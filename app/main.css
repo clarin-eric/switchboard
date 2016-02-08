@@ -1,0 +1,177 @@
+body {
+  background: cornsilk;
+
+  font-family: sans-serif;
+}
+
+.page-header {
+  color: #fff;
+  text-align: center;
+  padding: 3rem 1.8rem; 
+  background-color: #159957;
+  background-image: linear-gradient(120deg, #155799, #159957);
+}
+
+.project-name {
+  margin-top: 0;
+  margin-bottom: 0.1rem;
+  font-size: 2.00rem;
+}
+
+.project-tagline {
+  margin-bottom: 2rem;
+  font-weight: normal;
+  opacity: 0.7;
+}
+
+@media screen and (min-width: 64em) {
+  .project-tagline {
+    font-size: 1.25rem; } }
+
+.site-footer {
+  padding-top: 2rem;
+  margin-top: 2rem;
+  border-top: solid 1px #eff0f1; }
+
+.site-footer-owner {
+  display: block;
+  font-weight: bold; }
+
+.site-footer-credits {
+  color: #819198; }
+
+@media screen and (min-width: 64em) {
+  .site-footer {
+    font-size: 1rem; } }
+
+@media screen and (min-width: 42em) and (max-width: 64em) {
+  .site-footer {
+    font-size: 1rem; } }
+
+@media screen and (max-width: 42em) {
+  .site-footer {
+    font-size: 0.9rem; } }
+
+.dropArea {
+    borderWidth: 2;
+    borderColor: 'black';
+    borderStyle: 'dashed';
+    borderRadius: 4;
+    margin: 30;
+    padding: 30;
+    width: 200;
+    transition: 'all 0.5s'  
+}
+
+.dropAreaText {
+    text-align: center;
+    padding-top: 4em;
+    padding-botton: 4em;
+}
+
+.lane {
+  display: inline-block;
+
+  margin: 1em;
+
+  background-color: #efefef;
+  border: 1px solid #ccc;
+  border-radius: 0.5em;
+
+  min-width: 20em;
+  vertical-align: top;
+}
+
+.tool {
+  display: inline-block;
+
+  margin: 1em;
+
+  background-color: #afafaf;
+  border: 1px solid #ccc;
+  border-radius: 0.5em;
+
+  min-width: 10em;
+  vertical-align: top;
+}
+
+.lane-header {
+  overflow: auto;
+
+  padding: 1em;
+
+  color: #efefef;
+  background-color: #333;
+
+  border-top-left-radius: 0.5em;
+  border-top-right-radius: 0.5em;
+}
+
+.tool-header {
+  overflow: auto;
+
+  padding: 1em;
+
+  color: #afafaf;
+  background-color: #333;
+
+  border-top-left-radius: 0.5em;
+  border-top-right-radius: 0.5em;
+}
+
+.lane-name, .tool-name {
+  float: left;
+}
+
+.lane-add-note, .tool-add-note {
+  float: right;
+
+  margin-left: 0.5em;
+}
+
+.add-lane, .lane-add-note button, .add-tool, .tool-add-note button {
+  background-color: #fdfdfd;
+  border: 1px solid #ccc;
+}
+
+.notes {
+  margin: 0.5em;
+  padding-left: 0;
+
+  max-width: 20em;
+  list-style: none;
+}
+
+.note {
+  margin-bottom: 0.5em;
+  padding: 0.5em;
+
+  background-color: #fdfdfd;
+  box-shadow: 0 0 0.3em .03em rgba(0,0,0,.3);
+}
+.note:hover {
+  box-shadow: 0 0 0.3em .03em rgba(0,0,0,.7);
+
+  transition: .6s;
+}
+
+.note .value {
+  /* force to use inline-block so that it gets minimum height */
+  display: inline-block;
+}
+
+.note .delete {
+  float: right;
+
+  padding: 0;
+
+  background-color: #fdfdfd;
+  border: none;
+
+  cursor: pointer;
+
+  visibility: hidden;
+}
+.note:hover .delete {
+  visibility: visible;
+}
