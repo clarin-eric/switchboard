@@ -101,10 +101,11 @@ class ToolStore {
 		  output: ["text/xml"],
 		  url: "http://shannon.sfs.uni-tuebingen.de:8080/NaLiDa2Marc-1.0/",
 		  pid: "",
-		  parameter: { input :     "self.linkToResource" // for demo upload site, to be instantiated
+		  parameter: { input : "self.linkToResource" // for demo upload site, to be instantiated
 			     },
 		  
-		  // URL to get called: https://weblicht.sfs.uni-tuebingen.de/weblicht/?input=/link/to/resource&chainName=NamedEntities-DE
+		  // URL to get called:
+		  // http://shannon.sfs.uni-tuebingen.de:8888/weblicht?input=http://hdl.handle.net/10932/00-017B-E3BC-2D57-CC01-6&lang=de&analysis=ne
 		},		
 
 		{ task: "Named Entity Recognizer (for German)",
@@ -122,13 +123,13 @@ class ToolStore {
 		  languages: ["deu"], 
 		  mimetypes: ["text/plain"],
 		  output: ["text/xml"],
-		  url: "http://shannon.sfs.uni-tuebingen.de:8888/weblicht/",
+		  url: "http://shannon.sfs.uni-tuebingen.de:8888/weblicht",
 		  pid: "",
-		  parameter: {chainName : "NamedEntities-DE",
-			      input :     "self.linkToResource" // for demo upload site
+		  parameter: {  // input   :  "self.linkToResource", // for demo upload site
+				input   : "http://hdl.handle.net/10932/00-017B-E3BC-2D57-CC01-6",
+				lang    : "de",                  // German
+				analysis: "ne"                   // Named Entities
 			     },
-		  
-		  // URL to get called: https://weblicht.sfs.uni-tuebingen.de/weblicht/?input=/link/to/resource&chainName=NamedEntities-DE
 		},		
 		
 		{ task: "Part-of-speech tagging and lemmatization (for German)",
@@ -148,8 +149,10 @@ class ToolStore {
 		  output: ["text/xml"],
 		  url: "http://shannon.sfs.uni-tuebingen.de:8888/weblicht/",		  
 		  pid: "",
-		  parameter: {chainName : "POSTags-Lemmas-DE",
-			      input :     "self.linkToResource" 
+		  parameter: {chainName : "POSTags-Lemmas-DE",    // todo, check with Marie
+			      input :     "self.linkToResource",
+			      analysis:   "POSTags-Lemmas-DE",
+			      lang:       "de"
 			     },
 		},
 		

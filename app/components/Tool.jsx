@@ -61,7 +61,13 @@ export default class Tool extends React.Component {
 	var tool = entireState.selectedTool[0];
 
 	console.log('Tool/invokeTool', entireState, tool);
-	var win = window.open(tool.url, '_blank');
+
+	var parameterString = "?input=" + tool.parameter.input + "&lang=" + tool.parameter.lang + "&analysis=" + tool.parameter.analysis;
+	console.log("Tool.jsx/invokeTool: parameterString", parameterString);
+
+	var urlWithParameters = tool.url + parameterString;
+	
+	var win = window.open(urlWithParameters, '_blank');
 	win.focus();
     }
 }

@@ -4,6 +4,7 @@ import NoteActions from '../actions/NoteActions';
 import LaneActions from '../actions/LaneActions';
 import ToolActions from '../actions/ToolActions';
 import LaneStore from '../stores/LaneStore';        // storing lanes (state)
+import Request from 'superagent';
 
 export default class DropArea extends React.Component {
     constructor(props) {
@@ -98,6 +99,47 @@ export default class DropArea extends React.Component {
     };
     
     onDrop(files) {
+
+	// var req = Request
+	//     .post('http://shannon.sfs.uni-tuebingen.de:8011/api/uploadLR')
+	//     .set('Content-Type', 'text/plain');
+
+	// files.forEach((file)=> {
+	//     console.log('attaching', file.name, file);
+        //     req.attach(file.name, file);
+        // });
+
+	// var formData = new FormData();
+	// formData.append("username", "Groucho");
+	// formData.append("accountnum", 123456); // number 123456 is immediately converted to a string "123456"
+	// formData.append("langResource", files[0]);
+	
+	// files.forEach((file) => {
+	//     console.log('formdata before adding ', file, formData);
+	//     formData.append( "file" , file );
+	//     console.log('formdata after adding', file, formData);
+	// });
+
+	var req = Request
+//	    .post('http://shannon.sfs.uni-tuebingen.de:8011/api/uploadLR')
+//	    .post('http://localhost:8011/api/uploadLR')
+	    .post('http://localhost:8011/api/uploadLR')	
+//	    .set('Content-Type', 'text/plain')
+//	    .type('application/x-www-form-urlencoded') // form
+//	    .type('form')
+	    .attach("langResource", files[0], files[0].name)
+//	    .send(files[0])
+//	    .send(formData)	
+	    .end((err, res) => {
+		if (err) {
+		    console.log('error in uploading', err);
+		} else {
+		    console.log('success in uploading', res);
+		}
+	    });
+
+	console.log('req after', req, files[0], files[0].name);	
+
 	// console.log('Received files: ', files);
 	this.setState({
 	    files: files
