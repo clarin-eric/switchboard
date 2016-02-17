@@ -1,16 +1,12 @@
 import AltContainer from 'alt-container';
 import React from 'react';
-
 import Notes from './Notes.jsx';
 import NoteActions from '../actions/NoteActions';
 import NoteStore from '../stores/NoteStore';
-
 import LaneActions from '../actions/LaneActions';
 import LaneStore from '../stores/LaneStore';
-
 import ToolActions from '../actions/ToolActions';
 import ToolStore from '../stores/ToolStore';
-
 import Editable from './Editable.jsx';
 
 export default class Lane extends React.Component {
@@ -29,30 +25,27 @@ export default class Lane extends React.Component {
 	
 	return (
 	    <div {...props}>
+  	      <div className="lane-header">
+  	        <Editable className="lane-name"
+	                  editing={lane.editing}
+                          value={lane.name}
+	                  onEdit={this.editName}
+                          onValueClick={this.activateLaneEdit} />
 	    
-	    <div className="lane-header">
-	    
-	    <Editable className="lane-name"
-	              editing={lane.editing}
-                      value={lane.name}
-	              onEdit={this.editName}
-                      onValueClick={this.activateLaneEdit} />
-	    
-	    <div className="lane-add-note">
-	    
-	    <button onClick={this.displayTools}>T</button>
-	    </div>
-	    </div>
-	    <AltContainer
-            stores={[NoteStore]}
-            inject={{
-		notes: () => NoteStore.get(lane.notes)
-            }}
-	    >
-	    <Notes onValueClick={this.activateNoteEdit}
-                   onEdit={this.editNote}
-                   onDelete={this.deleteNote} />
-	    </AltContainer>
+	        <div className="lane-add-note">
+  	           <button onClick={this.displayTools}>T</button>
+	        </div>
+	      </div>
+	      <AltContainer
+                 stores={[NoteStore]}
+                 inject={{
+		       notes: () => NoteStore.get(lane.notes)
+		 }}
+       	      >
+	      <Notes onValueClick={this.activateNoteEdit}
+                     onEdit={this.editNote}
+                     onDelete={this.deleteNote} />
+	      </AltContainer>
 	    </div>
 	);
     }
@@ -69,11 +62,10 @@ export default class Lane extends React.Component {
 	var myLane = LaneActions.getLane( laneId );
 	console.log("Lane.jsx/displayTools: myLane", myLane);
 
-	var entireState = LaneStore.getState();
+	var entireLaneState = LaneStore.getState();
 	
-	console.log("Lane.jsx/displayTools after getLane", entireState, entireState.selectedLane[0] );
-
-	var tools = ToolActions.findTools( entireState.selectedLane[0] );
+	console.log("Lane.jsx/displayTools laneState", entireLaneState.selectedLane[0] );
+	ToolActions.findTools( entireLaneState.selectedLane[0] );
     }
     
     editNote(id, task) {

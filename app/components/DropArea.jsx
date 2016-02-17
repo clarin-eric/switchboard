@@ -3,17 +3,17 @@ import Dropzone from 'react-dropzone';
 import NoteActions from '../actions/NoteActions';
 import LaneActions from '../actions/LaneActions';
 import ToolActions from '../actions/ToolActions';
-import LaneStore from '../stores/LaneStore';        // storing lanes (state)
 import Request from 'superagent';
 
 export default class DropArea extends React.Component {
     constructor(props) {
 	super(props);
 
-	this.addLane = this.addLane.bind(this);
-	this.addNote = this.addNote.bind(this);
-	this.addMimetype = this.addMimetype.bind(this);
-	this.addLanguageCode = this.addLanguageCode.bind(this);	
+	this.addLane     = this.addLane.bind(this);
+	this.addNote     = this.addNote.bind(this);
+	this.addFilename = this.addFilename.bind(this);
+	this.addMimetype = this.addMimetype.bind(this);	
+	this.addLanguage = this.addLanguage.bind(this);	
 	this.showFiles = this.showFiles.bind(this);
 	this.onDrop = this.onDrop.bind(this);
 	
@@ -29,10 +29,13 @@ export default class DropArea extends React.Component {
 	console.log('adding new lane', lane);
 	return lane.id;
     }
-    
+
+    // a note get a task description as "knows" the lane it belongs to
     addNote( laneId, description ) {
-	const note = NoteActions.create({task: description});
-	console.log('DropArea/addNote has created a new note', note); 	
+	const note = NoteActions.create({
+	    task: description,
+	    belongsTo: laneId});
+	
 	LaneActions.attachToLane({
 	    noteId: note.id,
 	    laneId
@@ -41,20 +44,32 @@ export default class DropArea extends React.Component {
 	console.log('DropArea/addNote', laneId, description, 'with resulting note', note);
     }
 
+    addFilename( laneId, filename ) {
+	LaneActions.addFilename({
+	    filename: filename,
+	    laneId
+	});
+	
+	console.log('DropArea/addFilename', laneId, filename);
+    }
+
     addMimetype( laneId, mimetype ) {
 	LaneActions.addMimetype({
 	    mimetype: mimetype,
 	    laneId
 	});
+	
 	console.log('DropArea/addMimetype', laneId, mimetype);
     }
-
-    addLanguageCode( laneId, languageCode ) {
-	LaneActions.addLanguageCode({
-	    languageCode: languageCode,
+    
+    addLanguage( laneId, language ) {
+	console.log('DropArea/addLanguage', laneId, language);
+	LaneActions.addLanguage({
+	    language: language,
 	    laneId
 	});
-	console.log('DropArea/addLanguageCode', laneId, languageCode);
+	
+	console.log('DropArea/addLanguage', laneId, language);
     }
 
     showFiles() {
@@ -100,36 +115,10 @@ export default class DropArea extends React.Component {
     
     onDrop(files) {
 
-	// var req = Request
-	//     .post('http://shannon.sfs.uni-tuebingen.de:8011/api/uploadLR')
-	//     .set('Content-Type', 'text/plain');
-
-	// files.forEach((file)=> {
-	//     console.log('attaching', file.name, file);
-        //     req.attach(file.name, file);
-        // });
-
-	// var formData = new FormData();
-	// formData.append("username", "Groucho");
-	// formData.append("accountnum", 123456); // number 123456 is immediately converted to a string "123456"
-	// formData.append("langResource", files[0]);
-	
-	// files.forEach((file) => {
-	//     console.log('formdata before adding ', file, formData);
-	//     formData.append( "file" , file );
-	//     console.log('formdata after adding', file, formData);
-	// });
-
 	var req = Request
 //	    .post('http://shannon.sfs.uni-tuebingen.de:8011/api/uploadLR')
-//	    .post('http://localhost:8011/api/uploadLR')
 	    .post('http://localhost:8011/api/uploadLR')	
-//	    .set('Content-Type', 'text/plain')
-//	    .type('application/x-www-form-urlencoded') // form
-//	    .type('form')
 	    .attach("langResource", files[0], files[0].name)
-//	    .send(files[0])
-//	    .send(formData)	
 	    .end((err, res) => {
 		if (err) {
 		    console.log('error in uploading', err);
@@ -138,13 +127,11 @@ export default class DropArea extends React.Component {
 		}
 	    });
 
-	console.log('req after', req, files[0], files[0].name);	
-
-	// console.log('Received files: ', files);
 	this.setState({
 	    files: files
 	});
 
+	// once new file has been dropped, delete history of prior file drops
 	if (files.length > 0) {
 	    LaneActions.reset();
 	    NoteActions.reset();
@@ -154,15 +141,18 @@ export default class DropArea extends React.Component {
 	// for each file, create a lane (resource) and attach to each lane some notes (resource descriptors)
 	for (var i=0; i<files.length; i++) {
 	    var laneId = this.addLane(files[i].name);
+	    this.addFilename(laneId, files[i].name);
+
+	    // will be editable (see LanguageMenu)
 	    this.addMimetype(laneId, files[i].type);
 	    
 	    this.addNote(laneId, "name:   ".concat(files[i].name));
 	    this.addNote(laneId, "type:   ".concat(files[i].type));
 	    this.addNote(laneId, "size:   ".concat(files[i].size));	
-	    this.addNote(laneId, "preview:".concat(files[i].preview));
+	    // this.addNote(laneId, "preview:".concat(files[i].preview));
 	    
-	    // adding special Note for language information (create pulldown-menu)
-	    this.addNote(laneId, "language: click here");
+	    // will be editable (see MimetypeMenu)
+	    this.addNote(laneId, "language:");
 	}
     }
 
@@ -195,7 +185,7 @@ export default class DropArea extends React.Component {
 		    style: style,
 		    activeStyle: activeStyle 
 		},
-		'Drop your files here, or click to select files to upload.'
+		'Drop your files here, or click here to select files to upload.'
             ),
 	    this.showFiles()
         );

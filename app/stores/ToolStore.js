@@ -7,6 +7,7 @@ import uuid from 'node-uuid';
 import assign from 'object-assign';
 import alt from '../libs/alt';
 import ToolActions from '../actions/ToolActions';
+import NoteStore from './NoteStore';
 
 // inquire the internal state of language and mimetype menu
 // import LanguageMenu from './../components/LanguageMenu.jsx';
@@ -15,12 +16,54 @@ import ToolActions from '../actions/ToolActions';
 class ToolStore {
     constructor() {
 	this.bindActions(ToolActions);
-
 	this.applicableTools = [];
 	
 	// an initial list of tools that we are aware of.
 	this.tools = 
 	    [
+		{ task: "tokenisation",
+		  name: "CLARIN-DK Tool Box",
+		  homepage: "https://www.clarin.dk/tools/createByGoalChoice",
+		  creators: ["Bart Jongejan et al."],
+		  contact: {
+		      person: "Bart Jongejan",
+		      email: "bartj@hum.ku.dk",
+		  },
+		  version: "0.8.3",
+		  license: "public", 
+		  shortDescription: "CLARIN-DK Tool Box",
+		  longDescription:  "CLARIN-DK Tool Box",
+		  languages: ["nld", "eng", "deu", "fra", "ita", "spa", "por", "tur", "rus", "swe"], //iso 639-3
+		  mimetypes: ["application/pdf",
+			      "application/vnd.ms-powerpoint", // (PPT)
+			      "application/vnd.openxmlformats-officedocument.presentationml.presentation", // (PPTX)
+			      "application/vnd.oasis.opendocument.presentation", // (ODP)
+			      "application/vnd.ms-excel", // (XLS)
+			      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // (XLSX)
+			      "application/vnd.oasis.opendocument.spreadsheet", // (ODS)
+			      "application/x-download", //    (If it is PDF or RTF)
+			      "application/octet-stream", //  (If it is PDF or RTF)
+			      "application/msword", //         (RTF, DOC, DOCX)
+			      "application/vnd.oasis.opendocument.text", // (ODT)
+			      "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // (DOCX)
+			      "text/html", // (HTML)
+			      "text/rtf",  // (RTF)
+			      "text/plain", 
+			      "text/x-conll", // (CONLL)
+			      "image/gif", 
+			      "image/jpeg", 
+			      "image/pjpeg", 
+			      "image/png", 
+			      "image/svg+xml", 
+			      "image/tiff", 
+			      "image/vnd.microsoft.icon"
+			     ],
+		  url: ["https://www.clarin.dk/tools/createByGoalChoice"], // todo
+		  parameter: { "project"        : "new",
+			       "untokinput_url" : "self.linkToResource"
+			     }
+		},
+		
 		{ task: "tokenisation",
 		  name: "Ucto",
 		  homepage: "https://proycon.github.io/ucto",
@@ -118,18 +161,19 @@ class ToolStore {
 		  },	    
 		  version: "v1.0",
 		  licence: "public",
-		  longDescription: "Weblicht Easy Chain for German Named Entity Recognition. For, more information start Weblicht with easychain.",
+		  longDescription: "Weblicht Easy Chain for German Named Entity Recognition.",
 		  shortDescription: "Named Entity Recognizer", // controlled vocabulary, change name?
 		  languages: ["deu"], 
 		  mimetypes: ["text/plain"],
 		  output: ["text/xml"],
 		  url: "http://shannon.sfs.uni-tuebingen.de:8888/weblicht",
 		  pid: "",
-		  parameter: {  // input   :  "self.linkToResource", // for demo upload site
-				input   : "http://hdl.handle.net/10932/00-017B-E3BC-2D57-CC01-6",
-				lang    : "de",                  // German
-				analysis: "ne"                   // Named Entities
+		  parameter: {  input   :  "self.linkToResource", // for demo upload site (will be initialized)
+				lang    : "de",                   // German
+				analysis: "ne"                    // Named Entities
 			     },
+
+		  /// TODO pos | lemma | morphology | const-parsing | dep-parsing | ne
 		},		
 		
 		{ task: "Part-of-speech tagging and lemmatization (for German)",
@@ -142,7 +186,7 @@ class ToolStore {
 		  },	    
 		  version: "v1.0",
 		  licence: "public",
-		  longDescription: "Weblicht Easy Chain for POS Tagging and Lemmatization. For, more information start Weblicht with easychain.",
+		  longDescription: "Weblicht Easy Chain for POS Tagging and Lemmatization.",
 		  shortDescription: "POS Tagger",
 		  languages: ["deu"], 
 		  mimetypes: ["text/plain"],
@@ -189,6 +233,7 @@ class ToolStore {
 	const tools = this.tools;
 	
 	tool.id = uuid.v4();
+	tool.notes = tool.notes || [];
 	
 	this.setState({
 	    tools: tools.concat(tool)
@@ -239,13 +284,10 @@ class ToolStore {
     // multiple filters to be defined, in particular, language code
     findTools( resourceDescription ) {
 
-	console.log("ToolStore/findTools at the very start.");
-	// first, retrieve the mimetypes and languages that the user might have changed
-	// var languages = LanguageMenu.getState();
-	// console.log("ToolStore/findTools", LanguageMenu, LanguageMenu().selectedLanguages);
+	console.log("ToolStore/findTools at the very start.", resourceDescription);
 		    
 	// first filter: mimetype
-	var filteredTools = this.tools.filter((tool) =>
+	var mimetypeFilter = this.tools.filter((tool) =>
 					      {
 						  var result = tool.mimetypes.indexOf(resourceDescription.mimetype);
 					          if (result != -1) {
@@ -255,20 +297,37 @@ class ToolStore {
 						  }
 					      });
 
-	console.log('ToolStore/findTools with mimetype', resourceDescription, filteredTools);
+	console.log('ToolStore/findTools with mimetype', resourceDescription, mimetypeFilter);
 
-	// second filter: language code (TODO)
-	if (resourceDescription.language != null) {
-	    console.log("ToolStore: need to filter for language code", resourceDescription.languageCode);
-	} else {
-	    console.log("ToolStore: resource has no language code information available")
-	}
+	var languageFilter = mimetypeFilter;
 	
+	// second filter: language code 
+	if ( (resourceDescription.language == null) || (resourceDescription.language.length == 0)) {
+	    console.log('ToolStore/findTools: empty language', resourceDescription.language); 
+	} else {
+	    languageFilter = mimetypeFilter.filter((tool) =>
+						   {
+						       console.log('ToolStore/findTools: NON-empty language, checking',
+								   resourceDescription.language, tool);
+						       
+						       var result = tool.languages.indexOf(resourceDescription.language);
+					               if (result != -1) {
+							   // attach id to the tool
+							   tool.id = uuid.v4();
+							   return tool;
+						       }
+						   });
+	}
+
+	// --------------------------------	
+	// additional filters coming here..
+	// --------------------------------
+
 	this.setState({
-	    applicableTools: filteredTools
+	    applicableTools: languageFilter
 	});
 	
-	return filteredTools;
+	return languageFilter;
     }
     
     get(ids) {

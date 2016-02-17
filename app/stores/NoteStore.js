@@ -6,11 +6,11 @@ import NoteActions from '../actions/NoteActions';
 class NoteStore {
     constructor() {
 	this.bindActions(NoteActions);
-	
 	this.notes = [];
-	
+	this.selectedNote = [];	
 	this.exportPublicMethods({
-	    get: this.get.bind(this)
+	    get: this.get.bind(this),
+	    getAssociatedLane: this.getAssociatedLane.bind(this)
 	});
     }
 
@@ -18,15 +18,11 @@ class NoteStore {
 	this.setState({
 	    notes: []
 	});
-
-	console.log('NoteStore/reset');
     }
     
     create(note) {
 	const notes = this.notes;
-	
 	note.id = uuid.v4();
-	
 	this.setState({
 	    notes: notes.concat(note)
 	});
@@ -54,9 +50,23 @@ class NoteStore {
 
     getNote(noteId) {
 	const note = this.notes.filter((note) => note.id == noteId);
-	// console.log('NoteStore/getNote with id: ', noteId, note);
-	return note;
-    }    
+	console.log('NoteStore/getNote with id: ', noteId, note[0]);
+
+	// modify state
+	this.setState({
+	    selectedNote: [].concat(note)
+	});
+
+	return { note: note[0] };
+    }
+    
+    getAssociatedLane(nodeId) {
+	const n = this.getNote(nodeId);
+	console.log('NoteStore/getAssociatdLane', nodeId, n);
+	const val = n.belongsTo;
+	console.log('NoteStore/getAssociatdLane rtn', val);
+	return val;
+    }
     
     get(ids) {
 	return (ids || []).map(

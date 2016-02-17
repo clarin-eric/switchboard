@@ -6,8 +6,17 @@ export default class Editable extends React.Component {
 
     constructor(props) {
 	super(props);
+
     }
 
+    // setLanguage( id, newLanguage ) {
+    // 	if (newLanguage) {
+    // 	    console.log('Note.jsx/setLanguage new language', newLanguage);
+    // 	} else {
+    // 	    console.log('Note.jsx/setLanguage NO new language', newLanguage);
+    // 	}
+    // }
+    
     render() {
 	const {value, onEdit, onValueClick, editing, ...props} = this.props;
 
@@ -35,7 +44,7 @@ export default class Editable extends React.Component {
 	    return (
 		    <div>
 		    <span className="task" width="2cm">{this.props.task}</span>
-		    <LanguageMenu />	
+		    <LanguageMenu onLanguageSelection={this.setLanguage} />			    
 		    </div>
 	    );
 	}

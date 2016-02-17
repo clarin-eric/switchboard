@@ -1,83 +1,103 @@
 import React from 'react';
 import LanguageMenu from './LanguageMenu.jsx';
+import MimetypeMenu from './MimetypeMenu.jsx';
+import NoteActions from '../actions/NoteActions';
+import LaneActions from '../actions/LaneActions';        
+import NoteStore from '../stores/NoteStore';
 
 export default class Note extends React.Component {
     
     constructor(props) {
 	super(props);
+	const id = props.note.id;
 	
-	this.state = {
-	    editing: false
-	};
+	this.setLanguage = this.setLanguage.bind(this, id);
+	this.setMimetype = this.setMimetype.bind(this, id);	
+    }
+
+    setLanguage( id, language ) {
+	console.log('Note.jsx/setLanguage', language);	
+	var myNote = NoteActions.getNote( id );
+	var entireState = NoteStore.getState();
+	myNote = entireState.selectedNote[0];
+	var laneId = myNote.belongsTo;
+	var languageValue = null;	
+	if (language === undefined) {
+	    console.log('Note.jsx/setLanguage: language is undefined!');
+	} else {
+	    languageValue = language.value;
+	    console.log('Note.jsx/setLanguage: language set to', languageValue);	    
+	}
+	LaneActions.addLanguage({
+	    language: languageValue,
+	    laneId
+	});
+    }
+
+    setMimetype( id, mimetype ) {
+	console.log('Note.jsx/setMimetype', mimetype);
+	var myNote = NoteActions.getNote( id );
+	var entireState = NoteStore.getState();
+	myNote = entireState.selectedNote[0];
+	var laneId = myNote.belongsTo;
+	var mimetypeValue = null;	
+	if (mimetype === undefined) {
+	    console.log('Note.jsx/setMimetype: mimetype is undefined!');
+	} else {
+	    mimetypeValue = mimetype.value;
+	    console.log('Note.jsx/setMimetype: mimetype set to', mimetypeValue);	    
+	}	    
+	LaneActions.addMimetype({
+	    mimetype: mimetypeValue,
+	    laneId
+	});
     }
     
     render() {
 
-	console.log("Note.jsx/render", this.props, this.props.task)
-	
-	if(this.props.task == "language: click here") {
+	// show LanguageMenu
+	if(this.props.note.task.indexOf("language:") !== -1) {
 	    return this.renderLanguageNote();
 	}	
-	
-	if(this.state.editing) {
-	    return this.renderEdit();
-	}
 
+	// show MimetypeMenu
+	if(this.props.note.task.indexOf("type:") !== -1) {
+	    return this.renderMimetypeNote();
+	}	
+
+	// defailt rendering (not editable)
 	return this.renderNote();
     }
     
-    renderEdit = () => {
-	return <input type="text"
-	autoFocus={true}
-	placeholder={this.props.task}
-	onBlur={this.finishEdit}
-	onKeyPress={this.checkEnter} />;
-    };
-    
     renderNote = () => {
-	const onDelete = this.props.onDelete;
-
-	console.log('Note.jsx', this.props);
 	return (
 		<div onClick={this.edit}>
-		<span className="task">{this.props.task}</span>
-		{onDelete ? this.renderDelete() : null }
+		<span className="task">{this.props.note.task}</span>
 	    </div>
 	);
     };
 
     renderLanguageNote = () => {
 	return (
-		<div>
-		<span className="task">{this.props.task}</span>
-		<LanguageMenu />	
-		</div>
+ 	    <div>
+	      <span className="task">language</span>
+	      <LanguageMenu onLanguageSelection={this.setLanguage}
+	    />	
+	    </div>
 	);
     };
-    
-    renderDelete = () => {
-	return <button className="delete-note" onClick={this.props.onDelete}>x</button>;
-    };
-    
-    edit = () => {
-	this.setState({
-	    editing: true
-	});
-    };
-    
-    checkEnter = (e) => {
-	if(e.key === 'Enter') {
-	    this.finishEdit(e);
-	}
-    };
-    
-    finishEdit = (e) => {
-	if(this.props.onEdit) {
-	    this.props.onEdit(e.target.value);
-	}
-	
-	this.setState({
-	    editing: false
-	});
+
+    renderMimetypeNote = () => {
+	const mimetypeWithoutPrefix = this.props.note.task.substring(8, this.props.note.task.length);
+	console.log('Note.jsx/renderMimetypeNote', mimetypeWithoutPrefix);
+	return (
+ 	    <div>
+	      <span className="task">mimetype</span>
+    		<MimetypeMenu defaultValue = { {label: mimetypeWithoutPrefix,
+						value: mimetypeWithoutPrefix}
+					     }
+	                    onMimetypeSelection={this.setMimetype} />	
+	    </div>
+	);
     };
 }

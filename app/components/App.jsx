@@ -1,10 +1,10 @@
 import AltContainer from 'alt-container';
 import React from 'react';
-import Lanes from './Lanes.jsx';                    // render all the lanes
-import Tools from './Tools.jsx';                    // render all the lanes
+import Lanes from './Lanes.jsx';                    // render all the lanes (lang resources)
+import Tools from './Tools.jsx';                    // render all the tools
 import LaneActions from '../actions/LaneActions';   // actions associated with lanes: CRUD, attach/detach
 import LaneStore from '../stores/LaneStore';        // storing lanes (state)
-import ToolStore from '../stores/ToolStore';        // storing lanes (state)
+import ToolStore from '../stores/ToolStore';        // storing tools (state)
 import DropArea from './DropArea.jsx';
 
 require('./../images/switchboard.png');

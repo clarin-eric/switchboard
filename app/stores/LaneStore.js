@@ -30,8 +30,9 @@ class LaneStore {
 	
 	lane.id = uuid.v4();
 	lane.notes = lane.notes || [];
-	lane.mimetype = lane.mimetype || null;
-	lane.languageCode = lane.languageCode || null;
+	lane.filename = lane.filename || null;
+	lane.mimetype = lane.mimetype || null;	
+	lane.language = lane.language || null;
 	
 	this.setState({
 	    lanes: lanes.concat(lane)
@@ -58,9 +59,22 @@ class LaneStore {
 	});
     }
 
+
+    addFilename({laneId, filename}) {
+	const lanes = this.lanes.map((lane) => {
+	    console.log('LaneStore/addFilename map', lane.id, filename);
+	    if(lane.id === laneId) {
+		lane.filename = filename;
+	    }
+	    
+	    return lane;
+	});
+
+	this.setState({lanes});
+    }
+
     addMimetype({laneId, mimetype}) {
 	const lanes = this.lanes.map((lane) => {
-	    console.log('LaneStore/addMimetype map', lane.id, mimetype);
 	    if(lane.id === laneId) {
 		lane.mimetype = mimetype;
 	    }
@@ -71,11 +85,10 @@ class LaneStore {
 	this.setState({lanes});
     }
 
-    addLanguageCode({laneId, languageCode}) {
+    addLanguage({laneId, language}) {
 	const lanes = this.lanes.map((lane) => {
-	    console.log('LaneStore/setLanguageCode map', lane, languageCode);
 	    if(lane.id === laneId) {
-		lane.languageCode = languageCode;
+		lane.language = language;
 	    }
 	    
 	    return lane;
