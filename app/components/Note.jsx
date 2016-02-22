@@ -72,7 +72,7 @@ export default class Note extends React.Component {
     renderNote = () => {
 	return (
 		<div onClick={this.edit}>
-		<span className="task">{this.props.note.task}</span>
+		<span className="note">{this.props.note.task}</span>
 	    </div>
 	);
     };
@@ -80,7 +80,7 @@ export default class Note extends React.Component {
     renderLanguageNote = () => {
 	return (
  	    <div>
-	      <span className="task">language</span>
+	      <span className="note">language</span>
 	      <LanguageMenu onLanguageSelection={this.setLanguage}
 	    />	
 	    </div>
@@ -92,7 +92,7 @@ export default class Note extends React.Component {
 	console.log('Note.jsx/renderMimetypeNote', mimetypeWithoutPrefix);
 	return (
  	    <div>
-	      <span className="task">mimetype</span>
+	      <span className="note">mimetype</span>
     		<MimetypeMenu defaultValue = { {label: mimetypeWithoutPrefix,
 						value: mimetypeWithoutPrefix}
 					     }

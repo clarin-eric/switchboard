@@ -74,6 +74,15 @@ h2 {
     padding-botton: 4em;
 }
 
+.alignLeft {
+    float: left;
+    padding-right: 4em;
+}
+.alignRight {
+    float: right;
+    padding-left: 2em;
+}
+
 .lane {
   display: inline-block;
 
@@ -109,7 +118,7 @@ h2 {
   border: 1px solid #ccc;
   border-radius: 0.5em;
 
-  min-width: 10em;
+  min-width: 30em;
   vertical-align: top;
 }
 
@@ -137,8 +146,16 @@ h2 {
   border-top-right-radius: 0.5em;
 }
 
-.lane-name, .tool-name, .task-name {
-  float: left;
+.lane-name, .tool-name {
+    float: left;
+    display: block;
+    padding-right: 1em;    
+}
+
+.task-name {
+    padding-left: 1em;
+    padding-right: 2em;
+    min-width: 20em;    
 }
 
 .lane-add-note, .tool-add-note {
@@ -166,7 +183,7 @@ h2 {
   padding: 0.5em;
 
   background-color: #fdfdfd;
-  box-shadow: 0 0 0.3em .03em rgba(0,0,0,.3);
+  /* box-shadow: 0 0 0.3em .03em rgba(0,0,0,.3); */
 }
 .note:hover {
   box-shadow: 0 0 0.3em .03em rgba(0,0,0,.7);

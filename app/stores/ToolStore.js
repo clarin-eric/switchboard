@@ -461,9 +461,10 @@ class ToolStore {
 	    const entry = applicTools[i];
 	    const tinfo = [ {
 		name : entry.name,
-		desc : entry.longDescription,
+		longDescription : entry.longDescription,
 		url  : entry.url,
-		id   : entry.id
+		id   : entry.id,
+		parameter : entry.parameter
 		} ];
 
 	    console.log('ToolStore/groupTools', entry, tinfo);
