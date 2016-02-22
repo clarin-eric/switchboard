@@ -32,7 +32,7 @@ export default class MimetypeMenu extends React.Component {
 
 	    console.log('MimetypeMenu/renderValue value exists', exists);
             return <div 
-            class="simple-value"
+            className="simple-value"
             style={{
                 color: exists ? "black" : "red"
             }}

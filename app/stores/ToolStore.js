@@ -17,11 +17,14 @@ class ToolStore {
     constructor() {
 	this.bindActions(ToolActions);
 	this.applicableTools = [];
+	this.tasks = [];
+
+	this.groupTools = this.groupTools.bind(this);
 	
 	// an initial list of tools that we are aware of.
-	this.tools = 
+	this.registeredTools = 
 	    [
-		{ task: "tokenisation",
+		{ task: "Tokenisation",
 		  name: "CLARIN-DK Tool Box",
 		  homepage: "https://www.clarin.dk/tools/createByGoalChoice",
 		  creators: ["Bart Jongejan et al."],
@@ -64,7 +67,7 @@ class ToolStore {
 			     }
 		},
 		
-		{ task: "tokenisation",
+		{ task: "Tokenisation",
 		  name: "Ucto",
 		  homepage: "https://proycon.github.io/ucto",
 		  creators: ["Maarten van Gompel, Ko van der Sloot (CLST, Radboud University Nijmegen)"],
@@ -85,49 +88,7 @@ class ToolStore {
 			     }
 		},
 		
-		{ task: "Conversion of image format to jpg",
-		  name: "imageFormat2jpeg",
-		  homepage: "http://image.online-convert.com/convert-to-png",
-		  creators: ["Some guy somewhere"],
-		  contact: {
-		      person: "to_be_filled_out",
-		      email: "to_be_filled_out"
-		  },	    
-		  version: "v1.0",
-		  licence: "public",
-		  longDescription: "Converts a pdf document in jpg",
-		  shortDescription: "PDF2JPG Converter", 
-		  languages: ["n/a"], 
-		  mimetypes: ["image/jpeg"],
-		  output: ["image/png"],
-		  url: "http://image.online-convert.com/convert-to-png",
-		  pid: "",
-		  parameter: { input : "self.linkToResource" // for demo upload site, to be instantiated
-			     },
-		},
-
-		{ task: "Conversion of pdf to jpg",
-		  name: "pdf2jpg",
-		  homepage: "http://pdf2jpg.net",
-		  creators: ["Some guy somewhere"],
-		  contact: {
-		      person: "to_be_filled_out",
-		      email: "to_be_filled_out"
-		  },	    
-		  version: "v1.0",
-		  licence: "public",
-		  longDescription: "Converts a pdf document in jpg",
-		  shortDescription: "PDF2JPG Converter", 
-		  languages: ["n/a"], 
-		  mimetypes: ["application/pdf"],
-		  output: ["image/jpeg"],
-		  url: "http://pdf2jpg.net",
-		  pid: "",
-		  parameter: { input :     "self.linkToResource" // for demo upload site, to be instantiated
-			     },
-		},		
-
-		{ task: "Metadata format conversion",
+		{ task: "Metadata Format Conversion",
 		  name: "NaLiDa2Marc21",
 		  homepage: "http://shannon.sfs.uni-tuebingen.de/NaLiDa2Marc21",
 		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
@@ -145,13 +106,16 @@ class ToolStore {
 		  url: "http://shannon.sfs.uni-tuebingen.de:8080/NaLiDa2Marc-1.0/",
 		  pid: "",
 		  parameter: { input : "self.linkToResource" // for demo upload site, to be instantiated
-			     },
+			     }
 		  
 		  // URL to get called:
 		  // http://shannon.sfs.uni-tuebingen.de:8888/weblicht?input=http://hdl.handle.net/10932/00-017B-E3BC-2D57-CC01-6&lang=de&analysis=ne
 		},		
 
-		{ task: "Named Entity Recognizer (for German)",
+		// todo: 'en' version for the other weblicht services
+		// --------------------------------------------------
+		
+		{ task: "Named Entity Recognition",
 		  name: "Weblicht-NamedEntities-DE",
 		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
 		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
@@ -161,7 +125,7 @@ class ToolStore {
 		  },	    
 		  version: "v1.0",
 		  licence: "public",
-		  longDescription: "Weblicht Easy Chain for German Named Entity Recognition.",
+		  longDescription: "Weblicht Easy Chain for German Named Entity Recognition (German).",
 		  shortDescription: "Named Entity Recognizer", // controlled vocabulary, change name?
 		  languages: ["deu"], 
 		  mimetypes: ["text/plain"],
@@ -171,12 +135,171 @@ class ToolStore {
 		  parameter: {  input   :  "self.linkToResource", // for demo upload site (will be initialized)
 				lang    : "de",                   // German
 				analysis: "ne"                    // Named Entities
-			     },
+			     }
+		},
 
-		  /// TODO pos | lemma | morphology | const-parsing | dep-parsing | ne
+		{ task: "Named Entity Recognition",
+		  name: "Weblicht-NamedEntities-EN",
+		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
+		  contact: {
+		      person: "CLARIN Weblicht Support",
+		      email: "wlsupport@sfs.uni-tuebingen.de"
+		  },	    
+		  version: "v1.0",
+		  licence: "public",
+		  longDescription: "Weblicht Easy Chain for German Named Entity Recognition (English).",
+		  shortDescription: "Named Entity Recognizer", // controlled vocabulary, change name?
+		  languages: ["eng"], 
+		  mimetypes: ["text/plain"],
+		  output: ["text/xml"],
+		  url: "http://shannon.sfs.uni-tuebingen.de:8888/weblicht",
+		  pid: "",
+		  parameter: {  input   :  "self.linkToResource", // for demo upload site (will be initialized)
+				lang    : "en",                   // German
+				analysis: "ne"                    // Named Entities
+			     }
+		},				
+		
+		{ task: "Constituent Parsing",
+		  name: "Weblicht-Const-Parsing-DE",
+		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
+		  contact: {
+		      person: "CLARIN Weblicht Support",
+		      email: "wlsupport@sfs.uni-tuebingen.de"
+		  },	    
+		  version: "v1.0",
+		  licence: "public",
+		  longDescription: "Weblicht Easy Chain for Constituent Parsing (German).",
+		  shortDescription: "Constituent Parsing",
+		  languages: ["deu"], 
+		  mimetypes: ["text/plain"],
+		  output: ["text/xml"],
+		  url: "http://shannon.sfs.uni-tuebingen.de:8888/weblicht/",		  
+		  pid: "",
+		  parameter: {input :     "self.linkToResource",
+			      lang:       "de",			      
+			      analysis:   "const-parsing"
+			     }
+		},
+
+		{ task: "Constituent Parsing",
+		  name: "Weblicht-Const-Parsing-EN",
+		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
+		  contact: {
+		      person: "CLARIN Weblicht Support",
+		      email: "wlsupport@sfs.uni-tuebingen.de"
+		  },	    
+		  version: "v1.0",
+		  licence: "public",
+		  longDescription: "Weblicht Easy Chain for Constituent Parsing (English).",
+		  shortDescription: "Constituent Parsing",
+		  languages: ["eng"], 
+		  mimetypes: ["text/plain"],
+		  output: ["text/xml"],
+		  url: "http://shannon.sfs.uni-tuebingen.de:8888/weblicht/",		  
+		  pid: "",
+		  parameter: {input :     "self.linkToResource",
+			      lang:       "en",			      
+			      analysis:   "const-parsing"
+			     }
 		},		
 		
-		{ task: "Part-of-speech tagging and lemmatization (for German)",
+		{ task: "Dependency Parsing",
+		  name: "Weblicht-Dep-Parsing-DE",
+		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
+		  contact: {
+		      person: "CLARIN Weblicht Support",
+		      email: "wlsupport@sfs.uni-tuebingen.de"
+		  },	    
+		  version: "v1.0",
+		  licence: "public",
+		  longDescription: "Weblicht Easy Chain for Dependency Parsing (German).",
+		  shortDescription: "Dependency Parsing",
+		  languages: ["deu"], 
+		  mimetypes: ["text/plain"],
+		  output: ["text/xml"],
+		  url: "http://shannon.sfs.uni-tuebingen.de:8888/weblicht/",		  
+		  pid: "",
+		  parameter: {input :     "self.linkToResource",
+			      lang:       "de",			      
+			      analysis:   "dep-parsing"
+			     }
+		},
+
+		{ task: "Dependency Parsing",
+		  name: "Weblicht-Dep-Parsing-EN",
+		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
+		  contact: {
+		      person: "CLARIN Weblicht Support",
+		      email: "wlsupport@sfs.uni-tuebingen.de"
+		  },	    
+		  version: "v1.0",
+		  licence: "public",
+		  longDescription: "Weblicht Easy Chain for Dependency Parsing (English).",
+		  shortDescription: "Dependency Parsing",
+		  languages: ["eng"], 
+		  mimetypes: ["text/plain"],
+		  output: ["text/xml"],
+		  url: "http://shannon.sfs.uni-tuebingen.de:8888/weblicht/",		  
+		  pid: "",
+		  parameter: {input :     "self.linkToResource",
+			      lang:       "en",			      
+			      analysis:   "dep-parsing"
+			     }
+		},				
+
+		{ task: "Lemmatization",
+		  name: "Weblicht-Lemmas-DE",
+		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
+		  contact: {
+		      person: "CLARIN Weblicht Support",
+		      email: "wlsupport@sfs.uni-tuebingen.de"
+		  },	    
+		  version: "v1.0",
+		  licence: "public",
+		  longDescription: "Weblicht Easy Chain for Lemmatization (German).",
+		  shortDescription: "Lemmatizer",
+		  languages: ["deu"], 
+		  mimetypes: ["text/plain"],
+		  output: ["text/xml"],
+		  url: "http://shannon.sfs.uni-tuebingen.de:8888/weblicht/",		  
+		  pid: "",
+		  parameter: {input :     "self.linkToResource",
+			      lang:       "de",			      
+			      analysis:   "lemma"
+			     }
+		},
+
+		{ task: "Lemmatization",
+		  name: "Weblicht-Lemmas-EN",
+		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
+		  contact: {
+		      person: "CLARIN Weblicht Support",
+		      email: "wlsupport@sfs.uni-tuebingen.de"
+		  },	    
+		  version: "v1.0",
+		  licence: "public",
+		  longDescription: "Weblicht Easy Chain for Lemmatization (English).",
+		  shortDescription: "Lemmatizer",
+		  languages: ["eng"], 
+		  mimetypes: ["text/plain"],
+		  output: ["text/xml"],
+		  url: "http://shannon.sfs.uni-tuebingen.de:8888/weblicht/",		  
+		  pid: "",
+		  parameter: {input :     "self.linkToResource",
+			      lang:       "en",			      
+			      analysis:   "lemma"
+			     }
+		},		
+		
+		{ task: "Part-Of-Speech Tagging",
 		  name: "Weblicht-POSTags-Lemmas-DE",
 		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
 		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
@@ -186,41 +309,87 @@ class ToolStore {
 		  },	    
 		  version: "v1.0",
 		  licence: "public",
-		  longDescription: "Weblicht Easy Chain for POS Tagging and Lemmatization.",
+		  longDescription: "Weblicht Easy Chain for POS Tagging and Lemmatization (German).",
 		  shortDescription: "POS Tagger",
 		  languages: ["deu"], 
 		  mimetypes: ["text/plain"],
 		  output: ["text/xml"],
 		  url: "http://shannon.sfs.uni-tuebingen.de:8888/weblicht/",		  
 		  pid: "",
-		  parameter: {chainName : "POSTags-Lemmas-DE",    // todo, check with Marie
-			      input :     "self.linkToResource",
-			      analysis:   "POSTags-Lemmas-DE",
-			      lang:       "de"
-			     },
+		  parameter: {input :     "self.linkToResource",
+			      lang:       "de",			      
+			      analysis:   "pos"
+			     }
+		},		
+
+		{ task: "Part-Of-Speech Tagging",
+		  name: "Weblicht-POSTags-Lemmas-EN",
+		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
+		  contact: {
+		      person: "CLARIN Weblicht Support",
+		      email: "wlsupport@sfs.uni-tuebingen.de"
+		  },	    
+		  version: "v1.0",
+		  licence: "public",
+		  longDescription: "Weblicht Easy Chain for POS Tagging and Lemmatization (English).",
+		  shortDescription: "POS Tagger",
+		  languages: ["eng"], 
+		  mimetypes: ["text/plain"],
+		  output: ["text/xml"],
+		  url: "http://shannon.sfs.uni-tuebingen.de:8888/weblicht/",		  
+		  pid: "",
+		  parameter: {input :     "self.linkToResource",
+			      lang:       "en",			      
+			      analysis:   "pos"
+			     }
+		},		
+		
+		{ task: "Morphology Analysis",
+		  name: "Weblicht-Morphology-Analysis-DE",
+		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
+		  contact: {
+		      person: "CLARIN Weblicht Support",
+		      email: "wlsupport@sfs.uni-tuebingen.de"
+		  },	    
+		  version: "v1.0",
+		  licence: "public",
+		  longDescription: "Weblicht Easy Chain for Morphology Analysis (German)",
+		  shortDescription: "Morphology",
+		  languages: ["deu"], 
+		  mimetypes: ["text/plain"],
+		  output: ["text/xml"],
+		  url: "http://shannon.sfs.uni-tuebingen.de:8888/weblicht/",		  
+		  pid: "",
+		  parameter: {input :     "self.linkToResource",
+			      lang:       "de",			      
+			      analysis:   "morphology"
+			     }
 		},
 		
-		{ task: "Text-2-Speech Generation",
-		  name: "Mary Text-to-Speech system",
-		  homepage: "http://mary.dfki.de",
-		  creators: ["DFKI Language Technology Lab"],
+		{ task: "Morphology Analysis",
+		  name: "Weblicht-Morphology-Analysis-EN",		  
+		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
 		  contact: {
-		      person: "",
-		      email: ""
+		      person: "CLARIN Weblicht Support",
+		      email: "wlsupport@sfs.uni-tuebingen.de"
 		  },	    
-		  version: "MaryTTS 5.12", // to check with version employed by web service
-		  licence: "GNU Lesser General Public License v3.0",
-		  longDescription: "Mary Text-to-Speech System",
-		  shortDescription: "Text-2-Speech",
-		  languages: ["deu"], 
-		  mimetypes: ["text/plain"], // to adapt
+		  version: "v1.0",
+		  licence: "public",
+		  longDescription: "Weblicht Easy Chain for Morphology Analysis (English)",
+		  shortDescription: "Morphology",
+		  languages: ["eng"], 
+		  mimetypes: ["text/plain"],
 		  output: ["text/xml"],
-		  url: "https://clarin.phonetik.uni-muenchen.de/BASWebServices/services/runTTS",
+		  url: "http://shannon.sfs.uni-tuebingen.de:8888/weblicht/",		  
 		  pid: "",
-		  
-		  // assp:  query parameters can be given in any order
-		  parameterTemplate: "curl -v -X POST -H 'content-type: application/x-www-form-urlencoded' 'https://clarin.phonetik.uni-muenchen.de/BASWebServices/services/runTTS?AUDIO=WAVE_FILE&INPUT_TYPE=TEXT&INPUT_TEXT=<TEXT>&VOICE=bits1unitselautolabel&OUTPUT_TYPE=AUDIO'"
-		},	  
+		  parameter: {input :     "self.linkToResource",
+			      lang:       "en",			      
+			      analysis:   "morphology"
+			     }
+		}		
 	    ];
 	
 	this.exportPublicMethods({
@@ -230,13 +399,13 @@ class ToolStore {
     }
     
     create(tool) {
-	const tools = this.tools;
+	const registeredTools = this.registeredTools;
 	
 	tool.id = uuid.v4();
 	tool.notes = tool.notes || [];
 	
 	this.setState({
-	    tools: tools.concat(tool)
+	    registeredTools: registeredTools.concat(tool)
 	});
 	
 	return tool;
@@ -244,14 +413,15 @@ class ToolStore {
 
     reset () {
 	this.setState({
-	    applicableTools: []
+	    applicableTools: [],
+	    tasks: []
 	});
 
 	console.log('ToolStore/reset');
     }
     
     update(updatedTool) {
-	const tools = this.tools.map((tool) => {
+	const registeredTools = this.registeredTools.map((tool) => {
 	    if(tool.id === updatedTool.id) {
 		return assign({}, tool, updatedTool);
 	    }
@@ -259,18 +429,18 @@ class ToolStore {
 	    return tool;
 	});
 	
-	this.setState({tools});
+	this.setState({registeredTools});
     }
     
     delete(id) {
 	this.setState({
-	    tools: this.tools.filter((tool) => tool.id !== id)
+	    registeredTools: this.registeredTools.filter((tool) => tool.id !== id)
 	});
     }
 
     getTool(toolId) {
 	console.log('ToolStore/getTool at start with id: ', toolId);	
-	const tool = this.tools.filter((tool) => tool.id == toolId);
+	const tool = this.registeredTools.filter((tool) => tool.id == toolId);
 	console.log('ToolStore/getTool having identified tool: ', tool[0]);
 
 	// modify state
@@ -281,13 +451,43 @@ class ToolStore {
 	return { tool: tool[0] }; // todo
     }
 
+        // groups tools in terms of the tasks/analyses they can perform
+    groupTools( applicTools ){
+
+	console.log('ToolStore/groupTools', applicTools);	
+	var toolGroups = {};
+
+	for (var i = 0; i<applicTools.length; i++) {
+	    const entry = applicTools[i];
+	    const tinfo = [ {
+		name : entry.name,
+		desc : entry.longDescription,
+		url  : entry.url,
+		id   : entry.id
+		} ];
+
+	    console.log('ToolStore/groupTools', entry, tinfo);
+	    
+	    if (entry.task in toolGroups) { // obj.hasOwnProperty("key")
+		toolGroups[ entry.task ] = toolGroups[ entry.task ].concat( tinfo );
+	    } else {
+		toolGroups[ entry.task ] = [].concat( tinfo );		
+	    }
+	}
+
+	console.log('ToolStore/groupTools', toolGroups);
+	return toolGroups;
+	
+    }
+
+
     // multiple filters to be defined, in particular, language code
     findTools( resourceDescription ) {
 
 	console.log("ToolStore/findTools at the very start.", resourceDescription);
 		    
 	// first filter: mimetype
-	var mimetypeFilter = this.tools.filter((tool) =>
+	var mimetypeFilter = this.registeredTools.filter((tool) =>
 					      {
 						  var result = tool.mimetypes.indexOf(resourceDescription.mimetype);
 					          if (result != -1) {
@@ -323,8 +523,12 @@ class ToolStore {
 	// additional filters coming here..
 	// --------------------------------
 
+	// now, for the task-oriented view
+	var tasks = this.groupTools( languageFilter );
+	    
 	this.setState({
-	    applicableTools: languageFilter
+	    applicableTools: languageFilter,
+	    tasks: tasks
 	});
 	
 	return languageFilter;
@@ -332,7 +536,7 @@ class ToolStore {
     
     get(ids) {
 	return (ids || []).map(
-	    (id) => this.tools.filter((tool) => tool.id === id)
+	    (id) => this.registeredTools.filter((tool) => tool.id === id)
 	).filter((a) => a.length).map((a) => a[0]);
     }
 }

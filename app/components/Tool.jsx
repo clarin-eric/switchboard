@@ -57,6 +57,10 @@ export default class Tool extends React.Component {
     // todo: construct URL
     invokeTool(toolId) {
 
+	// the location for the server holding temporarily the resources
+	var nodeServerURL = "http://shannon.sfs.uni-tuebingen.de:8011/";
+	// var nodeServerURL = "http://localhost:8011/";	
+
 	console.log('Tool/invokeTool at the very start', toolId);
 	
 	//var myLane = LaneActions.getLane( laneId );
@@ -73,7 +77,7 @@ export default class Tool extends React.Component {
 
 	// needs to be overwritten
 	// var inputFile = tool.parameter.input;
-	var inputFile = "http://shannon.sfs.uni-tuebingen.de:8011/" + filename;
+	var inputFile = nodeServerURL + filename;
 	
 	var parameterString = "?input=" + inputFile + "&lang=" + tool.parameter.lang + "&analysis=" + tool.parameter.analysis;
 	console.log("Tool.jsx/invokeTool: parameterString", parameterString);

@@ -4,6 +4,10 @@ body {
   font-family: sans-serif;
 }
 
+h2 {
+  text-align: center;
+}
+
 .page-header {
   color: #fff;
   text-align: center;
@@ -34,6 +38,7 @@ body {
   border-top: solid 1px #eff0f1; }
 
 .site-footer-owner {
+  font-size: 0.1rem;    
   display: block;
   font-weight: bold; }
 
@@ -95,6 +100,19 @@ body {
   vertical-align: top;
 }
 
+.task {
+  display: inline-block;
+
+  margin: 1em;
+
+  background-color: #bfbfbf;
+  border: 1px solid #ccc;
+  border-radius: 0.5em;
+
+  min-width: 10em;
+  vertical-align: top;
+}
+
 .lane-header {
   overflow: auto;
 
@@ -107,7 +125,7 @@ body {
   border-top-right-radius: 0.5em;
 }
 
-.tool-header {
+.tool-header, .task-header {
   overflow: auto;
 
   padding: 1em;
@@ -119,7 +137,7 @@ body {
   border-top-right-radius: 0.5em;
 }
 
-.lane-name, .tool-name {
+.lane-name, .tool-name, .task-name {
   float: left;
 }
 
@@ -134,13 +152,14 @@ body {
   border: 1px solid #ccc;
 }
 
-.notes {
+.notes, .lanes, .tasks {
   margin: 0.5em;
   padding-left: 0;
 
   max-width: 20em;
   list-style: none;
 }
+
 
 .note {
   margin-bottom: 0.5em;
