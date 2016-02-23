@@ -1,0 +1,79 @@
+*,
+*:after,
+*:before {
+  box-sizing: border-box; }
+
+body {
+  font-family: 'Nobile', sans-serif; }
+
+*, *::before, *::after {
+  box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 0; }
+
+#root {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Open Sans'; }
+
+.card-header-details .icon::before {
+  position: relative;
+  right: 7px;
+  top: 1px; }
+
+.demo-container {
+  padding: 40px;
+  width: 100%; }
+  .demo-container h1 {
+    border-bottom: 1px solid #ccc;
+    color: #03a9f4;
+    margin-bottom: 40px;
+    padding-bottom: 40px;
+    text-align: center; }
+  .demo-container h2 {
+    color: #ccc; }
+
+.react-sanfona {
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  margin-bottom: 70px; }
+
+.react-sanfona-item-title {
+  background-color: #fafafa;
+  border-top: 1px solid #ccc;
+  color: #333;
+  padding: 20px;
+  text-transform: uppercase;
+  transition: background-color .3s; }
+.react-sanfona-item:first-child .react-sanfona-item-title {
+  border-top: none; }
+.react-sanfona-item-expanded .react-sanfona-item-title {
+  background-color: #03a9f4;
+  color: #fff; }
+.react-sanfona-item-body-wrapper {
+  color: #666;
+  padding: 20px;
+  position: relative; }
+  .react-sanfona-item-body-wrapper:hover .tooltip {
+    opacity: 1; }
+.react-sanfona-item img {
+  display: block;
+  max-width: 100%; }
+
+.tooltip {
+  background-color: #000;
+  bottom: -10px;
+  border-radius: 3px;
+  color: #fff;
+  left: 10px;
+  opacity: 0;
+  padding: 10px;
+  position: absolute;
+  transition: opacity .3s; }
+
+/*# sourceMappingURL=demo.css.map */
