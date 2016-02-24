@@ -1,5 +1,4 @@
 // todo: clean-up code base. Single store vs. multiple store
-// naming: registeredTools vs. applicableTools
 // harvesting registeredTools from where. App registry helper app?
 // 
 
@@ -8,10 +7,6 @@ import assign from 'object-assign';
 import alt from '../libs/alt';
 import ToolActions from '../actions/ToolActions';
 import NoteStore from './NoteStore';
-
-// inquire the internal state of language and mimetype menu
-// import LanguageMenu from './../components/LanguageMenu.jsx';
-// import MimetypeMenu from './../components/MimetypeMenu.jsx';
 
 class ToolStore {
     constructor() {
@@ -27,6 +22,7 @@ class ToolStore {
 		{ task: "Tokenisation",
 		  name: "CLARIN-DK Tool Box",
 		  homepage: "https://www.clarin.dk/tools/createByGoalChoice",
+		  location: "Copenhagen, Danmark",
 		  creators: ["Bart Jongejan et al."],
 		  contact: {
 		      person: "Bart Jongejan",
@@ -70,6 +66,7 @@ class ToolStore {
 		{ task: "Tokenisation",
 		  name: "Ucto",
 		  homepage: "https://proycon.github.io/ucto",
+		  location: "Nijmegen, The Netherlands",		  
 		  creators: ["Maarten van Gompel, Ko van der Sloot (CLST, Radboud University Nijmegen)"],
 		  contact: {
 		      person: "Maarten van Gompel",
@@ -91,6 +88,7 @@ class ToolStore {
 		{ task: "Metadata Format Conversion",
 		  name: "NaLiDa2Marc21",
 		  homepage: "http://shannon.sfs.uni-tuebingen.de/NaLiDa2Marc21",
+		  location: "Tuebingen, Germany",		  		  
 		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
 		  contact: {
 		      person: "NaLiDa Support",
@@ -118,6 +116,7 @@ class ToolStore {
 		{ task: "Named Entity Recognition",
 		  name: "Weblicht-NamedEntities-DE",
 		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+		  location: "Tuebingen, Germany",		  		  		  
 		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
 		  contact: {
 		      person: "CLARIN Weblicht Support",
@@ -141,6 +140,7 @@ class ToolStore {
 		{ task: "Named Entity Recognition",
 		  name: "Weblicht-NamedEntities-EN",
 		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+		  location: "Tuebingen, Germany",		  		  		  
 		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
 		  contact: {
 		      person: "CLARIN Weblicht Support",
@@ -164,6 +164,7 @@ class ToolStore {
 		{ task: "Constituent Parsing",
 		  name: "Weblicht-Const-Parsing-DE",
 		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+		  location: "Tuebingen, Germany",		  		  		  
 		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
 		  contact: {
 		      person: "CLARIN Weblicht Support",
@@ -187,6 +188,7 @@ class ToolStore {
 		{ task: "Constituent Parsing",
 		  name: "Weblicht-Const-Parsing-EN",
 		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+		  location: "Tuebingen, Germany",		  		  		  
 		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
 		  contact: {
 		      person: "CLARIN Weblicht Support",
@@ -210,6 +212,7 @@ class ToolStore {
 		{ task: "Dependency Parsing",
 		  name: "Weblicht-Dep-Parsing-DE",
 		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+		  location: "Tuebingen, Germany",		  		  		  
 		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
 		  contact: {
 		      person: "CLARIN Weblicht Support",
@@ -233,6 +236,7 @@ class ToolStore {
 		{ task: "Dependency Parsing",
 		  name: "Weblicht-Dep-Parsing-EN",
 		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+		  location: "Tuebingen, Germany",		  		  		  
 		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
 		  contact: {
 		      person: "CLARIN Weblicht Support",
@@ -256,6 +260,7 @@ class ToolStore {
 		{ task: "Lemmatization",
 		  name: "Weblicht-Lemmas-DE",
 		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+		  location: "Tuebingen, Germany",		  		  		  
 		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
 		  contact: {
 		      person: "CLARIN Weblicht Support",
@@ -279,6 +284,7 @@ class ToolStore {
 		{ task: "Lemmatization",
 		  name: "Weblicht-Lemmas-EN",
 		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+		  location: "Tuebingen, Germany",		  		  		  
 		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
 		  contact: {
 		      person: "CLARIN Weblicht Support",
@@ -302,6 +308,7 @@ class ToolStore {
 		{ task: "Part-Of-Speech Tagging",
 		  name: "Weblicht-POSTags-Lemmas-DE",
 		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+		  location: "Tuebingen, Germany",		  		  		  
 		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
 		  contact: {
 		      person: "CLARIN Weblicht Support",
@@ -325,6 +332,7 @@ class ToolStore {
 		{ task: "Part-Of-Speech Tagging",
 		  name: "Weblicht-POSTags-Lemmas-EN",
 		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+		  location: "Tuebingen, Germany",		  		  		  
 		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
 		  contact: {
 		      person: "CLARIN Weblicht Support",
@@ -348,6 +356,7 @@ class ToolStore {
 		{ task: "Morphology Analysis",
 		  name: "Weblicht-Morphology-Analysis-DE",
 		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+		  location: "Tuebingen, Germany",		  		  		  
 		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
 		  contact: {
 		      person: "CLARIN Weblicht Support",
@@ -371,6 +380,7 @@ class ToolStore {
 		{ task: "Morphology Analysis",
 		  name: "Weblicht-Morphology-Analysis-EN",		  
 		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+		  location: "Tuebingen, Germany",		  		  		  
 		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
 		  contact: {
 		      person: "CLARIN Weblicht Support",
@@ -454,7 +464,6 @@ class ToolStore {
         // groups tools in terms of the tasks/analyses they can perform
     groupTools( applicTools ){
 
-	console.log('ToolStore/groupTools', applicTools);	
 	var toolGroups = {};
 
 	for (var i = 0; i<applicTools.length; i++) {
@@ -464,11 +473,10 @@ class ToolStore {
 		longDescription : entry.longDescription,
 		url  : entry.url,
 		id   : entry.id,
+		email : entry.contact.email,
 		parameter : entry.parameter
 		} ];
 
-	    console.log('ToolStore/groupTools', entry, tinfo);
-	    
 	    if (entry.task in toolGroups) { // obj.hasOwnProperty("key")
 		toolGroups[ entry.task ] = toolGroups[ entry.task ].concat( tinfo );
 	    } else {
