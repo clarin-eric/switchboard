@@ -60,7 +60,7 @@ export default class Editable extends React.Component {
 	    );   
 	}
 
-	console.log("Editable/renderValue: else", this.props.value);	
+	// console.log("Editable/renderValue: else", this.props.value);	
 	return (
 		<div onClick={this.props.onValueClick}>
 		<span className="value">{this.props.value}</span>

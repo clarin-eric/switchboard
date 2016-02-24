@@ -23,14 +23,12 @@ export default class MimetypeMenu extends React.Component {
     	placeholder = "Select mimetype"
 	
 	renderValue = {function(item){
-	    console.log('MimetypeMenu/renderValue', item);
 
             // check if the mimetype is available (optional)
             var exists = options.map(function(option){
                 return option.value
             }).indexOf(item.value) != -1
 
-	    console.log('MimetypeMenu/renderValue value exists', exists);
             return <div 
             className="simple-value"
             style={{

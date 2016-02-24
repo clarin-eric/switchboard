@@ -21,8 +21,6 @@ class LaneStore {
 	this.setState({
 	    lanes: []
 	});
-
-	console.log('LaneStore/reset');
     }
 	
     create(lane) {
@@ -62,7 +60,6 @@ class LaneStore {
 
     addFilename({laneId, filename}) {
 	const lanes = this.lanes.map((lane) => {
-	    console.log('LaneStore/addFilename map', lane.id, filename);
 	    if(lane.id === laneId) {
 		lane.filename = filename;
 	    }
@@ -111,7 +108,7 @@ class LaneStore {
 	    return lane;
 	});
 
-	console.log('LaneStore/attachToLane having attached ', noteId, ' to ', laneId);
+	// console.log('LaneStore/attachToLane having attached ', noteId, ' to ', laneId);
 	
 	this.setState({lanes});
     }
@@ -130,7 +127,7 @@ class LaneStore {
 
     getLane(laneId) {
 	const lane = this.lanes.filter((lane) => lane.id == laneId);
-	console.log('LaneStore/getLane with id: ', laneId, lane[0]);
+	// console.log('LaneStore/getLane with id: ', laneId, lane[0]);
 
 	// modify state
 	this.setState({

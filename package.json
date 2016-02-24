@@ -1,7 +1,7 @@
 {
   "name": "clrs",
-  "version": "0.0.7",
-  "description": "CLARIN Language Resources Switchboard -- demo app",
+  "version": "0.0.8",
+  "description": "CLARIN Language Resources Switchboard (With Demo Upload Site)",
   "main": "index.js",
   "scripts": {
     "build": "webpack",
@@ -35,6 +35,8 @@
     "node-uuid": "^1.4.7",
     "object-assign": "^4.0.1",
     "react": "^0.14.7",
-    "react-dom": "^0.14.7"
+    "react-cardstack": "0.0.7",
+    "react-dom": "^0.14.7",
+    "url-loader": "^0.5.7"
   }
 }

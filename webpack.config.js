@@ -34,6 +34,13 @@ const common = {
     devtool: 'inline-source-map',
     module: {
 	loaders: [
+	    
+	    {
+		test: /\.(png|woff|woff2|eot|ttf|svg)/,
+		loader: 'url-loader?limit=100000'
+	    },
+	    
+	    
 	    {
 		// Test expects a RegExp! Note the slashes!
 		test: /\.css$/,
@@ -41,7 +48,8 @@ const common = {
 		// Include accepts either a path or an array of paths.
 		include: PATHS.app
 	    },
-
+	    
+	    
 	    {
 		test: /\.(png|jpg)$/,
 		loader: 'file-loader?name=[name].[ext]',

@@ -3,10 +3,10 @@ import Task from './Task.jsx';
 
 export default ({tasks}) => {
   return (
-      <div className="tasks">{Object.keys(tasks).map((task) =>
-	  <div className="task">{task}
-  	    <Task className="task" key={tasks[task]} items={tasks[task]} />
-	  </div>
+      <div className="task-oriented-view-container">{Object.keys(tasks).map((task) =>
+	  <h3 key={task}>{task}
+  	      <Task key={task} items={tasks[task]} />
+	  </h3>
     )}</div>
   );
 }

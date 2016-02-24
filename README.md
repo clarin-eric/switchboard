@@ -18,3 +18,5 @@ For more information, please contact claus.zinn@uni-tuebingen.de
 
 
 
+# Note
+The software is currently being developed. There is no stable version yet.

@@ -41,7 +41,7 @@ export default class DropArea extends React.Component {
 	    laneId
 	});
 
-	console.log('DropArea/addNote', laneId, description, 'with resulting note', note);
+	// console.log('DropArea/addNote', laneId, description, 'with resulting note', note);
     }
 
     addFilename( laneId, filename ) {
@@ -50,7 +50,7 @@ export default class DropArea extends React.Component {
 	    laneId
 	});
 	
-	console.log('DropArea/addFilename', laneId, filename);
+	// console.log('DropArea/addFilename', laneId, filename);
     }
 
     addMimetype( laneId, mimetype ) {
@@ -59,17 +59,16 @@ export default class DropArea extends React.Component {
 	    laneId
 	});
 	
-	console.log('DropArea/addMimetype', laneId, mimetype);
+	// console.log('DropArea/addMimetype', laneId, mimetype);
     }
     
     addLanguage( laneId, language ) {
-	console.log('DropArea/addLanguage', laneId, language);
 	LaneActions.addLanguage({
 	    language: language,
 	    laneId
 	});
 	
-	console.log('DropArea/addLanguage', laneId, language);
+	// console.log('DropArea/addLanguage', laneId, language);
     }
 
     showFiles() {

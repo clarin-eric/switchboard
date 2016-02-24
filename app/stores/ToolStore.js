@@ -354,7 +354,7 @@ class ToolStore {
 		},		
 		
 		{ task: "Morphology Analysis",
-		  name: "Weblicht-Morphology-Analysis-DE",
+		  name: "Weblicht-Morphology-DE",
 		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
 		  location: "Tuebingen, Germany",		  		  		  
 		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
@@ -378,7 +378,7 @@ class ToolStore {
 		},
 		
 		{ task: "Morphology Analysis",
-		  name: "Weblicht-Morphology-Analysis-EN",		  
+		  name: "Weblicht-Morphology-EN",		  
 		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
 		  location: "Tuebingen, Germany",		  		  		  
 		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
@@ -472,6 +472,7 @@ class ToolStore {
 		name : entry.name,
 		longDescription : entry.longDescription,
 		url  : entry.url,
+		location : entry.location,
 		id   : entry.id,
 		email : entry.contact.email,
 		parameter : entry.parameter

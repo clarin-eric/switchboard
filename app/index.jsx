@@ -1,6 +1,8 @@
-import './main.css';
-import './normalize.css';
-import './selectize.css';
+import './css/main.css';
+import './css/accordion.css';
+import './css/normalize.css';
+import './css/selectize.css';
+import './css/ionicons.min.css';
 
 import React from 'react';
 import ReactDOM from 'react-dom';

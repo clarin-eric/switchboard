@@ -78,7 +78,7 @@ export default class Accordion extends Component {
 }
 
 Accordion.defaultProps = {
-  activeItems: [0],
+  activeItems: [],
   allowMultiple: false
 };
 
