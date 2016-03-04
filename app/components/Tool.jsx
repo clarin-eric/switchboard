@@ -54,31 +54,60 @@ export default class Tool extends React.Component {
     );
   }
 
+    // http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht/?input=http://ws1-clarind.esc.rzg.mpg.de/drop-off/storage/rotkaeppchen.txt&lang=de&analysis=dep-parsing
+    
     // todo: construct URL
     invokeTool(toolId) {
 
-	// the location for the server holding temporarily the resources
-	var nodeServerURL = "http://shannon.sfs.uni-tuebingen.de:8011/";
-	// var nodeServerURL = "http://localhost:8011/";	
+	// our poor man's upload service (node based)
+	// var nodeServerURL = "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8011/";
 
+	// central service
+	var nodeServerURL = "http://ws1-clarind.esc.rzg.mpg.de/drop-off/storage/";
+	
 	console.log('Tool/invokeTool at the very start', toolId);
 	
-	//var myLane = LaneActions.getLane( laneId );
+	// fetch the information about the language resource
 	var entireState = LaneStore.getState();
 	var filename =  entireState.selectedLane[0].name;
 	console.log("Tool.jsx/invokeTool fetching active lane", entireState, entireState.selectedLane[0], filename );
-	
+
+	// fetch the information about the selected tool
 	ToolActions.getTool( toolId );
-	
 	var entireState = ToolStore.getState();
 	var tool = entireState.selectedTool[0];
-
 	console.log('Tool/invokeTool ToolStore state:', entireState, tool);
 
 	// needs to be overwritten
 	// var inputFile = tool.parameter.input;
 	var inputFile = nodeServerURL + filename;
+
+	var parameterNameInput    = "input";
+	var parameterNameLanguage = "lang";
+	var parameters = tool.parameter;
+
+	var parameterNames = [];
+	var first = false;
+	var parameterString = "";
 	
+	for (var parameter in parameters) {
+	    if (parameters.hasOwnProperty(parameter)) {
+		console.log(parameter + " -> " + parameters[parameter]);
+		if (tool.hasOwnProperty('mapping')) {
+		    var mapping = tool['mapping'];
+		    if (mapping.hasOwnProperty(parameter)) {
+			parameterString = parameterString.concat( mapping[parameter]).concat("=").concat(parameters[parameter]);
+		    } else {
+			parameterString = parameterString.concat( parameter ).concat("=").concat(parameters[parameter]);
+		    }
+		} else
+		    parameterString = parameterString.concat( parameter ).concat("=").concat(parameters[parameter]);
+	    }
+	}
+
+	alert('Tool.jsx/invokeTool parameterString', parameterString);
+
+	// todo: this only works for weblicht, for the time being. Parameters must be fetched from metadata
 	var parameterString = "?input=" + inputFile + "&lang=" + tool.parameter.lang + "&analysis=" + tool.parameter.analysis;
 	console.log("Tool.jsx/invokeTool: parameterString", parameterString);
 

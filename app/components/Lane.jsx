@@ -63,8 +63,19 @@ export default class Lane extends React.Component {
 	console.log("Lane.jsx/displayTools: myLane", myLane);
 
 	var entireLaneState = LaneStore.getState();
+	var langResourceDescription = entireLaneState.selectedLane[0];
+	console.log("Lane.jsx/displayTools laneState", langResourceDescription);
+
+	if (langResourceDescription.language == null) {
+	    alert('CLRS: Please identify the language of the resource!');
+	    return;
+	}
+
+	if (langResourceDescription.mimetype == null) {
+	    alert('CLRS: Please identify the mimetype of the resource!');
+	    return;
+	}
 	
-	console.log("Lane.jsx/displayTools laneState", entireLaneState.selectedLane[0] );
 	ToolActions.findTools( entireLaneState.selectedLane[0] );
     }
     

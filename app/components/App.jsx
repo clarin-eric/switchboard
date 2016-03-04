@@ -37,11 +37,6 @@ export default class App extends React.Component {
 	        >
 	        <Lanes />
 	        <p />
-	        <hr />
-	        <p />
-	        <h2>Tool-Oriented View</h2>	    
-   	        <Tools />
-	        <p />
    	        <hr />
   	        <p />
 	        <h2>Task-Oriented View</h2>

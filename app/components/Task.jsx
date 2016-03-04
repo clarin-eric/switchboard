@@ -11,6 +11,8 @@ export default class Task extends React.Component {
 	this.invokeTaskTool = this.invokeTaskTool.bind(this);
 	this.constructToolURL = this.constructToolURL.bind(this);
     }
+
+    
     
     render() {
 	const {items, ...props} = this.props;
@@ -153,6 +155,8 @@ export default class Task extends React.Component {
 				location={element.location}
                                 url={element.url}
 		                parameter={element.parameter}
+		                mapping={element.mapping}
+		                lang_encoding={element.lang_encoding}		
 				email={element.email}
 				role={element.longDescription}
 			/>			
@@ -162,15 +166,114 @@ export default class Task extends React.Component {
 	)}
 
     constructToolURL( item ) {
-	// the location for the server holding temporarily the resources
-	var nodeServerURL = "http://shannon.sfs.uni-tuebingen.de:8011/";
-	// var nodeServerURL = "http://localhost:8011/";	
 
+	// todo  outsource to external module
+	const langEncodingMap = {
+	    "de" : "deu",
+	    "en" : "eng",
+	    "nl" : "nld",
+	    "fr" : "fra",
+	    "it" : "ita",
+	    "es" : "spa",
+	    "pt" : "por",
+	    "tk" : "tur",
+	    "ru" : "rus",
+	    "sv" : "swe"
+	}
+	
+	const map639_1_to_639_3 = function( key ) {
+	    return langEncodingMap[key];
+	}
+
+	const map639_3_to_639_1 = function( value ) {
+	    for (var key in langEncodingMap) {
+		if (langEncodingMap[key] == value) {
+		    return key;
+		}
+	    }
+	
+	    return null;
+	}
+	
+	    
+	// the location for the server holding temporarily the resources
+	// var nodeServerURL = "http://shannon.sfs.uni-tuebingen.de:8011/";
+	// var nodeServerURL = "http://localhost:8011/";
+
+
+	// central service to retrieve language resource
+	var nodeServerURL = "http://ws1-clarind.esc.rzg.mpg.de/drop-off/storage/";	
 	var entireState = LaneStore.getState();
 	var filename =  entireState.selectedLane[0].name;
+	var language =  entireState.selectedLane[0].language;
+	var lang_encoding = item.lang_encoding;
+	
+	if (lang_encoding == "639-1") {
+	    language = map639_3_to_639_1(language);
+	} else {
+	    language = map639_1_to_639_3(language);
+	}
+    
 	var inputFile = nodeServerURL + filename;
-	var parameterString = "?input=" + inputFile + "&lang=" + item.parameter.lang + "&analysis=" + item.parameter.analysis;
-	var urlWithParameters = item.url + parameterString;
+
+	console.log('Task.jsx/constructToolURL', item, entireState.selectedLane[0], 'encoding:', lang_encoding);
+	
+	var parameterString = "";
+	var parameters = item.parameter;
+
+	if ( (item.hasOwnProperty('mapping') && (! (item['mapping'] === undefined )))) {
+	    console.log('found mapping', item['mapping']);
+	    for (var parameter in parameters) {
+		if (parameters.hasOwnProperty(parameter)) {
+		    console.log(parameter + " -> " + parameters[parameter]);
+		    if (item.hasOwnProperty('mapping')) {
+			var mapping = item['mapping'];
+			if (mapping.hasOwnProperty(parameter)) {
+			    switch (parameter) {
+			    case "input":
+				parameterString = parameterString.concat( mapping[parameter]).concat("=").concat( inputFile );
+				break;
+			    case "lang":
+				parameterString = parameterString.concat( mapping[parameter]).concat("=").concat( language );
+				break;
+			    default:
+				parameterString = parameterString.concat( mapping[parameter]).concat("=").concat(parameters[parameter]);
+			    }
+			} else {
+			    console.log('no', mapping, parameter);			    
+			    parameterString = parameterString.concat( parameter ).concat("=").concat(parameters[parameter]);
+			}
+		    } else
+			parameterString = parameterString.concat( parameter ).concat("=").concat(parameters[parameter]);
+		}
+		parameterString = parameterString.concat("&");
+	    }
+	} else {
+	    // use the givens without mapping
+	     for (var parameter in parameters) {
+		if (parameters.hasOwnProperty(parameter)) {
+		    console.log(parameter + " -> 2 -> " + parameters[parameter]);
+		    switch (parameter) {
+		    case "input":
+			parameterString = parameterString.concat(parameter).concat("=").concat( inputFile );
+			break;
+		    case "lang":
+			parameterString = parameterString.concat(parameter).concat("=").concat( language );
+			break;
+		    default:
+			parameterString = parameterString.concat(parameter).concat("=").concat(parameters[parameter]);			
+		    }
+		    
+		    parameterString = parameterString.concat("&");		    
+		}
+	     }
+	}
+
+
+	// var parameterString = "?input=" + inputFile + "&lang=" + item.parameter.lang + "&analysis=" + item.parameter.analysis;
+	var urlWithParameters = item.url + "?" + parameterString;
+
+	console.log('Task.jsx URL:', urlWithParameters);
 	return urlWithParameters;
     }
 	

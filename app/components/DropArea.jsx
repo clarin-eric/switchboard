@@ -114,10 +114,14 @@ export default class DropArea extends React.Component {
     
     onDrop(files) {
 
+	// --header='Content-Type: text/plain'
 	var req = Request
-//	    .post('http://shannon.sfs.uni-tuebingen.de:8011/api/uploadLR')
-	    .post('http://localhost:8011/api/uploadLR')	
-	    .attach("langResource", files[0], files[0].name)
+	//.post('http://tuebingen.weblicht.sfs.uni-tuebingen.de:8011/api/uploadLR')
+	    .post('http://ws1-clarind.esc.rzg.mpg.de/drop-off/storage/'.concat(files[0].name))
+//	    .post('http://localhost:8011/api/uploadLR')	
+	//.attach("langResource", files[0], files[0].name)
+	.send(files[0])	
+	.set('Content-Type', files[0].type)
 	    .end((err, res) => {
 		if (err) {
 		    console.log('error in uploading', err);
