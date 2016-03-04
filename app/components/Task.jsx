@@ -201,7 +201,7 @@ export default class Task extends React.Component {
 	// var nodeServerURL = "http://localhost:8011/";
 
 
-	// central service to retrieve language resource
+	// central service to retrieve language resource, may need to chech cross-site scripting issue
 	var nodeServerURL = "http://ws1-clarind.esc.rzg.mpg.de/drop-off/storage/";	
 	var entireState = LaneStore.getState();
 	var filename =  entireState.selectedLane[0].name;
