@@ -32,7 +32,10 @@ class ToolStore {
 		  license: "public", 
 		  shortDescription: "CLARIN-DK Tool Box",
 		  longDescription:  "CLARIN-DK Tool Box",
-		  languages: ["nld", "eng", "deu", "fra", "ita", "spa", "por", "tur", "rus", "swe"], //iso 639-3
+		  lang_encoding: "639-1",
+		  languages: ["bul", "ces", "dan", "deu", "ell", "eng", "spa", "est", "fas", "fra",
+			      "hun", "isl", "ita", "lat", "mkd", "nld", "pol", "por", "ron", "rus",
+			      "slk", "slv", "srp", "tur", "ukr"],
 		  mimetypes: ["application/pdf",
 			      "application/vnd.ms-powerpoint", // (PPT)
 			      "application/vnd.openxmlformats-officedocument.presentationml.presentation", // (PPTX)
