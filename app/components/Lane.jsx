@@ -33,7 +33,7 @@ export default class Lane extends React.Component {
                           onValueClick={this.activateLaneEdit} />
 	    
 	        <div className="lane-add-note">
-  	           <button onClick={this.displayTools}>T</button>
+  	           <button onClick={this.displayTools}>Show Tools</button>
 	        </div>
 	      </div>
 	      <AltContainer

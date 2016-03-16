@@ -25,7 +25,6 @@ export default class App extends React.Component {
    	      </section>
 	      <div id='dragAndDropArea'></div>	
 	       <DropArea />
-	        <button className="add-lane" onClick={this.addLane}>+</button>
 	    
    	        <AltContainer
                    stores={[LaneStore, ToolStore]}

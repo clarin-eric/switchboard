@@ -84,9 +84,9 @@ export default class DropArea extends React.Component {
             'div',
             null,
             React.createElement(
-                'h3',
+                'h2',
                 null,
-                'Dropped files: '
+                'Dropped file(s): '
             ),
             React.createElement(
                 'ul',
