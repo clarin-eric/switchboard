@@ -13,13 +13,14 @@ import ToolStore from '../stores/ToolStore';        // storing tools (state)
 import DropArea from './DropArea.jsx';
 
 require('./../images/switchboard.png');
+require('./../images/weblicht.jpg');
 
 export default class App extends React.Component {
     render() {
 	return (
 	    <div>
 	      <section className="page-header">
-	        <h1 className="project-name">CLARIN Language Resources Switchboard</h1>
+	        <h1 className="project-name">CLARIN Language Resource Switchboard</h1>
 	        <h2 className="project-tagline">Find the appropriate tool for your resource. </h2>
     	        <img src="switchboard.png" width="20%" height="20%" />
    	      </section>
@@ -45,7 +46,7 @@ export default class App extends React.Component {
   	      <section className="main-content">
 	        <footer className="site-footer">
     	          <span className="site-footer-owner">
-	            <a href="http://clarin-d.net">CLARIN-D / CLARIN-PLUS LRS</a> is maintained by Claus Zinn.
+	            A <a href="http://www.clarin.eu/node/4213">CLARIN-PLUS project</a>, contact: <a href="mailto:claus.zinn@uni-tuebingen.de?subject=CLARIN-PLUS LRS">Claus Zinn</a>.
    	          </span>
      	        </footer>
 	      </section>

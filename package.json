@@ -1,7 +1,7 @@
 {
   "name": "clrs",
-  "version": "0.0.8",
-  "description": "CLARIN Language Resources Switchboard (With Demo Upload Site)",
+  "version": "0.0.9",
+  "description": "CLARIN Language Resource Switchboard",
   "main": "index.js",
   "scripts": {
     "build": "webpack",

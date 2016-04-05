@@ -1,7 +1,8 @@
 body {
   background: cornsilk;
 
-  font-family: sans-serif;
+  /* font-family: sans-serif; */
+  font-family: 'Source Sans Pro', sans-serif; 
 }
 
 h2 {
@@ -165,7 +166,7 @@ h2 {
 }
 
 .add-lane, .lane-add-note button, .add-tool, .tool-add-note button {
-  background-color: fff;
+  background-color: #000;
   border: 2px solid #ccc;
 }
 

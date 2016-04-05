@@ -70,7 +70,7 @@ const common = {
     plugins: [
 	new HtmlwebpackPlugin({
 	    template: 'node_modules/html-webpack-template/index.html',
-	    title: 'CLARIN LANGUAGE RESOURCES SWITCHBOARD',
+	    title: 'CLARIN LANGUAGE RESOURCE SWITCHBOARD',
 	    appMountId: 'app'
 	})
   ]

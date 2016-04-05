@@ -148,7 +148,7 @@ export default class Task extends React.Component {
 	    { items.map( (element) => 
 		<AccordionItem title={element.name} key={element.id} >
 		  <ToolCard key={element.name}
-				imgSrc='http://localhost:8011/weblicht.jpg'
+				imgSrc='weblicht.jpg' 
 				imgBorderColor='#6A067A'
 				name={element.name}
 				title={element.name}

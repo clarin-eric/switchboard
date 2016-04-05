@@ -22,7 +22,7 @@ class ToolStore {
 		{ task: "Tokenisation",
 		  name: "CLARIN-DK Tool Box",
 		  homepage: "https://www.clarin.dk/tools/createByGoalChoice",
-		  location: "Copenhagen, Danmark",
+		  location: "Copenhagen, Denmark",
 		  creators: ["Bart Jongejan et al."],
 		  contact: {
 		      person: "Bart Jongejan",
