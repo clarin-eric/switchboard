@@ -1,4 +1,5 @@
 import './css/main.css';
+import './css/clarin.css';
 import './css/accordion.css';
 import './css/normalize.css';
 import './css/selectize.css';

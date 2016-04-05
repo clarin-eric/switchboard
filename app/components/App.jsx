@@ -14,15 +14,17 @@ import DropArea from './DropArea.jsx';
 
 require('./../images/switchboard.png');
 require('./../images/weblicht.jpg');
+require('./../images/CLARIN-Logo16-c.jpg');
 
 export default class App extends React.Component {
     render() {
 	return (
 	    <div>
 	      <section className="page-header">
+		<img className="alignLeft"  src="switchboard.png" width="20%" height="20%" />
+		<img className="alignRight" src="CLARIN-Logo16-c.jpg" width="11%" height="11%" />
 	        <h1 className="project-name">CLARIN Language Resource Switchboard</h1>
 	        <h2 className="project-tagline">Find the appropriate tool for your resource. </h2>
-    	        <img src="switchboard.png" width="20%" height="20%" />
    	      </section>
 	      <div id='dragAndDropArea'></div>	
 	       <DropArea />
