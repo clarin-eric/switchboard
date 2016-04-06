@@ -178,7 +178,8 @@ export default class Task extends React.Component {
 	    "pt" : "por",
 	    "tk" : "tur",
 	    "ru" : "rus",
-	    "sv" : "swe"
+	    "sv" : "swe",
+	    "fy" : "fry"
 	}
 	
 	const map639_1_to_639_3 = function( key ) {

@@ -43,6 +43,9 @@ export default class LanguageMenu extends React.Component {
 	    { label: "French",
 	      value: "fra"
 	    },
+	    { label: "Frysian",
+	      value: "fry"
+	    },	    
 	    { label: "German",
 	      value: "deu"
 	    },
