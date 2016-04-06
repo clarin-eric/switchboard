@@ -154,6 +154,114 @@ class ToolStore {
 			       lang         : "untokinput_language"
 			     }
 		},
+
+		{ task: "Dependency Parsing",
+		  name: "Alpino",
+		  logo: "YourLogoComesHere.png",		  
+		  homepage: "https://languagemachines.github.io/Valkuil/",
+		  location: "Nijmegen, The Netherlands",		  
+		  creators: ["Maarten van Gompel, Ko van der Sloot (CLST, Radboud University Nijmegen)"],
+		  contact: {
+		      person: "Maarten van Gompel",
+		      email: "proycon@anaproy.nl",
+		  },
+		  version: "x.y.z",
+		  license: "public", //but webservice is protected with (free) registration
+		  shortDescription: "A dependency parser for Dutch",
+		  longDescription: "Alpino is a dependency parser for Dutch, developed in the context of the PIONIER Project Algorithms for Linguistic Processing, developed by Gertjan van Noord at the University of Groningen. You can upload either tokenised or untokenised files (which will be automatically tokenised for you using ucto), the output will consist of a zip file containing XML files, one for each sentence in the input document.",
+		  languages: ["nld"], //iso 639-3
+		  lang_encoding: "639-1",
+		  mimetypes: ["text/plain"], //plain text OR FoLiA XML
+		  output: ["text/plain", "text/xml"], //plain text tab seperated output OR FoLiA XML
+		  url: ["https://webservices-lst.science.ru.nl/alpino/"],
+		  parameter: { project      : "new",
+			       input        : "self.linkToResource"
+			     },
+		  // mapping the standard parameter names to the ones used by the tools
+		  mapping:   { input        : "untokinput_url"
+			     }
+		},
+		
+		{ task: "Spelling correction",
+		  name: "Valkuil",
+		  logo: "YourLogoComesHere.png",		  
+		  homepage: "https://languagemachines.github.io/Valkuil/",
+		  location: "Nijmegen, The Netherlands",		  
+		  creators: ["Maarten van Gompel, Ko van der Sloot (CLST, Radboud University Nijmegen)"],
+		  contact: {
+		      person: "Maarten van Gompel",
+		      email: "proycon@anaproy.nl",
+		  },
+		  version: "x.y.z",
+		  license: "public", //but webservice is protected with (free) registration
+		  shortDescription: "A spelling corrector for Dutch",
+		  longDescription: "Valkuil is a Dutch spelling correction system.",
+		  languages: ["nld"], //iso 639-3
+		  lang_encoding: "639-1",
+		  mimetypes: ["text/xml","text/plain"], //plain text OR FoLiA XML
+		  output: ["text/plain", "text/xml"], //plain text tab seperated output OR FoLiA XML
+		  url: ["https://webservices-lst.science.ru.nl/valkuil/"],
+		  parameter: { project      : "new",
+			       input        : "self.linkToResource"
+			     },
+		  // mapping the standard parameter names to the ones used by the tools
+		  mapping:   { input        : "textinput_url"
+			     }
+		},
+
+		{ task: "Spelling correction",
+		  name: "Fowlt",
+		  logo: "YourLogoComesHere.png",		  
+		  homepage: "https://languagemachines.github.io/Valkuil/",
+		  location: "Nijmegen, The Netherlands",		  
+		  creators: ["Maarten van Gompel, Ko van der Sloot (CLST, Radboud University Nijmegen)"],
+		  contact: {
+		      person: "Maarten van Gompel",
+		      email: "proycon@anaproy.nl",
+		  },
+		  version: "x.y.z",
+		  license: "public", //but webservice is protected with (free) registration
+		  shortDescription: "A spelling corrector for English",
+		  longDescription: "Fowlt is a English spelling correction system.",
+		  languages: ["eng"], //iso 639-3
+		  lang_encoding: "639-1",
+		  mimetypes: ["text/xml","text/plain"], //plain text OR FoLiA XML
+		  output: ["text/plain", "text/xml"], //plain text tab seperated output OR FoLiA XML
+		  url: ["https://webservices-lst.science.ru.nl/fowlt/"],
+		  parameter: { project      : "new",
+			       input        : "self.linkToResource"
+			     },
+		  // mapping the standard parameter names to the ones used by the tools
+		  mapping:   { input        : "textinput_url"
+			     }
+		},
+
+		{ task: "NLP suite for Dutch",
+		  name: "Frog",
+		  logo: "YourLogoComesHere.png",		  
+		  homepage: "https://languagemachines.github.io/frog/",
+		  location: "Nijmegen, The Netherlands",		  
+		  creators: ["Maarten van Gompel, Ko van der Sloot (CLST, Radboud University Nijmegen)"],
+		  contact: {
+		      person: "Maarten van Gompel",
+		      email: "proycon@anaproy.nl",
+		  },
+		  version: "x.y.z",
+		  license: "public", //but webservice is protected with (free) registration
+		  shortDescription: "A tokeniser",
+		  longDescription: "Frog's current version will tokenize, tag, lemmatize, and morphologically segment word tokens in Dutch text files, will assign a dependency graph to each sentence, will identify the base phrase chunks in the sentence, and will attempt to find and label all named entities.",
+		  languages: ["nld"], //iso 639-3
+		  lang_encoding: "639-1",
+		  mimetypes: ["text/xml","text/plain"], //plain text OR FoLiA XML
+		  output: ["text/plain", "text/xml"], //plain text tab seperated output OR FoLiA XML
+		  url: ["https://webservices-lst.science.ru.nl/frog/"],
+		  parameter: { project      : "new",
+			       input        : "self.linkToResource"
+			     },
+		  // mapping the standard parameter names to the ones used by the tools
+		  mapping:   { input        : "maininput_url"
+			     }
+		},		
 		
 		{ task: "Metadata Format Conversion",
 		  name: "NaLiDa2Marc21",
