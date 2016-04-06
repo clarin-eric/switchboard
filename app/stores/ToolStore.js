@@ -181,6 +181,33 @@ class ToolStore {
 		  mapping:   { input        : "untokinput_url"
 			     }
 		},
+
+		{ task: "Machine Translation",
+		  name: "Oersetter",
+		  logo: "YourLogoComesHere.png",		  
+		  homepage: "https://languagemachines.github.io/Valkuil/",
+		  location: "Nijmegen, The Netherlands",		  
+		  creators: ["Maarten van Gompel, Ko van der Sloot (CLST, Radboud University Nijmegen)"],
+		  contact: {
+		      person: "Maarten van Gompel",
+		      email: "proycon@anaproy.nl",
+		  },
+		  version: "x.y.z",
+		  license: "public", //but webservice is protected with (free) registration
+		  shortDescription: "Oersetter is a Frisian-Dutch, Dutch-Frisian Machine Translation system ",
+		  longDescription: "Oersetter is a Frisian-Dutch, Dutch-Frisian Machine Translation system.  ",
+		  languages: ["nld"], //iso 639-3
+		  lang_encoding: "639-1",
+		  mimetypes: ["text/plain"], //plain text OR FoLiA XML
+		  output: ["text/plain", "text/xml"], //plain text tab seperated output OR FoLiA XML
+		  url: ["https://webservices-lst.science.ru.nl/oersetter/"],
+		  parameter: { project      : "new",
+			       input        : "self.linkToResource"
+			     },
+		  // mapping the standard parameter names to the ones used by the tools
+		  mapping:   { input        : "input-nl_url" // input-fy_url for other direction
+			     }
+		},
 		
 		{ task: "Spelling correction",
 		  name: "Valkuil",
