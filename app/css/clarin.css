@@ -270,17 +270,17 @@ pre > code {
 }
 
 /** Site footer */
-.site-footer {
-    padding: 0.5em;
+.site-footer-main {
+    padding: 1.5em;
     background-color: #99CCDD;
     color: #555;
-    font-size: 0.7em;
+    font-size: 0.5em;
     margin-top: 5em;
 }
-.site-footer a {
+.site-footer-main a {
     color: #6CBCCA;
 }
-.site-footer a:hover, .site-footer a:focus {
+.site-footer-main a:hover, .site-footer-main a:focus {
     color: #5595A0;
 }
 

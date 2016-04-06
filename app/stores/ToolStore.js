@@ -21,6 +21,7 @@ class ToolStore {
 	    [
 		{ task: "Tokenisation",
 		  name: "CLARIN-DK Tool Box",
+		  logo: "YourLogoComesHere.png",
 		  homepage: "https://www.clarin.dk/tools/createByGoalChoice",
 		  location: "Copenhagen, Denmark",
 		  creators: ["Bart Jongejan et al."],
@@ -61,13 +62,73 @@ class ToolStore {
 			      "image/vnd.microsoft.icon"
 			     ],
 		  url: ["https://www.clarin.dk/tools/createByGoalChoice"], // todo
-		  parameter: { "project"        : "new",
-			       "untokinput_url" : "self.linkToResource"
-			     }
+
+		  parameter: {  input   : "self.linkToResource", 
+				lang    : "self.linkToResourceLanguage",                 
+				analysis: "tok"
+			     },
+		  mapping:   { input        : "URL",
+			       lang         : "language"
+			     }		  
 		},
+
+		{ task: "Lemmatization",
+		  name: "CLARIN-DK Tool Box",
+		  logo: "YourLogoComesHere.png",
+		  homepage: "https://www.clarin.dk/tools/createByGoalChoice",
+		  location: "Copenhagen, Denmark",
+		  creators: ["Bart Jongejan et al."],
+		  contact: {
+		      person: "Bart Jongejan",
+		      email: "bartj@hum.ku.dk",
+		  },
+		  version: "0.8.3",
+		  license: "public", 
+		  shortDescription: "CLARIN-DK Tool Box",
+		  longDescription:  "CLARIN-DK Tool Box",
+		  lang_encoding: "639-1",
+		  languages: ["bul", "ces", "dan", "deu", "ell", "eng", "spa", "est", "fas", "fra",
+			      "hun", "isl", "ita", "lat", "mkd", "nld", "pol", "por", "ron", "rus",
+			      "slk", "slv", "srp", "tur", "ukr"],
+		  mimetypes: ["application/pdf",
+			      "application/vnd.ms-powerpoint", // (PPT)
+			      "application/vnd.openxmlformats-officedocument.presentationml.presentation", // (PPTX)
+			      "application/vnd.oasis.opendocument.presentation", // (ODP)
+			      "application/vnd.ms-excel", // (XLS)
+			      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // (XLSX)
+			      "application/vnd.oasis.opendocument.spreadsheet", // (ODS)
+			      "application/x-download", //    (If it is PDF or RTF)
+			      "application/octet-stream", //  (If it is PDF or RTF)
+			      "application/msword", //         (RTF, DOC, DOCX)
+			      "application/vnd.oasis.opendocument.text", // (ODT)
+			      "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // (DOCX)
+			      "text/html", // (HTML)
+			      "text/rtf",  // (RTF)
+			      "text/plain", 
+			      "text/x-conll", // (CONLL)
+			      "image/gif", 
+			      "image/jpeg", 
+			      "image/pjpeg", 
+			      "image/png", 
+			      "image/svg+xml", 
+			      "image/tiff", 
+			      "image/vnd.microsoft.icon"
+			     ],
+		  url: ["https://www.clarin.dk/tools/createByGoalChoice"], 
+		  parameter: {  input   : "self.linkToResource", 
+				lang    : "self.linkToResourceLanguage",                 
+				analysis: "lem"
+			     },
+
+		  // CLARIN-DK calls those parameters differently, namely:
+		  mapping:   { input        : "URL",
+			       lang         : "language"
+			     }		  
+		},		
 		
 		{ task: "Tokenisation",
 		  name: "Ucto",
+		  logo: "YourLogoComesHere.png",		  
 		  homepage: "https://proycon.github.io/ucto",
 		  location: "Nijmegen, The Netherlands",		  
 		  creators: ["Maarten van Gompel, Ko van der Sloot (CLST, Radboud University Nijmegen)"],
@@ -96,6 +157,7 @@ class ToolStore {
 		
 		{ task: "Metadata Format Conversion",
 		  name: "NaLiDa2Marc21",
+		  logo: "YourLogoComesHere.png",		  
 		  homepage: "http://shannon.sfs.uni-tuebingen.de/NaLiDa2Marc21",
 		  location: "Tuebingen, Germany",		  		  
 		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
@@ -124,6 +186,7 @@ class ToolStore {
 		
 		{ task: "Named Entity Recognition",
 		  name: "Weblicht-NamedEntities-DE",
+		  logo: "weblicht.jpg",		  
 		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
 		  location: "Tuebingen, Germany",		  		  		  
 		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
@@ -149,6 +212,7 @@ class ToolStore {
 
 		{ task: "Named Entity Recognition",
 		  name: "Weblicht-NamedEntities-EN",
+		  logo: "weblicht.jpg",		  		  
 		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
 		  location: "Tuebingen, Germany",		  		  		  
 		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
@@ -174,6 +238,7 @@ class ToolStore {
 		
 		{ task: "Constituent Parsing",
 		  name: "Weblicht-Const-Parsing-DE",
+		  logo: "weblicht.jpg",		  		  
 		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
 		  location: "Tuebingen, Germany",		  		  		  
 		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
@@ -199,6 +264,7 @@ class ToolStore {
 
 		{ task: "Constituent Parsing",
 		  name: "Weblicht-Const-Parsing-EN",
+		  logo: "weblicht.jpg",		  		  
 		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
 		  location: "Tuebingen, Germany",		  		  		  
 		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
@@ -224,6 +290,7 @@ class ToolStore {
 		
 		{ task: "Dependency Parsing",
 		  name: "Weblicht-Dep-Parsing-DE",
+		  logo: "weblicht.jpg",		  		  
 		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
 		  location: "Tuebingen, Germany",		  		  		  
 		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
@@ -249,6 +316,7 @@ class ToolStore {
 
 		{ task: "Dependency Parsing",
 		  name: "Weblicht-Dep-Parsing-EN",
+		  logo: "weblicht.jpg",		  		  
 		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
 		  location: "Tuebingen, Germany",		  		  		  
 		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
@@ -274,6 +342,7 @@ class ToolStore {
 
 		{ task: "Lemmatization",
 		  name: "Weblicht-Lemmas-DE",
+		  logo: "weblicht.jpg",		  		  
 		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
 		  location: "Tuebingen, Germany",		  		  		  
 		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
@@ -299,6 +368,7 @@ class ToolStore {
 
 		{ task: "Lemmatization",
 		  name: "Weblicht-Lemmas-EN",
+		  logo: "weblicht.jpg",		  		  
 		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
 		  location: "Tuebingen, Germany",		  		  		  
 		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
@@ -324,6 +394,7 @@ class ToolStore {
 		
 		{ task: "Part-Of-Speech Tagging",
 		  name: "Weblicht-POSTags-Lemmas-DE",
+		  logo: "weblicht.jpg",		  		  
 		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
 		  location: "Tuebingen, Germany",		  		  		  
 		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
@@ -349,6 +420,7 @@ class ToolStore {
 
 		{ task: "Part-Of-Speech Tagging",
 		  name: "Weblicht-POSTags-Lemmas-EN",
+		  logo: "weblicht.jpg",		  		  
 		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
 		  location: "Tuebingen, Germany",		  		  		  
 		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
@@ -374,6 +446,7 @@ class ToolStore {
 		
 		{ task: "Morphology Analysis",
 		  name: "Weblicht-Morphology-DE",
+		  logo: "weblicht.jpg",		  		  
 		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
 		  location: "Tuebingen, Germany",		  		  		  
 		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
@@ -398,7 +471,8 @@ class ToolStore {
 		},
 		
 		{ task: "Morphology Analysis",
-		  name: "Weblicht-Morphology-EN",		  
+		  name: "Weblicht-Morphology-EN",
+		  logo: "weblicht.jpg",		  		  
 		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
 		  location: "Tuebingen, Germany",		  		  		  
 		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
@@ -491,6 +565,7 @@ class ToolStore {
 	    const entry = applicTools[i];
 	    const tinfo = [ {
 		name : entry.name,
+		logo : entry.logo,
 		longDescription : entry.longDescription,
 		url  : entry.url,
 		location : entry.location,

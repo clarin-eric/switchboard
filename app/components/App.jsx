@@ -15,6 +15,7 @@ import DropArea from './DropArea.jsx';
 require('./../images/switchboard.png');
 require('./../images/weblicht.jpg');
 require('./../images/CLARIN-Logo16-c.jpg');
+require('./../images/YourLogoComesHere.png');
 
 export default class App extends React.Component {
     render() {
@@ -44,14 +45,13 @@ export default class App extends React.Component {
 	        <h2>Task-Oriented View</h2>
                 <Tasks />
 	      </AltContainer>
-	    
-  	      <section className="main-content">
-	        <footer className="site-footer">
-    	          <span className="site-footer-owner">
-	            A <a href="http://www.clarin.eu/node/4213">CLARIN-PLUS project</a>, contact: <a href="mailto:claus.zinn@uni-tuebingen.de?subject=CLARIN-PLUS LRS">Claus Zinn</a>.
-   	          </span>
-     	        </footer>
-	      </section>
+
+		<hr />
+		<footer class="site-footer" >
+		<p>Credits</p>
+		<p><a href="http://www.clarin.eu/node/4213">CLARIN-PLUS </a>receives funding from the European Union’s Horizon 2020 research and innovation programme under grant agreement no. 676529. Your use of the CLARIN ERIC site is subject to the CC-BY and our terms of use.</p>
+		<p>Contact: <a href="mailto:claus.zinn@uni-tuebingen.de?subject=CLARIN-PLUS LRS">Claus Zinn</a>. </p>
+		</footer>
 	    </div>
 	);
     }
