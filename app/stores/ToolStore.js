@@ -76,7 +76,7 @@ class ToolStore {
 		  name: "CLARIN-DK Tool Box",
 		  logo: "YourLogoComesHere.png",
 		  homepage: "https://www.clarin.dk/tools/createByGoalChoice",
-		  location: "Copenhagen, Denmark",
+		  location: "Copenhagen, Denmark (CLAM Webservices)",
 		  creators: ["Bart Jongejan et al."],
 		  contact: {
 		      person: "Bart Jongejan",
@@ -130,7 +130,7 @@ class ToolStore {
 		  name: "Ucto",
 		  logo: "YourLogoComesHere.png",		  
 		  homepage: "https://proycon.github.io/ucto",
-		  location: "Nijmegen, The Netherlands",		  
+		  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
 		  creators: ["Maarten van Gompel, Ko van der Sloot (CLST, Radboud University Nijmegen)"],
 		  contact: {
 		      person: "Maarten van Gompel",
@@ -159,7 +159,7 @@ class ToolStore {
 		  name: "Alpino",
 		  logo: "YourLogoComesHere.png",		  
 		  homepage: "http://www.let.rug.nl/vannoord/alp/Alpino/",
-		  location: "Nijmegen, The Netherlands",		  
+		  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
 		  creators: ["Maarten van Gompel, Ko van der Sloot (CLST, Radboud University Nijmegen)"],
 		  contact: {
 		      person: "Maarten van Gompel",
@@ -182,11 +182,38 @@ class ToolStore {
 			     }
 		},
 
+		{ task: "Text Analytics",
+		  name: "T-scan",
+		  logo: "YourLogoComesHere.png",		  
+		  homepage: "https://github.com/proycon/tscan",
+		  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
+		  creators: ["Maarten van Gompel, Ko van der Sloot (CLST, Radboud University Nijmegen)"],
+		  contact: {
+		      person: "Maarten van Gompel",
+		      email: "proycon@anaproy.nl",
+		  },
+		  version: "x.y.z",
+		  license: "public", //but webservice is protected with (free) registration
+		  shortDescription: "T-scan is a Dutch text analytics tool for readability prediction.",
+		  longDescription: "T-scan is a Dutch text analytics tool for readability prediction.",
+		  languages: ["nld"], //iso 639-3
+		  lang_encoding: "639-1",
+		  mimetypes: ["text/plain"], //plain text OR FoLiA XML
+		  output: ["text/plain", "text/xml"], //plain text tab seperated output OR FoLiA XML
+		  url: ["https://webservices-lst.science.ru.nl/tscan/"],
+		  parameter: { project      : "new",
+			       input        : "self.linkToResource"
+			     },
+		  // mapping the standard parameter names to the ones used by the tools
+		  mapping:   { input        : "textinput_url" 
+			     }
+		},
+
 		{ task: "Machine Translation",
 		  name: "Oersetter (NLD-FRY)",
 		  logo: "YourLogoComesHere.png",		  
-		  homepage: " http://oersetter.nl/",
-		  location: "Nijmegen, The Netherlands",		  
+		  homepage: "http://oersetter.nl/",
+		  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
 		  creators: ["Maarten van Gompel, Ko van der Sloot (CLST, Radboud University Nijmegen)"],
 		  contact: {
 		      person: "Maarten van Gompel",
@@ -212,8 +239,8 @@ class ToolStore {
 		{ task: "Machine Translation",
 		  name: "Oersetter (FRY-NLD)",
 		  logo: "YourLogoComesHere.png",		  
-		  homepage: " http://oersetter.nl/",
-		  location: "Nijmegen, The Netherlands",		  
+		  homepage: "http://oersetter.nl/",
+		  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
 		  creators: ["Maarten van Gompel, Ko van der Sloot (CLST, Radboud University Nijmegen)"],
 		  contact: {
 		      person: "Maarten van Gompel",
@@ -240,7 +267,7 @@ class ToolStore {
 		  name: "Valkuil",
 		  logo: "YourLogoComesHere.png",		  
 		  homepage: "https://languagemachines.github.io/Valkuil/",
-		  location: "Nijmegen, The Netherlands",		  
+		  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
 		  creators: ["Maarten van Gompel, Ko van der Sloot (CLST, Radboud University Nijmegen)"],
 		  contact: {
 		      person: "Maarten van Gompel",
@@ -267,7 +294,7 @@ class ToolStore {
 		  name: "Fowlt",
 		  logo: "YourLogoComesHere.png",		  
 		  homepage: "http://fowlt.net",
-		  location: "Nijmegen, The Netherlands",		  
+		  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
 		  creators: ["Maarten van Gompel, Ko van der Sloot (CLST, Radboud University Nijmegen)"],
 		  contact: {
 		      person: "Maarten van Gompel",
@@ -294,7 +321,7 @@ class ToolStore {
 		  name: "Frog",
 		  logo: "YourLogoComesHere.png",		  
 		  homepage: "https://languagemachines.github.io/frog/",
-		  location: "Nijmegen, The Netherlands",		  
+		  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
 		  creators: ["Maarten van Gompel, Ko van der Sloot (CLST, Radboud University Nijmegen)"],
 		  contact: {
 		      person: "Maarten van Gompel",
@@ -302,7 +329,7 @@ class ToolStore {
 		  },
 		  version: "x.y.z",
 		  license: "public", //but webservice is protected with (free) registration
-		  shortDescription: "A tokeniser",
+		  shortDescription: "NLP suite for Dutch",
 		  longDescription: "Frog's current version will tokenize, tag, lemmatize, and morphologically segment word tokens in Dutch text files, will assign a dependency graph to each sentence, will identify the base phrase chunks in the sentence, and will attempt to find and label all named entities.",
 		  languages: ["nld"], //iso 639-3
 		  lang_encoding: "639-1",
@@ -314,6 +341,37 @@ class ToolStore {
 			     },
 		  // mapping the standard parameter names to the ones used by the tools
 		  mapping:   { input        : "maininput_url"
+			     }
+		},		
+
+		{ task: "N-Gramming",
+		  name: "Colibri Core",
+		  logo: "YourLogoComesHere.png",		  
+		  homepage: "https://github.com/proycon/colibri-core",
+		  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
+		  creators: ["Maarten van Gompel, Ko van der Sloot (CLST, Radboud University Nijmegen)"],
+		  contact: {
+		      person: "Maarten van Gompel",
+		      email: "proycon@anaproy.nl",
+		  },
+		  version: "x.y.z",
+		  license: "public", //but webservice is protected with (free) registration
+		  shortDescription: "NLP tool for building n-grams and skip-grams.",
+		  longDescription: "Colibri core is an NLP tool as well as a C++ and Python library for working with basic linguistic constructions such as n-grams and skipgrams (i.e patte rns with one or more gaps, either of fixed or dynamic size) in a quick and memory-efficient way.",
+		  languages: ["nld", "eng", "deu", "fre", "esp", "por", "fry"], //iso 639-3, no GENERIC
+		  lang_encoding: "639-1",
+		  mimetypes: ["text/plain"], //plain text OR FoLiA XML
+		  output: ["text/plain", "text/xml"], //plain text tab seperated output OR FoLiA XML
+		  url: ["https://webservices-lst.science.ru.nl/colibricore/"],
+		  parameter: { project      : "new",
+			       input        : "self.linkToResource",
+			       lang         : "self.linkToResourceLanguage",                 			       
+			       sentenceperline_input : "false",
+			       sentenceperline_output : "false"
+			     },
+		  // mapping the standard parameter names to the ones used by the tools
+		  mapping:   { input        : "textinput_untok_url",
+			       lang         : "language"
 			     }
 		},		
 		
