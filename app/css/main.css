@@ -74,6 +74,15 @@ h2 {
   .site-footer {
     font-size: 0.9rem; } }
 
+.whiteLink {
+   color: white;
+}
+
+/* visited link */
+.whiteLink:visited {
+    color: white;
+}
+
 .dropArea {
     borderWidth: 2;
     borderColor: 'black';

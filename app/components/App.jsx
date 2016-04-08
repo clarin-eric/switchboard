@@ -27,7 +27,7 @@ export default class App extends React.Component {
 		<img className="alignRight" src="CLARIN-Logo16-c.jpg" width="11%" height="11%" />
 	        <h1 className="project-name">CLARIN Language Resource Switchboard</h1>
 	        <h2 className="project-tagline">Find the appropriate tool for your resource.
-		<a href="about.html"> [ About ]</a>
+		<a className="whiteLink" href="about.html"> [ About ]</a>
 		</h2>
    	      </section>
 	      <div id='dragAndDropArea'></div>	
