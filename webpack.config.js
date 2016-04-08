@@ -56,6 +56,12 @@ const common = {
 		include: PATHS.app.images
 	    },
 
+	    {
+		test: /\.(htm|html)$/,
+		loader: 'file-loader?name=[name].[ext]',
+		include: PATHS.app.html
+	    },
+	    
 	    // Set up jsx. This accepts js too thanks to RegExp
 	    {
 		test: /\.jsx?$/,

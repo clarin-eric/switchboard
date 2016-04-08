@@ -16,6 +16,7 @@ require('./../images/switchboard.png');
 require('./../images/weblicht.jpg');
 require('./../images/CLARIN-Logo16-c.jpg');
 require('./../images/YourLogoComesHere.png');
+require('./../html/about.html');
 
 export default class App extends React.Component {
     render() {
@@ -25,7 +26,9 @@ export default class App extends React.Component {
 		<img className="alignLeft"  src="switchboard.png" width="20%" height="20%" />
 		<img className="alignRight" src="CLARIN-Logo16-c.jpg" width="11%" height="11%" />
 	        <h1 className="project-name">CLARIN Language Resource Switchboard</h1>
-	        <h2 className="project-tagline">Find the appropriate tool for your resource. </h2>
+	        <h2 className="project-tagline">Find the appropriate tool for your resource.
+		<a href="about.html"> [ About ]</a>
+		</h2>
    	      </section>
 	      <div id='dragAndDropArea'></div>	
 	       <DropArea />
@@ -48,6 +51,7 @@ export default class App extends React.Component {
 
 		<hr />
 		<footer class="site-footer" >
+		<p><a href="about.html">About</a></p>		
 		<p>Credits</p>
 		<p><a href="http://www.clarin.eu/node/4213">CLARIN-PLUS </a>receives funding from the European Union’s Horizon 2020 research and innovation programme under grant agreement no. 676529. Your use of the CLARIN ERIC site is subject to the CC-BY and our terms of use.</p>
 		<p>Contact: <a href="mailto:claus.zinn@uni-tuebingen.de?subject=CLARIN-PLUS LRS">Claus Zinn</a>. </p>
