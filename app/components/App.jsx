@@ -50,9 +50,8 @@ export default class App extends React.Component {
 	      </AltContainer>
 
 		<hr />
-		<footer class="site-footer" >
-		<p><a href="about.html">About</a></p>		
-		<p>Credits</p>
+		<footer className="page-footer" >
+		<h4>Credits</h4>
 		<p><a href="http://www.clarin.eu/node/4213">CLARIN-PLUS </a>receives funding from the European Union’s Horizon 2020 research and innovation programme under grant agreement no. 676529. Your use of the CLARIN ERIC site is subject to the CC-BY and our terms of use.</p>
 		<p>Contact: <a href="mailto:claus.zinn@uni-tuebingen.de?subject=CLARIN-PLUS LRS">Claus Zinn</a>. </p>
 		</footer>

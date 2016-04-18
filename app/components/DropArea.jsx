@@ -85,12 +85,12 @@ export default class DropArea extends React.Component {
             null,
             React.createElement(
                 'h2',
-                null,
+		{ className: 'lane' },		
                 'Dropped file(s): '
             ),
             React.createElement(
                 'ul',
-                null,
+		{ className: 'lane' },		
                 [].map.call(files, function (f, i) {
                     return React.createElement(
 			'li',
