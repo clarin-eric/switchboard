@@ -171,6 +171,7 @@ export default class Task extends React.Component {
 	const langEncodingMap = {
 	    "de" : "deu",
 	    "en" : "eng",
+	    "da" : "dan",
 	    "nl" : "nld",
 	    "fr" : "fra",
 	    "it" : "ita",

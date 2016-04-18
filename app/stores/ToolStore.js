@@ -20,7 +20,7 @@ class ToolStore {
 	this.registeredTools = 
 	    [
 		{ task: "Tokenisation",
-		  name: "CLARIN-DK Tool Box",
+		  name: "CLARIN-DK Tool Box (CST Tokenizer)",
 		  logo: "YourLogoComesHere.png",
 		  homepage: "https://www.clarin.dk/tools/createByGoalChoice",
 		  location: "Copenhagen, Denmark",
@@ -31,12 +31,10 @@ class ToolStore {
 		  },
 		  version: "0.8.3",
 		  license: "public", 
-		  shortDescription: "CLARIN-DK Tool Box",
-		  longDescription:  "CLARIN-DK Tool Box",
+		  shortDescription: "CLARIN-DK Tool Box (CST Tokenizer)",
+		  longDescription:  "CLARIN-DK Tool Box (CST Tokenizer for English and Danish",
 		  lang_encoding: "639-1",
-		  languages: ["bul", "ces", "dan", "deu", "ell", "eng", "spa", "est", "fas", "fra",
-			      "hun", "isl", "ita", "lat", "mkd", "nld", "pol", "por", "ron", "rus",
-			      "slk", "slv", "srp", "tur", "ukr"],
+		  languages: ["dan", "eng"],
 		  mimetypes: ["application/pdf",
 			      "application/vnd.ms-powerpoint", // (PPT)
 			      "application/vnd.openxmlformats-officedocument.presentationml.presentation", // (PPTX)
@@ -73,7 +71,7 @@ class ToolStore {
 		},
 
 		{ task: "Lemmatization",
-		  name: "CLARIN-DK Tool Box",
+		  name: "CLARIN-DK Tool Box (CST Lemmatizer)",
 		  logo: "YourLogoComesHere.png",
 		  homepage: "https://www.clarin.dk/tools/createByGoalChoice",
 		  location: "Copenhagen, Denmark (CLAM Webservices)",
@@ -84,8 +82,8 @@ class ToolStore {
 		  },
 		  version: "0.8.3",
 		  license: "public", 
-		  shortDescription: "CLARIN-DK Tool Box",
-		  longDescription:  "CLARIN-DK Tool Box",
+		  shortDescription: "CLARIN-DK Tool Box (CST Lemmatizer)",
+		  longDescription:  "CLARIN-DK Tool Box (CST Lemmatizer). Lemmatiser for Bulgarian, Czech, Danish, Dutch, English, Estonian, Farsi, French, German, Greek, Hungarian, Icelandic, Italian, Latin, Macedonian, Polish, Portuguese, Romanian, Russian, Slovak, Serbian, Slovene, Spanish, and Ukrainian",
 		  lang_encoding: "639-1",
 		  languages: ["bul", "ces", "dan", "deu", "ell", "eng", "spa", "est", "fas", "fra",
 			      "hun", "isl", "ita", "lat", "mkd", "nld", "pol", "por", "ron", "rus",
@@ -118,6 +116,104 @@ class ToolStore {
 		  parameter: {  input   : "self.linkToResource", 
 				lang    : "self.linkToResourceLanguage",                 
 				analysis: "lem"
+			     },
+
+		  // CLARIN-DK calls those parameters differently, namely:
+		  mapping:   { input        : "URL",
+			       lang         : "language"
+			     }		  
+		},		
+		
+		{ task: "Voice Synthesis",
+		  name: "CLARIN-DK Tool Box (espeak)",
+		  logo: "YourLogoComesHere.png",
+		  homepage: "https://www.clarin.dk/tools/createByGoalChoice",
+		  location: "Copenhagen, Denmark (CLAM Webservices)",
+		  creators: ["Bart Jongejan et al."],
+		  contact: {
+		      person: "Bart Jongejan",
+		      email: "bartj@hum.ku.dk",
+		  },
+		  version: "0.8.3",
+		  license: "public", 
+		  shortDescription: "CLARIN-DK Tool Box (espeak)",
+		  longDescription:  "CLARIN-DK Tool Box (espeak). Text to speech software. History. Originally known as speak and originally written for Acorn/RISC_OS computers starting in 1995. This version is an enhancement and re-write, including a relaxation of the original memory and processing power constraints, and with support for additional languages.",
+		  lang_encoding: "639-1",
+		  languages: ["bul", "ces", "dan", "deu", "ell", "eng", "spa", "est", "fas", "fra", // TODO 
+			      "hun", "isl", "ita", "lat", "mkd", "nld", "pol", "por", "ron", "rus",
+			      "slk", "slv", "srp", "tur", "ukr"],
+		  mimetypes: [
+			      "text/plain"
+			     ],
+		  url: ["https://www.clarin.dk/tools/createByGoalChoice"], 
+		  parameter: {  input   : "self.linkToResource", 
+				lang    : "self.linkToResourceLanguage",                 
+				analysis: "voiceSynthesis"
+			     },
+
+		  // CLARIN-DK calls those parameters differently, namely:
+		  mapping:   { input        : "URL",
+			       lang         : "language"
+			     }		  
+		},		
+		
+
+		{ task: "Named Entity Recognition",
+		  name: "CLARIN-DK Tool Box (CST's name recognizer)",
+		  logo: "YourLogoComesHere.png",
+		  homepage: "https://www.clarin.dk/tools/createByGoalChoice",
+		  location: "Copenhagen, Denmark (CLAM Webservices)",
+		  creators: ["Bart Jongejan et al."],
+		  contact: {
+		      person: "Bart Jongejan",
+		      email: "bartj@hum.ku.dk",
+		  },
+		  version: "0.8.3",
+		  license: "public", 
+		  shortDescription: "CLARIN-DK Tool Box (CST's name recognizer)",
+		  longDescription:  "CLARIN-DK Tool Box (CST). CST's name recogniser classifies names as proper names, locations (with sub-classes of street, city, land and other types of locations), and other names (called MISC)",
+		  lang_encoding: "639-1",
+		  languages: ["dan"],
+		  mimetypes: ["text/plain"
+			     ],
+		  url: ["https://www.clarin.dk/tools/createByGoalChoice"], 
+		  parameter: {  input   : "self.linkToResource", 
+				lang    : "self.linkToResourceLanguage",                 
+				analysis: "ner"
+			     },
+
+		  // CLARIN-DK calls those parameters differently, namely:
+		  mapping:   { input        : "URL",
+			       lang         : "language"
+			     }		  
+		},		
+
+		{ task: "OCR Engine",
+		  name: "CLARIN-DK Tool Box (Tesseract | CuneiForm)",
+		  logo: "YourLogoComesHere.png",
+		  homepage: "https://www.clarin.dk/tools/createByGoalChoice",
+		  location: "Copenhagen, Denmark (CLAM Webservices)",
+		  creators: ["Bart Jongejan et al."],
+		  contact: {
+		      person: "Bart Jongejan",
+		      email: "bartj@hum.ku.dk",
+		  },
+		  version: "0.8.3",
+		  license: "public", 
+		  shortDescription: "CLARIN-DK Tool Box (Tesseract)",
+		  longDescription:  "Tesseract is probably the most accurate open source OCR engine available. Combined with the Leptonica Image Processing Library it can read a wide variety of image formats and convert them to text in over 60 languages. It was one of the top 3 engines in the 1995 UNLV Accuracy test. Between 1995 and 2006 it had little work done on it, but since then it has been improved extensively by Google. It is released under the Apache License 2.0. Note that the CLARIN-DL Tool Box GUI gives you also access to the Russian CuneiForm system.",
+		  lang_encoding: "639-1",
+		  languages: ["dan"],
+		  mimetypes: [
+			      "image/gif", 
+			      "image/jpeg", 
+			      "image/png", 
+			      "image/tiff", 
+			     ],
+		  url: ["https://www.clarin.dk/tools/createByGoalChoice"], 
+		  parameter: {  input   : "self.linkToResource", 
+				lang    : "self.linkToResourceLanguage",                 
+				analysis: "txt"
 			     },
 
 		  // CLARIN-DK calls those parameters differently, namely:
