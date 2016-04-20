@@ -139,9 +139,9 @@ class ToolStore {
 		  shortDescription: "CLARIN-DK Tool Box (espeak)",
 		  longDescription:  "CLARIN-DK Tool Box (espeak). Text to speech software. History. Originally known as speak and originally written for Acorn/RISC_OS computers starting in 1995. This version is an enhancement and re-write, including a relaxation of the original memory and processing power constraints, and with support for additional languages.",
 		  lang_encoding: "639-1",
-		  languages: ["bul", "ces", "dan", "deu", "ell", "eng", "spa", "est", "fas", "fra", // TODO 
-			      "hun", "isl", "ita", "lat", "mkd", "nld", "pol", "por", "ron", "rus",
-			      "slk", "slv", "srp", "tur", "ukr"],
+		  languages: ["afr", "bul", "bos", "cat", "ces", "cym", "dan", "ell", "eng", "epo", "spa", "est", "fin", "fas", "fra", 
+			      "hin", "hrv", "hun", "hye", "ind", "isl", "ita", "kat", "kan", "kur", "lat", "lav", "mkd", "mlg", "nld",
+			      "pol", "por", "ron", "rus", "slk", "sqi", "srp", "swe", "swa", "tam", "tur", "ukr", "vie", "zho"],
 		  mimetypes: [
 			      "text/plain"
 			     ],
