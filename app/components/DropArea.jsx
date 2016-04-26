@@ -114,22 +114,43 @@ export default class DropArea extends React.Component {
     
     onDrop(files) {
 
+	console.log('onDrop entry', files[0]) // , files[0].name, files[0].type);	
+	
 	// --header='Content-Type: text/plain'
+	
 	var req = Request
 	//.post('http://tuebingen.weblicht.sfs.uni-tuebingen.de:8011/api/uploadLR')
 	    .post('http://ws1-clarind.esc.rzg.mpg.de/drop-off/storage/'.concat(files[0].name))
-//	    .post('http://localhost:8011/api/uploadLR')	
 	//.attach("langResource", files[0], files[0].name)
-	.send(files[0])	
-	.set('Content-Type', files[0].type)
+	    .send(files[0])	
+	    .set('Content-Type', files[0].type)
 	    .end((err, res) => {
 		if (err) {
-		    console.log('error in uploading', err);
+		    console.log('error in uploading resource document to MPG', err);
 		} else {
-		    console.log('success in uploading', res);
+		    console.log('success in uploading resource document to MPG', res);
 		}
 	    });
 
+	var languageIdentification = Request
+	    //.put('http://tuebingen.weblicht.sfs.uni-tuebingen.de:8011/language/stream')
+	    .put('http://tuebingen.weblicht.sfs.uni-tuebingen.de:8011/language/string')
+//	    .send("und das haus ist bunt. das ist aber ein toller text sagte der Vater zu seinem Sohn und schwieg.")
+	    .send(files[0])	
+	    .set('Content-Type', files[0].type)	
+	    .end((err, res) => {
+		if (err) {
+		    console.log('error in uploading resource document for language identification', err);
+		} else {
+		    console.log('success in uploading for language identification', res);
+		}
+	    });
+	
+//	var stream = fs.createReadStream( '/Users/zinn/tmp/danishText.txt' ); //files[0].name
+//	var req = Request.post('http://tuebingen.weblicht.sfs.uni-tuebingen.de:8011/language/stream');
+//	req.type('text');
+//	fs.pipe(req);
+	
 	this.setState({
 	    files: files
 	});

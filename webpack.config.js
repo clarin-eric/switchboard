@@ -23,7 +23,12 @@ const common = {
     // without an extension. Note the .'s before extensions!!!
     // The matching will fail without!
     resolve: {
-	extensions: ['', '.js', '.jsx']
+	extensions: ['', '.js', '.jsx'],
+	modulesDirectories: ['web_modules', 'bower_components', 'node_modules']
+    },
+
+    node: {
+	fs: "empty"
     },
 
     output: {
@@ -61,7 +66,8 @@ const common = {
 		loader: 'file-loader?name=[name].[ext]',
 		include: PATHS.app.html
 	    },
-	    
+
+
 	    // Set up jsx. This accepts js too thanks to RegExp
 	    {
 		test: /\.jsx?$/,
