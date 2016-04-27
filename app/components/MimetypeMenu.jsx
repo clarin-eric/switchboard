@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactSelectize from 'react-selectize';
+import LaneActions from '../actions/LaneActions';
+
 // var MultiSelect = ReactSelectize.MultiSelect;
 var SimpleSelect = ReactSelectize.SimpleSelect;
 
@@ -81,28 +83,25 @@ export default class MimetypeMenu extends React.Component {
         });
 
         return <SimpleSelect options = {options}
-	
-        defaultValue  = {this.props.defaultValue}
-	
-    	placeholder = "Select mimetype"
-	
-	renderValue = {function(item){
+                             defaultValue  = {this.props.defaultValue}
+                             placeholder = "Select mimetype"
+	                     renderValue = {function(item){
 
-            // check if the mimetype is available (optional)
-            var exists = options.map(function(option){
-                return option.value
-            }).indexOf(item.value) != -1
-
-            return <div 
-            className="simple-value"
-            style={{
-                color: exists ? "black" : "red"
-            }}
-            >{item.label}</div>
-	    
-        }}
-            onValueChange = {this.props.onMimetypeSelection}
-	       >
+				 // check if the mimetype is available (optional)
+				 var exists = options.map(function(option){
+				     return option.value
+				 }).indexOf(item.value) != -1
+				 
+				 return <div 
+				 className="simple-value"
+				 style={{
+				     color: exists ? "black" : "red"
+				 }}
+				     >{item.label}</div>
+				     
+			     }}
+                             onValueChange = {this.props.onMimetypeSelection}
+	    >
                </SimpleSelect>
     }
 }

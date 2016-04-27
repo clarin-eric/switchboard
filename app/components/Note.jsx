@@ -16,17 +16,17 @@ export default class Note extends React.Component {
     }
 
     setLanguage( id, language ) {
-	//console.log('Note.jsx/setLanguage', language);	
+	console.log('Note.jsx/setLanguage', language);	
 	var myNote = NoteActions.getNote( id );
 	var entireState = NoteStore.getState();
 	myNote = entireState.selectedNote[0];
 	var laneId = myNote.belongsTo;
 	var languageValue = null;	
 	if (language === undefined) {
-	    //console.log('Note.jsx/setLanguage: language is undefined!');
+	    console.log('Note.jsx/setLanguage: language is undefined!');
 	} else {
 	    languageValue = language.value;
-	    //console.log('Note.jsx/setLanguage: language set to', languageValue);	    
+	    console.log('Note.jsx/setLanguage: language set to', languageValue);	    
 	}
 	LaneActions.addLanguage({
 	    language: languageValue,
@@ -35,17 +35,17 @@ export default class Note extends React.Component {
     }
 
     setMimetype( id, mimetype ) {
-	//console.log('Note.jsx/setMimetype', mimetype);
+	console.log('Note.jsx/setMimetype', mimetype);
 	var myNote = NoteActions.getNote( id );
 	var entireState = NoteStore.getState();
 	myNote = entireState.selectedNote[0];
 	var laneId = myNote.belongsTo;
 	var mimetypeValue = null;	
 	if (mimetype === undefined) {
-	    //console.log('Note.jsx/setMimetype: mimetype is undefined!');
+	    console.log('Note.jsx/setMimetype: mimetype is undefined!');
 	} else {
 	    mimetypeValue = mimetype.value;
-	    //console.log('Note.jsx/setMimetype: mimetype set to', mimetypeValue);	    
+	    console.log('Note.jsx/setMimetype: mimetype set to', mimetypeValue);	    
 	}	    
 	LaneActions.addMimetype({
 	    mimetype: mimetypeValue,
@@ -65,7 +65,7 @@ export default class Note extends React.Component {
 	    return this.renderMimetypeNote();
 	}	
 
-	// defailt rendering (not editable)
+	// default rendering (not editable)
 	return this.renderNote();
     }
     
@@ -78,11 +78,15 @@ export default class Note extends React.Component {
     };
 
     renderLanguageNote = () => {
+	const languageWithoutPrefix = this.props.note.task.substring(9, this.props.note.task.length-4);
+	const languageCode = this.props.note.task.substring(this.props.note.task.length-3, this.props.note.task.length);
 	return (
  	    <div>
 	      <span className="note">language</span>
-	      <LanguageMenu onLanguageSelection={this.setLanguage}
-	    />	
+	      <LanguageMenu defaultValue = { {label: languageWithoutPrefix,
+					      value: languageCode}
+					   }
+	                    onLanguageSelection={this.setLanguage} />	
 	    </div>
 	);
     };

@@ -13,7 +13,7 @@ export default class DropArea extends React.Component {
 	this.addNote     = this.addNote.bind(this);
 	this.addFilename = this.addFilename.bind(this);
 	this.addMimetype = this.addMimetype.bind(this);	
-	this.addLanguage = this.addLanguage.bind(this);	
+	this.addLanguage = this.addLanguage.bind(this);
 	this.showFiles = this.showFiles.bind(this);
 	this.onDrop = this.onDrop.bind(this);
 	
@@ -59,16 +59,94 @@ export default class DropArea extends React.Component {
 	    laneId
 	});
 	
-	// console.log('DropArea/addMimetype', laneId, mimetype);
+	console.log('DropArea/addMimetype', laneId, mimetype);
     }
     
     addLanguage( laneId, language ) {
+
+	// en
+	console.log('DropArea/addLanguage', laneId, language);
+	var threeLetterCode = null;
+
+	if (language == "en") {
+	    language = "English:eng";
+	    threeLetterCode = "eng";
+	} else if (language == "da") {
+	    language = "Danish:dan";
+    	    threeLetterCode = "dan";
+	} else if (language == "ca") {
+	    language = "Catalan:cat";
+    	    threeLetterCode = "cat";	    
+	} else if (language == "hu") {
+	    language = "Hungarian:hun";
+    	    threeLetterCode = "hun";
+	} else if (language == "it") {
+	    language = "Italian:ita";
+    	    threeLetterCode = "ita";	    
+	} else if (language == "no") {
+	    language = "Norwegian:nor";
+    	    threeLetterCode = "nor";
+	} else if (language == "sv") {
+	    language = "Swedish:swe";
+    	    threeLetterCode = "swe";
+	} else if (language == "de") {
+	    language = "German:deu";
+    	    threeLetterCode = "deu";
+	} else if (language == "es") {
+	    language = "Spanish:spa";
+    	    threeLetterCode = "spa";
+	} else if (language == "is") {
+	    language = "Icelandic:isl";
+    	    threeLetterCode = "isl";
+	} else if (language == "pl") {
+	    language = "Polish:pol";
+    	    threeLetterCode = "pol";
+	} else if (language == "th") {
+	    language = "Thai:tha";
+    	    threeLetterCode = "tha";
+	} else if (language == "et") {
+	    language = "Estonian:est";
+    	    threeLetterCode = "est";
+	} else if (language == "sk") {
+	    language = "Slovak:slk";
+    	    threeLetterCode = "slk";
+	} else if (language == "sl") {
+	    language = "Slovenian:slv";
+    	    threeLetterCode = "slv";
+	} else if (language == "ro") {
+	    language = "Romanian:ron";
+    	    threeLetterCode = "ron";	    	    	    
+	} else if (language == "fi") {
+	    language = "Finnish:fin";
+    	    threeLetterCode = "fin";
+	} else if (language == "pt") {
+	    language = "Portuguese:por";
+    	    threeLetterCode = "por";
+	} else if (language == "el") {
+	    language = "Greek:ell";
+    	    threeLetterCode = "ell";
+	} else if (language == "fr") {
+	    language = "French:fra";
+    	    threeLetterCode = "fra";
+	} else if (language == "nl") {
+	    language = "Dutch:nld";
+    	    threeLetterCode = "nld";
+	} else if (language == "ru") {
+	    language = "Russian:rus";
+    	    threeLetterCode = "rus";
+	} else {
+	    language = "Please identify language:any";
+	    threeLetterCode = "any";
+	}
+
+	// english:eng
+	console.log('DropArea/addLanguage after', laneId, language);	
 	LaneActions.addLanguage({
-	    language: language,
+	    language: threeLetterCode,
 	    laneId
 	});
-	
-	// console.log('DropArea/addLanguage', laneId, language);
+
+	return language;
     }
 
     showFiles() {
@@ -132,24 +210,39 @@ export default class DropArea extends React.Component {
 		}
 	    });
 
+	// tika seems to support at least these 18 languages:
+	// da, en, hu, no, sv, de, es, is, pl, th, et, fi, it, pt, el, fr, nl, ru
+	var languageDetected = "identify language!";
 	var languageIdentification = Request
-	    //.put('http://tuebingen.weblicht.sfs.uni-tuebingen.de:8011/language/stream')
 	    .put('http://tuebingen.weblicht.sfs.uni-tuebingen.de:8011/language/string')
-//	    .send("und das haus ist bunt. das ist aber ein toller text sagte der Vater zu seinem Sohn und schwieg.")
 	    .send(files[0])	
 	    .set('Content-Type', files[0].type)	
 	    .end((err, res) => {
 		if (err) {
 		    console.log('error in uploading resource document for language identification', err);
 		} else {
-		    console.log('success in uploading for language identification', res);
+		    // need to preset the language menu
+		    console.log('success in uploading for language identification', res.text);
+		    languageDetected = res.text;
 		}
+	// for each file, create a lane (resource) and attach to each lane some notes (resource descriptors)
+	for (var i=0; i<files.length; i++) {
+	    var laneId = this.addLane(files[i].name);
+	    this.addFilename(laneId, files[i].name);
+
+	    // will be editable (see LanguageMenu)
+	    this.addMimetype(laneId, files[i].type);
+	    languageDetected = this.addLanguage(laneId, languageDetected);
+	    
+	    this.addNote(laneId, "name:   ".concat(files[i].name));
+	    this.addNote(laneId, "type:   ".concat(files[i].type));
+	    this.addNote(laneId, "size:   ".concat(files[i].size));	
+	    // this.addNote(laneId, "preview:".concat(files[i].preview));
+	    this.addNote(laneId, "language:".concat(languageDetected));
+	    // will be editable (see MimetypeMenu)
+	}
+		
 	    });
-	
-//	var stream = fs.createReadStream( '/Users/zinn/tmp/danishText.txt' ); //files[0].name
-//	var req = Request.post('http://tuebingen.weblicht.sfs.uni-tuebingen.de:8011/language/stream');
-//	req.type('text');
-//	fs.pipe(req);
 	
 	this.setState({
 	    files: files
@@ -162,22 +255,7 @@ export default class DropArea extends React.Component {
 	    ToolActions.reset();
 	}
 
-	// for each file, create a lane (resource) and attach to each lane some notes (resource descriptors)
-	for (var i=0; i<files.length; i++) {
-	    var laneId = this.addLane(files[i].name);
-	    this.addFilename(laneId, files[i].name);
 
-	    // will be editable (see LanguageMenu)
-	    this.addMimetype(laneId, files[i].type);
-	    
-	    this.addNote(laneId, "name:   ".concat(files[i].name));
-	    this.addNote(laneId, "type:   ".concat(files[i].type));
-	    this.addNote(laneId, "size:   ".concat(files[i].size));	
-	    // this.addNote(laneId, "preview:".concat(files[i].preview));
-	    
-	    // will be editable (see MimetypeMenu)
-	    this.addNote(laneId, "language:");
-	}
     }
 
     render() {

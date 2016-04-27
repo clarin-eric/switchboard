@@ -4,6 +4,7 @@ import LaneActions from '../actions/LaneActions';
 
 // var MultiSelect = ReactSelectize.MultiSelect;
 var SimpleSelect = ReactSelectize.SimpleSelect;
+
 export default class LanguageMenu extends React.Component {
 
     constructor(props) {
@@ -12,16 +13,16 @@ export default class LanguageMenu extends React.Component {
 
     render() {
 
-	const { onLanguageSelection, ...props } = this.props;
+	const { defaultValue, ...props } = this.props;
 	
 	// mapping language names with ISO 639-3, will be informed by tool registry entries
 	var options = [
-	    { label: "Any Language",
+	    { label: "Please identify language",
 	      value: "any"
 	    },
 	    { label: "Afrikaans",
 	      value: "afr"
-	    },
+	    },	    
 	    { label: "Albanian",
 	      value: "sqi"
 	    },
@@ -34,6 +35,9 @@ export default class LanguageMenu extends React.Component {
 	    { label: "Bosnian",
 	      value: "bos"
 	    },
+	    { label: "Basque",
+	      value: "eus"
+	    },	    
 	    { label: "Bulgarian",
 	      value: "bul"
 	    },	    
@@ -76,6 +80,9 @@ export default class LanguageMenu extends React.Component {
 	    { label: "Georgian",
 	      value: "kat"
 	    },
+	    { label: "Galician",
+	      value: "glg"
+	    },	    
 	    { label: "German",
 	      value: "deu"
 	    },	    
@@ -96,7 +103,10 @@ export default class LanguageMenu extends React.Component {
 	    },	    
 	    { label: "Italian",
 	      value: "ita"
-	    },	    
+	    },
+	    { label: "Irish",
+	      value: "gle"
+	    },	    	    
 	    { label: "Japanese",
 	      value: "jap"
 	    },
@@ -111,20 +121,29 @@ export default class LanguageMenu extends React.Component {
 	    },
 	    { label: "Latvian",
 	      value: "lav"
-	    },	    
+	    },
+	    { label: "Lithuanian",
+	      value: "lit"
+	    },	    	    
 	    { label: "Macedonian",
 	      value: "mkd"
 	    },
 	    { label: "Malagasy",
 	      value: "mlg"
+	    },
+	    { label: "Maltese",
+	      value: "mlt"
 	    },	    
+	    { label: "Norwegian",
+	      value: "nor"
+	    },	    	    
 	    { label: "Polish",
 	      value: "pol"
 	    },
 	    { label: "Persian",
 	      value: "fas"
 	    },
-	    { label: "Portugese",
+	    { label: "Portuguese",
 	      value: "por"
 	    },	    
 	    { label: "Romanian",
@@ -133,9 +152,12 @@ export default class LanguageMenu extends React.Component {
 	    { label: "Russian",
 	      value: "rus"
 	    },
+	    { label: "Scottish Gaelic",
+	      value: "gla"
+	    },
 	    { label: "Slovak",
 	      value: "slk"
-	    },
+	    },	    
 	    { label: "Slovenian",
 	      value: "slv"
 	    },	    
@@ -170,7 +192,23 @@ export default class LanguageMenu extends React.Component {
                        });
 	
         return <SimpleSelect options = {options}
+                             defaultValue  = {this.props.defaultValue}
  	                     placeholder = "Select language"
+	                     renderValue = {function(item){
+				 console.log('LanguageMenu', item);
+				 // check if the language is available (optional)
+				 var exists = options.map(function(option){
+				     return option.label
+				 }).indexOf(item.label) != -1
+				 
+				 return <div 
+				 className="simple-value"
+				 style={{
+				     color: exists ? "black" : "red"
+				 }}
+				     >{item.label}</div>
+				     
+			     }}			     
 	                     onValueChange = {this.props.onLanguageSelection}
   	       >
 	       </SimpleSelect>
