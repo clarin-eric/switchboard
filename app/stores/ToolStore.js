@@ -949,6 +949,10 @@ class ToolStore {
 
 	// now, for the task-oriented view
 	var tasks = this.groupTools( languageFilter );
+
+	if (Object.keys(tasks).length == 0) {
+	    alert("Sorry! No applicable tools for the given resource were found!");
+	}
 	    
 	this.setState({
 	    applicableTools: languageFilter,
