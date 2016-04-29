@@ -27,38 +27,33 @@ export default class App extends React.Component {
 		<img className="alignRight" src="CLARIN-Logo16-c.jpg" width="11%" height="11%" />
 	        <h1 className="project-name">CLARIN Language Resource Switchboard</h1>
 	        <h2 className="project-tagline">Find the appropriate tool for your resource.
-		<a className="whiteLink" href="about.html"> [ About ]</a>
+                    <a className="whiteLink" href="about.html"> [ About ]</a>
 		</h2>
    	      </section>
 	      <div id='dragAndDropArea'></div>	
-	       <DropArea />
-	    
-   	        <AltContainer
+	      <DropArea />
+   	      <AltContainer
                    stores={[LaneStore, ToolStore]}
                    inject={{
 		       lanes: () => LaneStore.getState().lanes || [],
 		       tools: () => ToolStore.getState().applicableTools || [],
 		       tasks: () => ToolStore.getState().tasks || []		
 		   }}
-	        >
-	        <Lanes />
-	        <p />
-   	        <hr />
-  	        <p />
-	        <h2>Task-Oriented View</h2>
-                <Tasks />
+	       >
+	       <Lanes />
+	       <p />
+   	       <hr />
+  	       <p />
+	       <h2>Task-Oriented View</h2>
+               <Tasks />
 	      </AltContainer>
-
-		<hr />
-		<footer className="page-footer" >
+	      <hr />
+	      <footer className="page-footer" >
 		<h4>Credits</h4>
 		<p><a href="http://www.clarin.eu/node/4213">CLARIN-PLUS </a>receives funding from the European Union’s Horizon 2020 research and innovation programme under grant agreement no. 676529. Your use of the CLARIN ERIC site is subject to the CC-BY and our terms of use.</p>
 		<p>Contact: <a href="mailto:claus.zinn@uni-tuebingen.de?subject=CLARIN-PLUS LRS">Claus Zinn</a>. </p>
-		</footer>
+	      </footer>
 	    </div>
-	);
-    }
-    addLane() {
-	LaneActions.create({name: 'New lane'});
+	    );
     }
 }
