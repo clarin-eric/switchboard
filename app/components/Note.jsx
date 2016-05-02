@@ -16,7 +16,7 @@ export default class Note extends React.Component {
     }
 
     setLanguage( id, language ) {
-	console.log('Note.jsx/setLanguage', language);	
+	console.log('Note.jsx/setLanguage', id, language);	
 	var myNote = NoteActions.getNote( id );
 	var entireState = NoteStore.getState();
 	myNote = entireState.selectedNote[0];

@@ -241,7 +241,18 @@ export default class Task extends React.Component {
 	var entireState = LaneStore.getState();
 	var filename =  entireState.selectedLane[0].name;
 	var language =  entireState.selectedLane[0].language;
+	var upload   =  entireState.selectedLane[0].upload;
 	var lang_encoding = item.lang_encoding;
+
+	if (upload == "dnd") {
+	    console.log('the file has been dropped in the demo upload site');
+	} else if (upload == "vlo") {
+	    console.log('the LRS has been called from the VLO');
+	    // no use of temp. server for resource
+	    nodeServerURL = "";
+	} else {
+	    console.log("ERROR in upload info (Task.jsx)", upload);
+	}
 	
 	if (lang_encoding == "639-1") {
 	    language = map639_3_to_639_1(language);

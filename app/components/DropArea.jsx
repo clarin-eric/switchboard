@@ -12,6 +12,7 @@ export default class DropArea extends React.Component {
 	this.addLane     = this.addLane.bind(this);
 	this.addNote     = this.addNote.bind(this);
 	this.addFilename = this.addFilename.bind(this);
+	this.addUpload   = this.addUpload.bind(this);
 	this.addMimetype = this.addMimetype.bind(this);	
 	this.addLanguage = this.addLanguage.bind(this);
 	this.showFiles = this.showFiles.bind(this);
@@ -53,6 +54,15 @@ export default class DropArea extends React.Component {
 	// console.log('DropArea/addFilename', laneId, filename);
     }
 
+
+    addUpload( laneId, upload ) {
+	LaneActions.addUpload({
+	    upload: upload,
+	    laneId
+	});
+	
+    }
+    
     addMimetype( laneId, mimetype ) {
 	LaneActions.addMimetype({
 	    mimetype: mimetype,
@@ -141,7 +151,7 @@ export default class DropArea extends React.Component {
 	}
 
 	// english:eng
-	console.log('DropArea/addLanguage after', laneId, language);	
+	console.log('DropArea/addLanguage after', laneId, language, threeLetterCode);	
 	LaneActions.addLanguage({
 	    language: threeLetterCode,
 	    laneId
@@ -262,6 +272,7 @@ export default class DropArea extends React.Component {
 		for (var i=0; i<files.length; i++) {
 		    var laneId = this.addLane(files[i].name);
 		    this.addFilename(laneId, files[i].name);
+		    this.addUpload(laneId, 'dnd');
 		    
 		    // will be editable (see LanguageMenu)
 		    this.addMimetype(laneId, files[i].type);

@@ -10,7 +10,11 @@ import Tasks from './Tasks.jsx';                    // task-oriented view
 import LaneActions from '../actions/LaneActions';   // actions associated with lanes: CRUD, attach/detach
 import LaneStore from '../stores/LaneStore';        // storing lanes (state)
 import ToolStore from '../stores/ToolStore';        // storing tools (state)
-import DropArea from './DropArea.jsx';
+import DropArea from './DropArea.jsx';              // drop & drag area for resources
+import UrlArea from './UrlArea.jsx';                // all resource information given in parameters
+
+// routing between DropArea and UrlArea
+import { Router, Route, hashHistory } from 'react-router'
 
 require('./../images/switchboard.png');
 require('./../images/weblicht.jpg');
@@ -30,8 +34,14 @@ export default class App extends React.Component {
                     <a className="whiteLink" href="about.html"> [ About ]</a>
 		</h2>
    	      </section>
-	      <div id='dragAndDropArea'></div>	
-	      <DropArea />
+	      
+	      <div id='dragAndDropArea'></div>
+	      
+	      <Router history={hashHistory}>	      
+		<Route path="/" component={DropArea}/>
+      		<Route path="/vlo/:fileURL/:fileSize/:fileMimetype/:fileLanguage" component={UrlArea}/>
+              </Router>		
+	      
    	      <AltContainer
                    stores={[LaneStore, ToolStore]}
                    inject={{

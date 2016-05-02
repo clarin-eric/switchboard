@@ -31,6 +31,7 @@ class LaneStore {
 	lane.filename = lane.filename || null;
 	lane.mimetype = lane.mimetype || null;	
 	lane.language = lane.language || null;
+	lane.upload   = lane.upload   || null;
 	
 	this.setState({
 	    lanes: lanes.concat(lane)
@@ -70,6 +71,18 @@ class LaneStore {
 	this.setState({lanes});
     }
 
+    addUpload({laneId, upload}) {
+	const lanes = this.lanes.map((lane) => {
+	    if(lane.id === laneId) {
+		lane.upload = upload;
+	    }
+	    
+	    return lane;
+	});
+
+	this.setState({lanes});
+    }
+    
     addMimetype({laneId, mimetype}) {
 	const lanes = this.lanes.map((lane) => {
 	    if(lane.id === laneId) {
@@ -83,6 +96,8 @@ class LaneStore {
     }
 
     addLanguage({laneId, language}) {
+
+	console.log('LaneStore/addLanguage', laneId, language);
 	const lanes = this.lanes.map((lane) => {
 	    if(lane.id === laneId) {
 		lane.language = language;
