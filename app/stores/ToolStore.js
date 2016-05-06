@@ -200,10 +200,10 @@ class ToolStore {
 		  },
 		  version: "0.8.3",
 		  license: "public", 
-		  shortDescription: "CLARIN-DK Tool Box (Tesseract)",
+		  shortDescription: "CLARIN-DK Tool Box (Tesseract | CuneiForm)",
 		  longDescription:  "Tesseract is probably the most accurate open source OCR engine available. Combined with the Leptonica Image Processing Library it can read a wide variety of image formats and convert them to text in over 60 languages. It was one of the top 3 engines in the 1995 UNLV Accuracy test. Between 1995 and 2006 it had little work done on it, but since then it has been improved extensively by Google. It is released under the Apache License 2.0. Note that the CLARIN-DL Tool Box GUI gives you also access to the Russian CuneiForm system.",
 		  lang_encoding: "639-1",
-		  languages: ["dan"],
+		  languages: ["dan","eng"],
 		  mimetypes: [
 			      "image/gif", 
 			      "image/jpeg", 
@@ -513,16 +513,16 @@ class ToolStore {
 		  version: "v1.0",
 		  licence: "public",
 		  longDescription: "Weblicht Easy Chain for German Named Entity Recognition (German).",
-		  shortDescription: "Named Entity Recognizer", // controlled vocabulary, change name?
+		  shortDescription: "Named Entity Recognizer", 
 		  languages: ["deu"],
 		  lang_encoding: "639-1",		  
 		  mimetypes: ["text/plain"],
 		  output: ["text/xml"],
 		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht",
 		  pid: "",
-		  parameter: {  input   :  "self.linkToResource", // for demo upload site (will be initialized)
-				lang    : "de",                   // German
-				analysis: "ne"                    // Named Entities
+		  parameter: {  input   :  "self.linkToResource", 
+				lang    : "de",                   
+				analysis: "ne"                    
 			     }
 		},
 
