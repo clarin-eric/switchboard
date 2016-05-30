@@ -5,15 +5,16 @@ import ReactTooltip from 'react-tooltip';
 import Accordion from '../helperComponents/Accordion';         
 import AccordionItem from '../helperComponents/AccordionItem';
 
+import Request from 'superagent';
+
 export default class Task extends React.Component {
     constructor(props) {
 	super(props);
-	this.invokeTaskTool = this.invokeTaskTool.bind(this);
+	this.invokeSoftware = this.invokeSoftware.bind(this);
+	this.invokeWebService = this.invokeWebService.bind(this);	
 	this.constructToolURL = this.constructToolURL.bind(this);
     }
 
-    
-    
     render() {
 	const {items, ...props} = this.props;
 
@@ -120,7 +121,7 @@ export default class Task extends React.Component {
 	    const renderSummary = () => {
 		if ((title == "URL") && (summary) ) return (
 		    <p style={{ fontWeight: 100, lineHeight: 1.0 }}>
-		    <button onClick={this.invokeTaskTool.bind(this,summary)} > Click to start tool </button>		    
+		    <button onClick={this.invokeSoftware.bind(this,summary)} > Click to start tool </button>		    
 		    </p>
 		);
 		
@@ -148,17 +149,18 @@ export default class Task extends React.Component {
 	    { items.map( (element) => 
 		<AccordionItem title={element.name} key={element.id} >
 		  <ToolCard key={element.name}
-				imgSrc={element.logo}
-				imgBorderColor='#6A067A'
-				name={element.name}
-				title={element.name}
-				location={element.location}
-                                url={element.url}
-		                parameter={element.parameter}
-		                mapping={element.mapping}
-		                lang_encoding={element.lang_encoding}		
-				email={element.email}
-				role={element.longDescription}
+			 imgSrc={element.logo}
+			 imgBorderColor='#6A067A'
+			 name={element.name}
+			 title={element.name}
+			 softwareType={element.softwareType}
+			 location={element.location}
+                         url={element.url}
+		         parameter={element.parameter}
+		         mapping={element.mapping}
+		         lang_encoding={element.lang_encoding}		
+			 email={element.email}
+			 role={element.longDescription}
 			/>			
 		</AccordionItem>
 	    )}
@@ -232,26 +234,35 @@ export default class Task extends React.Component {
 	
 	    
 	// the location for the server holding temporarily the resources
-	// var nodeServerURL = "http://shannon.sfs.uni-tuebingen.de:8011/";
-	// var nodeServerURL = "http://localhost:8011/";
+	// var fileServerURL = "http://shannon.sfs.uni-tuebingen.de:8011/";
+	// var fileServerURL = "http://localhost:8011/";
 
 
+	console.log('Task.jsx', item);
 	// central service to retrieve language resource, may need to chech cross-site scripting issue
-	var nodeServerURL = "http://ws1-clarind.esc.rzg.mpg.de/drop-off/storage/";	
+	var fileServerURL = "http://ws1-clarind.esc.rzg.mpg.de/drop-off/storage/";	
 	var entireState = LaneStore.getState();
 	var filename =  entireState.selectedLane[0].name;
+	var file     =  entireState.selectedLane[0].file;
 	var language =  entireState.selectedLane[0].language;
 	var upload   =  entireState.selectedLane[0].upload;
 	var lang_encoding = item.lang_encoding;
+	var softwareType = item.softwareType;
 
 	if (upload == "dnd") {
 	    console.log('the file has been dropped in the demo upload site');
 	} else if (upload == "vlo") {
 	    console.log('the LRS has been called from the VLO');
 	    // no use of temp. server for resource
-	    nodeServerURL = "";
+	    fileServerURL = "";
 	} else {
 	    console.log("ERROR in upload info (Task.jsx)", upload);
+	}
+
+	if (softwareType == "webService") {
+	    console.log('we have a webService', item);
+	} else {
+	    console.log('we have a browserBased software', item);	    
 	}
 	
 	if (lang_encoding == "639-1") {
@@ -260,24 +271,27 @@ export default class Task extends React.Component {
 	    language = map639_1_to_639_3(language);
 	}
     
-	var inputFile = nodeServerURL + filename;
+	var inputFilename = fileServerURL + filename;
 
 	console.log('Task.jsx/constructToolURL', item, entireState.selectedLane[0], 'encoding:', lang_encoding);
 	
 	var parameterString = "";
 	var parameters = item.parameter;
-
+	var formParameter = "data";
+	
 	if ( (item.hasOwnProperty('mapping') && (! (item['mapping'] === undefined )))) {
-	    console.log('found mapping', item['mapping']);
 	    for (var parameter in parameters) {
 		if (parameters.hasOwnProperty(parameter)) {
-		    console.log(parameter + " -> " + parameters[parameter]);
 		    if (item.hasOwnProperty('mapping')) {
 			var mapping = item['mapping'];
 			if (mapping.hasOwnProperty(parameter)) {
 			    switch (parameter) {
 			    case "input":
-				parameterString = parameterString.concat( mapping[parameter]).concat("=").concat( inputFile );
+				if (softwareType == "webService") {
+				    formParameter = mapping[parameter];
+				} else {
+				    parameterString = parameterString.concat( mapping[parameter]).concat("=").concat( inputFilename );
+				}
 				break;
 			    case "lang":
 				parameterString = parameterString.concat( mapping[parameter]).concat("=").concat( language );
@@ -286,7 +300,6 @@ export default class Task extends React.Component {
 				parameterString = parameterString.concat( mapping[parameter]).concat("=").concat(parameters[parameter]);
 			    }
 			} else {
-			    console.log('no', mapping, parameter);			    
 			    parameterString = parameterString.concat( parameter ).concat("=").concat(parameters[parameter]);
 			}
 		    } else
@@ -298,10 +311,13 @@ export default class Task extends React.Component {
 	    // use the givens without mapping
 	     for (var parameter in parameters) {
 		if (parameters.hasOwnProperty(parameter)) {
-		    console.log(parameter + " -> 2 -> " + parameters[parameter]);
 		    switch (parameter) {
 		    case "input":
-			parameterString = parameterString.concat(parameter).concat("=").concat( inputFile );
+			if (softwareType == "webService") {
+			    formParameter = parameter;
+			} else {
+			    parameterString = parameterString.concat(parameter).concat("=").concat( inputFilename );
+			}
 			break;
 		    case "lang":
 			parameterString = parameterString.concat(parameter).concat("=").concat( language );
@@ -315,16 +331,63 @@ export default class Task extends React.Component {
 	     }
 	}
 
-
-	// var parameterString = "?input=" + inputFile + "&lang=" + item.parameter.lang + "&analysis=" + item.parameter.analysis;
-	var urlWithParameters = item.url + "?" + parameterString;
+	// var parameterString = "?input=" + inputFilename + "&lang=" + item.parameter.lang + "&analysis=" + item.parameter.analysis;
+	var urlWithParameters = "";
+	if (softwareType == "webService") {
+	    urlWithParameters = item.url;
+	} else {
+	    urlWithParameters = item.url + "?" + parameterString;
+	}
 
 	console.log('Task.jsx URL:', urlWithParameters);
-	return urlWithParameters;
+        var rtnValue = { };
+	if (softwareType == "webService") {
+	    rtnValue =
+		{
+		    toolType : "webService",
+		    url      : urlWithParameters,
+		    formPar  : formParameter,
+		    formVal  : file
+		};
+	} else	{
+	    rtnValue = 
+	    {
+		toolType : "browserBased",
+		url      : urlWithParameters
+	    };
+	}
+	
+	return rtnValue;
     }
 	
-    invokeTaskTool( fullURL ) {
-	var win = window.open(fullURL, '_blank');
-	win.focus();
+    invokeSoftware( URL ) {
+
+	console.log('invokeSoftware', URL);
+	if (URL.toolType == "webService") {
+	    this.invokeWebService(URL);
+	} else {
+	    var win = window.open(URL.url, '_blank');
+	    win.focus();
+	}
+    }
+
+    invokeWebService( URL ) {
+	let data = new FormData();
+	let file = URL.formVal;
+    
+	data.append( URL.formPar, file, file.name);
+	
+	var req = Request
+	    .post(URL.url)
+	    .send(data)
+	    .end((err, res) => {
+		if (err) {
+		    console.log('onDrop: error in calling webservice',   err, file.name, data, URL);
+		} else {
+		    var something = window.open("data:text/json," + encodeURIComponent(res.text), "_blank");
+		    // something.focus();
+		    console.log('onDrop: success in calling webservice', res, file.name, data, URL);
+		}
+	    });
     }
 }

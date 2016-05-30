@@ -12,6 +12,7 @@ export default class DropArea extends React.Component {
 	this.addLane     = this.addLane.bind(this);
 	this.addNote     = this.addNote.bind(this);
 	this.addFilename = this.addFilename.bind(this);
+	this.addFile     = this.addFile.bind(this);	
 	this.addUpload   = this.addUpload.bind(this);
 	this.addMimetype = this.addMimetype.bind(this);	
 	this.addLanguage = this.addLanguage.bind(this);
@@ -51,9 +52,18 @@ export default class DropArea extends React.Component {
 	    laneId
 	});
 	
-	// console.log('DropArea/addFilename', laneId, filename);
+	console.log('DropArea/addFilename', laneId, filename);
     }
 
+    addFile( laneId, file ) {
+	LaneActions.addFile({
+	    file: file,
+	    laneId
+	});
+
+	console.log('DropArea/addFile', laneId, file);	
+    }
+    
 
     addUpload( laneId, upload ) {
 	LaneActions.addUpload({
@@ -213,11 +223,12 @@ export default class DropArea extends React.Component {
 	//.attach("langResource", files[0], files[0].name)
 	    .send(files[0])	
 	    .set('Content-Type', files[0].type)
+//	    .withCredentials()
 	    .end((err, res) => {
 		if (err) {
-		    console.log('error in uploading resource document to MPG', err);
+		    console.log('DropArea: error in uploading resource document to MPG', err);
 		} else {
-		    console.log('success in uploading resource document to MPG', res);
+		    console.log('DropArea: success in uploading resource document to MPG', res);
 		}
 	    });
 
@@ -234,7 +245,8 @@ export default class DropArea extends React.Component {
 	    console.log("we have a plain text document", files[0].type);
 	} else if (files[0].type == "application/pdf") {
 	    console.log("we have a pdf document", files[0].type);
-	    
+
+	    // should work, once CLRS code and TIKA code is served from same website (CORS)
 	    var textualContent = Request
 		.put('http://tuebingen.weblicht.sfs.uni-tuebingen.de:8011/tika')
 		.send(files[0])	
@@ -271,6 +283,8 @@ export default class DropArea extends React.Component {
 		// for each file, create a lane (resource) and attach to each lane some notes (resource descriptors)
 		for (var i=0; i<files.length; i++) {
 		    var laneId = this.addLane(files[i].name);
+		    
+		    this.addFile(laneId, files[i]);
 		    this.addFilename(laneId, files[i].name);
 		    this.addUpload(laneId, 'dnd');
 		    

@@ -2,7 +2,7 @@ import React from 'react'
 import NoteActions from '../actions/NoteActions';
 import LaneActions from '../actions/LaneActions';
 import ToolActions from '../actions/ToolActions';
-
+import Request from 'superagent';
 
 export default class UrlArea extends React.Component {
     constructor(props) {
@@ -15,12 +15,12 @@ export default class UrlArea extends React.Component {
 	this.addMimetype   = this.addMimetype.bind(this);	
 	this.addLanguage   = this.addLanguage.bind(this);
 	this.useParameters = this.useParameters.bind(this);
-
+	this.getJSON       = this.getJSON.bind(this);	
+	this.processJSONData = this.processJSONData.bind(this);
+	
 	this.state = {
 	    files: []
 	};
-	
-	console.log('binding showFiles', this.useParameters, this.addNote, this.addLane);	
     }
 
     addLane( resourceName ) {
@@ -133,23 +133,63 @@ export default class UrlArea extends React.Component {
 	//     files: files
 	// });
 	
-	// first, reset all prior info
+	// reset all prior info
 	LaneActions.reset();
 	NoteActions.reset();
 	ToolActions.reset();
 
-	
-	console.log('useParameters', parameters);
-	
-	var laneId = this.addLane(parameters.fileURL);
-	this.addFilename(laneId, parameters.fileURL);
-	this.addUpload(laneId, "vlo");	
-	this.addMimetype(laneId, parameters.fileMimetype);
-	var languageDetected = this.addLanguage(laneId, parameters.fileLanguage);
-	this.addNote(laneId, "name:   ".concat(parameters.fileURL));
-	this.addNote(laneId, "type:   ".concat(parameters.fileMimetype));
-	this.addNote(laneId, "size:   ".concat(parameters.fileSize));	
-	this.addNote(laneId, "language:".concat(languageDetected));
+	if (parameters.tokenId == undefined) {
+	    // single file information has been passed
+	    console.log('UrlArea/useParameters: single file information has been passed', parameters);
+	    
+	    var laneId = this.addLane(parameters.fileURL);
+	    this.addFilename(laneId, parameters.fileURL);
+	    this.addUpload(laneId, "vlo");	
+	    this.addMimetype(laneId, parameters.fileMimetype);
+	    var languageDetected = this.addLanguage(laneId, parameters.fileLanguage);
+	    this.addNote(laneId, "name:   ".concat(parameters.fileURL));
+	    this.addNote(laneId, "type:   ".concat(parameters.fileMimetype));
+	    this.addNote(laneId, "size:   ".concat(parameters.fileSize));	
+	    this.addNote(laneId, "language:".concat(languageDetected));
+	} else {
+	    console.log('UrlArea/useParameters: a token has been passed', parameters);
+	    this.getJSON( parameters.tokenId );
+	    // contact the VLO to send associated JSON data with token
+	    
+	}
+    }
+
+    getJSON( tokenId ) {
+	console.log('UrlArea/getJSON', tokenId);
+	let vloService = "http://localhost:8011/api/getJSON";
+	var req = Request
+	    .post(vloService)
+	    .send({ token: tokenId })
+	    .set('Accept', 'application/json')
+	    .end((err, res) => {
+		if (err) {
+		    console.log('UrlArea/getJSON: error in calling VLO with token',   err, tokenId);
+		} else {
+		    console.log('UrlArea/getJSON: success in calling VLO with token', JSON.stringify(res.body));
+		    this.processJSONData( res.body.resources );
+		}
+	    });
+    }
+
+    processJSONData( files ) {
+	console.log('UrlArea/processJSONData', files);
+
+	for (var i=0; i<files.length; i++) {
+	    var laneId = this.addLane(files[i].file);
+	    this.addFilename(laneId, files[i].file);
+	    this.addUpload(laneId, 'vlo');
+	    this.addMimetype(laneId, files[i].mimetype);
+	    var languageDetected = this.addLanguage(laneId, files[i].language);
+	    this.addNote(laneId, "name:   ".concat(files[i].file));
+	    this.addNote(laneId, "type:   ".concat(files[i].mimetype));
+	    this.addNote(laneId, "size:   ".concat(files[i].size));	
+	    this.addNote(laneId, "language:".concat(languageDetected));
+	}
     }
     
     render() {
@@ -160,18 +200,34 @@ export default class UrlArea extends React.Component {
 
 	console.log('this.props.params', this.props.params);
 	var parameters = this.props.params
+
+	if (this.props.params.tokenId == undefined) {
+	    return React.createElement(
+		'h2',
+		null,
+		React.createElement(
+		    'div',
+		    {
+			style: style
+		    },
+		    'Single File Information has been passed via parameters.'
+		),
+		this.useParameters(parameters)
+            );
+	} else {
+	    return React.createElement(
+		'h2',
+		null,
+		React.createElement(
+		    'div',
+		    {
+			style: style
+		    },
+		    'All File Information has been passed via a token-based JSON transmission.'
+		),
+		this.useParameters(parameters)
+            );
+	}
 	
-	return React.createElement(
-	    'h2',
-	    null,
-	    React.createElement(
-		'div',
-		{
-		    style: style
-		},
-		'File Information has been passed via parameters'
-	    ),
-	    this.useParameters(parameters)
-        );
     }
 }

@@ -27,12 +27,17 @@ export default class App extends React.Component {
 	return (
 	    <div>
 	      <section className="page-header">
-		<img className="alignLeft"  src="switchboard.png" width="20%" height="20%" />
-		<img className="alignRight" src="CLARIN-Logo16-c.jpg" width="11%" height="11%" />
+		<a href="https://www.clarin.eu">
+		  <img className="alignLeft" src="CLARIN-Logo16-c.jpg" width="15%" height="15%" />
+		</a>
+		<img className="alignRight"  src="switchboard.png" width="18%" height="18%" />
 	        <h1 className="project-name">CLARIN Language Resource Switchboard</h1>
-	        <h2 className="project-tagline">Find the appropriate tool for your resource.
-                    <a className="whiteLink" href="about.html"> [ About ]</a>
-		</h2>
+	        <h2 className="project-tagline">Find the appropriate tool for your resource.</h2>
+		<p>
+		  <a className="whiteLink" href="about.html"> [ Developer Help ]</a>
+		  <a className="whiteLink" href="help.html">  [ User Help ]</a>		
+		</p>
+		
    	      </section>
 	      
 	      <div id='dragAndDropArea'></div>
@@ -40,6 +45,7 @@ export default class App extends React.Component {
 	      <Router history={hashHistory}>	      
 		<Route path="/" component={DropArea}/>
       		<Route path="/vlo/:fileURL/:fileSize/:fileMimetype/:fileLanguage" component={UrlArea}/>
+      		<Route path="/vlo/:tokenId" component={UrlArea}/>		
               </Router>		
 	      
    	      <AltContainer

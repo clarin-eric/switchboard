@@ -21,6 +21,7 @@ class ToolStore {
 	    [
 		{ task: "Tokenisation",
 		  name: "CLARIN-DK Tool Box (CST Tokenizer)",
+		  softwareType: "browserBased", 
 		  logo: "YourLogoComesHere.png",
 		  homepage: "https://www.clarin.dk/tools/createByGoalChoice",
 		  location: "Copenhagen, Denmark",
@@ -233,13 +234,13 @@ class ToolStore {
 		      email: "proycon@anaproy.nl",
 		  },
 		  version: "0.8.3",
-		  license: "public", //but webservice is protected with (free) registration
+		  license: "public",                //but webservice is protected with (free) registration
 		  shortDescription: "A tokeniser",
 		  longDescription: "Ucto is a unicode-compliant tokeniser. It takes input in the form of one or more untokenised texts, and subsequently tokenises them. Several languages are supported, but the software is extensible to other languages.",
-		  languages: ["nld", "eng", "deu", "fra", "ita", "spa", "por", "tur", "rus", "swe"], //iso 639-3
+		  languages: ["nld", "eng", "deu", "fra", "ita", "spa", "por", "tur", "rus", "swe"],
 		  lang_encoding: "639-1",
 		  mimetypes: ["text/xml","text/plain"], //plain text OR FoLiA XML
-		  output: ["text/plain", "text/xml"], //plain text tab seperated output OR FoLiA XML
+		  output: ["text/plain", "text/xml"],   //plain text tab-seperated output OR FoLiA XML
 		  url: ["https://webservices-lst.science.ru.nl/ucto/"],
 		  parameter: { project      : "new",
 			       input        : "self.linkToResource",
@@ -810,7 +811,62 @@ class ToolStore {
 			      lang:       "en",			      
 			      analysis:   "morphology"
 			     }
-		}		
+		},
+
+		// just add a webservice for the tools
+		{ task: "Keyword Extractor",
+		  name: "KER (WebService)",
+		  softwareType: "webService", 
+		  logo: "YourLogoComesHere.png",
+		  homepage: "http://lindat.mff.cuni.cz/services/ker/",
+		  location: "Prague, CUNI",
+		  creators: ["Jindřich Libovický"],
+		  contact: {
+		      person: "Jindřich Libovický",
+		      email: "libovicky@ufal.mff.cuni.cz",
+		  },
+		  version: "unknown",
+		  license: "unknown", 
+		  shortDescription: "Keyword extractor for Czech and English",
+		  longDescription:  "KER is a keyword extractor that was designed for scanned texts in Czech and English. It is based on the stadard tf-idf algorithm with the idf tables trained on texts from Wikipedia. To deal with the data sparsity, texts are preprocessed by Morphodita: morphological dictionary and tagger.",
+		  lang_encoding: "639-1",
+		  languages: ["ces", "eng"],
+		  mimetypes: ["text/plain"],
+		  url: ["http://lindat.mff.cuni.cz/services/ker"], 
+
+		  parameter: {  input   : "self.linkToResource", 
+				lang    : "self.linkToResourceLanguage"
+			     },
+		  mapping:   { input        : "file",
+			       lang         : "language"
+			     }		  
+		},
+
+		{ task: "Named Entity Recognition",
+		  name: "NameTag (WebService)",
+		  softwareType: "webService", 
+		  logo: "YourLogoComesHere.png",
+		  homepage: "http://lindat.mff.cuni.cz/services/nametag/",
+		  location: "Prague, CUNI",
+		  creators: ["Milan Straka, Jana Straková"],
+		  contact: {
+		      person: "Milan Straka",
+		      email: "straka@ufal.mff.cuni.cz",
+		  },
+		  version: "unknown",
+		  license: "NameTag is a free software under LGPL license and the linguistic models are free for non-commercial use and distributed under CC BY-NC-SA license, although for some models the original data used to create the model may impose additional licensing conditions.", 
+		  shortDescription: "Named Entity Recognition for Czech and English",
+		  longDescription:  "NameTag is an open-source tool for named entity recognition (NER). NameTag identifies proper names in text and classifies them into predefined categories, such as names of persons, locations, organizations, etc. NameTag is distributed as a standalone tool or a library, along with trained linguistic models. In the Czech language, NameTag achieves state-of-the-art performance (Straková et al. 2013).",
+		  lang_encoding: "639-1",
+		  languages: ["ces", "eng"],
+		  mimetypes: ["text/plain"],
+		  url: ["http://lindat.mff.cuni.cz/services/nametag/api/recognize"],
+		  parameter: {  input   : "self.linkToResource", 
+				lang    : "self.linkToResourceLanguage"
+			     },		  
+		  parameter: {  input   : "data"
+			     },
+		},		
 	    ];
 	
 	this.exportPublicMethods({
@@ -889,6 +945,7 @@ class ToolStore {
 		email : entry.contact.email,
 		parameter : entry.parameter,
 		lang_encoding: entry.lang_encoding,
+		softwareType: entry.softwareType,
 		mapping : entry.mapping,
 		} ];
 

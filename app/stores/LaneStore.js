@@ -27,7 +27,8 @@ class LaneStore {
 	const lanes = this.lanes;
 	
 	lane.id = uuid.v4();
-	lane.notes = lane.notes || [];
+	lane.notes    = lane.notes || [];
+	lane.file     = lane.file || null;
 	lane.filename = lane.filename || null;
 	lane.mimetype = lane.mimetype || null;	
 	lane.language = lane.language || null;
@@ -71,6 +72,18 @@ class LaneStore {
 	this.setState({lanes});
     }
 
+    addFile({laneId, file}) {
+	const lanes = this.lanes.map((lane) => {
+	    if(lane.id === laneId) {
+		lane.file = file;
+	    }
+	    
+	    return lane;
+	});
+
+	this.setState({lanes});
+    }
+    
     addUpload({laneId, upload}) {
 	const lanes = this.lanes.map((lane) => {
 	    if(lane.id === laneId) {
