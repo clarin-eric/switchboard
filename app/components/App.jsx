@@ -21,6 +21,7 @@ require('./../images/weblicht.jpg');
 require('./../images/CLARIN-Logo16-c.jpg');
 require('./../images/YourLogoComesHere.png');
 require('./../html/about.html');
+require('./../html/help.html');
 
 export default class App extends React.Component {
     render() {
@@ -34,8 +35,8 @@ export default class App extends React.Component {
 	        <h1 className="project-name">CLARIN Language Resource Switchboard</h1>
 	        <h2 className="project-tagline">Find the appropriate tool for your resource.</h2>
 		<p>
-		  <a className="whiteLink" href="about.html"> [ Developer Help ]</a>
 		  <a className="whiteLink" href="help.html">  [ User Help ]</a>		
+		  <a className="whiteLink" href="about.html"> [ Developer Help ]</a>
 		</p>
 		
    	      </section>

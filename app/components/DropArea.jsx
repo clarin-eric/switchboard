@@ -218,12 +218,10 @@ export default class DropArea extends React.Component {
 	// --header='Content-Type: text/plain'
 	
 	var req = Request
-	//.post('http://tuebingen.weblicht.sfs.uni-tuebingen.de:8011/api/uploadLR')
-	    .post('http://ws1-clarind.esc.rzg.mpg.de/drop-off/storage/'.concat(files[0].name))
-	//.attach("langResource", files[0], files[0].name)
+	    .post('http://weblicht.sfs.uni-tuebingen.de/clrs/storage/'.concat(files[0].name))	
+//	    .post('http://ws1-clarind.esc.rzg.mpg.de/drop-off/storage/'.concat(files[0].name))	// redirected to:
 	    .send(files[0])	
 	    .set('Content-Type', files[0].type)
-//	    .withCredentials()
 	    .end((err, res) => {
 		if (err) {
 		    console.log('DropArea: error in uploading resource document to MPG', err);
@@ -246,9 +244,8 @@ export default class DropArea extends React.Component {
 	} else if (files[0].type == "application/pdf") {
 	    console.log("we have a pdf document", files[0].type);
 
-	    // should work, once CLRS code and TIKA code is served from same website (CORS)
 	    var textualContent = Request
-		.put('http://tuebingen.weblicht.sfs.uni-tuebingen.de:8011/tika')
+		.put('http://weblicht.sfs.uni-tuebingen.de/clrs/tika')
 		.send(files[0])	
 		.set('header', 'Content-Type: '.concat(files[0].type))	
 		.end((err, res) => {
@@ -268,7 +265,7 @@ export default class DropArea extends React.Component {
 	// re-nesting of the following
 	console.log("Assuming we have a plain text document", files[0].type);    
 	var languageIdentification = Request
-	    .put('http://tuebingen.weblicht.sfs.uni-tuebingen.de:8011/language/string')
+	    .put('http://weblicht.sfs.uni-tuebingen.de/clrs/language/string')
 	    .send(files[0])	
 	    .set('Content-Type', files[0].type)	
 	    .end((err, res) => {
