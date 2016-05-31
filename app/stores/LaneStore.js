@@ -27,12 +27,13 @@ class LaneStore {
 	const lanes = this.lanes;
 	
 	lane.id = uuid.v4();
-	lane.notes    = lane.notes || [];
-	lane.file     = lane.file || null;
-	lane.filename = lane.filename || null;
-	lane.mimetype = lane.mimetype || null;	
-	lane.language = lane.language || null;
-	lane.upload   = lane.upload   || null;
+	lane.notes            = lane.notes || [];
+	lane.file             = lane.file || null;
+	lane.filename         = lane.filename || null;
+	lane.filenameWithDate = lane.filenameWithDate || null;
+	lane.mimetype         = lane.mimetype || null;	
+	lane.language         = lane.language || null;
+	lane.upload           = lane.upload   || null;
 	
 	this.setState({
 	    lanes: lanes.concat(lane)
@@ -60,10 +61,11 @@ class LaneStore {
     }
 
 
-    addFilename({laneId, filename}) {
+    addFilename({laneId, filename, filenameWithDate}) {
 	const lanes = this.lanes.map((lane) => {
 	    if(lane.id === laneId) {
-		lane.filename = filename;
+		lane.filename         = filename;
+		lane.filenameWithDate = filenameWithDate;		
 	    }
 	    
 	    return lane;
