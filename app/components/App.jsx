@@ -42,10 +42,10 @@ export default class App extends React.Component {
    	      </section>
 	      
 	      <div id='dragAndDropArea'></div>
-	      
+
 	      <Router history={hashHistory}>	      
 		<Route path="/" component={DropArea}/>
-      		<Route path="/vlo/:fileURL/:fileSize/:fileMimetype/:fileLanguage" component={UrlArea}/>
+      		<Route path="/vlo/:fileURL/:fileMimetype/:fileLanguage" component={UrlArea}/>
       		<Route path="/vlo/:tokenId" component={UrlArea}/>		
               </Router>		
 	      
