@@ -23,7 +23,7 @@ export default class DropArea extends React.Component {
 	    files: []
 	};
 
-	console.log('binding showFiles', this.showFiles, this.onDrop, this.addNote, this.addLane);
+	//console.log('binding showFiles', this.showFiles, this.onDrop, this.addNote, this.addLane);
     }
 
     addLane( resourceName ) {
@@ -216,72 +216,72 @@ export default class DropArea extends React.Component {
 	var today = new Date();
 	var newFileName = currentFile.name + '_at_' + today.getTime();
 	
-	console.log('onDrop entry, processing', currentFile, newFileName); 
+	//console.log('onDrop entry, processing', currentFile, newFileName); 
 
-	    // 1. store in the temporary file store at the MPG
+	// 1. store in the temporary file store at the MPG
 	Request
-		.post('http://weblicht.sfs.uni-tuebingen.de/clrs/storage/'.concat(newFileName))	
-	        // .post('http://ws1-clarind.esc.rzg.mpg.de/drop-off/storage/'.concat(files[i].name))	
-		.send(currentFile)	
-		.set('Content-Type', currentFile.type)
-		.end((err, res) => {
-		    if (err) {
-			console.log('DropArea: error in uploading resource document to MPG', newFileName, err);
-		    } else {
-			console.log('DropArea: success in uploading resource document to MPG', newFileName, res);
-
-			// 2. do mimetype detection using tika (available at detect/stream)
-			// ----------------------------------------------------------------
-			var mimetypeDetected = "identify mimetype!";	    
-			Request
-			    .put('http://weblicht.sfs.uni-tuebingen.de/clrs/detect/stream')
-			    .send(currentFile)	
-			    .set('Content-Type', currentFile.type)	
-			    .end((err, res) => {
-				if (err) {
-				    console.log('error: mimetype identification', newFileName, err);
-				} else {
-				    // need to preset the language menu
-				    console.log('success: mimetype identification', newFileName, res.text);
-				    mimetypeDetected = res.text;
-
-				    // 3. do language detection using tika (available at language/string)
-				    // ------------------------------------------------------------------
-				    // tika seems to support at least these 18 languages:
-    				    // da, en, hu, no, sv, de, es, is, pl, th, et, fi, it, pt, el, fr, nl, ru
-				    // --------------------------------------------------------
-				    
-				    var languageDetected = "identify language!";
-				    Request
-					.put('http://weblicht.sfs.uni-tuebingen.de/clrs/language/string')
-					.send(currentFile)	
-					.set('Content-Type', currentFile.type)	
-					.end((err, res) => {
-					    if (err) {
-						console.log('error: language identification', newFileName, err);
-					    } else {
-						console.log('success: language identification', newFileName, res.text);
-						languageDetected = res.text;
-
-						var laneId = this.addLane( currentFile.name );
+	    .post('http://weblicht.sfs.uni-tuebingen.de/clrs/storage/'.concat(newFileName))	
+	// .post('http://ws1-clarind.esc.rzg.mpg.de/drop-off/storage/'.concat(files[i].name))	
+	    .send(currentFile)	
+	    .set('Content-Type', currentFile.type)
+	    .end((err, res) => {
+		if (err) {
+		    console.log('DropArea: error in uploading resource document to MPG', newFileName, err);
+		} else {
+		    console.log('DropArea: success in uploading resource document to MPG', newFileName, res);
+		    
+		    // 2. do mimetype detection using tika (available at detect/stream)
+		    // ----------------------------------------------------------------
+		    var mimetypeDetected = "identify mimetype!";	    
+		    Request
+			.put('http://weblicht.sfs.uni-tuebingen.de/clrs/detect/stream')
+			.send(currentFile)	
+			.set('Content-Type', currentFile.type)	
+			.end((err, res) => {
+			    if (err) {
+				console.log('error: mimetype identification', newFileName, err);
+			    } else {
+				// need to preset the language menu
+				console.log('success: mimetype identification', newFileName, res.text);
+				mimetypeDetected = res.text;
+				
+				// 3. do language detection using tika (available at language/string)
+				// ------------------------------------------------------------------
+				// tika seems to support at least these 18 languages:
+    				// da, en, hu, no, sv, de, es, is, pl, th, et, fi, it, pt, el, fr, nl, ru
+				// --------------------------------------------------------
+				
+				var languageDetected = "identify language!";
+				Request
+				    .put('http://weblicht.sfs.uni-tuebingen.de/clrs/language/string')
+				    .send(currentFile)	
+				    .set('Content-Type', currentFile.type)	
+				    .end((err, res) => {
+					if (err) {
+					    console.log('error: language identification', newFileName, err);
+					} else {
+					    console.log('success: language identification', newFileName, res.text);
+					    languageDetected = res.text;
 					    
-						this.addFile(laneId, currentFile);
-						this.addFilename(laneId, currentFile.name, newFileName);
-						this.addUpload(laneId, 'dnd');
-						this.addMimetype(laneId, currentFile.type);
-						
-						languageDetected = this.addLanguage(laneId, languageDetected);
-						
-						this.addNote(laneId, "name:   ".concat(currentFile.name));
-						this.addNote(laneId, "type:   ".concat(currentFile.type));
-						this.addNote(laneId, "size:   ".concat(currentFile.size));	
-						this.addNote(laneId, "language:".concat(languageDetected));
-					    }
-					})
-				}
-			    })
-		    }
-		});
+					    var laneId = this.addLane( currentFile.name );
+					    
+					    this.addFile(laneId, currentFile);
+					    this.addFilename(laneId, currentFile.name, newFileName);
+					    this.addUpload(laneId, 'dnd');
+					    this.addMimetype(laneId, currentFile.type);
+					    
+					    languageDetected = this.addLanguage(laneId, languageDetected);
+					    
+					    this.addNote(laneId, "name:   ".concat(currentFile.name));
+					    this.addNote(laneId, "type:   ".concat(currentFile.type));
+					    this.addNote(laneId, "size:   ".concat(currentFile.size));	
+					    this.addNote(laneId, "language:".concat(languageDetected));
+					}
+				    })
+			    }
+			})
+		}
+	    });
     };
 
     onDrop(files) {

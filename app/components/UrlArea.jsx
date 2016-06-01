@@ -17,10 +17,16 @@ export default class UrlArea extends React.Component {
 	this.useParameters = this.useParameters.bind(this);
 	this.getJSON       = this.getJSON.bind(this);	
 	this.processJSONData = this.processJSONData.bind(this);
+	this.nilOperation    = this.nilOperation.bind(this);
+	this.unfoldHandle   = this.unfoldHandle.bind(this);
 	
 	this.state = {
 	    files: []
 	};
+
+	console.log('in constructor: this.props.params', this.props.params);
+	var parameters = this.props.params;
+	this.useParameters(parameters);
     }
 
     addLane( resourceName ) {
@@ -126,6 +132,25 @@ export default class UrlArea extends React.Component {
 	return language;
     }
 
+    nilOperation() {
+	console.log('called nil operation');
+    }
+
+    unfoldHandle( handle ) {
+	var hdlShortPrefix = "hdl:";
+	var hdlLongPrefix  = "http://hdl.handle.net/";	
+	var index = handle.indexOf(hdlShortPrefix);
+
+	var result = handle;
+
+	if (index > -1) {
+	    result = hdlLongPrefix.concat( handle.substring(index+hdlShortPrefix.length, handle.length) );
+	}
+
+	console.log( 'UrlArea/unfoldHandle', handle, result);
+	return result;
+    }
+    
     useParameters( parameters ) {
 	
         // var files = this.state.files;	
@@ -140,14 +165,15 @@ export default class UrlArea extends React.Component {
 
 	if (parameters.tokenId == undefined) {
 	    // single file information has been passed
-	    console.log('UrlArea/useParameters: single file information has been passed', parameters);
-	    
-	    var laneId = this.addLane(parameters.fileURL);
-	    this.addFilename(laneId, parameters.fileURL);
+	    // console.log('UrlArea/useParameters: single file information has been passed', parameters);
+
+	    var fileURL = this.unfoldHandle( parameters.fileURL);
+	    var laneId = this.addLane( fileURL );
+	    this.addFilename(laneId, fileURL );
 	    this.addUpload(laneId, "vlo");	
 	    this.addMimetype(laneId, parameters.fileMimetype);
 	    var languageDetected = this.addLanguage(laneId, parameters.fileLanguage);
-	    this.addNote(laneId, "name:   ".concat(parameters.fileURL));
+	    this.addNote(laneId, "name:   ".concat( fileURL ));
 	    this.addNote(laneId, "type:   ".concat(parameters.fileMimetype));
 	    this.addNote(laneId, "size:   ".concat(parameters.fileSize));	
 	    this.addNote(laneId, "language:".concat(languageDetected));
@@ -195,10 +221,12 @@ export default class UrlArea extends React.Component {
     render() {
 
 	var style = {
-	    align: 'center',
+	    fontSize: '0.5em',
+            margin: 2,
+            padding: 2	    
         };
 
-	console.log('this.props.params', this.props.params);
+	// console.log('this.props.params', this.props.params);
 	var parameters = this.props.params
 
 	if (this.props.params.tokenId == undefined) {
@@ -210,9 +238,10 @@ export default class UrlArea extends React.Component {
 		    {
 			style: style
 		    },
-		    'Single File Information has been passed via parameters.'
+		    'You have been transferred from the VLO. Please check the information below, then press "Show Tools".'
 		),
-		this.useParameters(parameters)
+		// this.useParameters(parameters)
+		this.nilOperation()
             );
 	} else {
 	    return React.createElement(
