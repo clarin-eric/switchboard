@@ -12,6 +12,7 @@ export default class Task extends React.Component {
 	super(props);
 	this.invokeSoftware = this.invokeSoftware.bind(this);
 	this.invokeWebService = this.invokeWebService.bind(this);	
+	this.gotoHome = this.gotoHome.bind(this);	
 	this.constructToolURL = this.constructToolURL.bind(this);
     }
 
@@ -72,10 +73,22 @@ export default class Task extends React.Component {
     
 			<DetailsRow
 			    icon='ion-ios-home-outline'
+	                    title="Home"
+       	                    summary={props.homepage}
+                        />
+
+			<DetailsRow
+			    icon='ion-ios-locked-outline'
+	                    title="Authentification"
+       	                    summary={props.authentification}
+                        />		
+
+			<DetailsRow
+			    icon='ion-ios-paperplane-outline'
 	                    title="URL"
        	                    summary={fullURL}
                         />
-
+		
                         <DetailsRow
 				icon='ion-ios-location-outline'
 	                        title="Location"
@@ -124,6 +137,12 @@ export default class Task extends React.Component {
 		    <button onClick={this.invokeSoftware.bind(this,summary)} > Click to start tool </button>		    
 		    </p>
 		);
+
+		if ((title == "Home") && (summary) ) return (
+		    <p style={{ fontWeight: 100, lineHeight: 1.0 }}>
+			<a href={summary} target="_blank"> {summary }</a> 
+		    </p>
+		);
 		
 		if(summary) return (
 			<p style={{ fontWeight: 100, lineHeight: 1.0 }}>
@@ -155,6 +174,8 @@ export default class Task extends React.Component {
 			 title={element.name}
 			 softwareType={element.softwareType}
 			 location={element.location}
+			 authentification={element.authentification}
+			 homepage={element.homepage}
                          url={element.url}
 		         parameter={element.parameter}
 		         mapping={element.mapping}
@@ -359,7 +380,13 @@ export default class Task extends React.Component {
 	
 	return rtnValue;
     }
-	
+
+    gotoHome( URL ) {
+	console.log('goto Home', URL);
+	var win = window.open(URL, '_blank');
+	win.focus();
+    }
+    
     invokeSoftware( URL ) {
 
 	console.log('invokeSoftware', URL);

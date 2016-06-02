@@ -23,7 +23,7 @@ class ToolStore {
 		  name: "CLARIN-DK Tool Box (CST Tokenizer)",
 		  softwareType: "browserBased", 
 		  logo: "YourLogoComesHere.png",
-		  homepage: "https://www.clarin.dk/tools/createByGoalChoice",
+		  homepage: "https://clarin.dk/clarindk/forside.jsp",		  
 		  location: "Copenhagen, Denmark",
 		  creators: ["Bart Jongejan et al."],
 		  contact: {
@@ -31,9 +31,10 @@ class ToolStore {
 		      email: "bartj@hum.ku.dk",
 		  },
 		  version: "0.8.3",
-		  license: "public", 
+		  license: "public",
+		  authentification: "no",
 		  shortDescription: "CLARIN-DK Tool Box (CST Tokenizer)",
-		  longDescription:  "CLARIN-DK Tool Box (CST Tokenizer for English and Danish",
+		  longDescription:  "CLARIN-DK Tool Box (CST Tokenizer for English and Danish)",
 		  lang_encoding: "639-1",
 		  languages: ["dan", "eng"],
 		  mimetypes: ["application/pdf",
@@ -74,7 +75,7 @@ class ToolStore {
 		{ task: "Lemmatization",
 		  name: "CLARIN-DK Tool Box (CST Lemmatizer)",
 		  logo: "YourLogoComesHere.png",
-		  homepage: "https://www.clarin.dk/tools/createByGoalChoice",
+		  homepage: "https://clarin.dk/clarindk/forside.jsp",		  
 		  location: "Copenhagen, Denmark (CLAM Webservices)",
 		  creators: ["Bart Jongejan et al."],
 		  contact: {
@@ -82,7 +83,8 @@ class ToolStore {
 		      email: "bartj@hum.ku.dk",
 		  },
 		  version: "0.8.3",
-		  license: "public", 
+		  license: "public",
+		  authentification: "no",		  
 		  shortDescription: "CLARIN-DK Tool Box (CST Lemmatizer)",
 		  longDescription:  "CLARIN-DK Tool Box (CST Lemmatizer). Lemmatiser for Bulgarian, Czech, Danish, Dutch, English, Estonian, Farsi, French, German, Greek, Hungarian, Icelandic, Italian, Latin, Macedonian, Polish, Portuguese, Romanian, Russian, Slovak, Serbian, Slovene, Spanish, and Ukrainian",
 		  lang_encoding: "639-1",
@@ -128,7 +130,7 @@ class ToolStore {
 		{ task: "Voice Synthesis",
 		  name: "CLARIN-DK Tool Box (espeak)",
 		  logo: "YourLogoComesHere.png",
-		  homepage: "https://www.clarin.dk/tools/createByGoalChoice",
+		  homepage: "https://clarin.dk/clarindk/forside.jsp",
 		  location: "Copenhagen, Denmark (CLAM Webservices)",
 		  creators: ["Bart Jongejan et al."],
 		  contact: {
@@ -136,9 +138,10 @@ class ToolStore {
 		      email: "bartj@hum.ku.dk",
 		  },
 		  version: "0.8.3",
-		  license: "public", 
+		  license: "public",
+		  authentification: "no",		  
 		  shortDescription: "CLARIN-DK Tool Box (espeak)",
-		  longDescription:  "CLARIN-DK Tool Box (espeak). Text to speech software. History. Originally known as speak and originally written for Acorn/RISC_OS computers starting in 1995. This version is an enhancement and re-write, including a relaxation of the original memory and processing power constraints, and with support for additional languages.",
+		  longDescription:  "Text to speech software. History. Originally known as speak and originally written for Acorn/RISC_OS computers starting in 1995. This version is an enhancement and re-write, including a relaxation of the original memory and processing power constraints, and with support for additional languages.",
 		  lang_encoding: "639-1",
 		  languages: ["afr", "bul", "bos", "cat", "ces", "cym", "dan", "ell", "eng", "epo", "spa", "est", "fin", "fas", "fra", 
 			      "hin", "hrv", "hun", "hye", "ind", "isl", "ita", "kat", "kan", "kur", "lat", "lav", "mkd", "mlg", "nld",
@@ -162,7 +165,7 @@ class ToolStore {
 		{ task: "Named Entity Recognition",
 		  name: "CLARIN-DK Tool Box (CST's name recognizer)",
 		  logo: "YourLogoComesHere.png",
-		  homepage: "https://www.clarin.dk/tools/createByGoalChoice",
+		  homepage: "https://clarin.dk/clarindk/forside.jsp",		  
 		  location: "Copenhagen, Denmark (CLAM Webservices)",
 		  creators: ["Bart Jongejan et al."],
 		  contact: {
@@ -170,7 +173,8 @@ class ToolStore {
 		      email: "bartj@hum.ku.dk",
 		  },
 		  version: "0.8.3",
-		  license: "public", 
+		  license: "public",
+		  authentification: "no",		  
 		  shortDescription: "CLARIN-DK Tool Box (CST's name recognizer)",
 		  longDescription:  "CLARIN-DK Tool Box (CST). CST's name recogniser classifies names as proper names, locations (with sub-classes of street, city, land and other types of locations), and other names (called MISC)",
 		  lang_encoding: "639-1",
@@ -192,7 +196,7 @@ class ToolStore {
 		{ task: "OCR Engine",
 		  name: "CLARIN-DK Tool Box (Tesseract | CuneiForm)",
 		  logo: "YourLogoComesHere.png",
-		  homepage: "https://www.clarin.dk/tools/createByGoalChoice",
+		  homepage: "https://clarin.dk/clarindk/forside.jsp",		  		  
 		  location: "Copenhagen, Denmark (CLAM Webservices)",
 		  creators: ["Bart Jongejan et al."],
 		  contact: {
@@ -200,7 +204,8 @@ class ToolStore {
 		      email: "bartj@hum.ku.dk",
 		  },
 		  version: "0.8.3",
-		  license: "public", 
+		  license: "public",
+		  authentification: "no",		  
 		  shortDescription: "CLARIN-DK Tool Box (Tesseract | CuneiForm)",
 		  longDescription:  "Tesseract is probably the most accurate open source OCR engine available. Combined with the Leptonica Image Processing Library it can read a wide variety of image formats and convert them to text in over 60 languages. It was one of the top 3 engines in the 1995 UNLV Accuracy test. Between 1995 and 2006 it had little work done on it, but since then it has been improved extensively by Google. It is released under the Apache License 2.0. Note that the CLARIN-DL Tool Box GUI gives you also access to the Russian CuneiForm system.",
 		  lang_encoding: "639-1",
@@ -226,7 +231,7 @@ class ToolStore {
 		{ task: "Tokenisation",
 		  name: "Ucto",
 		  logo: "YourLogoComesHere.png",		  
-		  homepage: "https://proycon.github.io/ucto",
+		  homepage: "https://languagemachines.github.io/ucto/",
 		  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
 		  creators: ["Maarten van Gompel, Ko van der Sloot (CLST, Radboud University Nijmegen)"],
 		  contact: {
@@ -235,6 +240,7 @@ class ToolStore {
 		  },
 		  version: "0.8.3",
 		  license: "public",                //but webservice is protected with (free) registration
+		  authentification: "yes",
 		  shortDescription: "A tokeniser",
 		  longDescription: "Ucto is a unicode-compliant tokeniser. It takes input in the form of one or more untokenised texts, and subsequently tokenises them. Several languages are supported, but the software is extensible to other languages.",
 		  languages: ["nld", "eng", "deu", "fra", "ita", "spa", "por", "tur", "rus", "swe"],
@@ -263,6 +269,7 @@ class ToolStore {
 		      email: "proycon@anaproy.nl",
 		  },
 		  version: "x.y.z",
+		  authentification: "no",		  
 		  license: "public", //but webservice is protected with (free) registration
 		  shortDescription: "A dependency parser for Dutch",
 		  longDescription: "Alpino is a dependency parser for Dutch, developed in the context of the PIONIER Project Algorithms for Linguistic Processing, developed by Gertjan van Noord at the University of Groningen. You can upload either tokenised or untokenised files (which will be automatically tokenised for you using ucto), the output will consist of a zip file containing XML files, one for each sentence in the input document.",
@@ -290,6 +297,7 @@ class ToolStore {
 		      email: "proycon@anaproy.nl",
 		  },
 		  version: "x.y.z",
+		  authentification: "no",		  
 		  license: "public", //but webservice is protected with (free) registration
 		  shortDescription: "T-scan is a Dutch text analytics tool for readability prediction.",
 		  longDescription: "T-scan is a Dutch text analytics tool for readability prediction.",
@@ -317,6 +325,7 @@ class ToolStore {
 		      email: "proycon@anaproy.nl",
 		  },
 		  version: "x.y.z",
+		  authentification: "no",		  
 		  license: "public", //but webservice is protected with (free) registration
 		  shortDescription: "Oersetter is a Dutch-Frisian Machine Translation system.",
 		  longDescription: "Oersetter is a Dutch-Frisian Machine Translation system.",
@@ -344,6 +353,7 @@ class ToolStore {
 		      email: "proycon@anaproy.nl",
 		  },
 		  version: "x.y.z",
+		  authentification: "no",		  
 		  license: "public", //but webservice is protected with (free) registration
 		  shortDescription: "Oersetter is a Frisian-Dutch Machine Translation system.",
 		  longDescription: "Oersetter is a Frisian-Dutch Machine Translation system.",
@@ -371,6 +381,7 @@ class ToolStore {
 		      email: "proycon@anaproy.nl",
 		  },
 		  version: "x.y.z",
+		  authentification: "no",		  
 		  license: "public", //but webservice is protected with (free) registration
 		  shortDescription: "A spelling corrector for Dutch",
 		  longDescription: "Valkuil is a Dutch spelling correction system.",
@@ -398,6 +409,7 @@ class ToolStore {
 		      email: "proycon@anaproy.nl",
 		  },
 		  version: "x.y.z",
+		  authentification: "no",		  
 		  license: "public", //but webservice is protected with (free) registration
 		  shortDescription: "A spelling corrector for English",
 		  longDescription: "Fowlt is a English spelling correction system.",
@@ -425,6 +437,7 @@ class ToolStore {
 		      email: "proycon@anaproy.nl",
 		  },
 		  version: "x.y.z",
+		  authentification: "no",		  
 		  license: "public", //but webservice is protected with (free) registration
 		  shortDescription: "NLP suite for Dutch",
 		  longDescription: "Frog's current version will tokenize, tag, lemmatize, and morphologically segment word tokens in Dutch text files, will assign a dependency graph to each sentence, will identify the base phrase chunks in the sentence, and will attempt to find and label all named entities.",
@@ -452,6 +465,7 @@ class ToolStore {
 		      email: "proycon@anaproy.nl",
 		  },
 		  version: "x.y.z",
+		  authentification: "no",		  
 		  license: "public", //but webservice is protected with (free) registration
 		  shortDescription: "NLP tool for building n-grams and skip-grams.",
 		  longDescription: "Colibri core is an NLP tool as well as a C++ and Python library for working with basic linguistic constructions such as n-grams and skipgrams (i.e patte rns with one or more gaps, either of fixed or dynamic size) in a quick and memory-efficient way.",
@@ -483,6 +497,7 @@ class ToolStore {
 		      email: "nalida@sfs.uni-tuebingen.de"
 		  },	    
 		  version: "v1.0",
+		  authentification: "no",		  
 		  licence: "public",
 		  longDescription: "Webservice converting NaLiDa-based CMDI profiles to Marc21",
 		  shortDescription: "Bibliographic Format Converter", // controlled vocabulary, change name?
@@ -512,6 +527,7 @@ class ToolStore {
 		      email: "wlsupport@sfs.uni-tuebingen.de"
 		  },	    
 		  version: "v1.0",
+		  authentification: "no",		  
 		  licence: "public",
 		  longDescription: "Weblicht Easy Chain for German Named Entity Recognition (German).",
 		  shortDescription: "Named Entity Recognizer", 
@@ -538,6 +554,7 @@ class ToolStore {
 		      email: "wlsupport@sfs.uni-tuebingen.de"
 		  },	    
 		  version: "v1.0",
+		  authentification: "no",		  
 		  licence: "public",
 		  longDescription: "Weblicht Easy Chain for German Named Entity Recognition (English).",
 		  shortDescription: "Named Entity Recognizer", // controlled vocabulary, change name?
@@ -564,6 +581,7 @@ class ToolStore {
 		      email: "wlsupport@sfs.uni-tuebingen.de"
 		  },	    
 		  version: "v1.0",
+		  authentification: "no",		  
 		  licence: "public",
 		  longDescription: "Weblicht Easy Chain for Constituent Parsing (German).",
 		  shortDescription: "Constituent Parsing",
@@ -590,6 +608,7 @@ class ToolStore {
 		      email: "wlsupport@sfs.uni-tuebingen.de"
 		  },	    
 		  version: "v1.0",
+		  authentification: "no",		  
 		  licence: "public",
 		  longDescription: "Weblicht Easy Chain for Constituent Parsing (English).",
 		  shortDescription: "Constituent Parsing",
@@ -616,6 +635,7 @@ class ToolStore {
 		      email: "wlsupport@sfs.uni-tuebingen.de"
 		  },	    
 		  version: "v1.0",
+		  authentification: "no",		  
 		  licence: "public",
 		  longDescription: "Weblicht Easy Chain for Dependency Parsing (German).",
 		  shortDescription: "Dependency Parsing",
@@ -642,6 +662,7 @@ class ToolStore {
 		      email: "wlsupport@sfs.uni-tuebingen.de"
 		  },	    
 		  version: "v1.0",
+		  authentification: "no",		  
 		  licence: "public",
 		  longDescription: "Weblicht Easy Chain for Dependency Parsing (English).",
 		  shortDescription: "Dependency Parsing",
@@ -668,6 +689,7 @@ class ToolStore {
 		      email: "wlsupport@sfs.uni-tuebingen.de"
 		  },	    
 		  version: "v1.0",
+		  authentification: "no",		  
 		  licence: "public",
 		  longDescription: "Weblicht Easy Chain for Lemmatization (German).",
 		  shortDescription: "Lemmatizer",
@@ -694,6 +716,7 @@ class ToolStore {
 		      email: "wlsupport@sfs.uni-tuebingen.de"
 		  },	    
 		  version: "v1.0",
+		  authentification: "no",		  
 		  licence: "public",
 		  longDescription: "Weblicht Easy Chain for Lemmatization (English).",
 		  shortDescription: "Lemmatizer",
@@ -720,6 +743,7 @@ class ToolStore {
 		      email: "wlsupport@sfs.uni-tuebingen.de"
 		  },	    
 		  version: "v1.0",
+		  authentification: "no",		  
 		  licence: "public",
 		  longDescription: "Weblicht Easy Chain for POS Tagging and Lemmatization (German).",
 		  shortDescription: "POS Tagger",
@@ -746,6 +770,7 @@ class ToolStore {
 		      email: "wlsupport@sfs.uni-tuebingen.de"
 		  },	    
 		  version: "v1.0",
+		  authentification: "no",		  
 		  licence: "public",
 		  longDescription: "Weblicht Easy Chain for POS Tagging and Lemmatization (English).",
 		  shortDescription: "POS Tagger",
@@ -772,6 +797,7 @@ class ToolStore {
 		      email: "wlsupport@sfs.uni-tuebingen.de"
 		  },	    
 		  version: "v1.0",
+		  authentification: "no",
 		  licence: "public",
 		  longDescription: "Weblicht Easy Chain for Morphology Analysis (German)",
 		  shortDescription: "Morphology",
@@ -798,6 +824,7 @@ class ToolStore {
 		      email: "wlsupport@sfs.uni-tuebingen.de"
 		  },	    
 		  version: "v1.0",
+		  authentification: "no",		  
 		  licence: "public",
 		  longDescription: "Weblicht Easy Chain for Morphology Analysis (English)",
 		  shortDescription: "Morphology",
@@ -826,6 +853,7 @@ class ToolStore {
 		      email: "libovicky@ufal.mff.cuni.cz",
 		  },
 		  version: "unknown",
+		  authentification: "no",		  
 		  license: "unknown", 
 		  shortDescription: "Keyword extractor for Czech and English",
 		  longDescription:  "KER is a keyword extractor that was designed for scanned texts in Czech and English. It is based on the stadard tf-idf algorithm with the idf tables trained on texts from Wikipedia. To deal with the data sparsity, texts are preprocessed by Morphodita: morphological dictionary and tagger.",
@@ -854,6 +882,7 @@ class ToolStore {
 		      email: "straka@ufal.mff.cuni.cz",
 		  },
 		  version: "unknown",
+		  authentification: "no",		  
 		  license: "NameTag is a free software under LGPL license and the linguistic models are free for non-commercial use and distributed under CC BY-NC-SA license, although for some models the original data used to create the model may impose additional licensing conditions.", 
 		  shortDescription: "Named Entity Recognition for Czech and English",
 		  longDescription:  "NameTag is an open-source tool for named entity recognition (NER). NameTag identifies proper names in text and classifies them into predefined categories, such as names of persons, locations, organizations, etc. NameTag is distributed as a standalone tool or a library, along with trained linguistic models. In the Czech language, NameTag achieves state-of-the-art performance (Straková et al. 2013).",
@@ -936,17 +965,19 @@ class ToolStore {
 	for (var i = 0; i<applicTools.length; i++) {
 	    const entry = applicTools[i];
 	    const tinfo = [ {
-		name : entry.name,
-		logo : entry.logo,
+		name            : entry.name,
+		logo            : entry.logo,
 		longDescription : entry.longDescription,
-		url  : entry.url,
-		location : entry.location,
-		id   : entry.id,
-		email : entry.contact.email,
-		parameter : entry.parameter,
-		lang_encoding: entry.lang_encoding,
-		softwareType: entry.softwareType,
-		mapping : entry.mapping,
+		homepage        : entry.homepage,
+		url             : entry.url,
+		location        : entry.location,
+		authentification: entry.authentification,
+		id              : entry.id,
+		email           : entry.contact.email,
+		parameter       : entry.parameter,
+		lang_encoding   : entry.lang_encoding,
+		softwareType    : entry.softwareType,
+		mapping         : entry.mapping,
 		} ];
 
 	    if (entry.task in toolGroups) { // obj.hasOwnProperty("key")
