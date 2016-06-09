@@ -18,7 +18,8 @@ export default class UrlArea extends React.Component {
 	this.getJSON       = this.getJSON.bind(this);	
 	this.processJSONData = this.processJSONData.bind(this);
 	this.nilOperation    = this.nilOperation.bind(this);
-	this.unfoldHandle   = this.unfoldHandle.bind(this);
+	this.unfoldHandle    = this.unfoldHandle.bind(this);
+	this.prefetch_URL    = this.prefetch_URL.bind(this);
 	
 	this.state = {
 	    files: []
@@ -27,6 +28,29 @@ export default class UrlArea extends React.Component {
 	console.log('in constructor: this.props.params', this.props.params);
 	var parameters = this.props.params;
 	this.useParameters(parameters);
+    }
+
+    prefetch_URL( URL, expectedMimetype ) {
+
+	console.log('UrlArea/prefetch_URL: at start', URL);	
+	var req = Request
+	    .get(URL)	
+	    // .head(URL)
+	    .end(function(err, res){
+		if (err) {
+		    console.log('UrlArea/prefetch_URL: error in prefetching URL',   err, URL);
+		} else {
+		    console.log('UrlArea/prefetch_URL: success in prefetching URL', JSON.stringify(res), res.type);
+		    if (res.type == expectedMimetype) {
+			console.log('prefetch_URL' ,res.type, expectedMimetype);
+		    } else {
+			alert('Resource may not not public, please try to fetch the resource with your authentification credentials!')
+		    }
+		}
+	    });
+
+	// be optimistic
+	return true;
     }
 
     addLane( resourceName ) {
@@ -177,6 +201,12 @@ export default class UrlArea extends React.Component {
 	    this.addNote(laneId, "type:   ".concat(parameters.fileMimetype));
 	    this.addNote(laneId, "size:   ".concat(parameters.fileSize));	
 	    this.addNote(laneId, "language:".concat(languageDetected));
+
+	    // check whether a tool could fetch the resource in question.
+	    // (todo: consider this being extra component)
+	    
+	    this.prefetch_URL(fileURL, parameters.fileMimetype);
+	    
 	} else {
 	    console.log('UrlArea/useParameters: a token has been passed', parameters);
 	    this.getJSON( parameters.tokenId );

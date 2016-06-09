@@ -993,10 +993,25 @@ class ToolStore {
     }
 
 
+    allTools() {
+
+	var allTools = this.registeredTools;
+	var tasks = this.groupTools( allTools );
+
+	if (Object.keys(tasks).length == 0) {
+	    alert("Sorry! There is not a single applicable tool...");
+	}
+	    
+	this.setState({
+	    applicableTools: allTools,
+	    tasks: tasks
+	});
+    }
+    
     // multiple filters to be defined, in particular, language code
     findTools( resourceDescription ) {
 
-	console.log("ToolStore/findTools at the very start.", resourceDescription);
+	// console.log("ToolStore/findTools at the very start.", resourceDescription);
 		    
 	// first filter: mimetype
 	var mimetypeFilter = this.registeredTools.filter((tool) =>
@@ -1009,7 +1024,7 @@ class ToolStore {
 						  }
 					      });
 
-	console.log('ToolStore/findTools with mimetype', resourceDescription, mimetypeFilter);
+	// console.log('ToolStore/findTools with mimetype', resourceDescription, mimetypeFilter);
 
 	var languageFilter = mimetypeFilter;
 	
@@ -1036,6 +1051,7 @@ class ToolStore {
 	// --------------------------------
 
 	// now, for the task-oriented view
+
 	var tasks = this.groupTools( languageFilter );
 
 	if (Object.keys(tasks).length == 0) {

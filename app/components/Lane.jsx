@@ -52,19 +52,9 @@ export default class Lane extends React.Component {
     
     displayTools(laneId) {
 	
-	// const note = NoteActions.create({task: 'New task'});
-	// LaneActions.attachToLane({
-	// 	noteId: note.id,
-	// 	  laneId
-	// });
-
-	// this updates the state in lanes store (setting selectedLane)
 	var myLane = LaneActions.getLane( laneId );
-	console.log("Lane.jsx/displayTools: myLane", myLane);
-
 	var entireLaneState = LaneStore.getState();
 	var langResourceDescription = entireLaneState.selectedLane[0];
-	console.log("Lane.jsx/displayTools laneState", langResourceDescription);
 
 	if (langResourceDescription.language == null) {
 	    alert('CLRS: Please identify the language of the resource!');

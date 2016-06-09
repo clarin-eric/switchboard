@@ -8,6 +8,7 @@ import Lanes from './Lanes.jsx';                    // render all the lanes (lan
 import Tools from './Tools.jsx';                    // render all the tools
 import Tasks from './Tasks.jsx';                    // task-oriented view
 import LaneActions from '../actions/LaneActions';   // actions associated with lanes: CRUD, attach/detach
+import ToolActions from '../actions/ToolActions';   // access to findTools action
 import LaneStore from '../stores/LaneStore';        // storing lanes (state)
 import ToolStore from '../stores/ToolStore';        // storing tools (state)
 import DropArea from './DropArea.jsx';              // drop & drag area for resources
@@ -24,19 +25,30 @@ require('./../html/about.html');
 require('./../html/help.html');
 
 export default class App extends React.Component {
+
+    constructor(props) {
+	super(props);
+	this.showTools = this.showTools.bind(this);
+    }
+
+    showTools() {
+	ToolActions.allTools( );	
+    }
+    
     render() {
 	return (
 	    <div>
 	      <section className="page-header">
 		<a href="https://www.clarin.eu">
-		  <img className="alignLeft" src="CLARIN-Logo16-c.jpg" width="15%" height="15%" />
+		  <img className="alignLeft" src="CLARIN-Logo16-c.jpg" width="12%" height="12%" />
 		</a>
-		<img className="alignRight"  src="switchboard.png" width="18%" height="18%" />
+		<img className="alignRight"  src="switchboard.png" width="15%" height="15%" />
 	        <h1 className="project-name">CLARIN Language Resource Switchboard</h1>
 	        <h2 className="project-tagline">Find the appropriate tool for your resource.</h2>
 		<p>
 		  <a className="whiteLink" href="help.html">  [ User Help ]</a>		
-		  <a className="whiteLink" href="about.html"> [ Developer Help ]</a>
+  	          <button className="alltools" onClick={this.showTools}>Show All Tools</button>
+  		<a className="whiteLink" href="about.html"> [ Developer Help ]</a>
 		</p>
 		
    	      </section>
@@ -46,6 +58,7 @@ export default class App extends React.Component {
 	      <Router history={hashHistory}>	      
 		<Route path="/" component={DropArea}/>
       		<Route path="/vlo/:fileURL/:fileMimetype/:fileLanguage" component={UrlArea}/>
+      		<Route path="/vlo/:fileURL/:fileMimetype" component={UrlArea}/>		
       		<Route path="/vlo/:tokenId" component={UrlArea}/>		
               </Router>		
 	      

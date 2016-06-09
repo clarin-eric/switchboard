@@ -110,10 +110,10 @@ export default class Task extends React.Component {
 	    const styles = {
 		row: {
 			width: '100%',
-			padding: '0 20px',
+			padding: '10 20px',
 			display: 'flex',
 			alignItems: 'center',
-			margin: '10px 0'
+			margin: '-20px 0'
 		},
 		icon: {
 			display: 'block',

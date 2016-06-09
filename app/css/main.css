@@ -111,6 +111,7 @@ h2 {
     padding-left: 2em;
 }
 
+
 .lane {
   display: inline-block;
 
@@ -135,6 +136,19 @@ h2 {
 
   min-width: 10em;
   vertical-align: top;
+}
+
+.alltools {
+  display: inline-block;
+
+  margin: 1em;
+
+  background-color: #afafaf;
+  border: 3px solid #ccc;
+  border-radius: 0.5em;
+
+  min-width: 7em;
+  vertical-align: center;
 }
 
 .task {
