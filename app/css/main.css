@@ -170,7 +170,7 @@ h2 {
   padding: 1em;
 
   color: #efefef;
-  background-color: #333;
+  background-color: #222;
 
   border-top-left-radius: 0.5em;
   border-top-right-radius: 0.5em;
@@ -224,18 +224,8 @@ h2 {
   padding: 0.5em;
 
   background-color: #fdfdfd;
-  /* box-shadow: 0 0 0.3em .03em rgba(0,0,0,.3); */
-}
-.note:hover {
-  box-shadow: 0 0 0.3em .03em rgba(0,0,0,.7);
-
-  transition: .6s;
 }
 
-.note .value {
-  /* force to use inline-block so that it gets minimum height */
-  display: inline-block;
-}
 
 .note .delete {
   float: right;
@@ -249,9 +239,7 @@ h2 {
 
   visibility: hidden;
 }
-.note:hover .delete {
-  visibility: visible;
-}
+
 
 .logoAlignLeft {
     align: left;

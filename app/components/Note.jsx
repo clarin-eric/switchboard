@@ -71,7 +71,7 @@ export default class Note extends React.Component {
     
     renderNote = () => {
 	return (
-		<div onClick={this.edit}>
+		<div>
 		<span className="note">{this.props.note.task}</span>
 	    </div>
 	);

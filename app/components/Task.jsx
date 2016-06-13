@@ -58,6 +58,8 @@ export default class Task extends React.Component {
 
 	const ToolCard = (props) => {
 	    const fullURL = this.constructToolURL(props);
+
+	    if (fullURL) 
 	    return(
              <div style={{ position: 'relative', top: 0 }}>
 		  <header style={styles.cardHeader} className='card-header-details'>
@@ -104,6 +106,47 @@ export default class Task extends React.Component {
 		</div>
 		</div>
 	    )
+
+	    return (
+		             <div style={{ position: 'relative', top: 0 }}>
+		  <header style={styles.cardHeader} className='card-header-details'>
+			<ProfilePicture imgSrc={props.imgSrc} borderColor={props.imgBorderColor} />
+		</header>
+
+		<div style={{color: '#000'}}>
+			<DetailsRow
+	                    icon='icon ion-ios-paper-outline'
+			    title="Description"
+       	                    summary={props.role}	    
+                        />
+    
+			<DetailsRow
+			    icon='ion-ios-home-outline'
+	                    title="Home"
+       	                    summary={props.homepage}
+                        />
+
+			<DetailsRow
+			    icon='ion-ios-locked-outline'
+	                    title="Authentification"
+       	                    summary={props.authentification}
+                        />		
+
+                        <DetailsRow
+				icon='ion-ios-location-outline'
+	                        title="Location"
+	                        summary={props.location}
+	                />
+    
+                        <DetailsRow
+				icon='ion-ios-email-outline'
+				title="e-mail"
+				summary={props.email}	    
+			/>
+
+		</div>
+		</div>
+	    )
 	};
 
 	const DetailsRow = ({ icon, title, summary }) => {
@@ -132,7 +175,7 @@ export default class Task extends React.Component {
 	    };
 	    
 	    const renderSummary = () => {
-		if ((title == "URL") && (summary) ) return (
+		if ((title == "URL") && ( summary.url )) return (
 		    <p style={{ fontWeight: 100, lineHeight: 1.0 }}>
 		    <button onClick={this.invokeSoftware.bind(this,summary)} > Click to start tool </button>		    
 		    </p>
@@ -252,17 +295,23 @@ export default class Task extends React.Component {
 	
 	    return null;
 	}
-	
 	    
 	// the location for the server holding temporarily the resources
 	// var fileServerURL = "http://shannon.sfs.uni-tuebingen.de:8011/";
 	// var fileServerURL = "http://localhost:8011/";
-
-
-	console.log('Task.jsx', item);
-	// central service to retrieve language resource, may need to chech cross-site scripting issue
+	
 	var fileServerURL = "http://ws1-clarind.esc.rzg.mpg.de/drop-off/storage/";	
 	var entireState = LaneStore.getState();
+        var rtnValue = { };	
+
+
+	// if there is no resource in the spotlight, we return an empty URL object.
+	if (entireState.selectedLane.length == 0) {
+	    console.log('Task.jsx: the is no lane defined.', item, entireState);
+	    return false;
+	}
+	
+	// central service to retrieve language resource, may need to chech cross-site scripting issue
 	var filename =  entireState.selectedLane[0].name;
 	var file     =  entireState.selectedLane[0].file;
 	var language =  entireState.selectedLane[0].language;
@@ -361,7 +410,7 @@ export default class Task extends React.Component {
 	}
 
 	console.log('Task.jsx URL:', urlWithParameters);
-        var rtnValue = { };
+
 	if (softwareType == "webService") {
 	    rtnValue =
 		{

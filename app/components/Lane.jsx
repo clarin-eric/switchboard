@@ -26,11 +26,11 @@ export default class Lane extends React.Component {
 	return (
 	    <div {...props}>
   	      <div className="lane-header">
-  	        <Editable className="lane-name"
-	                  editing={lane.editing}
-                          value={lane.name}
-	                  onEdit={this.editName}
-                          onValueClick={this.activateLaneEdit} />
+  	        <a className="lane-name"
+		   href={lane.name}
+		   target="_blank">
+	    	   <span>Link to Resource</span>
+		</a>
 	    
 	        <div className="lane-add-note">
   	           <button onClick={this.displayTools}>Show Tools</button>

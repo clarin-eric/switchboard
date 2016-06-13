@@ -65,7 +65,8 @@ class ToolStore {
 
 		  parameter: {  input   : "self.linkToResource", 
 				lang    : "self.linkToResourceLanguage",                 
-				analysis: "tok"
+				analysis: "tok",
+				UIlanguage: "en"
 			     },
 		  mapping:   { input        : "URL",
 			       lang         : "language"
@@ -118,7 +119,8 @@ class ToolStore {
 		  url: ["https://www.clarin.dk/tools/createByGoalChoice"], 
 		  parameter: {  input   : "self.linkToResource", 
 				lang    : "self.linkToResourceLanguage",                 
-				analysis: "lem"
+				analysis: "lem",
+				UIlanguage: "en"				
 			     },
 
 		  // CLARIN-DK calls those parameters differently, namely:
@@ -152,7 +154,8 @@ class ToolStore {
 		  url: ["https://www.clarin.dk/tools/createByGoalChoice"], 
 		  parameter: {  input   : "self.linkToResource", 
 				lang    : "self.linkToResourceLanguage",                 
-				analysis: "voiceSynthesis"
+				analysis: "voiceSynthesis",
+				UIlanguage: "en"				
 			     },
 
 		  // CLARIN-DK calls those parameters differently, namely:
@@ -184,7 +187,8 @@ class ToolStore {
 		  url: ["https://www.clarin.dk/tools/createByGoalChoice"], 
 		  parameter: {  input   : "self.linkToResource", 
 				lang    : "self.linkToResourceLanguage",                 
-				analysis: "ner"
+				analysis: "ner",
+				UIlanguage: "en"				
 			     },
 
 		  // CLARIN-DK calls those parameters differently, namely:
@@ -219,7 +223,8 @@ class ToolStore {
 		  url: ["https://www.clarin.dk/tools/createByGoalChoice"], 
 		  parameter: {  input   : "self.linkToResource", 
 				lang    : "self.linkToResourceLanguage",                 
-				analysis: "txt"
+				analysis: "txt",
+				UIlanguage: "en"				
 			     },
 
 		  // CLARIN-DK calls those parameters differently, namely:

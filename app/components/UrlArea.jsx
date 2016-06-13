@@ -44,7 +44,7 @@ export default class UrlArea extends React.Component {
 		    if (res.type == expectedMimetype) {
 			console.log('prefetch_URL' ,res.type, expectedMimetype);
 		    } else {
-			alert('Resource may not not public, please try to fetch the resource with your authentification credentials!')
+			alert('Resource may not not public, please try to fetch the resource with your authentification credentials! Click on "Link to Resource"')
 		    }
 		}
 	    });
