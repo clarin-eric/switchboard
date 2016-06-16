@@ -180,6 +180,9 @@ export default class DropArea extends React.Component {
             return '';
         }
 
+	// don't duplicate file information (apart from the preview)
+	return '';
+	
         return React.createElement(
             'div',
             null,

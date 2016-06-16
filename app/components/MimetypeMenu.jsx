@@ -14,6 +14,7 @@ export default class MimetypeMenu extends React.Component {
 	const {defaultValue, ...props} = this.props;
 
         var options = ["application/json",
+	    	       "application/tei+xml",
 	    	       "application/mediatagger",
 		       "application/msword",
 		       "application/mxf",
