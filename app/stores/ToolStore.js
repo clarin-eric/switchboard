@@ -263,6 +263,34 @@ class ToolStore {
 			     }
 		},
 
+		{ task: "Conversion",
+		  name: "OxGarage Conversion (web service)",
+		  logo: "YourLogoComesHere.png",
+		  softwareType: "webService", 		  
+		  homepage: "http://oxgarage.oucs.ox.ac.uk:8080/ege-webclient",
+		  location: "Oxford, United Kingdom",		  
+		  creators: ["see Github repository at https://github.com/sebastianrahtz/oxgarage"],
+		  contact: {
+		      person: "Github page",
+		      email: "see Github repository at https://github.com/sebastianrahtz/oxgarage",
+		  },
+		  version: "2.10.0",
+		  license: "public",               
+		  authentification: "no",
+		  shortDescription: "OxGarage webservice to transform XML-based TEI documents to plain text. For more conversions, please go to the homepage.",
+		  longDescription: "OxGarage is a web, and RESTful, service to manage the transformation of documents between a variety of formats. The majority of transformations use the Text Encoding Initiative format as a pivot format.",
+		  languages: ["nld", "eng", "deu", "fra", "ita", "spa", "por", "tur", "rus", "swe"], // todo
+		  lang_encoding: "639-1",
+		  mimetypes: ["text/xml", "application/tei+xml"], 
+		  output: ["text/plain"],
+		  url: ["http://oxgarage.oucs.ox.ac.uk:8080/ege-webservice/Conversions/TEI%3Atext%3Axml/txt%3Atext%3Aplain/"],
+		  parameter: { 
+			     },
+		  // mapping the standard parameter names to the ones used by the tools
+		  mapping:   { 
+			     }
+		},
+		
 		{ task: "Dependency Parsing",
 		  name: "Alpino",
 		  logo: "YourLogoComesHere.png",		  
