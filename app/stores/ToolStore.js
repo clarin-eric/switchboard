@@ -281,7 +281,8 @@ class ToolStore {
 		  longDescription: "OxGarage is a web, and RESTful, service to manage the transformation of documents between a variety of formats. The majority of transformations use the Text Encoding Initiative format as a pivot format.",
 		  languages: ["nld", "eng", "deu", "fra", "ita", "spa", "por", "tur", "rus", "swe"], // todo
 		  lang_encoding: "639-1",
-		  mimetypes: ["text/xml", "application/tei+xml"], 
+		  // mimetypes: ["text/xml", "application/xml", "application/tei+xml"],
+		  mimetypes: ["application/tei+xml"], 		  
 		  output: ["text/plain"],
 		  url: ["http://oxgarage.oucs.ox.ac.uk:8080/ege-webservice/Conversions/TEI%3Atext%3Axml/txt%3Atext%3Aplain/"],
 		  parameter: { 
@@ -316,6 +317,35 @@ class ToolStore {
 			     },
 		  // mapping the standard parameter names to the ones used by the tools
 		  mapping:   { input        : "untokinput_url"
+			     }
+		},
+
+		{ task: "Text Analytics",
+		  name: "Voyant Tools",
+		  logo: "voyant-tools.jpg",		  
+		  homepage: "http://voyant-tools.org",
+		  location: "Canada (Quebec)",		  
+		  creators: ["Stéfan Sinclair (McGill Alberta) and Geoffrey Rockwell (U Alberta)"],
+		  contact: {
+		      person: "Unknown Person",
+		      email: "Unknown email",
+		  },
+		  version: "v2.1",
+		  authentification: "no",		  
+		  license: "public", //but webservice is protected with (free) registration
+		  shortDescription: "Voyant Tools is a web-based text reading and analysis environment. It is a scholarly project that is designed to facilitate reading and interpretive practices for digital humanities students and scholars as well as for the general public.",
+		  longDescription: "Use it to learn how computers-assisted analysis works. Check out our examples that show you how to do real academic tasks with Voyant. Use it to study texts that you find on the web or texts that you have carefully edited and have on your computer. Use it to add functionality to your online collections, journals, blogs or web sites so others can see through your texts with analytical tools. Use it to add interactive evidence to your essays that you publish online. Add interactive panels right into your research essays (if they can be published online) so your readers can recapitulate your results. Use it to develop your own tools using our functionality and code.",
+		  // virtually any language
+		  languages: ["eng", "deu", "spa", "nld", "fra"], 
+		  lang_encoding: "639-1",
+		  mimetypes: ["text/plain", "application/pdf",
+			      "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+			      "text/tei+xml;format-variant=tei-dta"
+			     ], 
+		  output: ["text/plain", "text/xml"], //plain text tab seperated output OR FoLiA XML
+		  url: ["http://voyant-tools.org/"],
+		  parameter: { 
+			       input        : "self.linkToResource"
 			     }
 		},
 

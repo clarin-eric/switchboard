@@ -310,9 +310,12 @@ export default class Task extends React.Component {
 	    console.log('Task.jsx: the is no lane defined.', item, entireState);
 	    return false;
 	}
+
+	console.log('Task.jsx/constructToolURL', entireState.selectedLane[0]);
 	
 	// central service to retrieve language resource, may need to chech cross-site scripting issue
 	var filename =  entireState.selectedLane[0].name;
+	var filenameWithDate =  entireState.selectedLane[0].filenameWithDate;	
 	var file     =  entireState.selectedLane[0].file;
 	var language =  entireState.selectedLane[0].language;
 	var upload   =  entireState.selectedLane[0].upload;
@@ -342,6 +345,7 @@ export default class Task extends React.Component {
 	}
     
 	var inputFilename = fileServerURL + filename;
+	var inputFilename = fileServerURL + filenameWithDate;	
 
 	console.log('Task.jsx/constructToolURL', item, entireState.selectedLane[0], 'encoding:', lang_encoding);
 	

@@ -19,6 +19,7 @@ import { Router, Route, hashHistory } from 'react-router'
 
 require('./../images/switchboard.png');
 require('./../images/weblicht.jpg');
+require('./../images/voyant-tools.jpg');
 require('./../images/CLARIN-Logo16-c.jpg');
 require('./../images/YourLogoComesHere.png');
 require('./../html/about.html');

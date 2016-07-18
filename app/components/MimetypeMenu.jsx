@@ -14,7 +14,6 @@ export default class MimetypeMenu extends React.Component {
 	const {defaultValue, ...props} = this.props;
 
         var options = ["application/json",
-	    	       "application/tei+xml",
 	    	       "application/mediatagger",
 		       "application/msword",
 		       "application/mxf",
@@ -48,6 +47,10 @@ export default class MimetypeMenu extends React.Component {
 		       "image/png",		       
 		       "image/tiff",
 		       "image/pdf",
+		       
+		       "text/tei+xml;format-variant=tei-iso-spoken",
+		       "text/tei+xml;format-variant=tei-dta",
+		       
 		       "text/csv",
 		       "text/exb+xml",
 		       "text/exs+xml",
@@ -72,6 +75,12 @@ export default class MimetypeMenu extends React.Component {
 		       "text/x-toolbox-text",
 		       "text/x-trs",
 		       "text/xml",
+		       
+		       "text/xml;format-variant=exmaralda-exb",
+		       "text/xml;format-variant=folker-fln",
+		       "text/xml;format-variant=transcriber-trs",
+		       "text/xml;format-variant=weblicht-tcf",
+
 		       "unknown type",
 		       "video/avi",
 		       "video/mp4",

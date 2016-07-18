@@ -218,15 +218,25 @@ export default class DropArea extends React.Component {
     doRequests( currentFile ) {
 	var today = new Date();
 	var newFileName = currentFile.name + '_at_' + today.getTime();
+	var fileExtension = currentFile.name.split('.').pop();
+	newFileName = today.getTime() + "." + fileExtension;
+
+	// todo: RZG file upload server does not handle files of type "text/xml" appropriately.
+	// upload works, download only gives metadata of file to be downloaded.
+	var newFileType = currentFile.type
+	if (newFileType == "text/xml") {
+	    newFileType = "application/octet_stream"
+	}
 	
-	//console.log('onDrop entry, processing', currentFile, newFileName); 
+	console.log('onDrop entry, processing', currentFile, newFileName); 
 
 	// 1. store in the temporary file store at the MPG
 	Request
-	    .post('http://weblicht.sfs.uni-tuebingen.de/clrs/storage/'.concat(newFileName))	
+	    .post('http://weblicht.sfs.uni-tuebingen.de/clrs/storage/'.concat(newFileName))
+       // old url without proxy information in place:
 	// .post('http://ws1-clarind.esc.rzg.mpg.de/drop-off/storage/'.concat(files[i].name))	
 	    .send(currentFile)	
-	    .set('Content-Type', currentFile.type)
+	    .set('Content-Type', newFileType)
 	    .end((err, res) => {
 		if (err) {
 		    console.log('DropArea: error in uploading resource document to MPG', newFileName, err);
