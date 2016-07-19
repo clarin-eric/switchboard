@@ -248,10 +248,15 @@ class ToolStore {
 		  authentification: "yes",
 		  shortDescription: "A tokeniser",
 		  longDescription: "Ucto is a unicode-compliant tokeniser. It takes input in the form of one or more untokenised texts, and subsequently tokenises them. Several languages are supported, but the software is extensible to other languages.",
-		  languages: ["nld", "eng", "deu", "fra", "ita", "spa", "por", "tur", "rus", "swe"],
+		  languages: ["nld", "eng", "deu", "fra", "ita", "fry"],
 		  lang_encoding: "639-1",
-		  mimetypes: ["text/xml","text/plain"], //plain text OR FoLiA XML
-		  output: ["text/plain", "text/xml"],   //plain text tab-seperated output OR FoLiA XML
+		  mimetypes: [
+		      "text/plain"
+		              // , "text/xml",		      
+			      // , "application/pdf",
+			      // , "application/msword"
+		  ],
+		  output: ["Tadpole Columned Output Format", "text/folia+xml"], 		  		  		  
 		  url: ["https://webservices-lst.science.ru.nl/ucto/"],
 		  parameter: { project      : "new",
 			       input        : "self.linkToResource",
@@ -263,8 +268,37 @@ class ToolStore {
 			     }
 		},
 
+		{ task: "Text Analytics",
+		  name: "Voyant Tools",
+		  logo: "voyant-tools.jpg",		  
+		  homepage: "http://voyant-tools.org",
+		  location: "Canada (Quebec)",		  
+		  creators: ["Stéfan Sinclair (McGill Alberta) and Geoffrey Rockwell (U Alberta)"],
+		  contact: {
+		      person: "Unknown Person",
+		      email: "Unknown email",
+		  },
+		  version: "v2.1",
+		  authentification: "no",		  
+		  license: "public", //but webservice is protected with (free) registration
+		  shortDescription: "Voyant Tools is a web-based text reading and analysis environment. It is a scholarly project that is designed to facilitate reading and interpretive practices for digital humanities students and scholars as well as for the general public.",
+		  longDescription: "Use it to learn how computers-assisted analysis works. Check out our examples that show you how to do real academic tasks with Voyant. Use it to study texts that you find on the web or texts that you have carefully edited and have on your computer. Use it to add functionality to your online collections, journals, blogs or web sites so others can see through your texts with analytical tools. Use it to add interactive evidence to your essays that you publish online. Add interactive panels right into your research essays (if they can be published online) so your readers can recapitulate your results. Use it to develop your own tools using our functionality and code.",
+		  // virtually any language
+		  languages: ["eng", "deu", "spa", "nld", "fra"], 
+		  lang_encoding: "639-1",
+		  mimetypes: ["text/plain", "application/pdf",
+			      "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+			      "text/tei+xml;format-variant=tei-dta"
+			     ], 
+		  output: ["text/plain", "text/xml"], //plain text tab seperated output OR FoLiA XML
+		  url: ["http://voyant-tools.org/"],
+		  parameter: { 
+			       input        : "self.linkToResource"
+			     }
+		},
+		
 		{ task: "Conversion",
-		  name: "OxGarage Conversion (web service)",
+		  name: "OxGarage (web service)",
 		  logo: "YourLogoComesHere.png",
 		  softwareType: "webService", 		  
 		  homepage: "http://oxgarage.oucs.ox.ac.uk:8080/ege-webclient",
@@ -282,9 +316,45 @@ class ToolStore {
 		  languages: ["nld", "eng", "deu", "fra", "ita", "spa", "por", "tur", "rus", "swe"], // todo
 		  lang_encoding: "639-1",
 		  // mimetypes: ["text/xml", "application/xml", "application/tei+xml"],
-		  mimetypes: ["application/tei+xml"], 		  
+		  mimetypes: ["application/tei+xml",
+			      "text/tei+xml;format-variant=tei-dta"], 		  
 		  output: ["text/plain"],
 		  url: ["http://oxgarage.oucs.ox.ac.uk:8080/ege-webservice/Conversions/TEI%3Atext%3Axml/txt%3Atext%3Aplain/"],
+		  parameter: { 
+			     },
+		  // mapping the standard parameter names to the ones used by the tools
+		  mapping:   { 
+			     }
+		},
+
+		// <form id="f_decode" method="post" enctype="multipart/form-data" accept="application/tei+xml" action="decode.perl">
+
+
+		{ task: "Conversion",
+		  name: "TEI↔TCF encoder+decoder (web service)",
+		  logo: "YourLogoComesHere.png",
+		  softwareType: "webService", 		  
+		  homepage: "http://kaskade.dwds.de/tei-tcf",
+		  location: "DWDS, Germany",		  
+		  creators: ["Bryan Jurish"],
+		  contact: {
+		      person: "Bryan Jurish",
+		      email: "jurish@bbaw.de",
+		  },
+		  version: "0.0.3",
+		  license: "public",               
+		  authentification: "no",
+		  shortDescription: "Converts between TCF and TEI",
+		  longDescription: "A converter between the two formats TEI and TCF. Beta version.",
+		  languages: ["nld", "eng", "deu", "fra", "ita", "spa", "por", "tur", "rus", "swe"], // todo
+		  lang_encoding: "639-1",
+		  // mimetypes: ["text/xml", "application/xml", "application/tei+xml"],
+		  mimetypes: ["application/tei+xml",
+			      "text/tei+xml;format-variant=tei-dta",
+			      "application/xml;format-variant=weblicht-tcf"
+			     ], 		  
+		  output: ["text/plain"],
+		  url: ["http://kaskade.dwds.de/tei-tcf"], // TODO
 		  parameter: { 
 			     },
 		  // mapping the standard parameter names to the ones used by the tools
@@ -320,34 +390,6 @@ class ToolStore {
 			     }
 		},
 
-		{ task: "Text Analytics",
-		  name: "Voyant Tools",
-		  logo: "voyant-tools.jpg",		  
-		  homepage: "http://voyant-tools.org",
-		  location: "Canada (Quebec)",		  
-		  creators: ["Stéfan Sinclair (McGill Alberta) and Geoffrey Rockwell (U Alberta)"],
-		  contact: {
-		      person: "Unknown Person",
-		      email: "Unknown email",
-		  },
-		  version: "v2.1",
-		  authentification: "no",		  
-		  license: "public", //but webservice is protected with (free) registration
-		  shortDescription: "Voyant Tools is a web-based text reading and analysis environment. It is a scholarly project that is designed to facilitate reading and interpretive practices for digital humanities students and scholars as well as for the general public.",
-		  longDescription: "Use it to learn how computers-assisted analysis works. Check out our examples that show you how to do real academic tasks with Voyant. Use it to study texts that you find on the web or texts that you have carefully edited and have on your computer. Use it to add functionality to your online collections, journals, blogs or web sites so others can see through your texts with analytical tools. Use it to add interactive evidence to your essays that you publish online. Add interactive panels right into your research essays (if they can be published online) so your readers can recapitulate your results. Use it to develop your own tools using our functionality and code.",
-		  // virtually any language
-		  languages: ["eng", "deu", "spa", "nld", "fra"], 
-		  lang_encoding: "639-1",
-		  mimetypes: ["text/plain", "application/pdf",
-			      "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-			      "text/tei+xml;format-variant=tei-dta"
-			     ], 
-		  output: ["text/plain", "text/xml"], //plain text tab seperated output OR FoLiA XML
-		  url: ["http://voyant-tools.org/"],
-		  parameter: { 
-			       input        : "self.linkToResource"
-			     }
-		},
 
 		{ task: "Text Analytics",
 		  name: "T-scan",
@@ -433,33 +475,6 @@ class ToolStore {
 			     }
 		},		
 		
-		{ task: "Spelling correction",
-		  name: "Valkuil",
-		  logo: "YourLogoComesHere.png",		  
-		  homepage: "https://languagemachines.github.io/Valkuil/",
-		  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
-		  creators: ["Maarten van Gompel, Ko van der Sloot (CLST, Radboud University Nijmegen)"],
-		  contact: {
-		      person: "Maarten van Gompel",
-		      email: "proycon@anaproy.nl",
-		  },
-		  version: "x.y.z",
-		  authentification: "no",		  
-		  license: "public", //but webservice is protected with (free) registration
-		  shortDescription: "A spelling corrector for Dutch",
-		  longDescription: "Valkuil is a Dutch spelling correction system.",
-		  languages: ["nld"], //iso 639-3
-		  lang_encoding: "639-1",
-		  mimetypes: ["text/xml","text/plain"], //plain text OR FoLiA XML
-		  output: ["text/plain", "text/xml"], //plain text tab seperated output OR FoLiA XML
-		  url: ["https://webservices-lst.science.ru.nl/valkuil/"],
-		  parameter: { project      : "new",
-			       input        : "self.linkToResource"
-			     },
-		  // mapping the standard parameter names to the ones used by the tools
-		  mapping:   { input        : "textinput_url"
-			     }
-		},
 
 		{ task: "Spelling correction",
 		  name: "Fowlt",
@@ -490,8 +505,8 @@ class ToolStore {
 		},
 
 		{ task: "NLP suite for Dutch",
-		  name: "Frog",
-		  logo: "YourLogoComesHere.png",		  
+		  name: "Frog (plain text)",
+		  logo: "frog.jpg",		  
 		  homepage: "https://languagemachines.github.io/frog/",
 		  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
 		  creators: ["Maarten van Gompel, Ko van der Sloot (CLST, Radboud University Nijmegen)"],
@@ -506,8 +521,8 @@ class ToolStore {
 		  longDescription: "Frog's current version will tokenize, tag, lemmatize, and morphologically segment word tokens in Dutch text files, will assign a dependency graph to each sentence, will identify the base phrase chunks in the sentence, and will attempt to find and label all named entities.",
 		  languages: ["nld"], //iso 639-3
 		  lang_encoding: "639-1",
-		  mimetypes: ["text/xml","text/plain"], //plain text OR FoLiA XML
-		  output: ["text/plain", "text/xml"], //plain text tab seperated output OR FoLiA XML
+		  mimetypes: ["text/plain"],
+		  output: ["Tadpole Columned Output Format", "text/folia+xml"], 		  		  
 		  url: ["https://webservices-lst.science.ru.nl/frog/"],
 		  parameter: { project      : "new",
 			       input        : "self.linkToResource"
@@ -517,6 +532,92 @@ class ToolStore {
 			     }
 		},		
 
+		{ task: "NLP suite for Dutch",
+		  name: "Frog (folia+xml)",
+		  logo: "frog.jpg",		  
+		  homepage: "https://languagemachines.github.io/frog/",
+		  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
+		  creators: ["Maarten van Gompel, Ko van der Sloot (CLST, Radboud University Nijmegen)"],
+		  contact: {
+		      person: "Maarten van Gompel",
+		      email: "proycon@anaproy.nl",
+		  },
+		  version: "x.y.z",
+		  authentification: "no",		  
+		  license: "public", //but webservice is protected with (free) registration
+		  shortDescription: "NLP suite for Dutch",
+		  longDescription: "Frog's current version will tokenize, tag, lemmatize, and morphologically segment word tokens in Dutch text files, will assign a dependency graph to each sentence, will identify the base phrase chunks in the sentence, and will attempt to find and label all named entities.",
+		  languages: ["nld"], //iso 639-3
+		  lang_encoding: "639-1",
+		  mimetypes: ["text/folia+xml"],
+		  output: ["Tadpole Columned Output Format", "text/folia+xml"], 		  		  
+		  url: ["https://webservices-lst.science.ru.nl/frog/"],
+		  parameter: { project      : "new",
+			       input        : "self.linkToResource"
+			     },
+		  // mapping the standard parameter names to the ones used by the tools
+		  mapping:   { input        : "foliainput_url"
+			     }
+		},		
+
+		{ task: "Spelling correction",
+		  name: "Valkuil (plain text)",
+		  logo: "YourLogoComesHere.png",		  
+		  homepage: "https://languagemachines.github.io/Valkuil/",
+		  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
+		  creators: ["Maarten van Gompel, Ko van der Sloot (CLST, Radboud University Nijmegen)"],
+		  contact: {
+		      person: "Maarten van Gompel",
+		      email: "proycon@anaproy.nl",
+		  },
+		  version: "x.y.z",
+		  authentification: "no",		  
+		  license: "public", //but webservice is protected with (free) registration
+		  shortDescription: "A spelling corrector for Dutch",
+		  longDescription: "Valkuil is a Dutch spelling correction system.",
+		  languages: ["nld"], //iso 639-3
+		  lang_encoding: "639-1",
+		  mimetypes: ["text/plain"], 
+		  output: ["Tadpole Columned Output Format",
+			   "text/folia+xml"], 		  
+		  url: ["https://webservices-lst.science.ru.nl/valkuil/"],
+		  parameter: { project      : "new",
+			       input        : "self.linkToResource"
+			     },
+		  // mapping the standard parameter names to the ones used by the tools
+		  mapping:   { input        : "textinput_url"
+			     }
+		},
+		
+		{ task: "Spelling correction",
+		  name: "Valkuil (folia+xml)",
+		  logo: "YourLogoComesHere.png",		  
+		  homepage: "https://languagemachines.github.io/Valkuil/",
+		  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
+		  creators: ["Maarten van Gompel, Ko van der Sloot (CLST, Radboud University Nijmegen)"],
+		  contact: {
+		      person: "Maarten van Gompel",
+		      email: "proycon@anaproy.nl",
+		  },
+		  version: "x.y.z",
+		  authentification: "no",		  
+		  license: "public", //but webservice is protected with (free) registration
+		  shortDescription: "A spelling corrector for Dutch",
+		  longDescription: "Valkuil is a Dutch spelling correction system.",
+		  languages: ["nld"], //iso 639-3
+		  lang_encoding: "639-1",
+		  mimetypes: ["text/folia+xml"],
+		  output: ["Tadpole Columned Output Format",
+			   "text/folia+xml"], 
+		  url: ["https://webservices-lst.science.ru.nl/valkuil/"],
+		  parameter: { project      : "new",
+			       input        : "self.linkToResource"
+			     },
+		  // mapping the standard parameter names to the ones used by the tools
+		  mapping:   { input        : "foliainput_url"
+			     }
+		},
+		
 		{ task: "N-Gramming",
 		  name: "Colibri Core",
 		  logo: "YourLogoComesHere.png",		  

@@ -224,7 +224,9 @@ export default class DropArea extends React.Component {
 	// todo: RZG file upload server does not handle files of type "text/xml" appropriately.
 	// upload works, download only gives metadata of file to be downloaded.
 	var newFileType = currentFile.type
-	if (newFileType == "text/xml") {
+	if ( (newFileType == "text/xml") ||
+	     (newFileType == "text/folio+xml") || 
+	     (newFileType == "") ) {
 	    newFileType = "application/octet_stream"
 	}
 	
