@@ -562,8 +562,8 @@ class ToolStore {
 
 		{ task: "Spelling correction",
 		  name: "Valkuil (plain text)",
-		  logo: "YourLogoComesHere.png",		  
-		  homepage: "https://languagemachines.github.io/Valkuil/",
+		  logo: "valkuil.jpg",		  
+		  homepage: "http://valkuil.net",
 		  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
 		  creators: ["Maarten van Gompel, Ko van der Sloot (CLST, Radboud University Nijmegen)"],
 		  contact: {
@@ -591,7 +591,7 @@ class ToolStore {
 		
 		{ task: "Spelling correction",
 		  name: "Valkuil (folia+xml)",
-		  logo: "YourLogoComesHere.png",		  
+		  logo: "valkuil.jpg",		  		  
 		  homepage: "https://languagemachines.github.io/Valkuil/",
 		  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
 		  creators: ["Maarten van Gompel, Ko van der Sloot (CLST, Radboud University Nijmegen)"],
