@@ -619,8 +619,8 @@ class ToolStore {
 		},
 		
 		{ task: "N-Gramming",
-		  name: "Colibri Core",
-		  logo: "YourLogoComesHere.png",		  
+		  name: "Colibri Core (plain text)",
+		  logo: "colibriCore.jpg",		  		  
 		  homepage: "https://github.com/proycon/colibri-core",
 		  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
 		  creators: ["Maarten van Gompel, Ko van der Sloot (CLST, Radboud University Nijmegen)"],
@@ -635,8 +635,9 @@ class ToolStore {
 		  longDescription: "Colibri core is an NLP tool as well as a C++ and Python library for working with basic linguistic constructions such as n-grams and skipgrams (i.e patte rns with one or more gaps, either of fixed or dynamic size) in a quick and memory-efficient way.",
 		  languages: ["nld", "eng", "deu", "fre", "esp", "por", "fry"], //iso 639-3, no GENERIC
 		  lang_encoding: "639-1",
-		  mimetypes: ["text/plain"], //plain text OR FoLiA XML
-		  output: ["text/plain", "text/xml"], //plain text tab seperated output OR FoLiA XML
+		  mimetypes: ["text/plain"],
+		  output: ["Tadpole Columned Output Format",
+			   "text/folia+xml"], 		  
 		  url: ["https://webservices-lst.science.ru.nl/colibricore/"],
 		  parameter: { project      : "new",
 			       input        : "self.linkToResource",
@@ -648,7 +649,41 @@ class ToolStore {
 		  mapping:   { input        : "textinput_untok_url",
 			       lang         : "language"
 			     }
-		},		
+		},
+
+		{ task: "N-Gramming",
+		  name: "Colibri Core (folia+xml)",
+		  logo: "colibriCore.jpg",		  
+		  homepage: "https://github.com/proycon/colibri-core",
+		  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
+		  creators: ["Maarten van Gompel, Ko van der Sloot (CLST, Radboud University Nijmegen)"],
+		  contact: {
+		      person: "Maarten van Gompel",
+		      email: "proycon@anaproy.nl",
+		  },
+		  version: "x.y.z",
+		  authentification: "no",		  
+		  license: "public", //but webservice is protected with (free) registration
+		  shortDescription: "NLP tool for building n-grams and skip-grams.",
+		  longDescription: "Colibri core is an NLP tool as well as a C++ and Python library for working with basic linguistic constructions such as n-grams and skipgrams (i.e patte rns with one or more gaps, either of fixed or dynamic size) in a quick and memory-efficient way.",
+		  languages: ["nld", "eng", "deu", "fra", "spa", "por", "fry"], //iso 639-3 (generic to be added, todo)
+		  lang_encoding: "639-1",
+		  mimetypes: ["text/folia+xml"],
+		  output: ["Tadpole Columned Output Format",
+			   "text/folia+xml"], 		  		  
+		  output: ["text/plain", "text/xml"], 
+		  url: ["https://webservices-lst.science.ru.nl/colibricore/"],
+		  parameter: { project      : "new",
+			       input        : "self.linkToResource",
+			       lang         : "self.linkToResourceLanguage",                 			       
+			       sentenceperline_input : "false",
+			       sentenceperline_output : "false"
+			     },
+		  // mapping the standard parameter names to the ones used by the tools
+		  mapping:   { input        : "foliainput_url",
+			       lang         : "language"
+			     }
+		},				
 		
 		{ task: "Metadata Format Conversion",
 		  name: "NaLiDa2Marc21",
