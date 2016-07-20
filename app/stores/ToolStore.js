@@ -284,13 +284,13 @@ class ToolStore {
 		  shortDescription: "Voyant Tools is a web-based text reading and analysis environment. It is a scholarly project that is designed to facilitate reading and interpretive practices for digital humanities students and scholars as well as for the general public.",
 		  longDescription: "Use it to learn how computers-assisted analysis works. Check out our examples that show you how to do real academic tasks with Voyant. Use it to study texts that you find on the web or texts that you have carefully edited and have on your computer. Use it to add functionality to your online collections, journals, blogs or web sites so others can see through your texts with analytical tools. Use it to add interactive evidence to your essays that you publish online. Add interactive panels right into your research essays (if they can be published online) so your readers can recapitulate your results. Use it to develop your own tools using our functionality and code.",
 		  // virtually any language
-		  languages: ["eng", "deu", "spa", "nld", "fra"], 
+		  languages: ["eng", "deu", "spa", "nld", "fra", "generic"], 
 		  lang_encoding: "639-1",
 		  mimetypes: ["text/plain", "application/pdf",
 			      "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
 			      "text/tei+xml;format-variant=tei-dta"
 			     ], 
-		  output: ["text/plain", "text/xml"], //plain text tab seperated output OR FoLiA XML
+		  output: ["text/plain", "text/xml"], //plain text tab separated output OR FoLiA XML
 		  url: ["http://voyant-tools.org/"],
 		  parameter: { 
 			       input        : "self.linkToResource"
@@ -380,7 +380,7 @@ class ToolStore {
 		  languages: ["nld"], //iso 639-3
 		  lang_encoding: "639-1",
 		  mimetypes: ["text/plain"], //plain text OR FoLiA XML
-		  output: ["text/plain", "text/xml"], //plain text tab seperated output OR FoLiA XML
+		  output: ["text/plain", "text/xml"], //plain text tab separated output OR FoLiA XML
 		  url: ["https://webservices-lst.science.ru.nl/alpino/"],
 		  parameter: { project      : "new",
 			       input        : "self.linkToResource"
@@ -409,7 +409,7 @@ class ToolStore {
 		  languages: ["nld"], //iso 639-3
 		  lang_encoding: "639-1",
 		  mimetypes: ["text/plain"], //plain text OR FoLiA XML
-		  output: ["text/plain", "text/xml"], //plain text tab seperated output OR FoLiA XML
+		  output: ["text/plain", "text/xml"], //plain text tab separated output OR FoLiA XML
 		  url: ["https://webservices-lst.science.ru.nl/tscan/"],
 		  parameter: { project      : "new",
 			       input        : "self.linkToResource"
@@ -437,7 +437,7 @@ class ToolStore {
 		  languages: ["nld"], //iso 639-3
 		  lang_encoding: "639-1",
 		  mimetypes: ["text/plain"], //plain text OR FoLiA XML
-		  output: ["text/plain", "text/xml"], //plain text tab seperated output OR FoLiA XML
+		  output: ["text/plain", "text/xml"], //plain text tab seaerated output OR FoLiA XML
 		  url: ["https://webservices-lst.science.ru.nl/oersetter/"],
 		  parameter: { project      : "new",
 			       input        : "self.linkToResource"
@@ -465,7 +465,7 @@ class ToolStore {
 		  languages: ["fry"], //iso 639-3
 		  lang_encoding: "639-1",
 		  mimetypes: ["text/plain"], //plain text OR FoLiA XML
-		  output: ["text/plain", "text/xml"], //plain text tab seperated output OR FoLiA XML
+		  output: ["text/plain", "text/xml"], //plain text tab separated output OR FoLiA XML
 		  url: ["https://webservices-lst.science.ru.nl/oersetter/"],
 		  parameter: { project      : "new",
 			       input        : "self.linkToResource"
@@ -494,7 +494,7 @@ class ToolStore {
 		  languages: ["eng"], //iso 639-3
 		  lang_encoding: "639-1",
 		  mimetypes: ["text/xml","text/plain"], //plain text OR FoLiA XML
-		  output: ["text/plain", "text/xml"], //plain text tab seperated output OR FoLiA XML
+		  output: ["text/plain", "text/xml"], //plain text tab separated output OR FoLiA XML
 		  url: ["https://webservices-lst.science.ru.nl/fowlt/"],
 		  parameter: { project      : "new",
 			       input        : "self.linkToResource"
@@ -633,7 +633,7 @@ class ToolStore {
 		  license: "public", //but webservice is protected with (free) registration
 		  shortDescription: "NLP tool for building n-grams and skip-grams.",
 		  longDescription: "Colibri core is an NLP tool as well as a C++ and Python library for working with basic linguistic constructions such as n-grams and skipgrams (i.e patte rns with one or more gaps, either of fixed or dynamic size) in a quick and memory-efficient way.",
-		  languages: ["nld", "eng", "deu", "fre", "esp", "por", "fry"], //iso 639-3, no GENERIC
+		  languages: ["nld", "eng", "deu", "fre", "esp", "por", "fry", "generic"], 
 		  lang_encoding: "639-1",
 		  mimetypes: ["text/plain"],
 		  output: ["Tadpole Columned Output Format",
@@ -666,7 +666,7 @@ class ToolStore {
 		  license: "public", //but webservice is protected with (free) registration
 		  shortDescription: "NLP tool for building n-grams and skip-grams.",
 		  longDescription: "Colibri core is an NLP tool as well as a C++ and Python library for working with basic linguistic constructions such as n-grams and skipgrams (i.e patte rns with one or more gaps, either of fixed or dynamic size) in a quick and memory-efficient way.",
-		  languages: ["nld", "eng", "deu", "fra", "spa", "por", "fry"], //iso 639-3 (generic to be added, todo)
+		  languages: ["nld", "eng", "deu", "fra", "spa", "por", "fry", "generic"], 
 		  lang_encoding: "639-1",
 		  mimetypes: ["text/folia+xml"],
 		  output: ["Tadpole Columned Output Format",
@@ -1238,6 +1238,14 @@ class ToolStore {
 								   resourceDescription.language, tool);
 						       
 						       var result = tool.languages.indexOf(resourceDescription.language);
+					               if (result != -1) {
+							   // attach id to the tool
+							   tool.id = uuid.v4();
+							   return tool;
+						       }
+
+						       // for tools that are capable for processing any language
+						       result = tool.languages.indexOf("generic");
 					               if (result != -1) {
 							   // attach id to the tool
 							   tool.id = uuid.v4();

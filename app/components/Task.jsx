@@ -235,6 +235,8 @@ export default class Task extends React.Component {
 
 	// todo  outsource to external module
 	const langEncodingMap = {
+	    "generic" : "generic",
+	    
 	    "af" : "afr",
 	    "sq" : "sqi",
 	    "hy" : "hye",
