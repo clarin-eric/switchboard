@@ -81,9 +81,10 @@ const common = {
     },
     plugins: [
 	new HtmlwebpackPlugin({
-	    template: 'node_modules/html-webpack-template/index.html',
+	    template: 'app/template.html',
 	    title: 'CLARIN LANGUAGE RESOURCE SWITCHBOARD',
-	    appMountId: 'app'
+	    appMountId: 'app',
+	    favicon: 'app/images/lrs.png'
 	})
   ]
 };

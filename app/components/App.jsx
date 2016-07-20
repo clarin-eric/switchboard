@@ -23,6 +23,8 @@ require('./../images/voyant-tools.jpg');
 require('./../images/frog.jpg');
 require('./../images/colibriCore.jpg');
 require('./../images/valkuil.jpg');
+require('./../images/button_helpdesk_forhelp.png');
+require('./../images/lindat.jpg');
 require('./../images/CLARIN-Logo16-c.jpg');
 require('./../images/YourLogoComesHere.png');
 require('./../html/about.html');
@@ -38,13 +40,19 @@ export default class App extends React.Component {
     showTools() {
 	ToolActions.allTools( );	
     }
+
+    popup_CLARIN_HELPDESK(url) {
+	fenster = window.open(url, "CLARINHelpDesk", "width=370,height=570,resizable=yes");
+	fenster.focus();
+	return false;
+    }
     
     render() {
 	return (
 	    <div>
 	      <section className="page-header">
 		<a href="https://www.clarin.eu">
-		  <img className="alignLeft" src="CLARIN-Logo16-c.jpg" width="12%" height="12%" />
+		  <img className="alignLeft" src="CLARIN-Logo16-c.jpg" width="15%" height="15%" />
 		</a>
 		<img className="alignRight"  src="switchboard.png" width="15%" height="15%" />
 	        <h1 className="project-name">CLARIN Language Resource Switchboard</h1>
@@ -53,6 +61,9 @@ export default class App extends React.Component {
 		  <a className="whiteLink" href="help.html">  [ User Help ]</a>		
   	          <button className="alltools" onClick={this.showTools}>Show All Tools</button>
   		<a className="whiteLink" href="about.html"> [ Developer Help ]</a>
+		<a href="https://support.clarin-d.de/mail/?lang=de&QueueID=19&ResponsibleID=15&OwnerID=15" target="_blank" onclick="return popup_CLARIN_HELPDESK(this.href)">
+		<img className="alignRight" src="button_helpdesk_forhelp.png" width="10%" height="10%" />
+		</a>
 		</p>
 		
    	      </section>

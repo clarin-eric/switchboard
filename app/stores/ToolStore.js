@@ -1042,8 +1042,8 @@ class ToolStore {
 		// just add a webservice for the tools
 		{ task: "Keyword Extractor",
 		  name: "KER (WebService)",
-		  softwareType: "webService", 
-		  logo: "YourLogoComesHere.png",
+		  softwareType: "webService",
+		  logo: "lindat.jpg",
 		  homepage: "http://lindat.mff.cuni.cz/services/ker/",
 		  location: "Prague, CUNI",
 		  creators: ["Jindřich Libovický"],
@@ -1072,7 +1072,7 @@ class ToolStore {
 		{ task: "Named Entity Recognition",
 		  name: "NameTag (WebService)",
 		  softwareType: "webService", 
-		  logo: "YourLogoComesHere.png",
+		  logo: "lindat.jpg",
 		  homepage: "http://lindat.mff.cuni.cz/services/nametag/",
 		  location: "Prague, CUNI",
 		  creators: ["Milan Straka, Jana Straková"],
@@ -1092,7 +1092,8 @@ class ToolStore {
 		  parameter: {  input   : "self.linkToResource", 
 				lang    : "self.linkToResourceLanguage"
 			     },		  
-		  parameter: {  input   : "data"
+		  mapping: {  input   : "data",
+				lang    : "language"
 			     },
 		},		
 	    ];
