@@ -16,13 +16,12 @@ class ToolStore {
 
 	this.groupTools = this.groupTools.bind(this);
 	
-	// an initial list of tools that we are aware of.
 	this.registeredTools = 
 	    [
 		{ task: "Tokenisation",
 		  name: "CLARIN-DK Tool Box (CST Tokenizer)",
-		  softwareType: "browserBased", 
-		  logo: "YourLogoComesHere.png",
+		  softwareType: "browserBased",
+		  logo: "clarindk.jpg",		  
 		  homepage: "https://clarin.dk/clarindk/forside.jsp",		  
 		  location: "Copenhagen, Denmark",
 		  creators: ["Bart Jongejan et al."],
@@ -61,7 +60,7 @@ class ToolStore {
 			      "image/tiff", 
 			      "image/vnd.microsoft.icon"
 			     ],
-		  url: ["https://www.clarin.dk/tools/createByGoalChoice"], // todo
+		  url: ["https://www.clarin.dk/tools/createByGoalChoice"], 
 
 		  parameter: {  input   : "self.linkToResource", 
 				lang    : "self.linkToResourceLanguage",                 
@@ -75,7 +74,7 @@ class ToolStore {
 
 		{ task: "Lemmatization",
 		  name: "CLARIN-DK Tool Box (CST Lemmatizer)",
-		  logo: "YourLogoComesHere.png",
+		  logo: "clarindk.jpg",
 		  homepage: "https://clarin.dk/clarindk/forside.jsp",		  
 		  location: "Copenhagen, Denmark (CLAM Webservices)",
 		  creators: ["Bart Jongejan et al."],
@@ -131,7 +130,7 @@ class ToolStore {
 		
 		{ task: "Voice Synthesis",
 		  name: "CLARIN-DK Tool Box (espeak)",
-		  logo: "YourLogoComesHere.png",
+		  logo: "clarindk.jpg",		  
 		  homepage: "https://clarin.dk/clarindk/forside.jsp",
 		  location: "Copenhagen, Denmark (CLAM Webservices)",
 		  creators: ["Bart Jongejan et al."],
@@ -162,12 +161,46 @@ class ToolStore {
 		  mapping:   { input        : "URL",
 			       lang         : "language"
 			     }		  
-		},		
+		},
+
+		{ task: "Voice Synthesis",
+		  name: "Mary TTS",
+		  logo: "mary.jpg",
+		  softwareType: "webService", 		  
+		  homepage: "http://mary.dfki.de",
+		  location: "BAS, Muenchen",
+		  creators: ["Marc Schröder et al."],
+		  contact: {
+		      person: "Marc Schroeder",
+		      email: "",
+		  },
+		  version: "0.x.y",
+		  license: "public",
+		  authentification: "no",		  
+		  shortDescription: "Speech Synthesis System for German (hosted by BAS)",
+		  longDescription:  "MaryTTS is an open-source, multilingual Text-to-Speech Synthesis platform written in Java. It was originally developed as a collaborative project of DFKI’s Language Technology Lab and the Institute of Phonetics at Saarland University. It is now maintained by the Multimodal Speech Processing Group in the Cluster of Excellence MMCI and DFKI.",
+		  lang_encoding: "639-1",
+		  languages: ["deu"],
+		  mimetypes: [
+			      "text/plain"
+			     ],
+		  url: ["https://clarin.phonetik.uni-muenchen.de/BASWebServices/services/runTTSFile"], 
+		  parameter: {  input   : "self.linkToResource", 
+				AUDIO   : "WAVE_FILE",
+				INPUT_TYPE : "TEXT",
+				VOICE : "bits1unitselautolabel",
+				OUTPUT_TYPE : "AUDIO"
+			     },
+
+		  // CLARIN-DK calls those parameters differently, namely:
+		  mapping:   { input        : "INPUT_TEXT",
+			     }		  
+		},				
 		
 
 		{ task: "Named Entity Recognition",
 		  name: "CLARIN-DK Tool Box (CST's name recognizer)",
-		  logo: "YourLogoComesHere.png",
+		  logo: "clarindk.jpg",		  
 		  homepage: "https://clarin.dk/clarindk/forside.jsp",		  
 		  location: "Copenhagen, Denmark (CLAM Webservices)",
 		  creators: ["Bart Jongejan et al."],
@@ -190,8 +223,6 @@ class ToolStore {
 				analysis: "ner",
 				UIlanguage: "en"				
 			     },
-
-		  // CLARIN-DK calls those parameters differently, namely:
 		  mapping:   { input        : "URL",
 			       lang         : "language"
 			     }		  
@@ -199,7 +230,7 @@ class ToolStore {
 
 		{ task: "OCR Engine",
 		  name: "CLARIN-DK Tool Box (Tesseract | CuneiForm)",
-		  logo: "YourLogoComesHere.png",
+		  logo: "clarindk.jpg",		  		  
 		  homepage: "https://clarin.dk/clarindk/forside.jsp",		  		  
 		  location: "Copenhagen, Denmark (CLAM Webservices)",
 		  creators: ["Bart Jongejan et al."],
@@ -213,7 +244,7 @@ class ToolStore {
 		  shortDescription: "CLARIN-DK Tool Box (Tesseract | CuneiForm)",
 		  longDescription:  "Tesseract is probably the most accurate open source OCR engine available. Combined with the Leptonica Image Processing Library it can read a wide variety of image formats and convert them to text in over 60 languages. It was one of the top 3 engines in the 1995 UNLV Accuracy test. Between 1995 and 2006 it had little work done on it, but since then it has been improved extensively by Google. It is released under the Apache License 2.0. Note that the CLARIN-DL Tool Box GUI gives you also access to the Russian CuneiForm system.",
 		  lang_encoding: "639-1",
-		  languages: ["dan","eng"],
+		  languages: ["dan","eng","generic"],
 		  mimetypes: [
 			      "image/gif", 
 			      "image/jpeg", 
@@ -226,8 +257,6 @@ class ToolStore {
 				analysis: "txt",
 				UIlanguage: "en"				
 			     },
-
-		  // CLARIN-DK calls those parameters differently, namely:
 		  mapping:   { input        : "URL",
 			       lang         : "language"
 			     }		  
@@ -262,7 +291,6 @@ class ToolStore {
 			       input        : "self.linkToResource",
 			       lang         : "self.linkToResourceLanguage",
 			     },
-		  // mapping the standard parameter names to the ones used by the tools
 		  mapping:   { input        : "untokinput_url",
 			       lang         : "untokinput_language"
 			     }
@@ -290,7 +318,7 @@ class ToolStore {
 			      "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
 			      "text/tei+xml;format-variant=tei-dta"
 			     ], 
-		  output: ["text/plain", "text/xml"], //plain text tab separated output OR FoLiA XML
+		  output: [], 
 		  url: ["http://voyant-tools.org/"],
 		  parameter: { 
 			       input        : "self.linkToResource"
@@ -315,14 +343,12 @@ class ToolStore {
 		  longDescription: "OxGarage is a web, and RESTful, service to manage the transformation of documents between a variety of formats. The majority of transformations use the Text Encoding Initiative format as a pivot format.",
 		  languages: ["nld", "eng", "deu", "fra", "ita", "spa", "por", "tur", "rus", "swe"], // todo
 		  lang_encoding: "639-1",
-		  // mimetypes: ["text/xml", "application/xml", "application/tei+xml"],
 		  mimetypes: ["application/tei+xml",
 			      "text/tei+xml;format-variant=tei-dta"], 		  
 		  output: ["text/plain"],
 		  url: ["http://oxgarage.oucs.ox.ac.uk:8080/ege-webservice/Conversions/TEI%3Atext%3Axml/txt%3Atext%3Aplain/"],
 		  parameter: { 
 			     },
-		  // mapping the standard parameter names to the ones used by the tools
 		  mapping:   { 
 			     }
 		},
@@ -346,9 +372,8 @@ class ToolStore {
 		  authentification: "no",
 		  shortDescription: "Converts between TCF and TEI",
 		  longDescription: "A converter between the two formats TEI and TCF. Beta version.",
-		  languages: ["nld", "eng", "deu", "fra", "ita", "spa", "por", "tur", "rus", "swe"], // todo
+		  languages: ["generic"], 
 		  lang_encoding: "639-1",
-		  // mimetypes: ["text/xml", "application/xml", "application/tei+xml"],
 		  mimetypes: ["application/tei+xml",
 			      "text/tei+xml;format-variant=tei-dta",
 			      "application/xml;format-variant=weblicht-tcf"
@@ -357,14 +382,13 @@ class ToolStore {
 		  url: ["http://kaskade.dwds.de/tei-tcf"], // TODO
 		  parameter: { 
 			     },
-		  // mapping the standard parameter names to the ones used by the tools
 		  mapping:   { 
 			     }
 		},
 		
 		{ task: "Dependency Parsing",
 		  name: "Alpino",
-		  logo: "YourLogoComesHere.png",		  
+		  logo: "alpino.jpg",		  
 		  homepage: "http://www.let.rug.nl/vannoord/alp/Alpino/",
 		  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
 		  creators: ["Maarten van Gompel, Ko van der Sloot (CLST, Radboud University Nijmegen)"],
@@ -377,23 +401,25 @@ class ToolStore {
 		  license: "public", //but webservice is protected with (free) registration
 		  shortDescription: "A dependency parser for Dutch",
 		  longDescription: "Alpino is a dependency parser for Dutch, developed in the context of the PIONIER Project Algorithms for Linguistic Processing, developed by Gertjan van Noord at the University of Groningen. You can upload either tokenised or untokenised files (which will be automatically tokenised for you using ucto), the output will consist of a zip file containing XML files, one for each sentence in the input document.",
-		  languages: ["nld"], //iso 639-3
+		  languages: ["nld"], 
 		  lang_encoding: "639-1",
-		  mimetypes: ["text/plain"], //plain text OR FoLiA XML
-		  output: ["text/plain", "text/xml"], //plain text tab separated output OR FoLiA XML
+		  // tokenized vs. untokenized input (currently set to untokenized input)
+		  mimetypes: ["text/plain"],      
+		  output: ["alpinooutput", "text/folia+xml", "tokoutput"], 
 		  url: ["https://webservices-lst.science.ru.nl/alpino/"],
-		  parameter: { project      : "new",
-			       input        : "self.linkToResource"
+		  parameter: {
+		      project      : "new",
+		      input        : "self.linkToResource"
 			     },
-		  // mapping the standard parameter names to the ones used by the tools
-		  mapping:   { input        : "untokinput_url"
+		  mapping:   {
+		      input        : "untokinput_url"
 			     }
 		},
 
 
 		{ task: "Text Analytics",
 		  name: "T-scan",
-		  logo: "YourLogoComesHere.png",		  
+		  logo: "tscan.jpg",		  
 		  homepage: "https://github.com/proycon/tscan",
 		  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
 		  creators: ["Maarten van Gompel, Ko van der Sloot (CLST, Radboud University Nijmegen)"],
@@ -405,23 +431,26 @@ class ToolStore {
 		  authentification: "no",		  
 		  license: "public", //but webservice is protected with (free) registration
 		  shortDescription: "T-scan is a Dutch text analytics tool for readability prediction.",
-		  longDescription: "T-scan is a Dutch text analytics tool for readability prediction.",
-		  languages: ["nld"], //iso 639-3
+		  longDescription: "T-Scan is a new tool for analyzing Dutch text. It aims at extracting text features that are theoretically interesting, in that they relate to genre and text complexity, as well as practically interesting, in that they enable users and text producers to make text-specific diagnoses. T-Scan derives it features from tools such as Frog and Alpino, and resources such as SoNaR, SUBTLEX-NL and Referentie Bestand Nederlands.",
+		  languages: ["nld"], 
 		  lang_encoding: "639-1",
-		  mimetypes: ["text/plain"], //plain text OR FoLiA XML
-		  output: ["text/plain", "text/xml"], //plain text tab separated output OR FoLiA XML
+		  mimetypes: ["text/plain"], 
+		  output: ["text/folia+xml", "xsl", "wordcsv",
+			   "sencsv", "parcsv", "doccsv",
+			   "totalwordcsv", "totalsencsv", "totalparcsv", "totaldoccsv"],
 		  url: ["https://webservices-lst.science.ru.nl/tscan/"],
-		  parameter: { project      : "new",
-			       input        : "self.linkToResource"
+		  parameter: {
+		      project      : "new",
+		      input        : "self.linkToResource"
 			     },
-		  // mapping the standard parameter names to the ones used by the tools
-		  mapping:   { input        : "textinput_url" 
+		  mapping:   {
+		      input        : "textinput_url" 
 			     }
 		},
 
 		{ task: "Machine Translation",
 		  name: "Oersetter (NLD-FRY)",
-		  logo: "YourLogoComesHere.png",		  
+		  logo: "oersetter.jpg",		  
 		  homepage: "http://oersetter.nl/",
 		  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
 		  creators: ["Maarten van Gompel, Ko van der Sloot (CLST, Radboud University Nijmegen)"],
@@ -433,23 +462,22 @@ class ToolStore {
 		  authentification: "no",		  
 		  license: "public", //but webservice is protected with (free) registration
 		  shortDescription: "Oersetter is a Dutch-Frisian Machine Translation system.",
-		  longDescription: "Oersetter is a Dutch-Frisian Machine Translation system.",
-		  languages: ["nld"], //iso 639-3
+		  longDescription: "Oersetter is a statistical machine translation (SMT) system for Frisian to Dutch and Dutch to Frisian. A parallel training corpus has been established, which has subsequently been used to automatically learn a phrase-based SMT model. The translation system is built around the open-source SMT software Moses.",
+		  languages: ["nld"], 
 		  lang_encoding: "639-1",
-		  mimetypes: ["text/plain"], //plain text OR FoLiA XML
-		  output: ["text/plain", "text/xml"], //plain text tab seaerated output OR FoLiA XML
+		  mimetypes: ["text/plain"], 
+		  output: ["text/plain"], 
 		  url: ["https://webservices-lst.science.ru.nl/oersetter/"],
 		  parameter: { project      : "new",
 			       input        : "self.linkToResource"
 			     },
-		  // mapping the standard parameter names to the ones used by the tools
 		  mapping:   { input        : "input-nl_url" 
 			     }
 		},
 
 		{ task: "Machine Translation",
 		  name: "Oersetter (FRY-NLD)",
-		  logo: "YourLogoComesHere.png",		  
+		  logo: "oersetter.jpg",		  
 		  homepage: "http://oersetter.nl/",
 		  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
 		  creators: ["Maarten van Gompel, Ko van der Sloot (CLST, Radboud University Nijmegen)"],
@@ -462,23 +490,22 @@ class ToolStore {
 		  license: "public", //but webservice is protected with (free) registration
 		  shortDescription: "Oersetter is a Frisian-Dutch Machine Translation system.",
 		  longDescription: "Oersetter is a Frisian-Dutch Machine Translation system.",
-		  languages: ["fry"], //iso 639-3
+		  languages: ["fry"], 
 		  lang_encoding: "639-1",
-		  mimetypes: ["text/plain"], //plain text OR FoLiA XML
-		  output: ["text/plain", "text/xml"], //plain text tab separated output OR FoLiA XML
+		  mimetypes: ["text/plain"], 
+		  output: ["text/plain"], 
 		  url: ["https://webservices-lst.science.ru.nl/oersetter/"],
 		  parameter: { project      : "new",
 			       input        : "self.linkToResource"
 			     },
-		  // mapping the standard parameter names to the ones used by the tools
 		  mapping:   { input        : "input-fy_url" 
 			     }
 		},		
 		
 
 		{ task: "Spelling correction",
-		  name: "Fowlt",
-		  logo: "YourLogoComesHere.png",		  
+		  name: "Fowlt (plain text)",
+		  logo: "fowlt.jpg",		  
 		  homepage: "http://fowlt.net",
 		  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
 		  creators: ["Maarten van Gompel, Ko van der Sloot (CLST, Radboud University Nijmegen)"],
@@ -490,17 +517,43 @@ class ToolStore {
 		  authentification: "no",		  
 		  license: "public", //but webservice is protected with (free) registration
 		  shortDescription: "A spelling corrector for English",
-		  longDescription: "Fowlt is a English spelling correction system.",
-		  languages: ["eng"], //iso 639-3
+		  longDescription: "Fowlt is an online, free-to-use context-sensitive English spelling checker. It follows the setup of the Dutch spelling checker Valkuil.net. Both Valkuil and Fowlt are unlike the typical spelling checkers: whereas the latter mostly try to find errors by comparing all words to a built-in dictionary and flag the word as an error if they can't find a match, Fowlt is context sensitive, taking into account the words around every word. Fowlt makes use of language models. These models are created by giving lots of texts to machine learning software (TiMBL and WOPR).",
+		  languages: ["eng"], 
 		  lang_encoding: "639-1",
-		  mimetypes: ["text/xml","text/plain"], //plain text OR FoLiA XML
-		  output: ["text/plain", "text/xml"], //plain text tab separated output OR FoLiA XML
+		  mimetypes: ["text/plain"],
+		  output: ["text/folia+xml"], 
 		  url: ["https://webservices-lst.science.ru.nl/fowlt/"],
 		  parameter: { project      : "new",
 			       input        : "self.linkToResource"
 			     },
-		  // mapping the standard parameter names to the ones used by the tools
 		  mapping:   { input        : "textinput_url"
+			     }
+		},
+
+		{ task: "Spelling correction",
+		  name: "Fowlt (xml+folia)",
+		  logo: "fowlt.jpg",		  
+		  homepage: "http://fowlt.net",
+		  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
+		  creators: ["Maarten van Gompel, Ko van der Sloot (CLST, Radboud University Nijmegen)"],
+		  contact: {
+		      person: "Maarten van Gompel",
+		      email: "proycon@anaproy.nl",
+		  },
+		  version: "x.y.z",
+		  authentification: "no",		  
+		  license: "public", //but webservice is protected with (free) registration
+		  shortDescription: "A spelling corrector for English",
+		  longDescription: "Fowlt is an online, free-to-use context-sensitive English spelling checker. It follows the setup of the Dutch spelling checker Valkuil.net. Both Valkuil and Fowlt are unlike the typical spelling checkers: whereas the latter mostly try to find errors by comparing all words to a built-in dictionary and flag the word as an error if they can't find a match, Fowlt is context sensitive, taking into account the words around every word. Fowlt makes use of language models. These models are created by giving lots of texts to machine learning software (TiMBL and WOPR).",
+		  languages: ["eng"], 
+		  lang_encoding: "639-1",
+		  mimetypes: ["text/folia+xml"],
+		  output: ["text/folia+xml"], 
+		  url: ["https://webservices-lst.science.ru.nl/fowlt/"],
+		  parameter: { project      : "new",
+			       input        : "self.linkToResource"
+			     },
+		  mapping:   { input        : "foliainput_url"
 			     }
 		},
 
@@ -519,7 +572,7 @@ class ToolStore {
 		  license: "public", //but webservice is protected with (free) registration
 		  shortDescription: "NLP suite for Dutch",
 		  longDescription: "Frog's current version will tokenize, tag, lemmatize, and morphologically segment word tokens in Dutch text files, will assign a dependency graph to each sentence, will identify the base phrase chunks in the sentence, and will attempt to find and label all named entities.",
-		  languages: ["nld"], //iso 639-3
+		  languages: ["nld"],
 		  lang_encoding: "639-1",
 		  mimetypes: ["text/plain"],
 		  output: ["Tadpole Columned Output Format", "text/folia+xml"], 		  		  
@@ -527,7 +580,6 @@ class ToolStore {
 		  parameter: { project      : "new",
 			       input        : "self.linkToResource"
 			     },
-		  // mapping the standard parameter names to the ones used by the tools
 		  mapping:   { input        : "maininput_url"
 			     }
 		},		
@@ -547,7 +599,7 @@ class ToolStore {
 		  license: "public", //but webservice is protected with (free) registration
 		  shortDescription: "NLP suite for Dutch",
 		  longDescription: "Frog's current version will tokenize, tag, lemmatize, and morphologically segment word tokens in Dutch text files, will assign a dependency graph to each sentence, will identify the base phrase chunks in the sentence, and will attempt to find and label all named entities.",
-		  languages: ["nld"], //iso 639-3
+		  languages: ["nld"], 
 		  lang_encoding: "639-1",
 		  mimetypes: ["text/folia+xml"],
 		  output: ["Tadpole Columned Output Format", "text/folia+xml"], 		  		  
@@ -555,7 +607,33 @@ class ToolStore {
 		  parameter: { project      : "new",
 			       input        : "self.linkToResource"
 			     },
-		  // mapping the standard parameter names to the ones used by the tools
+		  mapping:   { input        : "foliainput_url"
+			     }
+		},
+		
+		{ task: "N-Gramming",
+		  name: "FoLiA-stats",
+		  logo: "foliastats.jpg",		  		  
+		  homepage: "https://github.com/LanguageMachines/foliautils",
+		  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
+		  creators: ["Ko van der Sloot (TiCC, Tilburg University)"],
+		  contact: {
+		      person: "Maarten van Gompel",
+		      email: "proycon@anaproy.nl",
+		  },
+		  version: "0.2",
+		  authentification: "no",		  
+		  license: "public", //but webservice is protected with (free) registration
+		  shortDescription: "N-gram frequency list generation on FoLiA input.",
+		  longDescription: "N-gram frequency list generation on FoLiA input.",
+		  languages: ["nld", "generic"], 
+		  lang_encoding: "639-1",
+		  mimetypes: ["text/folia+xml"],		  
+		  output: ["wordfreqlist", "lemmafreqlist", "lemmaposfreqlist"], 		  		  
+		  url: ["https://webservices-lst.science.ru.nl/foliastats/"],
+		  parameter: { project      : "new",
+			       input        : "self.linkToResource"
+			     },
 		  mapping:   { input        : "foliainput_url"
 			     }
 		},		
@@ -575,7 +653,7 @@ class ToolStore {
 		  license: "public", //but webservice is protected with (free) registration
 		  shortDescription: "A spelling corrector for Dutch",
 		  longDescription: "Valkuil is a Dutch spelling correction system.",
-		  languages: ["nld"], //iso 639-3
+		  languages: ["nld"], 
 		  lang_encoding: "639-1",
 		  mimetypes: ["text/plain"], 
 		  output: ["Tadpole Columned Output Format",
@@ -584,7 +662,6 @@ class ToolStore {
 		  parameter: { project      : "new",
 			       input        : "self.linkToResource"
 			     },
-		  // mapping the standard parameter names to the ones used by the tools
 		  mapping:   { input        : "textinput_url"
 			     }
 		},
@@ -604,7 +681,7 @@ class ToolStore {
 		  license: "public", //but webservice is protected with (free) registration
 		  shortDescription: "A spelling corrector for Dutch",
 		  longDescription: "Valkuil is a Dutch spelling correction system.",
-		  languages: ["nld"], //iso 639-3
+		  languages: ["nld"], 
 		  lang_encoding: "639-1",
 		  mimetypes: ["text/folia+xml"],
 		  output: ["Tadpole Columned Output Format",
@@ -613,7 +690,6 @@ class ToolStore {
 		  parameter: { project      : "new",
 			       input        : "self.linkToResource"
 			     },
-		  // mapping the standard parameter names to the ones used by the tools
 		  mapping:   { input        : "foliainput_url"
 			     }
 		},
@@ -645,7 +721,6 @@ class ToolStore {
 			       sentenceperline_input : "false",
 			       sentenceperline_output : "false"
 			     },
-		  // mapping the standard parameter names to the ones used by the tools
 		  mapping:   { input        : "textinput_untok_url",
 			       lang         : "language"
 			     }
@@ -671,7 +746,6 @@ class ToolStore {
 		  mimetypes: ["text/folia+xml"],
 		  output: ["Tadpole Columned Output Format",
 			   "text/folia+xml"], 		  		  
-		  output: ["text/plain", "text/xml"], 
 		  url: ["https://webservices-lst.science.ru.nl/colibricore/"],
 		  parameter: { project      : "new",
 			       input        : "self.linkToResource",
@@ -679,7 +753,6 @@ class ToolStore {
 			       sentenceperline_input : "false",
 			       sentenceperline_output : "false"
 			     },
-		  // mapping the standard parameter names to the ones used by the tools
 		  mapping:   { input        : "foliainput_url",
 			       lang         : "language"
 			     }
@@ -698,9 +771,9 @@ class ToolStore {
 		  version: "v1.0",
 		  authentification: "no",		  
 		  licence: "public",
-		  longDescription: "Webservice converting NaLiDa-based CMDI profiles to Marc21",
 		  shortDescription: "Bibliographic Format Converter", // controlled vocabulary, change name?
-		  languages: ["n/a"], 
+		  longDescription: "Webservice converting NaLiDa-based CMDI profiles to Marc21",
+		  languages: ["generic"], 
 		  mimetypes: ["text/xml"],
 		  output: ["text/xml"],
 		  url: "http://shannon.sfs.uni-tuebingen.de:8080/NaLiDa2Marc-1.0/",
@@ -711,9 +784,6 @@ class ToolStore {
 		  // URL to get called:
 		  // http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht?input=http://hdl.handle.net/10932/00-017B-E3BC-2D57-CC01-6&lang=de&analysis=ne
 		},		
-
-		// todo: 'en' version for the other weblicht services
-		// --------------------------------------------------
 		
 		{ task: "Named Entity Recognition",
 		  name: "Weblicht-NamedEntities-DE",
@@ -728,8 +798,8 @@ class ToolStore {
 		  version: "v1.0",
 		  authentification: "no",		  
 		  licence: "public",
-		  longDescription: "Weblicht Easy Chain for German Named Entity Recognition (German).",
 		  shortDescription: "Named Entity Recognizer", 
+		  longDescription: "Weblicht Easy Chain for German Named Entity Recognition (German).",
 		  languages: ["deu"],
 		  lang_encoding: "639-1",		  
 		  mimetypes: ["text/plain"],
@@ -755,17 +825,17 @@ class ToolStore {
 		  version: "v1.0",
 		  authentification: "no",		  
 		  licence: "public",
+		  shortDescription: "Named Entity Recognizer", 
 		  longDescription: "Weblicht Easy Chain for German Named Entity Recognition (English).",
-		  shortDescription: "Named Entity Recognizer", // controlled vocabulary, change name?
 		  languages: ["eng"],
 		  lang_encoding: "639-1",		  
 		  mimetypes: ["text/plain"],
 		  output: ["text/xml"],
 		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht",
 		  pid: "",
-		  parameter: {  input   :  "self.linkToResource", // for demo upload site (will be initialized)
-				lang    : "en",                   // German
-				analysis: "ne"                    // Named Entities
+		  parameter: {  input   : "self.linkToResource", 
+				lang    : "en",                   
+				analysis: "ne"                    
 			     }
 		},				
 		
@@ -782,8 +852,8 @@ class ToolStore {
 		  version: "v1.0",
 		  authentification: "no",		  
 		  licence: "public",
-		  longDescription: "Weblicht Easy Chain for Constituent Parsing (German).",
 		  shortDescription: "Constituent Parsing",
+		  longDescription: "Weblicht Easy Chain for Constituent Parsing (German).",
 		  languages: ["deu"],
 		  lang_encoding: "639-1",		  
 		  mimetypes: ["text/plain"],
@@ -809,8 +879,8 @@ class ToolStore {
 		  version: "v1.0",
 		  authentification: "no",		  
 		  licence: "public",
-		  longDescription: "Weblicht Easy Chain for Constituent Parsing (English).",
 		  shortDescription: "Constituent Parsing",
+		  longDescription: "Weblicht Easy Chain for Constituent Parsing (English).",
 		  languages: ["eng"],
 		  lang_encoding: "639-1",		  
 		  mimetypes: ["text/plain"],
@@ -836,8 +906,8 @@ class ToolStore {
 		  version: "v1.0",
 		  authentification: "no",		  
 		  licence: "public",
-		  longDescription: "Weblicht Easy Chain for Dependency Parsing (German).",
 		  shortDescription: "Dependency Parsing",
+		  longDescription: "Weblicht Easy Chain for Dependency Parsing (German).",
 		  languages: ["deu"],
 		  lang_encoding: "639-1",		  
 		  mimetypes: ["text/plain"],
@@ -863,8 +933,8 @@ class ToolStore {
 		  version: "v1.0",
 		  authentification: "no",		  
 		  licence: "public",
-		  longDescription: "Weblicht Easy Chain for Dependency Parsing (English).",
 		  shortDescription: "Dependency Parsing",
+		  longDescription: "Weblicht Easy Chain for Dependency Parsing (English).",
 		  languages: ["eng"],
 		  lang_encoding: "639-1",		  
 		  mimetypes: ["text/plain"],
@@ -890,8 +960,8 @@ class ToolStore {
 		  version: "v1.0",
 		  authentification: "no",		  
 		  licence: "public",
-		  longDescription: "Weblicht Easy Chain for Lemmatization (German).",
 		  shortDescription: "Lemmatizer",
+		  longDescription: "Weblicht Easy Chain for Lemmatization (German).",
 		  languages: ["deu"],
 		  lang_encoding: "639-1",		  
 		  mimetypes: ["text/plain"],
@@ -917,8 +987,8 @@ class ToolStore {
 		  version: "v1.0",
 		  authentification: "no",		  
 		  licence: "public",
-		  longDescription: "Weblicht Easy Chain for Lemmatization (English).",
 		  shortDescription: "Lemmatizer",
+		  longDescription: "Weblicht Easy Chain for Lemmatization (English).",
 		  languages: ["eng"],
 		  lang_encoding: "639-1",		  
 		  mimetypes: ["text/plain"],
@@ -944,8 +1014,8 @@ class ToolStore {
 		  version: "v1.0",
 		  authentification: "no",		  
 		  licence: "public",
+		  shortDescription: "POS Tagger and Lemmatization Tool",		  
 		  longDescription: "Weblicht Easy Chain for POS Tagging and Lemmatization (German).",
-		  shortDescription: "POS Tagger",
 		  languages: ["deu"],
 		  lang_encoding: "639-1",		  
 		  mimetypes: ["text/plain"],
@@ -971,8 +1041,8 @@ class ToolStore {
 		  version: "v1.0",
 		  authentification: "no",		  
 		  licence: "public",
+		  shortDescription: "POS Tagger and Lemmatization Tool",
 		  longDescription: "Weblicht Easy Chain for POS Tagging and Lemmatization (English).",
-		  shortDescription: "POS Tagger",
 		  languages: ["eng"],
 		  lang_encoding: "639-1",		  
 		  mimetypes: ["text/plain"],
@@ -998,8 +1068,8 @@ class ToolStore {
 		  version: "v1.0",
 		  authentification: "no",
 		  licence: "public",
+		  shortDescription: "Morphology Analysis Tool",
 		  longDescription: "Weblicht Easy Chain for Morphology Analysis (German)",
-		  shortDescription: "Morphology",
 		  languages: ["deu"],
 		  lang_encoding: "639-1",		  
 		  mimetypes: ["text/plain"],
@@ -1025,8 +1095,8 @@ class ToolStore {
 		  version: "v1.0",
 		  authentification: "no",		  
 		  licence: "public",
+		  shortDescription: "Morphology Analysis Tool",
 		  longDescription: "Weblicht Easy Chain for Morphology Analysis (English)",
-		  shortDescription: "Morphology",
 		  languages: ["eng"],
 		  lang_encoding: "639-1",		  
 		  mimetypes: ["text/plain"],
@@ -1039,7 +1109,7 @@ class ToolStore {
 			     }
 		},
 
-		// just add a webservice for the tools
+		// Here comes a list of webserves (unsure whether to include them at this stage)
 		{ task: "Keyword Extractor",
 		  name: "KER (WebService)",
 		  softwareType: "webService",

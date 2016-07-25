@@ -79,6 +79,8 @@ const common = {
 	    }	    
 	]
     },
+
+    // see https://www.npmjs.com/package/html-webpack-plugin
     plugins: [
 	new HtmlwebpackPlugin({
 	    template: 'app/template.html',
