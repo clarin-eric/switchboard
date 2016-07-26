@@ -6,9 +6,9 @@
 <body>
   
   <h1>How to use the Language Resource Switchboard</h1>
-  <p>There are two versions of the Language Resources Switchboard (LRS): the standalone version,
+  <p>Currently, there are two versions of the Language Resources Switchboard (LRS): the standalone version,
   where users can drag and drop their own resources from the file system into the LRS drop area, and the VLO version,
-  where users can call the LRS for selected resources from the Virtual Language Observatory. This
+  where users can call the LRS for a selected resource from the Virtual Language Observatory. This
   document describes the standalone version, but it is as well applicable for the VLO version once the
   LRS has been called with a <em>single</em> resource. </p>
 
@@ -21,7 +21,7 @@
     <li>A file information pane appears with basic information about the file. Please verify
     whether the information that has been gathered in the pane is correct. Use the pull-down menus
     for 'mimetype' and 'language' to correct existing information, or to add missing
-      information. Both language and mimetype must be supplied before the next step</li>
+      information. Both language and mimetype must be supplied before the next step.</li>
     <li>In the file info pane, click on 'Show Tools'. The 'Task Oriented View' should now show a
       list of applicable tools capable of processing the resource in question. The tools are
       ordered, given the task they perform.</li>
@@ -51,9 +51,21 @@
   the <a href="http://weblicht.sfs.uni-tuebingen.de/clrs">standalone version of the LRS.<a />
     Before uploading the resource, check whether the resource matches the mimetype you expect.
 
+    <h3>Mind the gap (General Remarks)</h3>
+    <ul>
+      <li>For the processing of a large file, please keep in mind that its uploading to the server may take some time. Also, the LRS methods for the identification of a resource's language and mimetype may take its time toll.</li>
+      <li>The LRS now also shows <em>web services</em>. This is experimental. When 'Click to start
+      tool' is pressed, the web service is being called. Upon completion (which may take some
+      time), a new tab opens with the web services' response. The response either holds the
+      processed data, or a reference to a location where is can be downloaded from. Sometimes,
+      the response also holds metadata about the processing.
+      <li>Please contact us, when a tool (or web service) does not work as advertised, or when you
+	would like to have some tool (or web service) added to the LRS.</li>
+    </ul>
     <p>
-      For more details, please contact: <a href="mailto:claus.zinn@uni-tuebingen.de?subject=CLARIN-PLUS LRS">Claus Zinn</a>.
       <hr>
+      
+      Please contact: <a href="mailto:claus.zinn@uni-tuebingen.de?subject=CLARIN-PLUS LRS">Claus Zinn</a>.
       Alternatively, you can also contact the German CLARIN 
 
 		<a href="https://support.clarin-d.de/mail/?lang=de&QueueID=19&ResponsibleID=15&OwnerID=15" target="_blank" onclick="return popup_CLARIN_HELPDESK(this.href)">

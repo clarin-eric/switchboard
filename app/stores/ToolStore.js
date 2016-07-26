@@ -163,8 +163,9 @@ class ToolStore {
 			     }		  
 		},
 
+		// seems like BAS only offers German voice(s) of Mary. @ Jul 25, website mary.dfki.de not working.
 		{ task: "Voice Synthesis",
-		  name: "Mary TTS",
+		  name: "Mary TTS (web service)",
 		  logo: "mary.jpg",
 		  softwareType: "webService", 		  
 		  homepage: "http://mary.dfki.de",
@@ -174,7 +175,7 @@ class ToolStore {
 		      person: "Marc Schroeder",
 		      email: "",
 		  },
-		  version: "0.x.y",
+		  version: "> 5.1",
 		  license: "public",
 		  authentification: "no",		  
 		  shortDescription: "Speech Synthesis System for German (hosted by BAS)",
@@ -195,8 +196,47 @@ class ToolStore {
 		  // CLARIN-DK calls those parameters differently, namely:
 		  mapping:   { input        : "INPUT_TEXT",
 			     }		  
-		},				
-		
+		},
+
+		{ task: "Phonetic Transcription",
+		  name: "runMinni (web service)",
+		  logo: "YourLogoComesHere.png",		  		  
+		  softwareType: "webService", 		  
+		  homepage: "http://www.phonetik.uni-muenchen.de/forschung/Bas/BasWebserviceseng.html",
+		  location: "BAS, Muenchen",
+		  creators: ["Florian Schiel, Andreas Kipp, Thomas Kisler (BAS)"],
+		  contact: {
+		      person: "Florian Schiel, Andreas Kipp, Thomas Kisler (BAS)",
+		      email: "",
+		  },
+		  version: "x.y.z",
+		  license: "public",
+		  authentification: "no",		  
+		  shortDescription: "Segments and labels a speech audio file into SAM-PA (or IPA) phonetic segments without any text/phonological input.",
+		  longDescription:  "Segments and labels a speech audio file into SAM-PA (or IPA) phonetic segments without any text/phonological input; results are stored either in praat compatible TextGrid file (configuration parameter OUTFORMAT=TextGrid) or a CSV table (the BPF MAU tier, configuration parameter OUTFORMAT=csv).",
+		  lang_encoding: "639-1",
+		  languages: ["deu"],
+		  mimetypes: [
+			      "audio/wav"
+			     ],
+		  url: ["https://clarin.phonetik.uni-muenchen.de/BASWebServices/services/runMINNI"], 
+		  parameter: {  input      : "self.linkToResource", 
+				OUTIPA     : "false", 
+				OUTFORMAT  : "TextGrid", 
+				LANGUAGE   : "deu-DE", 
+				WEIGHT     : "default",
+				MAUSSHIFT  : "default", 
+				OUTSYMBOL  : "sampa", 
+				MINPAUSLEN : "5",
+				USETRN     : "force",
+				INSPROB    : "0.0"
+			     },
+
+		  // CLARIN-DK calls those parameters differently, namely:
+		  mapping:   { input        : "SIGNAL",
+			     }		  
+		},		
+
 
 		{ task: "Named Entity Recognition",
 		  name: "CLARIN-DK Tool Box (CST's name recognizer)",
