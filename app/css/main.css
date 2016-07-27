@@ -76,13 +76,16 @@ h2 {
   .site-footer {
     font-size: 0.9rem; } }
 
-.whiteLink {
-   color: white;
+.lane-name:link {
+     color: white;
 }
 
-/* visited link */
-.whiteLink:visited {
-    color: white;
+.lane-name:visited {
+    color: green;
+}
+
+.lane-name:hover {
+    color: green;
 }
 
 .dropArea {
@@ -115,7 +118,7 @@ h2 {
 .lane {
   display: inline-block;
 
-  margin: 1em;
+  margin: 2em;
 
   background-color: #efefef;
   border: 1px solid #ccc;
@@ -128,22 +131,21 @@ h2 {
 .tool {
   display: inline-block;
 
-  margin: 1em;
+  margin: 10em;
 
   background-color: #afafaf;
   border: 1px solid #ccc;
   border-radius: 0.5em;
 
-  min-width: 10em;
+  min-width: 50em;
   vertical-align: top;
 }
 
 .alltools {
   display: inline-block;
 
-  margin: 1em;
+  margin: 10px;
 
-  background-color: #afafaf;
   border: 3px solid #ccc;
   border-radius: 0.5em;
 
@@ -154,13 +156,13 @@ h2 {
 .task {
   display: inline-block;
 
-  margin: 1em;
+  margin: 10em;
 
   background-color: #bfbfbf;
   border: 1px solid #ccc;
   border-radius: 0.5em;
 
-  min-width: 30em;
+  min-width: 50em;
   vertical-align: top;
 }
 
@@ -176,13 +178,18 @@ h2 {
   border-top-right-radius: 0.5em;
 }
 
+.taskHead {
+    padding-left: 1em;
+    padding-top: 1em;
+}
+    
 .tool-header, .task-header {
   overflow: auto;
 
-  padding: 1em;
+  padding:1em;
 
   color: #afafaf;
-  background-color: #333;
+  background-color: #33;
 
   border-top-left-radius: 0.5em;
   border-top-right-radius: 0.5em;
@@ -190,6 +197,7 @@ h2 {
 
 .lane-name, .tool-name {
     float: left;
+    color: #fff;
     display: block;
     padding-right: 1em;    
 }
@@ -214,7 +222,7 @@ h2 {
   margin: 0.5em;
   padding-left: 0;
 
-  max-width: 20em;
+  max-width: 40em;
   list-style: none;
 }
 

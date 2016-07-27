@@ -17,6 +17,7 @@ import UrlArea from './UrlArea.jsx';                // all resource information 
 // routing between DropArea and UrlArea
 import { Router, Route, hashHistory } from 'react-router'
 
+require('./../images/clarin-logo-wide.png');
 require('./../images/switchboard.png');
 require('./../images/weblicht.jpg');
 require('./../images/voyant-tools.jpg');
@@ -57,24 +58,42 @@ export default class App extends React.Component {
     render() {
 	return (
 	    <div>
-	      <section className="page-header">
-		<a href="https://www.clarin.eu">
-		  <img className="alignLeft" src="CLARIN-Logo16-c.jpg" width="15%" height="15%" />
-		</a>
-		<img className="alignRight"  src="switchboard.png" width="15%" height="15%" />
-	        <h1 className="project-name">CLARIN Language Resource Switchboard</h1>
-	        <h2 className="project-tagline">Find the appropriate tool for your resource.</h2>
-		<p>
-		  <a className="whiteLink" href="help.html">  [ User Help ]</a>		
-  	          <button className="alltools" onClick={this.showTools}>Show All Tools</button>
-  		<a className="whiteLink" href="about.html"> [ Developer Help ]</a>
-		<a href="https://support.clarin-d.de/mail/?lang=de&QueueID=19&ResponsibleID=15&OwnerID=15" target="_blank" onclick="return popup_CLARIN_HELPDESK(this.href)">
-		<img className="alignRight" src="button_helpdesk_forhelp.png" width="10%" height="10%" />
-		</a>
-		</p>
-		
-   	      </section>
-	      
+     <header id="header" role="banner">
+       <div className="navbar-static-top  navbar-default navbar" role="navigation">
+         <div className="container">
+           <div className="navbar-header">
+             <a className="navbar-brand" href="./" id="idce">
+               <span><i className="fa fa-cog fa-spin fa-1x fa-fw" aria-hidden="true"></i> Language Resource Switchboard</span>
+             </a>
+           </div>
+	   
+           <div className="collapse navbar-collapse" role="navigation" id="id1">
+             <ul className="nav navbar-nav" id="idcf">
+               <li>
+                 <a href="./about.html">
+		   Dev Help
+		 </a>
+               </li>
+	       <li>
+                 <a href="./help.html">
+		   User Help
+		 </a>
+               </li>
+	       <li>
+	       <button className="alltools" onClick={this.showTools}>Show All Tools</button>
+	       </li>
+             </ul>
+	     <ul className="nav navbar-nav navbar-right" id="id723">
+               <li>
+                 <a href="http://www.clarin.eu/" className="clarin-logo hidden-xs">
+		   <span>CLARIN</span>
+		 </a>
+               </li>
+             </ul>
+           </div>
+         </div>
+       </div>
+     </header>
 	      <div id='dragAndDropArea'></div>
 
 	      <Router history={hashHistory}>	      
@@ -96,15 +115,10 @@ export default class App extends React.Component {
 	       <p />
    	       <hr />
   	       <p />
-	       <h2>Task-Oriented View</h2>
+	       <h2>Task-Oriented Tool View</h2>
                <Tasks />
 	      </AltContainer>
 	      <hr />
-	      <footer className="page-footer" >
-		<h4>Credits</h4>
-		<p><a href="http://www.clarin.eu/node/4213">CLARIN-PLUS </a>receives funding from the European Union’s Horizon 2020 research and innovation programme under grant agreement no. 676529. Your use of the CLARIN ERIC site is subject to the CC-BY and our terms of use.</p>
-		<p>Contact: <a href="mailto:claus.zinn@uni-tuebingen.de?subject=CLARIN-PLUS LRS">Claus Zinn</a>. </p>
-	      </footer>
 	    </div>
 	    );
     }

@@ -15,10 +15,11 @@ export default class Lane extends React.Component {
 	
 	const id = props.lane.id;
 	
-	this.displayTools = this.displayTools.bind(this, id);
-	this.deleteNote = this.deleteNote.bind(this, id);
-	this.editName = this.editName.bind(this, id);
+	this.displayTools     = this.displayTools.bind(this, id);
+	this.deleteNote       = this.deleteNote.bind(this, id);
+	this.editName         = this.editName.bind(this, id);
 	this.activateLaneEdit = this.activateLaneEdit.bind(this, id);
+	this.getFileUrl       = this.getFileUrl.bind(this, id);
     }
     render() {
 	const {lane, ...props} = this.props;
@@ -27,7 +28,7 @@ export default class Lane extends React.Component {
 	    <div {...props}>
   	      <div className="lane-header">
   	        <a className="lane-name"
-		   href={lane.name}
+		   href={this.getFileUrl(lane)}
 		   target="_blank">
 	    	   <span>Link to Resource</span>
 		</a>
@@ -67,6 +68,16 @@ export default class Lane extends React.Component {
 	}
 	
 	ToolActions.findTools( entireLaneState.selectedLane[0] );
+    }
+
+    getFileUrl(id) {
+	console.log('Lane.jsx/getFileUrl', id);
+	var url = id.name;
+	if (id.upload == "dnd") {
+            url = 'http://weblicht.sfs.uni-tuebingen.de/clrs/storage/' + id.filenameWithDate
+	}
+
+	return url;
     }
     
     editNote(id, task) {

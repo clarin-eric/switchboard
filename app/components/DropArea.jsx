@@ -233,10 +233,9 @@ export default class DropArea extends React.Component {
 	console.log('onDrop entry, processing', currentFile, newFileName); 
 
 	// 1. store in the temporary file store at the MPG
+	// -- the following URL is a proxy to 'http://ws1-clarind.esc.rzg.mpg.de/drop-off/storage/'
 	Request
 	    .post('http://weblicht.sfs.uni-tuebingen.de/clrs/storage/'.concat(newFileName))
-       // old url without proxy information in place:
-	// .post('http://ws1-clarind.esc.rzg.mpg.de/drop-off/storage/'.concat(files[i].name))	
 	    .send(currentFile)	
 	    .set('Content-Type', newFileType)
 	    .end((err, res) => {

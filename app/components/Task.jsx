@@ -153,22 +153,22 @@ export default class Task extends React.Component {
 	    const styles = {
 		row: {
 			width: '100%',
-			padding: '10 20px',
+			padding: '20 20px',
 			display: 'flex',
 			alignItems: 'center',
-			margin: '-20px 0'
+			margin: '-10px 0'
 		},
 		icon: {
 			display: 'block',
 			width: '30px',
 			height: '30px',
-			margin: '10px 20px 0 0',
+			margin: '0px 20px 0 0',
 			textAlign: 'center',
-			fontSize: '32px'
+			fontSize: '24px'
 		},
 		title: {
 			fontWeight: 500,
-			fontSize: '16px',
+			fontSize: '12px',
 			margin: 0,
 			fontStyle: 'italic'
 		}
@@ -176,19 +176,19 @@ export default class Task extends React.Component {
 	    
 	    const renderSummary = () => {
 		if ((title == "URL") && ( summary.url )) return (
-		    <p style={{ fontWeight: 100, lineHeight: 1.0 }}>
+		    <p style={{ fontWeight: 100, fontSize: '16px', lineHeight: 1.5 }}>
 		    <button onClick={this.invokeSoftware.bind(this,summary)} > Click to start tool </button>		    
 		    </p>
 		);
 
 		if ((title == "Home") && (summary) ) return (
-		    <p style={{ fontWeight: 100, lineHeight: 1.0 }}>
+		    <p style={{ fontWeight: 100, fontSize: '16px', lineHeight: 1.5 }}>
 			<a href={summary} target="_blank"> {summary }</a> 
 		    </p>
 		);
 		
 		if(summary) return (
-			<p style={{ fontWeight: 100, lineHeight: 1.0 }}>
+			<p style={{ fontWeight: 100, fontSize: '16px', lineHeight: 1.4 }} >
 				{summary}
 			</p>
 		);

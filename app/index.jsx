@@ -1,9 +1,11 @@
 import './css/main.css';
-import './css/clarin.css';
 import './css/accordion.css';
-import './css/normalize.css';
 import './css/selectize.css';
 import './css/ionicons.min.css';
+
+import './css/vlo.css';
+import './css/font-awesome.min.css';
+
 
 import React from 'react';
 import ReactDOM from 'react-dom';
