@@ -28,8 +28,8 @@ export default class Lane extends React.Component {
 	    <div {...props}>
   	      <div className="lane-header">
   	        <a className="lane-name"
-		   href={this.getFileUrl(lane)}
-		   target="_blank">
+	           href='#' onClick={this.getFileUrl.bind(this,lane)}
+		   >
 	    	   <span>Link to Resource</span>
 		</a>
 	    
@@ -70,14 +70,22 @@ export default class Lane extends React.Component {
 	ToolActions.findTools( entireLaneState.selectedLane[0] );
     }
 
-    getFileUrl(id) {
-	console.log('Lane.jsx/getFileUrl', id);
-	var url = id.name;
-	if (id.upload == "dnd") {
-            url = 'http://weblicht.sfs.uni-tuebingen.de/clrs/storage/' + id.filenameWithDate
+    getFileUrl(laneId) {
+	var myLane = LaneActions.getLane( laneId );
+	var entireLaneState = LaneStore.getState();
+	var langResourceDescription = entireLaneState.selectedLane[0];
+
+	console.log('Lane.jsx/getFileUrl', langResourceDescription);
+	var url = langResourceDescription.name;
+	if (langResourceDescription.upload == "dnd") {
+	    console.log('Lane.jsx/getFileUrl:dnd', langResourceDescription.filenameWithDate);
+            url = 'http://weblicht.sfs.uni-tuebingen.de/clrs/storage/' + langResourceDescription.filenameWithDate;
+	} else {
+	    console.log('Lane.jsx/getFileUrl:vlo', langResourceDescription.filename);
 	}
 
-	return url;
+	var win = window.open(url, '_blank');
+	win.focus();	
     }
     
     editNote(id, task) {

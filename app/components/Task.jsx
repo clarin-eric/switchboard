@@ -324,6 +324,7 @@ export default class Task extends React.Component {
 	var lang_encoding = item.lang_encoding;
 	var softwareType = item.softwareType;
 
+
 	if (upload == "dnd") {
 	    console.log('the file has been dropped in the demo upload site');
 	} else if (upload == "vlo") {
@@ -347,7 +348,9 @@ export default class Task extends React.Component {
 	}
     
 	var inputFilename = fileServerURL + filename;
-	var inputFilename = fileServerURL + filenameWithDate;	
+	if (upload == "dnd") {
+	    inputFilename = fileServerURL + filenameWithDate;
+	}
 
 	console.log('Task.jsx/constructToolURL', item, entireState.selectedLane[0], 'encoding:', lang_encoding);
 	
