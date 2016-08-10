@@ -479,8 +479,8 @@ export default class Task extends React.Component {
 		});
 	} else {
 	    let data = new FormData();
-	    data.set( URL.formPar, file, file.name);
-
+	    //data.set( URL.formPar, file, file.name);
+	    data.append( URL.formPar, file, file.name);
 	    Request
 		.post(URL.url)
 		.send(data)
