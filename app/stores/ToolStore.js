@@ -389,7 +389,7 @@ class ToolStore {
 		  url: ["http://oxgarage.oucs.ox.ac.uk:8080/ege-webservice/Conversions/TEI%3Atext%3Axml/txt%3Atext%3Aplain/"],
 		  parameter: { 
 			       input        : "self.linkToResource"
-			     }		  
+		  },
 		  mapping:   { 
 			     }
 		},
