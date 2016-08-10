@@ -388,7 +388,8 @@ class ToolStore {
 		  output: ["text/plain"],
 		  url: ["http://oxgarage.oucs.ox.ac.uk:8080/ege-webservice/Conversions/TEI%3Atext%3Axml/txt%3Atext%3Aplain/"],
 		  parameter: { 
-			     },
+			       input        : "self.linkToResource"
+			     }		  
 		  mapping:   { 
 			     }
 		},
@@ -399,7 +400,8 @@ class ToolStore {
 		{ task: "Conversion",
 		  name: "TEI↔TCF encoder+decoder (web service)",
 		  logo: "YourLogoComesHere.png",
-		  softwareType: "webService", 		  
+		  softwareType: "webService",
+		  postSubmit: "data",		  
 		  homepage: "http://kaskade.dwds.de/tei-tcf",
 		  location: "DWDS, Germany",		  
 		  creators: ["Bryan Jurish"],
@@ -419,10 +421,11 @@ class ToolStore {
 			      "application/xml;format-variant=weblicht-tcf"
 			     ], 		  
 		  output: ["text/plain"],
-		  url: ["http://kaskade.dwds.de/tei-tcf"], // TODO
-		  parameter: { 
+		  url: ["http://kaskade.dwds.de/tei-tcf/encode.perl"], // TODO
+		  parameter: { input : "self.linkToResource" // for demo upload site, to be instantiated
 			     },
-		  mapping:   { 
+		  
+		  mapping:   { input : "f"
 			     }
 		},
 		
@@ -797,11 +800,71 @@ class ToolStore {
 			       lang         : "language"
 			     }
 		},				
+
+		// curl -d @germanet.dc.xml -o output.marc.xml http://weblicht.sfs.uni-tuebingen.de/converter/DC2Marc/rest
+
+		// { task: "Metadata Format Conversion",
+		//   name: "NaLiDa2Marc21 (web service)",
+		//   softwareType: "webService",
+		//   postSubmit: "data",
+		//   logo: "YourLogoComesHere.png",		  
+		//   homepage: "http://shannon.sfs.uni-tuebingen.de/NaLiDa2Marc21",
+		//   location: "Tuebingen, Germany",		  		  
+		//   creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
+		//   contact: {
+		//       person: "NaLiDa Support",
+		//       email: "nalida@sfs.uni-tuebingen.de"
+		//   },	    
+		//   version: "v1.0",
+		//   authentification: "no",		  
+		//   licence: "public",
+		//   shortDescription: "Bibliographic Format Converter", // controlled vocabulary, change name?
+		//   longDescription: "Webservice converting NaLiDa-based CMDI profiles to Marc21",
+		//   languages: ["generic"], 
+		//   mimetypes: ["text/xml"],
+		//   output: ["text/xml"],
+		//   url: "http://shannon.sfs.uni-tuebingen.de:8080/NaLiDa2Marc-1.0",
+		//   pid: "",
+		//   parameter: { input : "self.linkToResource" // for demo upload site, to be instantiated
+		// 	     }
+		  
+		//   // URL to get called:
+		//   // http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht?input=http://hdl.handle.net/10932/00-017B-E3BC-2D57-CC01-6&lang=de&analysis=ne
+		// },		
 		
 		{ task: "Metadata Format Conversion",
-		  name: "NaLiDa2Marc21",
+		  name: "CMDI2DC (web service)",
+		  softwareType: "webService",
+		  postSubmit: "data",
 		  logo: "YourLogoComesHere.png",		  
-		  homepage: "http://shannon.sfs.uni-tuebingen.de/NaLiDa2Marc21",
+		  homepage: "http://weblicht.sfs.uni-tuebingen.de/converter/Cmdi2DC",
+		  location: "Tuebingen, Germany",		  		  
+		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
+		  contact: {
+		      person: "NaLiDa Support",
+		      email: "nalida@sfs.uni-tuebingen.de"
+		  },	    
+		  version: "v0.9",
+		  authentification: "no",		  
+		  licence: "public",
+		  shortDescription: "Bibliographic Format Converter: CMDI to Dublin Core (DC)", 
+		  longDescription: "Webservice converting CMDI metadata to XML-based Dublin Core metadata",
+		  languages: ["generic"], 
+		  mimetypes: ["text/xml", "application/octet-stream"],
+		  output: ["text/xml"],
+		  url: ["http://weblicht.sfs.uni-tuebingen.de/converter/Cmdi2DC/rest"],
+		  pid: "",
+		  parameter: { input : "self.linkToResource" // for demo upload site, to be instantiated
+			     }
+		},
+
+		
+		{ task: "Metadata Format Conversion",
+		  name: "DC2MARC21 (web service)",
+		  softwareType: "webService",
+		  postSubmit: "data",
+		  logo: "YourLogoComesHere.png",		  
+		  homepage: "http://weblicht.sfs.uni-tuebingen.de/converter/DC2Marc",
 		  location: "Tuebingen, Germany",		  		  
 		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
 		  contact: {
@@ -811,19 +874,120 @@ class ToolStore {
 		  version: "v1.0",
 		  authentification: "no",		  
 		  licence: "public",
-		  shortDescription: "Bibliographic Format Converter", // controlled vocabulary, change name?
-		  longDescription: "Webservice converting NaLiDa-based CMDI profiles to Marc21",
+		  shortDescription: "Bibliographic Format Converter: DC to MARC 21", 
+		  longDescription: "Webservice converting XML-based Dublin Core metadata to XML-based MARC 21 metadata",
 		  languages: ["generic"], 
-		  mimetypes: ["text/xml"],
+		  mimetypes: ["text/xml", "application/octet-stream"],
 		  output: ["text/xml"],
-		  url: "http://shannon.sfs.uni-tuebingen.de:8080/NaLiDa2Marc-1.0/",
+		  url: ["http://weblicht.sfs.uni-tuebingen.de/converter/DC2Marc/rest"],
 		  pid: "",
 		  parameter: { input : "self.linkToResource" // for demo upload site, to be instantiated
 			     }
-		  
-		  // URL to get called:
-		  // http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht?input=http://hdl.handle.net/10932/00-017B-E3BC-2D57-CC01-6&lang=de&analysis=ne
-		},		
+		},
+		
+		{ task: "Metadata Format Conversion",
+		  name: "MARC2EAD (web service)",
+		  softwareType: "webService",
+		  postSubmit: "data",
+		  logo: "YourLogoComesHere.png",		  
+		  homepage: "http://weblicht.sfs.uni-tuebingen.de/converter/Marc2EAD",
+		  location: "Tuebingen, Germany",		  		  
+		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
+		  contact: {
+		      person: "NaLiDa Support",
+		      email: "nalida@sfs.uni-tuebingen.de"
+		  },	    
+		  version: "v1.0",
+		  authentification: "no",		  
+		  licence: "public",
+		  shortDescription: "Bibliographic Format Converter: from MARC 21 to EAD", 
+		  longDescription: "Webservice converting XML-based MARC 21 metadata to XML-based EAD metadata",
+		  languages: ["generic"], 
+		  mimetypes: ["text/xml", "application/octet-stream"],
+		  output: ["text/xml"],
+		  url: ["http://weblicht.sfs.uni-tuebingen.de/converter/Marc2EAD/rest"],
+		  pid: "",
+		  parameter: { input : "self.linkToResource" // for demo upload site, to be instantiated
+			     }
+		},
+
+		{ task: "Metadata Format Conversion",
+		  name: "Marc2MODS (web service)",
+		  softwareType: "webService",
+		  postSubmit: "data",
+		  logo: "YourLogoComesHere.png",		  
+		  homepage: "http://weblicht.sfs.uni-tuebingen.de/converter/Marc2MODS",
+		  location: "Tuebingen, Germany",		  		  
+		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
+		  contact: {
+		      person: "NaLiDa Support",
+		      email: "nalida@sfs.uni-tuebingen.de"
+		  },	    
+		  version: "v1.0",
+		  authentification: "no",		  
+		  licence: "public",
+		  shortDescription: "Bibliographic Format Converter: from MARC 21 to MODS", 
+		  longDescription: "Webservice converting XML-based MARC 21 metadata to XML-based MODS metadata",
+		  languages: ["generic"], 
+		  mimetypes: ["text/xml", "application/octet-stream"],
+		  output: ["text/xml"],
+		  url: ["http://weblicht.sfs.uni-tuebingen.de/converter/Marc2MODS/rest"],
+		  pid: "",
+		  parameter: { input : "self.linkToResource" // for demo upload site, to be instantiated
+			     }
+		},
+		
+		{ task: "Metadata Format Conversion",
+		  name: "Marc2RDFDC (web service)",
+		  softwareType: "webService",
+		  postSubmit: "data",
+		  logo: "YourLogoComesHere.png",		  
+		  homepage: "http://weblicht.sfs.uni-tuebingen.de/converter/Marc2RDFDC",
+		  location: "Tuebingen, Germany",		  		  
+		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
+		  contact: {
+		      person: "NaLiDa Support",
+		      email: "nalida@sfs.uni-tuebingen.de"
+		  },	    
+		  version: "v1.0",
+		  authentification: "no",		  
+		  licence: "public",
+		  shortDescription: "Bibliographic Format Converter: from MARC 21 to RDF-DC", 
+		  longDescription: "Webservice converting XML-based MARC 21 metadata to XML-based RDF-DC metadata",
+		  languages: ["generic"], 
+		  mimetypes: ["text/xml", "application/octet-stream"],
+		  output: ["text/xml"],
+		  url: ["http://weblicht.sfs.uni-tuebingen.de/converter/Marc2RDFDC/rest"],
+		  pid: "",
+		  parameter: { input : "self.linkToResource" // for demo upload site, to be instantiated
+			     }
+		},				
+
+		{ task: "Metadata Format Conversion",
+		  name: "MODS2RDF (web service)",
+		  softwareType: "webService",
+		  postSubmit: "data",
+		  logo: "YourLogoComesHere.png",		  
+		  homepage: "http://weblicht.sfs.uni-tuebingen.de/converter/MODS2RDF",
+		  location: "Tuebingen, Germany",		  		  
+		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
+		  contact: {
+		      person: "NaLiDa Support",
+		      email: "nalida@sfs.uni-tuebingen.de"
+		  },	    
+		  version: "v1.0",
+		  authentification: "no",		  
+		  licence: "public",
+		  shortDescription: "Bibliographic Format Converter: from MODS to RDF", 
+		  longDescription: "Webservice converting XML-based MODS metadata to XML-based RDF metadata",
+		  languages: ["generic"], 
+		  mimetypes: ["text/xml", "application/octet-stream"],
+		  output: ["text/xml"],
+		  url: ["http://weblicht.sfs.uni-tuebingen.de/converter/MODSRDF/rest"],
+		  pid: "",
+		  parameter: { input : "self.linkToResource" // for demo upload site, to be instantiated
+			     }
+		},				
 		
 		{ task: "Named Entity Recognition",
 		  name: "Weblicht-NamedEntities-DE",
@@ -1153,6 +1317,7 @@ class ToolStore {
 		{ task: "Keyword Extractor",
 		  name: "KER (WebService)",
 		  softwareType: "webService",
+		  postSubmit: "form",
 		  logo: "lindat.jpg",
 		  homepage: "http://lindat.mff.cuni.cz/services/ker/",
 		  location: "Prague, CUNI",
@@ -1181,7 +1346,8 @@ class ToolStore {
 
 		{ task: "Named Entity Recognition",
 		  name: "NameTag (WebService)",
-		  softwareType: "webService", 
+		  softwareType: "webService",
+		  postSubmit: "form",
 		  logo: "lindat.jpg",
 		  homepage: "http://lindat.mff.cuni.cz/services/nametag/",
 		  location: "Prague, CUNI",
@@ -1287,6 +1453,7 @@ class ToolStore {
 		parameter       : entry.parameter,
 		lang_encoding   : entry.lang_encoding,
 		softwareType    : entry.softwareType,
+		postSubmit      : entry.postSubmit,
 		mapping         : entry.mapping,
 		} ];
 

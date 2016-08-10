@@ -57,6 +57,7 @@ export default class DropArea extends React.Component {
     }
 
     addFile( laneId, file ) {
+
 	LaneActions.addFile({
 	    file: file,
 	    laneId
@@ -230,7 +231,7 @@ export default class DropArea extends React.Component {
 	    newFileType = "application/octet_stream"
 	}
 	
-	console.log('onDrop entry, processing', currentFile, newFileName); 
+	console.log('onDrop entry, processing', currentFile, newFileName);
 
 	// 1. store in the temporary file store at the MPG
 	// -- the following URL is a proxy to 'http://ws1-clarind.esc.rzg.mpg.de/drop-off/storage/'

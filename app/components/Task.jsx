@@ -216,6 +216,7 @@ export default class Task extends React.Component {
 			 name={element.name}
 			 title={element.name}
 			 softwareType={element.softwareType}
+			 postSubmit={element.postSubmit}
 			 location={element.location}
 			 authentification={element.authentification}
 			 homepage={element.homepage}
@@ -313,7 +314,7 @@ export default class Task extends React.Component {
 	    return false;
 	}
 
-	console.log('Task.jsx/constructToolURL', entireState.selectedLane[0]);
+	console.log('Task.jsx/constructToolURL', entireState.selectedLane[0], item);
 	
 	// central service to retrieve language resource, may need to chech cross-site scripting issue
 	var filename =  entireState.selectedLane[0].name;
@@ -323,6 +324,7 @@ export default class Task extends React.Component {
 	var upload   =  entireState.selectedLane[0].upload;
 	var lang_encoding = item.lang_encoding;
 	var softwareType = item.softwareType;
+	var postSubmit = item.postSubmit;
 
 
 	if (upload == "dnd") {
@@ -423,10 +425,11 @@ export default class Task extends React.Component {
 	if (softwareType == "webService") {
 	    rtnValue =
 		{
-		    toolType : "webService",
-		    url      : urlWithParameters,
-		    formPar  : formParameter,
-		    formVal  : file
+		    toolType   : "webService",
+		    url        : urlWithParameters,
+		    formPar    : formParameter,
+		    formVal    : file,
+		    postSubmit : postSubmit
 		};
 	} else	{
 	    rtnValue = 
@@ -457,22 +460,40 @@ export default class Task extends React.Component {
     }
 
     invokeWebService( URL ) {
-	let data = new FormData();
+
 	let file = URL.formVal;
-    
-	data.append( URL.formPar, file, file.name);
 	
-	var req = Request
-	    .post(URL.url)
-	    .send(data)
-	    .end((err, res) => {
-		if (err) {
-		    console.log('onDrop: error in calling webservice',   err, file.name, data, URL);
-		} else {
-		    var something = window.open("data:text/json," + encodeURIComponent(res.text), "_blank");
-		    // something.focus();
-		    console.log('onDrop: success in calling webservice', res, file.name, data, URL);
-		}
-	    });
+	if (URL.postSubmit == "data") {
+	    Request
+		.post(URL.url)
+		.send(file)
+		.end((err, res) => {
+		    if (err) {
+			console.log('Task.jsx/invokeWebService: error in calling webservice', err, file.name, URL);
+			alert('Result of calling web service: ' + err);
+		    } else {
+			var something = window.open("data:text/json," + encodeURIComponent(res.text), "_blank");
+			// something.focus();
+			console.log('onDrop: success in calling webservice', res, file.name, data, URL);
+		    }
+		});
+	} else {
+	    let data = new FormData();
+	    data.set( URL.formPar, file, file.name);
+
+	    Request
+		.post(URL.url)
+		.send(data)
+		.end((err, res) => {
+		    if (err) {
+			console.log('Task.jsx/invokeWebService: error in calling webservice', err, file.name, data, URL);
+			alert('Result of calling web service: ' + err);
+		    } else {
+			var something = window.open("data:text/json," + encodeURIComponent(res.text), "_blank");
+			// something.focus();
+			console.log('onDrop: success in calling webservice', res, file.name, data, URL);
+		    }
+		});
+	}
     }
 }

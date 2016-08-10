@@ -51,7 +51,23 @@ export default class MimetypeMenu extends React.Component {
 		       "text/tei+xml;format-variant=tei-iso-spoken",
 		       "text/tei+xml;format-variant=tei-dta",
 
+		       // see https://tools.ietf.org/html/rfc6129
+		       "application/tei+xml",
+
 		       "text/folia+xml",
+		       
+		       "text/cmdi+xml",
+		       "text/dc+xml",
+		       "text/marc21+xml",
+		       "text/mods+xml",
+
+		       // see https://tools.ietf.org/html/rfc6207
+		       "application/mods+xml",
+		       "application/mads+xml",
+		       "application/mets+xml",
+		       "application/marcxml+xml",
+		       "application/sru+xml",
+		       
 		       
 		       "text/csv",
 		       "text/exb+xml",
