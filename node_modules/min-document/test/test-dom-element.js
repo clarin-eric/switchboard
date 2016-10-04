@@ -66,6 +66,14 @@ function testDomElement(document) {
       assert.end()
     })
 
+    test("does not serialize innerHTML as an attribute", function(assert) {
+      var div = document.createElement("div")
+      div.innerHTML = "Test <img />"
+      assert.equal(div.toString(), "<div>Test <img /></div>")
+      cleanup()
+      assert.end()
+    })
+
     test("can getElementsByTagName", function(assert) {
         var parent = document.createElement("div")
         var child1 = document.createElement("span")
@@ -140,6 +148,22 @@ function testDomElement(document) {
         assert.end()
     })
 
+    test("can serialize style property", function(assert) {
+        var div = document.createElement("div")
+        div.style.fontSize = "16px"
+        assert.equal(div.toString(), "<div style=\"font-size:16px;\"></div>")
+        cleanup(); 
+        assert.end()
+    })
+
+    test("can serialize style as a string", function(assert) {
+      var div = document.createElement("div")
+      div.setAttribute('style', 'display: none')
+      assert.equal(div.toString(), "<div style=\"display: none\"></div>")
+      cleanup()
+      assert.end()
+    })
+
     test("can serialize text nodes", function(assert) {
         var div = document.createElement("div")
         div.appendChild(document.createTextNode('<test> "&'))
@@ -152,6 +176,43 @@ function testDomElement(document) {
         var div = document.createElement("div")
         div.setAttribute("data-foo", '<p>"&')
         assert.equal(div.toString(), '<div data-foo="&lt;p&gt;&quot;&amp;"></div>')
+        cleanup()
+        assert.end()
+    })
+
+    test("can check if an element contains another", function(assert) {
+        var parent = document.createElement("div")
+        var sibling = document.createElement("div")
+        var child1 = document.createElement("div")
+        var child2 = document.createElement("div")
+
+        child1.appendChild(child2)
+        parent.appendChild(child1)
+
+        assert.equal(parent.contains(parent), true)
+        assert.equal(parent.contains(sibling), false)
+        assert.equal(parent.contains(child1), true)
+        assert.equal(parent.contains(child2), true)
+
+        cleanup()
+        assert.end()
+    })
+
+    test("can handle non string attribute values", function(assert) {
+        var div = document.createElement("div")
+        div.setAttribute("data-number", 100)
+        div.setAttribute("data-boolean", true)
+        div.setAttribute("data-null", null)
+        assert.equal(div.toString(), '<div data-number="100" data-boolean="true" data-null=""></div>')
+        cleanup()
+        assert.end()
+    })
+
+    test("can serialize textarea correctly", function(assert) {
+        var input = document.createElement("textarea")
+        input.setAttribute("name", "comment")
+        input.innerHTML = "user input here"
+        assert.equal(input.toString(), '<textarea name="comment">user input here</textarea>')
         cleanup()
         assert.end()
     })

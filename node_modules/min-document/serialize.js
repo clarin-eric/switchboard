@@ -1,6 +1,6 @@
 module.exports = serializeNode
 
-var voidElements = /area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr/i;
+var voidElements = ["area","base","br","col","embed","hr","img","input","keygen","link","menuitem","meta","param","source","track","wbr"];
 
 function serializeNode(node) {
     switch (node.nodeType) {
@@ -24,7 +24,7 @@ function serializeElement(elem) {
 
     strings.push("<" + tagname + properties(elem) + datasetify(elem))
 
-    if (voidElements.test(tagname)) {
+    if (voidElements.indexOf(tagname) > -1) {
         strings.push(" />")
     } else {
         strings.push(">")
@@ -33,6 +33,8 @@ function serializeElement(elem) {
             strings.push.apply(strings, elem.childNodes.map(serializeNode))
         } else if (elem.textContent || elem.innerText) {
             strings.push(escapeText(elem.textContent || elem.innerText))
+        } else if (elem.innerHTML) {
+            strings.push(elem.innerHTML)
         }
 
         strings.push("</" + tagname + ">")
@@ -51,13 +53,17 @@ function isProperty(elem, key) {
     return elem.hasOwnProperty(key) &&
         (type === "string" || type === "boolean" || type === "number") &&
         key !== "nodeName" && key !== "className" && key !== "tagName" &&
-        key !== "textContent" && key !== "innerText" && key !== "namespaceURI"
+        key !== "textContent" && key !== "innerText" && key !== "namespaceURI" &&  key !== "innerHTML"
 }
 
 function stylify(styles) {
+    if (typeof styles === 'string') return styles
     var attr = ""
     Object.keys(styles).forEach(function (key) {
         var value = styles[key]
+        key = key.replace(/[A-Z]/g, function(c) {
+            return "-" + c.toLowerCase();
+        })
         attr += key + ":" + value + ";"
     })
     return attr
@@ -100,8 +106,9 @@ function properties(elem) {
 
     for (var ns in elem._attributes) {
       for (var attribute in elem._attributes[ns]) {
-        var name = (ns !== "null" ? ns + ":" : "") + attribute
-        props.push({ name: name, value: elem._attributes[ns][attribute] })
+        var prop = elem._attributes[ns][attribute]
+        var name = (prop.prefix ? prop.prefix + ":" : "") + attribute
+        props.push({ name: name, value: prop.value })
       }
     }
 
@@ -112,7 +119,15 @@ function properties(elem) {
     return props.length ? stringify(props) : ""
 }
 
-function escapeText(str) {
+function escapeText(s) {
+    var str = '';
+
+    if (typeof(s) === 'string') { 
+        str = s; 
+    } else if (s) {
+        str = s.toString();
+    }
+
     return str
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")

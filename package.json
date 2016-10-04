@@ -4,18 +4,22 @@
   "description": "CLARIN Language Resource Switchboard",
   "main": "index.js",
   "scripts": {
-    "build": "webpack",
-    "start": "webpack-dev-server"
+      "build": "webpack",
+      "start": "webpack-dev-server"
   },
   "keywords": [
-    "webpack",
-    "demo"
+      "webpack",
+      "demo"
   ],
   "author": "Claus Zinn",
   "license": "MIT",
+  "repository": {
+      "type": "git",
+      "url": "https://github.com/clarin-eric/LRSwitchboard.git"
+  },
   "devDependencies": {
-    "babel-core": "^6.3.26",
-    "babel-loader": "^6.2.0",
+    "babel-core": "^6.17.0",
+    "babel-loader": "^6.2.1",
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
     "babel-preset-react-hmre": "^1.0.1",
@@ -24,22 +28,27 @@
     "html-webpack-plugin": "^1.7.0",
     "html-webpack-template": "^2.5.1",
     "style-loader": "^0.13.0",
-    "webpack": "^1.12.9",
-    "webpack-dev-server": "^1.14.0",
-    "webpack-merge": "^0.7.0"
+    "webpack": "^1.12.11",
+    "webpack-dev-server": "^1.16.1",
+    "webpack-merge": "^0.7.3"
   },
   "dependencies": {
-    "alt": "^0.18.1",
-    "alt-container": "^1.0.0",
-    "alt-utils": "^1.0.0",
-    "fs": "0.0.2",
-    "java": "^0.6.1",
-    "node-uuid": "^1.4.7",
-    "object-assign": "^4.0.1",
-    "react": "^0.14.7",
-    "react-cardstack": "0.0.7",
-    "react-dom": "^0.14.7",
-    "tika": "^1.3.0",
-    "url-loader": "^0.5.7"
+      "alt": "^0.18.1",
+      "alt-container": "^1.0.0",
+      "alt-utils": "^1.0.0",
+      "classnames" : "^2.2.5",
+      "fileloader" : "^0.9.0", 
+      "superagent" : "^2.3.0",
+      "react": "^15.3.2",
+      "react-dom": "^15.3.2",
+      "react-addons-css-transition-group": "^15.3.2",
+      "react-addons-shallow-compare" : "^15.3.2",
+      "react-dropzone" : "^3.6.0",
+      "react-router" : "^2.8.1",
+      "react-selectize" : "^2.0.0",
+      "node-uuid": "^1.4.7",
+      "uuid": "^2.0.3",
+      "tika": "^1.3.0",
+      "url-loader": "^0.5.7"
   }
 }

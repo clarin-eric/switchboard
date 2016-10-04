@@ -1,7 +1,7 @@
 import React from 'react';
 import LaneActions from '../actions/LaneActions';
 import LaneStore from '../stores/LaneStore';
-import ReactTooltip from 'react-tooltip';
+// import ReactTooltip from 'react-tooltip';
 import Accordion from '../helperComponents/Accordion';         
 import AccordionItem from '../helperComponents/AccordionItem';
 

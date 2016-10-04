@@ -16,6 +16,7 @@ function DOMElement(tagName, owner, namespace) {
     var ns = namespace === undefined ? htmlns : (namespace || null)
 
     this.tagName = ns === htmlns ? String(tagName).toUpperCase() : tagName
+    this.nodeName = this.tagName
     this.className = ""
     this.dataset = {}
     this.childNodes = []
@@ -96,20 +97,33 @@ DOMElement.prototype.insertBefore =
 
 DOMElement.prototype.setAttributeNS =
     function _Element_setAttributeNS(namespace, name, value) {
+        var prefix = null
+        var localName = name
         var colonPosition = name.indexOf(":")
-        var localName = colonPosition > -1 ? name.substr(colonPosition + 1) : name
-        var attributes = this._attributes[namespace] || (this._attributes[namespace] = {})
-        attributes[localName] = value
+        if (colonPosition > -1) {
+            prefix = name.substr(0, colonPosition)
+            localName = name.substr(colonPosition + 1)
+        }
+        if (this.tagName === 'INPUT' && name === 'type') {
+          this.type = value;
+        }
+        else {
+          var attributes = this._attributes[namespace] || (this._attributes[namespace] = {})
+          attributes[localName] = {value: value, prefix: prefix}
+        }
     }
 
 DOMElement.prototype.getAttributeNS =
     function _Element_getAttributeNS(namespace, name) {
         var attributes = this._attributes[namespace];
-        if (!(attributes && typeof attributes[name] === "string")) {
+        var value = attributes && attributes[name] && attributes[name].value
+        if (this.tagName === 'INPUT' && name === 'type') {
+          return this.type;
+        }
+        if (typeof value !== "string") {
             return null
         }
-
-        return attributes[name]
+        return value
     }
 
 DOMElement.prototype.removeAttributeNS =
@@ -186,4 +200,10 @@ DOMElement.prototype.getElementsByTagName = function _Element_getElementsByTagNa
     })
 
     return elems
+}
+
+DOMElement.prototype.contains = function _Element_contains(element) {
+    return domWalk(this, function (node) {
+        return element === node
+    }) || false
 }

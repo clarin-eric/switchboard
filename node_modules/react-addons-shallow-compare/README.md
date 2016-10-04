@@ -2,4 +2,4 @@
 
 This package provides the React shallowCompare add-on.
 
-See <https://facebook.github.io/react/docs/addons.html> for more information.
+See <https://facebook.github.io/react/docs/shallow-compare.html> for more information.

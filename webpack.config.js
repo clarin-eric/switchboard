@@ -6,9 +6,17 @@ const merge = require('webpack-merge');
 const TARGET = process.env.npm_lifecycle_event;
 
 const PATHS = {
-  app: path.join(__dirname, 'app'),
+    app: path.join(__dirname, 'app'),
   build: path.join(__dirname, 'build')
 };
+
+
+// const PATHS = {
+//     app: '/Users/zinn/Projects/CLARIN_PLUS/code/clrs/app',
+//   build: '/Users/zinn/Projects/CLARIN_PLUS/code/clrs/build'
+// };
+
+    
 
 
 process.env.BABEL_ENV = TARGET;

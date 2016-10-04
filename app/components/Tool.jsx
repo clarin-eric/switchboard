@@ -12,7 +12,7 @@ import ToolActions from '../actions/ToolActions';
 import ToolStore from '../stores/ToolStore';
 
 import Editable from './Editable.jsx';
-import ReactTooltip from 'react-tooltip';
+// import ReactTooltip from 'react-tooltip';
 
 export default class Tool extends React.Component {
     constructor(props) {

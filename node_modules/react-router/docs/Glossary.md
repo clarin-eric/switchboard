@@ -11,9 +11,9 @@ This is a glossary of common terms used in the React Router codebase and documen
 * [LocationDescriptor](#locationdescriptor)
 * [LocationKey](#locationkey)
 * [LocationState](#locationstate)
+* [Params](#params)
 * [Path](#path)
 * [Pathname](#pathname)
-* [Params](#params)
 * [Query](#query)
 * [QueryString](#querystring)
 * [RedirectFunction](#redirectfunction)
@@ -66,10 +66,10 @@ A *hash* is a string that represents the hash portion of the URL. It is synonymo
 ## LeaveHook
 
 ```js
-type LeaveHook = () => any;
+type LeaveHook = (prevState: RouterState) => any;
 ```
 
-A *leave hook* is a user-defined function that is called when a route is about to be unmounted.
+A *leave hook* is a user-defined function that is called when a route is about to be unmounted. It receives the previous [router state](#routerstate) as its first argument.
 
 ## Location
 
@@ -89,7 +89,7 @@ A *location* answers two important (philosophical) questions:
   - Where am I?
   - How did I get here?
 
-New locations are typically created each time the URL changes. You can read more about locations in [the `history` docs](https://github.com/reactjs/history/blob/master/docs/Location.md).
+New locations are typically created each time the URL changes. You can read more about locations in [the `history` docs](https://github.com/mjackson/history/blob/v2.x/docs/Location.md).
 
 ### LocationDescriptor
 
@@ -104,7 +104,7 @@ New locations are typically created each time the URL changes. You can read more
 
 A *location descriptor* is the pushable analogue of a location. Locations tell you where you are; you create location descriptors to say where to go.
 
-You can read more about location descriptors in [the `history` docs](https://github.com/reactjs/history/blob/master/docs/Location.md).
+You can read more about location descriptors in [the `history` docs](https://github.com/mjackson/history/blob/v2.x/docs/Location.md).
 
 ## LocationKey
 
@@ -127,6 +127,14 @@ This type gets its name from the first argument to HTML5's [`pushState`][pushSta
 [pushState]: https://developer.mozilla.org/en-US/docs/Web/API/History_API#The_pushState()_method
 [replaceState]: https://developer.mozilla.org/en-US/docs/Web/API/History_API#The_replaceState()_method
 
+## Params
+
+```js
+type Params = Object;
+```
+
+The word *params* refers to an object of key/value pairs that were parsed out of the original URL's [pathname](#pathname). The values of this object are typically strings, unless there is more than one param with the same name in which case the value is an array.
+
 ## Path
 
 ```js
@@ -143,14 +151,6 @@ type Pathname = string;
 
 A *pathname* is the portion of a URL that describes a hierarchical path, including the preceding `/`. For example, in `http://example.com/the/path?the=query`, `/the/path` is the pathname. It is synonymous with `window.location.pathname` in web browsers.
 
-## QueryString
-
-```js
-type QueryString = string;
-```
-
-A *query string* is the portion of the URL that follows the [pathname](#pathname), including any preceding `?`. For example, in `http://example.com/the/path?the=query`, `?the=query` is the query string. It is synonymous with `window.location.search` in web browsers.
-
 ## Query
 
 ```js
@@ -159,13 +159,13 @@ type Query = Object;
 
 A *query* is the parsed version of a [query string](#querystring).
 
-## Params
+## QueryString
 
 ```js
-type Params = Object;
+type QueryString = string;
 ```
 
-The word *params* refers to an object of key/value pairs that were parsed out of the original URL's [pathname](#pathname). The values of this object are typically strings, unless there is more than one param with the same name in which case the value is an array.
+A *query string* is the portion of the URL that follows the [pathname](#pathname), including any preceding `?`. For example, in `http://example.com/the/path?the=query`, `?the=query` is the query string. It is synonymous with `window.location.search` in web browsers.
 
 ## RedirectFunction
 
@@ -203,6 +203,8 @@ The term *route component* refers to a [component](#component) that is directly 
   - `params` – The current [params](#params)
   - `route` – The [route](#route) that declared this component
   - `routeParams` – A subset of the [params](#params) that were specified in the route's [`path`](#routepattern)
+
+Route components should generally be component classes rather than strings. This will avoid potential issues with passing the injected props above to DOM components.
 
 ## RouteConfig
 
@@ -244,7 +246,7 @@ type Router = {
   go(n: number) => void;
   goBack() => void;
   goForward() => void;
-  setRouteLeaveHook(hook: RouteHook) => Function;
+  setRouteLeaveHook(route: Route, hook: RouteHook) => Function;
   isActive(location: LocationDescriptor, indexOnly: boolean) => void;
 };
 ```

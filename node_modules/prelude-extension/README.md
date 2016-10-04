@@ -14,6 +14,8 @@ Prelude Extension
 
 `get :: a -> [String] -> b`
 
+`is-empty-object :: object -> Boolean`
+
 `is-equal-to-object :: a -> b -> Boolean`
 
 `mappend :: a -> [String] -> b -> (b -> b -> b) -> a` 

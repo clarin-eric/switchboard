@@ -4,7 +4,7 @@ module.exports = testDocument
 
 function testDocument(document) {
     var cleanup = require('./cleanup')(document)
-    var Event = require('../Event');
+    var Event = require('../event');
 
     test("document is a Document", function (assert) {
         assert.equal(typeof document.createTextNode, "function")
@@ -326,8 +326,16 @@ function testDocument(document) {
 
     test("input has type=text by default", function (assert) {
         var elem = document.createElement("input")
-        assert.equal(elem.type, "text");
+        assert.equal(elem.getAttribute("type"), "text");
         assert.equal(elemString(elem), "<input type=\"text\" />")
+        assert.end()
+    })
+
+    test("input type=text can be overridden", function (assert) {
+        var elem = document.createElement("input")
+        elem.setAttribute("type", "hidden")
+        assert.equal(elem.getAttribute("type"), "hidden");
+        assert.equal(elemString(elem), "<input type=\"hidden\" />")
         assert.end()
     })
 
@@ -374,6 +382,7 @@ function testDocument(document) {
         assert.equal(elem.getAttributeNS(ns, "myattr"), blankAttributeNS())
         elem.setAttributeNS(ns, "myns:myattr", "the value")
         assert.equal(elem.getAttributeNS(ns, "myattr"), "the value")
+        assert.equal(elemString(elem), '<div myns:myattr="the value"></div>')
         elem.removeAttributeNS(ns, "myattr")
         assert.equal(elem.getAttributeNS(ns, "myattr"), blankAttributeNS())
 
@@ -474,6 +483,17 @@ function testDocument(document) {
 
         cleanup()
         assert.end()
+    })
+
+    test("can check if it contains an element", function(assert) {
+    	var el = document.createElement("div")
+    	document.body.appendChild(el)
+
+    	assert.equals(document.contains(document.body), true)
+    	assert.equals(document.contains(el), true)
+
+    	cleanup()
+    	assert.end()
     })
 
     test("can do events", function (assert) {

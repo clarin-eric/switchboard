@@ -117,14 +117,14 @@ class ToolStore {
 			     ],
 		  url: ["https://www.clarin.dk/tools/createByGoalChoice"], 
 		  parameter: {  input   : "self.linkToResource", 
-				lang    : "self.linkToResourceLanguage",                 
-				analysis: "lem",
-				UIlanguage: "en"				
-			     },
+						lang    : "self.linkToResourceLanguage",                 
+						analysis: "lem",
+						UIlanguage: "en"				
+			     	 },
 
 		  // CLARIN-DK calls those parameters differently, namely:
-		  mapping:   { input        : "URL",
-			       lang         : "language"
+		  mapping:   {  input        : "URL",
+			       		lang         : "language"
 			     }		  
 		},		
 		
@@ -989,6 +989,33 @@ class ToolStore {
 			     }
 		},				
 		
+		{ task: "Tokenisation",
+		  name: "Weblicht-Tokenization-TK",
+		  logo: "weblicht.jpg",		  
+		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+		  location: "Tuebingen, Germany",		  		  		  
+		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
+		  contact: {
+		      person: "CLARIN Weblicht Support",
+		      email: "wlsupport@sfs.uni-tuebingen.de"
+		  },	    
+		  version: "v1.0",
+		  authentification: "no",		  
+		  licence: "public",
+		  shortDescription: "Tokenization for Turkish", 
+		  longDescription: "Weblicht Easy Chain for tokenization of Turkish texts.",
+		  languages: ["tur"],
+		  lang_encoding: "639-1",		  
+		  mimetypes: ["text/plain"],
+		  output: ["text/xml"],
+		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht",
+		  pid: "",
+		  parameter: {  input   :  "self.linkToResource", 
+				lang    : "tk",                   
+				analysis: "token"                    
+			     }
+		},
+
 		{ task: "Named Entity Recognition",
 		  name: "Weblicht-NamedEntities-DE",
 		  logo: "weblicht.jpg",		  
@@ -1015,7 +1042,7 @@ class ToolStore {
 				analysis: "ne"                    
 			     }
 		},
-
+		
 		{ task: "Named Entity Recognition",
 		  name: "Weblicht-NamedEntities-EN",
 		  logo: "weblicht.jpg",		  		  
@@ -1125,6 +1152,34 @@ class ToolStore {
 		},
 
 		{ task: "Dependency Parsing",
+		  name: "Weblicht-Dep-Parsing-NL",
+		  logo: "weblicht.jpg",		  		  
+		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+		  location: "Tuebingen, Germany",		  		  		  
+		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
+		  contact: {
+		      person: "CLARIN Weblicht Support",
+		      email: "wlsupport@sfs.uni-tuebingen.de"
+		  },	    
+		  version: "v1.0",
+		  authentification: "no",		  
+		  licence: "public",
+		  shortDescription: "Dependency Parsing (NL)",
+		  longDescription: "Weblicht Easy Chain for Dependency Parsing (Dutch).",
+		  languages: ["nld"],
+		  lang_encoding: "639-1",		  
+		  mimetypes: ["text/plain"],
+		  output: ["text/xml"],
+		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht/",		  
+		  pid: "",
+		  parameter: {input :     "self.linkToResource",
+			      lang:       "nl",			      
+			      analysis:   "dep-parsing"
+			     }
+		},
+		
+
+		{ task: "Dependency Parsing",
 		  name: "Weblicht-Dep-Parsing-EN",
 		  logo: "weblicht.jpg",		  		  
 		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
@@ -1230,7 +1285,34 @@ class ToolStore {
 			      lang:       "de",			      
 			      analysis:   "pos"
 			     }
-		},		
+		},
+
+		{ task: "Part-Of-Speech Tagging",
+		  name: "Weblicht-POSTags-Lemmas-IT",
+		  logo: "weblicht.jpg",		  		  
+		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+		  location: "Tuebingen, Germany",		  		  		  
+		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
+		  contact: {
+		      person: "CLARIN Weblicht Support",
+		      email: "wlsupport@sfs.uni-tuebingen.de"
+		  },	    
+		  version: "v1.0",
+		  authentification: "no",		  
+		  licence: "public",
+		  shortDescription: "POS Tagger and Lemmatization Tool",		  
+		  longDescription: "Weblicht Easy Chain for POS Tagging and Lemmatization (Italian).",
+		  languages: ["ita"],
+		  lang_encoding: "639-1",		  
+		  mimetypes: ["text/plain"],
+		  output: ["text/xml"],
+		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht/",		  
+		  pid: "",
+		  parameter: {input :     "self.linkToResource",
+			      lang:       "it",			      
+			      analysis:   "pos"
+			     }
+		},				
 
 		{ task: "Part-Of-Speech Tagging",
 		  name: "Weblicht-POSTags-Lemmas-EN",
