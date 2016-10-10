@@ -18,6 +18,7 @@ class NoteStore {
 	this.setState({
 	    notes: []
 	});
+	console.log('NoteStore/reset');
     }
     
     create(note) {

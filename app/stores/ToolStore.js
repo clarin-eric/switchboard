@@ -1546,71 +1546,103 @@ class ToolStore {
 	    }
 	}
 
-	console.log('ToolStore/groupTools', toolGroups);
+	// console.log('ToolStore/groupTools', toolGroups);
 	return toolGroups;
 	
     }
 
+    // return all tools (possibly without the web services)
+    allTools( includeWebServices ) {
 
-    allTools() {
+	var tools = [];
 
-	var allTools = this.registeredTools;
-	var tasks = this.groupTools( allTools );
+	// in case web services all excluded, filter out all web services from result list.
+	if (includeWebServices === true) {
+	    tools = this.registeredTools;
+	} else {
+	    tools = this.registeredTools.filter(
+		(tool) =>
+		    {
+			if (! (tool.softwareType == "webService")) {
+			    tool.id = uuid.v4();
+			    return tool;
+			}
+		    });
+	}
+	
+	var tasks = this.groupTools( tools );
 
+	// This should never happen, implies empty tool registry
 	if (Object.keys(tasks).length == 0) {
 	    alert("Sorry! There is not a single applicable tool...");
 	}
 	    
 	this.setState({
-	    applicableTools: allTools,
+	    applicableTools: tools,
 	    tasks: tasks
 	});
     }
     
     // multiple filters to be defined, in particular, language code
-    findTools( resourceDescription ) {
+    findTools( parameters ) {
 
-	// console.log("ToolStore/findTools at the very start.", resourceDescription);
-		    
+	var resourceDescription = parameters[0];
+	var includeWebServices = parameters[1];
+
+	// if necessary, filter out web services
+	console.log('ToolStore.js/findTools first and second', resourceDescription, includeWebServices);
+	var tools = [];
+
+	// in case web services all excluded, filter out all web services from result list.
+	if (includeWebServices === true) {
+	    tools = this.registeredTools;
+	} else {
+	    tools = this.registeredTools.filter(
+		(tool) =>
+		    {
+			if (! (tool.softwareType == "webService")) {
+			    tool.id = uuid.v4();
+			    return tool;
+			}
+		    });
+	}
+	
 	// first filter: mimetype
-	var mimetypeFilter = this.registeredTools.filter((tool) =>
-					      {
-						  var result = tool.mimetypes.indexOf(resourceDescription.mimetype);
-					          if (result != -1) {
-						      // attach id to the tool
-						      tool.id = uuid.v4();
-						      return tool;
-						  }
-					      });
+	var mimetypeFilter = tools.filter(
+	    (tool) =>
+		{
+		    var result = tool.mimetypes.indexOf(resourceDescription.mimetype);
+		    if (result != -1) {
+			// attach id to the tool
+			tool.id = uuid.v4();
+			return tool;
+		    }
+		});
 
-	// console.log('ToolStore/findTools with mimetype', resourceDescription, mimetypeFilter);
-
-	var languageFilter = mimetypeFilter;
+	var languageFilter = [];
 	
 	// second filter: language code 
 	if ( (resourceDescription.language == null) || (resourceDescription.language.length == 0)) {
 	    console.log('ToolStore/findTools: empty language', resourceDescription.language); 
 	} else {
-	    languageFilter = mimetypeFilter.filter((tool) =>
-						   {
-						       console.log('ToolStore/findTools: NON-empty language, checking',
-								   resourceDescription.language, tool);
-						       
-						       var result = tool.languages.indexOf(resourceDescription.language);
-					               if (result != -1) {
-							   // attach id to the tool
-							   tool.id = uuid.v4();
-							   return tool;
-						       }
-
-						       // for tools that are capable for processing any language
-						       result = tool.languages.indexOf("generic");
-					               if (result != -1) {
-							   // attach id to the tool
-							   tool.id = uuid.v4();
-							   return tool;
-						       }
-						   });
+	    languageFilter = mimetypeFilter.filter(
+		(tool) =>
+		    {
+			var result = tool.languages.indexOf(resourceDescription.language);
+			if (result != -1) {
+			    // attach id to the tool
+			    tool.id = uuid.v4();
+			    return tool;
+			}
+			
+			// for tools that are capable for processing any language
+			result = tool.languages.indexOf("generic");
+			if (result != -1) {
+			    // attach id to the tool
+			    tool.id = uuid.v4();
+			    return tool;
+			}
+		    });
 	}
 
 	// --------------------------------	
@@ -1618,7 +1650,6 @@ class ToolStore {
 	// --------------------------------
 
 	// now, for the task-oriented view
-
 	var tasks = this.groupTools( languageFilter );
 
 	if (Object.keys(tasks).length == 0) {

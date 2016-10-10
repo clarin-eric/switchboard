@@ -19,8 +19,11 @@ class LaneStore {
 
     reset () {
 	this.setState({
-	    lanes: []
+	    lanes: [],
+	    selectedLane: []
 	});
+
+	console.log('LaneStore/reset');	
     }
 	
     create(lane) {

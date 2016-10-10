@@ -205,7 +205,8 @@ export default class Task extends React.Component {
 		</div>
 	    );
 	};
-	
+
+	console.log('Task.jsx/items', items);
 	return (
 	    <Accordion allowMultiple={true}>
 	    { items.map( (element) => 
@@ -310,7 +311,7 @@ export default class Task extends React.Component {
 
 	// if there is no resource in the spotlight, we return an empty URL object.
 	if (entireState.selectedLane.length == 0) {
-	    console.log('Task.jsx: the is no lane defined.', item, entireState);
+	    console.log('Task.jsx: there is no lane defined.', item, entireState);
 	    return false;
 	}
 
@@ -328,7 +329,7 @@ export default class Task extends React.Component {
 
 
 	if (upload == "dnd") {
-	    console.log('the file has been dropped in the demo upload site');
+	    // console.log('the file has been dropped in the demo upload site');
 	} else if (upload == "vlo") {
 	    console.log('the LRS has been called from the VLO');
 	    // no use of temp. server for resource
@@ -338,9 +339,9 @@ export default class Task extends React.Component {
 	}
 
 	if (softwareType == "webService") {
-	    console.log('we have a webService', item);
+	    // console.log('we have a webService', item);
 	} else {
-	    console.log('we have a browserBased software', item);	    
+	    // console.log('we have a browserBased software', item);	    
 	}
 	
 	if (lang_encoding == "639-1") {
@@ -354,7 +355,7 @@ export default class Task extends React.Component {
 	    inputFilename = fileServerURL + filenameWithDate;
 	}
 
-	console.log('Task.jsx/constructToolURL', item, entireState.selectedLane[0], 'encoding:', lang_encoding);
+	// console.log('Task.jsx/constructToolURL', item, entireState.selectedLane[0], 'encoding:', lang_encoding);
 	
 	var parameterString = "";
 	var parameters = item.parameter;
@@ -420,7 +421,7 @@ export default class Task extends React.Component {
 	    urlWithParameters = item.url + "?" + parameterString;
 	}
 
-	console.log('Task.jsx URL:', urlWithParameters);
+	//console.log('Task.jsx URL:', urlWithParameters);
 
 	if (softwareType == "webService") {
 	    rtnValue =

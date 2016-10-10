@@ -16,8 +16,8 @@ export default class DropArea extends React.Component {
 	this.addUpload   = this.addUpload.bind(this);
 	this.addMimetype = this.addMimetype.bind(this);	
 	this.addLanguage = this.addLanguage.bind(this);
-	this.showFiles = this.showFiles.bind(this);
-	this.onDrop = this.onDrop.bind(this);
+	this.showFiles   = this.showFiles.bind(this);
+	this.onDrop      = this.onDrop.bind(this);
 	
 	this.state = {
 	    files: []
@@ -183,7 +183,8 @@ export default class DropArea extends React.Component {
 
 	// don't duplicate file information (apart from the preview)
 	return '';
-	
+
+	//disabled
         return React.createElement(
             'div',
             null,
@@ -231,8 +232,6 @@ export default class DropArea extends React.Component {
 	    newFileType = "application/octet_stream"
 	}
 	
-	console.log('onDrop entry, processing', currentFile, newFileName);
-
 	// 1. store in the temporary file store at the MPG
 	// -- the following URL is a proxy to 'http://ws1-clarind.esc.rzg.mpg.de/drop-off/storage/'
 	Request

@@ -9,10 +9,12 @@ import Tools from './Tools.jsx';                    // render all the tools
 import Tasks from './Tasks.jsx';                    // task-oriented view
 import LaneActions from '../actions/LaneActions';   // actions associated with lanes: CRUD, attach/detach
 import ToolActions from '../actions/ToolActions';   // access to findTools action
+import NoteActions from '../actions/NoteActions';   // access to notes
 import LaneStore from '../stores/LaneStore';        // storing lanes (state)
 import ToolStore from '../stores/ToolStore';        // storing tools (state)
 import DropArea from './DropArea.jsx';              // drop & drag area for resources
-import UrlArea from './UrlArea.jsx';                // all resource information given in parameters
+import UrlArea  from './UrlArea.jsx';               // all resource information given in parameters
+import Toggle   from 'react-toggle';
 
 // routing between DropArea and UrlArea
 import { Router, Route, hashHistory } from 'react-router'
@@ -41,12 +43,36 @@ require('./../html/help.html');
 export default class App extends React.Component {
 
     constructor(props) {
-	super(props);
-	this.showTools = this.showTools.bind(this);
+	super(props)
+	this.showTools = this.showTools.bind(this)
+        this.clearDropzone = this.clearDropzone.bind(this)
+        this.handleWebServicesChange = this.handleChange.bind(this, 'includeWebServices')
+
+	this.state = {
+	    includeWebServices: false
+	};
+	
+    }
+
+    handleChange (key, event) {
+	this.setState({ [key]: event.target.checked }, function () {
+	    console.log('now, the state has changed...:', this.state.includeWebServices);
+	});
+	if (event.target.checked === true) {
+	    document.getElementById("showAllToolsButton").innerHTML = 'Show All Tools and Web Services';
+	} else {
+	    document.getElementById("showAllToolsButton").innerHTML = 'Show All Tools';	    
+	}
     }
 
     showTools() {
-	ToolActions.allTools( );	
+	ToolActions.allTools( this.state.includeWebServices );	
+    }
+
+    clearDropzone() {
+	ToolActions.reset();
+	LaneActions.reset();
+	NoteActions.reset();
     }
 
     popup_CLARIN_HELPDESK(url) {
@@ -78,10 +104,18 @@ export default class App extends React.Component {
                  <a href="./help.html">
 		   User Help
 		 </a>
-               </li>
+		</li>
 	       <li>
-	       <button className="alltools" onClick={this.showTools}>Show All Tools</button>
+	       <button className="clearDropzone" onClick={this.clearDropzone}>Clear Dropzone</button>
+	       </li>				
+	       <li>
+		 <button id="showAllToolsButton" className="alltools" onClick={this.showTools}>Show All Tools</button>
 	       </li>
+	       <li><p />
+		  <Toggle
+	             defaultChecked={false}
+		     onChange={this.handleWebServicesChange} />
+	       </li>	       
              </ul>
 	     <ul className="nav navbar-nav navbar-right" id="id723">
                <li>
@@ -107,15 +141,15 @@ export default class App extends React.Component {
                    stores={[LaneStore, ToolStore]}
                    inject={{
 		       lanes: () => LaneStore.getState().lanes || [],
-		       tools: () => ToolStore.getState().applicableTools || [],
-		       tasks: () => ToolStore.getState().tasks || []		
-		   }}
-	       >
-	       <Lanes />
+		       tasks: () => ToolStore.getState().tasks || []
+		   }} >
+	       <Lanes  />
 	       <p />
    	       <hr />
   	       <p />
-	       <h2>Task-Oriented Tool View</h2>
+	       <h2>
+		 Task-Oriented Tool View
+	       </h2>
                <Tasks />
 	      </AltContainer>
 	      <hr />

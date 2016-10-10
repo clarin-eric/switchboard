@@ -8,6 +8,7 @@ import LaneStore from '../stores/LaneStore';
 import ToolActions from '../actions/ToolActions';
 import ToolStore from '../stores/ToolStore';
 import Editable from './Editable.jsx';
+import Toggle   from 'react-toggle';                
 
 export default class Lane extends React.Component {
     constructor(props) {
@@ -20,10 +21,15 @@ export default class Lane extends React.Component {
 	this.editName         = this.editName.bind(this, id);
 	this.activateLaneEdit = this.activateLaneEdit.bind(this, id);
 	this.getFileUrl       = this.getFileUrl.bind(this, id);
+	this.handleWebServicesChange = this.handleChange.bind(this, 'includeWebServices')
+
+	this.state = {
+	    includeWebServices: false
+	};
+
     }
     render() {
 	const {lane, ...props} = this.props;
-	
 	return (
 	    <div {...props}>
   	      <div className="lane-header">
@@ -32,31 +38,45 @@ export default class Lane extends React.Component {
 		   >
 	    	   <span>Link to Resource</span>
 		</a>
-	    
+		  <Toggle
+	             defaultChecked={false}
+	             onChange={this.handleWebServicesChange} />	    
 	        <div className="lane-add-note">
-  	           <button onClick={this.displayTools}>Show Tools</button>
+  	          <button id="showToolsButton" onClick={this.displayTools}>Show Tools</button>
 	        </div>
 	      </div>
-	      <AltContainer
-                 stores={[NoteStore]}
-                 inject={{
-		       notes: () => NoteStore.get(lane.notes)
-		 }}
-       	      >
-	      <Notes onValueClick={this.activateNoteEdit}
-                     onEdit={this.editNote}
-                     onDelete={this.deleteNote} />
+	      <AltContainer stores={[NoteStore]}
+			    inject={{ notes: () => NoteStore.get(lane.notes) }} >
+		<Notes onValueClick={this.activateNoteEdit}
+                       onEdit={this.editNote}
+                       onDelete={this.deleteNote} />
 	      </AltContainer>
 	    </div>
 	);
     }
+
+    handleChange (key, event) {
+	this.setState({ [key]: event.target.checked }, function () {
+	    console.log('now, the state has changed...:', this.state.includeWebServices);
+	});
+	if (event.target.checked === true) {
+	    document.getElementById("showToolsButton").innerHTML = 'Show Tools and Web Services';
+	} else {
+	    document.getElementById("showToolsButton").innerHTML = 'Show Tools';	    
+	}
+    }
     
     displayTools(laneId) {
-	
+
 	var myLane = LaneActions.getLane( laneId );
 	var entireLaneState = LaneStore.getState();
+
+	// for the time being, tools are being display for the first file (=lane)
 	var langResourceDescription = entireLaneState.selectedLane[0];
 
+	console.log('Lane.jsx/displayTools', this.state.includeWebServices, langResourceDescription);
+	
+	
 	if (langResourceDescription.language == null) {
 	    alert('CLRS: Please identify the language of the resource!');
 	    return;
@@ -67,7 +87,7 @@ export default class Lane extends React.Component {
 	    return;
 	}
 	
-	ToolActions.findTools( entireLaneState.selectedLane[0] );
+	ToolActions.findTools( langResourceDescription, this.state.includeWebServices );
     }
 
     getFileUrl(laneId) {
