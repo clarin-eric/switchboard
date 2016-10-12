@@ -4,6 +4,7 @@
     "react",
     "survivejs-kanban"
   ],
+
   "env": {
     "start": {
       "presets": [

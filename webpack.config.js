@@ -73,7 +73,11 @@ const common = {
 		// Enable caching for improved performance during development
 		// It uses default OS directory by default. If you need something
 		// more custom, pass a path to it. I.e., babel?cacheDirectory=<path>
-		loaders: ['babel?cacheDirectory'],
+		loader: 'babel',
+		query:
+		{
+		    presets:['react', 'es2015', 'stage-0']
+		},
 		include: PATHS.app
 	    }	    
 	]

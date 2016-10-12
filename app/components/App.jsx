@@ -14,7 +14,10 @@ import LaneStore from '../stores/LaneStore';        // storing lanes (state)
 import ToolStore from '../stores/ToolStore';        // storing tools (state)
 import DropArea from './DropArea.jsx';              // drop & drag area for resources
 import UrlArea  from './UrlArea.jsx';               // all resource information given in parameters
-import Toggle   from 'react-toggle';
+import Toggle   from 'react-toggle';                // toggle button for enables/disabling web services
+import UserHelp from './UserHelp.jsx';
+import DevHelp from './DevHelp.jsx';
+import AboutHelp from './AboutHelp.jsx';
 
 // routing between DropArea and UrlArea
 import { Router, Route, hashHistory } from 'react-router'
@@ -37,8 +40,8 @@ require('./../images/fowlt.jpg');
 require('./../images/clarindk.jpg');
 require('./../images/CLARIN-Logo16-c.jpg');
 require('./../images/YourLogoComesHere.png');
-require('./../html/about.html');
-require('./../html/help.html');
+require('./../images/metadataListing1.png');
+require('./../images/metadataListing2.png');
 
 export default class App extends React.Component {
 
@@ -48,8 +51,12 @@ export default class App extends React.Component {
         this.clearDropzone = this.clearDropzone.bind(this)
         this.handleWebServicesChange = this.handleChange.bind(this, 'includeWebServices')
 
+	this.handleClick = this.setState({isShowingModal: true})
+	this.handleClose = this.setState({isShowingModal: false})
+	
 	this.state = {
-	    includeWebServices: false
+	    includeWebServices: false,
+	    isShowingModal: false
 	};
 	
     }
@@ -96,15 +103,11 @@ export default class App extends React.Component {
            <div className="collapse navbar-collapse" role="navigation" id="id1">
              <ul className="nav navbar-nav" id="idcf">
                <li>
-                 <a href="./about.html">
-		   Dev Help
-		 </a>
+		 <UserHelp className="header-link" />		 
                </li>
 	       <li>
-                 <a href="./help.html">
-		   User Help
-		 </a>
-		</li>
+		 <DevHelp className="header-link" />
+	       </li>
 	       <li>
 	       <button className="clearDropzone" onClick={this.clearDropzone}>Clear Dropzone</button>
 	       </li>				
@@ -115,6 +118,9 @@ export default class App extends React.Component {
 		  <Toggle
 	             defaultChecked={false}
 		     onChange={this.handleWebServicesChange} />
+	       </li>
+	       <li>
+		 <AboutHelp className="header-link" />
 	       </li>	       
              </ul>
 	     <ul className="nav navbar-nav navbar-right" id="id723">
