@@ -19,6 +19,40 @@ class ToolStore {
 	this.registeredTools = 
 	    [
 		{ task: "Tokenisation",
+		  name: "Ucto",
+		  logo: "YourLogoComesHere.png",		  
+		  homepage: "https://languagemachines.github.io/ucto/",
+		  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
+		  creators: ["Maarten van Gompel, Ko van der Sloot (CLST, Radboud University Nijmegen)"],
+		  contact: {
+		      person: "Maarten van Gompel",
+		      email: "proycon@anaproy.nl",
+		  },
+		  version: "0.8.3",
+		  license: "public",                //but webservice is protected with (free) registration
+		  authentification: "yes",
+		  shortDescription: "A tokeniser",
+		  longDescription: "Ucto is a unicode-compliant tokeniser. It takes input in the form of one or more untokenised texts, and subsequently tokenises them. Several languages are supported, but the software is extensible to other languages.",
+		  languages: ["nld", "eng", "deu", "fra", "ita", "fry"],
+		  lang_encoding: "639-1",
+		  mimetypes: [
+		      "text/plain"
+		              // , "text/xml",		      
+			      // , "application/pdf",
+			      // , "application/msword"
+		  ],
+		  output: ["Tadpole Columned Output Format", "text/folia+xml"], 		  		  		  
+		  url: ["https://webservices-lst.science.ru.nl/ucto/"],
+		  parameter: { project      : "new",
+			       input        : "self.linkToResource",
+			       lang         : "self.linkToResourceLanguage",
+			     },
+		  mapping:   { input        : "untokinput_url",
+			       lang         : "untokinput_language"
+			     }
+		},
+		
+		{ task: "Tokenisation",
 		  name: "CLARIN-DK Tool Box (CST Tokenizer)",
 		  softwareType: "browserBased",
 		  logo: "clarindk.jpg",		  
@@ -35,7 +69,9 @@ class ToolStore {
 		  shortDescription: "CLARIN-DK Tool Box (CST Tokenizer)",
 		  longDescription:  "CLARIN-DK Tool Box (CST Tokenizer for English and Danish)",
 		  lang_encoding: "639-1",
-		  languages: ["dan", "eng"],
+		  languages: ["bul", "ces", "dan", "deu", "ell", "eng", "spa", "est", "fas", "fra",
+			      "hun", "isl", "ita", "lat", "mkd", "nld", "pol", "por", "ron", "rus",
+			      "slk", "slv", "srp", "tur", "ukr"],		  
 		  mimetypes: ["application/pdf",
 			      "application/vnd.ms-powerpoint", // (PPT)
 			      "application/vnd.openxmlformats-officedocument.presentationml.presentation", // (PPTX)
@@ -70,68 +106,6 @@ class ToolStore {
 		  mapping:   { input        : "URL",
 			       lang         : "language"
 			     }		  
-		},
-
-		{ task: "Tokenisation",
-		  name: "Weblicht-Tokenization-TK",
-		  logo: "weblicht.jpg",		  
-		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
-		  location: "Tuebingen, Germany",		  		  		  
-		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
-		  contact: {
-		      person: "CLARIN Weblicht Support",
-		      email: "wlsupport@sfs.uni-tuebingen.de"
-		  },	    
-		  version: "v1.0",
-		  authentification: "no",		  
-		  licence: "public",
-		  shortDescription: "Tokenization for Turkish", 
-		  longDescription: "Weblicht Easy Chain for tokenization of Turkish texts.",
-		  languages: ["tur"],
-		  lang_encoding: "639-1",		  
-		  mimetypes: ["text/plain"],
-		  output: ["text/xml"],
-		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht",
-		  pid: "",
-		  parameter: {  input   :  "self.linkToResource", 
-				lang    : "tk",                   
-				analysis: "token"                    
-			     }
-		},
-
-		
-		{ task: "Tokenisation",
-		  name: "Ucto",
-		  logo: "YourLogoComesHere.png",		  
-		  homepage: "https://languagemachines.github.io/ucto/",
-		  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
-		  creators: ["Maarten van Gompel, Ko van der Sloot (CLST, Radboud University Nijmegen)"],
-		  contact: {
-		      person: "Maarten van Gompel",
-		      email: "proycon@anaproy.nl",
-		  },
-		  version: "0.8.3",
-		  license: "public",                //but webservice is protected with (free) registration
-		  authentification: "yes",
-		  shortDescription: "A tokeniser",
-		  longDescription: "Ucto is a unicode-compliant tokeniser. It takes input in the form of one or more untokenised texts, and subsequently tokenises them. Several languages are supported, but the software is extensible to other languages.",
-		  languages: ["nld", "eng", "deu", "fra", "ita", "fry"],
-		  lang_encoding: "639-1",
-		  mimetypes: [
-		      "text/plain"
-		              // , "text/xml",		      
-			      // , "application/pdf",
-			      // , "application/msword"
-		  ],
-		  output: ["Tadpole Columned Output Format", "text/folia+xml"], 		  		  		  
-		  url: ["https://webservices-lst.science.ru.nl/ucto/"],
-		  parameter: { project      : "new",
-			       input        : "self.linkToResource",
-			       lang         : "self.linkToResourceLanguage",
-			     },
-		  mapping:   { input        : "untokinput_url",
-			       lang         : "untokinput_language"
-			     }
 		},
 
 		{ task: "Lemmatization",
@@ -183,151 +157,13 @@ class ToolStore {
 						analysis: "lem",
 						UIlanguage: "en"				
 			     	 },
-
-		  // CLARIN-DK calls those parameters differently, namely:
 		  mapping:   {  input        : "URL",
-			       		lang         : "language"
+		       		lang         : "language"
 			     }		  
 		},
 
-		{ task: "Lemmatization",
-		  name: "Weblicht-Lemmas-DE",
-		  logo: "weblicht.jpg",		  		  
-		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
-		  location: "Tuebingen, Germany",		  		  		  
-		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
-		  contact: {
-		      person: "CLARIN Weblicht Support",
-		      email: "wlsupport@sfs.uni-tuebingen.de"
-		  },	    
-		  version: "v1.0",
-		  authentification: "no",		  
-		  licence: "public",
-		  shortDescription: "Lemmatizer",
-		  longDescription: "Weblicht Easy Chain for Lemmatization (German).",
-		  languages: ["deu"],
-		  lang_encoding: "639-1",		  
-		  mimetypes: ["text/plain"],
-		  output: ["text/xml"],
-		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht/",		  
-		  pid: "",
-		  parameter: {input :     "self.linkToResource",
-			      lang:       "de",			      
-			      analysis:   "lemma"
-			     }
-		},
-
-		{ task: "Lemmatization",
-		  name: "Weblicht-Lemmas-EN",
-		  logo: "weblicht.jpg",		  		  
-		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
-		  location: "Tuebingen, Germany",		  		  		  
-		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
-		  contact: {
-		      person: "CLARIN Weblicht Support",
-		      email: "wlsupport@sfs.uni-tuebingen.de"
-		  },	    
-		  version: "v1.0",
-		  authentification: "no",		  
-		  licence: "public",
-		  shortDescription: "Lemmatizer",
-		  longDescription: "Weblicht Easy Chain for Lemmatization (English).",
-		  languages: ["eng"],
-		  lang_encoding: "639-1",		  
-		  mimetypes: ["text/plain"],
-		  output: ["text/xml"],
-		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht/",		  
-		  pid: "",
-		  parameter: {input :     "self.linkToResource",
-			      lang:       "en",			      
-			      analysis:   "lemma"
-			     }
-		},		
-		
-
-		{ task: "Part-Of-Speech Tagging",
-		  name: "Weblicht-POSTags-Lemmas-DE",
-		  logo: "weblicht.jpg",		  		  
-		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
-		  location: "Tuebingen, Germany",		  		  		  
-		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
-		  contact: {
-		      person: "CLARIN Weblicht Support",
-		      email: "wlsupport@sfs.uni-tuebingen.de"
-		  },	    
-		  version: "v1.0",
-		  authentification: "no",		  
-		  licence: "public",
-		  shortDescription: "POS Tagger and Lemmatization Tool",		  
-		  longDescription: "Weblicht Easy Chain for POS Tagging and Lemmatization (German).",
-		  languages: ["deu"],
-		  lang_encoding: "639-1",		  
-		  mimetypes: ["text/plain"],
-		  output: ["text/xml"],
-		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht/",		  
-		  pid: "",
-		  parameter: {input :     "self.linkToResource",
-			      lang:       "de",			      
-			      analysis:   "pos"
-			     }
-		},
-
-		{ task: "Part-Of-Speech Tagging",
-		  name: "Weblicht-POSTags-Lemmas-IT",
-		  logo: "weblicht.jpg",		  		  
-		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
-		  location: "Tuebingen, Germany",		  		  		  
-		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
-		  contact: {
-		      person: "CLARIN Weblicht Support",
-		      email: "wlsupport@sfs.uni-tuebingen.de"
-		  },	    
-		  version: "v1.0",
-		  authentification: "no",		  
-		  licence: "public",
-		  shortDescription: "POS Tagger and Lemmatization Tool",		  
-		  longDescription: "Weblicht Easy Chain for POS Tagging and Lemmatization (Italian).",
-		  languages: ["ita"],
-		  lang_encoding: "639-1",		  
-		  mimetypes: ["text/plain"],
-		  output: ["text/xml"],
-		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht/",		  
-		  pid: "",
-		  parameter: {input :     "self.linkToResource",
-			      lang:       "it",			      
-			      analysis:   "pos"
-			     }
-		},				
-
-		{ task: "Part-Of-Speech Tagging",
-		  name: "Weblicht-POSTags-Lemmas-EN",
-		  logo: "weblicht.jpg",		  		  
-		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
-		  location: "Tuebingen, Germany",		  		  		  
-		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
-		  contact: {
-		      person: "CLARIN Weblicht Support",
-		      email: "wlsupport@sfs.uni-tuebingen.de"
-		  },	    
-		  version: "v1.0",
-		  authentification: "no",		  
-		  licence: "public",
-		  shortDescription: "POS Tagger and Lemmatization Tool",
-		  longDescription: "Weblicht Easy Chain for POS Tagging and Lemmatization (English).",
-		  languages: ["eng"],
-		  lang_encoding: "639-1",		  
-		  mimetypes: ["text/plain"],
-		  output: ["text/xml"],
-		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht/",		  
-		  pid: "",
-		  parameter: {input :     "self.linkToResource",
-			      lang:       "en",			      
-			      analysis:   "pos"
-			     }
-		},		
-
 		{ task: "Named Entity Recognition",
-		  name: "CLARIN-DK Tool Box (CST's name recognizer)",
+		  name: "CLARIN-DK Tool Box (CST Name Recognizer)",
 		  logo: "clarindk.jpg",		  
 		  homepage: "https://clarin.dk/clarindk/forside.jsp",		  
 		  location: "Copenhagen, Denmark (CLAM Webservices)",
@@ -343,7 +179,29 @@ class ToolStore {
 		  longDescription:  "CLARIN-DK Tool Box (CST). CST's name recogniser classifies names as proper names, locations (with sub-classes of street, city, land and other types of locations), and other names (called MISC)",
 		  lang_encoding: "639-1",
 		  languages: ["dan"],
-		  mimetypes: ["text/plain"
+		  mimetypes: ["application/pdf",
+			      "application/vnd.ms-powerpoint", // (PPT)
+			      "application/vnd.openxmlformats-officedocument.presentationml.presentation", // (PPTX)
+			      "application/vnd.oasis.opendocument.presentation", // (ODP)
+			      "application/vnd.ms-excel", // (XLS)
+			      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // (XLSX)
+			      "application/vnd.oasis.opendocument.spreadsheet", // (ODS)
+			      "application/x-download", //    (If it is PDF or RTF)
+			      "application/octet-stream", //  (If it is PDF or RTF)
+			      "application/msword", //         (RTF, DOC, DOCX)
+			      "application/vnd.oasis.opendocument.text", // (ODT)
+			      "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // (DOCX)
+			      "text/html", // (HTML)
+			      "text/rtf",  // (RTF)
+			      "text/plain", 
+			      "text/x-conll", // (CONLL)
+			      "image/gif", 
+			      "image/jpeg", 
+			      "image/pjpeg", 
+			      "image/png", 
+			      "image/svg+xml", 
+			      "image/tiff", 
+			      "image/vnd.microsoft.icon"
 			     ],
 		  url: ["https://www.clarin.dk/tools/createByGoalChoice"], 
 		  parameter: {  input   : "self.linkToResource", 
@@ -356,60 +214,6 @@ class ToolStore {
 			     }		  
 		},
 
-		{ task: "Named Entity Recognition",
-		  name: "Weblicht-NamedEntities-DE",
-		  logo: "weblicht.jpg",		  
-		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
-		  location: "Tuebingen, Germany",		  		  		  
-		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
-		  contact: {
-		      person: "CLARIN Weblicht Support",
-		      email: "wlsupport@sfs.uni-tuebingen.de"
-		  },	    
-		  version: "v1.0",
-		  authentification: "no",		  
-		  licence: "public",
-		  shortDescription: "Named Entity Recognizer", 
-		  longDescription: "Weblicht Easy Chain for German Named Entity Recognition (German).",
-		  languages: ["deu"],
-		  lang_encoding: "639-1",		  
-		  mimetypes: ["text/plain"],
-		  output: ["text/xml"],
-		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht",
-		  pid: "",
-		  parameter: {  input   :  "self.linkToResource", 
-				lang    : "de",                   
-				analysis: "ne"                    
-			     }
-		},
-		
-		{ task: "Named Entity Recognition",
-		  name: "Weblicht-NamedEntities-EN",
-		  logo: "weblicht.jpg",		  		  
-		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
-		  location: "Tuebingen, Germany",		  		  		  
-		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
-		  contact: {
-		      person: "CLARIN Weblicht Support",
-		      email: "wlsupport@sfs.uni-tuebingen.de"
-		  },	    
-		  version: "v1.0",
-		  authentification: "no",		  
-		  licence: "public",
-		  shortDescription: "Named Entity Recognizer", 
-		  longDescription: "Weblicht Easy Chain for German Named Entity Recognition (English).",
-		  languages: ["eng"],
-		  lang_encoding: "639-1",		  
-		  mimetypes: ["text/plain"],
-		  output: ["text/xml"],
-		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht",
-		  pid: "",
-		  parameter: {  input   : "self.linkToResource", 
-				lang    : "en",                   
-				analysis: "ne"                    
-			     }
-		},				
-		
 		{ task: "Voice Synthesis",
 		  name: "CLARIN-DK Tool Box (espeak)",
 		  logo: "clarindk.jpg",		  
@@ -429,8 +233,8 @@ class ToolStore {
 		  languages: ["afr", "bul", "bos", "cat", "ces", "cym", "dan", "ell", "eng", "epo", "spa", "est", "fin", "fas", "fra", 
 			      "hin", "hrv", "hun", "hye", "ind", "isl", "ita", "kat", "kan", "kur", "lat", "lav", "mkd", "mlg", "nld",
 			      "pol", "por", "ron", "rus", "slk", "sqi", "srp", "swe", "swa", "tam", "tur", "ukr", "vie", "zho"],
-		  mimetypes: [
-			      "text/plain"
+		  mimetypes: [  "text/plain",
+				"application/pdf" // may add other mimetypes
 			     ],
 		  url: ["https://www.clarin.dk/tools/createByGoalChoice"], 
 		  parameter: {  input   : "self.linkToResource", 
@@ -439,7 +243,6 @@ class ToolStore {
 				UIlanguage: "en"				
 			     },
 
-		  // CLARIN-DK calls those parameters differently, namely:
 		  mapping:   { input        : "URL",
 			       lang         : "language"
 			     }		  
@@ -481,6 +284,288 @@ class ToolStore {
 			     }		  
 		},		
 
+		{ task: "Tokenisation",
+		  name: "WebLicht-Tokenization-TK",
+		  logo: "weblicht.jpg",		  
+		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+		  location: "Tuebingen, Germany",		  		  		  
+		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
+		  contact: {
+		      person: "CLARIN WebLicht Support",
+		      email: "wlsupport@sfs.uni-tuebingen.de"
+		  },	    
+		  version: "v1.0",
+		  authentification: "no",		  
+		  licence: "public",
+		  shortDescription: "Tokenization for Turkish", 
+		  longDescription: "WebLicht Easy Chain for tokenization of Turkish texts.",
+		  languages: ["tur"],
+		  lang_encoding: "639-1",		  
+		  mimetypes: ["text/plain",
+			      "text/rtf",			     
+			      "application/pdf",
+			      "application/msword",
+			      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
+		  output: ["text/xml"],
+		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht",
+		  pid: "",
+		  parameter: {  input   :  "self.linkToResource", 
+				lang    : "tr",                   
+				analysis: "token"                    
+			     }
+		},
+		
+		{ task: "Named Entity Recognition",
+		  name: "WebLicht-NamedEntities-DE",
+		  logo: "weblicht.jpg",		  
+		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+		  location: "Tuebingen, Germany",		  		  		  
+		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
+		  contact: {
+		      person: "CLARIN WebLicht Support",
+		      email: "wlsupport@sfs.uni-tuebingen.de"
+		  },	    
+		  version: "v1.0",
+		  authentification: "no",		  
+		  licence: "public",
+		  shortDescription: "Named Entity Recognizer", 
+		  longDescription: "WebLicht Easy Chain for German Named Entity Recognition (German).",
+		  languages: ["deu"],
+		  lang_encoding: "639-1",		  
+		  mimetypes: ["text/plain",
+			      "text/rtf",			     
+			      "application/pdf",
+			      "application/msword",
+			      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
+		  output: ["text/xml"],
+		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht",
+		  pid: "",
+		  parameter: {  input   :  "self.linkToResource", 
+				lang    : "de",                   
+				analysis: "ne"                    
+			     }
+		},
+		
+
+		{ task: "Lemmatization",
+		  name: "WebLicht-Lemmas-DE",
+		  logo: "weblicht.jpg",		  		  
+		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+		  location: "Tuebingen, Germany",		  		  		  
+		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
+		  contact: {
+		      person: "CLARIN WebLicht Support",
+		      email: "wlsupport@sfs.uni-tuebingen.de"
+		  },	    
+		  version: "v1.0",
+		  authentification: "no",		  
+		  licence: "public",
+		  shortDescription: "Lemmatizer",
+		  longDescription: "WebLicht Easy Chain for Lemmatization (German).",
+		  languages: ["deu"],
+		  lang_encoding: "639-1",		  
+		  mimetypes: ["text/plain",,
+			      "text/rtf",			     
+			      "application/pdf",
+			      "application/msword",
+			      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
+		  output: ["text/xml"],
+		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht/",		  
+		  pid: "",
+		  parameter: {input :     "self.linkToResource",
+			      lang:       "de",			      
+			      analysis:   "lemma"
+			     }
+		},
+
+		{ task: "Lemmatization",
+		  name: "WebLicht-Lemmas-EN",
+		  logo: "weblicht.jpg",		  		  
+		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+		  location: "Tuebingen, Germany",		  		  		  
+		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
+		  contact: {
+		      person: "CLARIN WebLicht Support",
+		      email: "wlsupport@sfs.uni-tuebingen.de"
+		  },	    
+		  version: "v1.0",
+		  authentification: "no",		  
+		  licence: "public",
+		  shortDescription: "Lemmatizer",
+		  longDescription: "WebLicht Easy Chain for Lemmatization (English).",
+		  languages: ["eng"],
+		  lang_encoding: "639-1",		  
+		  mimetypes: ["text/plain",
+			      "text/rtf",			     
+			      "application/pdf",
+			      "application/msword",
+			      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
+		  output: ["text/xml"],
+		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht/",		  
+		  pid: "",
+		  parameter: {input :     "self.linkToResource",
+			      lang:       "en",			      
+			      analysis:   "lemma"
+			     }
+		},		
+		
+
+		{ task: "Part-Of-Speech Tagging",
+		  name: "WebLicht-POSTags-Lemmas-DE",
+		  logo: "weblicht.jpg",		  		  
+		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+		  location: "Tuebingen, Germany",		  		  		  
+		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
+		  contact: {
+		      person: "CLARIN WebLicht Support",
+		      email: "wlsupport@sfs.uni-tuebingen.de"
+		  },	    
+		  version: "v1.0",
+		  authentification: "no",		  
+		  licence: "public",
+		  shortDescription: "POS Tagger and Lemmatization Tool",		  
+		  longDescription: "WebLicht Easy Chain for POS Tagging and Lemmatization (German).",
+		  languages: ["deu"],
+		  lang_encoding: "639-1",		  
+		  mimetypes: ["text/plain",
+			      "text/rtf",			     
+			      "application/pdf",
+			      "application/msword",
+			      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
+		  output: ["text/xml"],
+		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht/",		  
+		  pid: "",
+		  parameter: {input :     "self.linkToResource",
+			      lang:       "de",			      
+			      analysis:   "pos"
+			     }
+		},
+
+		{ task: "Part-Of-Speech Tagging",
+		  name: "WebLicht-POSTags-Lemmas-FR",
+		  logo: "weblicht.jpg",		  		  
+		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+		  location: "Tuebingen, Germany",		  		  		  
+		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
+		  contact: {
+		      person: "CLARIN WebLicht Support",
+		      email: "wlsupport@sfs.uni-tuebingen.de"
+		  },	    
+		  version: "v1.0",
+		  authentification: "no",		  
+		  licence: "public",
+		  shortDescription: "POS Tagger and Lemmatization Tool",		  
+		  longDescription: "WebLicht Easy Chain for POS Tagging and Lemmatization (French).",
+		  languages: ["fra"],
+		  lang_encoding: "639-1",		  
+		  mimetypes: ["text/plain",
+			      "text/rtf",			     
+			      "application/pdf",
+			      "application/msword",
+			      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
+		  output: ["text/xml"],
+		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht/",		  
+		  pid: "",
+		  parameter: {input :     "self.linkToResource",
+			      lang:       "fr",			      
+			      analysis:   "pos"
+			     }
+		},		
+
+		{ task: "Part-Of-Speech Tagging",
+		  name: "WebLicht-POSTags-Lemmas-IT",
+		  logo: "weblicht.jpg",		  		  
+		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+		  location: "Tuebingen, Germany",		  		  		  
+		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
+		  contact: {
+		      person: "CLARIN WebLicht Support",
+		      email: "wlsupport@sfs.uni-tuebingen.de"
+		  },	    
+		  version: "v1.0",
+		  authentification: "no",		  
+		  licence: "public",
+		  shortDescription: "POS Tagger and Lemmatization Tool",		  
+		  longDescription: "WebLicht Easy Chain for POS Tagging and Lemmatization (Italian).",
+		  languages: ["ita"],
+		  lang_encoding: "639-1",		  
+		  mimetypes: ["text/plain",
+			      "text/rtf",			     
+			      "application/pdf",
+			      "application/msword",
+			      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
+		  output: ["text/xml"],
+		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht/",		  
+		  pid: "",
+		  parameter: {input :     "self.linkToResource",
+			      lang:       "it",			      
+			      analysis:   "pos"
+			     }
+		},				
+
+		{ task: "Part-Of-Speech Tagging",
+		  name: "WebLicht-POSTags-Lemmas-EN",
+		  logo: "weblicht.jpg",		  		  
+		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+		  location: "Tuebingen, Germany",		  		  		  
+		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
+		  contact: {
+		      person: "CLARIN WebLicht Support",
+		      email: "wlsupport@sfs.uni-tuebingen.de"
+		  },	    
+		  version: "v1.0",
+		  authentification: "no",		  
+		  licence: "public",
+		  shortDescription: "POS Tagger and Lemmatization Tool",
+		  longDescription: "WebLicht Easy Chain for POS Tagging and Lemmatization (English).",
+		  languages: ["eng"],
+		  lang_encoding: "639-1",		  
+		  mimetypes: ["text/plain",
+			      "text/rtf",			     
+			      "application/pdf",
+			      "application/msword",
+			      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
+		  output: ["text/xml"],
+		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht/",		  
+		  pid: "",
+		  parameter: {input :     "self.linkToResource",
+			      lang:       "en",			      
+			      analysis:   "pos"
+			     }
+		},		
+		
+		{ task: "Named Entity Recognition",
+		  name: "WebLicht-NamedEntities-EN",
+		  logo: "weblicht.jpg",		  		  
+		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+		  location: "Tuebingen, Germany",		  		  		  
+		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
+		  contact: {
+		      person: "CLARIN WebLicht Support",
+		      email: "wlsupport@sfs.uni-tuebingen.de"
+		  },	    
+		  version: "v1.0",
+		  authentification: "no",		  
+		  licence: "public",
+		  shortDescription: "Named Entity Recognizer", 
+		  longDescription: "WebLicht Easy Chain for German Named Entity Recognition (English).",
+		  languages: ["eng"],
+		  lang_encoding: "639-1",		  
+		  mimetypes: ["text/plain",
+			      "text/rtf",			     
+			      "application/pdf",
+			      "application/msword",
+			      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
+		  output: ["text/xml"],
+		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht",
+		  pid: "",
+		  parameter: {  input   : "self.linkToResource", 
+				lang    : "en",                   
+				analysis: "ne"                    
+			     }
+		},				
+		
+
 
 		{ task: "Text Analytics",
 		  name: "Voyant Tools",
@@ -500,8 +585,11 @@ class ToolStore {
 		  // virtually any language
 		  languages: ["eng", "deu", "spa", "nld", "fra", "generic"], 
 		  lang_encoding: "639-1",
-		  mimetypes: ["text/plain", "application/pdf",
-			      "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+		  mimetypes: ["text/plain",
+			      "text/rtf",			     
+			      "application/pdf",
+			      "application/msword",
+			      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
 			      "text/tei+xml;format-variant=tei-dta"
 			     ], 
 		  output: [], 
@@ -886,23 +974,27 @@ class ToolStore {
 
 		
 		{ task: "Constituent Parsing",
-		  name: "Weblicht-Const-Parsing-DE",
+		  name: "WebLicht-Const-Parsing-DE",
 		  logo: "weblicht.jpg",		  		  
 		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
 		  location: "Tuebingen, Germany",		  		  		  
 		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
 		  contact: {
-		      person: "CLARIN Weblicht Support",
+		      person: "CLARIN WebLicht Support",
 		      email: "wlsupport@sfs.uni-tuebingen.de"
 		  },	    
 		  version: "v1.0",
 		  authentification: "no",		  
 		  licence: "public",
 		  shortDescription: "Constituent Parsing",
-		  longDescription: "Weblicht Easy Chain for Constituent Parsing (German).",
+		  longDescription: "WebLicht Easy Chain for Constituent Parsing (German).",
 		  languages: ["deu"],
 		  lang_encoding: "639-1",		  
-		  mimetypes: ["text/plain"],
+		  mimetypes: ["text/plain",
+			      "text/rtf",			     
+			      "application/pdf",
+			      "application/msword",
+			      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
 		  output: ["text/xml"],
 		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht/",		  
 		  pid: "",
@@ -913,23 +1005,27 @@ class ToolStore {
 		},
 
 		{ task: "Constituent Parsing",
-		  name: "Weblicht-Const-Parsing-EN",
+		  name: "WebLicht-Const-Parsing-EN",
 		  logo: "weblicht.jpg",		  		  
 		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
 		  location: "Tuebingen, Germany",		  		  		  
 		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
 		  contact: {
-		      person: "CLARIN Weblicht Support",
+		      person: "CLARIN WebLicht Support",
 		      email: "wlsupport@sfs.uni-tuebingen.de"
 		  },	    
 		  version: "v1.0",
 		  authentification: "no",		  
 		  licence: "public",
 		  shortDescription: "Constituent Parsing",
-		  longDescription: "Weblicht Easy Chain for Constituent Parsing (English).",
+		  longDescription: "WebLicht Easy Chain for Constituent Parsing (English).",
 		  languages: ["eng"],
 		  lang_encoding: "639-1",		  
-		  mimetypes: ["text/plain"],
+		  mimetypes: ["text/plain",
+			      "text/rtf",			     
+			      "application/pdf",
+			      "application/msword",
+			      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
 		  output: ["text/xml"],
 		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht/",		  
 		  pid: "",
@@ -940,23 +1036,27 @@ class ToolStore {
 		},		
 		
 		{ task: "Dependency Parsing",
-		  name: "Weblicht-Dep-Parsing-DE",
+		  name: "WebLicht-Dep-Parsing-DE",
 		  logo: "weblicht.jpg",		  		  
 		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
 		  location: "Tuebingen, Germany",		  		  		  
 		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
 		  contact: {
-		      person: "CLARIN Weblicht Support",
+		      person: "CLARIN WebLicht Support",
 		      email: "wlsupport@sfs.uni-tuebingen.de"
 		  },	    
 		  version: "v1.0",
 		  authentification: "no",		  
 		  licence: "public",
 		  shortDescription: "Dependency Parsing",
-		  longDescription: "Weblicht Easy Chain for Dependency Parsing (German).",
+		  longDescription: "WebLicht Easy Chain for Dependency Parsing (German).",
 		  languages: ["deu"],
 		  lang_encoding: "639-1",		  
-		  mimetypes: ["text/plain"],
+		  mimetypes: ["text/plain",
+			      "text/rtf",			     
+			      "application/pdf",
+			      "application/msword",
+			      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
 		  output: ["text/xml"],
 		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht/",		  
 		  pid: "",
@@ -967,23 +1067,27 @@ class ToolStore {
 		},
 
 		{ task: "Dependency Parsing",
-		  name: "Weblicht-Dep-Parsing-NL",
+		  name: "WebLicht-Dep-Parsing-NL",
 		  logo: "weblicht.jpg",		  		  
 		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
 		  location: "Tuebingen, Germany",		  		  		  
 		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
 		  contact: {
-		      person: "CLARIN Weblicht Support",
+		      person: "CLARIN WebLicht Support",
 		      email: "wlsupport@sfs.uni-tuebingen.de"
 		  },	    
 		  version: "v1.0",
 		  authentification: "no",		  
 		  licence: "public",
 		  shortDescription: "Dependency Parsing (NL)",
-		  longDescription: "Weblicht Easy Chain for Dependency Parsing (Dutch).",
+		  longDescription: "WebLicht Easy Chain for Dependency Parsing (Dutch).",
 		  languages: ["nld"],
 		  lang_encoding: "639-1",		  
-		  mimetypes: ["text/plain"],
+		  mimetypes: ["text/plain",
+			      "text/rtf",			     
+			      "application/pdf",
+			      "application/msword",
+			      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
 		  output: ["text/xml"],
 		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht/",		  
 		  pid: "",
@@ -995,23 +1099,27 @@ class ToolStore {
 		
 
 		{ task: "Dependency Parsing",
-		  name: "Weblicht-Dep-Parsing-EN",
+		  name: "WebLicht-Dep-Parsing-EN",
 		  logo: "weblicht.jpg",		  		  
 		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
 		  location: "Tuebingen, Germany",		  		  		  
 		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
 		  contact: {
-		      person: "CLARIN Weblicht Support",
+		      person: "CLARIN WebLicht Support",
 		      email: "wlsupport@sfs.uni-tuebingen.de"
 		  },	    
 		  version: "v1.0",
 		  authentification: "no",		  
 		  licence: "public",
 		  shortDescription: "Dependency Parsing",
-		  longDescription: "Weblicht Easy Chain for Dependency Parsing (English).",
+		  longDescription: "WebLicht Easy Chain for Dependency Parsing (English).",
 		  languages: ["eng"],
 		  lang_encoding: "639-1",		  
-		  mimetypes: ["text/plain"],
+		  mimetypes: ["text/plain",
+			      "text/rtf",			     
+			      "application/pdf",
+			      "application/msword",
+			      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
 		  output: ["text/xml"],
 		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht/",		  
 		  pid: "",
@@ -1024,23 +1132,27 @@ class ToolStore {
 		
 		
 		{ task: "Morphology Analysis",
-		  name: "Weblicht-Morphology-DE",
+		  name: "WebLicht-Morphology-DE",
 		  logo: "weblicht.jpg",		  		  
 		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
 		  location: "Tuebingen, Germany",		  		  		  
 		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
 		  contact: {
-		      person: "CLARIN Weblicht Support",
+		      person: "CLARIN WebLicht Support",
 		      email: "wlsupport@sfs.uni-tuebingen.de"
 		  },	    
 		  version: "v1.0",
 		  authentification: "no",
 		  licence: "public",
 		  shortDescription: "Morphology Analysis Tool",
-		  longDescription: "Weblicht Easy Chain for Morphology Analysis (German)",
+		  longDescription: "WebLicht Easy Chain for Morphology Analysis (German)",
 		  languages: ["deu"],
 		  lang_encoding: "639-1",		  
-		  mimetypes: ["text/plain"],
+		  mimetypes: ["text/plain",
+			      "text/rtf",			     
+			      "application/pdf",
+			      "application/msword",
+			      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
 		  output: ["text/xml"],
 		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht/",		  
 		  pid: "",
@@ -1051,23 +1163,27 @@ class ToolStore {
 		},
 		
 		{ task: "Morphology Analysis",
-		  name: "Weblicht-Morphology-EN",
+		  name: "WebLicht-Morphology-EN",
 		  logo: "weblicht.jpg",		  		  
 		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
 		  location: "Tuebingen, Germany",		  		  		  
 		  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
 		  contact: {
-		      person: "CLARIN Weblicht Support",
+		      person: "CLARIN WebLicht Support",
 		      email: "wlsupport@sfs.uni-tuebingen.de"
 		  },	    
 		  version: "v1.0",
 		  authentification: "no",		  
 		  licence: "public",
 		  shortDescription: "Morphology Analysis Tool",
-		  longDescription: "Weblicht Easy Chain for Morphology Analysis (English)",
+		  longDescription: "WebLicht Easy Chain for Morphology Analysis (English)",
 		  languages: ["eng"],
 		  lang_encoding: "639-1",		  
-		  mimetypes: ["text/plain"],
+		  mimetypes: ["text/plain",
+			      "text/rtf",			     
+			      "application/pdf",
+			      "application/msword",
+			      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
 		  output: ["text/xml"],
 		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht/",		  
 		  pid: "",
@@ -1167,7 +1283,6 @@ class ToolStore {
 				OUTPUT_TYPE : "AUDIO"
 			     },
 
-		  // CLARIN-DK calls those parameters differently, namely:
 		  mapping:   { input        : "INPUT_TEXT",
 			     }		  
 		},
@@ -1206,7 +1321,6 @@ class ToolStore {
 				INSPROB    : "0.0"
 			     },
 
-		  // CLARIN-DK calls those parameters differently, namely:
 		  mapping:   { input        : "SIGNAL",
 			     }		  
 		},		
