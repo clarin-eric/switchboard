@@ -6381,7 +6381,7 @@ button.close {
     font-style: italic;
     margin-left: 1em;
     padding-left: 1em;
-    border: 1px dotted;
+    border: 2px dotted;
     margin-bottom: .5em
 }
 

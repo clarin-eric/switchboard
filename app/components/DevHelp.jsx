@@ -16,7 +16,7 @@ export default class DevHelp extends React.Component {
   }
   render() {
     return <a className={this.props.className} onClick={this.openModal}>
-      Dev Help
+      Developer
       {this.state.showModal ?
         <DevHelpText onClose={this.closeModal}/>
       : null}

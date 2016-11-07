@@ -12,7 +12,7 @@ import ToolActions from '../actions/ToolActions';
 import ToolStore from '../stores/ToolStore';
 
 import Editable from './Editable.jsx';
-// import ReactTooltip from 'react-tooltip';
+//import ReactTooltip from 'react-tooltip';
 
 export default class Tool extends React.Component {
     constructor(props) {
@@ -34,7 +34,6 @@ export default class Tool extends React.Component {
 	  <div className="lane-add-note">
             <button onClick={this.invokeTool} > @ </button>
             <p data-tip={tool.longDescription}> Info </p>
-            <ReactTooltip />	
            </div>
 	</div>
 	<div>{tool.task}</div>

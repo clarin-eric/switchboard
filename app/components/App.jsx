@@ -90,76 +90,75 @@ export default class App extends React.Component {
     
     render() {
 	return (
-	    <div>
-     <header id="header" role="banner">
-       <div className="navbar-static-top  navbar-default navbar" role="navigation">
-         <div className="container">
-           <div className="navbar-header">
-             <a className="navbar-brand" href="./" id="idce">
-               <span><i className="fa fa-cog fa-spin fa-1x fa-fw" aria-hidden="true"></i> Language Resource Switchboard</span>
-             </a>
-           </div>
-	   
-           <div className="collapse navbar-collapse" role="navigation" id="id1">
-             <ul className="nav navbar-nav" id="idcf">
-               <li>
-		 <UserHelp className="header-link" />		 
-               </li>
-	       <li>
-		 <DevHelp className="header-link" />
-	       </li>
-	       <li>
-	       <button className="clearDropzone" onClick={this.clearDropzone}>Clear Dropzone</button>
-	       </li>				
-	       <li>
-		 <button id="showAllToolsButton" className="alltools" onClick={this.showTools}>Show All Tools</button>
-	       </li>
-	       <li><p />
-		  <Toggle
-	             defaultChecked={false}
-		     onChange={this.handleWebServicesChange} />
-	       </li>
-	       <li>
-		 <AboutHelp className="header-link" />
-	       </li>	       
-             </ul>
-	     <ul className="nav navbar-nav navbar-right" id="id723">
-               <li>
-                 <a href="http://www.clarin.eu/" className="clarin-logo hidden-xs">
-		   <span>CLARIN</span>
-		 </a>
-               </li>
-             </ul>
-           </div>
-         </div>
-       </div>
-     </header>
-	      <div id='dragAndDropArea'></div>
-
-	      <Router history={hashHistory}>	      
-		<Route path="/" component={DropArea}/>
-      		<Route path="/vlo/:fileURL/:fileMimetype/:fileLanguage" component={UrlArea}/>
-      		<Route path="/vlo/:fileURL/:fileMimetype" component={UrlArea}/>		
-      		<Route path="/vlo/:tokenId" component={UrlArea}/>		
-              </Router>		
-	      
-   	      <AltContainer
-                   stores={[LaneStore, ToolStore]}
+<div>
+  <header id="header" role="banner">
+    <div className="navbar-static-top  navbar-default navbar" role="navigation">
+      <div className="container">
+        <div className="navbar-header">
+          <a className="navbar-brand" href="./" id="idce">
+            <span><i className="fa fa-cog fa-spin fa-1x fa-fw" aria-hidden="true"></i> Language Resource Switchboard</span>
+          </a>
+        </div>
+	
+        <div className="collapse navbar-collapse" role="navigation" id="id1">
+          <ul className="nav navbar-nav" id="idcf">
+            <li>
+	      <UserHelp className="header-link" />		 
+            </li>
+	    <li>
+	      <DevHelp className="header-link" />
+	    </li>
+	    <li>
+	      <AboutHelp className="header-link" />
+	    </li>	       	    
+	    <li>
+	      <button className="clearDropzone" onClick={this.clearDropzone}>Clear Dropzone</button>
+	    </li>				
+	    <li>
+	      <button id="showAllToolsButton" className="alltools" onClick={this.showTools}>Show All Tools</button>
+	    </li>
+	    <li><p />
+	      <Toggle
+	         defaultChecked={false}
+		 onChange={this.handleWebServicesChange} />
+	    </li>
+          </ul>
+	  <ul className="nav navbar-nav navbar-right" id="id723">
+            <li>
+              <a href="http://www.clarin.eu/" className="clarin-logo hidden-xs">
+		<span>CLARIN</span>
+	      </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div id='dragAndDropArea'></div>
+  
+  <Router history={hashHistory}>	      
+    <Route path="/" component={DropArea}/>
+    <Route path="/vlo/:fileURL/:fileMimetype/:fileLanguage" component={UrlArea}/>
+    <Route path="/vlo/:fileURL/:fileMimetype" component={UrlArea}/>		
+    <Route path="/vlo/:tokenId" component={UrlArea}/>		
+  </Router>		
+  
+  <AltContainer
+     stores={[LaneStore, ToolStore]}
                    inject={{
 		       lanes: () => LaneStore.getState().lanes || [],
 		       tasks: () => ToolStore.getState().tasks || []
 		   }} >
-	       <Lanes  />
-	       <p />
-   	       <hr />
-  	       <p />
-	       <h2>
-		 Task-Oriented Tool View
-	       </h2>
-               <Tasks />
-	      </AltContainer>
-	      <hr />
-	    </div>
-	    );
-    }
-}
+    <Lanes  />
+    <p />
+    <hr />
+    <p />
+    <h2>
+      Task-Oriented Tool View
+    </h2>
+    <Tasks />
+  </AltContainer>
+  <hr />
+</div>
+);
+}}
