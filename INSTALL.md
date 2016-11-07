@@ -13,13 +13,14 @@ In the future, the directories node_modules/ and build/ will not be hosted on gi
 
 1. Download the sources from github, e.g.,
 
-      ```git clone https://github.com/clarin-eric/LRSwitchboard.git```
+   ```git clone https://github.com/clarin-eric/LRSwitchboard.git```
 
 2. Enter the directory LRSwitchboard, and perform
 
-      ```webpack```
+   ```webpack```
+   
 
-   to re-build the build directory (if you need to)
+to re-build the build directory (if you need to)
 
    Opening build/index.html will open the LRS "locally".
 
@@ -39,7 +40,7 @@ to have your web server serving the pages.
 
 In the current directory (where Dockerfile resides), call:
 
-```docker build --no-cache -t clrs-nginx-java```
+   ```docker build --no-cache -t clrs-nginx-java```
 
 This command will build a docker image that includes the entire content of the build directory (the
 CLRS webpage).  It runs nginx as web server and has access to Java for running the Tika Apache
