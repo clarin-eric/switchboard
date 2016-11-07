@@ -46,4 +46,8 @@ This command will build a docker image that includes the entire content of the b
 CLRS webpage).  It runs nginx as web server and has access to Java for running the Tika Apache
 tools for language and mimetype identification.
 
+Alternatively, please use the Makefile, calling
+
+   ```make '''
+
 Expose different ports, given your local computing environment.

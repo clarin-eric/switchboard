@@ -1,7 +1,7 @@
 # LRSwitchboard
 Code Repository for the Language Resources Switchboard of CLARIN.
 
-The implementation is based upon reactjs and related packages. It contains a demo upload site,
+The implementation is based upon reactjs and related packages. It contains a standalone upload site,
 where users can drag&drop their language resource(s). Each resource can be associated with a
 mimetype (detected during file drop) or edited by the user thereafter, and a language code (iso
 639-3). The demo upload site depicts each language resource with all relevant information, the user
@@ -14,14 +14,17 @@ make them available for download by the invoked tools.
 
 For more information, please contact claus.zinn@uni-tuebingen.de
 
+# Website
+
+The switchboard is currently being served at:
+
+```http://weblicht.sfs.uni-tuebingen.de/clrs/#/ ```
 
 
-
-
-# Note
+# Status
 The software is currently being developed. A 1.0 release will be made available soon.
 
-# Publications:
+# Publications
 
 - The Switchboard specification (Milestone 2.2 of the CLARIN-PLUS project), see https://office.clarin.eu/v/CE-2015-0684-LR_switchboard_spec.pdf
 
