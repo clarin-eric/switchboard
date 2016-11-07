@@ -17,7 +17,7 @@ In the future, the directories node_modules/ and build/ will not be hosted on gi
 
 2. Enter the directory LRSwitchboard, and perform
 
-   ```webpack```
+   ```webpack ```
    
 
 to re-build the build directory (if you need to)
