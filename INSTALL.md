@@ -48,6 +48,6 @@ tools for language and mimetype identification.
 
 Alternatively, please use the Makefile, calling
 
-   ```make '''
+   ```make ```
 
 Expose different ports, given your local computing environment.
