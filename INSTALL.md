@@ -31,7 +31,7 @@ now holding the contents of the build directory).
    
 4. Direct your browser to, say,
 
-   ```http://weblicht.sfs.uni-tuebingen.de/clrs```
+   ```http://weblicht.sfs.uni-tuebingen.de/clrs ```
 
 to have your web server serving the pages.
 
