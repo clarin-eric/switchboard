@@ -19,12 +19,14 @@ For more information, please contact claus.zinn@uni-tuebingen.de
 
 
 # Note
-The software is currently being developed. A 1.0 release will be made available by October 31, 2016.
+The software is currently being developed. A 1.0 release will be made available soon.
 
 # Publications:
 
 - The Switchboard specification (Milestone 2.2 of the CLARIN-PLUS project), see https://office.clarin.eu/v/CE-2015-0684-LR_switchboard_spec.pdf
 
 - Claus Zinn. The CLARIN Language Resource Switchboard. CLARIN 2016 Annual Conference, Aix-en-Provence, France, 2016.
+See https://www.clarin.eu/sites/default/files/zinn-CLARIN2016_paper_26.pdf
+
 
 

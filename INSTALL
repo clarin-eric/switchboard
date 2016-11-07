@@ -26,8 +26,22 @@ In the future, the directories node_modules/ and build/ will not be hosted on gi
 4. Direct your browser to, say, http://weblicht.sfs.uni-tuebingen.de/clrs to have your web server serving the pages.
 
 
+DOCKER
+------
+
+In the current directory (where Dockerfile resides), call:
+
+docker build --no-cache -t clrs-nginx-java .
+
+This command will build a docker image that includes the entire content of the build directory (the
+CLRS webpage).  It runs nginx as web server and has access to Java for running the Tika Apache
+tools for language and mimetype identification.
+
+Expose different ports, given your local computing environment.
 
 
+
+--
 Draft version of the INSTALL.
-C. Zinn, Oct 17, 2016
+C. Zinn, Nov 7th, 2016
 
