@@ -32,6 +32,7 @@ export default class DropArea extends React.Component {
     }
 
     // a lane is a list of notes describing the file dropped
+    // a note has a back-link to the lane it belongs to, and each lane knows its notes.
     addNote( laneId, description ) {
 	const note = NoteActions.create({
 	    task: description,

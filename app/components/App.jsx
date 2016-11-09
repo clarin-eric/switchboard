@@ -5,8 +5,7 @@
 import AltContainer from 'alt-container';
 import React from 'react';
 import Lanes from './Lanes.jsx';                    // render all the lanes (lang resources)
-import Tools from './Tools.jsx';                    // render all the tools
-import Tasks from './Tasks.jsx';                    // task-oriented view
+import Tasks from './Tasks.jsx';                    // task-oriented view for all tools
 import LaneActions from '../actions/LaneActions';   // actions associated with lanes: CRUD, attach/detach
 import ToolActions from '../actions/ToolActions';   // access to findTools action
 import NoteActions from '../actions/NoteActions';   // access to notes

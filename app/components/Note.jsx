@@ -16,7 +16,6 @@ export default class Note extends React.Component {
     }
 
     setLanguage( id, language ) {
-	console.log('Note.jsx/setLanguage', id, language);	
 	var myNote = NoteActions.getNote( id );
 	var entireState = NoteStore.getState();
 	myNote = entireState.selectedNote[0];
@@ -35,7 +34,6 @@ export default class Note extends React.Component {
     }
 
     setMimetype( id, mimetype ) {
-	console.log('Note.jsx/setMimetype', mimetype);
 	var myNote = NoteActions.getNote( id );
 	var entireState = NoteStore.getState();
 	myNote = entireState.selectedNote[0];
