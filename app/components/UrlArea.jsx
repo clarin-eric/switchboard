@@ -10,10 +10,9 @@ export default class UrlArea extends React.Component {
 
 	this.addLane       = this.addLane.bind(this);
 	this.addNote       = this.addNote.bind(this);
-	this.addFilename   = this.addFilename.bind(this);
-	this.addUpload     = this.addUpload.bind(this);
-	this.addMimetype   = this.addMimetype.bind(this);	
-	this.addLanguage   = this.addLanguage.bind(this);
+	
+	this.processLanguage   = this.processLanguage.bind(this);
+	
 	this.useParameters = this.useParameters.bind(this);
 	this.getJSON       = this.getJSON.bind(this);	
 	this.processJSONData = this.processJSONData.bind(this);
@@ -53,12 +52,6 @@ export default class UrlArea extends React.Component {
 	return true;
     }
 
-    addLane( resourceName ) {
-	var lane = LaneActions.create({name: resourceName});
-	console.log('adding new lane', lane);	
-	return lane.id;
-    }
-
     addNote( laneId, description ) {
 	const note = NoteActions.create({
 	    task: description,
@@ -70,90 +63,88 @@ export default class UrlArea extends React.Component {
 	});
     }
 
-    addFilename( laneId, filename ) {
-	LaneActions.addFilename({
-	    filename: filename,
-	    laneId
-	});
-    }
+    processLanguage( language ) {
 
+	// this is a temp. hack
+	// all language-related code conversions with be bundled somewhere
+	
+	var languageCombo = null;
+	var threeLetterCode = null;
 
-    addUpload( laneId, upload ) {
-	LaneActions.addUpload({
-	    upload: upload,
-	    laneId
-	});
-	
-    }
-
-    addMimetype( laneId, mimetype ) {
-	LaneActions.addMimetype({
-	    mimetype: mimetype,
-	    laneId
-	});
-	console.log('DropArea/addMimetype', laneId, mimetype);	
-    }
-    
-    addLanguage( laneId, threeLetterCode ) {
-	
-	var language = threeLetterCode;
-	
-	if (language == "eng") {
-	    language = "English:eng";
-	} else if (language == "dan") {
-	    language = "Danish:dan";
-	} else if (language == "cat") {
-	    language = "Catalan:cat";
-	} else if (language == "hun") {
-	    language = "Hungarian:hun";
-	} else if (language == "ita") {
-	    language = "Italian:ita";
-	} else if (language == "nor") {
-	    language = "Norwegian:nor";
-	} else if (language == "swe") {
-	    language = "Swedish:swe";
-	} else if (language == "deu") {
-	    language = "German:deu";
-	} else if (language == "spa") {
-	    language = "Spanish:spa";
-	} else if (language == "isi") {
-	    language = "Icelandic:isl";
-	} else if (language == "pol") {
-	    language = "Polish:pol";
-	} else if (language == "tha") {
-	    language = "Thai:tha";
-	} else if (language == "est") {
-	    language = "Estonian:est";
-	} else if (language == "slk") {
-	    language = "Slovak:slk";
-	} else if (language == "sll") {
-	    language = "Slovenian:slv";
-	} else if (language == "ron") {
-	    language = "Romanian:ron";
-	} else if (language == "fin") {
-	    language = "Finnish:fin";
-	} else if (language == "por") {
-	    language = "Portuguese:por";
-	} else if (language == "ell") {
-	    language = "Greek:ell";
-	} else if (language == "fra") {
-	    language = "French:fra";
-	} else if (language == "nld") {
-	    language = "Dutch:nld";
-	} else if (language == "rus") {
-	    language = "Russian:rus";
+	if (language == "en") {
+	    languageCombo = "English:eng";
+	    threeLetterCode = "eng";
+	} else if (language == "da") {
+	    languageCombo = "Danish:dan";
+    	    threeLetterCode = "dan";
+	} else if (language == "ca") {
+	    languageCombo = "Catalan:cat";
+    	    threeLetterCode = "cat";	    
+	} else if (language == "hu") {
+	    languageCombo = "Hungarian:hun";
+    	    threeLetterCode = "hun";
+	} else if (language == "it") {
+	    languageCombo = "Italian:ita";
+    	    threeLetterCode = "ita";	    
+	} else if (language == "no") {
+	    languageCombo = "Norwegian:nor";
+    	    threeLetterCode = "nor";
+	} else if (language == "sv") {
+	    languageCombo = "Swedish:swe";
+    	    threeLetterCode = "swe";
+	} else if (language == "de") {
+	    languageCombo = "German:deu";
+    	    threeLetterCode = "deu";
+	} else if (language == "es") {
+	    languageCombo = "Spanish:spa";
+    	    threeLetterCode = "spa";
+	} else if (language == "is") {
+	    languageCombo = "Icelandic:isl";
+    	    threeLetterCode = "isl";
+	} else if (language == "pl") {
+	    languageCombo = "Polish:pol";
+    	    threeLetterCode = "pol";
+	} else if (language == "th") {
+	    languageCombo = "Thai:tha";
+    	    threeLetterCode = "tha";
+	} else if (language == "et") {
+	    languageCombo = "Estonian:est";
+    	    threeLetterCode = "est";
+	} else if (language == "sk") {
+	    languageCombo = "Slovak:slk";
+    	    threeLetterCode = "slk";
+	} else if (language == "sl") {
+	    languageCombo = "Slovenian:slv";
+    	    threeLetterCode = "slv";
+	} else if (language == "ro") {
+	    languageCombo = "Romanian:ron";
+    	    threeLetterCode = "ron";	    	    	    
+	} else if (language == "fi") {
+	    languageCombo = "Finnish:fin";
+    	    threeLetterCode = "fin";
+	} else if (language == "pt") {
+	    languageCombo = "Portuguese:por";
+    	    threeLetterCode = "por";
+	} else if (language == "el") {
+	    languageCombo = "Greek:ell";
+    	    threeLetterCode = "ell";
+	} else if (language == "fr") {
+	    languageCombo = "French:fra";
+    	    threeLetterCode = "fra";
+	} else if (language == "nl") {
+	    languageCombo = "Dutch:nld";
+    	    threeLetterCode = "nld";
+	} else if (language == "ru") {
+	    languageCombo = "Russian:rus";
+    	    threeLetterCode = "rus";
 	} else {
-	    language = "Please identify language:any";
+	    languageCombo = "Please identify language:any";
+	    threeLetterCode = "any";
 	}
 
-	// english:eng
-	console.log('UrlArea/addLanguage after', laneId, language, threeLetterCode);	
-	LaneActions.addLanguage({
-	    language: threeLetterCode,
-	    laneId
-	});
-
-	return language;
+	return { languageCombo  : languageCombo,
+		 threeLetterCode: threeLetterCode
+	       };
     }
 
     nilOperation() {
@@ -189,14 +180,18 @@ export default class UrlArea extends React.Component {
 
 	if (parameters.tokenId == undefined) {
 	    // single file information has been passed
-	    // console.log('UrlArea/useParameters: single file information has been passed', parameters);
-
 	    var fileURL = this.unfoldHandle( parameters.fileURL);
-	    var laneId = this.addLane( fileURL );
-	    this.addFilename(laneId, fileURL );
-	    this.addUpload(laneId, "vlo");	
-	    this.addMimetype(laneId, parameters.fileMimetype);
-	    var languageDetected = this.addLanguage(laneId, parameters.fileLanguage);
+	    var languageHarmonization = this.processLanguage(parameters.fileLanguage);	    
+	    
+	    var lane = LaneActions.create( { name: fileUrl,
+					     filename: fileUrl,
+					     upload: 'vlo',
+					     mimetype: parameters.fileMimetype,
+					     language: languageHarmonization.threeLetterCode
+					   } );
+
+	    var laneId = lane.id;
+	    
 	    this.addNote(laneId, "name:   ".concat( fileURL ));
 	    this.addNote(laneId, "type:   ".concat(parameters.fileMimetype));
 	    this.addNote(laneId, "size:   ".concat(parameters.fileSize));	
@@ -240,11 +235,15 @@ export default class UrlArea extends React.Component {
 	console.log('UrlArea/processJSONData', files);
 
 	for (var i=0; i<files.length; i++) {
-	    var laneId = this.addLane(files[i].file);
-	    this.addFilename(laneId, files[i].file);
-	    this.addUpload(laneId, 'vlo');
-	    this.addMimetype(laneId, files[i].mimetype);
-	    var languageDetected = this.addLanguage(laneId, files[i].language);
+	    var languageHarmonization = this.processLanguage(files[i].language);	    
+	    var lane = LaneActions.create( { name: files[i].file,
+					     filename: files[i].file,
+					     upload: 'vlo',
+					     mimetype: files[i].mimetype,
+					     language: languageHarmonization.threeLetterCode
+					   } );
+
+	    var laneId = lane.id;
 	    this.addNote(laneId, "name:   ".concat(files[i].file));
 	    this.addNote(laneId, "type:   ".concat(files[i].mimetype));
 	    this.addNote(laneId, "size:   ".concat(files[i].size));	

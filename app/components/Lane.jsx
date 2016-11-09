@@ -15,11 +15,8 @@ export default class Lane extends React.Component {
 	
 	const id = props.lane.id;
 	
-	this.displayTools     = this.displayTools.bind(this, id);
-	this.deleteNote       = this.deleteNote.bind(this, id);
-	this.editName         = this.editName.bind(this, id);
-	this.activateLaneEdit = this.activateLaneEdit.bind(this, id);
-	this.getFileUrl       = this.getFileUrl.bind(this, id);
+	this.displayTools            = this.displayTools.bind(this, id);
+	this.getFileUrl              = this.getFileUrl.bind(this, id);
 	this.handleWebServicesChange = this.handleChange.bind(this, 'includeWebServices')
 
 	this.state = {
@@ -46,9 +43,7 @@ export default class Lane extends React.Component {
 	      </div>
 	      <AltContainer stores={[NoteStore]}
 			    inject={{ notes: () => NoteStore.get(lane.notes) }} >
-		<Notes onValueClick={this.activateNoteEdit}
-                       onEdit={this.editNote}
-                       onDelete={this.deleteNote} />
+		<Notes />
 	      </AltContainer>
 	    </div>
 	);
@@ -105,31 +100,5 @@ export default class Lane extends React.Component {
 
 	var win = window.open(url, '_blank');
 	win.focus();	
-    }
-    
-    editNote(id, task) {
-	NoteActions.update({id, task, editing: false});
-    }
-    
-    deleteNote(laneId, noteId) {
-	LaneActions.detachFromLane({laneId, noteId});
-	NoteActions.delete(noteId);
-    }
-    
-    editName(id, name) {
-	if(name) {
-	    LaneActions.update({id, name, editing: false});
-	}
-	else {
-	    LaneActions.delete(id);
-	}
-    }
-    
-    activateLaneEdit(id) {
-	LaneActions.update({id, editing: true});
-    }
-    
-    activateNoteEdit(id) {
-	NoteActions.update({id, editing: true});
     }
 }

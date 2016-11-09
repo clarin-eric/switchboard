@@ -63,44 +63,6 @@ class LaneStore {
 	});
     }
 
-
-    addFilename({laneId, filename, filenameWithDate}) {
-	const lanes = this.lanes.map((lane) => {
-	    if(lane.id === laneId) {
-		lane.filename         = filename;
-		lane.filenameWithDate = filenameWithDate;		
-	    }
-	    
-	    return lane;
-	});
-
-	this.setState({lanes});
-    }
-
-    addFile({laneId, file}) {
-	const lanes = this.lanes.map((lane) => {
-	    if(lane.id === laneId) {
-		lane.file = file;
-	    }
-	    
-	    return lane;
-	});
-
-	this.setState({lanes});
-    }
-    
-    addUpload({laneId, upload}) {
-	const lanes = this.lanes.map((lane) => {
-	    if(lane.id === laneId) {
-		lane.upload = upload;
-	    }
-	    
-	    return lane;
-	});
-
-	this.setState({lanes});
-    }
-    
     addMimetype({laneId, mimetype}) {
 	const lanes = this.lanes.map((lane) => {
 	    if(lane.id === laneId) {
@@ -115,7 +77,6 @@ class LaneStore {
 
     addLanguage({laneId, language}) {
 
-	console.log('LaneStore/addLanguage', laneId, language);
 	const lanes = this.lanes.map((lane) => {
 	    if(lane.id === laneId) {
 		lane.language = language;
