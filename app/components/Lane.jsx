@@ -7,7 +7,6 @@ import LaneActions from '../actions/LaneActions';
 import LaneStore from '../stores/LaneStore';
 import ToolActions from '../actions/ToolActions';
 import ToolStore from '../stores/ToolStore';
-import Editable from './Editable.jsx';
 import Toggle   from 'react-toggle';                
 
 export default class Lane extends React.Component {
