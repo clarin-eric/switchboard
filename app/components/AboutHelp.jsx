@@ -33,7 +33,8 @@ class AboutHelpText extends React.Component {
         <ModalDialog onClose={this.props.onClose} className="devHelpDialog"  width={800}>
           <div className="content" id="about">
 	  
-            <h1>About</h1>
+            <h2>About</h2>
+	    <p><center><small><b><em>Leave Help with ESC</em></b></small></center></p>	    	    
             <p>
               The Language Resource Switchboard (LRS) is being developed 
               within the <a href="http://www.clarin.eu/">CLARIN-PLUS</a> project

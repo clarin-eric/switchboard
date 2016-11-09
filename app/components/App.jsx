@@ -51,14 +51,9 @@ export default class App extends React.Component {
         this.clearDropzone = this.clearDropzone.bind(this)
         this.handleWebServicesChange = this.handleChange.bind(this, 'includeWebServices')
 
-	this.handleClick = this.setState({isShowingModal: true})
-	this.handleClose = this.setState({isShowingModal: false})
-	
 	this.state = {
-	    includeWebServices: false,
-	    isShowingModal: false
+	    includeWebServices: false
 	};
-	
     }
 
     handleChange (key, event) {
@@ -141,23 +136,30 @@ export default class App extends React.Component {
     <Route path="/vlo/:fileURL/:fileMimetype/:fileLanguage" component={UrlArea}/>
     <Route path="/vlo/:fileURL/:fileMimetype" component={UrlArea}/>		
     <Route path="/vlo/:tokenId" component={UrlArea}/>		
-  </Router>		
+  </Router>
+  
+  <p />
+  <hr />
+  <p />
   
   <AltContainer
-     stores={[LaneStore, ToolStore]}
+     stores={[LaneStore]}
                    inject={{
-		       lanes: () => LaneStore.getState().lanes || [],
-		       tasks: () => ToolStore.getState().tasks || []
+		       lanes: () => LaneStore.getState().lanes || []
 		   }} >
     <Lanes  />
-    <p />
-    <hr />
-    <p />
-    <h2>
-      Task-Oriented Tool View
-    </h2>
+  </AltContainer>
+  
+  <h2>Task-Oriented Tool View </h2>
+  
+  <AltContainer
+     stores={[ToolStore]}
+                   inject={{
+		       toolsPerTasks: () => ToolStore.getState().toolsPerTasks || []
+		   }} >
     <Tasks />
   </AltContainer>
+  
   <hr />
 </div>
 );

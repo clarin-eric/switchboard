@@ -12,7 +12,7 @@ class ToolStore {
     constructor() {
 	this.bindActions(ToolActions);
 	this.applicableTools = [];
-	this.tasks = [];
+	this.toolsPerTasks = [];
 
 	this.groupTools = this.groupTools.bind(this);
 	
@@ -1602,7 +1602,7 @@ class ToolStore {
     reset () {
 	this.setState({
 	    applicableTools: [],
-	    tasks: []
+	    toolsPerTasks: []
 	});
 
 	console.log('ToolStore/reset');
@@ -1639,14 +1639,16 @@ class ToolStore {
 	return { tool: tool[0] }; // todo
     }
 
-        // groups tools in terms of the tasks/analyses they can perform
-    groupTools( applicTools ){
+    // construct a dictionary to group all tools in terms of the tasks they can perform
+    // key: task, value: tools
+    groupTools( tools ){
 
+	// a dictionary/hashtable to group all tools in terms of the tasks they can perform
 	var toolGroups = {};
 
-	for (var i = 0; i<applicTools.length; i++) {
-	    const entry = applicTools[i];
-	    const tinfo = [ {
+	for (var i = 0; i<tools.length; i++) {
+	    const entry = tools[i];
+	    const toolInfo = [ {
 		name            : entry.name,
 		logo            : entry.logo,
 		longDescription : entry.longDescription,
@@ -1663,10 +1665,13 @@ class ToolStore {
 		mapping         : entry.mapping,
 		} ];
 
-	    if (entry.task in toolGroups) { // obj.hasOwnProperty("key")
-		toolGroups[ entry.task ] = toolGroups[ entry.task ].concat( tinfo );
+	    // equal to notation: obj.hasOwnProperty("key")	    
+	    if (entry.task in toolGroups) {
+		// add tool to the task
+		toolGroups[ entry.task ] = toolGroups[ entry.task ].concat( toolInfo );
 	    } else {
-		toolGroups[ entry.task ] = [].concat( tinfo );		
+		// enter task to hashtable with the tool info
+		toolGroups[ entry.task ] = [].concat( toolInfo );		
 	    }
 	}
 
@@ -1694,16 +1699,16 @@ class ToolStore {
 		    });
 	}
 	
-	var tasks = this.groupTools( tools );
+	var toolsPerTasks = this.groupTools( tools );
 
 	// This should never happen, implies empty tool registry
-	if (Object.keys(tasks).length == 0) {
-	    alert("Sorry! There is not a single applicable tool...");
+	if (Object.keys(toolsPerTasks).length == 0) {
+	    alert("Sorry! There is not a single applicable tool (across tasks)...");
 	}
 	    
 	this.setState({
 	    applicableTools: tools,
-	    tasks: tasks
+	    toolsPerTasks: toolsPerTasks
 	});
     }
     
@@ -1774,15 +1779,15 @@ class ToolStore {
 	// --------------------------------
 
 	// now, for the task-oriented view
-	var tasks = this.groupTools( languageFilter );
+	var toolsPerTasks = this.groupTools( languageFilter );
 
-	if (Object.keys(tasks).length == 0) {
+	if (Object.keys(toolsPerTasks).length == 0) {
 	    alert("Sorry! No applicable tools for the given resource were found!");
 	}
 	    
 	this.setState({
 	    applicableTools: languageFilter,
-	    tasks: tasks
+	    toolsPerTasks: toolsPerTasks
 	});
 	
 	return languageFilter;
