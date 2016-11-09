@@ -63,9 +63,8 @@ class NoteStore {
     
     getAssociatedLane(nodeId) {
 	const n = this.getNote(nodeId);
-	console.log('NoteStore/getAssociatdLane', nodeId, n);
 	const val = n.belongsTo;
-	console.log('NoteStore/getAssociatdLane rtn', val);
+	console.log('NoteStore/getAssociatedLane rtn', nodeId, n, val);
 	return val;
     }
     

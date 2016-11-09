@@ -22,17 +22,16 @@ export default class DropArea extends React.Component {
 	this.state = {
 	    files: []
 	};
-
-	//console.log('binding showFiles', this.showFiles, this.onDrop, this.addNote, this.addLane);
     }
 
+    // a file dropped defines a new "lane"
     addLane( resourceName ) {
 	var lane = LaneActions.create({name: resourceName});
 	console.log('adding new lane', lane);
 	return lane.id;
     }
 
-    // a note get a task description as "knows" the lane it belongs to
+    // a lane is a list of notes describing the file dropped
     addNote( laneId, description ) {
 	const note = NoteActions.create({
 	    task: description,
@@ -42,8 +41,6 @@ export default class DropArea extends React.Component {
 	    noteId: note.id,
 	    laneId
 	});
-
-	// console.log('DropArea/addNote', laneId, description, 'with resulting note', note);
     }
 
     addFilename( laneId, filename, filenameWithDate ) {

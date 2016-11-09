@@ -215,6 +215,9 @@ export default class UrlArea extends React.Component {
 	}
     }
 
+    // exploring an alternative way of passing information
+    // Here, the VLO invokes the LRS with a token, once received the LRS requests from the VLO
+    // a JSON-based metadata description for such a given token
     getJSON( tokenId ) {
 	console.log('UrlArea/getJSON', tokenId);
 	let vloService = "http://localhost:8011/api/getJSON";
@@ -232,6 +235,7 @@ export default class UrlArea extends React.Component {
 	    });
     }
 
+    // experimental, see getJSON
     processJSONData( files ) {
 	console.log('UrlArea/processJSONData', files);
 
