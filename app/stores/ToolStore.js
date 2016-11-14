@@ -1630,12 +1630,6 @@ class ToolStore {
 	console.log('ToolStore/getTool at start with id: ', toolId);	
 	const tool = this.registeredTools.filter((tool) => tool.id == toolId);
 	console.log('ToolStore/getTool having identified tool: ', tool[0]);
-
-	// modify state
-	this.setState({
-	    selectedTool: [].concat(tool)
-	});
-
 	return { tool: tool[0] }; // todo
     }
 

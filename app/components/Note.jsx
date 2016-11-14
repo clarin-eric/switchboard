@@ -9,17 +9,15 @@ export default class Note extends React.Component {
     
     constructor(props) {
 	super(props);
-	const id = props.note.id;
+	const note = props.note;
+	const id = note.id;
 	
-	this.setLanguage = this.setLanguage.bind(this, id);
-	this.setMimetype = this.setMimetype.bind(this, id);	
+	this.setLanguage = this.setLanguage.bind(this, note);
+	this.setMimetype = this.setMimetype.bind(this, note);	
     }
 
-    setLanguage( id, language ) {
-	var myNote = NoteActions.getNote( id );
-	var entireState = NoteStore.getState();
-	myNote = entireState.selectedNote[0];
-	var laneId = myNote.belongsTo;
+    setLanguage( note, language ) {
+	var laneId = note.belongsTo;
 	var languageValue = null;	
 	if (language === undefined) {
 	    console.log('Note.jsx/setLanguage: language is undefined!');
@@ -33,11 +31,8 @@ export default class Note extends React.Component {
 	});
     }
 
-    setMimetype( id, mimetype ) {
-	var myNote = NoteActions.getNote( id );
-	var entireState = NoteStore.getState();
-	myNote = entireState.selectedNote[0];
-	var laneId = myNote.belongsTo;
+    setMimetype( note, mimetype ) {
+	var laneId = note.belongsTo;
 	var mimetypeValue = null;	
 	if (mimetype === undefined) {
 	    console.log('Note.jsx/setMimetype: mimetype is undefined!');

@@ -7,7 +7,6 @@ class NoteStore {
     constructor() {
 	this.bindActions(NoteActions);
 	this.notes = [];
-	this.selectedNote = [];	
 	this.exportPublicMethods({
 	    get: this.get.bind(this),
 	    getAssociatedLane: this.getAssociatedLane.bind(this)
@@ -52,12 +51,6 @@ class NoteStore {
     getNote(noteId) {
 	const note = this.notes.filter((note) => note.id == noteId);
 	console.log('NoteStore/getNote with id: ', noteId, note[0]);
-
-	// modify state
-	this.setState({
-	    selectedNote: [].concat(note)
-	});
-
 	return { note: note[0] };
     }
     
