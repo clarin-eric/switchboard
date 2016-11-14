@@ -13,10 +13,11 @@ export default class Lane extends React.Component {
     constructor(props) {
 	super(props);
 	
-	const id = props.lane.id;
+	const lane = props.lane;
+	const id = lane.id;
 	
-	this.displayTools            = this.displayTools.bind(this, id);
-	this.getFileUrl              = this.getFileUrl.bind(this, id);
+	this.displayTools            = this.displayTools.bind(this, lane);
+	this.getFileUrl              = this.getFileUrl.bind(this, lane);
 	this.handleWebServicesChange = this.handleChange.bind(this, 'includeWebServices')
 
 	this.state = {
@@ -30,7 +31,7 @@ export default class Lane extends React.Component {
 	    <div {...props}>
   	      <div className="lane-header">
   	        <a className="lane-name"
-	           href='#' onClick={this.getFileUrl.bind(this,lane)}
+	           href='#' onClick={this.getFileUrl}
 		   >
 	    	   <span>Link to Resource</span>
 		</a>
@@ -60,42 +61,34 @@ export default class Lane extends React.Component {
 	}
     }
     
-    displayTools(laneId) {
+    displayTools(lane) {
 
-	var myLane = LaneActions.getLane( laneId );
-	var entireLaneState = LaneStore.getState();
-
-	// for the time being, tools are being display for the first file (=lane)
-	var langResourceDescription = entireLaneState.selectedLane[0];
-
-	console.log('Lane.jsx/displayTools', this.state.includeWebServices, langResourceDescription);
+	console.log('Lane.jsx/displayTools',
+		    'webservices:', this.state.includeWebServices,
+		    'resource:', lane);
 	
 	
-	if (langResourceDescription.language == null) {
+	if (lane.language == null) {
 	    alert('CLRS: Please identify the language of the resource!');
 	    return;
 	}
 
-	if (langResourceDescription.mimetype == null) {
+	if (lane.mimetype == null) {
 	    alert('CLRS: Please identify the mimetype of the resource!');
 	    return;
 	}
 	
-	ToolActions.findTools( langResourceDescription, this.state.includeWebServices );
+	ToolActions.findTools( lane, this.state.includeWebServices );
     }
 
-    getFileUrl(laneId) {
-	var myLane = LaneActions.getLane( laneId );
-	var entireLaneState = LaneStore.getState();
-	var langResourceDescription = entireLaneState.selectedLane[0];
-
-	console.log('Lane.jsx/getFileUrl', langResourceDescription);
-	var url = langResourceDescription.name;
-	if (langResourceDescription.upload == "dnd") {
-	    console.log('Lane.jsx/getFileUrl:dnd', langResourceDescription.filenameWithDate);
-            url = 'http://weblicht.sfs.uni-tuebingen.de/clrs/storage/' + langResourceDescription.filenameWithDate;
+    getFileUrl(lane) {
+	console.log('Lane.jsx/getFileUrl', lane);
+	var url = lane.name;
+	if (lane.upload == "dnd") {
+	    console.log('Lane.jsx/getFileUrl:dnd', lane.filenameWithDate);
+            url = 'http://weblicht.sfs.uni-tuebingen.de/clrs/storage/' + lane.filenameWithDate;
 	} else {
-	    console.log('Lane.jsx/getFileUrl:vlo', langResourceDescription.filename);
+	    console.log('Lane.jsx/getFileUrl:vlo', lane.filename);
 	}
 
 	var win = window.open(url, '_blank');

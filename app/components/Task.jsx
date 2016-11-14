@@ -17,7 +17,7 @@ export default class Task extends React.Component {
     }
 
     render() {
-	const {items, ...props} = this.props;
+	const {items, lane, ...props} = this.props;
 
 	const styles = {
 	    cardHeader: {
@@ -57,7 +57,7 @@ export default class Task extends React.Component {
 	);
 
 	const ToolCard = (props) => {
-	    const fullURL = this.constructToolURL(props);
+	    const fullURL = this.constructToolURL(props, lane);
 
 	    if (fullURL) 
 	    return(
@@ -206,7 +206,7 @@ export default class Task extends React.Component {
 	    );
 	};
 
-	console.log('Task.jsx/items', items);
+	console.log('Task.jsx/items', items, 'lane:', lane);
 	return (
 	    <Accordion allowMultiple={true}>
 	    { items.map( (element) => 
@@ -233,7 +233,7 @@ export default class Task extends React.Component {
 	    </Accordion> 	    
 	)}
 
-    constructToolURL( item ) {
+    constructToolURL( item, lane ) {
 
 	// todo  outsource to external module
 	const langEncodingMap = {
@@ -305,24 +305,22 @@ export default class Task extends React.Component {
 	// var fileServerURL = "http://localhost:8011/";
 	
 	var fileServerURL = "http://ws1-clarind.esc.rzg.mpg.de/drop-off/storage/";	
-	var entireState = LaneStore.getState();
         var rtnValue = { };	
 
-
 	// if there is no resource in the spotlight, we return an empty URL object.
-	if (entireState.selectedLane.length == 0) {
-	    console.log('Task.jsx: there is no lane defined.', item, entireState);
+	if (lane == undefined) {
+	    console.log('Task.jsx: there is no lane defined.', item);
 	    return false;
 	}
 
-	console.log('Task.jsx/constructToolURL', entireState.selectedLane[0], item);
+	console.log('Task.jsx/constructToolURL item:', item, 'lane:', lane);
 	
 	// central service to retrieve language resource, may need to chech cross-site scripting issue
-	var filename =  entireState.selectedLane[0].name;
-	var filenameWithDate =  entireState.selectedLane[0].filenameWithDate;	
-	var file     =  entireState.selectedLane[0].file;
-	var language =  entireState.selectedLane[0].language;
-	var upload   =  entireState.selectedLane[0].upload;
+	var filename =  lane.name;
+	var filenameWithDate =  lane.filenameWithDate;	
+	var file     =  lane.file;
+	var language =  lane.language;
+	var upload   =  lane.upload;
 	var lang_encoding = item.lang_encoding;
 	var softwareType = item.softwareType;
 	var postSubmit = item.postSubmit;
@@ -355,8 +353,6 @@ export default class Task extends React.Component {
 	    inputFilename = fileServerURL + filenameWithDate;
 	}
 
-	// console.log('Task.jsx/constructToolURL', item, entireState.selectedLane[0], 'encoding:', lang_encoding);
-	
 	var parameterString = "";
 	var parameters = item.parameter;
 	var formParameter = "data";

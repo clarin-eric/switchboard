@@ -154,7 +154,8 @@ export default class App extends React.Component {
   <AltContainer
      stores={[ToolStore]}
                    inject={{
-		       toolsPerTasks: () => ToolStore.getState().toolsPerTasks || []
+		       toolsPerTasks: () => ToolStore.getState().toolsPerTasks || [],
+		       lane: () => LaneStore.getState().lanes[0] || []
 		   }} >
     <Tasks />
   </AltContainer>

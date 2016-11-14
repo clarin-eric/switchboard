@@ -9,7 +9,6 @@ class LaneStore {
 	this.bindActions(LaneActions);
 	
 	this.lanes = [];
-	this.selectedLane = [];
 
 	this.exportPublicMethods({
 	    get: this.get.bind(this),
@@ -19,8 +18,7 @@ class LaneStore {
 
     reset () {
 	this.setState({
-	    lanes: [],
-	    selectedLane: []
+	    lanes: []
 	});
 
 	console.log('LaneStore/reset');	
@@ -121,13 +119,6 @@ class LaneStore {
 
     getLane(laneId) {
 	const lane = this.lanes.filter((lane) => lane.id == laneId);
-	// console.log('LaneStore/getLane with id: ', laneId, lane[0]);
-
-	// modify state
-	this.setState({
-	    selectedLane: [].concat(lane)
-	});
-
 	return { lane: lane[0] };
     }
 
