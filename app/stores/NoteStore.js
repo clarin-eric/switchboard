@@ -8,8 +8,7 @@ class NoteStore {
 	this.bindActions(NoteActions);
 	this.notes = [];
 	this.exportPublicMethods({
-	    get: this.get.bind(this),
-	    getAssociatedLane: this.getAssociatedLane.bind(this)
+	    get: this.get.bind(this)
 	});
     }
 
@@ -52,13 +51,6 @@ class NoteStore {
 	const note = this.notes.filter((note) => note.id == noteId);
 	console.log('NoteStore/getNote with id: ', noteId, note[0]);
 	return { note: note[0] };
-    }
-    
-    getAssociatedLane(nodeId) {
-	const n = this.getNote(nodeId);
-	const val = n.belongsTo;
-	console.log('NoteStore/getAssociatedLane rtn', nodeId, n, val);
-	return val;
     }
     
     get(ids) {

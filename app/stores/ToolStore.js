@@ -6,7 +6,6 @@ import uuid from 'node-uuid';
 import assign from 'object-assign';
 import alt from '../libs/alt';
 import ToolActions from '../actions/ToolActions';
-import NoteStore from './NoteStore';
 
 class ToolStore {
     constructor() {
