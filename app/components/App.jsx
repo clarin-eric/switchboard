@@ -134,7 +134,8 @@ export default class App extends React.Component {
     <Route path="/" component={DropArea}/>
     <Route path="/vlo/:fileURL/:fileMimetype/:fileLanguage" component={UrlArea}/>
     <Route path="/vlo/:fileURL/:fileMimetype" component={UrlArea}/>		
-    <Route path="/vlo/:tokenId" component={UrlArea}/>		
+    <Route path="/vlo/:tokenId" component={UrlArea}/>
+    <Route path="/vcr/:fileURL" caller="vcr" component={UrlArea}/>
   </Router>
   
   <p />

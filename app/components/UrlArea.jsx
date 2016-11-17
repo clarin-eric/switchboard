@@ -9,7 +9,6 @@ export default class UrlArea extends React.Component {
     constructor(props) {
 	super(props);
 
-	this.addLane       = this.addLane.bind(this);
 	this.addNote       = this.addNote.bind(this);
 	
 	this.processLanguage   = util.processLanguage.bind(this);
@@ -25,7 +24,7 @@ export default class UrlArea extends React.Component {
 	    files: []
 	};
 
-	console.log('in constructor: this.props.params', this.props.params);
+	console.log('in constructor: this.props.params', this.props.params, 'all props:', this.props, 'with caller:', this.props.route.caller);
 	var parameters = this.props.params;
 	this.useParameters(parameters);
     }
@@ -100,8 +99,8 @@ export default class UrlArea extends React.Component {
 	    var fileURL = this.unfoldHandle( parameters.fileURL);
 	    var languageHarmonization = this.processLanguage(parameters.fileLanguage);	    
 	    
-	    var lane = LaneActions.create( { name: fileUrl,
-					     filename: fileUrl,
+	    var lane = LaneActions.create( { name: fileURL,
+					     filename: fileURL,
 					     upload: 'vlo',
 					     mimetype: parameters.fileMimetype,
 					     language: languageHarmonization.threeLetterCode
@@ -112,7 +111,7 @@ export default class UrlArea extends React.Component {
 	    this.addNote(laneId, "name:   ".concat( fileURL ));
 	    this.addNote(laneId, "type:   ".concat(parameters.fileMimetype));
 	    this.addNote(laneId, "size:   ".concat(parameters.fileSize));	
-	    this.addNote(laneId, "language:".concat(languageDetected));
+	    this.addNote(laneId, "language:".concat(languageHarmonization.languageCombo));
 
 	    // check whether a tool could fetch the resource in question.
 	    // (todo: consider this being extra component)
