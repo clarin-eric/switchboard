@@ -182,7 +182,7 @@ export default class UrlArea extends React.Component {
 		    {
 			style: style
 		    },
-		    'You have been transferred from the VLO. Please check the information below, then press "Show Tools".'
+		    `You have been transferred from the ${this.props.route.caller}. Please check the information below, then press "Show Tools".`
 		),
 		// this.useParameters(parameters)
 		this.nilOperation()
