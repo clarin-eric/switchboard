@@ -1,4 +1,5 @@
 import React from 'react'
+import Loader from 'react-loader';
 import NoteActions from '../actions/NoteActions';
 import LaneActions from '../actions/LaneActions';
 import ToolActions from '../actions/ToolActions';
@@ -13,42 +14,49 @@ export default class UrlArea extends React.Component {
 	
 	this.processLanguage   = util.processLanguage.bind(this);
 	
-	this.useParameters = this.useParameters.bind(this);
-	this.getJSON       = this.getJSON.bind(this);	
-	this.processJSONData = this.processJSONData.bind(this);
-	this.nilOperation    = this.nilOperation.bind(this);
-	this.unfoldHandle    = this.unfoldHandle.bind(this);
-	this.prefetch_URL    = this.prefetch_URL.bind(this);
-	
-	this.state = {
-	    files: []
-	};
+	this.processParameters = this.processParameters.bind(this);
+	this.getJSON           = this.getJSON.bind(this);	
+	this.processJSONData   = this.processJSONData.bind(this);
+	this.unfoldHandle      = this.unfoldHandle.bind(this);
+	this.prefetch_URL      = this.prefetch_URL.bind(this);
 
-	console.log('in constructor: this.props.params', this.props.params, 'all props:', this.props, 'with caller:', this.props.route.caller);
+	this.state = {
+	    isLoaded: false
+	};	
+
+	console.log('in constructor: this.props.params', this.props.params, 'with caller:', this.props.route.caller);
 	var parameters = this.props.params;
-	this.useParameters(parameters);
+	// this.processParameters(parameters);
     }
 
+    // Take the mimetype detection from the 'browser' when downloading the resource from provider.
+    // Similar to DropArea, we could plug-in Apache TIKA for second opinion.
+    // Todo: use of Apache TIKA for language detection
     prefetch_URL( URL, expectedMimetype ) {
 
-	console.log('UrlArea/prefetch_URL: at start', URL);	
+	console.log('UrlArea/prefetch_URL: at start', URL);
+	var that = this;
 	var req = Request
 	    .get(URL)	
-	    // .head(URL)
 	    .end(function(err, res){
+		
+		// loading came to an end
+		that.setState( { isLoaded: true });
+
+		// show alert, depending on the result
 		if (err) {
-		    console.log('UrlArea/prefetch_URL: error in prefetching URL',   err, URL);
+		    alert('Cannot retrieve the resource. Please try to fetch the resource by clicking on "Link to Resource"');
 		} else {
-		    console.log('UrlArea/prefetch_URL: success in prefetching URL', JSON.stringify(res), res.type);
+		    console.log('UrlArea/prefetch_URL: success in prefetching URL', JSON.stringify(res), res.type, expectedMimetype);
 		    if (res.type == expectedMimetype) {
-			console.log('prefetch_URL' ,res.type, expectedMimetype);
+			// in case we wanted text/html and got the text/html Shibboleth login page, this won't work
+			console.log('prefetch_URL: at end with res', res, res.type, expectedMimetype);
 		    } else {
+			// To be improved, check whether res.text includes Shibboleth
 			alert('Resource may not not public, please try to fetch the resource with your authentification credentials! Click on "Link to Resource"')
 		    }
 		}
 	    });
-
-	// be optimistic
 	return true;
     }
 
@@ -61,10 +69,6 @@ export default class UrlArea extends React.Component {
 	    noteId: note.id,
 	    laneId
 	});
-    }
-
-    nilOperation() {
-	console.log('called nil operation');
     }
 
     unfoldHandle( handle ) {
@@ -82,16 +86,16 @@ export default class UrlArea extends React.Component {
 	return result;
     }
     
-    useParameters( parameters ) {
+    processParameters( parameters ) {
 
-	console.log('UrlArea/useParameters', parameters);
+	console.log('UrlArea/processParameters', parameters);
 	// reset prior history
 	LaneActions.reset();
 	NoteActions.reset();
 	ToolActions.reset();
 
 	if (parameters.tokenId == undefined) {
-	    // single file information has been passed
+	    // information for a single file has been passed (multiple files not possible).
 	    var fileURL = this.unfoldHandle( parameters.fileURL);
 	    var languageHarmonization = this.processLanguage(parameters.fileLanguage);	    
 	    
@@ -109,21 +113,17 @@ export default class UrlArea extends React.Component {
 	    this.addNote(laneId, "language:".concat(languageHarmonization.languageCombo));
 
 	    // check whether a tool could fetch the resource in question.
-	    // (todo: consider this being extra component)
-	    
 	    this.prefetch_URL(fileURL, parameters.fileMimetype);
 	    
 	} else {
-	    console.log('UrlArea/useParameters: a token has been passed', parameters);
+	    console.log('UrlArea/processParameters: a token has been passed', parameters);
 	    this.getJSON( parameters.tokenId );
-	    // contact the VLO to send associated JSON data with token
-	    
 	}
     }
 
-    // exploring an alternative way of passing information
-    // Here, the VLO invokes the LRS with a token, once received the LRS requests from the VLO
-    // a JSON-based metadata description for such a given token
+    // Purely explorational. 
+    // Here, the VLO invokes the LRS with a token; once it is received, the LRS requests from the VLO
+    // a JSON-based metadata description for given token
     getJSON( tokenId ) {
 	console.log('UrlArea/getJSON', tokenId);
 	let vloService = "http://localhost:8011/api/getJSON";
@@ -161,8 +161,15 @@ export default class UrlArea extends React.Component {
 	    this.addNote(laneId, "language:".concat(languageDetected));
 	}
     }
-    
+
+    componentDidMount() {
+	const parameters = this.props.params;
+	console.log('UrlArea/componentDidMount: this.props.params', parameters);
+	this.processParameters(parameters);
+    }
+	
     render() {
+	const { isLoaded } = this.state;
 
 	var style = {
 	    fontSize: '0.5em',
@@ -170,37 +177,18 @@ export default class UrlArea extends React.Component {
             padding: 2	    
         };
 
-	console.log('UrlArea/render: this.props.params', this.props.params);
-	var parameters = this.props.params
-
-	if (this.props.params.tokenId == undefined) {
-	    return React.createElement(
-		'h2',
-		null,
-		React.createElement(
-		    'div',
-		    {
-			style: style
-		    },
-		    `You have been transferred from the ${this.props.route.caller}. Please check the information below, then press "Show Tools".`
-		),
-		// this.useParameters(parameters)
-		this.nilOperation()
-            );
-	} else {
-	    return React.createElement(
-		'h2',
-		null,
-		React.createElement(
-		    'div',
-		    {
-			style: style
-		    },
-		    'All File Information has been passed via a token-based JSON transmission.'
-		),
-		this.useParameters(parameters)
-            );
+	var transferalInfo = `Resource transferal from the ${this.props.route.caller}. Please check the information below, then press "Show Tools"`;
+	if (this.props.params.tokenId !== undefined) {
+	    transferalInfo = 'Resource via token-based tranferal (experimental).'
 	}
-	
+	return (
+	       <Loader loaded={isLoaded}>
+		  <h2>
+		    <div style={style} >
+		    {transferalInfo}
+		    </div>
+		  </h2>
+               </Loader>		    
+	    );
     }
 }

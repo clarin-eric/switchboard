@@ -45,6 +45,7 @@
     "superagent": "^2.3.0",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
+    "react-loader": "^2.4.0",
     "react-addons-css-transition-group": "^15.3.2",
     "react-addons-shallow-compare": "^15.3.2",
     "react-dropzone": "^3.6.0",

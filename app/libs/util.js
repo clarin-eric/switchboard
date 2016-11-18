@@ -78,7 +78,7 @@ export default {
 	    threeLetterCode = "any";
 	}
 
-	console.log('processLanguage', languageCombo, threeLetterCode);
+	console.log('util/processLanguage', language, languageCombo, threeLetterCode);
 	return { languageCombo  : languageCombo,
 		 threeLetterCode: threeLetterCode
 	       };
