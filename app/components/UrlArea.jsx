@@ -83,13 +83,9 @@ export default class UrlArea extends React.Component {
     }
     
     useParameters( parameters ) {
-	
-        // var files = this.state.files;	
-	// this.setState({
-	//     files: files
-	// });
-	
-	// reset all prior info
+
+	console.log('UrlArea/useParameters', parameters);
+	// reset prior history
 	LaneActions.reset();
 	NoteActions.reset();
 	ToolActions.reset();
@@ -105,7 +101,6 @@ export default class UrlArea extends React.Component {
 					     mimetype: parameters.fileMimetype,
 					     language: languageHarmonization.threeLetterCode
 					   } );
-
 	    var laneId = lane.id;
 	    
 	    this.addNote(laneId, "name:   ".concat( fileURL ));
@@ -175,7 +170,7 @@ export default class UrlArea extends React.Component {
             padding: 2	    
         };
 
-	// console.log('this.props.params', this.props.params);
+	console.log('UrlArea/render: this.props.params', this.props.params);
 	var parameters = this.props.params
 
 	if (this.props.params.tokenId == undefined) {

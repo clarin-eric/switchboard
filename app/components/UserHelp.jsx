@@ -120,9 +120,6 @@ class UserHelpText extends React.Component {
 		<img className="alignRight" src="button_helpdesk_forhelp.png" width="10%" height="10%" />
 	      </a>
 	    </p>
-	    <hr />
-	    <p />	  
-          <p>You can open up a <a onClick={this.openModal}>second modal</a> within this!</p>
         </ModalDialog>
     </ModalContainer>;
   }

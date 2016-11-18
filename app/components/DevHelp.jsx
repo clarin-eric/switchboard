@@ -84,7 +84,6 @@ class DevHelpText extends React.Component {
 	  <p>
 	    For any questions, please contact: <a href="mailto:claus.zinn@uni-tuebingen.de?subject=CLARIN-PLUS LRS">Claus Zinn</a>.
 	  </p>
-          <p>You can open up a <a onClick={this.openModal}>second modal</a> within this!</p>
         </ModalDialog>
 </ModalContainer>;
   }
