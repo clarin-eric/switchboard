@@ -51,7 +51,6 @@ export default class UrlArea extends React.Component {
 
 		// show alert, depending on the result
 		if (err) {
-		    console.log('error fetching resource', err);
 		    that.setState({showAlertURLFetchError: true} );
 		} else {
 		    console.log('UrlArea/prefetch_URL: success in prefetching URL', JSON.stringify(res), res.type, expectedMimetype);

@@ -30,7 +30,7 @@ class AboutHelpText extends React.Component {
   }
   render() {
     return <ModalContainer onClose={this.props.onClose}>
-        <ModalDialog onClose={this.props.onClose} className="devHelpDialog"  width={800}>
+        <ModalDialog onClose={this.props.onClose} className="devHelpDialog" width={800}>
           <div className="content" id="about">
 	  
             <h2>About</h2>
