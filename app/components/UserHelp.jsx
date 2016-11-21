@@ -45,7 +45,7 @@ class UserHelpText extends React.Component {
           : null}
 
 	    <h2>How to use the Language Resource Switchboard</h2>
-	    <p><center><small><b><em>Leave Help with ESC</em></b></small></center></p>
+	    <center><p><small><b><em>Leave Help with ESC</em></b></small></p></center>
 	  <p>Currently, there are two versions of the Language Resources Switchboard (LRS): the standalone version,
 	    where users can drag and drop their own resources from the file system into the LRS drop area, and the VLO version,
 	    where users can call the LRS for a selected resource from the Virtual Language Observatory. This

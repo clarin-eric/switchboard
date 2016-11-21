@@ -34,7 +34,7 @@ class AboutHelpText extends React.Component {
           <div className="content" id="about">
 	  
             <h2>About</h2>
-	    <p><center><small><b><em>Leave Help with ESC</em></b></small></center></p>	    	    
+	    <center><p><small><b><em>Leave Help with ESC</em></b></small></p></center>
             <p>
               The Language Resource Switchboard (LRS) is being developed 
               within the <a href="http://www.clarin.eu/">CLARIN-PLUS</a> project

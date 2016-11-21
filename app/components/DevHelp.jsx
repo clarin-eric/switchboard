@@ -45,7 +45,7 @@ class DevHelpText extends React.Component {
           : null}
 	    
 	    <h2>How to get your tool listed in the CLARIN LRS</h2>
-	    <p><center><small><b><em>Leave Help with ESC</em></b></small></center></p>	    
+	    <center><p><small><b><em>Leave Help with ESC</em></b></small></p></center>
 	  <p>For the time being, two pieces of information about a resource are used to identify whether there is any tool
 	    that can process the resource:</p>
 	  <ul>
