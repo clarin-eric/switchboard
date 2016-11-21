@@ -39,7 +39,7 @@ class UserHelpText extends React.Component {
   }
   render() {
     return <ModalContainer onClose={this.props.onClose}>
-        <ModalDialog onClose={this.props.onClose} className="userHelpDialog"  width={800}>
+        <ModalDialog onClose={this.props.onClose} className="userHelpDialog"  width={800} height={400}>
           {this.state.showSecondModal ?
             <SecondModal onClose={this.closeModal}/>
           : null}

@@ -3,6 +3,9 @@ import Loader from 'react-loader';
 import NoteActions from '../actions/NoteActions';
 import LaneActions from '../actions/LaneActions';
 import ToolActions from '../actions/ToolActions';
+import AlertShibboleth from './AlertShibboleth.jsx';
+import AlertURLFetchError from './AlertURLFetchError.jsx';
+
 import Request from 'superagent';
 import util from '../libs/util';
 
@@ -21,7 +24,9 @@ export default class UrlArea extends React.Component {
 	this.prefetch_URL      = this.prefetch_URL.bind(this);
 
 	this.state = {
-	    isLoaded: false
+	    isLoaded: false,
+	    showAlertShibboleth: false,
+	    showAlertURLFetchError: false,
 	};	
 
 	console.log('in constructor: this.props.params', this.props.params, 'with caller:', this.props.route.caller);
@@ -32,6 +37,7 @@ export default class UrlArea extends React.Component {
     // Take the mimetype detection from the 'browser' when downloading the resource from provider.
     // Similar to DropArea, we could plug-in Apache TIKA for second opinion.
     // Todo: use of Apache TIKA for language detection
+    // Todo: For VCR, FCS connection, need to determine language and mimetype
     prefetch_URL( URL, expectedMimetype ) {
 
 	console.log('UrlArea/prefetch_URL: at start', URL);
@@ -45,15 +51,19 @@ export default class UrlArea extends React.Component {
 
 		// show alert, depending on the result
 		if (err) {
-		    alert('Cannot retrieve the resource. Please try to fetch the resource by clicking on "Link to Resource"');
+		    console.log('error fetching resource', err);
+		    that.setState({showAlertURLFetchError: true} );
 		} else {
 		    console.log('UrlArea/prefetch_URL: success in prefetching URL', JSON.stringify(res), res.type, expectedMimetype);
 		    if (res.type == expectedMimetype) {
 			// in case we wanted text/html and got the text/html Shibboleth login page, this won't work
 			console.log('prefetch_URL: at end with res', res, res.type, expectedMimetype);
 		    } else {
-			// To be improved, check whether res.text includes Shibboleth
-			alert('Resource may not not public, please try to fetch the resource with your authentification credentials! Click on "Link to Resource"')
+			if (res.text.indexOf('Shibboleth' != -1))  {
+			    that.setState({showAlertShibboleth: true});
+			} else {
+			    alert('The resource may not not public, please try to fetch the resource with your authentification credentials! Click on "Link to Resource"');			    
+			}
 		    }
 		}
 	    });
@@ -183,11 +193,18 @@ export default class UrlArea extends React.Component {
 	}
 	return (
 	       <Loader loaded={isLoaded}>
-		  <h2>
-		    <div style={style} >
-		    {transferalInfo}
-		    </div>
-		  </h2>
+		<h2>
+		   <div style={style} >
+		     {transferalInfo}
+                   </div>
+		</h2>
+		{this.state.showAlertShibboleth ?
+    		 <AlertShibboleth />
+		 : null }
+
+	        {this.state.showAlertURLFetchError ?
+		 <AlertURLFetchError />
+		 : null }	        
                </Loader>		    
 	    );
     }
