@@ -19,7 +19,7 @@
   font-size: 1em;
   padding: 2px 52px 2px 5px;
   position: relative;
-  z-index: 9;
+  z-index: 1;
 }
 .react-selectize .react-selectize-control .react-selectize-placeholder {
   color: #aaa;

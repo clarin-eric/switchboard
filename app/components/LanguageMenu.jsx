@@ -195,8 +195,6 @@ export default class LanguageMenu extends React.Component {
                              defaultValue  = {this.props.defaultValue}
  	                     placeholder = "Select language"
 	                     renderValue = {function(item){
-				 console.log('LanguageMenu', item);
-				 // check if the language is available (optional)
 				 var exists = options.map(function(option){
 				     return option.label
 				 }).indexOf(item.label) != -1
