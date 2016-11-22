@@ -50,7 +50,7 @@ class DevHelpText extends React.Component {
 	    that can process the resource:</p>
 	  <ul>
 	    <li>mimetype: automatically detected once the resource has been dragged & dropped into the drop area.</li>
-	    <li>language: the language the resource is in. Apache Tika is used to identify the resource' language.</li>		
+	    <li>language: the language the resource is in. Apache Tika is used to identify the language of the resource.</li>		
 	  </ul>
 	  <p>For each tool, the LRS switchboard requires a metadata description that gives the switchboard all relevant information for tool applicability. In particular, the metadata description has, you guessed it, slots that describe all the mimetypes and all the languages that the tool can process. </p>
 	  <p>Example:</p>

@@ -39,8 +39,6 @@ export default class UrlArea extends React.Component {
     // Todo: use of Apache TIKA for language detection
     // Todo: For VCR, FCS connection, need to determine language and mimetype
     prefetch_URL( URL, expectedMimetype ) {
-
-	console.log('UrlArea/prefetch_URL: at start', URL);
 	var that = this;
 	var req = Request
 	    .get(URL)	
@@ -53,7 +51,7 @@ export default class UrlArea extends React.Component {
 		if (err) {
 		    that.setState({showAlertURLFetchError: true} );
 		} else {
-		    console.log('UrlArea/prefetch_URL: success in prefetching URL', JSON.stringify(res), res.type, expectedMimetype);
+		    // console.log('UrlArea/prefetch_URL: success in prefetching URL', JSON.stringify(res), res.type, expectedMimetype);
 		    if (res.type == expectedMimetype) {
 			// in case we wanted text/html and got the text/html Shibboleth login page, this won't work
 			console.log('prefetch_URL: at end with res', res, res.type, expectedMimetype);

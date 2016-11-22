@@ -206,7 +206,7 @@ export default class Task extends React.Component {
 	    );
 	};
 
-	console.log('Task.jsx/items', items, 'lane:', lane);
+	// console.log('Task.jsx/items', items, 'lane:', lane);
 	return (
 	    <Accordion allowMultiple={true}>
 	    { items.map( (element) => 
@@ -313,7 +313,7 @@ export default class Task extends React.Component {
 	    return false;
 	}
 
-	console.log('Task.jsx/constructToolURL item:', item, 'lane:', lane);
+	// console.log('Task.jsx/constructToolURL item:', item, 'lane:', lane);
 	
 	// central service to retrieve language resource, may need to chech cross-site scripting issue
 	var filename =  lane.name;
@@ -329,7 +329,6 @@ export default class Task extends React.Component {
 	if (upload == "dnd") {
 	    // console.log('the file has been dropped in the demo upload site');
 	} else if (upload == "vlo") {
-	    console.log('the LRS has been called from the VLO');
 	    // no use of temp. server for resource
 	    fileServerURL = "";
 	} else {

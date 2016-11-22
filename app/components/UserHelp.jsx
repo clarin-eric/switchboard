@@ -39,7 +39,7 @@ class UserHelpText extends React.Component {
   }
   render() {
     return <ModalContainer onClose={this.props.onClose}>
-        <ModalDialog onClose={this.props.onClose} className="userHelpDialog"  width={800} height={400}>
+        <ModalDialog onClose={this.props.onClose} className="userHelpDialog"  width={800}>
           {this.state.showSecondModal ?
             <SecondModal onClose={this.closeModal}/>
           : null}
@@ -82,7 +82,7 @@ class UserHelpText extends React.Component {
 	    <li>may be only accessible after user authentification, or</li>
 	    <li>may be accessible to you, but not necessarily accessible to the tools that the LRS is
 	      suggesting for processing the resource.</li>
-	    <li>It may also be possible that the resource's handle is pointing to a viewer application that shows
+	    <li>It may also be possible that the handle of the resource is pointing to a viewer application that shows
 	      the resource, rather than directly linking to the resource.</li>
 	  </ul>
 	  If the tool suggested by the LRS has problems processing the resource of interest, please
@@ -94,14 +94,14 @@ class UserHelpText extends React.Component {
 	    <h3>Mind the gap (General Remarks)</h3>
 	    <ul>
 	      <li>For the processing of a large file, please keep in mind that its uploading to the server
-		may take some time. Also, the LRS methods for the identification of a resource's language and
-		mimetype may take its time toll.</li>
+		may take some time. Also, the LRS methods for the identification of the language and
+		mimetype of a resource may take its time toll.</li>
 	      <li>For the processing of a large file, please also keep in mind that many tools may have a
 		restriction that the LR Switchboard is currently unaware of. For instance, the WebLicht
 		workflow engine currently permits the processing of files less than 3 MB.</li>
 	      <li>The LRS now also shows <em>web services</em>. This is experimental. When 'Click to start
 		tool' is pressed, the web service is being called. Upon completion (which may take some
-		time), a new tab opens with the web services' response. The response either holds the
+		time), a new tab opens with the response of the web services. The response either holds the
 		processed data, or a reference to a location where it can be downloaded from. Sometimes,
 		the response also holds metadata about the processing.</li>
 	      <li>At the time of writing, only a single resource can be processed; there is no batch
@@ -110,13 +110,13 @@ class UserHelpText extends React.Component {
 	      <li><em>Please contact us, when a tool (or web service) does not work as advertised, or when you
 		  would like to have some tool (or web service) added to the LRS.</em></li>
 	    </ul>
+            <hr />
 	    <p>
-	      <hr />
 	      
 	      Please contact: <a href="mailto:claus.zinn@uni-tuebingen.de?subject=CLARIN-PLUS LRS">Claus Zinn</a>.
 	      Alternatively, you can also contact the German CLARIN 
 	      
-	      <a href="https://support.clarin-d.de/mail/?lang=de&QueueID=19&ResponsibleID=15&OwnerID=15" target="_blank" onclick="return popup_CLARIN_HELPDESK(this.href)">
+	      <a href="https://support.clarin-d.de/mail/?lang=de&QueueID=19&ResponsibleID=15&OwnerID=15" target="_blank">
 		<img className="alignRight" src="button_helpdesk_forhelp.png" width="10%" height="10%" />
 	      </a>
 	    </p>
