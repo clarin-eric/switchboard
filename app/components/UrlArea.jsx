@@ -21,46 +21,74 @@ export default class UrlArea extends React.Component {
 	this.getJSON           = this.getJSON.bind(this);	
 	this.processJSONData   = this.processJSONData.bind(this);
 	this.unfoldHandle      = this.unfoldHandle.bind(this);
-	this.prefetch_URL      = this.prefetch_URL.bind(this);
+	this.fetchURL          = this.fetchURL.bind(this);
 
 	this.state = {
 	    isLoaded: false,
 	    showAlertShibboleth: false,
 	    showAlertURLFetchError: false,
+	    resource: undefined
 	};	
 
 	console.log('in constructor: this.props.params', this.props.params, 'with caller:', this.props.route.caller);
+
+	// the parameters, passed by the routing
 	var parameters = this.props.params;
-	// this.processParameters(parameters);
     }
 
-    // Take the mimetype detection from the 'browser' when downloading the resource from provider.
-    // Similar to DropArea, we could plug-in Apache TIKA for second opinion.
+    // Take the mimetype detection from the 'browser' when downloading the resource from provider (res.type)
     // Todo: use of Apache TIKA for language detection
-    // Todo: For VCR, FCS connection, need to determine language and mimetype
-    prefetch_URL( URL, expectedMimetype ) {
+    fetchURL( caller, fileURL ) {
 	var that = this;
 	var req = Request
-	    .get(URL)	
+	    .get(fileURL)	
 	    .end(function(err, res){
 		
-		// loading came to an end
+		// done with loading, discontinue spinner
 		that.setState( { isLoaded: true });
 
-		// show alert, depending on the result
 		if (err) {
+   		    // show fetch alert
 		    that.setState({showAlertURLFetchError: true} );
 		} else {
-		    // console.log('UrlArea/prefetch_URL: success in prefetching URL', JSON.stringify(res), res.type, expectedMimetype);
-		    if (res.type == expectedMimetype) {
-			// in case we wanted text/html and got the text/html Shibboleth login page, this won't work
-			console.log('prefetch_URL: at end with res', res, res.type, expectedMimetype);
+		    // record file in state
+		    that.setState( { resource : res } );
+		    console.log('UrlArea/fetchURL: ', res, res.header['content-type'], res.header['content-length']);
+
+		    // check whether we've fetched the Shibboleth login
+		    if ( (res.text.indexOf('Shibboleth') != -1))  {
+			that.setState({showAlertShibboleth: true});
 		    } else {
-			if (res.text.indexOf('Shibboleth' != -1))  {
-			    that.setState({showAlertShibboleth: true});
-			} else {
-			    alert('The resource may not not public, please try to fetch the resource with your authentification credentials! Click on "Link to Resource"');			    
-			}
+		    
+
+			// create lane
+			var lane = LaneActions.create( { name: fileURL,
+							 filename: fileURL,
+							 upload: caller,
+							 mimetype: res.type
+						       } );
+			var laneId = lane.id;
+			that.addNote(laneId, "name:   ".concat( fileURL ));
+			that.addNote(laneId, "type:   ".concat( res.type ));
+			that.addNote(laneId, "size:   not determined");	
+
+			var languageHarmonization = "identify language!";
+			console.log('UrlArea/fetchURL: calling TIKA for language detection');
+			Request
+			    .put('http://weblicht.sfs.uni-tuebingen.de/clrs/language/string')
+			    .send(res.text)	
+			    .set('Content-Type', res.type)	
+			    .end((err, langDetectResult) => {
+				if (err) {
+				    console.log('error: language identification', err);
+				} else {
+				    console.log('success: language identification', langDetectResult.text);
+				    languageHarmonization = that.processLanguage(langDetectResult.text);
+				    
+				    that.addNote(laneId, "language:".concat( languageHarmonization.languageCombo ));
+				    LaneActions.addLanguage( { laneId: laneId,
+							       language: languageHarmonization.threeLetterCode})
+				}})
 		    }
 		}
 	    });
@@ -87,44 +115,71 @@ export default class UrlArea extends React.Component {
 
 	if (index > -1) {
 	    result = hdlLongPrefix.concat( handle.substring(index+hdlShortPrefix.length, handle.length) );
+	    console.log('UrlArea/unfoldHandle success', handle, result);	    
+	} else {
+	    console.log('UrlArea/unfoldHandle not need to unfold', handle);
 	}
 
-	console.log( 'UrlArea/unfoldHandle', handle, result);
 	return result;
     }
     
-    processParameters( parameters ) {
+    processParameters( caller, parameters ) {
 
-	console.log('UrlArea/processParameters', parameters);
-	// reset prior history
+	// first, reset prior history
 	LaneActions.reset();
 	NoteActions.reset();
 	ToolActions.reset();
 
-	if (parameters.tokenId == undefined) {
-	    // information for a single file has been passed (multiple files not possible).
-	    var fileURL = this.unfoldHandle( parameters.fileURL);
-	    var languageHarmonization = this.processLanguage(parameters.fileLanguage);	    
-	    
-	    var lane = LaneActions.create( { name: fileURL,
-					     filename: fileURL,
-					     upload: 'vlo',
-					     mimetype: parameters.fileMimetype,
-					     language: languageHarmonization.threeLetterCode
-					   } );
-	    var laneId = lane.id;
-	    
-	    this.addNote(laneId, "name:   ".concat( fileURL ));
-	    this.addNote(laneId, "type:   ".concat(parameters.fileMimetype));
-	    this.addNote(laneId, "size:   ".concat(parameters.fileSize));	
-	    this.addNote(laneId, "language:".concat(languageHarmonization.languageCombo));
+	console.log('UrlArea/processParameters', caller);
 
-	    // check whether a tool could fetch the resource in question.
-	    this.prefetch_URL(fileURL, parameters.fileMimetype);
+	// just in case, we've got a hdl
+	var fileURL = this.unfoldHandle( parameters.fileURL);
+	
+	
+	// when called from the VCR and the FCS, we just get the URL, nothing else.
+	if ( (caller == "VCR") || (caller == "FCS") ) {
+	    
+	    console.log('UrlArea/processParameters: called from the VCR/FCS');
+	    // fetch the resource, and set the information accordingly
+	    this.fetchURL(caller, fileURL);
 	    
 	} else {
-	    console.log('UrlArea/processParameters: a token has been passed', parameters);
-	    this.getJSON( parameters.tokenId );
+	    console.log('UrlArea/processParameters: called from the VLO');	    
+
+	    // "normal" call from the VLO
+	    if (parameters.tokenId == undefined) {
+
+		// need to identify mimetype, SHOULD (CURRENTLY) NOT HAPPEN
+		if (parameters.fileMimetype == undefined) {
+		    console.log('the filetype of the resource needs to be identified');
+		}
+
+		// need to identfy language, SHOULD (CURRENTLY) NOT HAPPEN
+		if (parameters.fileLanguage == undefined) {
+		    console.log('the language of the resource needs to be identified');
+		}
+		
+		// information for a single file has been passed (passing multiple files is not possible).
+		var languageHarmonization = this.processLanguage(parameters.fileLanguage);	    
+	    
+		var lane = LaneActions.create( { name: fileURL,
+						 filename: fileURL,
+						 upload: 'VLO',
+						 mimetype: parameters.fileMimetype,
+						 language: languageHarmonization.threeLetterCode
+					       } );
+		var laneId = lane.id;
+	    
+		this.addNote(laneId, "name:   ".concat( fileURL ));
+		this.addNote(laneId, "type:   ".concat(parameters.fileMimetype));
+		this.addNote(laneId, "size:   ".concat(parameters.fileSize));	
+		this.addNote(laneId, "language:".concat(languageHarmonization.languageCombo));
+
+	    } else {
+		// purely explorational (see below)
+		console.log('UrlArea/processParameters: a token has been passed', parameters);
+		this.getJSON( parameters.tokenId );
+	    }
 	}
     }
 
@@ -156,7 +211,7 @@ export default class UrlArea extends React.Component {
 	    var languageHarmonization = this.processLanguage(files[i].language);	    
 	    var lane = LaneActions.create( { name: files[i].file,
 					     filename: files[i].file,
-					     upload: 'vlo',
+					     upload: 'VLO',
 					     mimetype: files[i].mimetype,
 					     language: languageHarmonization.threeLetterCode
 					   } );
@@ -170,9 +225,15 @@ export default class UrlArea extends React.Component {
     }
 
     componentDidMount() {
+
+	// fetch all parameter from router
 	const parameters = this.props.params;
-	console.log('UrlArea/componentDidMount: this.props.params', parameters);
-	this.processParameters(parameters);
+
+	// the caller, one of VLO, VCR, or FCS
+	const caller = this.props.route.caller;
+	
+	console.log('UrlArea/componentDidMount: this.props.params', parameters, caller);
+	this.processParameters(caller, parameters);
     }
 	
     render() {

@@ -79,7 +79,7 @@ export default class DropArea extends React.Component {
         );
     };
 
-    doRequests( currentFile ) {
+    processFile( currentFile ) {
 	var today = new Date();
 	var newFileName = currentFile.name + '_at_' + today.getTime();
 	var fileExtension = currentFile.name.split('.').pop();
@@ -102,7 +102,7 @@ export default class DropArea extends React.Component {
 	    .set('Content-Type', newFileType)
 	    .end((err, res) => {
 		if (err) {
-		    console.log('DropArea: error in uploading resource document to MPG', newFileName, err);
+		    alert('Error in uploading resource to the MPG temporary file storage server');
 		} else {
 		    console.log('DropArea: success in uploading resource document to MPG', newFileName, res);
 		    
@@ -170,7 +170,7 @@ export default class DropArea extends React.Component {
 	console.log('onDrop entry, processing these files', files, files.length);
 	
 	for (var i=0; i<files.length; i++) {
-	    this.doRequests( files[i] );
+	    this.processFile( files[i] );
 	}
 	
 	this.setState({

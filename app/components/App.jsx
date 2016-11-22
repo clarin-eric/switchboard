@@ -14,9 +14,9 @@ import ToolStore from '../stores/ToolStore';        // storing tools (state)
 import DropArea from './DropArea.jsx';              // drop & drag area for resources
 import UrlArea  from './UrlArea.jsx';               // all resource information given in parameters
 import Toggle   from 'react-toggle';                // toggle button for enables/disabling web services
-import UserHelp from './UserHelp.jsx';
-import DevHelp from './DevHelp.jsx';
-import AboutHelp from './AboutHelp.jsx';
+import UserHelp from './UserHelp.jsx';              // component displaying user help
+import DevHelp from './DevHelp.jsx';                // component displaying help targeted at developers
+import AboutHelp from './AboutHelp.jsx';            // displaying admin. information about the switchboard
 
 // routing between DropArea and UrlArea
 import { Router, Route, hashHistory } from 'react-router'
