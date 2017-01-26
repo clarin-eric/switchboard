@@ -136,10 +136,10 @@ export default class UrlArea extends React.Component {
 	var fileURL = this.unfoldHandle( parameters.fileURL);
 	
 	
-	// when called from the VCR and the FCS, we just get the URL, nothing else.
-	if ( (caller == "VCR") || (caller == "FCS") ) {
+	// when called from the VCR, the FCS, or B2DROP, we just get the URL, nothing else.
+	if ( (caller == "VCR") || (caller == "FCS") || (caller == "B2DROP") ) {
 	    
-	    console.log('UrlArea/processParameters: called from the VCR/FCS');
+	    console.log('UrlArea/processParameters: called from the VCR/FCS/B2DROP');
 	    // fetch the resource, and set the information accordingly
 	    this.fetchURL(caller, fileURL);
 	    
@@ -229,7 +229,7 @@ export default class UrlArea extends React.Component {
 	// fetch all parameter from router
 	const parameters = this.props.params;
 
-	// the caller, one of VLO, VCR, or FCS
+	// the caller, one of VLO, VCR, FCS, or B2DROP
 	const caller = this.props.route.caller;
 	
 	console.log('UrlArea/componentDidMount: this.props.params', parameters, caller);

@@ -17,6 +17,7 @@ import Toggle   from 'react-toggle';                // toggle button for enables
 import UserHelp from './UserHelp.jsx';              // component displaying user help
 import DevHelp from './DevHelp.jsx';                // component displaying help targeted at developers
 import AboutHelp from './AboutHelp.jsx';            // displaying admin. information about the switchboard
+import AlertURLFetchError from './AlertURLFetchError.jsx';
 
 // routing between DropArea and UrlArea
 import { Router, Route, hashHistory } from 'react-router'
@@ -51,7 +52,8 @@ export default class App extends React.Component {
         this.handleWebServicesChange = this.handleChange.bind(this, 'includeWebServices')
 
 	this.state = {
-	    includeWebServices: false
+	    includeWebServices: false,
+	    showAlertURLFetchError: true	    
 	};
     }
 
@@ -136,7 +138,9 @@ export default class App extends React.Component {
     <Route path="/vlo/:fileURL/:fileMimetype"               caller="VLO" component={UrlArea}/>		
     <Route path="/vlo/:tokenId" caller="VLO"                component={UrlArea}/>
     <Route path="/vcr/:fileURL" caller="VCR"                component={UrlArea}/>
-    <Route path="/fcs/:fileURL" caller="FCS"                component={UrlArea}/>		
+    <Route path="/fcs/:fileURL" caller="FCS"                component={UrlArea}/>
+    <Route path="/b2drop/:fileURL" caller="B2DROP"          component={UrlArea}/>    
+    <Route path="*"                                         component={AlertURLFetchError}/>
   </Router>
   
   <p />

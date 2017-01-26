@@ -328,7 +328,7 @@ export default class Task extends React.Component {
 
 	if (upload == "dnd") {
 	    // console.log('the file has been dropped in the demo upload site');
-	} else if ( (upload == "VLO") || (upload == "VCR") || (upload == "FCS") ){
+	} else if ( (upload == "VLO") || (upload == "VCR") || (upload == "FCS") || (upload == "B2DROP") ){
 	    // no use of temp. server for resource
 	    fileServerURL = "";
 	} else {

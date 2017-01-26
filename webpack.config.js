@@ -27,7 +27,9 @@ const common = {
     },
 
     node: {
-	fs: "empty"
+	fs: 'empty',
+	net: 'empty',
+	tls: 'empty'
     },
 
     output: {
@@ -65,7 +67,6 @@ const common = {
 		loader: 'file-loader?name=[name].[ext]',
 		include: PATHS.app.html
 	    },
-
 
 	    // Set up jsx. This accepts js too thanks to RegExp
 	    {
