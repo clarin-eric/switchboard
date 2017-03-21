@@ -18,6 +18,8 @@ import UserHelp from './UserHelp.jsx';              // component displaying user
 import DevHelp from './DevHelp.jsx';                // component displaying help targeted at developers
 import AboutHelp from './AboutHelp.jsx';            // displaying admin. information about the switchboard
 import AlertURLFetchError from './AlertURLFetchError.jsx';
+import PiwikReactRouter from 'piwik-react-router';
+
 
 // routing between DropArea and UrlArea
 import { Router, Route, hashHistory } from 'react-router'
@@ -55,6 +57,19 @@ export default class App extends React.Component {
 	    includeWebServices: false,
 	    showAlertURLFetchError: true	    
 	};
+
+	this.piwik = PiwikReactRouter({
+	    url	: 'https://stats.clarin.eu',
+	    siteId	: 21,
+	    enableLinkTracking: true
+        });
+    
+
+    }
+
+    componentDidMount() {
+	this.piwik.push(["setDomains", ["*.weblicht.sfs.uni-tuebingen.de/clrs","*.weblicht.sfs.uni-tuebingen.de/clrs"]]);
+	this.piwik.push(['trackPageView']);	
     }
 
     handleChange (key, event) {
@@ -83,7 +98,9 @@ export default class App extends React.Component {
 	fenster.focus();
 	return false;
     }
-    
+
+ 
+
     render() {
 	return (
 <div>
@@ -129,10 +146,15 @@ export default class App extends React.Component {
         </div>
       </div>
     </div>
+    <noscript>
+      <p>
+	<img src="//stats.clarin.eu/piwik.php?idsite=21" style={{border:0}} alt="" />
+      </p>
+    </noscript>		
   </header>
   <div id='dragAndDropArea'></div>
   
-  <Router history={hashHistory}>	      
+  <Router history={this.piwik.connectToHistory(hashHistory)}>	      
     <Route path="/" component={DropArea}/>
     <Route path="/vlo/:fileURL/:fileMimetype/:fileLanguage" caller="VLO" component={UrlArea}/>
     <Route path="/vlo/:fileURL/:fileMimetype"               caller="VLO" component={UrlArea}/>		
