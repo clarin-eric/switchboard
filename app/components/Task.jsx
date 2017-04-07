@@ -7,6 +7,9 @@ import AccordionItem from '../helperComponents/AccordionItem';
 
 import Request from 'superagent';
 
+// import PiwikReactRouter from 'piwik-react-router';
+
+
 export default class Task extends React.Component {
     constructor(props) {
 	super(props);
@@ -16,6 +19,14 @@ export default class Task extends React.Component {
 	this.constructToolURL = this.constructToolURL.bind(this);
     }
 
+    // componentDidMount() {
+    // 	this.piwik = PiwikReactRouter({
+    // 	    url	: 'https://stats.clarin.eu',
+    // 	    siteId	: 21,
+    // 	    enableLinkTracking: true
+    //     });
+    // }
+    
     render() {
 	const {items, lane, ...props} = this.props;
 
@@ -443,13 +454,17 @@ export default class Task extends React.Component {
 	var win = window.open(URL, '_blank');
 	win.focus();
     }
-    
+
+    // book-keeping. Think of Piwik type information gathering
     invokeSoftware( URL ) {
 
 	console.log('invokeSoftware', URL);
 	if (URL.toolType == "webService") {
 	    this.invokeWebService(URL);
 	} else {
+	    // inform Piwik
+	    console.log('why does piwik reference _paq persist:', _paq);
+	    _paq.push(["trackEvent", 'ToolInvocation', URL.url]);	    
 	    var win = window.open(URL.url, '_blank');
 	    win.focus();
 	}
@@ -457,8 +472,10 @@ export default class Task extends React.Component {
 
     invokeWebService( URL ) {
 
+	// inform Piwik
+	_paq.push(["trackEvent", 'WebServiceInvocation', URL.url]);
+
 	let file = URL.formVal;
-	
 	if (URL.postSubmit == "data") {
 	    Request
 		.post(URL.url)
