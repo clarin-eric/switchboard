@@ -1,5 +1,7 @@
-example
-script
+.babelrc
+.eslintrc.json
+.eslintignore
+docs/
+spec/
+src/
 webpack.config.js
-test
-*.es6.js

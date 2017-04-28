@@ -29,9 +29,9 @@ export default class UrlArea extends React.Component {
 	    showAlertShibboleth: false,
 	    showAlertURLFetchError: false,
 	    resource: undefined
-	};	
+	};
 
-	console.log('in constructor: this.props.params', this.props.params, 'with caller:', this.props.route.caller);
+	console.log('UrlArea/constructor: this.props', this.props);
     }
 
     // Take the mimetype detection from the 'browser' when downloading the resource from provider (res.type)
@@ -145,6 +145,7 @@ export default class UrlArea extends React.Component {
 	    
 	} else {
 	    console.log('UrlArea/processParameters: called from the VLO with parameters', parameters);
+	    console.log('UrlArea/processParameters:', this.state);
 
 	    // "normal" call from the VLO
 	    if (parameters.tokenId == undefined) {
@@ -176,7 +177,7 @@ export default class UrlArea extends React.Component {
 		this.addNote(laneId, "language:".concat(languageHarmonization.languageCombo));
 
 		this.setState( { isLoaded: true });
-		this.forceUpdate();
+		this.props.refreshFun();		
 
 	    } else {
      	       this.setState( { isLoaded: true });	    
@@ -231,10 +232,10 @@ export default class UrlArea extends React.Component {
     componentDidMount() {
 
 	// fetch all parameter from router
-	const parameters = this.props.params;
+	const parameters = this.props.match.params;
 
 	// the caller, one of VLO, VCR, FCS, or B2DROP
-	const caller = this.props.route.caller;
+	const caller = this.props.caller;
 	
 	console.log('UrlArea/componentDidMount: this.props.params', parameters, caller);
 	this.processParameters(caller, parameters);
@@ -249,10 +250,10 @@ export default class UrlArea extends React.Component {
             padding: 2	    
         };
 
-	var transferalInfo = `Resource transferal from the ${this.props.route.caller}. Please check the information below, then press "Show Tools"`;
-	if (this.props.params.tokenId !== undefined) {
-	    transferalInfo = 'Resource via token-based tranferal (experimental).'
-	}
+	var transferalInfo = `Resource transferal from the ${this.props.caller}. Please check the information below, then press "Show Tools"`;
+	// if (this.props.params.tokenId !== undefined) {
+	//     transferalInfo = 'Resource via token-based tranferal (experimental).'
+	// }
 	return (
 	       <Loader loaded={isLoaded}>
 		<h2>
@@ -266,7 +267,7 @@ export default class UrlArea extends React.Component {
 
 	        {this.state.showAlertURLFetchError ?
 		 <AlertURLFetchError />
-		 : null }	        
+		 : null }
                </Loader>		    
 	    );
     }

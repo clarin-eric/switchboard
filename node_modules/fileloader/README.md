@@ -40,6 +40,7 @@ $ npm install fileloader
 ```js
 var nunjucks = require('nunjucks');
 var FileLoader = require('fileloader');
+var cluster = require('cluster');
 
 var watch = true;
 if (cluster.isWorker) {

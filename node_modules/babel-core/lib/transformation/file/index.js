@@ -3,10 +3,6 @@
 exports.__esModule = true;
 exports.File = undefined;
 
-var _typeof2 = require("babel-runtime/helpers/typeof");
-
-var _typeof3 = _interopRequireDefault(_typeof2);
-
 var _getIterator2 = require("babel-runtime/core-js/get-iterator");
 
 var _getIterator3 = _interopRequireDefault(_getIterator2);
@@ -50,10 +46,6 @@ var _optionManager2 = _interopRequireDefault(_optionManager);
 var _pluginPass = require("../plugin-pass");
 
 var _pluginPass2 = _interopRequireDefault(_pluginPass);
-
-var _shebangRegex = require("shebang-regex");
-
-var _shebangRegex2 = _interopRequireDefault(_shebangRegex);
 
 var _babelTraverse = require("babel-traverse");
 
@@ -113,6 +105,8 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var shebangRegex = /^#!.*/;
+
 var INTERNAL_PLUGINS = [[_blockHoist2.default], [_shadowFunctions2.default]];
 
 var errorVisitor = {
@@ -129,7 +123,7 @@ var File = function (_Store) {
   (0, _inherits3.default)(File, _Store);
 
   function File() {
-    var opts = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+    var opts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
     var pipeline = arguments[1];
     (0, _classCallCheck3.default)(this, File);
 
@@ -141,10 +135,7 @@ var File = function (_Store) {
     _this.opts = _this.initOptions(opts);
 
     _this.parserOpts = {
-      highlightCode: _this.opts.highlightCode,
-      nonStandard: _this.opts.nonStandard,
       sourceType: _this.opts.sourceType,
-      filename: _this.opts.filename,
       sourceFileName: _this.opts.filename,
       plugins: []
     };
@@ -278,8 +269,8 @@ var File = function (_Store) {
       }
 
       var ref = _ref2;
-      var plugin = ref[0];
-      var pluginOpts = ref[1];
+      var plugin = ref[0],
+          pluginOpts = ref[1];
 
 
       currentPluginVisitors.push(plugin.visitor);
@@ -340,7 +331,7 @@ var File = function (_Store) {
   };
 
   File.prototype.addImport = function addImport(source, imported) {
-    var name = arguments.length <= 2 || arguments[2] === undefined ? imported : arguments[2];
+    var name = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : imported;
 
     var alias = source + ":" + imported;
     var id = this.dynamicImportIds[alias];
@@ -429,7 +420,7 @@ var File = function (_Store) {
   };
 
   File.prototype.buildCodeFrameError = function buildCodeFrameError(node, msg) {
-    var Error = arguments.length <= 2 || arguments[2] === undefined ? SyntaxError : arguments[2];
+    var Error = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : SyntaxError;
 
     var loc = node && (node.loc || node._loc);
 
@@ -456,45 +447,39 @@ var File = function (_Store) {
     var inputMap = this.opts.inputSourceMap;
 
     if (inputMap) {
-      var _ret = function () {
-        var inputMapConsumer = new _sourceMap2.default.SourceMapConsumer(inputMap);
-        var outputMapConsumer = new _sourceMap2.default.SourceMapConsumer(map);
+      var inputMapConsumer = new _sourceMap2.default.SourceMapConsumer(inputMap);
+      var outputMapConsumer = new _sourceMap2.default.SourceMapConsumer(map);
 
-        var mergedGenerator = new _sourceMap2.default.SourceMapGenerator({
-          file: inputMapConsumer.file,
-          sourceRoot: inputMapConsumer.sourceRoot
+      var mergedGenerator = new _sourceMap2.default.SourceMapGenerator({
+        file: inputMapConsumer.file,
+        sourceRoot: inputMapConsumer.sourceRoot
+      });
+
+      var source = outputMapConsumer.sources[0];
+
+      inputMapConsumer.eachMapping(function (mapping) {
+        var generatedPosition = outputMapConsumer.generatedPositionFor({
+          line: mapping.generatedLine,
+          column: mapping.generatedColumn,
+          source: source
         });
+        if (generatedPosition.column != null) {
+          mergedGenerator.addMapping({
+            source: mapping.source,
 
-        var source = outputMapConsumer.sources[0];
+            original: mapping.source == null ? null : {
+              line: mapping.originalLine,
+              column: mapping.originalColumn
+            },
 
-        inputMapConsumer.eachMapping(function (mapping) {
-          var generatedPosition = outputMapConsumer.generatedPositionFor({
-            line: mapping.generatedLine,
-            column: mapping.generatedColumn,
-            source: source
+            generated: generatedPosition
           });
-          if (generatedPosition.column != null) {
-            mergedGenerator.addMapping({
-              source: mapping.source,
+        }
+      });
 
-              original: mapping.source == null ? null : {
-                line: mapping.originalLine,
-                column: mapping.originalColumn
-              },
-
-              generated: generatedPosition
-            });
-          }
-        });
-
-        var mergedMap = mergedGenerator.toJSON();
-        inputMap.mappings = mergedMap.mappings;
-        return {
-          v: inputMap
-        };
-      }();
-
-      if ((typeof _ret === "undefined" ? "undefined" : (0, _typeof3.default)(_ret)) === "object") return _ret.v;
+      var mergedMap = mergedGenerator.toJSON();
+      inputMap.mappings = mergedMap.mappings;
+      return inputMap;
     } else {
       return map;
     }
@@ -514,7 +499,7 @@ var File = function (_Store) {
           if (parser) {
             parseCode = require(parser).parse;
           } else {
-            throw new Error("Couldn't find parser " + parserOpts.parser + " with \"parse\" method relative to directory " + dirname);
+            throw new Error("Couldn't find parser " + parserOpts.parser + " with \"parse\" method " + ("relative to directory " + dirname));
           }
         } else {
           parseCode = parserOpts.parser;
@@ -659,18 +644,18 @@ var File = function (_Store) {
   };
 
   File.prototype.parseShebang = function parseShebang() {
-    var shebangMatch = _shebangRegex2.default.exec(this.code);
+    var shebangMatch = shebangRegex.exec(this.code);
     if (shebangMatch) {
       this.shebang = shebangMatch[0];
-      this.code = this.code.replace(_shebangRegex2.default, "");
+      this.code = this.code.replace(shebangRegex, "");
     }
   };
 
   File.prototype.makeResult = function makeResult(_ref4) {
-    var code = _ref4.code;
-    var map = _ref4.map;
-    var ast = _ref4.ast;
-    var ignored = _ref4.ignored;
+    var code = _ref4.code,
+        map = _ref4.map,
+        ast = _ref4.ast,
+        ignored = _ref4.ignored;
 
     var result = {
       metadata: null,
@@ -713,7 +698,7 @@ var File = function (_Store) {
         if (generator) {
           gen = require(generator).print;
         } else {
-          throw new Error("Couldn't find generator " + gen + " with \"print\" method relative to directory " + dirname);
+          throw new Error("Couldn't find generator " + gen + " with \"print\" method relative " + ("to directory " + dirname));
         }
       }
     }

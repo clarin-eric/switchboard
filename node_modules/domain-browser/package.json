@@ -106,7 +106,7 @@
   "directories": {},
   "dist": {
     "shasum": "867aa4b093faa05f1de08c06f4d7b21fdf8698bc",
-    "tarball": "http://registry.npmjs.org/domain-browser/-/domain-browser-1.1.7.tgz"
+    "tarball": "https://registry.npmjs.org/domain-browser/-/domain-browser-1.1.7.tgz"
   },
   "engines": {
     "node": ">=0.4",

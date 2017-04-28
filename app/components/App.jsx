@@ -19,10 +19,10 @@ import UserHelp from './UserHelp.jsx';              // component displaying user
 import DevHelp from './DevHelp.jsx';                // component displaying help targeted at developers
 import AboutHelp from './AboutHelp.jsx';            // displaying admin. information about the switchboard
 import AlertURLFetchError from './AlertURLFetchError.jsx';
-
+import PropTypes from 'prop-types';
 
 // routing between DropArea and UrlArea
-import { Router, Route, hashHistory } from 'react-router';
+import { HashRouter, Route, Switch } from 'react-router-dom';
 
 require('./../images/clarin-logo-wide.png');
 require('./../images/switchboard.png');
@@ -48,10 +48,12 @@ require('./../images/metadataListing2.png');
 export default class App extends React.Component {
 
     constructor(props) {
-	super(props)
-	this.showTools = this.showTools.bind(this)
-        this.clearDropzone = this.clearDropzone.bind(this)
-        this.handleWebServicesChange = this.handleChange.bind(this, 'includeWebServices')
+	super(props);
+
+	this.refresh = this.refresh.bind(this);
+	this.showTools = this.showTools.bind(this);
+        this.clearDropzone = this.clearDropzone.bind(this);
+        this.handleWebServicesChange = this.handleChange.bind(this, 'includeWebServices');
 
 	this.state = {
 	    includeWebServices: false,
@@ -61,6 +63,10 @@ export default class App extends React.Component {
 	console.log('constructor in App', this);
     }
 
+    refresh() {
+	this.forceUpdate();
+    }
+    
     handleChange (key, event) {
 	this.setState({ [key]: event.target.checked }, function () {
 	    console.log('now, the state has changed...:', this.state.includeWebServices);
@@ -137,17 +143,19 @@ export default class App extends React.Component {
     </div>
   </header>
   <div id='dragAndDropArea'></div>
-  <Router history={hashHistory}>
-    <Route path="/" component={DropArea}>
-      <Route path="/vlo/:fileURL/:fileMimetype/:fileLanguage" caller="VLO" component={UrlArea} />
-      <Route path="/vlo/:fileURL/:fileMimetype"               caller="VLO" component={UrlArea} />		
-      <Route path="/vlo/:tokenId"                             caller="VLO" component={UrlArea} />
+  <HashRouter>
+    <Switch>
+      <Route exact path="/" component={DropArea} />
+      <Route exact path="/vlo/:fileURL/:fileMimetype/:fileLanguage"
+	    render={(props) => <UrlArea refreshFun={this.refresh} caller="VLO" {...props} /> } />
+      <Route exact path="/vlo/:fileURL/:fileMimetype"               caller="VLO" component={UrlArea} />		
+      <Route exact path="/vlo/:tokenId"                             caller="VLO" component={UrlArea} />
       <Route path="/vcr/:fileURL"                             caller="VCR" component={UrlArea} />
       <Route path="/fcs/:fileURL"                             caller="FCS" component={UrlArea} />
       <Route path="/b2drop/:fileURL"                          caller="B2DROP" component={UrlArea} />    
-      <Route path="*"                                                         component={AlertURLFetchError}/>
-    </Route>
-  </Router>
+      <Route path="*"                                                         component={AlertURLFetchError} />
+    </Switch>
+  </HashRouter>
   
   <p />
   <hr />

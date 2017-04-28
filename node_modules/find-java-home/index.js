@@ -83,7 +83,7 @@ function findJavaHome(options, cb){
     if(exists(macUtility)){
       exec(macUtility, {cwd:proposed}, function(error, out, err){
         if(error || err)return next(cb, error || ''+err, null);
-        javaHome = ''+out;
+        javaHome = ''+out.replace(/\\n$/, '');
         next(cb, null, javaHome);
       }) ;
       return;

@@ -191,7 +191,7 @@ var Parser = function () {
                 node.spaces.after = this.parseSpace(this.currToken[1]);
             } else if (this.currToken[0] === 'combinator') {
                 node.value = this.currToken[1];
-            } else if (this.currToken[0] === 'space' && !(this.lossy && this.prevToken[0] === '&')) {
+            } else if (this.currToken[0] === 'space') {
                 node.value = this.parseSpace(this.currToken[1], ' ');
             }
             this.position++;
@@ -232,6 +232,10 @@ var Parser = function () {
 
     Parser.prototype.error = function error(message) {
         throw new this.input.error(message); // eslint-disable-line new-cap
+    };
+
+    Parser.prototype.missingBackslash = function missingBackslash() {
+        return this.error('Expected a backslash preceding the semicolon.');
     };
 
     Parser.prototype.missingParenthesis = function missingParenthesis() {
@@ -332,30 +336,28 @@ var Parser = function () {
             return this.error('Expected pseudo-class or pseudo-element');
         }
         if (this.currToken[0] === 'word') {
-            (function () {
-                var pseudo = void 0;
-                _this.splitWord(false, function (first, length) {
-                    pseudoStr += first;
-                    pseudo = new _pseudo2.default({
-                        value: pseudoStr,
-                        source: {
-                            start: {
-                                line: startingToken[2],
-                                column: startingToken[3]
-                            },
-                            end: {
-                                line: _this.currToken[4],
-                                column: _this.currToken[5]
-                            }
+            var pseudo = void 0;
+            this.splitWord(false, function (first, length) {
+                pseudoStr += first;
+                pseudo = new _pseudo2.default({
+                    value: pseudoStr,
+                    source: {
+                        start: {
+                            line: startingToken[2],
+                            column: startingToken[3]
                         },
-                        sourceIndex: startingToken[4]
-                    });
-                    _this.newNode(pseudo);
-                    if (length > 1 && _this.nextToken && _this.nextToken[0] === '(') {
-                        _this.error('Misplaced parenthesis.');
-                    }
+                        end: {
+                            line: _this.currToken[4],
+                            column: _this.currToken[5]
+                        }
+                    },
+                    sourceIndex: startingToken[4]
                 });
-            })();
+                _this.newNode(pseudo);
+                if (length > 1 && _this.nextToken && _this.nextToken[0] === '(') {
+                    _this.error('Misplaced parenthesis.');
+                }
+            });
         } else {
             this.error('Unexpected "' + this.currToken[0] + '" found.');
         }
@@ -547,6 +549,9 @@ var Parser = function () {
                 break;
             case ':':
                 this.pseudo();
+                break;
+            case ';':
+                this.missingBackslash();
                 break;
             case ',':
                 this.comma();

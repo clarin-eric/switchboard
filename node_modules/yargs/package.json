@@ -26,7 +26,8 @@
     "type": "range"
   },
   "_requiredBy": [
-    "/uglify-js"
+    "/uglify-js",
+    "/webpack/uglify-js"
   ],
   "_resolved": "https://registry.npmjs.org/yargs/-/yargs-3.10.0.tgz",
   "_shasum": "f7ee7bd857dd7c1d2d38c0e74efbd681d1431fd1",
