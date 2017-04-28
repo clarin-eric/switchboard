@@ -1,13 +1,10 @@
 export default {
     processLanguage: function( language ) {
 
-	// this is a temp. hack
-	// all language-related code conversions with be bundled somewhere
-	
 	var languageCombo = null;
 	var threeLetterCode = null;
 
-	if (language == "en") {
+	if ( (language == "en") || (language == "eng") ) {
 	    languageCombo = "English:eng";
 	    threeLetterCode = "eng";
 	} else if (language == "da") {

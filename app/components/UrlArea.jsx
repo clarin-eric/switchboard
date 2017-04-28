@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactDOM from 'react-dom';
 import Loader from 'react-loader';
 import NoteActions from '../actions/NoteActions';
 import LaneActions from '../actions/LaneActions';
@@ -31,9 +32,6 @@ export default class UrlArea extends React.Component {
 	};	
 
 	console.log('in constructor: this.props.params', this.props.params, 'with caller:', this.props.route.caller);
-
-	// the parameters, passed by the routing
-	var parameters = this.props.params;
     }
 
     // Take the mimetype detection from the 'browser' when downloading the resource from provider (res.type)
@@ -96,6 +94,7 @@ export default class UrlArea extends React.Component {
     }
 
     addNote( laneId, description ) {
+        console.log('UrlArea/addNote', laneId, description);
 	const note = NoteActions.create({
 	    task: description,
 	    belongsTo: laneId});
@@ -129,7 +128,8 @@ export default class UrlArea extends React.Component {
 	LaneActions.reset();
 	NoteActions.reset();
 	ToolActions.reset();
-
+	this.forceUpdate();
+	
 	console.log('UrlArea/processParameters', caller);
 
 	// just in case, we've got a hdl
@@ -144,7 +144,7 @@ export default class UrlArea extends React.Component {
 	    this.fetchURL(caller, fileURL);
 	    
 	} else {
-	    console.log('UrlArea/processParameters: called from the VLO');	    
+	    console.log('UrlArea/processParameters: called from the VLO with parameters', parameters);
 
 	    // "normal" call from the VLO
 	    if (parameters.tokenId == undefined) {
@@ -175,7 +175,11 @@ export default class UrlArea extends React.Component {
 		this.addNote(laneId, "size:   ".concat(parameters.fileSize));	
 		this.addNote(laneId, "language:".concat(languageHarmonization.languageCombo));
 
+		this.setState( { isLoaded: true });
+		this.forceUpdate();
+
 	    } else {
+     	       this.setState( { isLoaded: true });	    
 		// purely explorational (see below)
 		console.log('UrlArea/processParameters: a token has been passed', parameters);
 		this.getJSON( parameters.tokenId );

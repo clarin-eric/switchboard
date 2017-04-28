@@ -3,8 +3,8 @@ import Dropzone from 'react-dropzone';
 import NoteActions from '../actions/NoteActions';
 import LaneActions from '../actions/LaneActions';
 import ToolActions from '../actions/ToolActions';
-import Request from 'superagent';
 
+import Request from 'superagent';
 import util from '../libs/util';
 
 // alternative to superagent
@@ -63,36 +63,36 @@ export default class DropArea extends React.Component {
 	return '';
 
 	//disabled
-        return React.createElement(
-            'div',
-            null,
-            React.createElement(
-                'h2',
-		{ className: 'lane' },		
-                'Dropped file(s): '
-            ),
-            React.createElement(
-                'ul',
-		{ className: 'lane' },		
-                [].map.call(files, function (f, i) {
-                    return React.createElement(
-			'li',
-			{
-                            key: i 
-			},
-			React.createElement('img', {
-                            src: f.preview,
-                            width: 100 
-			}),
-			React.createElement(
-			    'div',
-			    null,
-			    f.name + ' : ' + f.size + ' bytes.'
-			)
-                    );
-                })
-            )
-        );
+        // return React.createElement(
+        //     'div',
+        //     null,
+        //     React.createElement(
+        //         'h2',
+	// 	{ className: 'lane' },		
+        //         'Dropped file(s): '
+        //     ),
+        //     React.createElement(
+        //         'ul',
+	// 	{ className: 'lane' },		
+        //         [].map.call(files, function (f, i) {
+        //             return React.createElement(
+	// 		'li',
+	// 		{
+        //                     key: i 
+	// 		},
+	// 		React.createElement('img', {
+        //                     src: f.preview,
+        //                     width: 100 
+	// 		}),
+	// 		React.createElement(
+	// 		    'div',
+	// 		    null,
+	// 		    f.name + ' : ' + f.size + ' bytes.'
+	// 		)
+        //             );
+        //         })
+        //     )
+        // );
     }
 
     processFile( currentFile ) {
@@ -283,16 +283,6 @@ processFile_b2Drop( currentFile ) {
 	    newFileType = "application/octet_stream"
 	}
 
-	//.post('http://switchboard:clarin-plus@shannon.sfs.uni-tuebingen.de/owncloud/remote.php/webdav/'.concat(newFileName))    
-        //.post('http://shannon.sfs.uni-tuebingen.de/owncloud/remote.php/webdav/'.concat(newFileName))
-	// .post('http://localhost/owncloud/remote.php/webdav/'.concat(newFileName))        
-    //
-
-    // this.owncloud_upload( newFileName, currentFile );
-    
-    // return;
-    
-    
 	// 1a. store in local b2drop instance
 	Request
 //	.put(this.cloudURL.concat('/remote.php/webdav/').concat(newFileName))

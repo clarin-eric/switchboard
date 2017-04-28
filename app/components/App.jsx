@@ -4,6 +4,7 @@
 
 import AltContainer from 'alt-container';
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Lanes from './Lanes.jsx';                    // render all the lanes (lang resources)
 import Tasks from './Tasks.jsx';                    // task-oriented view for all tools
 import LaneActions from '../actions/LaneActions';   // actions associated with lanes: CRUD, attach/detach
@@ -18,11 +19,10 @@ import UserHelp from './UserHelp.jsx';              // component displaying user
 import DevHelp from './DevHelp.jsx';                // component displaying help targeted at developers
 import AboutHelp from './AboutHelp.jsx';            // displaying admin. information about the switchboard
 import AlertURLFetchError from './AlertURLFetchError.jsx';
-import PiwikReactRouter from 'piwik-react-router';
 
 
 // routing between DropArea and UrlArea
-import { Router, Route, hashHistory } from 'react-router'
+import { Router, Route, hashHistory } from 'react-router';
 
 require('./../images/clarin-logo-wide.png');
 require('./../images/switchboard.png');
@@ -58,18 +58,7 @@ export default class App extends React.Component {
 	    showAlertURLFetchError: true	    
 	};
 
-	this.piwik = PiwikReactRouter({
-	    url	: 'https://stats.clarin.eu',
-	    siteId	: 21,
-	    enableLinkTracking: true
-        });
-    
-
-    }
-
-    componentDidMount() {
-	this.piwik.push(["setDomains", ["*.weblicht.sfs.uni-tuebingen.de/clrs","*.weblicht.sfs.uni-tuebingen.de/clrs"]]);
-	this.piwik.push(['trackPageView']);	
+	console.log('constructor in App', this);
     }
 
     handleChange (key, event) {
@@ -146,23 +135,18 @@ export default class App extends React.Component {
         </div>
       </div>
     </div>
-    <noscript>
-      <p>
-	<img src="//stats.clarin.eu/piwik.php?idsite=21" style={{border:0}} alt="" />
-      </p>
-    </noscript>		
   </header>
   <div id='dragAndDropArea'></div>
-  
-  <Router history={this.piwik.connectToHistory(hashHistory)}>	      
-    <Route path="/" component={DropArea}/>
-    <Route path="/vlo/:fileURL/:fileMimetype/:fileLanguage" caller="VLO" component={UrlArea}/>
-    <Route path="/vlo/:fileURL/:fileMimetype"               caller="VLO" component={UrlArea}/>		
-    <Route path="/vlo/:tokenId" caller="VLO"                component={UrlArea}/>
-    <Route path="/vcr/:fileURL" caller="VCR"                component={UrlArea}/>
-    <Route path="/fcs/:fileURL" caller="FCS"                component={UrlArea}/>
-    <Route path="/b2drop/:fileURL" caller="B2DROP"          component={UrlArea}/>    
-    <Route path="*"                                         component={AlertURLFetchError}/>
+  <Router history={hashHistory}>
+    <Route path="/" component={DropArea}>
+      <Route path="/vlo/:fileURL/:fileMimetype/:fileLanguage" caller="VLO" component={UrlArea} />
+      <Route path="/vlo/:fileURL/:fileMimetype"               caller="VLO" component={UrlArea} />		
+      <Route path="/vlo/:tokenId"                             caller="VLO" component={UrlArea} />
+      <Route path="/vcr/:fileURL"                             caller="VCR" component={UrlArea} />
+      <Route path="/fcs/:fileURL"                             caller="FCS" component={UrlArea} />
+      <Route path="/b2drop/:fileURL"                          caller="B2DROP" component={UrlArea} />    
+      <Route path="*"                                                         component={AlertURLFetchError}/>
+    </Route>
   </Router>
   
   <p />
@@ -174,7 +158,7 @@ export default class App extends React.Component {
                    inject={{
 		       lanes: () => LaneStore.getState().lanes || []
 		   }} >
-    <Lanes  />
+    <Lanes />
   </AltContainer>
   
   <h2>Task-Oriented Tool View </h2>

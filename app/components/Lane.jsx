@@ -52,7 +52,7 @@ export default class Lane extends React.Component {
 
     handleChange (key, event) {
 	this.setState({ [key]: event.target.checked }, function () {
-	    console.log('now, the state has changed...:', this.state.includeWebServices);
+	    console.log('now, the state has changed...:', key, event, this.state.includeWebServices);
 	});
 	if (event.target.checked === true) {
 	    document.getElementById("showToolsButton").innerHTML = 'Show Tools and Web Services';
