@@ -7,67 +7,67 @@ export default {
 	if ( (language == "en") || (language == "eng") ) {
 	    languageCombo = "English:eng";
 	    threeLetterCode = "eng";
-	} else if (language == "da") {
+	} else if ((language == "da") || (language == "dan")) {
 	    languageCombo = "Danish:dan";
     	    threeLetterCode = "dan";
-	} else if (language == "ca") {
+	} else if ((language == "ca") || (language == "cat")) {
 	    languageCombo = "Catalan:cat";
     	    threeLetterCode = "cat";	    
-	} else if (language == "hu") {
+	} else if ((language == "hu") || (language == "hun")) {
 	    languageCombo = "Hungarian:hun";
     	    threeLetterCode = "hun";
-	} else if (language == "it") {
+	} else if ((language == "it") || (language == "ita")) {
 	    languageCombo = "Italian:ita";
     	    threeLetterCode = "ita";	    
-	} else if (language == "no") {
+	} else if ((language == "no") || (language == "nor")) {
 	    languageCombo = "Norwegian:nor";
     	    threeLetterCode = "nor";
-	} else if (language == "sv") {
+	} else if ((language == "sv") || (language == "swe")) {
 	    languageCombo = "Swedish:swe";
     	    threeLetterCode = "swe";
-	} else if (language == "de") {
+	} else if ((language == "de") || (language == "deu")) {
 	    languageCombo = "German:deu";
     	    threeLetterCode = "deu";
-	} else if (language == "es") {
+	} else if ((language == "es") || (language == "spa")) {
 	    languageCombo = "Spanish:spa";
     	    threeLetterCode = "spa";
-	} else if (language == "is") {
+	} else if ((language == "is") || (language == "isl")) {
 	    languageCombo = "Icelandic:isl";
     	    threeLetterCode = "isl";
-	} else if (language == "pl") {
+	} else if ((language == "pl") || (language == "pol")) {
 	    languageCombo = "Polish:pol";
     	    threeLetterCode = "pol";
-	} else if (language == "th") {
+	} else if ((language == "th") || (language == "tha")) {
 	    languageCombo = "Thai:tha";
     	    threeLetterCode = "tha";
-	} else if (language == "et") {
+	} else if ((language == "et") || (language == "est")) {
 	    languageCombo = "Estonian:est";
     	    threeLetterCode = "est";
-	} else if (language == "sk") {
+	} else if ((language == "sk") || (language == "slk")) {
 	    languageCombo = "Slovak:slk";
     	    threeLetterCode = "slk";
-	} else if (language == "sl") {
+	} else if ((language == "sl") || (language == "slv")) {
 	    languageCombo = "Slovenian:slv";
     	    threeLetterCode = "slv";
-	} else if (language == "ro") {
+	} else if ((language == "ro") || (language == "ron")) {
 	    languageCombo = "Romanian:ron";
     	    threeLetterCode = "ron";	    	    	    
-	} else if (language == "fi") {
+	} else if ((language == "fi") || (language == "fin")) {
 	    languageCombo = "Finnish:fin";
     	    threeLetterCode = "fin";
-	} else if (language == "pt") {
+	} else if ((language == "pt") || (language == "por")) {
 	    languageCombo = "Portuguese:por";
     	    threeLetterCode = "por";
-	} else if (language == "el") {
+	} else if ((language == "el") || (language == "ell")) {
 	    languageCombo = "Greek:ell";
     	    threeLetterCode = "ell";
-	} else if (language == "fr") {
+	} else if ((language == "fr") || (language == "fra")) {
 	    languageCombo = "French:fra";
     	    threeLetterCode = "fra";
-	} else if (language == "nl") {
+	} else if ((language == "nl") || (language == "nld")) {
 	    languageCombo = "Dutch:nld";
     	    threeLetterCode = "nld";
-	} else if (language == "ru") {
+	} else if ((language == "ru") || (language == "rus")) {
 	    languageCombo = "Russian:rus";
     	    threeLetterCode = "rus";
 	} else {

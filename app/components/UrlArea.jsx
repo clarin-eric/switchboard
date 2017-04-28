@@ -110,11 +110,11 @@ export default class UrlArea extends React.Component {
 	var hdlLongPrefix  = "http://hdl.handle.net/";	
 	var index = handle.indexOf(hdlShortPrefix);
 
-	var result = handle;
+	var result = decodeURIComponent(handle);
 
 	if (index > -1) {
 	    result = hdlLongPrefix.concat( handle.substring(index+hdlShortPrefix.length, handle.length) );
-	    console.log('UrlArea/unfoldHandle success', handle, result);	    
+	    console.log('UrlArea/unfoldHandle success', handle, result, result);	    
 	} else {
 	    console.log('UrlArea/unfoldHandle not need to unfold', handle);
 	}
@@ -162,17 +162,17 @@ export default class UrlArea extends React.Component {
 		
 		// information for a single file has been passed (passing multiple files is not possible).
 		var languageHarmonization = this.processLanguage(parameters.fileLanguage);	    
-	    
+		var mimeType = decodeURIComponent(parameters.fileMimetype);
 		var lane = LaneActions.create( { name: fileURL,
 						 filename: fileURL,
 						 upload: 'VLO',
-						 mimetype: parameters.fileMimetype,
+						 mimetype: mimeType,
 						 language: languageHarmonization.threeLetterCode
 					       } );
 		var laneId = lane.id;
 	    
 		this.addNote(laneId, "name:   ".concat( fileURL ));
-		this.addNote(laneId, "type:   ".concat(parameters.fileMimetype));
+		this.addNote(laneId, "type:   ".concat(mimeType));
 		this.addNote(laneId, "size:   ".concat(parameters.fileSize));	
 		this.addNote(laneId, "language:".concat(languageHarmonization.languageCombo));
 
@@ -250,7 +250,7 @@ export default class UrlArea extends React.Component {
             padding: 2	    
         };
 
-	var transferalInfo = `Resource transferal from the ${this.props.caller}. Please check the information below, then press "Show Tools"`;
+	var transferalInfo = `Resource transferal from ${this.props.caller}. Please check the information below, then press "Show Tools"`;
 	// if (this.props.params.tokenId !== undefined) {
 	//     transferalInfo = 'Resource via token-based tranferal (experimental).'
 	// }
