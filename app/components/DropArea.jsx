@@ -109,11 +109,13 @@ export default class DropArea extends React.Component {
 	     (newFileType == "") ) {
 	    newFileType = "application/octet_stream"
 	}
+
+	var protocol = window.location.protocol;
 	
 	// 1. store in the temporary file store at the MPG
 	// -- the following URL is a proxy to 'http://ws1-clarind.esc.rzg.mpg.de/drop-off/storage/'
 	Request
-	    .post('http://weblicht.sfs.uni-tuebingen.de/clrs/storage/'.concat(newFileName))
+	    .post(protocol.concat('//weblicht.sfs.uni-tuebingen.de/clrs/storage/').concat(newFileName))
 	    .send(currentFile)	
 	    .set('Content-Type', newFileType)
 	    .end((err, res) => {
@@ -126,7 +128,7 @@ export default class DropArea extends React.Component {
 		    // ----------------------------------------------------------------
 		    var mimetypeDetected = "identify mimetype!";	    
 		    Request
-			.put('http://weblicht.sfs.uni-tuebingen.de/clrs/detect/stream')
+			.put(protocol.concat('//weblicht.sfs.uni-tuebingen.de/clrs/detect/stream'))
 			.send(currentFile)	
 			.set('Content-Type', currentFile.type)	
 			.end((err, res) => {
@@ -145,7 +147,7 @@ export default class DropArea extends React.Component {
 				
 				var languageDetected = "identify language!";
 				Request
-				    .put('http://weblicht.sfs.uni-tuebingen.de/clrs/language/string')
+				    .put(protocol.concat('//weblicht.sfs.uni-tuebingen.de/clrs/language/string'))
 				    .send(currentFile)	
 				    .set('Content-Type', currentFile.type)	
 				    .end((err, res) => {

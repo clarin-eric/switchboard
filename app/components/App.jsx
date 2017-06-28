@@ -21,6 +21,9 @@ import AboutHelp from './AboutHelp.jsx';            // displaying admin. informa
 import AlertURLFetchError from './AlertURLFetchError.jsx';
 import PropTypes from 'prop-types';
 
+// Piwik support
+import PiwikReactRouter from 'piwik-react-router';
+
 // routing between DropArea and UrlArea
 import { HashRouter, Route, Switch } from 'react-router-dom';
 
@@ -41,6 +44,9 @@ require('./../images/alpino.jpg');
 require('./../images/fowlt.jpg');
 require('./../images/clarindk.jpg');
 require('./../images/CLARIN-Logo16-c.jpg');
+require('./../images/zil.png');
+require('./../images/acdh.png');
+
 require('./../images/YourLogoComesHere.png');
 require('./../images/metadataListing1.png');
 require('./../images/metadataListing2.png');
@@ -60,11 +66,29 @@ export default class App extends React.Component {
 	    showAlertURLFetchError: true	    
 	};
 
-	console.log('constructor in App', this);
+	this.piwik = PiwikReactRouter({
+	    url	: 'https://stats.clarin.eu',
+	    siteId	: 21,
+	    enableLinkTracking: true
+        });
+
+//	this.piwik.push(["setDomains", ["*.weblicht.sfs.uni-tuebingen.de/clrs","*.weblicht.sfs.uni-tuebingen.de/clrs"]]);
+//	this.piwik.push(['trackPageView']);
+	console.log('constructor in App after piwik', this);
     }
 
     refresh() {
 	this.forceUpdate();
+    }
+
+    componentDidMount() {
+	this.piwik.push(["setDomains", ["*.weblicht.sfs.uni-tuebingen.de/clrs","*.weblicht.sfs.uni-tuebingen.de/clrs"]]);
+	this.piwik.push(['trackPageView']);
+
+	localStorage.removeItem("app");
+	this.clearDropzone();
+	this.refresh();
+	console.log('App: component did mount', this);	
     }
     
     handleChange (key, event) {
@@ -83,6 +107,8 @@ export default class App extends React.Component {
     }
 
     clearDropzone() {
+        console.log('clearing drop zone');
+	localStorage.removeItem("app");    		  
 	ToolActions.reset();
 	LaneActions.reset();
 	NoteActions.reset();
@@ -148,11 +174,12 @@ export default class App extends React.Component {
       <Route exact path="/" component={DropArea} />
       <Route exact path="/vlo/:fileURL/:fileMimetype/:fileLanguage"
 	    render={(props) => <UrlArea refreshFun={this.refresh} caller="VLO" {...props} /> } />
-      <Route exact path="/vlo/:fileURL/:fileMimetype"               caller="VLO" component={UrlArea} />		
-      <Route exact path="/vlo/:tokenId"                             caller="VLO" component={UrlArea} />
-      <Route path="/vcr/:fileURL"                             caller="VCR" component={UrlArea} />
-      <Route path="/fcs/:fileURL"                             caller="FCS" component={UrlArea} />
-      <Route path="/b2drop/:fileURL"                          caller="B2DROP" component={UrlArea} />    
+      <Route exact path="/vlo/:fileURL/:fileMimetype"             caller="VLO" component={UrlArea} />		
+      <Route exact path="/vlo/:tokenId"                           caller="VLO" component={UrlArea} />
+      <Route path="/vcr/:fileURL"                                 caller="VCR" component={UrlArea} />
+      <Route path="/fcs/:fileURL"                                 caller="FCS" component={UrlArea} />
+      <Route path="/b2drop/:fileURL"
+            render={(props) => <UrlArea refreshFun={this.refresh} caller="B2DROP" {...props} /> } />    
       <Route path="*"                                                         component={AlertURLFetchError} />
     </Switch>
   </HashRouter>
@@ -174,6 +201,7 @@ export default class App extends React.Component {
   <AltContainer
      stores={[ToolStore]}
                    inject={{
+		       registeredTools: () => ToolStore.getState().registeredTools || [],
 		       toolsPerTasks: () => ToolStore.getState().toolsPerTasks || [],
 		       lane: () => LaneStore.getState().lanes[0] || []
 		   }} >

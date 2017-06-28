@@ -10,6 +10,9 @@ export default {
 	} else if ((language == "da") || (language == "dan")) {
 	    languageCombo = "Danish:dan";
     	    threeLetterCode = "dan";
+	} else if ((language == "tr") || (language == "tur")) {
+	    languageCombo = "Turkish:tur";
+    	    threeLetterCode = "tur";	    
 	} else if ((language == "ca") || (language == "cat")) {
 	    languageCombo = "Catalan:cat";
     	    threeLetterCode = "cat";	    
@@ -28,6 +31,9 @@ export default {
 	} else if ((language == "de") || (language == "deu")) {
 	    languageCombo = "German:deu";
     	    threeLetterCode = "deu";
+	} else if ((language == "cs") || (language == "ces")) {
+	    languageCombo = "Czech:ces";
+    	    threeLetterCode = "ces";	    
 	} else if ((language == "es") || (language == "spa")) {
 	    languageCombo = "Spanish:spa";
     	    threeLetterCode = "spa";

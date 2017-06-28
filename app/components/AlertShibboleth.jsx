@@ -33,7 +33,7 @@ class AlertShibboleth extends React.Component {
         <ModalDialog onClose={this.props.onClose} className="systemAlertDialog"  width={400}>
 	    <h2>Resource Retrieval Error</h2>
 	    <p>
-	    The resource seems to be behind a Shibboleth authentification wall. Please fetch the resource with your authentification credentials by clicking on "Link to Resource". Then use the standalone version of the LRS to upload the resource.
+	    The resource seems to be behind a Shibboleth authentication wall. Please fetch the resource with your authentication credentials by clicking on "Link to Resource". Then use the standalone version of the LRS to upload the resource.
 	    </p>
 	    
         </ModalDialog>

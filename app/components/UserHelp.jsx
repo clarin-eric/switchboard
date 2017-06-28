@@ -80,14 +80,14 @@ class UserHelpText extends React.Component {
 	  When the LRS is called from the VLO, please keep in mind that the resource of interest
 	  <ul>
 	    <li>may have an different mimetype than advertised, or </li>
-	    <li>may be only accessible after user authentification, or</li>
+	    <li>may be only accessible after user authentication, or</li>
 	    <li>may be accessible to you, but not necessarily accessible to the tools that the LRS is
 	      suggesting for processing the resource.</li>
 	    <li>It may also be possible that the handle of the resource is pointing to a viewer application that shows
 	      the resource, rather than directly linking to the resource.</li>
 	  </ul>
 	  If the tool suggested by the LRS has problems processing the resource of interest, please
-	  consider downloading the resource from the resource provider (an authentification may be
+	  consider downloading the resource from the resource provider (an authentication may be
 	  required). Then save the resource to your harddrive, and use
 	  the <a href="http://weblicht.sfs.uni-tuebingen.de/clrs">standalone version of the LRS.</a>
 	    Before uploading the resource, check whether the resource matches the mimetype you expect.

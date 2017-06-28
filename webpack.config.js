@@ -88,10 +88,11 @@ const common = {
     plugins: [
 	new HtmlwebpackPlugin({
 	    template: 'app/template.html',
+	    hash: true,
 	    title: 'CLARIN LANGUAGE RESOURCE SWITCHBOARD',
 	    appMountId: 'app',
 	    favicon: 'app/images/lrs.png'
-	})
+	}),
   ]
 };
 
@@ -102,7 +103,7 @@ const webpack = require('webpack');
 if(TARGET === 'start' || !TARGET) {
 
     module.exports = merge(common, {
-	devtool: '#eval-source-map',
+	devtool: '#inline-source-map',
 
 	devServer: {
 	    historyApiFallback: true,

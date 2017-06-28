@@ -9,11 +9,17 @@ import ToolActions from '../actions/ToolActions';
 
 class ToolStore {
     constructor() {
+
+	console.log('==> ToolStore: I am being constructed');
 	this.bindActions(ToolActions);
 	this.applicableTools = [];
 	this.toolsPerTasks = [];
 
 	this.groupTools = this.groupTools.bind(this);
+	
+	this.on('init', () => {
+	    console.log("ToolStore: I have been initialised");
+	});
 	
 	this.registeredTools = 
 	    [
@@ -29,7 +35,7 @@ class ToolStore {
 		  },
 		  version: "0.8.3",
 		  license: "public",                //but webservice is protected with (free) registration
-		  authentification: "yes",
+		  authentication: "yes",
 		  shortDescription: "A tokeniser",
 		  longDescription: "Ucto is a unicode-compliant tokeniser. It takes input in the form of one or more untokenised texts, and subsequently tokenises them. Several languages are supported, but the software is extensible to other languages.",
 		  languages: ["nld", "eng", "deu", "fra", "ita", "fry"],
@@ -64,7 +70,7 @@ class ToolStore {
 		  },
 		  version: "0.8.3",
 		  license: "public",
-		  authentification: "no",
+		  authentication: "no",
 		  shortDescription: "CLARIN-DK Tool Box (CST Tokenizer)",
 		  longDescription:  "CLARIN-DK Tool Box (CST Tokenizer for English and Danish)",
 		  lang_encoding: "639-1",
@@ -119,7 +125,7 @@ class ToolStore {
 		  },
 		  version: "0.8.3",
 		  license: "public",
-		  authentification: "no",		  
+		  authentication: "no",		  
 		  shortDescription: "CLARIN-DK Tool Box (CST Lemmatizer)",
 		  longDescription:  "CLARIN-DK Tool Box (CST Lemmatizer). Lemmatiser for Bulgarian, Czech, Danish, Dutch, English, Estonian, Farsi, French, German, Greek, Hungarian, Icelandic, Italian, Latin, Macedonian, Polish, Portuguese, Romanian, Russian, Slovak, Serbian, Slovene, Spanish, and Ukrainian",
 		  lang_encoding: "639-1",
@@ -162,6 +168,33 @@ class ToolStore {
 		},
 
 		{ task: "Named Entity Recognition",
+		  name: "Concraft -> Nerf",
+		  logo: "zil.png",		  		  		  
+		  homepage: "http://zil.ipipan.waw.pl/Nerf",
+		  location: "Warsaw, Poland",		  		  		  
+		  creators: ["Institute of Computer Science, Polish Academy of Sciences, Poland"],
+		  contact: {
+		      person: "MultiService",
+		      email: "rjawor@amu.edu.pl"
+		  },	    
+		  version: "v1.0",
+		  authentication: "no",		  
+		  licence: "public",
+		  shortDescription: "Named Entity Recognition for Polish" ,
+		  longDescription: "Statistical named entity recognition tool based on linear-chain conditional random fields. Part of: Multiservice, a robust linguistic Web service for Polish.",
+		  languages: ["pol"],
+		  lang_encoding: "639-1",		  
+		  mimetypes: ["text/plain",
+			      "text/html"],
+		  output: ["text/xml"],
+		  url: "http://multiservice.nlp.ipipan.waw.pl/en/clrs",		  
+		  pid: "",
+		  parameter: {input :     "self.linkToResource",
+			      analysis:   "2"
+			     }
+		},
+		
+		{ task: "Named Entity Recognition",
 		  name: "CLARIN-DK Tool Box (CST Name Recognizer)",
 		  logo: "clarindk.jpg",		  
 		  homepage: "https://clarin.dk/clarindk/forside.jsp",		  
@@ -173,7 +206,7 @@ class ToolStore {
 		  },
 		  version: "0.8.3",
 		  license: "public",
-		  authentification: "no",		  
+		  authentication: "no",		  
 		  shortDescription: "CLARIN-DK Tool Box (CST's name recognizer)",
 		  longDescription:  "CLARIN-DK Tool Box (CST). CST's name recogniser classifies names as proper names, locations (with sub-classes of street, city, land and other types of locations), and other names (called MISC)",
 		  lang_encoding: "639-1",
@@ -225,7 +258,7 @@ class ToolStore {
 		  },
 		  version: "0.8.3",
 		  license: "public",
-		  authentification: "no",		  
+		  authentication: "no",		  
 		  shortDescription: "CLARIN-DK Tool Box (espeak)",
 		  longDescription:  "Text to speech software. History. Originally known as speak and originally written for Acorn/RISC_OS computers starting in 1995. This version is an enhancement and re-write, including a relaxation of the original memory and processing power constraints, and with support for additional languages.",
 		  lang_encoding: "639-1",
@@ -261,11 +294,10 @@ class ToolStore {
 		  },
 		  version: "0.8.3",
 		  license: "public",
-		  authentification: "no",		  
+		  authentication: "no",		  
 		  shortDescription: "CLARIN-DK Tool Box (Tesseract | CuneiForm)",
 		  longDescription:  "Tesseract is probably the most accurate open source OCR engine available. Combined with the Leptonica Image Processing Library it can read a wide variety of image formats and convert them to text in over 60 languages. It was one of the top 3 engines in the 1995 UNLV Accuracy test. Between 1995 and 2006 it had little work done on it, but since then it has been improved extensively by Google. It is released under the Apache License 2.0. Note that the CLARIN-DL Tool Box GUI gives you also access to the Russian CuneiForm system.",
-		  lang_encoding: "639-1",
-		  languages: ["dan","eng","generic"],
+		  lang_encoding: "639-1",		  languages: ["dan","eng","generic"],
 		  mimetypes: [
 			      "image/gif", 
 			      "image/jpeg", 
@@ -284,7 +316,7 @@ class ToolStore {
 		},		
 
 		{ task: "Tokenisation",
-		  name: "WebLicht-Tokenization-TK",
+		  name: "WebLicht-Tokenization-TUR",
 		  logo: "weblicht.jpg",		  
 		  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
 		  location: "Tuebingen, Germany",		  		  		  
@@ -294,7 +326,7 @@ class ToolStore {
 		      email: "wlsupport@sfs.uni-tuebingen.de"
 		  },	    
 		  version: "v1.0",
-		  authentification: "no",		  
+		  authentication: "no",		  
 		  licence: "public",
 		  shortDescription: "Tokenization for Turkish", 
 		  longDescription: "WebLicht Easy Chain for tokenization of Turkish texts.",
@@ -304,9 +336,10 @@ class ToolStore {
 			      "text/rtf",			     
 			      "application/pdf",
 			      "application/msword",
-			      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
+			      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+			     ],
 		  output: ["text/xml"],
-		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht",
+		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht",
 		  pid: "",
 		  parameter: {  input   :  "self.linkToResource", 
 				lang    : "tr",                   
@@ -325,7 +358,7 @@ class ToolStore {
 		      email: "wlsupport@sfs.uni-tuebingen.de"
 		  },	    
 		  version: "v1.0",
-		  authentification: "no",		  
+		  authentication: "no",		  
 		  licence: "public",
 		  shortDescription: "Named Entity Recognizer", 
 		  longDescription: "WebLicht Easy Chain for German Named Entity Recognition (German).",
@@ -337,7 +370,7 @@ class ToolStore {
 			      "application/msword",
 			      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
 		  output: ["text/xml"],
-		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht",
+		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht",
 		  pid: "",
 		  parameter: {  input   :  "self.linkToResource", 
 				lang    : "de",                   
@@ -357,7 +390,7 @@ class ToolStore {
 		      email: "wlsupport@sfs.uni-tuebingen.de"
 		  },	    
 		  version: "v1.0",
-		  authentification: "no",		  
+		  authentication: "no",		  
 		  licence: "public",
 		  shortDescription: "Lemmatizer",
 		  longDescription: "WebLicht Easy Chain for Lemmatization (German).",
@@ -369,7 +402,7 @@ class ToolStore {
 			      "application/msword",
 			      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
 		  output: ["text/xml"],
-		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht/",		  
+		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
 		  pid: "",
 		  parameter: {input :     "self.linkToResource",
 			      lang:       "de",			      
@@ -388,7 +421,7 @@ class ToolStore {
 		      email: "wlsupport@sfs.uni-tuebingen.de"
 		  },	    
 		  version: "v1.0",
-		  authentification: "no",		  
+		  authentication: "no",		  
 		  licence: "public",
 		  shortDescription: "Lemmatizer",
 		  longDescription: "WebLicht Easy Chain for Lemmatization (English).",
@@ -400,7 +433,7 @@ class ToolStore {
 			      "application/msword",
 			      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
 		  output: ["text/xml"],
-		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht/",		  
+		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
 		  pid: "",
 		  parameter: {input :     "self.linkToResource",
 			      lang:       "en",			      
@@ -420,7 +453,7 @@ class ToolStore {
 		      email: "wlsupport@sfs.uni-tuebingen.de"
 		  },	    
 		  version: "v1.0",
-		  authentification: "no",		  
+		  authentication: "no",		  
 		  licence: "public",
 		  shortDescription: "POS Tagger and Lemmatization Tool",		  
 		  longDescription: "WebLicht Easy Chain for POS Tagging and Lemmatization (German).",
@@ -432,7 +465,7 @@ class ToolStore {
 			      "application/msword",
 			      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
 		  output: ["text/xml"],
-		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht/",		  
+		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
 		  pid: "",
 		  parameter: {input :     "self.linkToResource",
 			      lang:       "de",			      
@@ -451,7 +484,7 @@ class ToolStore {
 		      email: "wlsupport@sfs.uni-tuebingen.de"
 		  },	    
 		  version: "v1.0",
-		  authentification: "no",		  
+		  authentication: "no",		  
 		  licence: "public",
 		  shortDescription: "POS Tagger and Lemmatization Tool",		  
 		  longDescription: "WebLicht Easy Chain for POS Tagging and Lemmatization (French).",
@@ -463,7 +496,7 @@ class ToolStore {
 			      "application/msword",
 			      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
 		  output: ["text/xml"],
-		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht/",		  
+		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
 		  pid: "",
 		  parameter: {input :     "self.linkToResource",
 			      lang:       "fr",			      
@@ -482,7 +515,7 @@ class ToolStore {
 		      email: "wlsupport@sfs.uni-tuebingen.de"
 		  },	    
 		  version: "v1.0",
-		  authentification: "no",		  
+		  authentication: "no",		  
 		  licence: "public",
 		  shortDescription: "POS Tagger and Lemmatization Tool",		  
 		  longDescription: "WebLicht Easy Chain for POS Tagging and Lemmatization (Italian).",
@@ -494,7 +527,7 @@ class ToolStore {
 			      "application/msword",
 			      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
 		  output: ["text/xml"],
-		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht/",		  
+		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
 		  pid: "",
 		  parameter: {input :     "self.linkToResource",
 			      lang:       "it",			      
@@ -513,7 +546,7 @@ class ToolStore {
 		      email: "wlsupport@sfs.uni-tuebingen.de"
 		  },	    
 		  version: "v1.0",
-		  authentification: "no",		  
+		  authentication: "no",		  
 		  licence: "public",
 		  shortDescription: "POS Tagger and Lemmatization Tool",
 		  longDescription: "WebLicht Easy Chain for POS Tagging and Lemmatization (English).",
@@ -525,11 +558,38 @@ class ToolStore {
 			      "application/msword",
 			      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
 		  output: ["text/xml"],
-		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht/",		  
+		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
 		  pid: "",
 		  parameter: {input :     "self.linkToResource",
 			      lang:       "en",			      
 			      analysis:   "pos"
+			     }
+		},
+		
+		{ task: "Part-Of-Speech Tagging",
+		  name: "Concraft",
+		  logo: "zil.png",		  		  		  
+		  homepage: "http://zil.ipipan.waw.pl/Concraft",
+		  location: "Warsaw, Poland",		  		  		  
+		  creators: ["Institute of Computer Science, Polish Academy of Sciences, Poland"],
+		  contact: {
+		      person: "MultiService",
+		      email: "rjawor@amu.edu.pl"
+		  },	    
+		  version: "v1.0",
+		  authentication: "no",		  
+		  licence: "public",
+		  shortDescription: "POS Tagger for Polish" ,
+		  longDescription: "Morphosyntactic tagger for Polish based on constrained conditional random fields. Part of: Multiservice, a robust  linguistic Web service for Polish.",
+		  languages: ["pol"],
+		  lang_encoding: "639-1",		  
+		  mimetypes: ["text/plain",
+			      "text/html"],
+		  output: ["text/xml"],
+		  url: "http://multiservice.nlp.ipipan.waw.pl/en/clrs",		  
+		  pid: "",
+		  parameter: {input :     "self.linkToResource",
+			      analysis:   "0"
 			     }
 		},		
 		
@@ -544,7 +604,7 @@ class ToolStore {
 		      email: "wlsupport@sfs.uni-tuebingen.de"
 		  },	    
 		  version: "v1.0",
-		  authentification: "no",		  
+		  authentication: "no",		  
 		  licence: "public",
 		  shortDescription: "Named Entity Recognizer", 
 		  longDescription: "WebLicht Easy Chain for German Named Entity Recognition (English).",
@@ -556,7 +616,7 @@ class ToolStore {
 			      "application/msword",
 			      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
 		  output: ["text/xml"],
-		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht",
+		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht",
 		  pid: "",
 		  parameter: {  input   : "self.linkToResource", 
 				lang    : "en",                   
@@ -577,7 +637,7 @@ class ToolStore {
 		      email: "Unknown email",
 		  },
 		  version: "v2.1",
-		  authentification: "no",		  
+		  authentication: "no",		  
 		  license: "public", //but webservice is protected with (free) registration
 		  shortDescription: "Voyant Tools is a web-based text reading and analysis environment. It is a scholarly project that is designed to facilitate reading and interpretive practices for digital humanities students and scholars as well as for the general public.",
 		  longDescription: "Use it to learn how computers-assisted analysis works. Check out our examples that show you how to do real academic tasks with Voyant. Use it to study texts that you find on the web or texts that you have carefully edited and have on your computer. Use it to add functionality to your online collections, journals, blogs or web sites so others can see through your texts with analytical tools. Use it to add interactive evidence to your essays that you publish online. Add interactive panels right into your research essays (if they can be published online) so your readers can recapitulate your results. Use it to develop your own tools using our functionality and code.",
@@ -610,7 +670,7 @@ class ToolStore {
 		      email: "proycon@anaproy.nl",
 		  },
 		  version: "x.y.z",
-		  authentification: "no",		  
+		  authentication: "yes",		  
 		  license: "public", //but webservice is protected with (free) registration
 		  shortDescription: "A dependency parser for Dutch",
 		  longDescription: "Alpino is a dependency parser for Dutch, developed in the context of the PIONIER Project Algorithms for Linguistic Processing, developed by Gertjan van Noord at the University of Groningen. You can upload either tokenised or untokenised files (which will be automatically tokenised for you using ucto), the output will consist of a zip file containing XML files, one for each sentence in the input document.",
@@ -629,6 +689,37 @@ class ToolStore {
 			     }
 		},
 
+		{
+		    task: "Text Enhancement",
+		    name: "Apache Stanbol Enhancer",
+		    logo: "acdh.png",		  		
+		    homepage: "https://stanbol.apache.org",
+		     homepage: "http://www.oeaw.ac.at/acdh",
+		    location: "Vienna, Austria",		    
+		    creators: ["Apache Foundation (software), Austrian Center of Digital Humanities (enhancement chains and configuration)"],
+		    contact: {
+			person: "Matej Durco",
+			email: "acdh-tech@oeaw.ac.at <mailto:acdh-tech@oeaw.ac.at>"
+		    },
+		    version: "v1.0",
+		    authentification: "no",		
+		    licence: "public",
+		    shortDescription: "Text Enhancement",
+		    longDescription: "This is a stateless interface to allow clients to submit content to analyze by the EnhancementEngines and get the resulting RDF enhancements at once without storing anything on the server-side.",
+		    languages: ["eng"],
+		    lang_encoding: "639-1",		
+		    mimetypes: ["text/plain"],
+		    output: ["application/json"],
+		    url: ["https://enrich-lrs.acdh.oeaw.ac.at/StanbolWrapper"],		
+		    pid: "",
+		    parameter: {
+			input     : "self.linkToResource",
+			outFormat : "application%2Fjson"
+		    },
+		    mapping:   {
+			input     : "resourceUri" 
+		    }
+		},
 
 		{ task: "Text Analytics",
 		  name: "T-scan",
@@ -641,7 +732,7 @@ class ToolStore {
 		      email: "proycon@anaproy.nl",
 		  },
 		  version: "x.y.z",
-		  authentification: "no",		  
+		  authentication: "yes",		  
 		  license: "public", //but webservice is protected with (free) registration
 		  shortDescription: "T-scan is a Dutch text analytics tool for readability prediction.",
 		  longDescription: "T-Scan is a new tool for analyzing Dutch text. It aims at extracting text features that are theoretically interesting, in that they relate to genre and text complexity, as well as practically interesting, in that they enable users and text producers to make text-specific diagnoses. T-Scan derives it features from tools such as Frog and Alpino, and resources such as SoNaR, SUBTLEX-NL and Referentie Bestand Nederlands.",
@@ -672,7 +763,7 @@ class ToolStore {
 		      email: "proycon@anaproy.nl",
 		  },
 		  version: "x.y.z",
-		  authentification: "no",		  
+		  authentication: "yes",		  
 		  license: "public", //but webservice is protected with (free) registration
 		  shortDescription: "Oersetter is a Dutch-Frisian Machine Translation system.",
 		  longDescription: "Oersetter is a statistical machine translation (SMT) system for Frisian to Dutch and Dutch to Frisian. A parallel training corpus has been established, which has subsequently been used to automatically learn a phrase-based SMT model. The translation system is built around the open-source SMT software Moses.",
@@ -699,7 +790,7 @@ class ToolStore {
 		      email: "proycon@anaproy.nl",
 		  },
 		  version: "x.y.z",
-		  authentification: "no",		  
+		  authentication: "yes",		  
 		  license: "public", //but webservice is protected with (free) registration
 		  shortDescription: "Oersetter is a Frisian-Dutch Machine Translation system.",
 		  longDescription: "Oersetter is a Frisian-Dutch Machine Translation system.",
@@ -727,7 +818,7 @@ class ToolStore {
 		      email: "proycon@anaproy.nl",
 		  },
 		  version: "x.y.z",
-		  authentification: "no",		  
+		  authentication: "yes",		  
 		  license: "public", //but webservice is protected with (free) registration
 		  shortDescription: "A spelling corrector for English",
 		  longDescription: "Fowlt is an online, free-to-use context-sensitive English spelling checker. It follows the setup of the Dutch spelling checker Valkuil.net. Both Valkuil and Fowlt are unlike the typical spelling checkers: whereas the latter mostly try to find errors by comparing all words to a built-in dictionary and flag the word as an error if they can't find a match, Fowlt is context sensitive, taking into account the words around every word. Fowlt makes use of language models. These models are created by giving lots of texts to machine learning software (TiMBL and WOPR).",
@@ -754,7 +845,7 @@ class ToolStore {
 		      email: "proycon@anaproy.nl",
 		  },
 		  version: "x.y.z",
-		  authentification: "no",		  
+		  authentication: "yes",		  
 		  license: "public", //but webservice is protected with (free) registration
 		  shortDescription: "A spelling corrector for English",
 		  longDescription: "Fowlt is an online, free-to-use context-sensitive English spelling checker. It follows the setup of the Dutch spelling checker Valkuil.net. Both Valkuil and Fowlt are unlike the typical spelling checkers: whereas the latter mostly try to find errors by comparing all words to a built-in dictionary and flag the word as an error if they can't find a match, Fowlt is context sensitive, taking into account the words around every word. Fowlt makes use of language models. These models are created by giving lots of texts to machine learning software (TiMBL and WOPR).",
@@ -781,7 +872,7 @@ class ToolStore {
 		      email: "proycon@anaproy.nl",
 		  },
 		  version: "x.y.z",
-		  authentification: "no",		  
+		  authentication: "yes",		  
 		  license: "public", //but webservice is protected with (free) registration
 		  shortDescription: "NLP suite for Dutch",
 		  longDescription: "Frog's current version will tokenize, tag, lemmatize, and morphologically segment word tokens in Dutch text files, will assign a dependency graph to each sentence, will identify the base phrase chunks in the sentence, and will attempt to find and label all named entities.",
@@ -808,7 +899,7 @@ class ToolStore {
 		      email: "proycon@anaproy.nl",
 		  },
 		  version: "x.y.z",
-		  authentification: "no",		  
+		  authentication: "yes",		  
 		  license: "public", //but webservice is protected with (free) registration
 		  shortDescription: "NLP suite for Dutch",
 		  longDescription: "Frog's current version will tokenize, tag, lemmatize, and morphologically segment word tokens in Dutch text files, will assign a dependency graph to each sentence, will identify the base phrase chunks in the sentence, and will attempt to find and label all named entities.",
@@ -835,7 +926,7 @@ class ToolStore {
 		      email: "proycon@anaproy.nl",
 		  },
 		  version: "0.2",
-		  authentification: "no",		  
+		  authentication: "yes",		  
 		  license: "public", //but webservice is protected with (free) registration
 		  shortDescription: "N-gram frequency list generation on FoLiA input.",
 		  longDescription: "N-gram frequency list generation on FoLiA input.",
@@ -862,7 +953,7 @@ class ToolStore {
 		      email: "proycon@anaproy.nl",
 		  },
 		  version: "x.y.z",
-		  authentification: "no",		  
+		  authentication: "yes",		  
 		  license: "public", //but webservice is protected with (free) registration
 		  shortDescription: "A spelling corrector for Dutch",
 		  longDescription: "Valkuil is a Dutch spelling correction system.",
@@ -890,7 +981,7 @@ class ToolStore {
 		      email: "proycon@anaproy.nl",
 		  },
 		  version: "x.y.z",
-		  authentification: "no",		  
+		  authentication: "yes",		  
 		  license: "public", //but webservice is protected with (free) registration
 		  shortDescription: "A spelling corrector for Dutch",
 		  longDescription: "Valkuil is a Dutch spelling correction system.",
@@ -918,7 +1009,7 @@ class ToolStore {
 		      email: "proycon@anaproy.nl",
 		  },
 		  version: "x.y.z",
-		  authentification: "no",		  
+		  authentication: "yes",		  
 		  license: "public", //but webservice is protected with (free) registration
 		  shortDescription: "NLP tool for building n-grams and skip-grams.",
 		  longDescription: "Colibri core is an NLP tool as well as a C++ and Python library for working with basic linguistic constructions such as n-grams and skipgrams (i.e patte rns with one or more gaps, either of fixed or dynamic size) in a quick and memory-efficient way.",
@@ -950,7 +1041,7 @@ class ToolStore {
 		      email: "proycon@anaproy.nl",
 		  },
 		  version: "x.y.z",
-		  authentification: "no",		  
+		  authentication: "yes",		  
 		  license: "public", //but webservice is protected with (free) registration
 		  shortDescription: "NLP tool for building n-grams and skip-grams.",
 		  longDescription: "Colibri core is an NLP tool as well as a C++ and Python library for working with basic linguistic constructions such as n-grams and skipgrams (i.e patte rns with one or more gaps, either of fixed or dynamic size) in a quick and memory-efficient way.",
@@ -971,6 +1062,32 @@ class ToolStore {
 			     }
 		},				
 
+		{ task: "Shallow Parsing",
+		  name: "Concraft->Spejd",
+		  logo: "zil.png",		  		  		  
+		  homepage: "http://zil.ipipan.waw.pl/Spejd",
+		  location: "Warsaw, Poland",		  		  		  
+		  creators: ["Institute of Computer Science, Polish Academy of Sciences, Poland"],
+		  contact: {
+		      person: "MultiService",
+		      email: "rjawor@amu.edu.pl"
+		  },	    
+		  version: "v1.0",
+		  authentication: "no",		  
+		  licence: "public",
+		  shortDescription: "A Shallow Parser for Polish" ,
+		  longDescription: "Tool for partial parsing and rule-based morphosyntactic disambiguation. Part of: Multiservice, a robust  linguistic  Web service for Polish.",
+		  languages: ["pol"],
+		  lang_encoding: "639-1",		  
+		  mimetypes: ["text/plain",
+			      "text/html"],
+		  output: ["text/xml"],
+		  url: "http://multiservice.nlp.ipipan.waw.pl/en/clrs",		  
+		  pid: "",
+		  parameter: {input :     "self.linkToResource",
+			      analysis:   "1"
+			     }
+		},		
 		
 		{ task: "Constituent Parsing",
 		  name: "WebLicht-Const-Parsing-DE",
@@ -983,7 +1100,7 @@ class ToolStore {
 		      email: "wlsupport@sfs.uni-tuebingen.de"
 		  },	    
 		  version: "v1.0",
-		  authentification: "no",		  
+		  authentication: "no",		  
 		  licence: "public",
 		  shortDescription: "Constituent Parsing",
 		  longDescription: "WebLicht Easy Chain for Constituent Parsing (German).",
@@ -995,7 +1112,7 @@ class ToolStore {
 			      "application/msword",
 			      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
 		  output: ["text/xml"],
-		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht/",		  
+		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
 		  pid: "",
 		  parameter: {input :     "self.linkToResource",
 			      lang:       "de",			      
@@ -1014,7 +1131,7 @@ class ToolStore {
 		      email: "wlsupport@sfs.uni-tuebingen.de"
 		  },	    
 		  version: "v1.0",
-		  authentification: "no",		  
+		  authentication: "no",		  
 		  licence: "public",
 		  shortDescription: "Constituent Parsing",
 		  longDescription: "WebLicht Easy Chain for Constituent Parsing (English).",
@@ -1026,13 +1143,40 @@ class ToolStore {
 			      "application/msword",
 			      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
 		  output: ["text/xml"],
-		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht/",		  
+		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
 		  pid: "",
 		  parameter: {input :     "self.linkToResource",
 			      lang:       "en",			      
 			      analysis:   "const-parsing"
 			     }
 		},		
+
+		{ task: "Dependency Parsing",
+		  name: "Concraft -> DependencyParser",
+		  logo: "zil.png",		  		  		  
+		  homepage: "http://zil.ipipan.waw.pl/DependencyParser",
+		  location: "Warsaw, Poland",		  		  		  
+		  creators: ["Institute of Computer Science, Polish Academy of Sciences, Poland"],
+		  contact: {
+		      person: "MultiService",
+		      email: "rjawor@amu.edu.pl"
+		  },	    
+		  version: "v1.0",
+		  authentication: "no",		  
+		  licence: "public",
+		  shortDescription: "A Shallow Parser for Polish" ,
+		  longDescription: "Polish dependency parser is trained on the extended version of the Polish dependency treebank (Składnica zależnościowa) with the publicly available parsing systems – MaltParser or MateParser. MaltParser is a transition-based dependency parser that uses a deterministic parsing algorithm. The deterministic parsing algorithm builds a dependency structure of an input sentence based on transitions (shift-reduce actions) predicted by a classifier. The classifier learns to predict the next transition given training data and the parse history. MateParser, in turn, is a graph-based parser that defines a space of well-formed candidate dependency trees for an input sentence, scores them given an induced parsing model, and selects the highest scoring dependency tree as a correct analysis of the input sentence. Part of: Multiservice, a robust  linguistic  Web service for Polish.",
+		  languages: ["pol"],
+		  lang_encoding: "639-1",		  
+		  mimetypes: ["text/plain",
+			      "text/html"],
+		  output: ["text/xml"],
+		  url: "http://multiservice.nlp.ipipan.waw.pl/en/clrs",		  
+		  pid: "",
+		  parameter: {input :     "self.linkToResource",
+			      analysis:   "4"
+			     }
+		},
 		
 		{ task: "Dependency Parsing",
 		  name: "WebLicht-Dep-Parsing-DE",
@@ -1045,7 +1189,7 @@ class ToolStore {
 		      email: "wlsupport@sfs.uni-tuebingen.de"
 		  },	    
 		  version: "v1.0",
-		  authentification: "no",		  
+		  authentication: "no",		  
 		  licence: "public",
 		  shortDescription: "Dependency Parsing",
 		  longDescription: "WebLicht Easy Chain for Dependency Parsing (German).",
@@ -1057,7 +1201,7 @@ class ToolStore {
 			      "application/msword",
 			      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
 		  output: ["text/xml"],
-		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht/",		  
+		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
 		  pid: "",
 		  parameter: {input :     "self.linkToResource",
 			      lang:       "de",			      
@@ -1076,7 +1220,7 @@ class ToolStore {
 		      email: "wlsupport@sfs.uni-tuebingen.de"
 		  },	    
 		  version: "v1.0",
-		  authentification: "no",		  
+		  authentication: "no",		  
 		  licence: "public",
 		  shortDescription: "Dependency Parsing (NL)",
 		  longDescription: "WebLicht Easy Chain for Dependency Parsing (Dutch).",
@@ -1088,7 +1232,7 @@ class ToolStore {
 			      "application/msword",
 			      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
 		  output: ["text/xml"],
-		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht/",		  
+		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
 		  pid: "",
 		  parameter: {input :     "self.linkToResource",
 			      lang:       "nl",			      
@@ -1108,7 +1252,7 @@ class ToolStore {
 		      email: "wlsupport@sfs.uni-tuebingen.de"
 		  },	    
 		  version: "v1.0",
-		  authentification: "no",		  
+		  authentication: "no",		  
 		  licence: "public",
 		  shortDescription: "Dependency Parsing",
 		  longDescription: "WebLicht Easy Chain for Dependency Parsing (English).",
@@ -1120,15 +1264,67 @@ class ToolStore {
 			      "application/msword",
 			      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
 		  output: ["text/xml"],
-		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht/",		  
+		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
 		  pid: "",
 		  parameter: {input :     "self.linkToResource",
 			      lang:       "en",			      
 			      analysis:   "dep-parsing"
 			     }
-		},				
+		},
 
-		
+		{ task: "Text Summarization",
+		  name: "Concraft -> Bartek -> NicolasSummarizer",
+		  logo: "zil.png",		  		  		  
+		  homepage: "http://zil.ipipan.waw.pl/Nicolas",
+		  location: "Warsaw, Poland",		  		  		  
+		  creators: ["Institute of Computer Science, Polish Academy of Sciences, Poland"],
+		  contact: {
+		      person: "MultiService",
+		      email: "rjawor@amu.edu.pl"
+		  },	    
+		  version: "v1.0",
+		  authentication: "no",		  
+		  licence: "public",
+		  shortDescription: "Text Summarization for Polish",
+		  longDescription: "Java coreference-based summarization tool; its creation was cofunded by the European Union from resources of the European Social Fund -- Project PO KL 'Information technologies: Research and their interdisciplinary applications'. Part of: Multiservice, a robust  linguistic  Web service for Polish.",
+		  languages: ["pol"],
+		  lang_encoding: "639-1",		  
+		  mimetypes: ["text/plain",
+			      "text/html"],
+		  output: ["text/xml"],
+		  url: "http://multiservice.nlp.ipipan.waw.pl/en/clrs",		  
+		  pid: "",
+		  parameter: {input :     "self.linkToResource",
+			      analysis:   "6"
+			     }
+		},
+
+		{ task: "Coreference Resolution",
+		  name: "Concraft -> Bartek",
+		  logo: "zil.png",		  		  		  
+		  homepage: "http://zil.ipipan.waw.pl/Bartek",
+		  location: "Warsaw, Poland",		  		  		  
+		  creators: ["Institute of Computer Science, Polish Academy of Sciences, Poland"],
+		  contact: {
+		      person: "MultiService",
+		      email: "rjawor@amu.edu.pl"
+		  },	    
+		  version: "v1.0",
+		  authentication: "no",		  
+		  licence: "public",
+		  shortDescription: "Coreference Resolution for Polish",
+		  longDescription: "Statistical tool for performing Coreference Resolution (CR). Part of: Multiservice, a robust  linguistic  Web service for Polish.",
+		  languages: ["pol"],
+		  lang_encoding: "639-1",		  
+		  mimetypes: ["text/plain",
+			      "text/html"],
+		  output: ["text/xml"],
+		  url: "http://multiservice.nlp.ipipan.waw.pl/en/clrs",		  
+		  pid: "",
+		  parameter: {input :     "self.linkToResource",
+			      analysis:   "5"
+			     }
+		},			
 		
 		{ task: "Morphology Analysis",
 		  name: "WebLicht-Morphology-DE",
@@ -1141,7 +1337,7 @@ class ToolStore {
 		      email: "wlsupport@sfs.uni-tuebingen.de"
 		  },	    
 		  version: "v1.0",
-		  authentification: "no",
+		  authentication: "no",
 		  licence: "public",
 		  shortDescription: "Morphology Analysis Tool",
 		  longDescription: "WebLicht Easy Chain for Morphology Analysis (German)",
@@ -1153,7 +1349,7 @@ class ToolStore {
 			      "application/msword",
 			      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
 		  output: ["text/xml"],
-		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht/",		  
+		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
 		  pid: "",
 		  parameter: {input :     "self.linkToResource",
 			      lang:       "de",			      
@@ -1172,7 +1368,7 @@ class ToolStore {
 		      email: "wlsupport@sfs.uni-tuebingen.de"
 		  },	    
 		  version: "v1.0",
-		  authentification: "no",		  
+		  authentication: "no",		  
 		  licence: "public",
 		  shortDescription: "Morphology Analysis Tool",
 		  longDescription: "WebLicht Easy Chain for Morphology Analysis (English)",
@@ -1184,7 +1380,7 @@ class ToolStore {
 			      "application/msword",
 			      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
 		  output: ["text/xml"],
-		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht/",		  
+		  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
 		  pid: "",
 		  parameter: {input :     "self.linkToResource",
 			      lang:       "en",			      
@@ -1194,7 +1390,7 @@ class ToolStore {
 
 		// Here comes a list of webserves (unsure whether to include them at this stage)
 		{ task: "Keyword Extractor",
-		  name: "KER (WebService)",
+		  name: "KER (web service)",
 		  softwareType: "webService",
 		  postSubmit: "form",
 		  logo: "lindat.jpg",
@@ -1206,7 +1402,7 @@ class ToolStore {
 		      email: "libovicky@ufal.mff.cuni.cz",
 		  },
 		  version: "unknown",
-		  authentification: "no",		  
+		  authentication: "no",		  
 		  license: "unknown", 
 		  shortDescription: "Keyword extractor for Czech and English",
 		  longDescription:  "KER is a keyword extractor that was designed for scanned texts in Czech and English. It is based on the stadard tf-idf algorithm with the idf tables trained on texts from Wikipedia. To deal with the data sparsity, texts are preprocessed by Morphodita: morphological dictionary and tagger.",
@@ -1223,8 +1419,43 @@ class ToolStore {
 			     }		  
 		},
 
+		{ task: "Dependency Parsing",
+		  name: "UDPipe (web service, CES-only)",
+		  softwareType: "webService",
+		  postSubmit: "form",
+		  logo: "lindat.jpg",
+		  homepage: "http://ufal.mff.cuni.cz/udpipe",
+		  location: "Prague, CUNI",
+		  creators: ["Milan Straka, Jana Straková"],
+		  contact: {
+		      person: "Milan Straka",
+		      email: "straka@ufal.mff.cuni.cz",
+		  },
+		  version: "unknown",
+		  authentication: "no",		  
+		  license: "UDPipe is a free software under Mozilla Public License 2.0 and the linguistic models are free for non-commercial use and distributed under CC BY-NC-SA license, although for some models the original data used to create the model may impose additional licensing conditions. UDPipe is versioned using Semantic Versioning.", 
+		  shortDescription: "Dependency Parsing",
+		  longDescription:  "UDPipe is an trainable pipeline for tokenization, tagging, lemmatization and dependency parsing of CoNLL-U files. UDPipe is language-agnostic and can be trained given only annotated data in CoNLL-U format. Trained models are provided for nearly all UD treebanks.",
+		  lang_encoding: "639-1",
+		  languages: ["ces"],
+		  mimetypes: ["text/plain"],
+		  url: ["http://lindat.mff.cuni.cz/services/udpipe/api/process?tokenizer&tagger&parser"],
+		  parameter: {  input   : "self.linkToResource", 
+				lang    : "self.linkToResourceLanguage",
+ 				model   : "czech"
+			     },		  
+		  mapping: {    input   : "data",
+				lang    : "language"
+			   },
+		},
+
+		// curl -F 'model=german' -F 'data=@germanText.txt' 'http://lindat.mff.cuni.cz/services/udpipe/api/process?tokenizer&tagger&parser'
+
+//		grc, ara, eus, bul, hrv, ces, dan, nld, eng, est, fin, fra, deu, got, ell, heb, hin, hun, ind, gle, ita, jpn, lat, nor, chu, fas, pol, por, ron, slv, spa, swe, tam, cat, zho, glg, kaz, lav, rus, tur, cop, san, slk, ukr, uig, vie, bel, kor, lit, urd
+
+		
 		{ task: "Named Entity Recognition",
-		  name: "NameTag (WebService)",
+		  name: "NameTag (web service)",
 		  softwareType: "webService",
 		  postSubmit: "form",
 		  logo: "lindat.jpg",
@@ -1236,7 +1467,7 @@ class ToolStore {
 		      email: "straka@ufal.mff.cuni.cz",
 		  },
 		  version: "unknown",
-		  authentification: "no",		  
+		  authentication: "no",		  
 		  license: "NameTag is a free software under LGPL license and the linguistic models are free for non-commercial use and distributed under CC BY-NC-SA license, although for some models the original data used to create the model may impose additional licensing conditions.", 
 		  shortDescription: "Named Entity Recognition for Czech and English",
 		  longDescription:  "NameTag is an open-source tool for named entity recognition (NER). NameTag identifies proper names in text and classifies them into predefined categories, such as names of persons, locations, organizations, etc. NameTag is distributed as a standalone tool or a library, along with trained linguistic models. In the Czech language, NameTag achieves state-of-the-art performance (Straková et al. 2013).",
@@ -1250,6 +1481,33 @@ class ToolStore {
 		  mapping: {  input   : "data",
 				lang    : "language"
 			     },
+		},
+
+		{ task: "Sentiment Analysis",
+		  name: "Concraft -> Sentipejd",
+		  logo: "zil.png",		  		  		  
+		  homepage: "http://iis.ipipan.waw.pl/2008/proceedings/iis08-20.pdf",
+		  location: "Warsaw, Poland",		  		  		  
+		  creators: ["Institute of Computer Science, Polish Academy of Sciences, Poland"],
+		  contact: {
+		      person: "MultiService",
+		      email: "rjawor@amu.edu.pl"
+		  },	    
+		  version: "v1.0",
+		  authentication: "no",		  
+		  licence: "public",
+		  shortDescription: "Sentiment Analysis for Polish" ,
+		  longDescription: " A morphosyntactic tagger extended with a semantic category, expressing properties of positive or negative  sentiment. Part of: Multiservice, a robust  linguistic  Web service for Polish.",
+		  languages: ["pol"],
+		  lang_encoding: "639-1",		  
+		  mimetypes: ["text/plain",
+			      "text/html"],
+		  output: ["text/xml"],
+		  url: "http://multiservice.nlp.ipipan.waw.pl/en/clrs",		  
+		  pid: "",
+		  parameter: {input :     "self.linkToResource",
+			      analysis:   "3"
+			     }
 		},
 
 		// seems like BAS only offers German voice(s) of Mary. @ Jul 25, website mary.dfki.de not working.
@@ -1266,7 +1524,7 @@ class ToolStore {
 		  },
 		  version: "> 5.1",
 		  license: "public",
-		  authentification: "no",		  
+		  authentication: "no",		  
 		  shortDescription: "Speech Synthesis System for German (hosted by BAS)",
 		  longDescription:  "MaryTTS is an open-source, multilingual Text-to-Speech Synthesis platform written in Java. It was originally developed as a collaborative project of DFKI’s Language Technology Lab and the Institute of Phonetics at Saarland University. It is now maintained by the Multimodal Speech Processing Group in the Cluster of Excellence MMCI and DFKI.",
 		  lang_encoding: "639-1",
@@ -1299,7 +1557,7 @@ class ToolStore {
 		  },
 		  version: "x.y.z",
 		  license: "public",
-		  authentification: "no",		  
+		  authentication: "no",		  
 		  shortDescription: "Segments and labels a speech audio file into SAM-PA (or IPA) phonetic segments without any text/phonological input.",
 		  longDescription:  "Segments and labels a speech audio file into SAM-PA (or IPA) phonetic segments without any text/phonological input; results are stored either in praat compatible TextGrid file (configuration parameter OUTFORMAT=TextGrid) or a CSV table (the BPF MAU tier, configuration parameter OUTFORMAT=csv).",
 		  lang_encoding: "639-1",
@@ -1337,7 +1595,7 @@ class ToolStore {
 		  },
 		  version: "2.10.0",
 		  license: "public",               
-		  authentification: "no",
+		  authentication: "no",
 		  shortDescription: "OxGarage webservice to transform XML-based TEI documents to plain text. For more conversions, please go to the homepage.",
 		  longDescription: "OxGarage is a web, and RESTful, service to manage the transformation of documents between a variety of formats. The majority of transformations use the Text Encoding Initiative format as a pivot format.",
 		  languages: ["nld", "eng", "deu", "fra", "ita", "spa", "por", "tur", "rus", "swe"], // todo
@@ -1370,7 +1628,7 @@ class ToolStore {
 		  },
 		  version: "0.0.3",
 		  license: "public",               
-		  authentification: "no",
+		  authentication: "no",
 		  shortDescription: "Converts between TCF and TEI",
 		  longDescription: "A converter between the two formats TEI and TCF. Beta version.",
 		  languages: ["generic"], 
@@ -1403,7 +1661,7 @@ class ToolStore {
 		//       email: "nalida@sfs.uni-tuebingen.de"
 		//   },	    
 		//   version: "v1.0",
-		//   authentification: "no",		  
+		//   authentication: "no",		  
 		//   licence: "public",
 		//   shortDescription: "Bibliographic Format Converter", // controlled vocabulary, change name?
 		//   longDescription: "Webservice converting NaLiDa-based CMDI profiles to Marc21",
@@ -1416,7 +1674,7 @@ class ToolStore {
 		// 	     }
 		  
 		//   // URL to get called:
-		//   // http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht?input=http://hdl.handle.net/10932/00-017B-E3BC-2D57-CC01-6&lang=de&analysis=ne
+		//   // http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht?input=http://hdl.handle.net/10932/00-017B-E3BC-2D57-CC01-6&lang=de&analysis=ne
 		// },		
 		
 		{ task: "Metadata Format Conversion",
@@ -1432,7 +1690,7 @@ class ToolStore {
 		      email: "nalida@sfs.uni-tuebingen.de"
 		  },	    
 		  version: "v0.9",
-		  authentification: "no",		  
+		  authentication: "no",		  
 		  licence: "public",
 		  shortDescription: "Bibliographic Format Converter: CMDI to Dublin Core (DC)", 
 		  longDescription: "Webservice converting CMDI metadata to XML-based Dublin Core metadata",
@@ -1459,7 +1717,7 @@ class ToolStore {
 		      email: "nalida@sfs.uni-tuebingen.de"
 		  },	    
 		  version: "v1.0",
-		  authentification: "no",		  
+		  authentication: "no",		  
 		  licence: "public",
 		  shortDescription: "Bibliographic Format Converter: DC to MARC 21", 
 		  longDescription: "Webservice converting XML-based Dublin Core metadata to XML-based MARC 21 metadata",
@@ -1485,7 +1743,7 @@ class ToolStore {
 		      email: "nalida@sfs.uni-tuebingen.de"
 		  },	    
 		  version: "v1.0",
-		  authentification: "no",		  
+		  authentication: "no",		  
 		  licence: "public",
 		  shortDescription: "Bibliographic Format Converter: from MARC 21 to EAD", 
 		  longDescription: "Webservice converting XML-based MARC 21 metadata to XML-based EAD metadata",
@@ -1511,7 +1769,7 @@ class ToolStore {
 		      email: "nalida@sfs.uni-tuebingen.de"
 		  },	    
 		  version: "v1.0",
-		  authentification: "no",		  
+		  authentication: "no",		  
 		  licence: "public",
 		  shortDescription: "Bibliographic Format Converter: from MARC 21 to MODS", 
 		  longDescription: "Webservice converting XML-based MARC 21 metadata to XML-based MODS metadata",
@@ -1537,7 +1795,7 @@ class ToolStore {
 		      email: "nalida@sfs.uni-tuebingen.de"
 		  },	    
 		  version: "v1.0",
-		  authentification: "no",		  
+		  authentication: "no",		  
 		  licence: "public",
 		  shortDescription: "Bibliographic Format Converter: from MARC 21 to RDF-DC", 
 		  longDescription: "Webservice converting XML-based MARC 21 metadata to XML-based RDF-DC metadata",
@@ -1563,7 +1821,7 @@ class ToolStore {
 		      email: "nalida@sfs.uni-tuebingen.de"
 		  },	    
 		  version: "v1.0",
-		  authentification: "no",		  
+		  authentication: "no",		  
 		  licence: "public",
 		  shortDescription: "Bibliographic Format Converter: from MODS to RDF", 
 		  longDescription: "Webservice converting XML-based MODS metadata to XML-based RDF metadata",
@@ -1574,9 +1832,77 @@ class ToolStore {
 		  pid: "",
 		  parameter: { input : "self.linkToResource" // for demo upload site, to be instantiated
 			     }
-		},				
+		},
+
+
+		{ task: "Conversion",
+		  name: "HTML To TEXT Converter (web service)",
+		  softwareType: "browserBased",
+		  //softwareType: "webService",
+		  postSubmit: "form",
+		  logo: "YourLogoComesHere.png",		  
+		  homepage: "EXPERIMENTAL",
+		  location: "Copenhagen, Denmark",		  
+		  creators: ["Bart Jongejan et al."],
+		  contact: {
+		      person: "Bart Jongejan",
+		      email: "bartj@hum.ku.dk",
+		  },	  	  
+		  version: "unknown",
+		  authentication: "no",		  
+		  licence: "public",
+		  shortDescription: "This is a converter from text/html to text/plain", 
+		  longDescription: "This is a converter from text/html to text/plain", 
+		  languages: ["generic"],
+		  lang_encoding: "639-1",		  
+		  mimetypes: ["text/html"],
+		  output: ["text/plain"],
+		  url: ["https://cst.dk/html2text"],
+		  pid: "",
+		  parameter: { input : "self.linkToResource",
+			       iLang : "en",
+			       base:  ""
+			     },
+		  mapping: {    input   : "F",
+			   },		  
+		  
+		},
+
+		{ task: "Tokenisation",
+		  name: "ILC Tokenizer (web service)",
+		  //softwareType: "webService",
+		  softwareType: "browserBased",
+		  logo: "YourLogoComesHere.png", // Fix this
+		  homepage: "http://ilc4clarin.ilc.cnr.it/services/ltfw/readme",
+		  location: "Pisa, Italiy",
+		  creators: ["Ricardo del Gratta"],
+		  contact: {
+		      person: "Riccardo Del Gratta",
+		      email: "riccardo.delgratta@gmail.com",
+		  },
+		  version: "unknown",
+		  authentication: "no",		  
+		  license: "unknown.", 
+		  shortDescription: "This is the ILC tokenizer for a number of European languages.",
+		  longDescription: "This is the ILC tokenizer (web service) for Italian, French, German, English, Spanish und Dutch.",
+		  lang_encoding: "639-3",
+		  languages: ["ita", "fra", "deu", "eng", "esp", "nld"],
+		  mimetypes: ["text/plain"],
+		  url: ["http://ilc4clarin.ilc.cnr.it/services/ltfw/wl/tokenizer/lrs"],
+		  parameter: {  input   : "self.linkToResource", 
+				lang    : "self.linkToResourceLanguage",
+			     },		  
+		  mapping: {  input   : "url",
+			      lang    : "lang" // fix this!
+			   },
+		},
+
+		// curl -X POST  "http://localhost:8080/wl/tokenizer/plainget?lang=ita&url=https://raw.githubusercontent.com/clarin-eric/LRS-Hackathon/master/samples/resources/txt/hermes-it.txt"
+
+		// /kaf/tokenizer/plainget (it.cnr.ilc.tokenizer.service.resources.TokenizerKafResource)
 		
-		
+		// wget "http://localhost:8080/wl/tokenizer/plainget?lang=it&url=https://raw.githubusercontent.com/clarin-eric/LRS-Hackathon/master/samples/resources/txt/hermes-it.txt" -O test
+
 	    ];
 	
 	this.exportPublicMethods({
@@ -1601,10 +1927,11 @@ class ToolStore {
     reset () {
 	this.setState({
 	    applicableTools: [],
-	    toolsPerTasks: []
+	    toolsPerTasks: [],
+	    registeredTools: this.registeredTools
 	});
 
-	console.log('ToolStore/reset');
+	console.log('ToolStore/reset', this);
     }
     
     update(updatedTool) {
@@ -1648,7 +1975,7 @@ class ToolStore {
 		homepage        : entry.homepage,
 		url             : entry.url,
 		location        : entry.location,
-		authentification: entry.authentification,
+		authentication  : entry.authentication,
 		id              : entry.id,
 		email           : entry.contact.email,
 		parameter       : entry.parameter,

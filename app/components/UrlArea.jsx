@@ -71,9 +71,10 @@ export default class UrlArea extends React.Component {
 			that.addNote(laneId, "size:   not determined");	
 
 			var languageHarmonization = "identify language!";
-			console.log('UrlArea/fetchURL: calling TIKA for language detection');
+			var protocol = window.location.protocol;
+			console.log('UrlArea/fetchURL: calling TIKA for language detection', protocol);
 			Request
-			    .put('http://weblicht.sfs.uni-tuebingen.de/clrs/language/string')
+			    .put(protocol.concat('//weblicht.sfs.uni-tuebingen.de/clrs/language/string'))
 			    .send(res.text)	
 			    .set('Content-Type', res.type)	
 			    .end((err, langDetectResult) => {
@@ -107,7 +108,8 @@ export default class UrlArea extends React.Component {
 
     unfoldHandle( handle ) {
 	var hdlShortPrefix = "hdl:";
-	var hdlLongPrefix  = "http://hdl.handle.net/";	
+	var protocol = window.location.protocol;
+	var hdlLongPrefix  = protocol.concat("//hdl.handle.net/");	
 	var index = handle.indexOf(hdlShortPrefix);
 
 	var result = decodeURIComponent(handle);
@@ -251,7 +253,7 @@ export default class UrlArea extends React.Component {
         };
 
 	var transferalInfo = `Resource transferal from ${this.props.caller}. Please check the information below, then press "Show Tools"`;
-	// if (this.props.params.tokenId !== undefined) {
+	// if (this.props.match.params.tokenId !== undefined) {
 	//     transferalInfo = 'Resource via token-based tranferal (experimental).'
 	// }
 	return (

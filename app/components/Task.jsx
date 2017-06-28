@@ -92,8 +92,8 @@ export default class Task extends React.Component {
 
 			<DetailsRow
 			    icon='ion-ios-locked-outline'
-	                    title="Authentification"
-       	                    summary={props.authentification}
+	                    title="Authentication"
+       	                    summary={props.authentication}
                         />		
 
 			<DetailsRow
@@ -139,8 +139,8 @@ export default class Task extends React.Component {
 
 			<DetailsRow
 			    icon='ion-ios-locked-outline'
-	                    title="Authentification"
-       	                    summary={props.authentification}
+	                    title="Authentication"
+       	                    summary={props.authentication}
                         />		
 
                         <DetailsRow
@@ -230,7 +230,7 @@ export default class Task extends React.Component {
 			 softwareType={element.softwareType}
 			 postSubmit={element.postSubmit}
 			 location={element.location}
-			 authentification={element.authentification}
+			 authentication={element.authentication}
 			 homepage={element.homepage}
                          url={element.url}
 		         parameter={element.parameter}
@@ -291,7 +291,7 @@ export default class Task extends React.Component {
 	    "it" : "ita",
 	    "es" : "spa",
 	    "pt" : "por",
-	    "tk" : "tur",
+	    "tr" : "tur",
 	    "ru" : "rus",
 	    "sv" : "swe",
 	    "fy" : "fry"
@@ -324,7 +324,7 @@ export default class Task extends React.Component {
 	    return false;
 	}
 
-	// console.log('Task.jsx/constructToolURL item:', item, 'lane:', lane);
+	console.log('Task.jsx/constructToolURL item:', item, 'lane:', lane);
 	
 	// central service to retrieve language resource, may need to chech cross-site scripting issue
 	var filename =  lane.name;
@@ -354,9 +354,9 @@ export default class Task extends React.Component {
 	
 	if (lang_encoding == "639-1") {
 	    language = map639_3_to_639_1(language);
-	} else {
-	    language = map639_1_to_639_3(language);
-	}
+	} // else {
+	//     language = map639_1_to_639_3(language);
+	// }
     
 	var inputFilename = fileServerURL + filename;
 	if (upload == "dnd") {
@@ -479,6 +479,7 @@ export default class Task extends React.Component {
 	if (URL.postSubmit == "data") {
 	    Request
 		.post(URL.url)
+//		.set('Content-Type', 'text/plain')
 		.send(file)
 		.end((err, res) => {
 		    if (err) {
@@ -497,6 +498,7 @@ export default class Task extends React.Component {
 	    Request
 		.post(URL.url)
 		.send(data)
+//		.set('Content-Type', 'text/plain')	    
 		.end((err, res) => {
 		    if (err) {
 			console.log('Task.jsx/invokeWebService: error in calling webservice', err, file.name, data, URL);
