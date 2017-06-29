@@ -1910,12 +1910,13 @@ class ToolStore {
 	    getTool: this.getTool.bind(this)	    
 	});
     }
-    
+
+    // tool store is static.
     create(tool) {
 	const registeredTools = this.registeredTools;
 	
 	tool.id = uuid.v4();
-	tool.notes = tool.notes || [];
+	tool.notes = tool.notes || []; // CZ: not necessary
 	
 	this.setState({
 	    registeredTools: registeredTools.concat(tool)

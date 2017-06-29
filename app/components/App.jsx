@@ -26,6 +26,7 @@ import PiwikReactRouter from 'piwik-react-router';
 
 // routing between DropArea and UrlArea
 import { HashRouter, Route, Switch } from 'react-router-dom';
+import { hashHistory } from 'react-router';
 
 require('./../images/clarin-logo-wide.png');
 require('./../images/switchboard.png');
@@ -86,7 +87,6 @@ export default class App extends React.Component {
 	this.piwik.push(['trackPageView']);
 
 	localStorage.removeItem("app");
-	this.clearDropzone();
 	this.refresh();
 	console.log('App: component did mount', this);	
     }
@@ -201,7 +201,7 @@ export default class App extends React.Component {
   <AltContainer
      stores={[ToolStore]}
                    inject={{
-		       registeredTools: () => ToolStore.getState().registeredTools || [],
+		       registeredTools: () => ToolStore.getState().registeredTools || [], // not required
 		       toolsPerTasks: () => ToolStore.getState().toolsPerTasks || [],
 		       lane: () => LaneStore.getState().lanes[0] || []
 		   }} >
