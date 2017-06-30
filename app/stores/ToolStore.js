@@ -101,7 +101,7 @@ class ToolStore {
 			      "image/tiff", 
 			      "image/vnd.microsoft.icon"
 			     ],
-		  url: ["https://www.clarin.dk/tools/createByGoalChoice"], 
+		  url: ["http://cst.dk:8080/tools/createByGoalChoice"], 
 
 		  parameter: {  input   : "self.linkToResource", 
 				lang    : "self.linkToResourceLanguage",                 
@@ -156,7 +156,7 @@ class ToolStore {
 			      "image/tiff", 
 			      "image/vnd.microsoft.icon"
 			     ],
-		  url: ["https://www.clarin.dk/tools/createByGoalChoice"], 
+		  url: ["http://cst.dk:8080/tools/createByGoalChoice"], 
 		  parameter: {  input   : "self.linkToResource", 
 						lang    : "self.linkToResourceLanguage",                 
 						analysis: "lem",
@@ -235,7 +235,7 @@ class ToolStore {
 			      "image/tiff", 
 			      "image/vnd.microsoft.icon"
 			     ],
-		  url: ["https://www.clarin.dk/tools/createByGoalChoice"], 
+		  url: ["http://cst.dk:8080/tools/createByGoalChoice"], 
 		  parameter: {  input   : "self.linkToResource", 
 				lang    : "self.linkToResourceLanguage",                 
 				analysis: "ner",
@@ -268,7 +268,7 @@ class ToolStore {
 		  mimetypes: [  "text/plain",
 				"application/pdf" // may add other mimetypes
 			     ],
-		  url: ["https://www.clarin.dk/tools/createByGoalChoice"], 
+		  url: ["http://cst.dk:8080/tools/createByGoalChoice"], 
 		  parameter: {  input   : "self.linkToResource", 
 				lang    : "self.linkToResourceLanguage",                 
 				analysis: "voiceSynthesis",
@@ -304,7 +304,7 @@ class ToolStore {
 			      "image/png", 
 			      "image/tiff", 
 			     ],
-		  url: ["https://www.clarin.dk/tools/createByGoalChoice"], 
+		  url: ["http://cst.dk:8080/tools/createByGoalChoice"], 
 		  parameter: {  input   : "self.linkToResource", 
 				lang    : "self.linkToResourceLanguage",                 
 				analysis: "txt",
@@ -1872,19 +1872,19 @@ class ToolStore {
 		  name: "ILC Tokenizer (web service)",
 		  //softwareType: "webService",
 		  softwareType: "browserBased",
-		  logo: "YourLogoComesHere.png", // Fix this
+		  logo: "ILC-CNR_for_CLARIN-IT_Logo.png", 
 		  homepage: "http://ilc4clarin.ilc.cnr.it/services/ltfw/readme",
-		  location: "Pisa, Italiy",
+		  location: "Pisa, Italy",
 		  creators: ["Ricardo del Gratta"],
 		  contact: {
 		      person: "Riccardo Del Gratta",
-		      email: "riccardo.delgratta@gmail.com",
+		      email: "riccardo.delgratta@ilc.cnr.it",
 		  },
 		  version: "unknown",
 		  authentication: "no",		  
 		  license: "unknown.", 
 		  shortDescription: "This is the ILC tokenizer for a number of European languages.",
-		  longDescription: "This is the ILC tokenizer (web service) for Italian, French, German, English, Spanish und Dutch.",
+		  longDescription: "The ILC4CLARIN tokenizer is a Java port of the original Perl-based tokenizer, which is available at Github, see https://github.com/opener-project/tokenizer-base.",
 		  lang_encoding: "639-3",
 		  languages: ["ita", "fra", "deu", "eng", "esp", "nld"],
 		  mimetypes: ["text/plain"],

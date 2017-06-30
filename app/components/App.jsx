@@ -47,6 +47,7 @@ require('./../images/clarindk.jpg');
 require('./../images/CLARIN-Logo16-c.jpg');
 require('./../images/zil.png');
 require('./../images/acdh.png');
+require('./../images/ILC-CNR_for_CLARIN-IT_Logo.png');
 
 require('./../images/YourLogoComesHere.png');
 require('./../images/metadataListing1.png');

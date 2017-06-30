@@ -5,7 +5,7 @@ import LaneActions from '../actions/LaneActions';
 import ToolActions from '../actions/ToolActions';
 
 import Request from 'superagent';
-import util from '../libs/util';
+import processLanguage from '../libs/util';
 
 // alternative to superagent
 
@@ -14,8 +14,6 @@ export default class DropArea extends React.Component {
 	super(props);
 
 	this.addNote     = this.addNote.bind(this);
-	
-	this.processLanguage = util.processLanguage.bind(this);
 	this.showFiles   = this.showFiles.bind(this);
 	this.onDrop      = this.onDrop.bind(this);
 	this.owncloud_share = this.owncloud_share.bind(this);
@@ -158,7 +156,7 @@ export default class DropArea extends React.Component {
 					    languageDetected = res.text;
 
 					    // with all information gathered, define new lane (i.e. resource and its properties)
-					    var languageHarmonization = this.processLanguage(languageDetected);
+					    var languageHarmonization = processLanguage(languageDetected);
 
 					    var lane = LaneActions.create( { name: currentFile.name,
 									     filename: currentFile.name,
@@ -371,7 +369,7 @@ processFile_b2Drop( currentFile ) {
 							languageDetected = res.text;
 							
 							// with all information gathered, define new lane (i.e. resource and its properties)
-							var languageHarmonization = this.processLanguage(languageDetected);
+							var languageHarmonization = processLanguage(languageDetected);
 							
 							var lane = LaneActions.create( { name: currentFile.name,
 											 filename: currentFile.name,
