@@ -126,7 +126,6 @@ export default class App extends React.Component {
 	localStorage.removeItem("app"); // CZ: check whether necessary for cache busting
 
 	this.setState( {toolsPerTask: {} } );
-	ToolActions.reset();
 	LaneActions.reset();
 	NoteActions.reset();
     }

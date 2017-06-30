@@ -2,7 +2,6 @@ import React from 'react';
 import Dropzone from 'react-dropzone';
 import NoteActions from '../actions/NoteActions';
 import LaneActions from '../actions/LaneActions';
-// import ToolActions from '../actions/ToolActions';
 
 import Request from 'superagent';
 import processLanguage from '../libs/util';
@@ -415,7 +414,6 @@ processFile_b2Drop( currentFile ) {
 	if (files.length > 0) {
 	    LaneActions.reset();
 	    NoteActions.reset();
-//	    ToolActions.reset();
 	}
     }
 

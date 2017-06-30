@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import Loader from 'react-loader';
 import NoteActions from '../actions/NoteActions';
 import LaneActions from '../actions/LaneActions';
-import ToolActions from '../actions/ToolActions';
 import AlertShibboleth from './AlertShibboleth.jsx';
 import AlertURLFetchError from './AlertURLFetchError.jsx';
 
@@ -129,7 +128,6 @@ export default class UrlArea extends React.Component {
 	// first, reset prior history
 	LaneActions.reset();
 	NoteActions.reset();
-	ToolActions.reset();
 	this.forceUpdate();
 	
 	console.log('UrlArea/processParameters', caller);
