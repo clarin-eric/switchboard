@@ -5,13 +5,11 @@
 import AltContainer from 'alt-container';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
+
+// components
 import Lanes from './Lanes.jsx';                    // render all the lanes (lang resources)
-import Tasks from './Tasks.jsx';                    // task-oriented view for all tools
-import LaneActions from '../actions/LaneActions';   // actions associated with lanes: CRUD, attach/detach
-import ToolActions from '../actions/ToolActions';   // access to findTools action
-import NoteActions from '../actions/NoteActions';   // access to notes
-import LaneStore from '../stores/LaneStore';        // storing lanes (state)
-import ToolStore from '../stores/ToolStore';        // storing tools (state)
+import TaskOrientedView from './TaskOrientedView';  // component to render the task-oriented view
 import DropArea from './DropArea.jsx';              // drop & drag area for resources
 import UrlArea  from './UrlArea.jsx';               // all resource information given in parameters
 import Toggle   from 'react-toggle';                // toggle button for enables/disabling web services
@@ -19,7 +17,15 @@ import UserHelp from './UserHelp.jsx';              // component displaying user
 import DevHelp from './DevHelp.jsx';                // component displaying help targeted at developers
 import AboutHelp from './AboutHelp.jsx';            // displaying admin. information about the switchboard
 import AlertURLFetchError from './AlertURLFetchError.jsx';
-import PropTypes from 'prop-types';
+
+// actions
+import LaneActions from '../actions/LaneActions';   // actions associated with lanes: CRUD, attach/detach
+import ToolActions from '../actions/ToolActions';   // access to findTools action
+import NoteActions from '../actions/NoteActions';   // access to notes
+
+// stores
+import LaneStore from '../stores/LaneStore';        // storing lanes (state)
+// import ToolStore from '../stores/ToolStore';        // storing tools (state)
 
 // Piwik support
 import PiwikReactRouter from 'piwik-react-router';
@@ -28,6 +34,10 @@ import PiwikReactRouter from 'piwik-react-router';
 import { HashRouter, Route, Switch } from 'react-router-dom';
 import { hashHistory } from 'react-router';
 
+// access to matcher
+import Matcher from '../libs/Matcher';
+
+// logo images for task-oriented view (CZ: should move to TaskOrientedView
 require('./../images/clarin-logo-wide.png');
 require('./../images/switchboard.png');
 require('./../images/weblicht.jpg');
@@ -73,9 +83,8 @@ export default class App extends React.Component {
 	    enableLinkTracking: true
         });
 
-//	this.piwik.push(["setDomains", ["*.weblicht.sfs.uni-tuebingen.de/clrs","*.weblicht.sfs.uni-tuebingen.de/clrs"]]);
-//	this.piwik.push(['trackPageView']);
-	console.log('constructor in App after piwik', this);
+	// set by allTools
+	this.toolsPerTask = {};
     }
 
     refresh() {
@@ -86,9 +95,10 @@ export default class App extends React.Component {
 	this.piwik.push(["setDomains", ["*.weblicht.sfs.uni-tuebingen.de/clrs","*.weblicht.sfs.uni-tuebingen.de/clrs"]]);
 	this.piwik.push(['trackPageView']);
 
+	// CZ: check whether following is nececessary for cache busting (localStorage)
 	localStorage.removeItem("app");
 	this.refresh();
-	console.log('App: component did mount', this);	
+	console.log('App: component did mount', this, 'localStorage', localStorage);	
     }
     
     handleChange (key, event) {
@@ -103,24 +113,15 @@ export default class App extends React.Component {
     }
 
     showTools() {
-	ToolActions.allTools( this.state.includeWebServices );	
+	this.toolsPerTask = Matcher.allTools( this.state.includeWebServices );
     }
 
     clearDropzone() {
-        console.log('clearing drop zone');
-	localStorage.removeItem("app");    		  
+	localStorage.removeItem("app"); // CZ: check whether necessary for cache busting
 	ToolActions.reset();
 	LaneActions.reset();
 	NoteActions.reset();
     }
-
-    popup_CLARIN_HELPDESK(url) {
-	fenster = window.open(url, "CLARINHelpDesk", "width=370,height=570,resizable=yes");
-	fenster.focus();
-	return false;
-    }
-
- 
 
     render() {
 	return (
@@ -195,19 +196,9 @@ export default class App extends React.Component {
 		   }} >
     <Lanes />
   </AltContainer>
-  
-  <h2>Task-Oriented Tool View </h2>
-  
-  <AltContainer
-     stores={[ToolStore]}
-                   inject={{
-		       registeredTools: () => ToolStore.getState().registeredTools || [], // not required
-		       toolsPerTasks: () => ToolStore.getState().toolsPerTasks || [],
-		       lane: () => LaneStore.getState().lanes[0] || []
-		   }} >
-    <Tasks />
-  </AltContainer>
-  
+  <TaskOrientedView lane = { () => LaneStore.getState().lanes[0] || [] }
+                    toolsPerTask = { this.toolsPerTask }
+		/>
   <hr />
 </div>
 );

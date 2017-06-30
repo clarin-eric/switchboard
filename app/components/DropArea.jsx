@@ -2,7 +2,7 @@ import React from 'react';
 import Dropzone from 'react-dropzone';
 import NoteActions from '../actions/NoteActions';
 import LaneActions from '../actions/LaneActions';
-import ToolActions from '../actions/ToolActions';
+// import ToolActions from '../actions/ToolActions';
 
 import Request from 'superagent';
 import util from '../libs/util';
@@ -15,7 +15,7 @@ export default class DropArea extends React.Component {
 
 	this.addNote     = this.addNote.bind(this);
 	
-	this.processLanguage = util.processLanguage.bind(this);
+	this.processLanguage = util.processLanguage;
 	this.showFiles   = this.showFiles.bind(this);
 	this.onDrop      = this.onDrop.bind(this);
 	this.owncloud_share = this.owncloud_share.bind(this);
@@ -417,7 +417,7 @@ processFile_b2Drop( currentFile ) {
 	if (files.length > 0) {
 	    LaneActions.reset();
 	    NoteActions.reset();
-	    ToolActions.reset();
+//	    ToolActions.reset();
 	}
     }
 

@@ -6,7 +6,7 @@ import NoteStore from '../stores/NoteStore';
 import LaneActions from '../actions/LaneActions';
 import LaneStore from '../stores/LaneStore';
 import ToolActions from '../actions/ToolActions';
-import ToolStore from '../stores/ToolStore';
+//import ToolStore from '../stores/ToolStore';
 import Toggle   from 'react-toggle';                
 
 export default class Lane extends React.Component {
