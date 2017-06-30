@@ -5,18 +5,22 @@ import NoteActions from '../actions/NoteActions';
 import NoteStore from '../stores/NoteStore';
 import LaneActions from '../actions/LaneActions';
 import LaneStore from '../stores/LaneStore';
-import ToolActions from '../actions/ToolActions';
-//import ToolStore from '../stores/ToolStore';
-import Toggle   from 'react-toggle';                
+import Toggle   from 'react-toggle';
+
+// access to matcher
+import Matcher from '../libs/Matcher';
+
 
 export default class Lane extends React.Component {
     constructor(props) {
 	super(props);
-	
+
+	console.log('Lane/constructor', props);
 	const lane = props.lane;
-	const id = lane.id;
+	console.log('Lane/constructor with lane', lane);	
+	this.handleToolsPerTaskChange = props.passChangeToParent;
 	
-	this.displayTools            = this.displayTools.bind(this, lane);
+	this.showTools            = this.showTools.bind(this, lane);
 	this.getFileUrl              = this.getFileUrl.bind(this, lane);
 	this.handleWebServicesChange = this.handleChange.bind(this, 'includeWebServices')
 
@@ -26,7 +30,7 @@ export default class Lane extends React.Component {
 
     }
     render() {
-	const {lane, ...props} = this.props;
+	const {lane, passChangeToParent, ...props} = this.props;
 	return (
 	    <div {...props}>
   	      <div className="lane-header">
@@ -39,7 +43,7 @@ export default class Lane extends React.Component {
 	             defaultChecked={false}
 	             onChange={this.handleWebServicesChange} />	    
 	        <div className="lane-add-note">
-  	          <button id="showToolsButton" onClick={this.displayTools}>Show Tools</button>
+  	          <button id="showToolsButton" onClick={this.showTools}>Show Tools</button>
 	        </div>
 	      </div>
 	      <AltContainer stores={[NoteStore]}
@@ -61,10 +65,11 @@ export default class Lane extends React.Component {
 	}
     }
     
-    displayTools(lane) {
+    showTools(lane) {
 
-	console.log('Lane.jsx/displayTools',
-		    'webservices:', this.state.includeWebServices,
+	let includeWebServices = this.state.includeWebServices;
+	console.log('Lane/showTools invocation',
+		    'webservices:', includeWebServices,
 		    'resource:', lane);
 	
 	
@@ -77,8 +82,11 @@ export default class Lane extends React.Component {
 	    alert('CLRS: Please identify the mimetype of the resource!');
 	    return;
 	}
-	
-	ToolActions.findTools( lane, this.state.includeWebServices );
+
+	let matcher = new Matcher();
+	let toolsPerTask = matcher.findApplicableTools( lane, includeWebServices );
+	console.log('Lane/showTools applicable tools for', lane, toolsPerTask, this.handleToolsPerTaskChange, this);
+	this.handleToolsPerTaskChange( toolsPerTask );
     }
 
     getFileUrl(lane) {

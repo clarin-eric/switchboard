@@ -2,7 +2,7 @@
 // 2016-17 Claus Zinn
 // 
 // File: Registry.js
-// Time-stamp: <2017-06-29 22:32:00 (zinn)>
+// Time-stamp: <2017-06-30 16:08:53 (zinn)>
 //
 // ----------------------------------------------------------------------------------------
 
@@ -88,7 +88,7 @@ const Registry =
 		      "image/tiff", 
 		      "image/vnd.microsoft.icon"
 		     ],
-	  url: ["https://www.clarin.dk/tools/createByGoalChoice"], 
+	  url: ["http://cst.dk:8080/tools/createByGoalChoice"], 
 
 	  parameter: {  input   : "self.linkToResource", 
 			lang    : "self.linkToResourceLanguage",                 
@@ -143,7 +143,7 @@ const Registry =
 		      "image/tiff", 
 		      "image/vnd.microsoft.icon"
 		     ],
-	  url: ["https://www.clarin.dk/tools/createByGoalChoice"], 
+	  url: ["http://cst.dk:8080/tools/createByGoalChoice"], 
 	  parameter: {  input   : "self.linkToResource", 
 			lang    : "self.linkToResourceLanguage",                 
 			analysis: "lem",
@@ -222,7 +222,7 @@ const Registry =
 		      "image/tiff", 
 		      "image/vnd.microsoft.icon"
 		     ],
-	  url: ["https://www.clarin.dk/tools/createByGoalChoice"], 
+	  url: ["http://cst.dk:8080/tools/createByGoalChoice"], 
 	  parameter: {  input   : "self.linkToResource", 
 			lang    : "self.linkToResourceLanguage",                 
 			analysis: "ner",
@@ -255,7 +255,7 @@ const Registry =
 	  mimetypes: [  "text/plain",
 			"application/pdf" // may add other mimetypes
 		     ],
-	  url: ["https://www.clarin.dk/tools/createByGoalChoice"], 
+	  url: ["http://cst.dk:8080/tools/createByGoalChoice"], 
 	  parameter: {  input   : "self.linkToResource", 
 			lang    : "self.linkToResourceLanguage",                 
 			analysis: "voiceSynthesis",
@@ -291,7 +291,7 @@ const Registry =
 	      "image/png", 
 	      "image/tiff", 
 	  ],
-	  url: ["https://www.clarin.dk/tools/createByGoalChoice"], 
+	  url: ["http://cst.dk:8080/tools/createByGoalChoice"], 
 	  parameter: {  input   : "self.linkToResource", 
 			lang    : "self.linkToResourceLanguage",                 
 			analysis: "txt",

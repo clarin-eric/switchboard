@@ -2,7 +2,7 @@
 // 2016-17 Claus Zinn
 // 
 // File: Matcher.js
-// Time-stamp: <2017-06-30 12:20:51 (zinn)>
+// Time-stamp: <2017-06-30 16:12:22 (zinn)>
 //
 // ----------------------------------------------------------------------------------------
 
@@ -70,25 +70,22 @@ export default class Matcher {
 		    });
 	}
 	
-	var toolsPerTasks = this.groupTools( tools );
+	var toolsPerTask = this.groupTools( tools );
 
 	// should never happen, implies empty tool registry
 	// CZ: should be dealt with in the React component (rendering task-oriented list)	
-	if (Object.keys(toolsPerTasks).length == 0) {
+	if (Object.keys(toolsPerTask).length == 0) {
 	    alert("Sorry! The app registry has no tool entries");
 	}
 
-	return toolsPerTasks;
+	return toolsPerTask;
     }
     
     // multiple filters to be defined, in particular, language code
-    findApplicableTools( parameters ) {
-
-	var resourceDescription = parameters[0];
-	var includeWebServices = parameters[1];
+    findApplicableTools( resourceDescription, includeWebServices) {
 
 	// if necessary, filter out web services
-	console.log('ToolStore.js/findApplicableTools first and second', resourceDescription, includeWebServices);
+	console.log('Matcher/findApplicableTools', resourceDescription, includeWebServices);
 	var tools = [];
 
 	// in case web services all excluded, filter out all web services from result list.
@@ -121,7 +118,7 @@ export default class Matcher {
 	
 	// second filter: language code 
 	if ( (resourceDescription.language == null) || (resourceDescription.language.length == 0)) {
-	    console.log('ToolStore/findApplicableTools: empty language', resourceDescription.language); 
+	    console.log('Matcher/findApplicableTools: empty language', resourceDescription.language); 
 	} else {
 	    languageFilter = mimetypeFilter.filter(
 		(tool) =>
@@ -148,11 +145,13 @@ export default class Matcher {
 	// --------------------------------
 
 	// now, for the task-oriented view
-	var toolsPerTasks = this.groupTools( languageFilter );
+	var toolsPerTask = this.groupTools( languageFilter );
 
 	// CZ: should be dealt with in the React component (rendering task-oriented list)
-	if (Object.keys(toolsPerTasks).length == 0) {
+	if (Object.keys(toolsPerTask).length == 0) {
 	    alert("Sorry! the app registry has no tools applicable to the given resource!");
 	}
+
+	return toolsPerTask;
     }
 }

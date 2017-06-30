@@ -10,7 +10,7 @@ import Request from 'superagent';
 // import PiwikReactRouter from 'piwik-react-router';
 
 
-export default class Task extends React.Component {
+export default class Tool extends React.Component {
     constructor(props) {
 	super(props);
 	this.invokeSoftware = this.invokeSoftware.bind(this);
@@ -217,7 +217,7 @@ export default class Task extends React.Component {
 	    );
 	};
 
-	// console.log('Task.jsx/items', items, 'lane:', lane);
+	// console.log('Tool.jsx/items', items, 'lane:', lane);
 	return (
 	    <Accordion allowMultiple={true}>
 	    { items.map( (element) => 
@@ -320,11 +320,11 @@ export default class Task extends React.Component {
 
 	// if there is no resource in the spotlight, we return an empty URL object.
 	if (lane == undefined) {
-	    console.log('Task.jsx: there is no lane defined.', item);
+	    console.log('Tool.jsx: there is no lane defined.', item);
 	    return false;
 	}
 
-	console.log('Task.jsx/constructToolURL item:', item, 'lane:', lane);
+	console.log('Tool.jsx/constructToolURL item:', item, 'lane:', lane);
 	
 	// central service to retrieve language resource, may need to chech cross-site scripting issue
 	var filename =  lane.name;
@@ -343,7 +343,7 @@ export default class Task extends React.Component {
 	    // no use of temp. server for resource
 	    fileServerURL = "";
 	} else {
-	    console.log("ERROR in upload info (Task.jsx)", upload);
+	    console.log("ERROR in upload info (Tool.jsx)", upload);
 	}
 
 	if (softwareType == "webService") {
@@ -427,7 +427,7 @@ export default class Task extends React.Component {
 	    urlWithParameters = item.url + "?" + parameterString;
 	}
 
-	//console.log('Task.jsx URL:', urlWithParameters);
+	//console.log('Tool.jsx URL:', urlWithParameters);
 
 	if (softwareType == "webService") {
 	    rtnValue =
@@ -483,7 +483,7 @@ export default class Task extends React.Component {
 		.send(file)
 		.end((err, res) => {
 		    if (err) {
-			console.log('Task.jsx/invokeWebService: error in calling webservice', err, file.name, URL);
+			console.log('Tool.jsx/invokeWebService: error in calling webservice', err, file.name, URL);
 			alert('Result of calling web service: ' + err);
 		    } else {
 			var something = window.open("data:text/json," + encodeURIComponent(res.text), "_blank");
@@ -501,7 +501,7 @@ export default class Task extends React.Component {
 //		.set('Content-Type', 'text/plain')	    
 		.end((err, res) => {
 		    if (err) {
-			console.log('Task.jsx/invokeWebService: error in calling webservice', err, file.name, data, URL);
+			console.log('Tool.jsx/invokeWebService: error in calling webservice', err, file.name, data, URL);
 			alert('Result of calling web service: ' + err);
 		    } else {
 			var something = window.open("data:text/json," + encodeURIComponent(res.text), "_blank");

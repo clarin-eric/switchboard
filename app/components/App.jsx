@@ -20,12 +20,10 @@ import AlertURLFetchError from './AlertURLFetchError.jsx';
 
 // actions
 import LaneActions from '../actions/LaneActions';   // actions associated with lanes: CRUD, attach/detach
-import ToolActions from '../actions/ToolActions';   // access to findTools action
 import NoteActions from '../actions/NoteActions';   // access to notes
 
 // stores
 import LaneStore from '../stores/LaneStore';        // storing lanes (state)
-// import ToolStore from '../stores/ToolStore';        // storing tools (state)
 
 // Piwik support
 import PiwikReactRouter from 'piwik-react-router';
@@ -71,6 +69,7 @@ export default class App extends React.Component {
 	this.showTools = this.showTools.bind(this);
         this.clearDropzone = this.clearDropzone.bind(this);
         this.handleWebServicesChange = this.handleChange.bind(this, 'includeWebServices');
+	this.handleToolsPerTaskChange = this.handleToolsPerTaskChange.bind(this);
 
 	this.state = {
 	    includeWebServices: false,
@@ -85,6 +84,10 @@ export default class App extends React.Component {
         });
     }
 
+    handleToolsPerTaskChange( toolsPerTask ) {
+	this.setState( {toolsPerTask: toolsPerTask} );
+    }
+    
     refresh() {
 	this.forceUpdate();
     }
@@ -199,9 +202,9 @@ export default class App extends React.Component {
                    inject={{
 		       lanes: () => LaneStore.getState().lanes || []
 		   }} >
-    <Lanes />
+    <Lanes passChangeToParent = { this.handleToolsPerTaskChange } />
   </AltContainer>
-  <TaskOrientedView lane = { () => LaneStore.getState().lanes[0] || [] }
+  <TaskOrientedView lane = { LaneStore.getState().lanes[0] || [] }
             toolsPerTask = { this.state.toolsPerTask || {} }
 		/>
   <hr />
