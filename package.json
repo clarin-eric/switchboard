@@ -50,7 +50,7 @@
     "react": "^15.5.4",
     "react-addons-css-transition-group": "^15.3.2",
     "react-addons-shallow-compare": "^15.3.2",
-    "react-dom": "^15.3.2",
+    "react-dom": "^15.6.1",
     "react-dropzone": "^3.6.0",
     "react-loader": "^2.4.0",
     "react-modal-dialog": "~3.0.2",

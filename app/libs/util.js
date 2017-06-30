@@ -1,4 +1,4 @@
-function processLanguage( language ) {
+export default function processLanguage( language ) {
 
     var languageCombo = null;
     var threeLetterCode = null;
@@ -86,4 +86,3 @@ function processLanguage( language ) {
 	   };
 }
 
-export default processLanguage;

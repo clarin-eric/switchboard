@@ -2,7 +2,7 @@
 // 2016-17 Claus Zinn
 // 
 // File: Matcher.js
-// Time-stamp: <2017-06-29 22:29:55 (zinn)>
+// Time-stamp: <2017-06-30 12:20:51 (zinn)>
 //
 // ----------------------------------------------------------------------------------------
 
@@ -19,7 +19,7 @@ export default class Matcher {
     // construct a dictionary to group all tools in terms of the tasks they can perform
     // key: task, value: tools
     groupTools( tools ){
-	
+
 	var toolGroups = {};
 
 	for (var i = 0; i<tools.length; i++) {
@@ -78,7 +78,7 @@ export default class Matcher {
 	    alert("Sorry! The app registry has no tool entries");
 	}
 
-	return toolsPerTask;
+	return toolsPerTasks;
     }
     
     // multiple filters to be defined, in particular, language code

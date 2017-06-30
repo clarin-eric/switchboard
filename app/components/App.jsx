@@ -74,7 +74,8 @@ export default class App extends React.Component {
 
 	this.state = {
 	    includeWebServices: false,
-	    showAlertURLFetchError: true	    
+	    showAlertURLFetchError: true,
+	    toolsPerTask : {}
 	};
 
 	this.piwik = PiwikReactRouter({
@@ -82,9 +83,6 @@ export default class App extends React.Component {
 	    siteId	: 21,
 	    enableLinkTracking: true
         });
-
-	// set by allTools
-	this.toolsPerTask = {};
     }
 
     refresh() {
@@ -113,11 +111,18 @@ export default class App extends React.Component {
     }
 
     showTools() {
-	this.toolsPerTask = Matcher.allTools( this.state.includeWebServices );
+	console.log('calling App/showTools');
+	let matcher = new Matcher();
+	let toolsPerTask = matcher.allTools( this.state.includeWebServices );
+
+	this.setState( {toolsPerTask: toolsPerTask} );
+	console.log('App/showTools this.state', this.state.toolsPerTask);
     }
 
     clearDropzone() {
 	localStorage.removeItem("app"); // CZ: check whether necessary for cache busting
+
+	this.setState( {toolsPerTask: {} } );
 	ToolActions.reset();
 	LaneActions.reset();
 	NoteActions.reset();
@@ -197,7 +202,7 @@ export default class App extends React.Component {
     <Lanes />
   </AltContainer>
   <TaskOrientedView lane = { () => LaneStore.getState().lanes[0] || [] }
-                    toolsPerTask = { this.toolsPerTask }
+            toolsPerTask = { this.state.toolsPerTask || {} }
 		/>
   <hr />
 </div>
