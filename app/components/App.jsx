@@ -188,7 +188,7 @@ export default class App extends React.Component {
       <Route path="/fcs/:fileURL"                                 caller="FCS" component={UrlArea} />
       <Route path="/b2drop/:fileURL"
             render={(props) => <UrlArea refreshFun={this.refresh} caller="B2DROP" {...props} /> } />    
-      <Route path="*"                                                         component={AlertURLFetchError} />
+      <Route path="*"                                                          component={AlertURLFetchError} />
     </Switch>
   </HashRouter>
   

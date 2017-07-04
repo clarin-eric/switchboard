@@ -13,6 +13,18 @@ export default class Profiler {
 	this.addNote     = this.addNote.bind(this);
 	this.protocol    = window.location.protocol;	// use https or http given parent window
 	
+	// SHANNON
+	this.cloudURLWithCredentials = "http://switchboard:clarin-plus@shannon.sfs.uni-tuebingen.de";
+	this.cloudURL = "http://shannon.sfs.uni-tuebingen.de";
+
+	//LOCALHOST
+	// this.cloudURLWithCredentials = "http://switchboard:clarin-plus@localhost";
+	// this.cloudURL = "http://localhost";
+
+	// OFFICIAL SITE
+	// this.cloudURL = "https://b2drop.eudat.eu";
+	// this.cloudURLWithCredentials = "claus.zinn@uni-tuebingen.de:sPL-Fh2-7SS-hCJ@https://b2drop.eudat.eu";	
+	
 	// default values
 	this.resourceProps =
 	    { name: resource.name,
@@ -135,7 +147,7 @@ export default class Profiler {
 	});
     }
 
-    processFile3() {
+    processFile() {
 	let promiseUpload = this.uploadFile();
 	let that = this;
 	promiseUpload.then(
@@ -155,8 +167,97 @@ export default class Profiler {
 	    })
     }
 
+    processFile_b2Drop() {
+	let promiseUpload = this.uploadFile();
+	let that = this;
+	promiseUpload.then(
+	    function(resolve) {
+		let promiseGetShares = that.create_b2DropShares();
+		promiseGetShares.then(
+		    function(resolve) {
+			let promiseLanguage = that.identifyLanguage();
+			promiseLanguage.then(
+			    function(resolve) {
+				let promiseMimeType = that.identifyMimeType();
+				promiseMimeType.catch(
+				    function(reject) {
+					console.log('mimetype id failed', reject);
+				    })},
+			    function(reject) {
+				console.log('lang id failed', reject) })},
+		    function(reject) {
+			console.log('creation of shares failed', reject)})},
+	    function(reject) {
+		console.log('upload failed', reject);
+	    })
+    }
+	    
+    upload_b2Drop() {
+
+	let currentFile = this.resourceProps;
+	let newFileName = currentFile.filenameWithDate;
+	let protocol = this.protocol;
+	let that = this;
+
+	return new Promise(function(resolve, reject) {
+	    // 1a. store in local b2drop instance
+	    Request
+		.put(this.cloudURL.concat('/owncloud/remote.php/webdav/').concat(newFileName))    
+		.auth('switchboard', 'clarin-plus')
+		.set('Access-Control-Allow-Origin', '*')	
+		.set('Access-Control-Allow-Credentials', 'true')
+		.set('Content-Type', currentFile.type)
+		.withCredentials()    
+		.set('Cache-Control', 'no-cache,no-store,must-revalidate,max-age=-1')
+		.send(currentFile)
+		.end((err, res) => {
+		    if (err) {
+			reject(err);
+			alert('Error in uploading resource to B2Drop instance');
+		    } else {
+			// 1b. Create a 'share link' action on the file you uploaded
+			resolve(res);
+		    }
+		})
+	})
+    };
+
+    create_b2DropShares() {
+	let currentFile = this.resourceProps;
+	let newFileName = currentFile.filenameWithDate;
+	let protocol = this.protocol;
+	let that = this;
+	
+	return new Promise(function(resolve, reject) {	
+	    Request
+		.post(this.cloudURL.concat('/owncloud/ocs/v1.php/apps/files_sharing/api/v1/shares'))
+		.set('Content-Type', 'application/json')
+		.set('Accept', 'application/xml')
+		.set('Access-Control-Allow-Origin', '*')
+		.set('Access-Control-Allow-Credentials', 'true')
+		.send( { path : newFileName,
+			 shareType: 3
+		       } )
+		.auth('switchboard', 'clarin-plus')
+		.withCredentials()
+		.end((err, res) => {
+		    if (err) {
+			reject(err);			
+			alert('Error in creating a share-link with B2Drop'.concat(newFileName));
+		    } else {
+			var parseString = require('xml2js').parseString;
+			parseString(res.text, function (err, result) {
+			    console.log('sharing result', result, err);
+			    console.log('url to download', result.ocs.data[0].url[0].concat('/download'));
+			});
+			resolve(res)
+		    }})
+	})
+    }
+
+
     // same version with nesting
-    processFile() {
+    processFile_nested() {
 
 	let resource = ResourceActions.create( this.resourceProps );
 	let resourceId = resource.id;
@@ -169,7 +270,6 @@ export default class Profiler {
 	// CZ: RZG file upload server does not handle files of type "text/xml" appropriately.
 	// upload works, download only gives metadata of file to be downloaded.
 	let currentFile = this.resourceProps.file;
-	console.log('Profiler/processFile2 before', this.resourceProps, currentFile);
 	
 	var newFileType = currentFile.type;
 	if ( (newFileType == "text/xml") ||
@@ -226,4 +326,92 @@ export default class Profiler {
 		}
 	    });
     }
+
+    processFile_b2Drop_nested() {
+	let resource = ResourceActions.create( this.resourceProps );
+	let resourceId = resource.id;
+
+	// information known from file drop
+	this.addNote(resourceId, "name:   ".concat(resource.file.name));
+	this.addNote(resourceId, "type:   ".concat(resource.file.type));
+	this.addNote(resourceId, "size:   ".concat(resource.file.size));	
+	
+	let currentFile = this.resourceProps.file;
+	let newFileName = this.resourceProps.filenameWithDate;
+
+	// 1a. store in local b2drop instance
+	Request
+	    .put(this.cloudURL.concat('/owncloud/remote.php/webdav/').concat(newFileName))    
+            .auth('switchboard', 'clarin-plus')
+	    .set('Access-Control-Allow-Origin', 'vpn2183.extern.uni-tuebingen.de')
+	    .set('Access-Control-Allow-Credentials', 'true')
+            .set('Content-Type', currentFile.type)
+	    .withCredentials()    
+	    .send(currentFile)
+	    .end((err, res) => {
+	    if (err) {
+		    alert('Error in uploading resource to B2Drop instance');
+		    console.log('Error', err, res);
+		} else {
+		    // 1b. Create a 'share link' action on the file you uploaded
+		    Request
+			.post(this.cloudURL.concat('/owncloud/ocs/v1.php/apps/files_sharing/api/v1/shares'))
+		    	.set('Content-Type', 'application/json')
+			.set('Accept', 'application/xml')
+		        .set('Access-Control-Allow-Origin', '*')
+			.set('Access-Control-Allow-Credentials', 'true')
+		        .send( { path : newFileName,
+			         shareType: 3
+			       } )
+			.auth('switchboard', 'clarin-plus')
+			.withCredentials()
+			.end((err, res) => {
+			    if (err) {
+				alert('Error in creating a share-link with B2Drop'.concat(newFileName));
+			    } else {
+				var parseString = require('xml2js').parseString;
+				parseString(res.text, function (err, result) {
+				    console.log('sharing result', result, err);
+				    console.log('url to download', result.ocs.data[0].url[0].concat('/download'));
+				});
+		    
+				// 2. Do mimetype detection using tika (available at detect/stream)
+				// ----------------------------------------------------------------
+				var mimetypeDetected = "identify mimetype!";	    
+				Request
+				    .put('http://weblicht.sfs.uni-tuebingen.de/clrs/detect/stream')
+				    .send(currentFile)	
+				    .set('Content-Type', currentFile.type)
+				    .end((err, res) => {
+					if (err) {
+					    console.log('error: mimetype identification', newFileName, err);
+					} else {
+					    console.log('success: mimetype identification', newFileName, res.text);
+					    mimetypeDetected = res.text;
+					    
+					    // 3. do language detection using tika (available at language/string)
+					    // ------------------------------------------------------------------
+					    // tika seems to support at least these 18 languages:
+    					    // da, en, hu, no, sv, de, es, is, pl, th, et, fi, it, pt, el, fr, nl, ru
+					    // --------------------------------------------------------
+					    
+					    var languageDetected = "identify language!";
+					    Request
+						.put('http://weblicht.sfs.uni-tuebingen.de/clrs/language/string')
+						.send(currentFile)	
+						.set('Content-Type', currentFile.type)	
+						.end((err, res) => {
+						    if (err) {
+							console.log('error: language identification', newFileName, err);
+						    } else {
+							console.log('success: language identification', newFileName, res.text);
+							languageDetected = res.text;
+							
+							// with all information gathered, define new resource and its properties
+							var languageHarmonization = processLanguage(languageDetected);
+							this.addNote(resourceId, "language:".concat( languageHarmonization.languageCombo));
+						    }})
+					}})}
+			})}
+	    })}
 }
