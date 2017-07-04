@@ -76,15 +76,15 @@ h2 {
   .site-footer {
     font-size: 0.9rem; } }
 
-.lane-name:link {
+.resource-name:link {
      color: white;
 }
 
-.lane-name:visited {
+.resource-name:visited {
     color: green;
 }
 
-.lane-name:hover {
+.resource-name:hover {
     color: green;
 }
 
@@ -115,7 +115,7 @@ h2 {
 }
 
 
-.lane {
+.resource {
   display: inline-block;
 
   margin: 2em;
@@ -178,7 +178,7 @@ h2 {
   vertical-align: top;
 }
 
-.lane-header {
+.resource-header {
   overflow: auto;
 
   padding: 1em;
@@ -207,7 +207,7 @@ h2 {
   border-top-right-radius: 0.5em;
 }
 
-.lane-name, .tool-name {
+.resource-name, .tool-name {
     float: left;
     color: #fff;
     display: block;
@@ -220,17 +220,17 @@ h2 {
     min-width: 20em;    
 }
 
-.lane-add-note, .tool-add-note {
+.resource-add-note, .tool-add-note {
   float: right;
   margin-left: 0.5em;
 }
 
-.add-lane, .lane-add-note button, .add-tool, .tool-add-note button {
+.add-resource, .resource-add-note button, .add-tool, .tool-add-note button {
   background-color: #000;
   border: 2px solid #ccc;
 }
 
-.notes, .lanes, .tasks {
+.notes, .resources, .tasks {
   margin: 0.5em;
   padding-left: 0;
 

@@ -1,6 +1,4 @@
 import React from 'react';
-import LaneActions from '../actions/LaneActions';
-import LaneStore from '../stores/LaneStore';
 // import ReactTooltip from 'react-tooltip';
 import Accordion from '../helperComponents/Accordion';         
 import AccordionItem from '../helperComponents/AccordionItem';
@@ -28,7 +26,7 @@ export default class Tool extends React.Component {
     // }
     
     render() {
-	const {items, lane, ...props} = this.props;
+	const {items, resource, ...props} = this.props;
 
 	const styles = {
 	    cardHeader: {
@@ -68,7 +66,7 @@ export default class Tool extends React.Component {
 	);
 
 	const ToolCard = (props) => {
-	    const fullURL = this.constructToolURL(props, lane);
+	    const fullURL = this.constructToolURL(props, resource);
 
 	    if (fullURL) 
 	    return(
@@ -217,7 +215,6 @@ export default class Tool extends React.Component {
 	    );
 	};
 
-	// console.log('Tool.jsx/items', items, 'lane:', lane);
 	return (
 	    <Accordion allowMultiple={true}>
 	    { items.map( (element) => 
@@ -244,7 +241,7 @@ export default class Tool extends React.Component {
 	    </Accordion> 	    
 	)}
 
-    constructToolURL( item, lane ) {
+    constructToolURL( item, resource ) {
 
 	// todo  outsource to external module
 	const langEncodingMap = {
@@ -319,19 +316,19 @@ export default class Tool extends React.Component {
         var rtnValue = { };	
 
 	// if there is no resource in the spotlight, we return an empty URL object.
-	if (lane == undefined) {
-	    console.log('Tool.jsx: there is no lane defined.', item);
+	if (resource == undefined) {
+	    console.log('Tool.jsx: there is no resource defined.', item);
 	    return false;
 	}
 
-	console.log('Tool.jsx/constructToolURL item:', item, 'lane:', lane);
+	console.log('Tool.jsx/constructToolURL item:', item, 'resource:', resource);
 	
 	// central service to retrieve language resource, may need to chech cross-site scripting issue
-	var filename =  lane.name;
-	var filenameWithDate =  lane.filenameWithDate;	
-	var file     =  lane.file;
-	var language =  lane.language;
-	var upload   =  lane.upload;
+	var filename =  resource.name;
+	var filenameWithDate =  resource.filenameWithDate;	
+	var file     =  resource.file;
+	var language =  resource.language;
+	var upload   =  resource.upload;
 	var lang_encoding = item.lang_encoding;
 	var softwareType = item.softwareType;
 	var postSubmit = item.postSubmit;

@@ -2,7 +2,7 @@ import React from 'react';
 import LanguageMenu from './LanguageMenu.jsx';
 import MimetypeMenu from './MimetypeMenu.jsx';
 import NoteActions from '../actions/NoteActions';
-import LaneActions from '../actions/LaneActions';        
+import ResourceActions from '../actions/ResourceActions';        
 import NoteStore from '../stores/NoteStore';
 
 export default class Note extends React.Component {
@@ -17,7 +17,7 @@ export default class Note extends React.Component {
     }
 
     setLanguage( note, language ) {
-	var laneId = note.belongsTo;
+	var resourceId = note.belongsTo;
 	var languageValue = null;	
 	if (language === undefined) {
 	    console.log('Note.jsx/setLanguage: language is undefined!');
@@ -25,14 +25,14 @@ export default class Note extends React.Component {
 	    languageValue = language.value;
 	    console.log('Note.jsx/setLanguage: language set to', languageValue);	    
 	}
-	LaneActions.addLanguage({
+	ResourceActions.addLanguage({
 	    language: languageValue,
-	    laneId
+	    resourceId
 	});
     }
 
     setMimetype( note, mimetype ) {
-	var laneId = note.belongsTo;
+	var resourceId = note.belongsTo;
 	var mimetypeValue = null;	
 	if (mimetype === undefined) {
 	    console.log('Note.jsx/setMimetype: mimetype is undefined!');
@@ -40,9 +40,9 @@ export default class Note extends React.Component {
 	    mimetypeValue = mimetype.value;
 	    console.log('Note.jsx/setMimetype: mimetype set to', mimetypeValue);	    
 	}	    
-	LaneActions.addMimetype({
+	ResourceActions.addMimetype({
 	    mimetype: mimetypeValue,
-	    laneId
+	    resourceId
 	});
     }
     
@@ -71,6 +71,7 @@ export default class Note extends React.Component {
     };
 
     renderLanguageNote = () => {
+	console.log('Note.jsx/renderLanguageNote', this.props.note.task);
 	const languageWithoutPrefix = this.props.note.task.substring(9, this.props.note.task.length-4);
 	const languageCode = this.props.note.task.substring(this.props.note.task.length-3, this.props.note.task.length);
 	return (

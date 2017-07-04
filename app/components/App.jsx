@@ -8,7 +8,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
 // components
-import Lanes from './Lanes.jsx';                    // render all the lanes (lang resources)
+import Resources from './Resources.jsx';            // render all the resources
 import TaskOrientedView from './TaskOrientedView';  // component to render the task-oriented view
 import DropArea from './DropArea.jsx';              // drop & drag area for resources
 import UrlArea  from './UrlArea.jsx';               // all resource information given in parameters
@@ -19,11 +19,11 @@ import AboutHelp from './AboutHelp.jsx';            // displaying admin. informa
 import AlertURLFetchError from './AlertURLFetchError.jsx';
 
 // actions
-import LaneActions from '../actions/LaneActions';   // actions associated with lanes: CRUD, attach/detach
-import NoteActions from '../actions/NoteActions';   // access to notes
+import ResourceActions from '../actions/ResourceActions';   // actions associated with resources: CRUD, attach/detach
+import NoteActions from '../actions/NoteActions';   // access to notes (= resource properties)
 
 // stores
-import LaneStore from '../stores/LaneStore';        // storing lanes (state)
+import ResourceStore from '../stores/ResourceStore';        // storing resources (state)
 
 // Piwik support
 import PiwikReactRouter from 'piwik-react-router';
@@ -126,7 +126,7 @@ export default class App extends React.Component {
 	localStorage.removeItem("app"); // CZ: check whether necessary for cache busting
 
 	this.setState( {toolsPerTask: {} } );
-	LaneActions.reset();
+	ResourceActions.reset();
 	NoteActions.reset();
     }
 
@@ -197,13 +197,13 @@ export default class App extends React.Component {
   <p />
   
   <AltContainer
-     stores={[LaneStore]}
+     stores={[ResourceStore]}
                    inject={{
-		       lanes: () => LaneStore.getState().lanes || []
+		       resources: () => ResourceStore.getState().resources || []
 		   }} >
-    <Lanes passChangeToParent = { this.handleToolsPerTaskChange } />
+    <Resources passChangeToParent = { this.handleToolsPerTaskChange } />
   </AltContainer>
-  <TaskOrientedView lane = { LaneStore.getState().lanes[0] || [] }
+  <TaskOrientedView resource = { ResourceStore.getState().resources[0] || [] }
             toolsPerTask = { this.state.toolsPerTask || {} }
 		/>
   <hr />

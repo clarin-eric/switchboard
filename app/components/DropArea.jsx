@@ -1,10 +1,13 @@
 import React from 'react';
 import Dropzone from 'react-dropzone';
 import NoteActions from '../actions/NoteActions';
-import LaneActions from '../actions/LaneActions';
+import ResourceActions from '../actions/ResourceActions';
 
 import Request from 'superagent';
 import processLanguage from '../libs/util';
+
+// access to profiler
+import Profiler from '../libs/Profiler';
 
 // alternative to superagent
 
@@ -34,24 +37,22 @@ export default class DropArea extends React.Component {
 	// this.cloudURLWithCredentials = "claus.zinn@uni-tuebingen.de:sPL-Fh2-7SS-hCJ@https://b2drop.eudat.eu";
     }
 
-    // a lane is a list of notes describing the file dropped
-    // a note has a back-link to the lane it belongs to, and each lane knows its notes.
-    addNote( laneId, description ) {
+    // a resource is a list of notes describing the file dropped
+    // a note has a back-link to the resource it belongs to, and each resource knows its notes.
+    addNote( resourceId, description ) {
 	const note = NoteActions.create({
 	    task: description,
-	    belongsTo: laneId});
+	    belongsTo: resourceId});
 	
-	LaneActions.attachToLane({
+	ResourceActions.attachToResource({
 	    noteId: note.id,
-	    laneId
+	    resourceId
 	});
     }
 
     showFiles() {
 
         var files = this.state.files;
-//	console.log('showFiles', files);
-	
         if (files.length <= 0) {
             return '';
         }
@@ -59,18 +60,17 @@ export default class DropArea extends React.Component {
 	// don't duplicate file information (apart from the preview)
 	return '';
 
-	//disabled
         // return React.createElement(
         //     'div',
         //     null,
         //     React.createElement(
         //         'h2',
-	// 	{ className: 'lane' },		
+	// 	{ className: 'resource' },		
         //         'Dropped file(s): '
         //     ),
         //     React.createElement(
         //         'ul',
-	// 	{ className: 'lane' },		
+	// 	{ className: 'resource' },		
         //         [].map.call(files, function (f, i) {
         //             return React.createElement(
 	// 		'li',
@@ -93,92 +93,10 @@ export default class DropArea extends React.Component {
     }
 
     processFile( currentFile ) {
-	var today = new Date();
-	var newFileName = currentFile.name + '_at_' + today.getTime();
-	var fileExtension = currentFile.name.split('.').pop();
-	newFileName = today.getTime() + "." + fileExtension;
 
-	// todo: RZG file upload server does not handle files of type "text/xml" appropriately.
-	// upload works, download only gives metadata of file to be downloaded.
-	var newFileType = currentFile.type
-	if ( (newFileType == "text/xml") ||
-	     (newFileType == "text/folio+xml") || 
-	     (newFileType == "") ) {
-	    newFileType = "application/octet_stream"
-	}
-
-	var protocol = window.location.protocol;
-	
-	// 1. store in the temporary file store at the MPG
-	// -- the following URL is a proxy to 'http://ws1-clarind.esc.rzg.mpg.de/drop-off/storage/'
-	Request
-	    .post(protocol.concat('//weblicht.sfs.uni-tuebingen.de/clrs/storage/').concat(newFileName))
-	    .send(currentFile)	
-	    .set('Content-Type', newFileType)
-	    .end((err, res) => {
-		if (err) {
-		    alert('Error in uploading resource to the MPG temporary file storage server');
-		} else {
-		    console.log('DropArea: success in uploading resource document to MPG', newFileName, res);
-		    
-		    // 2. do mimetype detection using tika (available at detect/stream)
-		    // ----------------------------------------------------------------
-		    var mimetypeDetected = "identify mimetype!";	    
-		    Request
-			.put(protocol.concat('//weblicht.sfs.uni-tuebingen.de/clrs/detect/stream'))
-			.send(currentFile)	
-			.set('Content-Type', currentFile.type)	
-			.end((err, res) => {
-			    if (err) {
-				console.log('error: mimetype identification', newFileName, err);
-			    } else {
-				// need to preset the language menu
-				console.log('success: mimetype identification', newFileName, res.text);
-				mimetypeDetected = res.text;
-				
-				// 3. do language detection using tika (available at language/string)
-				// ------------------------------------------------------------------
-				// tika seems to support at least these 18 languages:
-    				// da, en, hu, no, sv, de, es, is, pl, th, et, fi, it, pt, el, fr, nl, ru
-				// --------------------------------------------------------
-				
-				var languageDetected = "identify language!";
-				Request
-				    .put(protocol.concat('//weblicht.sfs.uni-tuebingen.de/clrs/language/string'))
-				    .send(currentFile)	
-				    .set('Content-Type', currentFile.type)	
-				    .end((err, res) => {
-					if (err) {
-					    console.log('error: language identification', newFileName, err);
-					} else {
-					    console.log('success: language identification', newFileName, res.text);
-					    languageDetected = res.text;
-
-					    // with all information gathered, define new lane (i.e. resource and its properties)
-					    var languageHarmonization = processLanguage(languageDetected);
-
-					    var lane = LaneActions.create( { name: currentFile.name,
-									     filename: currentFile.name,
-									     filenameWithDate: newFileName,
-									     file: currentFile,
-									     upload: 'dnd',
-									     mimetype: currentFile.type,
-									     language: languageHarmonization.threeLetterCode
-									   } );
-
-					    var laneId = lane.id;
-					    
-					    this.addNote(laneId, "name:   ".concat(currentFile.name));
-					    this.addNote(laneId, "type:   ".concat(currentFile.type));
-					    this.addNote(laneId, "size:   ".concat(currentFile.size));	
-					    this.addNote(laneId, "language:".concat( languageHarmonization.languageCombo));
-					}
-				    })
-			    }
-			})
-		}
-	    });
-    }
+	let profiler = new Profiler( currentFile );
+	let resourceProp = profiler.processFile3( currentFile );
+    }    
 
     owncloud_upload( newFileName, currentFile ) {
 
@@ -345,7 +263,6 @@ processFile_b2Drop( currentFile ) {
 					if (err) {
 					    console.log('error: mimetype identification', newFileName, err);
 					} else {
-					    // need to preset the language menu
 					    console.log('success: mimetype identification', newFileName, res.text);
 					    mimetypeDetected = res.text;
 					    
@@ -367,10 +284,10 @@ processFile_b2Drop( currentFile ) {
 							console.log('success: language identification', newFileName, res.text);
 							languageDetected = res.text;
 							
-							// with all information gathered, define new lane (i.e. resource and its properties)
+							// with all information gathered, define new resource and its properties
 							var languageHarmonization = processLanguage(languageDetected);
 							
-							var lane = LaneActions.create( { name: currentFile.name,
+							var resource = ResourceActions.create( { name: currentFile.name,
 											 filename: currentFile.name,
 											 filenameWithDate: newFileName,
 											 file: currentFile,
@@ -379,12 +296,12 @@ processFile_b2Drop( currentFile ) {
 											 language: languageHarmonization.threeLetterCode
 										       } );
 							
-							var laneId = lane.id;
+							var resourceId = resource.id;
 							
-							this.addNote(laneId, "name:   ".concat(currentFile.name));
-							this.addNote(laneId, "type:   ".concat(currentFile.type));
-							this.addNote(laneId, "size:   ".concat(currentFile.size));	
-							this.addNote(laneId, "language:".concat( languageHarmonization.languageCombo));
+							this.addNote(resourceId, "name:   ".concat(currentFile.name));
+							this.addNote(resourceId, "type:   ".concat(currentFile.type));
+							this.addNote(resourceId, "size:   ".concat(currentFile.size));	
+							this.addNote(resourceId, "language:".concat( languageHarmonization.languageCombo));
 						    }
 						})
 					}
@@ -399,7 +316,11 @@ processFile_b2Drop( currentFile ) {
     
     onDrop(files) {
 
-	// console.log('onDrop entry, processing these files', files, files.length);
+	// clear view
+	if (files.length > 0) {
+	    ResourceActions.reset();
+	    NoteActions.reset();
+	}	
 
 	for (var i=0; i<files.length; i++) {
 	    // this.processFile_b2Drop( files[i] );
@@ -410,11 +331,7 @@ processFile_b2Drop( currentFile ) {
 	    files: files
 	});
 
-	// once new file has been dropped, delete history of prior file drops
-	if (files.length > 0) {
-	    LaneActions.reset();
-	    NoteActions.reset();
-	}
+
     }
 
     render() {

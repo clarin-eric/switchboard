@@ -2,20 +2,18 @@ import React from 'react'
 import ReactDOM from 'react-dom';
 import Loader from 'react-loader';
 import NoteActions from '../actions/NoteActions';
-import LaneActions from '../actions/LaneActions';
+import ResourceActions from '../actions/ResourceActions';
 import AlertShibboleth from './AlertShibboleth.jsx';
 import AlertURLFetchError from './AlertURLFetchError.jsx';
 
 import Request from 'superagent';
-import util from '../libs/util';
+import processLanguage from '../libs/util';
 
 export default class UrlArea extends React.Component {
     constructor(props) {
 	super(props);
 
 	this.addNote       = this.addNote.bind(this);
-	
-	this.processLanguage   = util.processLanguage.bind(this);
 	
 	this.processParameters = this.processParameters.bind(this);
 	this.getJSON           = this.getJSON.bind(this);	
@@ -58,16 +56,16 @@ export default class UrlArea extends React.Component {
 		    } else {
 		    
 
-			// create lane
-			var lane = LaneActions.create( { name: fileURL,
+			// create resource
+			var resource = ResourceActions.create( { name: fileURL,
 							 filename: fileURL,
 							 upload: caller,
 							 mimetype: res.type
 						       } );
-			var laneId = lane.id;
-			that.addNote(laneId, "name:   ".concat( fileURL ));
-			that.addNote(laneId, "type:   ".concat( res.type ));
-			that.addNote(laneId, "size:   not determined");	
+			var resourceId = resource.id;
+			that.addNote(resourceId, "name:   ".concat( fileURL ));
+			that.addNote(resourceId, "type:   ".concat( res.type ));
+			that.addNote(resourceId, "size:   not determined");	
 
 			var languageHarmonization = "identify language!";
 			var protocol = window.location.protocol;
@@ -81,10 +79,10 @@ export default class UrlArea extends React.Component {
 				    console.log('error: language identification', err);
 				} else {
 				    console.log('success: language identification', langDetectResult.text);
-				    languageHarmonization = that.processLanguage(langDetectResult.text);
+				    languageHarmonization = processLanguage(langDetectResult.text);
 				    
-				    that.addNote(laneId, "language:".concat( languageHarmonization.languageCombo ));
-				    LaneActions.addLanguage( { laneId: laneId,
+				    that.addNote(resourceId, "language:".concat( languageHarmonization.languageCombo ));
+				    ResourceActions.addLanguage( { resourceId: resourceId,
 							       language: languageHarmonization.threeLetterCode})
 				}})
 		    }
@@ -93,15 +91,15 @@ export default class UrlArea extends React.Component {
 	return true;
     }
 
-    addNote( laneId, description ) {
-        console.log('UrlArea/addNote', laneId, description);
+    addNote( resourceId, description ) {
+        console.log('UrlArea/addNote', resourceId, description);
 	const note = NoteActions.create({
 	    task: description,
-	    belongsTo: laneId});
+	    belongsTo: resourceId});
 	
-	LaneActions.attachToLane({
+	ResourceActions.attachToResource({
 	    noteId: note.id,
-	    laneId
+	    resourceId
 	});
     }
 
@@ -126,7 +124,7 @@ export default class UrlArea extends React.Component {
     processParameters( caller, parameters ) {
 
 	// first, reset prior history
-	LaneActions.reset();
+	ResourceActions.reset();
 	NoteActions.reset();
 	this.forceUpdate();
 	
@@ -161,20 +159,20 @@ export default class UrlArea extends React.Component {
 		}
 		
 		// information for a single file has been passed (passing multiple files is not possible).
-		var languageHarmonization = this.processLanguage(parameters.fileLanguage);	    
+		var languageHarmonization = processLanguage(parameters.fileLanguage);	    
 		var mimeType = decodeURIComponent(parameters.fileMimetype);
-		var lane = LaneActions.create( { name: fileURL,
+		var resource = ResourceActions.create( { name: fileURL,
 						 filename: fileURL,
 						 upload: 'VLO',
 						 mimetype: mimeType,
 						 language: languageHarmonization.threeLetterCode
 					       } );
-		var laneId = lane.id;
+		var resourceId = resource.id;
 	    
-		this.addNote(laneId, "name:   ".concat( fileURL ));
-		this.addNote(laneId, "type:   ".concat(mimeType));
-		this.addNote(laneId, "size:   ".concat(parameters.fileSize));	
-		this.addNote(laneId, "language:".concat(languageHarmonization.languageCombo));
+		this.addNote(resourceId, "name:   ".concat( fileURL ));
+		this.addNote(resourceId, "type:   ".concat(mimeType));
+		this.addNote(resourceId, "size:   ".concat(parameters.fileSize));	
+		this.addNote(resourceId, "language:".concat(languageHarmonization.languageCombo));
 
 		this.setState( { isLoaded: true });
 		this.props.refreshFun();		
@@ -213,19 +211,19 @@ export default class UrlArea extends React.Component {
 	console.log('UrlArea/processJSONData', files);
 
 	for (var i=0; i<files.length; i++) {
-	    var languageHarmonization = this.processLanguage(files[i].language);	    
-	    var lane = LaneActions.create( { name: files[i].file,
+	    var languageHarmonization = processLanguage(files[i].language);	    
+	    var resource = ResourceActions.create( { name: files[i].file,
 					     filename: files[i].file,
 					     upload: 'VLO',
 					     mimetype: files[i].mimetype,
 					     language: languageHarmonization.threeLetterCode
 					   } );
 
-	    var laneId = lane.id;
-	    this.addNote(laneId, "name:   ".concat(files[i].file));
-	    this.addNote(laneId, "type:   ".concat(files[i].mimetype));
-	    this.addNote(laneId, "size:   ".concat(files[i].size));	
-	    this.addNote(laneId, "language:".concat(languageDetected));
+	    var resourceId = resource.id;
+	    this.addNote(resourceId, "name:   ".concat(files[i].file));
+	    this.addNote(resourceId, "type:   ".concat(files[i].mimetype));
+	    this.addNote(resourceId, "size:   ".concat(files[i].size));	
+	    this.addNote(resourceId, "language:".concat(languageDetected));
 	}
     }
 

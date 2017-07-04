@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactSelectize from 'react-selectize';
-import LaneActions from '../actions/LaneActions';
 
 // var MultiSelect = ReactSelectize.MultiSelect;
 var SimpleSelect = ReactSelectize.SimpleSelect;
