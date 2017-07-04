@@ -85,9 +85,9 @@ export default class App extends React.Component {
 	this.piwik.push(["setDomains", ["*.weblicht.sfs.uni-tuebingen.de/clrs","*.weblicht.sfs.uni-tuebingen.de/clrs"]]);
 	this.piwik.push(['trackPageView']);
 
-	localStorage.removeItem("app");
-	this.clearDropzone();
-	this.refresh();
+	//localStorage.removeItem("app");
+	//this.clearDropzone();
+	//this.refresh();
 	console.log('App: component did mount', this);	
     }
     
