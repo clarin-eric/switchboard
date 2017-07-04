@@ -16,8 +16,6 @@ export default class UrlArea extends React.Component {
 	this.addNote       = this.addNote.bind(this);
 	
 	this.processParameters = this.processParameters.bind(this);
-	this.getJSON           = this.getJSON.bind(this);	
-	this.processJSONData   = this.processJSONData.bind(this);
 	this.unfoldHandle      = this.unfoldHandle.bind(this);
 	this.fetchURL          = this.fetchURL.bind(this);
 
@@ -145,85 +143,34 @@ export default class UrlArea extends React.Component {
 	    console.log('UrlArea/processParameters: called from the VLO with parameters', parameters);
 	    console.log('UrlArea/processParameters:', this.state);
 
-	    // "normal" call from the VLO
-	    if (parameters.tokenId == undefined) {
-
-		// need to identify mimetype, SHOULD (CURRENTLY) NOT HAPPEN
-		if (parameters.fileMimetype == undefined) {
-		    console.log('the filetype of the resource needs to be identified');
-		}
-
-		// need to identfy language, SHOULD (CURRENTLY) NOT HAPPEN
-		if (parameters.fileLanguage == undefined) {
-		    console.log('the language of the resource needs to be identified');
-		}
-		
-		// information for a single file has been passed (passing multiple files is not possible).
-		var languageHarmonization = processLanguage(parameters.fileLanguage);	    
-		var mimeType = decodeURIComponent(parameters.fileMimetype);
-		var resource = ResourceActions.create( { name: fileURL,
-						 filename: fileURL,
-						 upload: 'VLO',
-						 mimetype: mimeType,
-						 language: languageHarmonization.threeLetterCode
-					       } );
-		var resourceId = resource.id;
-	    
-		this.addNote(resourceId, "name:   ".concat( fileURL ));
-		this.addNote(resourceId, "type:   ".concat(mimeType));
-		this.addNote(resourceId, "size:   ".concat(parameters.fileSize));	
-		this.addNote(resourceId, "language:".concat(languageHarmonization.languageCombo));
-
-		this.setState( { isLoaded: true });
-		this.props.refreshFun();		
-
-	    } else {
-     	       this.setState( { isLoaded: true });	    
-		// purely explorational (see below)
-		console.log('UrlArea/processParameters: a token has been passed', parameters);
-		this.getJSON( parameters.tokenId );
+	    // need to identify mimetype, SHOULD (CURRENTLY) NOT HAPPEN
+	    if (parameters.fileMimetype == undefined) {
+		console.log('the filetype of the resource needs to be identified');
 	    }
-	}
-    }
 
-    // Purely explorational. 
-    // Here, the VLO invokes the LRS with a token; once it is received, the LRS requests from the VLO
-    // a JSON-based metadata description for given token
-    getJSON( tokenId ) {
-	console.log('UrlArea/getJSON', tokenId);
-	let vloService = "http://localhost:8011/api/getJSON";
-	var req = Request
-	    .post(vloService)
-	    .send({ token: tokenId })
-	    .set('Accept', 'application/json')
-	    .end((err, res) => {
-		if (err) {
-		    console.log('UrlArea/getJSON: error in calling VLO with token',   err, tokenId);
-		} else {
-		    console.log('UrlArea/getJSON: success in calling VLO with token', JSON.stringify(res.body));
-		    this.processJSONData( res.body.resources );
-		}
-	    });
-    }
-
-    // experimental, see getJSON
-    processJSONData( files ) {
-	console.log('UrlArea/processJSONData', files);
-
-	for (var i=0; i<files.length; i++) {
-	    var languageHarmonization = processLanguage(files[i].language);	    
-	    var resource = ResourceActions.create( { name: files[i].file,
-					     filename: files[i].file,
-					     upload: 'VLO',
-					     mimetype: files[i].mimetype,
-					     language: languageHarmonization.threeLetterCode
-					   } );
-
+	    // need to identfy language, SHOULD (CURRENTLY) NOT HAPPEN
+	    if (parameters.fileLanguage == undefined) {
+		console.log('the language of the resource needs to be identified');
+	    }
+	    
+	    // information for a single file has been passed (passing multiple files is not possible).
+	    var languageHarmonization = processLanguage(parameters.fileLanguage);	    
+	    var mimeType = decodeURIComponent(parameters.fileMimetype);
+	    var resource = ResourceActions.create( { name: fileURL,
+						     filename: fileURL,
+						     upload: 'VLO',
+						     mimetype: mimeType,
+						     language: languageHarmonization.threeLetterCode
+						   } );
 	    var resourceId = resource.id;
-	    this.addNote(resourceId, "name:   ".concat(files[i].file));
-	    this.addNote(resourceId, "type:   ".concat(files[i].mimetype));
-	    this.addNote(resourceId, "size:   ".concat(files[i].size));	
-	    this.addNote(resourceId, "language:".concat(languageDetected));
+	    
+	    this.addNote(resourceId, "name:   ".concat( fileURL ));
+	    this.addNote(resourceId, "type:   ".concat(mimeType));
+	    this.addNote(resourceId, "size:   ".concat(parameters.fileSize));	
+	    this.addNote(resourceId, "language:".concat(languageHarmonization.languageCombo));
+
+	    this.setState( { isLoaded: true });
+	    this.props.refreshFun();		
 	}
     }
 
