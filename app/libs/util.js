@@ -1,4 +1,69 @@
-export default function processLanguage( language ) {
+const langEncodingMap = {
+    "generic" : "generic",
+    
+    "af" : "afr",
+    "sq" : "sqi",
+    "hy" : "hye",
+    "bs" : "bos",
+    "bg" : "bul",
+    "ca" : "cat",
+    "cs" : "ces",
+    "zh" : "zho",
+    "hr" : "hrv",
+    "eo" : "epo",
+    "et" : "est",
+    "ka" : "kat",
+    "hi" : "hin",
+    "hu" : "hun",
+    "is" : "isl",
+    "id" : "ind",
+    "ja" : "jpn",
+    "kn" : "kan",
+    "ku" : "kur",
+    "lv" : "lav",
+    "mk" : "mkd",
+    "ml" : "mlg",
+    "pl" : "pol",
+    "fa" : "fas",
+    "ro" : "ron",
+    "sk" : "slk",
+    "sl" : "slv",
+    "sr" : "srp",
+    "sw" : "swa",
+    "ta" : "tam",
+    "vi" : "vie",
+    "cy" : "cym",
+    "uk" : "ukr",
+    "de" : "deu",
+    "en" : "eng",
+    "da" : "dan",
+    "nl" : "nld",
+    "fr" : "fra",
+    "it" : "ita",
+    "es" : "spa",
+    "pt" : "por",
+    "tr" : "tur",
+    "ru" : "rus",
+    "sv" : "swe",
+    "fy" : "fry"
+}
+	
+export const map639_1_to_639_3 = function( key ) {
+    return langEncodingMap[key];
+}
+
+export const map639_3_to_639_1 = function( value ) {
+	    for (var key in langEncodingMap) {
+		if (langEncodingMap[key] == value) {
+		    return key;
+		}
+	    }
+	
+	    return null;
+	}
+
+
+export function processLanguage( language ) {
 
     var languageCombo = null;
     var threeLetterCode = null;

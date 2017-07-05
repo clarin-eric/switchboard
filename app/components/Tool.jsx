@@ -3,6 +3,7 @@ import React from 'react';
 import Accordion from '../helperComponents/Accordion';         
 import AccordionItem from '../helperComponents/AccordionItem';
 
+import { map639_1_to_639_3, map639_3_to_639_1 } from '../libs/util';
 import Request from 'superagent';
 
 // import PiwikReactRouter from 'piwik-react-router';
@@ -13,7 +14,6 @@ export default class Tool extends React.Component {
 	super(props);
 	this.invokeSoftware = this.invokeSoftware.bind(this);
 	this.invokeWebService = this.invokeWebService.bind(this);	
-	this.gotoHome = this.gotoHome.bind(this);	
 	this.constructToolURL = this.constructToolURL.bind(this);
     }
 
@@ -243,70 +243,6 @@ export default class Tool extends React.Component {
 
     constructToolURL( item, resource ) {
 
-	// todo  outsource to external module
-	const langEncodingMap = {
-	    "generic" : "generic",
-	    
-	    "af" : "afr",
-	    "sq" : "sqi",
-	    "hy" : "hye",
-	    "bs" : "bos",
-	    "bg" : "bul",
-	    "ca" : "cat",
-	    "cs" : "ces",
-	    "zh" : "zho",
-	    "hr" : "hrv",
-	    "eo" : "epo",
-	    "et" : "est",
-	    "ka" : "kat",
-	    "hi" : "hin",
-	    "hu" : "hun",
-	    "is" : "isl",
-	    "id" : "ind",
-	    "ja" : "jpn",
-	    "kn" : "kan",
-	    "ku" : "kur",
-	    "lv" : "lav",
-	    "mk" : "mkd",
-	    "ml" : "mlg",
-	    "pl" : "pol",
-	    "fa" : "fas",
-	    "ro" : "ron",
-	    "sk" : "slk",
-	    "sl" : "slv",
-	    "sr" : "srp",
-	    "sw" : "swa",
-	    "ta" : "tam",
-	    "vi" : "vie",
-	    "cy" : "cym",
-	    "uk" : "ukr",
-	    "de" : "deu",
-	    "en" : "eng",
-	    "da" : "dan",
-	    "nl" : "nld",
-	    "fr" : "fra",
-	    "it" : "ita",
-	    "es" : "spa",
-	    "pt" : "por",
-	    "tr" : "tur",
-	    "ru" : "rus",
-	    "sv" : "swe",
-	    "fy" : "fry"
-	}
-	
-	const map639_1_to_639_3 = function( key ) {
-	    return langEncodingMap[key];
-	}
-
-	const map639_3_to_639_1 = function( value ) {
-	    for (var key in langEncodingMap) {
-		if (langEncodingMap[key] == value) {
-		    return key;
-		}
-	    }
-	
-	    return null;
-	}
 	    
 	// the location for the server holding temporarily the resources
 	// var fileServerURL = "http://shannon.sfs.uni-tuebingen.de:8011/";
@@ -335,9 +271,7 @@ export default class Tool extends React.Component {
 
 
 	if (upload == "dnd") {
-	    // console.log('the file has been dropped in the demo upload site');
 	} else if ( (upload == "VLO") || (upload == "VCR") || (upload == "FCS") || (upload == "B2DROP") ){
-	    // no use of temp. server for resource
 	    fileServerURL = "";
 	} else {
 	    console.log("ERROR in upload info (Tool.jsx)", upload);
@@ -424,8 +358,6 @@ export default class Tool extends React.Component {
 	    urlWithParameters = item.url + "?" + parameterString;
 	}
 
-	//console.log('Tool.jsx URL:', urlWithParameters);
-
 	if (softwareType == "webService") {
 	    rtnValue =
 		{
@@ -444,12 +376,6 @@ export default class Tool extends React.Component {
 	}
 	
 	return rtnValue;
-    }
-
-    gotoHome( URL ) {
-	console.log('goto Home', URL);
-	var win = window.open(URL, '_blank');
-	win.focus();
     }
 
     // book-keeping. Think of Piwik type information gathering

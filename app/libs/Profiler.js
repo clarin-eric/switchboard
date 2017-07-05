@@ -1,5 +1,5 @@
 import Request from 'superagent';
-import processLanguage from '../libs/util';
+import {processLanguage} from '../libs/util';
 import NoteActions from '../actions/NoteActions';
 import ResourceActions from '../actions/ResourceActions';
 
@@ -71,10 +71,12 @@ export default class Profiler {
 	let newFileName = currentFile.filenameWithDate;
 	let protocol = this.protocol;
 	let that = this;
+
+	console.log('Profiler/uploadFile', currentFile.file);
         return new Promise(function(resolve, reject) {
 	    Request
 		.post(protocol.concat('//weblicht.sfs.uni-tuebingen.de/clrs/storage/').concat(newFileName))
-		.send(currentFile)	
+		.send(currentFile.file)	
 		.set('Content-Type', newFileType)
 		.end((err, res) => {
 		    if (err) {

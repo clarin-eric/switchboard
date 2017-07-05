@@ -7,7 +7,7 @@ import AlertShibboleth from './AlertShibboleth.jsx';
 import AlertURLFetchError from './AlertURLFetchError.jsx';
 
 import Request from 'superagent';
-import processLanguage from '../libs/util';
+import {processLanguage} from '../libs/util';
 
 export default class UrlArea extends React.Component {
     constructor(props) {
@@ -31,6 +31,7 @@ export default class UrlArea extends React.Component {
 
     // Take the mimetype detection from the 'browser' when downloading the resource from provider (res.type)
     // Todo: use of Apache TIKA for language detection
+    // CZ: may go to Download.js (see Upload.js)
     fetchURL( caller, fileURL ) {
 	var that = this;
 	var req = Request
@@ -140,20 +141,15 @@ export default class UrlArea extends React.Component {
 	    this.fetchURL(caller, fileURL);
 	    
 	} else {
-	    console.log('UrlArea/processParameters: called from the VLO with parameters', parameters);
-	    console.log('UrlArea/processParameters:', this.state);
-
-	    // need to identify mimetype, SHOULD (CURRENTLY) NOT HAPPEN
-	    if (parameters.fileMimetype == undefined) {
-		console.log('the filetype of the resource needs to be identified');
-	    }
-
-	    // need to identfy language, SHOULD (CURRENTLY) NOT HAPPEN
-	    if (parameters.fileLanguage == undefined) {
-		console.log('the language of the resource needs to be identified');
-	    }
 	    
-	    // information for a single file has been passed (passing multiple files is not possible).
+	    if (parameters.fileMimetype == undefined) {
+		alert('Please identify the media type of the resource !');
+	    }
+	    if (parameters.fileLanguage == undefined) {
+		alert('Please identify the language of the resource !');
+	    }
+
+
 	    var languageHarmonization = processLanguage(parameters.fileLanguage);	    
 	    var mimeType = decodeURIComponent(parameters.fileMimetype);
 	    var resource = ResourceActions.create( { name: fileURL,
@@ -179,10 +175,10 @@ export default class UrlArea extends React.Component {
 	// fetch all parameter from router
 	const parameters = this.props.match.params;
 
-	// the caller, one of VLO, VCR, FCS, or B2DROP
+	// get the caller, one of VLO, VCR, FCS, or B2DROP
 	const caller = this.props.caller;
-	
-	console.log('UrlArea/componentDidMount: this.props.params', parameters, caller);
+
+	// process parameters
 	this.processParameters(caller, parameters);
     }
 	
@@ -196,9 +192,6 @@ export default class UrlArea extends React.Component {
         };
 
 	var transferalInfo = `Resource transferal from ${this.props.caller}. Please check the information below, then press "Show Tools"`;
-	// if (this.props.match.params.tokenId !== undefined) {
-	//     transferalInfo = 'Resource via token-based tranferal (experimental).'
-	// }
 	return (
 	       <Loader loaded={isLoaded}>
 		<h2>
