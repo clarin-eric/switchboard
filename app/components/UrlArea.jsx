@@ -42,9 +42,9 @@ export default class UrlArea extends React.Component {
 		if ( (resolve.text.indexOf('Shibboleth') != -1))  {
 		    that.setState({showAlertShibboleth: true});
 		} else {
-		    var downloadedFile = new File([resolve.text], "filename.txt", {type: resolve.type});
+		    var downloadedFile = new File([resolve.text], fileURL, {type: resolve.type});
 		    console.log('UrlArea/fetchAndProcessURL file', downloadedFile);		    
-		    let profiler = new Profiler( downloadedFile );
+		    let profiler = new Profiler( downloadedFile, caller );
 		    let promiseLanguage = profiler.identifyLanguage();
 		    promiseLanguage.then(
 			function(resolve) {

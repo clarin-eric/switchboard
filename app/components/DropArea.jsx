@@ -67,7 +67,7 @@ export default class DropArea extends React.Component {
 	let promiseUpload = uploader.uploadFile();
 	let that = this;
 	
-	let profiler = new Profiler( currentFile );
+	let profiler = new Profiler( currentFile, "dnd", uploader.filenameWithDate );
 	let resourceProp = profiler.processFile( currentFile );
     }    
     

@@ -13,7 +13,7 @@ export default class Downloader {
 	    .get(that.url)	
 	    .end((err, res) => {
 		if (err) {
-		    console.log('Downloader/downloadFile: ', err);
+		    console.log('Downloader/downloadFile Error Case: ', err);
 		    reject(err);
 		} else {
 		    console.log('Downloader/downloadFile: ', res, res.header['content-type'], res.header['content-length']);

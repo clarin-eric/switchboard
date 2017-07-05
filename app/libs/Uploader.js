@@ -29,7 +29,7 @@ export default class Uploader {
         return new Promise(function(resolve, reject) {
 	    Request
 		.post(that.protocol.concat('//weblicht.sfs.uni-tuebingen.de/clrs/storage/').concat(that.filenameWithDate))
-		.send(that.file.file)	
+		.send(that.file)	
 		.set('Content-Type', that.newFileType)
 		.end((err, res) => {
 		    if (err) {

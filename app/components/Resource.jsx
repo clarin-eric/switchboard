@@ -81,12 +81,16 @@ export default class Resource extends React.Component {
 	this.handleToolsPerTaskChange( toolsPerTask );
     }
 
+    // CZ: may need clean-up
     getFileUrl(resource) {
-	var url = resource.name;
+        console.log('Resource/getFileUrl', resource);
+	var url = '';
 	if (resource.upload == "dnd") {
             url = 'http://weblicht.sfs.uni-tuebingen.de/clrs/storage/' + resource.filenameWithDate;
-	} else {
-	    console.log('Resource.jsx/getFileUrl:vlo', resource.filename);
+	} else if (resource.upload == "VLO") {
+            url = resource.name
+	} else { // VCR, FCS, B2DROP 
+	    url = resource.filename;
 	}
 
 	var win = window.open(url, '_blank');

@@ -5,7 +5,7 @@ import ResourceActions from '../actions/ResourceActions';
 
 export default class Profiler {
 
-    constructor( resource ) {
+    constructor( resource, caller, filenameWithDate ) {
 
 	this.addNote     = this.addNote.bind(this);
 	this.updateNote  = this.updateNote.bind(this);	
@@ -24,17 +24,30 @@ export default class Profiler {
 	// this.cloudURLWithCredentials = "claus.zinn@uni-tuebingen.de:sPL-Fh2-7SS-hCJ@https://b2drop.eudat.eu";	
 
 	this.resource = resource;
-	
-	let today = new Date();
-	let fileExtension = resource.name.split('.').pop();
-	
+
+	if (filenameWithDate === undefined) {
+	    let today = new Date();
+	    let numberSlashes = resource.name.split("/");
+	    this.filenameWithDate = resource.name;
+	    var fileExtension = "";
+	    if (numberSlashes.length == 1) {
+		fileExtension = resource.name.slice((Math.max(0, resource.name.lastIndexOf(".")) || Infinity) + 1);
+		filenameWithDate = today.getTime() + "." + fileExtension;
+	    }
+	    console.log('Profiler/constructor', resource, fileExtension, filenameWithDate, numberSlashes, numberSlashes.length, numberSlashes.length == 1);	    
+	    
+	} else {
+	    console.log('Profiler/constructor called with 3 args', resource, filenameWithDate);	    	    
+	    this.filenameWithDate = filenameWithDate
+	}
+	    
 	// default values
 	this.resourceProps =
 	    { filename: resource.name,
-	      filenameWithDate: today.getTime() + "." + fileExtension,
+	      filenameWithDate: filenameWithDate,
 	      file: resource,
 	      size: resource.size,
-	      upload: 'dnd',
+	      upload: caller, 
 	      
 	      // next two pieces are overwritten by Tika.
 	      mimetype: resource.type, 
@@ -122,48 +135,6 @@ export default class Profiler {
 	});
     }
 
-    fetchAndProcessURL( caller, fileURL ) {
-	let that = this;
-	let downloader = new Downloader( fileURL );
-	let promiseDownload = downloader.downloadFile( fileURL );
-	
-	promiseDownload.then(
-	    function(resolve) {
-		console.log('UrlArea/fetchAndProcessURL', resolve);
-		// check whether we've fetched the Shibboleth login
-		if ( (resolve.text.indexOf('Shibboleth') != -1))  {
-		    that.setState({showAlertShibboleth: true});
-		} else {
-
-		    var f = new File([resolve.text], "filename.txt", {type: resolve.type});
-		    console.log('UrlArea/fetchAndProcessURL file', f);		    
-		    // create resource
-		    var resource = ResourceActions.create( { name: fileURL,
-							     filename: fileURL,
-							     upload: caller,
-							     mimetype: resolve.type
-							   } );
-		    // add notes
-		    var resourceId = resource.id;
-		    that.addNote(resourceId, "name:   ".concat( fileURL ));
-		    that.addNote(resourceId, "type:   ".concat( f.type ));
-		    that.addNote(resourceId, "size:   ".concat( f.size ));	
-
-		    // detect language (and add note)
-		    let profiler = new Profiler( f ); 
-		    let promiseLanguage = profiler.identifyLanguage();
-		    promiseLanguage.then(
-			function(resolve) {  42 },
-			function(reject) { 43 })}
-	    },
-	    function(reject) {
-		// done with loading, discontinue spinner
-		that.setState( { isLoaded: true });		
-		// show fetch alert
-		that.setState({showAlertURLFetchError: true} );
-	    })
-    }
-    
     processFile() {
 	let that = this;
 	let promiseLanguage = that.identifyLanguage();
