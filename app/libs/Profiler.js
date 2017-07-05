@@ -7,10 +7,8 @@ export default class Profiler {
 
     constructor( resource ) {
 
-	let today = new Date();
-	let fileExtension = resource.name.split('.').pop();
-
 	this.addNote     = this.addNote.bind(this);
+	this.updateNote  = this.updateNote.bind(this);	
 	this.protocol    = window.location.protocol;	// use https or http given parent window
 	
 	// SHANNON
@@ -24,20 +22,33 @@ export default class Profiler {
 	// OFFICIAL SITE
 	// this.cloudURL = "https://b2drop.eudat.eu";
 	// this.cloudURLWithCredentials = "claus.zinn@uni-tuebingen.de:sPL-Fh2-7SS-hCJ@https://b2drop.eudat.eu";	
+
+	this.resource = resource;
+	
+	let today = new Date();
+	let fileExtension = resource.name.split('.').pop();
 	
 	// default values
 	this.resourceProps =
-	    { name: resource.name,
-	      filename: resource.name,
+	    { filename: resource.name,
 	      filenameWithDate: today.getTime() + "." + fileExtension,
 	      file: resource,
+	      size: resource.size,
 	      upload: 'dnd',
+	      
+	      // next two pieces are overwritten by Tika.
 	      mimetype: resource.type, 
-	      language: "eng",
-	      languageCombo: "English:eng"
+	      language: "any",
+	      languageCombo: "Please identify language:any"
 	    }
 
-	this.resource = null;
+	this.resourceStateItem = ResourceActions.create( this.resourceProps );
+	let resourceId = this.resourceStateItem.id;
+
+	// information known from file drop
+	this.addNote(resourceId, "name:   ".concat(this.resourceStateItem.file.name));
+	this.addNote(resourceId, "type:   ".concat(this.resourceStateItem.file.type)); 
+	this.addNote(resourceId, "size:   ".concat(this.resourceStateItem.file.size));	
     }
 
     // a resource is a list of notes describing the file dropped
@@ -58,44 +69,7 @@ export default class Profiler {
 	    task: description,
 	    belongsTo: resourceId});
     }
-    
-    uploadFile() {
-	let currentFile = this.resourceProps;
-	var newFileType = currentFile.type;
-	if ( (newFileType == "text/xml") ||
-	     (newFileType == "text/folio+xml") || 
-	     (newFileType == "") ) {
-	    newFileType = "application/octet_stream"
-	}
 
-	let newFileName = currentFile.filenameWithDate;
-	let protocol = this.protocol;
-	let that = this;
-
-	console.log('Profiler/uploadFile', currentFile.file);
-        return new Promise(function(resolve, reject) {
-	    Request
-		.post(protocol.concat('//weblicht.sfs.uni-tuebingen.de/clrs/storage/').concat(newFileName))
-		.send(currentFile.file)	
-		.set('Content-Type', newFileType)
-		.end((err, res) => {
-		    if (err) {
-			reject(err);
-			alert('Error in uploading resource to the MPG temporary file storage server.');
-		    } else {
-			// when uploaded succeeded, we present resource information
-			that.resource = ResourceActions.create( that.resourceProps );
-			let resourceId = that.resource.id;
-			that.addNote(resourceId, "name:   ".concat(that.resource.file.name));
-			that.addNote(resourceId, "type:   ".concat(that.resource.file.type)); // overwritten by Tika, see below
-			that.addNote(resourceId, "size:   ".concat(that.resource.file.size));	
-			// remaining actions.
-			resolve(res)
-		    }
-		})});
-    }
-	
-    
     // not called (info from browser and VLO is being trusted)
     identifyMimeType( ) {
 	let file = this.resourceProps.file;
@@ -112,8 +86,8 @@ export default class Profiler {
 			alert('Warning: could not identify media type.');
 		    } else {
 			that.resourceProps.mimetype = res.text;
-			let resourceId = that.resource.id;
-			that.addNote(resourceId, "type:   ".concat(that.resourceProps.mimetype)); 
+			let resourceId = that.resourceStateItem.id;
+			that.updateNote(resourceId, "type:   ".concat(that.resourceProps.mimetype)); 
 			resolve(res);
 		    }
 		})
@@ -138,10 +112,9 @@ export default class Profiler {
 			alert('Warning: could not identify language');
 		    } else {
 			let langStructure = processLanguage(res.text);
-			// must be sequenced (CZ, use promises and superagent together)
 			that.resourceProps.language = langStructure.threeLetterCode;
 			that.resourceProps.languageCombo = langStructure.languageCombo;
-			let resourceId = that.resource.id;			
+			let resourceId = that.resourceStateItem.id;			
 			that.addNote(resourceId, "language:".concat( langStructure.languageCombo ));				
 			resolve(res);
 		    }
@@ -149,24 +122,60 @@ export default class Profiler {
 	});
     }
 
-    processFile() {
-	let promiseUpload = this.uploadFile();
+    fetchAndProcessURL( caller, fileURL ) {
 	let that = this;
-	promiseUpload.then(
+	let downloader = new Downloader( fileURL );
+	let promiseDownload = downloader.downloadFile( fileURL );
+	
+	promiseDownload.then(
 	    function(resolve) {
-		let promiseLanguage = that.identifyLanguage();
-		promiseLanguage.then(
-		    function(resolve) {
-			let promiseMimeType = that.identifyMimeType();
-			promiseMimeType.catch(
-			    function(reject) {
-				console.log('mimetype id failed', reject);
-			    })},
-		    function(reject) {
-			console.log('lang id failed', reject) })},
+		console.log('UrlArea/fetchAndProcessURL', resolve);
+		// check whether we've fetched the Shibboleth login
+		if ( (resolve.text.indexOf('Shibboleth') != -1))  {
+		    that.setState({showAlertShibboleth: true});
+		} else {
+
+		    var f = new File([resolve.text], "filename.txt", {type: resolve.type});
+		    console.log('UrlArea/fetchAndProcessURL file', f);		    
+		    // create resource
+		    var resource = ResourceActions.create( { name: fileURL,
+							     filename: fileURL,
+							     upload: caller,
+							     mimetype: resolve.type
+							   } );
+		    // add notes
+		    var resourceId = resource.id;
+		    that.addNote(resourceId, "name:   ".concat( fileURL ));
+		    that.addNote(resourceId, "type:   ".concat( f.type ));
+		    that.addNote(resourceId, "size:   ".concat( f.size ));	
+
+		    // detect language (and add note)
+		    let profiler = new Profiler( f ); 
+		    let promiseLanguage = profiler.identifyLanguage();
+		    promiseLanguage.then(
+			function(resolve) {  42 },
+			function(reject) { 43 })}
+	    },
 	    function(reject) {
-		console.log('upload failed', reject);
+		// done with loading, discontinue spinner
+		that.setState( { isLoaded: true });		
+		// show fetch alert
+		that.setState({showAlertURLFetchError: true} );
 	    })
+    }
+    
+    processFile() {
+	let that = this;
+	let promiseLanguage = that.identifyLanguage();
+	promiseLanguage.then(
+	    function(resolve) {
+		let promiseMimeType = that.identifyMimeType();
+		promiseMimeType.catch(
+		    function(reject) {
+			console.log('mimetype id failed', reject);
+		    })},
+	    function(reject) {
+		console.log('language identification id failed', reject) })
     }
 
     processFile_b2Drop() {
@@ -204,7 +213,7 @@ export default class Profiler {
 	return new Promise(function(resolve, reject) {
 	    // 1a. store in local b2drop instance
 	    Request
-		.put(this.cloudURL.concat('/owncloud/remote.php/webdav/').concat(newFileName))    
+		.put(that.cloudURL.concat('/owncloud/remote.php/webdav/').concat(newFileName))    
 		.auth('switchboard', 'clarin-plus')
 		.set('Access-Control-Allow-Origin', '*')	
 		.set('Access-Control-Allow-Credentials', 'true')

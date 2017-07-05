@@ -5,6 +5,7 @@ import ResourceActions from '../actions/ResourceActions';
 
 // access to profiler
 import Profiler from '../libs/Profiler';
+import Uploader from '../libs/Uploader';
 
 export default class DropArea extends React.Component {
     constructor(props) {
@@ -60,8 +61,12 @@ export default class DropArea extends React.Component {
         // );
     }
 
-    processFile( currentFile ) {
+    uploadAndProcessFile( currentFile ) {
 
+	let uploader = new Uploader( currentFile );
+	let promiseUpload = uploader.uploadFile();
+	let that = this;
+	
 	let profiler = new Profiler( currentFile );
 	let resourceProp = profiler.processFile( currentFile );
     }    
@@ -77,7 +82,7 @@ export default class DropArea extends React.Component {
 	// process the file(s)
 	for (var i=0; i<files.length; i++) {
 	    // this.processFile_b2Drop( files[i] );
-	    this.processFile( files[i] );	    
+	    this.uploadAndProcessFile( files[i] );	    
 	}
 
 	// set the state

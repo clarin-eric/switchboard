@@ -29,9 +29,10 @@ class ResourceStore {
 	resource.file             = resource.file || null;
 	resource.filename         = resource.filename || null;
 	resource.filenameWithDate = resource.filenameWithDate || null;
-	resource.mimetype         = resource.mimetype || null;	
-	resource.language         = resource.language || null;
 	resource.upload           = resource.upload   || null;
+	resource.mimetype         = resource.mimetype || null;	
+	resource.size             = resource.size || null;
+	resource.language         = resource.language || null;
 	
 	this.setState({
 	    resources: resources.concat(resource)

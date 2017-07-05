@@ -181,14 +181,16 @@ export default class App extends React.Component {
     <Switch>
       <Route exact path="/" component={DropArea} />
       <Route exact path="/vlo/:fileURL/:fileMimetype/:fileLanguage"
-	    render={(props) => <UrlArea refreshFun={this.refresh} caller="VLO" {...props} /> } />
-      <Route exact path="/vlo/:fileURL/:fileMimetype"             caller="VLO" component={UrlArea} />		
-      <Route exact path="/vlo/:tokenId"                           caller="VLO" component={UrlArea} />
-      <Route path="/vcr/:fileURL"                                 caller="VCR" component={UrlArea} />
-      <Route path="/fcs/:fileURL"                                 caller="FCS" component={UrlArea} />
+	     render={(props) => <UrlArea refreshFun={this.refresh} caller="VLO" {...props} /> } />
+      <Route exact path="/vlo/:fileURL/:fileMimetype"
+             render={(props) => <UrlArea refreshFun={this.refresh} caller="VLO" {...props} /> } />	    
+      <Route path="/vcr/:fileURL"
+            render={(props) => <UrlArea refreshFun={this.refresh} caller="VCR" {...props} /> } />
+      <Route path="/fcs/:fileURL"
+   	    render={(props) => <UrlArea refreshFun={this.refresh} caller="FCS" {...props} /> } />	    
       <Route path="/b2drop/:fileURL"
-            render={(props) => <UrlArea refreshFun={this.refresh} caller="B2DROP" {...props} /> } />    
-      <Route path="*"                                                          component={AlertURLFetchError} />
+	    render={(props) => <UrlArea refreshFun={this.refresh} caller="B2DROP" {...props} /> } />    
+      <Route path="*"       component={AlertURLFetchError} />
     </Switch>
   </HashRouter>
   

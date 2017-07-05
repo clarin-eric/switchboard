@@ -1,4 +1,65 @@
-    owncloud_upload( newFileName, currentFile ) {
+    // Take the mimetype detection from the 'browser' when downloading the resource from provider (res.type)
+    // Todo: use of Apache TIKA for language detection
+    // CZ: may go to Download.js (see Upload.js)
+    fetchAndProcessURL_inactive( caller, fileURL ) { // CZ remove
+	var that = this;
+	var req = Request
+	    .get(fileURL)	
+	    .end(function(err, res){
+		
+		// done with loading, discontinue spinner
+		that.setState( { isLoaded: true });
+
+		if (err) {
+   		    // show fetch alert
+		    that.setState({showAlertURLFetchError: true} );
+		} else {
+		    // record file in state
+		    that.setState( { resource : res } );
+		    console.log('UrlArea/fetchAndProcessURL: ', res, res.header['content-type'], res.header['content-length']);
+
+		    // check whether we've fetched the Shibboleth login
+		    if ( (res.text.indexOf('Shibboleth') != -1))  {
+			that.setState({showAlertShibboleth: true});
+		    } else {
+		    
+
+			// create resource
+			var resource = ResourceActions.create( { name: fileURL,
+							 filename: fileURL,
+							 upload: caller,
+							 mimetype: res.type
+						       } );
+			var resourceId = resource.id;
+			that.addNote(resourceId, "name:   ".concat( fileURL ));
+			that.addNote(resourceId, "type:   ".concat( res.type ));
+			that.addNote(resourceId, "size:   not determined");	 // CZ: check since we have downloaded the resource...
+
+			var languageHarmonization = "identify language!";
+			var protocol = window.location.protocol;
+			console.log('UrlArea/fetchAndProcessURL: calling TIKA for language detection', protocol);
+			Request
+			    .put(protocol.concat('//weblicht.sfs.uni-tuebingen.de/clrs/language/string'))
+			    .send(res.text)	
+			    .set('Content-Type', res.type)	
+			    .end((err, langDetectResult) => {
+				if (err) {
+				    console.log('error: language identification', err);
+				} else {
+				    console.log('success: language identification', langDetectResult.text);
+				    languageHarmonization = processLanguage(langDetectResult.text);
+				    
+				    that.addNote(resourceId, "language:".concat( languageHarmonization.languageCombo ));
+				    ResourceActions.addLanguage( { resourceId: resourceId,
+							       language: languageHarmonization.threeLetterCode})
+				}})
+		    }
+		}
+	    });
+	return true;
+    }
+
+owncloud_upload( newFileName, currentFile ) {
 
 	var that = this;
 	var xhr = new XMLHttpRequest();

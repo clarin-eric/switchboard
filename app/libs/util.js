@@ -1,3 +1,22 @@
+export function unfoldHandle( handle ) {
+    var hdlShortPrefix = "hdl:";
+    var protocol = window.location.protocol;
+    var hdlLongPrefix  = protocol.concat("//hdl.handle.net/");	
+    var index = handle.indexOf(hdlShortPrefix);
+
+    var result = decodeURIComponent(handle);
+
+    if (index > -1) {
+	result = hdlLongPrefix.concat( handle.substring(index+hdlShortPrefix.length, handle.length) );
+	console.log('UrlArea/unfoldHandle success', handle, result, result);	    
+    } else {
+	console.log('UrlArea/unfoldHandle not need to unfold', handle);
+    }
+
+    return result;
+}
+
+
 const langEncodingMap = {
     "generic" : "generic",
     
