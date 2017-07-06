@@ -5,26 +5,15 @@ import AccordionItem from '../helperComponents/AccordionItem';
 
 import { map639_1_to_639_3, map639_3_to_639_1 } from '../back-end/util';
 import Request from 'superagent';
-
-// import PiwikReactRouter from 'piwik-react-router';
+import {invokeWebService, invokeBrowserBasedTool} from '../back-end/ToolInvoker';
 
 
 export default class Tool extends React.Component {
     constructor(props) {
 	super(props);
 	this.invokeTool = this.invokeTool.bind(this);
-	this.invokeWebService = this.invokeWebService.bind(this);
-	this.invokeBrowserBasedTool = this.invokeBrowserBasedTool.bind(this);		
 	this.constructToolURL = this.constructToolURL.bind(this);
     }
-
-    // componentDidMount() {
-    // 	this.piwik = PiwikReactRouter({
-    // 	    url	: 'https://stats.clarin.eu',
-    // 	    siteId	: 21,
-    // 	    enableLinkTracking: true
-    //     });
-    // }
     
     render() {
 	const {items, resource, ...props} = this.props;
@@ -381,53 +370,11 @@ export default class Tool extends React.Component {
 
     invokeTool( URL ) {
 	if (URL.toolType == "webService") {
-	    this.invokeWebService(URL);
+	    _paq.push(["trackEvent", 'ToolInvocation', URL.url]);	    // inform Piwik
+	    invokeWebService(URL);
 	} else {
-	    this.invokeBrowserBasedTool( URL );
-	}
-    }
-
-    invokeBrowserBasedTool( URL ) {
-	_paq.push(["trackEvent", 'ToolInvocation', URL.url]);	    // inform Piwik
-	var win = window.open(URL.url, '_blank');
-	win.focus();	
-    }
-
-    invokeWebService( URL ) {
-	_paq.push(["trackEvent", 'WebServiceInvocation', URL.url]); // inform Piwik
-
-	let file = URL.formVal;
-	if (URL.postSubmit == "data") {
-	    Request
-		.post(URL.url)
-		.send(file)
-		.end((err, res) => {
-		    if (err) {
-			console.log('Tool.jsx/invokeWebService: error in calling webservice', err, file.name, URL);
-			alert('Result of calling web service: ' + err);
-		    } else {
-			var something = window.open("data:text/json," + encodeURIComponent(res.text), "_blank");
-			console.log('onDrop: success in calling webservice', res, file.name, data, URL);
-		    }
-		});
-	} else {
-	    let data = new FormData();
-	    //data.set( URL.formPar, file, file.name);
-	    data.append( URL.formPar, file, file.name);
-	    Request
-		.post(URL.url)
-		.send(data)
-//		.set('Content-Type', 'text/plain')	    
-		.end((err, res) => {
-		    if (err) {
-			console.log('Tool.jsx/invokeWebService: error in calling webservice', err, file.name, data, URL);
-			alert('Result of calling web service: ' + err);
-		    } else {
-			var something = window.open("data:text/json," + encodeURIComponent(res.text), "_blank");
-			// something.focus();
-			console.log('onDrop: success in calling webservice', res, file.name, data, URL);
-		    }
-		});
+	    _paq.push(["trackEvent", 'WebServiceInvocation', URL.url]); // inform Piwik
+	    invokeBrowserBasedTool( URL );
 	}
     }
 }
