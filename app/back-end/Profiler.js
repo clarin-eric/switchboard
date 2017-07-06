@@ -1,5 +1,5 @@
 import Request from 'superagent';
-import {processLanguage} from '../libs/util';
+import {processLanguage} from './util';
 import NoteActions from '../actions/NoteActions';
 import ResourceActions from '../actions/ResourceActions';
 
@@ -10,18 +10,10 @@ export default class Profiler {
 	this.addNote     = this.addNote.bind(this);
 	this.updateNote  = this.updateNote.bind(this);	
 	this.protocol    = window.location.protocol;	// use https or http given parent window
+
+	// TIKA prefix
+	this.tika = "//weblicht.sfs.uni-tuebingen.de/clrs"
 	
-	// SHANNON
-	this.cloudURLWithCredentials = "http://switchboard:clarin-plus@shannon.sfs.uni-tuebingen.de";
-	this.cloudURL = "http://shannon.sfs.uni-tuebingen.de";
-
-	//LOCALHOST
-	// this.cloudURLWithCredentials = "http://switchboard:clarin-plus@localhost";
-	// this.cloudURL = "http://localhost";
-
-	// OFFICIAL SITE
-	// this.cloudURL = "https://b2drop.eudat.eu";
-	// this.cloudURLWithCredentials = "claus.zinn@uni-tuebingen.de:sPL-Fh2-7SS-hCJ@https://b2drop.eudat.eu";	
 
 	this.resource = resource;
 
@@ -87,7 +79,7 @@ export default class Profiler {
 	let that = this;	
 	return new Promise(function(resolve, reject) {
 	    Request
-		.put(protocol.concat('//weblicht.sfs.uni-tuebingen.de/clrs/detect/stream'))
+		.put(protocol.concat(that.tika.concat('/detect/stream')))
 		.send(file)	
 		.set('Content-Type', file.type)	
 		.end((err, res) => {
@@ -113,7 +105,7 @@ export default class Profiler {
 	let that = this;
 	return new Promise(function(resolve, reject) {
 	    Request
-		.put(protocol.concat('//weblicht.sfs.uni-tuebingen.de/clrs/language/string'))
+		.put(protocol.concat(that.tika.concat('/language/string')))
 		.send(file)	
 		.set('Content-Type', file.type)	
 		.end((err, res) => {

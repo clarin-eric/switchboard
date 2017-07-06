@@ -2,13 +2,13 @@
 // 2016-17 Claus Zinn
 // 
 // File: Matcher.js
-// Time-stamp: <2017-07-06 10:28:20 (zinn)>
+// Time-stamp: <2017-07-06 11:20:18 (zinn)>
 //
 // ----------------------------------------------------------------------------------------
 
 import React, { Component } from 'react';
 import uuid from 'node-uuid';
-import Registry from '../libs/Registry.js';
+import Registry from './Registry.js';
 
 export default class Matcher {
 

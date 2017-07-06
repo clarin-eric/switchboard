@@ -7,10 +7,10 @@ import AlertShibboleth from './AlertShibboleth.jsx';
 import AlertURLFetchError from './AlertURLFetchError.jsx';
 
 import Request from 'superagent';
-import {processLanguage, unfoldHandle} from '../libs/util';
+import {processLanguage, unfoldHandle} from '../back-end/util';
 
-import Downloader from '../libs/Downloader';
-import Profiler from '../libs/Profiler';
+import Downloader from '../back-end/Downloader';
+import Profiler from '../back-end/Profiler';
 
 export default class UrlArea extends React.Component {
     constructor(props) {

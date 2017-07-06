@@ -33,7 +33,7 @@ import { HashRouter, Route, Switch } from 'react-router-dom';
 import { hashHistory } from 'react-router';
 
 // access to matcher
-import Matcher from '../libs/Matcher';
+import Matcher from '../back-end/Matcher';
 
 // logo images for task-oriented view (CZ: should move to TaskOrientedView
 require('./../images/clarin-logo-wide.png');

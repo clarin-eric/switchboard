@@ -8,7 +8,7 @@ import ResourceStore from '../stores/ResourceStore';
 import Toggle   from 'react-toggle';
 
 // access to matcher
-import Matcher from '../libs/Matcher';
+import Matcher from '../back-end/Matcher';
 
 
 export default class Resource extends React.Component {

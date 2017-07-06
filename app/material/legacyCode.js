@@ -1,7 +1,4 @@
 // this is legacy code (before refactoring)
-//
-
-
     // same version with nesting
     processFile_nested() {
 

@@ -128,6 +128,9 @@ export function processLanguage( language ) {
     } else if ((language == "th") || (language == "tha")) {
 	languageCombo = "Thai:tha";
     	threeLetterCode = "tha";
+    } else if ((language == "hr") || (language == "hrv")) {
+	languageCombo = "Croatian:hrv";
+    	threeLetterCode = "hrv";	
     } else if ((language == "et") || (language == "est")) {
 	languageCombo = "Estonian:est";
     	threeLetterCode = "est";
@@ -162,6 +165,8 @@ export function processLanguage( language ) {
 	languageCombo = "Please identify language:any";
 	threeLetterCode = "any";
     }
+
+    console.log('processLanguage', language, languageCombo, threeLetterCode)
 
     return { languageCombo  : languageCombo,
 	     threeLetterCode: threeLetterCode

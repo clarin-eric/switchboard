@@ -20,6 +20,19 @@ export default class Uploader {
 	     (this.newFileType == "") ) {
 	    this.newFileType = "application/octet_stream"
 	}
+
+	// SHANNON
+	this.cloudURLWithCredentials = "http://switchboard:clarin-plus@shannon.sfs.uni-tuebingen.de";
+	this.cloudURL = "http://shannon.sfs.uni-tuebingen.de";
+
+	//LOCALHOST
+	// this.cloudURLWithCredentials = "http://switchboard:clarin-plus@localhost";
+	// this.cloudURL = "http://localhost";
+
+	// OFFICIAL SITE
+	// this.cloudURL = "https://b2drop.eudat.eu";
+	// this.cloudURLWithCredentials = "claus.zinn@uni-tuebingen.de:sPL-Fh2-7SS-hCJ@https://b2drop.eudat.eu";	
+	
     }
 
     uploadFile() {

@@ -3,7 +3,7 @@ import React from 'react';
 import Accordion from '../helperComponents/Accordion';         
 import AccordionItem from '../helperComponents/AccordionItem';
 
-import { map639_1_to_639_3, map639_3_to_639_1 } from '../libs/util';
+import { map639_1_to_639_3, map639_3_to_639_1 } from '../back-end/util';
 import Request from 'superagent';
 
 // import PiwikReactRouter from 'piwik-react-router';
@@ -12,8 +12,9 @@ import Request from 'superagent';
 export default class Tool extends React.Component {
     constructor(props) {
 	super(props);
-	this.invokeSoftware = this.invokeSoftware.bind(this);
-	this.invokeWebService = this.invokeWebService.bind(this);	
+	this.invokeTool = this.invokeTool.bind(this);
+	this.invokeWebService = this.invokeWebService.bind(this);
+	this.invokeBrowserBasedTool = this.invokeBrowserBasedTool.bind(this);		
 	this.constructToolURL = this.constructToolURL.bind(this);
     }
 
@@ -186,7 +187,7 @@ export default class Tool extends React.Component {
 	    const renderSummary = () => {
 		if ((title == "URL") && ( summary.url )) return (
 		    <p style={{ fontWeight: 100, fontSize: '16px', lineHeight: 1.5 }}>
-		    <button onClick={this.invokeSoftware.bind(this,summary)} > Click to start tool </button>		    
+		    <button onClick={this.invokeTool.bind(this,summary)} > Click to start tool </button>		    
 		    </p>
 		);
 
@@ -378,31 +379,27 @@ export default class Tool extends React.Component {
 	return rtnValue;
     }
 
-    // book-keeping. Think of Piwik type information gathering
-    invokeSoftware( URL ) {
-
-	console.log('invokeSoftware', URL);
+    invokeTool( URL ) {
 	if (URL.toolType == "webService") {
 	    this.invokeWebService(URL);
 	} else {
-	    // inform Piwik
-	    console.log('why does piwik reference _paq persist:', _paq);
-	    _paq.push(["trackEvent", 'ToolInvocation', URL.url]);	    
-	    var win = window.open(URL.url, '_blank');
-	    win.focus();
+	    this.invokeBrowserBasedTool( URL );
 	}
     }
 
-    invokeWebService( URL ) {
+    invokeBrowserBasedTool( URL ) {
+	_paq.push(["trackEvent", 'ToolInvocation', URL.url]);	    // inform Piwik
+	var win = window.open(URL.url, '_blank');
+	win.focus();	
+    }
 
-	// inform Piwik
-	_paq.push(["trackEvent", 'WebServiceInvocation', URL.url]);
+    invokeWebService( URL ) {
+	_paq.push(["trackEvent", 'WebServiceInvocation', URL.url]); // inform Piwik
 
 	let file = URL.formVal;
 	if (URL.postSubmit == "data") {
 	    Request
 		.post(URL.url)
-//		.set('Content-Type', 'text/plain')
 		.send(file)
 		.end((err, res) => {
 		    if (err) {
@@ -410,7 +407,6 @@ export default class Tool extends React.Component {
 			alert('Result of calling web service: ' + err);
 		    } else {
 			var something = window.open("data:text/json," + encodeURIComponent(res.text), "_blank");
-			// something.focus();
 			console.log('onDrop: success in calling webservice', res, file.name, data, URL);
 		    }
 		});

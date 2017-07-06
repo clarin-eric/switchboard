@@ -4,8 +4,8 @@ import NoteActions from '../actions/NoteActions';
 import ResourceActions from '../actions/ResourceActions';
 
 // access to profiler
-import Profiler from '../libs/Profiler';
-import Uploader from '../libs/Uploader';
+import Profiler from '../back-end/Profiler';
+import Uploader from '../back-end/Uploader';
 
 export default class DropArea extends React.Component {
     constructor(props) {
