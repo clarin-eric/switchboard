@@ -8,7 +8,6 @@ export function unfoldHandle( handle ) {
 
     if (index > -1) {
 	result = hdlLongPrefix.concat( handle.substring(index+hdlShortPrefix.length, handle.length) );
-	console.log('UrlArea/unfoldHandle success', handle, result, result);	    
     } else {
 	console.log('UrlArea/unfoldHandle not need to unfold', handle);
     }
@@ -164,7 +163,6 @@ export function processLanguage( language ) {
 	threeLetterCode = "any";
     }
 
-    console.log('util/processLanguage', language, languageCombo, threeLetterCode);
     return { languageCombo  : languageCombo,
 	     threeLetterCode: threeLetterCode
 	   };

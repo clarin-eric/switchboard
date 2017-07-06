@@ -2,7 +2,7 @@
 // 2016-17 Claus Zinn
 // 
 // File: Matcher.js
-// Time-stamp: <2017-06-30 16:12:22 (zinn)>
+// Time-stamp: <2017-07-06 10:28:20 (zinn)>
 //
 // ----------------------------------------------------------------------------------------
 
@@ -85,7 +85,6 @@ export default class Matcher {
     findApplicableTools( resourceDescription, includeWebServices) {
 
 	// if necessary, filter out web services
-	console.log('Matcher/findApplicableTools', resourceDescription, includeWebServices);
 	var tools = [];
 
 	// in case web services all excluded, filter out all web services from result list.

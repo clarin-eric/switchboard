@@ -20,8 +20,6 @@ export default class Uploader {
 	     (this.newFileType == "") ) {
 	    this.newFileType = "application/octet_stream"
 	}
-	
-	console.log('Uploader/constructor', this.file, this.file.name);
     }
 
     uploadFile() {

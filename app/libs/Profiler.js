@@ -34,11 +34,7 @@ export default class Profiler {
 		fileExtension = resource.name.slice((Math.max(0, resource.name.lastIndexOf(".")) || Infinity) + 1);
 		filenameWithDate = today.getTime() + "." + fileExtension;
 	    }
-	    console.log('Profiler/constructor', resource, fileExtension, filenameWithDate,
-			numberSlashes, numberSlashes.length, numberSlashes.length == 1);	    
-	    
 	} else {
-	    console.log('Profiler/constructor called with 3 args', resource, filenameWithDate);	    	    
 	    this.filenameWithDate = filenameWithDate
 	}
 	    
