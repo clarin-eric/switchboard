@@ -23,7 +23,6 @@ export default class Note extends React.Component {
 	    console.log('Note.jsx/setLanguage: language is undefined!');
 	} else {
 	    languageValue = language.value;
-	    console.log('Note.jsx/setLanguage: language set to', languageValue);	    
 	}
 	ResourceActions.addLanguage({
 	    language: languageValue,
@@ -38,7 +37,6 @@ export default class Note extends React.Component {
 	    console.log('Note.jsx/setMimetype: mimetype is undefined!');
 	} else {
 	    mimetypeValue = mimetype.value;
-	    console.log('Note.jsx/setMimetype: mimetype set to', mimetypeValue);	    
 	}	    
 	ResourceActions.addMimetype({
 	    mimetype: mimetypeValue,
@@ -71,7 +69,6 @@ export default class Note extends React.Component {
     };
 
     renderLanguageNote = () => {
-	console.log('Note.jsx/renderLanguageNote', this.props.note.task);
 	const languageWithoutPrefix = this.props.note.task.substring(9, this.props.note.task.length-4);
 	const languageCode = this.props.note.task.substring(this.props.note.task.length-3, this.props.note.task.length);
 	return (

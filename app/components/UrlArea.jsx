@@ -36,14 +36,12 @@ export default class UrlArea extends React.Component {
 	
 	promiseDownload.then(
 	    function(resolve) {
-		console.log('UrlArea/fetchAndProcessURL', resolve);
 		that.setState( { isLoaded: true });		
 		// check whether we've fetched the Shibboleth login
 		if ( (resolve.text.indexOf('Shibboleth') != -1))  {
 		    that.setState({showAlertShibboleth: true});
 		} else {
 		    var downloadedFile = new File([resolve.text], fileURL, {type: resolve.type});
-		    console.log('UrlArea/fetchAndProcessURL file', downloadedFile);		    
 		    let profiler = new Profiler( downloadedFile, caller );
 		    let promiseLanguage = profiler.identifyLanguage();
 		    promiseLanguage.then(
@@ -64,7 +62,6 @@ export default class UrlArea extends React.Component {
     
 
     addNote( resourceId, description ) {
-        console.log('UrlArea/addNote', resourceId, description);
 	const note = NoteActions.create({
 	    task: description,
 	    belongsTo: resourceId});
@@ -83,19 +80,13 @@ export default class UrlArea extends React.Component {
 	NoteActions.reset();
 	this.forceUpdate();
 	
-	console.log('UrlArea/processParameters', caller);
-
 	// just in case, we've got a hdl
 	var fileURL = unfoldHandle( parameters.fileURL);
 	
-	
 	// when called from the VCR, the FCS, or B2DROP, we just get the URL, nothing else.
 	if ( (caller == "VCR") || (caller == "FCS") || (caller == "B2DROP") ) {
-	    
-	    console.log('UrlArea/processParameters: called from the VCR/FCS/B2DROP');
 	    // fetch the resource, and profile it
 	    this.fetchAndProcessURL(caller, fileURL);
-	    
 	} else {
 	    
 	    if (parameters.fileMimetype == undefined) {
@@ -105,9 +96,10 @@ export default class UrlArea extends React.Component {
 		alert('Please identify the language of the resource !');
 	    }
 
-
 	    var languageHarmonization = processLanguage(parameters.fileLanguage);	    
 	    var mimeType = decodeURIComponent(parameters.fileMimetype);
+
+	    // update the Resource panel
 	    var resource = ResourceActions.create( { name: fileURL,
 						     filename: fileURL,
 						     upload: 'VLO',

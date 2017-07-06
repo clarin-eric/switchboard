@@ -99,12 +99,11 @@ export default class App extends React.Component {
 	// CZ: check whether following is nececessary for cache busting (localStorage)
 	localStorage.removeItem("app");
 	this.refresh();
-	console.log('App: component did mount', this, 'localStorage', localStorage);	
     }
     
     handleChange (key, event) {
 	this.setState({ [key]: event.target.checked }, function () {
-	    console.log('now, the state has changed...:', this.state.includeWebServices);
+	    console.log('The app state has changed...:', this.state.includeWebServices);
 	});
 	if (event.target.checked === true) {
 	    document.getElementById("showAllToolsButton").innerHTML = 'Show All Tools and Web Services';
@@ -114,12 +113,9 @@ export default class App extends React.Component {
     }
 
     showTools() {
-	console.log('calling App/showTools');
 	let matcher = new Matcher();
 	let toolsPerTask = matcher.allTools( this.state.includeWebServices );
-
 	this.setState( {toolsPerTask: toolsPerTask} );
-	console.log('App/showTools this.state', this.state.toolsPerTask);
     }
 
     clearDropzone() {
