@@ -40,6 +40,54 @@ export default class Uploader {
 		    }
 		})});
     }
+
+    // uploading to B2DROP is a two stage process
+    uploadFile_B2Drop() {
+	let that = this;
+	return new Promise(function(resolve, reject) {
+	    // 1a. store in B2DROP 
+	    Request
+		.put(that.cloudURL.concat('/owncloud/remote.php/webdav/').concat(that.filenameWithDate))    
+		.auth('switchboard', 'clarin-plus')
+		.set('Access-Control-Allow-Origin', '*')	
+		.set('Access-Control-Allow-Credentials', 'true')
+		.set('Content-Type', currentFile.type)
+		.withCredentials()    
+		.set('Cache-Control', 'no-cache,no-store,must-revalidate,max-age=-1')
+		.send(currentFile)
+		.end((err, res) => {
+		    if (err) {
+			reject(err);
+			alert('Error in uploading resource to B2Drop instance');
+		    } else {
+			// 1b. Create a 'share link' action on the file you uploaded
+			Request
+			    .post(that.cloudURL.concat('/owncloud/ocs/v1.php/apps/files_sharing/api/v1/shares'))
+			    .set('Content-Type', 'application/json')
+			    .set('Accept', 'application/xml')
+			    .set('Access-Control-Allow-Origin', '*')
+			    .set('Access-Control-Allow-Credentials', 'true')
+			    .send( { path : that.filenameWithDate,
+				     shareType: 3
+				   } )
+			    .auth('switchboard', 'clarin-plus')
+			    .withCredentials()
+			    .end((err, res) => {
+				if (err) {
+				    reject(err);			
+				    alert('Error in creating a share-link with B2Drop'.concat(that.filenameWithDate));
+				} else {
+				    var parseString = require('xml2js').parseString;
+				    parseString(res.text, function (err, result) {
+					console.log('sharing result', result, err);
+					console.log('url to download', result.ocs.data[0].url[0].concat('/download'));
+				    });
+				    resolve(res)
+				}})
+		    }
+		})})
+    }
 }
+
 
 

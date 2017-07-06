@@ -65,10 +65,14 @@ export default class DropArea extends React.Component {
 
 	let uploader = new Uploader( currentFile );
 	let promiseUpload = uploader.uploadFile();
-	let that = this;
-	
-	let profiler = new Profiler( currentFile, "dnd", uploader.filenameWithDate );
-	let resourceProp = profiler.processFile( currentFile );
+	promiseUpload.then(
+	    function(resolve) {
+		let profiler = new Profiler( currentFile, "dnd", uploader.filenameWithDate );
+		profiler.processFile( currentFile );
+	    },
+	    function(reject) {
+		alert('Error: unable to upload file');
+	    });
     }    
     
     onDrop(files) {

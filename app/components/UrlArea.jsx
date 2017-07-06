@@ -93,7 +93,7 @@ export default class UrlArea extends React.Component {
 	if ( (caller == "VCR") || (caller == "FCS") || (caller == "B2DROP") ) {
 	    
 	    console.log('UrlArea/processParameters: called from the VCR/FCS/B2DROP');
-	    // fetch the resource, and set the information accordingly
+	    // fetch the resource, and profile it
 	    this.fetchAndProcessURL(caller, fileURL);
 	    
 	} else {

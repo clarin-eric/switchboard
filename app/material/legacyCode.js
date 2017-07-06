@@ -1,4 +1,167 @@
-    // Take the mimetype detection from the 'browser' when downloading the resource from provider (res.type)
+// this is legacy code (before refactoring)
+//
+
+
+    // same version with nesting
+    processFile_nested() {
+
+	let resource = ResourceActions.create( this.resourceProps );
+	let resourceId = resource.id;
+
+	// information known from file drop
+	this.addNote(resourceId, "name:   ".concat(resource.file.name));
+	this.addNote(resourceId, "type:   ".concat(resource.file.type));
+	this.addNote(resourceId, "size:   ".concat(resource.file.size));	
+	
+	// CZ: RZG file upload server does not handle files of type "text/xml" appropriately.
+	// upload works, download only gives metadata of file to be downloaded.
+	let currentFile = this.resourceProps.file;
+	
+	var newFileType = currentFile.type;
+	if ( (newFileType == "text/xml") ||
+	     (newFileType == "text/folio+xml") || 
+	     (newFileType == "") ) {
+	    newFileType = "application/octet_stream"
+	}
+
+	// use https or http, given CLRS invocation
+	let newFileName = this.resourceProps.filenameWithDate;
+	
+	Request
+	    .post(this.protocol.concat('//weblicht.sfs.uni-tuebingen.de/clrs/storage/').concat(newFileName))
+	    .send(currentFile)	
+	    .set('Content-Type', newFileType)
+	    .end((err, res) => {
+		if (err) {
+		    alert('Error in uploading resource to the MPG temporary file storage server.');
+		} else {
+		    Request
+			.put(this.protocol.concat('//weblicht.sfs.uni-tuebingen.de/clrs/language/string'))
+			.send(currentFile)	
+			.set('Content-Type', currentFile.type)	
+			.end((err, res) => {
+			    if (err) {
+				alert('Warning: could not identify language');
+			    } else {
+				console.log('identified language as', res.text);
+				let langStructure = processLanguage(res.text);
+				this.resourceProps.language = langStructure.threeLetterCode;
+				this.resourceProps.languageCombo = langStructure.languageCombo;
+				this.addNote(resourceId, "language:".concat( langStructure.languageCombo ));				
+				Request
+				    .put(this.protocol.concat('//weblicht.sfs.uni-tuebingen.de/clrs/detect/stream'))
+				    .send(currentFile)	
+				    .set('Content-Type', currentFile.type)	
+				    .end((err, res) => {
+					if (err) {
+					    alert('Warning: Apache Tika could not identify media type.');
+					} else {
+					    if (this.resourceProps.mimetype == res.type) {
+						console.log('Browser-based mimetype detection identical to Apache Tika detection')
+					    } else {
+						console.log('Browser-based mimetype detection not identical to Apache Tika detection',
+							    this.resourceProps.mimetype,
+							    res.type);
+						this.resourceProps.mimetype = res.text;
+						this.updateNote(resourceId, "type:   ".concat(res.type));
+					    }
+					}
+				    })
+			    }
+			})		    
+		}
+	    });
+    }
+
+    processFile_b2Drop_nested() {
+	let resource = ResourceActions.create( this.resourceProps );
+	let resourceId = resource.id;
+
+	// information known from file drop
+	this.addNote(resourceId, "name:   ".concat(resource.file.name));
+	this.addNote(resourceId, "type:   ".concat(resource.file.type));
+	this.addNote(resourceId, "size:   ".concat(resource.file.size));	
+	
+	let currentFile = this.resourceProps.file;
+	let newFileName = this.resourceProps.filenameWithDate;
+
+	// 1a. store in local b2drop instance
+	Request
+	    .put(this.cloudURL.concat('/owncloud/remote.php/webdav/').concat(newFileName))    
+            .auth('switchboard', 'clarin-plus')
+	    .set('Access-Control-Allow-Origin', 'vpn2183.extern.uni-tuebingen.de')
+	    .set('Access-Control-Allow-Credentials', 'true')
+            .set('Content-Type', currentFile.type)
+	    .withCredentials()    
+	    .send(currentFile)
+	    .end((err, res) => {
+	    if (err) {
+		    alert('Error in uploading resource to B2Drop instance');
+		    console.log('Error', err, res);
+		} else {
+		    // 1b. Create a 'share link' action on the file you uploaded
+		    Request
+			.post(this.cloudURL.concat('/owncloud/ocs/v1.php/apps/files_sharing/api/v1/shares'))
+		    	.set('Content-Type', 'application/json')
+			.set('Accept', 'application/xml')
+		        .set('Access-Control-Allow-Origin', '*')
+			.set('Access-Control-Allow-Credentials', 'true')
+		        .send( { path : newFileName,
+			         shareType: 3
+			       } )
+			.auth('switchboard', 'clarin-plus')
+			.withCredentials()
+			.end((err, res) => {
+			    if (err) {
+				alert('Error in creating a share-link with B2Drop'.concat(newFileName));
+			    } else {
+				var parseString = require('xml2js').parseString;
+				parseString(res.text, function (err, result) {
+				    console.log('sharing result', result, err);
+				    console.log('url to download', result.ocs.data[0].url[0].concat('/download'));
+				});
+		    
+				// 2. Do mimetype detection using tika (available at detect/stream)
+				// ----------------------------------------------------------------
+				var mimetypeDetected = "identify mimetype!";	    
+				Request
+				    .put('http://weblicht.sfs.uni-tuebingen.de/clrs/detect/stream')
+				    .send(currentFile)	
+				    .set('Content-Type', currentFile.type)
+				    .end((err, res) => {
+					if (err) {
+					    console.log('error: mimetype identification', newFileName, err);
+					} else {
+					    console.log('success: mimetype identification', newFileName, res.text);
+					    mimetypeDetected = res.text;
+					    
+					    // 3. do language detection using tika (available at language/string)
+					    // ------------------------------------------------------------------
+					    // tika seems to support at least these 18 languages:
+    					    // da, en, hu, no, sv, de, es, is, pl, th, et, fi, it, pt, el, fr, nl, ru
+					    // --------------------------------------------------------
+					    
+					    var languageDetected = "identify language!";
+					    Request
+						.put('http://weblicht.sfs.uni-tuebingen.de/clrs/language/string')
+						.send(currentFile)	
+						.set('Content-Type', currentFile.type)	
+						.end((err, res) => {
+						    if (err) {
+							console.log('error: language identification', newFileName, err);
+						    } else {
+							console.log('success: language identification', newFileName, res.text);
+							languageDetected = res.text;
+							
+							// with all information gathered, define new resource and its properties
+							var languageHarmonization = processLanguage(languageDetected);
+							this.addNote(resourceId, "language:".concat( languageHarmonization.languageCombo));
+						    }})
+					}})}
+			})}
+	    })}
+
+// Take the mimetype detection from the 'browser' when downloading the resource from provider (res.type)
     // Todo: use of Apache TIKA for language detection
     // CZ: may go to Download.js (see Upload.js)
     fetchAndProcessURL_inactive( caller, fileURL ) { // CZ remove
