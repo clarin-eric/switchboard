@@ -16,7 +16,6 @@ class NoteStore {
 	this.setState({
 	    notes: []
 	});
-	console.log('NoteStore/reset');
     }
     
     create(note) {
@@ -49,7 +48,6 @@ class NoteStore {
 
     getNote(noteId) {
 	const note = this.notes.filter((note) => note.id == noteId);
-	console.log('NoteStore/getNote with id: ', noteId, note[0]);
 	return { note: note[0] };
     }
     

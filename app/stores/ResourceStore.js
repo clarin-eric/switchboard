@@ -82,7 +82,6 @@ class ResourceStore {
 	});
 
 	this.setState({resources});
-	console.log('addLanguage', resourceId, language);
     }
     
     attachToResource({resourceId, noteId}) {
@@ -99,8 +98,6 @@ class ResourceStore {
 	    return resource;
 	});
 
-	// console.log('ResourceStore/attachToResource having attached ', noteId, ' to ', resourceId);
-	
 	this.setState({resources});
     }
     
