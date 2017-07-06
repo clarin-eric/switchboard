@@ -1,5 +1,142 @@
 // this is legacy code (before refactoring)
-    // same version with nesting
+    constructToolURL( item, resource ) {
+
+	    
+	// the location for the server holding temporarily the resources
+	// var fileServerURL = "http://shannon.sfs.uni-tuebingen.de:8011/";
+	// var fileServerURL = "http://localhost:8011/";
+	
+	var fileServerURL = "http://ws1-clarind.esc.rzg.mpg.de/drop-off/storage/";	
+        var rtnValue = { };	
+
+	// if there is no resource in the spotlight, we return an empty URL object.
+	if (resource == undefined) {
+	    console.log('Tool.jsx: there is no resource defined.', item);
+	    return false;
+	}
+
+	console.log('Tool.jsx/constructToolURL item:', item, 'resource:', resource);
+	
+	// central service to retrieve language resource, may need to chech cross-site scripting issue
+	var filename =  resource.name;
+	var filenameWithDate =  resource.filenameWithDate;	
+	var file     =  resource.file;
+	var language =  resource.language;
+	var upload   =  resource.upload;
+	var lang_encoding = item.lang_encoding;
+	var softwareType = item.softwareType;
+	var postSubmit = item.postSubmit;
+
+
+	if (upload == "dnd") {
+	} else if ( (upload == "VLO") || (upload == "VCR") || (upload == "FCS") || (upload == "B2DROP") ){
+	    fileServerURL = "";
+	} else {
+	    console.log("ERROR in upload info (Tool.jsx)", upload);
+	}
+
+	if (softwareType == "webService") {
+	    // console.log('we have a webService', item);
+	} else {
+	    // console.log('we have a browserBased software', item);	    
+	}
+	
+	if (lang_encoding == "639-1") {
+	    language = map639_3_to_639_1(language);
+	} // else {
+	//     language = map639_1_to_639_3(language);
+	// }
+    
+	var inputFilename = fileServerURL + filename;
+	if (upload == "dnd") {
+	    inputFilename = fileServerURL + filenameWithDate;
+	}
+
+	var parameterString = "";
+	var parameters = item.parameter;
+	var formParameter = "data";
+	
+	if ( (item.hasOwnProperty('mapping') && (! (item['mapping'] === undefined )))) {
+	    for (var parameter in parameters) {
+		if (parameters.hasOwnProperty(parameter)) {
+		    if (item.hasOwnProperty('mapping')) {
+			var mapping = item['mapping'];
+			if (mapping.hasOwnProperty(parameter)) {
+			    switch (parameter) {
+			    case "input":
+				if (softwareType == "webService") {
+				    formParameter = mapping[parameter];
+				} else {
+				    parameterString = parameterString.concat( mapping[parameter]).concat("=").concat( inputFilename );
+				}
+				break;
+			    case "lang":
+				parameterString = parameterString.concat( mapping[parameter]).concat("=").concat( language );
+				break;
+			    default:
+				parameterString = parameterString.concat( mapping[parameter]).concat("=").concat(parameters[parameter]);
+			    }
+			} else {
+			    parameterString = parameterString.concat( parameter ).concat("=").concat(parameters[parameter]);
+			}
+		    } else
+			parameterString = parameterString.concat( parameter ).concat("=").concat(parameters[parameter]);
+		}
+		parameterString = parameterString.concat("&");
+	    }
+	} else {
+	    // use the givens without mapping
+	     for (var parameter in parameters) {
+		if (parameters.hasOwnProperty(parameter)) {
+		    switch (parameter) {
+		    case "input":
+			if (softwareType == "webService") {
+			    formParameter = parameter;
+			} else {
+			    parameterString = parameterString.concat(parameter).concat("=").concat( inputFilename );
+			}
+			break;
+		    case "lang":
+			parameterString = parameterString.concat(parameter).concat("=").concat( language );
+			break;
+		    default:
+			parameterString = parameterString.concat(parameter).concat("=").concat(parameters[parameter]);			
+		    }
+		    
+		    parameterString = parameterString.concat("&");		    
+		}
+	     }
+	}
+
+	// var parameterString = "?input=" + inputFilename + "&lang=" + item.parameter.lang + "&analysis=" + item.parameter.analysis;
+	var urlWithParameters = "";
+	if (softwareType == "webService") {
+	    urlWithParameters = item.url;
+	} else {
+	    urlWithParameters = item.url + "?" + parameterString;
+	}
+
+	if (softwareType == "webService") {
+	    rtnValue =
+		{
+		    toolType   : "webService",
+		    url        : urlWithParameters,
+		    formPar    : formParameter,
+		    formVal    : file,
+		    postSubmit : postSubmit
+		};
+	} else	{
+	    rtnValue = 
+	    {
+		toolType : "browserBased",
+		url      : urlWithParameters
+	    };
+	}
+	
+	return rtnValue;
+    }
+
+// same version with nesting
     processFile_nested() {
 
 	let resource = ResourceActions.create( this.resourceProps );
