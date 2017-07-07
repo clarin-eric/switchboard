@@ -59,7 +59,7 @@ class ResourceStore {
 	});
     }
 
-    addMimetype({resourceId, mimetype}) {
+    updateMimetype({resourceId, mimetype}) {
 	const resources = this.resources.map((resource) => {
 	    if(resource.id === resourceId) {
 		resource.mimetype = mimetype;
@@ -71,7 +71,7 @@ class ResourceStore {
 	this.setState({resources});
     }
 
-    addLanguage({resourceId, language}) {
+    updateLanguage({resourceId, language}) {
 
 	const resources = this.resources.map((resource) => {
 	    if(resource.id === resourceId) {

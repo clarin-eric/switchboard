@@ -1,10 +1,7 @@
 import AltContainer from 'alt-container';
 import React from 'react';
 import Notes from './Notes.jsx';
-import NoteActions from '../actions/NoteActions';
 import NoteStore from '../stores/NoteStore';
-import ResourceActions from '../actions/ResourceActions';
-import ResourceStore from '../stores/ResourceStore';
 import Toggle   from 'react-toggle';
 
 // access to matcher
@@ -81,7 +78,7 @@ export default class Resource extends React.Component {
 	this.handleToolsPerTaskChange( toolsPerTask );
     }
 
-    // CZ: may need clean-up
+    // CZ: clean-up (no hardwired addresses)
     getFileUrl(resource) {
         console.log('Resource/getFileUrl', resource);
 	var url = '';

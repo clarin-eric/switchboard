@@ -1,3 +1,5 @@
+import { map639_1_to_639_3, map639_3_to_639_1 } from './util';
+
 export function invokeBrowserBasedTool( URL ) {
     var win = window.open(URL.url, '_blank');
     win.focus();	

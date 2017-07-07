@@ -1,9 +1,7 @@
 import React from 'react';
 import LanguageMenu from './LanguageMenu.jsx';
 import MimetypeMenu from './MimetypeMenu.jsx';
-import NoteActions from '../actions/NoteActions';
 import ResourceActions from '../actions/ResourceActions';        
-import NoteStore from '../stores/NoteStore';
 
 export default class Note extends React.Component {
     
@@ -24,7 +22,7 @@ export default class Note extends React.Component {
 	} else {
 	    languageValue = language.value;
 	}
-	ResourceActions.addLanguage({
+	ResourceActions.updateLanguage({
 	    language: languageValue,
 	    resourceId
 	});
@@ -38,7 +36,7 @@ export default class Note extends React.Component {
 	} else {
 	    mimetypeValue = mimetype.value;
 	}	    
-	ResourceActions.addMimetype({
+	ResourceActions.updateMimetype({
 	    mimetype: mimetypeValue,
 	    resourceId
 	});
