@@ -85,7 +85,6 @@ export default class DropArea extends React.Component {
 
 	// process the file(s)
 	for (var i=0; i<files.length; i++) {
-	    // this.processFile_b2Drop( files[i] );
 	    this.uploadAndProcessFile( files[i] );	    
 	}
 

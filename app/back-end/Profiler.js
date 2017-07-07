@@ -137,18 +137,4 @@ export default class Profiler {
 	    function(reject) {
 		console.log('Warning: language identification failed', reject) })
     }
-
-    processFile_b2Drop() {
-	let that = this;
-	let promiseLanguage = that.identifyLanguage();
-	promiseLanguage.then(
-	    function(resolve) {
-		let promiseMimeType = that.identifyMimeType();
-		promiseMimeType.catch(
-		    function(reject) {
-			console.log('Warning: mimetype identification failed', reject);			
-		    })},
-	    function(reject) {
-		console.log('Warning: language identification failed', reject) })		
-    }
 }
