@@ -12,7 +12,7 @@ class ResourceStore {
 	this.exportPublicMethods({
 	    get: this.get.bind(this),
 	    getResource: this.getResource.bind(this)
-	});	
+	});
     }
 
     reset () {
@@ -25,7 +25,6 @@ class ResourceStore {
 	const resources = this.resources;
 	
 	resource.id = uuid.v4();
-	resource.notes            = resource.notes || [];
 	resource.file             = resource.file || null;
 	resource.filename         = resource.filename || null;
 	resource.filenameWithDate = resource.filenameWithDate || null;
@@ -37,7 +36,8 @@ class ResourceStore {
 	this.setState({
 	    resources: resources.concat(resource)
 	});
-	
+
+	console.log('ResourceStore/create', resource);
 	return resource;
     }
     
@@ -49,14 +49,9 @@ class ResourceStore {
 	    
 	    return resource;
 	});
-	
+
+	console.log('ResourceStore/update', resources);
 	this.setState({resources});
-    }
-    
-    delete(id) {
-	this.setState({
-	    resources: this.resources.filter((resource) => resource.id !== id)
-	});
     }
 
     updateMimetype({resourceId, mimetype}) {
@@ -68,53 +63,19 @@ class ResourceStore {
 	    return resource;
 	});
 
-	this.setState({resources});
-    }
-
-    updateLanguage({resourceId, language}) {
-
-	const resources = this.resources.map((resource) => {
-	    if(resource.id === resourceId) {
-		resource.language = language;
-	    }
-	    
-	    return resource;
-	});
-
+	console.log('ResourceStore/updateMimetype', resources);
 	this.setState({resources});
     }
     
-    attachToResource({resourceId, noteId}) {
-	const resources = this.resources.map((resource) => {
-	    if(resource.id === resourceId) {
-		if(resource.notes.indexOf(noteId) === -1) {
-		    resource.notes.push(noteId);
-		}
-		else {
-		    console.warn('Already attached note to resource', resources);
-		}
-	    }
-	    
-	    return resource;
+    delete(id) {
+	this.setState({
+	    resources: this.resources.filter((resource) => resource.id !== id)
 	});
-
-	this.setState({resources});
-    }
-    
-    detachFromResource({resourceId, noteId}) {
-	const resources = this.resources.map((resource) => {
-	    if(resource.id === resourceId) {
-		resource.notes = resource.notes.filter((note) => note !== noteId);
-	    }
-	    
-	    return resource;
-	});
-	
-	this.setState({resources});
     }
 
     getResource(resourceId) {
-	const resource = this.resources.filter((resource) => resource.id == resourceId);
+	let resource = this.resources.filter((resource) => resource.id == resourceId);
+	console.log('ResourceStore/getResource', { resource: resource[0] });
 	return { resource: resource[0] };
     }
 

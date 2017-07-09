@@ -83,92 +83,92 @@ export const map639_3_to_639_1 = function( value ) {
 
 export function processLanguage( language ) {
 
-    var languageCombo = null;
+    var languageName = null;
     var threeLetterCode = null;
 
     if ( (language == "en") || (language == "eng") ) {
-	languageCombo = "English:eng";
+	languageName = "English";
 	threeLetterCode = "eng";
     } else if ((language == "da") || (language == "dan")) {
-	languageCombo = "Danish:dan";
+	languageName = "Danish";
     	threeLetterCode = "dan";
     } else if ((language == "tr") || (language == "tur")) {
-	languageCombo = "Turkish:tur";
+	languageName = "Turkish";
     	threeLetterCode = "tur";	    
     } else if ((language == "ca") || (language == "cat")) {
-	languageCombo = "Catalan:cat";
+	languageName = "Catalan";
     	threeLetterCode = "cat";	    
     } else if ((language == "hu") || (language == "hun")) {
-	languageCombo = "Hungarian:hun";
+	languageName = "Hungarian";
     	threeLetterCode = "hun";
     } else if ((language == "it") || (language == "ita")) {
-	languageCombo = "Italian:ita";
+	languageName = "Italian";
     	threeLetterCode = "ita";	    
     } else if ((language == "no") || (language == "nor")) {
-	languageCombo = "Norwegian:nor";
+	languageName = "Norwegian";
     	threeLetterCode = "nor";
     } else if ((language == "sv") || (language == "swe")) {
-	languageCombo = "Swedish:swe";
+	languageName = "Swedish";
     	threeLetterCode = "swe";
     } else if ((language == "de") || (language == "deu")) {
-	languageCombo = "German:deu";
+	languageName = "German";
     	threeLetterCode = "deu";
     } else if ((language == "cs") || (language == "ces")) {
-	languageCombo = "Czech:ces";
+	languageName = "Czech";
     	threeLetterCode = "ces";	    
     } else if ((language == "es") || (language == "spa")) {
-	languageCombo = "Spanish:spa";
+	languageName = "Spanish";
     	threeLetterCode = "spa";
     } else if ((language == "is") || (language == "isl")) {
-	languageCombo = "Icelandic:isl";
+	languageName = "Icelandic";
     	threeLetterCode = "isl";
     } else if ((language == "pl") || (language == "pol")) {
-	languageCombo = "Polish:pol";
+	languageName = "Polish";
     	threeLetterCode = "pol";
     } else if ((language == "th") || (language == "tha")) {
-	languageCombo = "Thai:tha";
+	languageName = "Thai";
     	threeLetterCode = "tha";
     } else if ((language == "hr") || (language == "hrv")) {
-	languageCombo = "Croatian:hrv";
+	languageName = "Croatian";
     	threeLetterCode = "hrv";	
     } else if ((language == "et") || (language == "est")) {
-	languageCombo = "Estonian:est";
+	languageName = "Estonian";
     	threeLetterCode = "est";
     } else if ((language == "sk") || (language == "slk")) {
-	languageCombo = "Slovak:slk";
+	languageName = "Slovak";
     	threeLetterCode = "slk";
     } else if ((language == "sl") || (language == "slv")) {
-	languageCombo = "Slovenian:slv";
+	languageName = "Slovenian";
     	threeLetterCode = "slv";
     } else if ((language == "ro") || (language == "ron")) {
-	languageCombo = "Romanian:ron";
+	languageName = "Romanian";
     	threeLetterCode = "ron";	    	    	    
     } else if ((language == "fi") || (language == "fin")) {
-	languageCombo = "Finnish:fin";
+	languageName = "Finnish";
     	threeLetterCode = "fin";
     } else if ((language == "pt") || (language == "por")) {
-	languageCombo = "Portuguese:por";
+	languageName = "Portuguese";
     	threeLetterCode = "por";
     } else if ((language == "el") || (language == "ell")) {
-	languageCombo = "Greek:ell";
+	languageName = "Greek";
     	threeLetterCode = "ell";
     } else if ((language == "fr") || (language == "fra")) {
-	languageCombo = "French:fra";
+	languageName = "French";
     	threeLetterCode = "fra";
     } else if ((language == "nl") || (language == "nld")) {
-	languageCombo = "Dutch:nld";
+	languageName = "Dutch";
     	threeLetterCode = "nld";
     } else if ((language == "ru") || (language == "rus")) {
-	languageCombo = "Russian:rus";
+	languageName = "Russian";
     	threeLetterCode = "rus";
     } else {
-	languageCombo = "Please identify language:any";
+	languageName = "Please identify language";
 	threeLetterCode = "any";
     }
 
-    console.log('processLanguage', language, languageCombo, threeLetterCode)
+    console.log('processLanguage', languageName, threeLetterCode)
 
-    return { languageCombo  : languageCombo,
+    return { language  : languageName,
 	     threeLetterCode: threeLetterCode
 	   };
 }

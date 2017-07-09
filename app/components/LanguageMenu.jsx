@@ -11,9 +11,8 @@ export default class LanguageMenu extends React.Component {
     }
 
     render() {
-
-	const { defaultValue, ...props } = this.props;
-	
+	const {defaultValue, ...props } = this.props;
+	const that = this;
 	// mapping language names with ISO 639-3, will be informed by tool registry entries
 	var options = [
 	    { label: "Please identify language",
@@ -189,11 +188,14 @@ export default class LanguageMenu extends React.Component {
 	    }].map(function(language){
                 return {label: language.label, value: language.value}
                        });
-	
-        return <SimpleSelect options = {options}
-                             defaultValue  = {this.props.defaultValue}
+
+        return (<SimpleSelect options = {options}
+                defaultValue  = {that.props.defaultValue}
+                value  = {that.props.defaultValue}
  	                     placeholder = "Select language"
-	                     renderValue = {function(item){
+                renderValue = {function(item){
+			     	 console.log('SimpleSelect/renderValue language', item);
+		    
 				 var exists = options.map(function(option){
 				     return option.label
 				 }).indexOf(item.label) != -1
@@ -205,9 +207,9 @@ export default class LanguageMenu extends React.Component {
 				 }}
 				     >{item.label}</div>
 				     
-			     }}			     
-	                     onValueChange = {this.props.onLanguageSelection}
+	}}
+                             onValueChange = {this.props.onLanguageSelection}	
   	       >
 	       </SimpleSelect>
-    }
+	       )}
 }

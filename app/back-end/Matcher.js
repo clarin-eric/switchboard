@@ -2,7 +2,7 @@
 // 2016-17 Claus Zinn
 // 
 // File: Matcher.js
-// Time-stamp: <2017-07-06 11:20:18 (zinn)>
+// Time-stamp: <2017-07-08 23:42:49 (zinn)>
 //
 // ----------------------------------------------------------------------------------------
 
@@ -84,6 +84,7 @@ export default class Matcher {
     // multiple filters to be defined, in particular, language code
     findApplicableTools( resourceDescription, includeWebServices) {
 
+	console.log('findApplocableTools', resourceDescription, includeWebServices) ;
 	// if necessary, filter out web services
 	var tools = [];
 
@@ -122,7 +123,7 @@ export default class Matcher {
 	    languageFilter = mimetypeFilter.filter(
 		(tool) =>
 		    {
-			var result = tool.languages.indexOf(resourceDescription.language);
+			var result = tool.languages.indexOf(resourceDescription.language.value);
 			if (result != -1) {
 			    // attach id to the tool
 			    tool.id = uuid.v4();

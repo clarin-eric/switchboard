@@ -11,7 +11,6 @@ export default class MimetypeMenu extends React.Component {
 
     render() {
 	const {defaultValue, ...props} = this.props;
-
         var options = ["application/json",
 	    	       "application/mediatagger",
 		       "application/msword",
@@ -110,10 +109,11 @@ export default class MimetypeMenu extends React.Component {
         });
 
         return <SimpleSelect options = {options}
-                             defaultValue  = {this.props.defaultValue}
+        defaultValue  = {defaultValue}
+                             value  = {defaultValue}	
                              placeholder = "Select mimetype"
 	                     renderValue = {function(item){
-
+			     	 console.log('SimpleSelect/renderValue mimetype', item);
 				 // check if the mimetype is available (optional)
 				 var exists = options.map(function(option){
 				     return option.value

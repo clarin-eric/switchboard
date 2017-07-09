@@ -1,20 +1,15 @@
 import Request from 'superagent';
 import {processLanguage} from './util';
-import NoteActions from '../actions/NoteActions';
 import ResourceActions from '../actions/ResourceActions';
 
 export default class Profiler {
 
     constructor( resource, caller, filenameWithDate ) {
 
-	this.addNote     = this.addNote.bind(this);
-	this.updateNote  = this.updateNote.bind(this);	
 	this.protocol    = window.location.protocol;	// use https or http given parent window
 
 	// TIKA prefix
 	this.tika = "//weblicht.sfs.uni-tuebingen.de/clrs"
-	
-
 	this.resource = resource;
 
 	if (filenameWithDate === undefined) {
@@ -40,36 +35,13 @@ export default class Profiler {
 	      
 	      // next two pieces are overwritten by Tika.
 	      mimetype: resource.type, 
-	      language: "any",
-	      languageCombo: "Please identify language:any"
+	      language: { language  : "Please identify language",
+			  threeLetterCode: "any"
+			}
 	    }
 
+	// create the resource in the store
 	this.resourceStateItem = ResourceActions.create( this.resourceProps );
-	let resourceId = this.resourceStateItem.id;
-
-	// information known from file drop
-	this.addNote(resourceId, "name:   ".concat(this.resourceStateItem.file.name));
-	this.addNote(resourceId, "type:   ".concat(this.resourceStateItem.file.type)); 
-	this.addNote(resourceId, "size:   ".concat(this.resourceStateItem.file.size));	
-    }
-
-    // a resource is a list of notes describing the file dropped
-    // a note has a back-link to the resource it belongs to, and each resource knows its notes.
-    addNote( resourceId, description ) {
-	const note = NoteActions.create({
-	    task: description,
-	    belongsTo: resourceId});
-	
-	ResourceActions.attachToResource({
-	    noteId: note.id,
-	    resourceId
-	});
-    }
-
-    updateNote( resourceId, description ) {
-	 NoteActions.update({
-	    task: description,
-	    belongsTo: resourceId});
     }
 
     // not called (info from browser and VLO is being trusted)
@@ -87,9 +59,8 @@ export default class Profiler {
 			reject(err);
 			alert('Warning: could not identify media type.');
 		    } else {
-			that.resourceProps.mimetype = res.text;
-			let resourceId = that.resourceStateItem.id;
-			that.updateNote(resourceId, "type:   ".concat(that.resourceProps.mimetype)); 
+			that.resourceStateItem.mimetype = res.text;
+			ResourceActions.update(that.resourceStateItem);			
 			resolve(res);
 		    }
 		})
@@ -114,10 +85,8 @@ export default class Profiler {
 			alert('Warning: could not identify language');
 		    } else {
 			let langStructure = processLanguage(res.text);
-			that.resourceProps.language = langStructure.threeLetterCode;
-			that.resourceProps.languageCombo = langStructure.languageCombo;
-			let resourceId = that.resourceStateItem.id;			
-			that.addNote(resourceId, "language:".concat( langStructure.languageCombo ));				
+			that.resourceStateItem.language = langStructure;
+			ResourceActions.update(that.resourceStateItem);
 			resolve(res);
 		    }
 		})

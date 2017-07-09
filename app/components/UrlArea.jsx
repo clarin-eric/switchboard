@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom';
 import Loader from 'react-loader';
-import NoteActions from '../actions/NoteActions';
 import ResourceActions from '../actions/ResourceActions';
 import AlertShibboleth from './AlertShibboleth.jsx';
 import AlertURLFetchError from './AlertURLFetchError.jsx';
@@ -16,8 +15,6 @@ export default class UrlArea extends React.Component {
     constructor(props) {
 	super(props);
 
-	this.addNote       = this.addNote.bind(this);
-	
 	this.processParameters   = this.processParameters.bind(this);
 	this.fetchAndProcessURL  = this.fetchAndProcessURL.bind(this);
 
@@ -60,24 +57,10 @@ export default class UrlArea extends React.Component {
 	    })
     }
     
-
-    addNote( resourceId, description ) {
-	const note = NoteActions.create({
-	    task: description,
-	    belongsTo: resourceId});
-	
-	ResourceActions.attachToResource({
-	    noteId: note.id,
-	    resourceId
-	});
-    }
-
-    
     processParameters( caller, parameters ) {
 
 	// first, reset prior history
 	ResourceActions.reset();
-	NoteActions.reset();
 	this.forceUpdate();
 	
 	// just in case, we've got a hdl
@@ -104,15 +87,9 @@ export default class UrlArea extends React.Component {
 						     filename: fileURL,
 						     upload: 'VLO',
 						     mimetype: mimeType,
-						     language: languageHarmonization.threeLetterCode
+						     size: parameters.fileSize,
+						     language: languageHarmonization
 						   } );
-	    var resourceId = resource.id;
-	    
-	    this.addNote(resourceId, "name:   ".concat( fileURL ));
-	    this.addNote(resourceId, "type:   ".concat(mimeType));
-	    this.addNote(resourceId, "size:   ".concat(parameters.fileSize));	
-	    this.addNote(resourceId, "language:".concat(languageHarmonization.languageCombo));
-
 	    this.setState( { isLoaded: true });
 	    this.props.refreshFun();		
 	}

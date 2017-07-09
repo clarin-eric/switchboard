@@ -20,7 +20,6 @@ import AlertURLFetchError from './AlertURLFetchError.jsx';
 
 // actions
 import ResourceActions from '../actions/ResourceActions';   // actions associated with resources: CRUD, attach/detach
-import NoteActions from '../actions/NoteActions';   // access to notes (= resource properties)
 
 // stores
 import ResourceStore from '../stores/ResourceStore';        // storing resources (state)
@@ -123,7 +122,6 @@ export default class App extends React.Component {
 
 	this.setState( {toolsPerTask: {} } );
 	ResourceActions.reset();
-	NoteActions.reset();
     }
 
     render() {

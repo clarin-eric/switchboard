@@ -1,6 +1,5 @@
 import React from 'react';
 import Dropzone from 'react-dropzone';
-import NoteActions from '../actions/NoteActions';
 import ResourceActions from '../actions/ResourceActions';
 
 // access to profiler
@@ -80,7 +79,6 @@ export default class DropArea extends React.Component {
 	// clear resources view
 	if (files.length > 0) {
 	    ResourceActions.reset();
-	    NoteActions.reset();
 	}	
 
 	// process the file(s)
