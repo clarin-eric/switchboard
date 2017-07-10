@@ -38,8 +38,8 @@ class ToolStore {
 		  authentication: "yes",
 		  shortDescription: "A tokeniser",
 		  longDescription: "Ucto is a unicode-compliant tokeniser. It takes input in the form of one or more untokenised texts, and subsequently tokenises them. Several languages are supported, but the software is extensible to other languages.",
-		  languages: ["nld", "eng", "deu", "fra", "ita", "fry"],
-		  lang_encoding: "639-1",
+		  languages: ["nld", "eng", "deu", "fra", "ita", "fry", "swe", "rus", "spa", "por", "tur"],
+		  lang_encoding: "639-3",
 		  mimetypes: [
 		      "text/plain"
 		              // , "text/xml",		      
