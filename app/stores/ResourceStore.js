@@ -37,7 +37,7 @@ class ResourceStore {
 	    resources: resources.concat(resource)
 	});
 
-	console.log('ResourceStore/create', resource);
+	//console.log('ResourceStore/create', resource);
 	return resource;
     }
     
@@ -50,23 +50,10 @@ class ResourceStore {
 	    return resource;
 	});
 
-	console.log('ResourceStore/update', resources);
+	//console.log('ResourceStore/update', resources);
 	this.setState({resources});
     }
 
-    updateMimetype({resourceId, mimetype}) {
-	const resources = this.resources.map((resource) => {
-	    if(resource.id === resourceId) {
-		resource.mimetype = mimetype;
-	    }
-	    
-	    return resource;
-	});
-
-	console.log('ResourceStore/updateMimetype', resources);
-	this.setState({resources});
-    }
-    
     delete(id) {
 	this.setState({
 	    resources: this.resources.filter((resource) => resource.id !== id)

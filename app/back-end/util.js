@@ -166,7 +166,7 @@ export function processLanguage( language ) {
 	threeLetterCode = "any";
     }
 
-    console.log('processLanguage', languageName, threeLetterCode)
+    // console.log('processLanguage', languageName, threeLetterCode)
 
     return { language  : languageName,
 	     threeLetterCode: threeLetterCode

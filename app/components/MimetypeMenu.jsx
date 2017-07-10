@@ -113,7 +113,6 @@ export default class MimetypeMenu extends React.Component {
                              value  = {defaultValue}	
                              placeholder = "Select mimetype"
 	                     renderValue = {function(item){
-			     	 console.log('SimpleSelect/renderValue mimetype', item);
 				 // check if the mimetype is available (optional)
 				 var exists = options.map(function(option){
 				     return option.value

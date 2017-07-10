@@ -47,12 +47,12 @@ export function constructToolURL( toolDescription, resourceDescription ) {
     var fileServerURL = "";
     var rtnValue = { };	
 
-    console.log('Tool.jsx/constructToolURL toolDescription:', toolDescription, 'resourceDescription:', resourceDescription);
+//    console.log('Tool.jsx/constructToolURL toolDescription:', toolDescription, 'resourceDescription:', resourceDescription);
     
     var filename         =  resourceDescription.name;
     var filenameWithDate =  resourceDescription.filenameWithDate;	
     var file             =  resourceDescription.file;
-    var language         =  resourceDescription.language;
+    var language         =  resourceDescription.language.threeLetterCode;
     var upload           =  resourceDescription.upload;
     
     var lang_encoding    = toolDescription.lang_encoding;

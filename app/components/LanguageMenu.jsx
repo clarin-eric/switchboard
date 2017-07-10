@@ -194,8 +194,6 @@ export default class LanguageMenu extends React.Component {
                 value  = {that.props.defaultValue}
  	                     placeholder = "Select language"
                 renderValue = {function(item){
-			     	 console.log('SimpleSelect/renderValue language', item);
-		    
 				 var exists = options.map(function(option){
 				     return option.label
 				 }).indexOf(item.label) != -1

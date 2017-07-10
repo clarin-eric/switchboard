@@ -1,5 +1,5 @@
 import alt from '../libs/alt';
 
 export default alt.generateActions(
-    'create', 'update', 'delete', 'reset', 'getResource', 'updateMimetype'
+    'create', 'update', 'delete', 'reset', 'getResource'
 );
