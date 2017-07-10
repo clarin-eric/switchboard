@@ -61,7 +61,7 @@ export default class UrlArea extends React.Component {
 
 	// first, reset prior history
 	ResourceActions.reset();
-	this.forceUpdate();
+	// this.forceUpdate();
 	
 	// just in case, we've got a hdl
 	var fileURL = unfoldHandle( parameters.fileURL);
@@ -91,7 +91,7 @@ export default class UrlArea extends React.Component {
 						     language: languageHarmonization
 						   } );
 	    this.setState( { isLoaded: true });
-	    this.props.refreshFun();		
+//	    this.props.refreshFun();		
 	}
     }
 

@@ -5,6 +5,8 @@ import LanguageMenu from './LanguageMenu.jsx';
 import MimetypeMenu from './MimetypeMenu.jsx';
 import ResourceActions from '../actions/ResourceActions';        
 
+import {fileStorageServerMPG, fileStorageServerB2DROP} from './../back-end/util';
+
 // access to matcher
 import Matcher from '../back-end/Matcher';
 
@@ -25,7 +27,6 @@ export default class Resource extends React.Component {
 	this.state = {
 	    includeWebServices: false
 	};
-
     }
 
     setLanguage( resource, language ) {
@@ -70,12 +71,11 @@ export default class Resource extends React.Component {
 	this.handleToolsPerTaskChange( toolsPerTask );
     }
 
-    // CZ: clean-up (no hardwired addresses)
     getFileUrl(resource) {
-        console.log('Resource/getFileUrl', resource);
+        //console.log('Resource/getFileUrl', resource);
 	var url = '';
 	if (resource.upload == "dnd") {
-            url = 'http://weblicht.sfs.uni-tuebingen.de/clrs/storage/' + resource.filenameWithDate;
+            url = fileStorageServerMPG + resource.filenameWithDate;
 	} else if (resource.upload == "VLO") {
             url = resource.name
 	} else { // VCR, FCS, B2DROP 

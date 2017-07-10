@@ -13,6 +13,16 @@ export default class Tool extends React.Component {
 	super(props);
 	this.invokeTool = this.invokeTool.bind(this);
     }
+
+    invokeTool( URL ) {
+	if (URL.toolType == "webService") {
+	    _paq.push(["trackEvent", 'ToolInvocation', URL.url]);	    // inform Piwik
+	    invokeWebService(URL);
+	} else {
+	    _paq.push(["trackEvent", 'WebServiceInvocation', URL.url]); // inform Piwik
+	    invokeBrowserBasedTool( URL );
+	}
+    }
     
     render() {
 	const {items, resource, ...props} = this.props;
@@ -231,13 +241,4 @@ export default class Tool extends React.Component {
 	)}
 
 
-    invokeTool( URL ) {
-	if (URL.toolType == "webService") {
-	    _paq.push(["trackEvent", 'ToolInvocation', URL.url]);	    // inform Piwik
-	    invokeWebService(URL);
-	} else {
-	    _paq.push(["trackEvent", 'WebServiceInvocation', URL.url]); // inform Piwik
-	    invokeBrowserBasedTool( URL );
-	}
-    }
 }

@@ -3,6 +3,7 @@
 // http://ws1-clarind.esc.rzg.mpg.de/drop-off/storage/.
 
 import Request from 'superagent';
+import {fileStorageServerMPG, fileStorageServerB2DROP} from './util';
 
 export default class Uploader {
 
@@ -11,7 +12,9 @@ export default class Uploader {
 	this.protocol = window.location.protocol;
 	let today = new Date();
 	let fileExtension = this.file.name.split('.').pop();
-	this.filenameWithDate = today.getTime() + "." + fileExtension;
+	let filenameWithDate = today.getTime() + "." + fileExtension;
+
+	this.remoteFilename = fileStorageServerMPG + filenameWithDate;
 
 	// the file server at the MPG seems to have problems with certain file types, so we change it here.
 	this.newFileType = this.file.type;
@@ -20,26 +23,13 @@ export default class Uploader {
 	     (this.newFileType == "") ) {
 	    this.newFileType = "application/octet_stream"
 	}
-
-	// SHANNON
-	this.cloudURLWithCredentials = "http://switchboard:clarin-plus@shannon.sfs.uni-tuebingen.de";
-	this.cloudURL = "http://shannon.sfs.uni-tuebingen.de";
-
-	//LOCALHOST
-	// this.cloudURLWithCredentials = "http://switchboard:clarin-plus@localhost";
-	// this.cloudURL = "http://localhost";
-
-	// OFFICIAL SITE
-	// this.cloudURL = "https://b2drop.eudat.eu";
-	// this.cloudURLWithCredentials = "claus.zinn@uni-tuebingen.de:sPL-Fh2-7SS-hCJ@https://b2drop.eudat.eu";	
-	
     }
 
     uploadFile() {
 	let that = this;
         return new Promise(function(resolve, reject) {
 	    Request
-		.post(that.protocol.concat('//weblicht.sfs.uni-tuebingen.de/clrs/storage/').concat(that.filenameWithDate))
+		.post(that.protocol.concat(fileStorageServerMPG).concat(that.filenameWithDate))
 		.send(that.file)	
 		.set('Content-Type', that.newFileType)
 		.end((err, res) => {
@@ -53,19 +43,19 @@ export default class Uploader {
     }
 
     // uploading to B2DROP is a two stage process
-    uploadFile_B2Drop() {
+    uploadFile_B2DROP() {
 	let that = this;
 	return new Promise(function(resolve, reject) {
 	    // 1a. store in B2DROP 
 	    Request
-		.put(that.cloudURL.concat('/owncloud/remote.php/webdav/').concat(that.filenameWithDate))    
+		.put(fileStorageServerB2DROP.concat('/remote.php/webdav/').concat(that.filenameWithDate))    
 		.auth('switchboard', 'clarin-plus')
 		.set('Access-Control-Allow-Origin', '*')	
 		.set('Access-Control-Allow-Credentials', 'true')
-		.set('Content-Type', currentFile.type)
+		.set('Content-Type', that.file.type)
 		.withCredentials()    
 		.set('Cache-Control', 'no-cache,no-store,must-revalidate,max-age=-1')
-		.send(currentFile)
+		.send(that.file)
 		.end((err, res) => {
 		    if (err) {
 			reject(err);
@@ -73,7 +63,7 @@ export default class Uploader {
 		    } else {
 			// 1b. Create a 'share link' action on the file you uploaded
 			Request
-			    .post(that.cloudURL.concat('/owncloud/ocs/v1.php/apps/files_sharing/api/v1/shares'))
+			    .post(fileStorageServerB2DROP.concat('/ocs/v1.php/apps/files_sharing/api/v1/shares'))
 			    .set('Content-Type', 'application/json')
 			    .set('Accept', 'application/xml')
 			    .set('Access-Control-Allow-Origin', '*')
