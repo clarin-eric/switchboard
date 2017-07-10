@@ -50,7 +50,7 @@ export function constructToolURL( toolDescription, resourceDescription ) {
 //    console.log('Tool.jsx/constructToolURL toolDescription:', toolDescription, 'resourceDescription:', resourceDescription);
     
     var filename         =  resourceDescription.name;
-    var filenameWithDate =  resourceDescription.filenameWithDate;	
+    var remoteFilename   =  resourceDescription.remoteFilename;	
     var file             =  resourceDescription.file;
     var language         =  resourceDescription.language.threeLetterCode;
     var upload           =  resourceDescription.upload;
@@ -58,35 +58,6 @@ export function constructToolURL( toolDescription, resourceDescription ) {
     var lang_encoding    = toolDescription.lang_encoding;
     var softwareType     = toolDescription.softwareType;
     var postSubmit       = toolDescription.postSubmit;
-
-    // determine the value of the input parameter
-    var inputFilename = ""
-    
-    switch (upload) {
-    case "dnd":
-	fileServerURL = "http://ws1-clarind.esc.rzg.mpg.de/drop-off/storage/";
-	inputFilename = fileServerURL + filenameWithDate;
-	break;
-    case "VLO":
-	fileServerURL = "";
-	inputFilename = filename;	
-	break;
-    case "VCR":
-	fileServerURL = "http://ws1-clarind.esc.rzg.mpg.de/drop-off/storage/";
-	inputFilename = fileServerURL + filenameWithDate;
-	break;
-    case "FCS":
-	fileServerURL = "http://ws1-clarind.esc.rzg.mpg.de/drop-off/storage/";
-	inputFilename = fileServerURL + filenameWithDate;
-	break;
-    case "B2DROP":
-	fileServerURL = "";
-	inputFilename = filename;	
-	break;
-    default:
-	console.log("ERROR: cannot construct URL for tool invocation", upload);
-	return;
-    }
 
     // the tool expects an encoding of the language parameter in ISO639-1
     if (lang_encoding == "639-1") {
@@ -111,7 +82,7 @@ export function constructToolURL( toolDescription, resourceDescription ) {
 			    if (softwareType == "webService") {
 				formParameter = mapping[parameter];
 			    } else {
-				parameterString = parameterString.concat( mapping[parameter]).concat("=").concat( inputFilename );
+				parameterString = parameterString.concat( mapping[parameter]).concat("=").concat( remoteFilename );
 			    }
 			    break;
 			case "lang":
@@ -137,7 +108,7 @@ export function constructToolURL( toolDescription, resourceDescription ) {
 		    if (softwareType == "webService") {
 			formParameter = parameter;
 		    } else {
-			parameterString = parameterString.concat(parameter).concat("=").concat( inputFilename );
+			parameterString = parameterString.concat(parameter).concat("=").concat( remoteFilename );
 		    }
 		    break;
 		case "lang":
@@ -152,7 +123,7 @@ export function constructToolURL( toolDescription, resourceDescription ) {
 	}
     }
 
-    // var parameterString = "?input=" + inputFilename + "&lang=" + toolDescription.parameter.lang + "&analysis=" + toolDescription.parameter.analysis;
+    // var parameterString = "?input=" + remoteFilename + "&lang=" + toolDescription.parameter.lang + "&analysis=" + toolDescription.parameter.analysis;
     var urlWithParameters = "";
     if (softwareType == "webService") {
 	urlWithParameters = toolDescription.url;

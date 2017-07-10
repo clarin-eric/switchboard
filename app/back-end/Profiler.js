@@ -4,31 +4,19 @@ import ResourceActions from '../actions/ResourceActions';
 
 export default class Profiler {
 
-    constructor( resource, caller, filenameWithDate ) {
+    constructor( resource, caller, remoteFilename ) {
 
 	this.protocol    = window.location.protocol;	// use https or http given parent window
 
 	// TIKA prefix
 	this.tika = "//weblicht.sfs.uni-tuebingen.de/clrs"
 	this.resource = resource;
-
-	if (filenameWithDate === undefined) {
-	    let today = new Date();
-	    let numberSlashes = resource.name.split("/");
-	    this.filenameWithDate = resource.name;
-	    var fileExtension = "";
-	    if (numberSlashes.length == 1) {
-		fileExtension = resource.name.slice((Math.max(0, resource.name.lastIndexOf(".")) || Infinity) + 1);
-		filenameWithDate = today.getTime() + "." + fileExtension;
-	    }
-	} else {
-	    this.filenameWithDate = filenameWithDate
-	}
+	this.remoteFilename = remoteFilename;
 	    
 	// default values
 	this.resourceProps =
-	    { filename: resource.name,
-	      filenameWithDate: filenameWithDate,
+	    { name: resource.name,
+	      remoteFilename: remoteFilename,
 	      file: resource,
 	      size: resource.size,
 	      upload: caller, 

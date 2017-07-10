@@ -19,7 +19,7 @@ export default class Resource extends React.Component {
 	this.handleToolsPerTaskChange = props.passChangeToParent;
 	
 	this.showTools               = this.showTools.bind(this, resource);
-	this.getFileUrl              = this.getFileUrl.bind(this, resource);
+	this.openResource              = this.openResource.bind(this, resource);
 	this.handleWebServicesChange = this.handleChange.bind(this, 'includeWebServices')
 	this.setLanguage             = this.setLanguage.bind(this, resource);
 	this.setMimetype             = this.setMimetype.bind(this, resource);
@@ -71,18 +71,9 @@ export default class Resource extends React.Component {
 	this.handleToolsPerTaskChange( toolsPerTask );
     }
 
-    getFileUrl(resource) {
-        //console.log('Resource/getFileUrl', resource);
-	var url = '';
-	if (resource.upload == "dnd") {
-            url = fileStorageServerMPG + resource.filenameWithDate;
-	} else if (resource.upload == "VLO") {
-            url = resource.name
-	} else { // VCR, FCS, B2DROP 
-	    url = resource.filename;
-	}
-
-	var win = window.open(url, '_blank');
+    openResource(resource) {
+        //console.log('Resource/openResource', resource);
+	var win = window.open(resource.remoteFilename, '_blank');
 	win.focus();	
     }
     
@@ -92,7 +83,7 @@ export default class Resource extends React.Component {
             <div {...props}>
   	      <div className="resource-header">
   	        <a className="resource-name"
-	           href='#' onClick={this.getFileUrl}
+	           href='#' onClick={this.openResource}
 		   >
 	    	   <span>Link to Resource</span>
 		</a>

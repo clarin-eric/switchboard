@@ -12,9 +12,10 @@ export default class Uploader {
 	this.protocol = window.location.protocol;
 	let today = new Date();
 	let fileExtension = this.file.name.split('.').pop();
-	let filenameWithDate = today.getTime() + "." + fileExtension;
+	this.filenameWithDate = today.getTime() + "." + fileExtension;
 
-	this.remoteFilename = fileStorageServerMPG + filenameWithDate;
+	// default upload 
+	this.remoteFilename = fileStorageServerMPG + this.filenameWithDate;
 
 	// the file server at the MPG seems to have problems with certain file types, so we change it here.
 	this.newFileType = this.file.type;
@@ -29,7 +30,7 @@ export default class Uploader {
 	let that = this;
         return new Promise(function(resolve, reject) {
 	    Request
-		.post(that.protocol.concat(fileStorageServerMPG).concat(that.filenameWithDate))
+		.post(that.protocol.concat(that.remoteFilename))
 		.send(that.file)	
 		.set('Content-Type', that.newFileType)
 		.end((err, res) => {
@@ -82,6 +83,8 @@ export default class Uploader {
 				    parseString(res.text, function (err, result) {
 					console.log('sharing result', result, err);
 					console.log('url to download', result.ocs.data[0].url[0].concat('/download'));
+					that.remoteFilename = fileStorageServerB2DROP + result.ocs.data[0].url[0].concat('/download')
+					console.log('stored', that.remoteFilename);
 				    });
 				    resolve(res)
 				}})

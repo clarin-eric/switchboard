@@ -2,7 +2,7 @@
 // 2016-17 Claus Zinn
 // 
 // File: Registry.js
-// Time-stamp: <2017-06-30 16:08:53 (zinn)>
+// Time-stamp: <2017-07-10 15:28:11 (zinn)>
 //
 // ----------------------------------------------------------------------------------------
 
@@ -25,7 +25,7 @@ const Registry =
 	  authentication: "yes",
 	  shortDescription: "A tokeniser",
 	  longDescription: "Ucto is a unicode-compliant tokeniser. It takes input in the form of one or more untokenised texts, and subsequently tokenises them. Several languages are supported, but the software is extensible to other languages.",
-	  languages: ["nld", "eng", "deu", "fra", "ita", "fry"],
+	  languages: ["nld", "eng", "deu", "fra", "ita", "fry"], // check with ticket
 	  lang_encoding: "639-1",
 	  mimetypes: [
 	      "text/plain"

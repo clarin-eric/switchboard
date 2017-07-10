@@ -39,7 +39,7 @@ export default class UrlArea extends React.Component {
 		    that.setState({showAlertShibboleth: true});
 		} else {
 		    var downloadedFile = new File([resolve.text], fileURL, {type: resolve.type});
-		    let profiler = new Profiler( downloadedFile, caller );
+		    let profiler = new Profiler( downloadedFile, caller, fileURL );
 		    let promiseLanguage = profiler.identifyLanguage();
 		    promiseLanguage.then(
 			function(resolve) {
@@ -84,7 +84,7 @@ export default class UrlArea extends React.Component {
 
 	    // update the Resource panel
 	    var resource = ResourceActions.create( { name: fileURL,
-						     filename: fileURL,
+						     remoteFilename: fileURL,
 						     upload: 'VLO',
 						     mimetype: mimeType,
 						     size: parameters.fileSize,
