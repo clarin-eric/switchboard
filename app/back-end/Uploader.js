@@ -83,7 +83,7 @@ export default class Uploader {
 				    parseString(res.text, function (err, result) {
 					console.log('sharing result', result, err);
 					console.log('url to download', result.ocs.data[0].url[0].concat('/download'));
-					that.remoteFilename = fileStorageServerB2DROP + result.ocs.data[0].url[0].concat('/download')
+					that.remoteFilename = result.ocs.data[0].url[0].concat('/download')
 					console.log('stored', that.remoteFilename);
 				    });
 				    resolve(res)

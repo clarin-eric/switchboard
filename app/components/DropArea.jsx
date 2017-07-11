@@ -63,18 +63,11 @@ export default class DropArea extends React.Component {
     uploadAndProcessFile( currentFile ) {
 
 	let uploader = new Uploader( currentFile );
-	let promiseUpload = uploader.uploadFile();
-	//let promiseUpload = uploader.uploadFile_B2DROP();
+	//let promiseUpload = uploader.uploadFile();
+	let promiseUpload = uploader.uploadFile_B2DROP();
 	promiseUpload.then(
 	    function(resolve) {
 		console.log('DropArea/uploadAndProcessFile', resolve);//
-		
-		// var parseString = require('xml2js').parseString;
-		// parseString(resolve, function (err, result) {
-		//     console.log('sharing result', result, err);
-		//     console.log('url to download', result.ocs.data[0].url[0].concat('/download'));
-		// });
-		
 		let profiler = new Profiler( currentFile, "dnd", uploader.remoteFilename );
 		profiler.processFile( currentFile );
 	    },

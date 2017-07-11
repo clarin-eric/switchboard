@@ -49,7 +49,6 @@ export function constructToolURL( toolDescription, resourceDescription ) {
 
 //    console.log('Tool.jsx/constructToolURL toolDescription:', toolDescription, 'resourceDescription:', resourceDescription);
     
-    var filename         =  resourceDescription.name;
     var remoteFilename   =  resourceDescription.remoteFilename;	
     var file             =  resourceDescription.file;
     var language         =  resourceDescription.language.threeLetterCode;

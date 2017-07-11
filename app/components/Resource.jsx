@@ -72,7 +72,7 @@ export default class Resource extends React.Component {
     }
 
     openResource(resource) {
-        //console.log('Resource/openResource', resource);
+        console.log('Resource/openResource', resource);
 	var win = window.open(resource.remoteFilename, '_blank');
 	win.focus();	
     }
@@ -97,7 +97,7 @@ export default class Resource extends React.Component {
 		<ul className="notes">
 		<li className="note" key="resourceName" >
 		  <div>
-		    <span className="note">name: {resource.filename}</span>
+		    <span className="note">name: {resource.name}</span>
 		  </div>		
 		</li>
 		<li className="note" key="resourceSize" >

@@ -26,7 +26,6 @@ class ResourceStore {
 	
 	resource.id = uuid.v4();
 	resource.file             = resource.file || null;
-	resource.filename         = resource.filename || null;
 	resource.remoteFilename   = resource.remoteFilename || null;
 	resource.upload           = resource.upload   || null;
 	resource.mimetype         = resource.mimetype || null;	
