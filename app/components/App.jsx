@@ -89,6 +89,8 @@ export default class App extends React.Component {
 
 	localStorage.removeItem("app");
 	this.refresh();
+	//this.clearDropzone();
+	//this.refresh();
 	console.log('App: component did mount', this);	
     }
     
