@@ -1,14 +1,14 @@
 # Docker image for running CLRS
 # C. Zinn, initiated November 2016
-# Time-stamp: <2017-07-11 10:39:51 (zinn)>
+# Time-stamp: <2017-07-11 13:00:41 (zinn)>
 #
 # This is a minimal image for running the CLRS in a DOCKER image.
 # This Dockerfile assumes, however, that calls to Apache Tika, and the file storage server
 # are handled with external calls, see to-do list below.
 #
 
-# start with a docker image that runs java
-FROM openjdk:8
+# start with an Alpine-based docker image
+FROM registry.gitlab.com/clarin-eric/docker-alpine-base:1.0.2
 
 # now, install nginx
 # the following being taken from the nginx:latest dockerfile
