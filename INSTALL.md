@@ -44,9 +44,22 @@ In the docker directory, call
 
 This command will build a docker image that includes the entire content of the build directory (the
 CLRS webpage).  It runs nginx as web server and has access to Java for running the Tika Apache
-tools for language and mimetype identification. 
+tools for language and mimetype identification. It uses supervisord to spawn/control the various processes.
 
 
 Expose different ports, given your local computing environment, you can run the Docker image with
 
    ```docker run --name switchboard -d -p 9001:9001 -p 9998:9998 -p 80:80 docker.clarin.eu/clrs:1.0.0 ```
+
+
+Open
+
+   ```http://localhost ```
+
+in your browser to get access to the switchboard.
+
+The address
+
+   ```http://localhost:9001 ```
+
+gives access to the supervisor.
