@@ -46,11 +46,14 @@ This command will build a docker image that includes the entire content of the b
 CLRS webpage).  It runs nginx as web server and has access to Java for running the Tika Apache
 tools for language and mimetype identification. It uses supervisord to spawn/control the various processes.
 
+Note that the nginx has a number of reverse proxies, see docker/nginx.conf. In particular, it gives access to
+the file storage server at the MPG in Garching. All reverse-proxing aims at addressing CORS-related issues.
 
-Expose different ports, given your local computing environment, you can run the Docker image with
+You can run the Docker image with
 
    ```docker run --name switchboard -d -p 9001:9001 -p 9998:9998 -p 80:80 docker.clarin.eu/clrs:1.0.0 ```
 
+(but this may depend on your local computing environment).
 
 Open
 
