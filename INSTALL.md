@@ -38,16 +38,15 @@ to have your web server serving the pages.
 
 # DOCKERization
 
-In the current directory (where Dockerfile resides), call:
-
-   ```docker build --no-cache -t clrs-nginx-java```
-
-This command will build a docker image that includes the entire content of the build directory (the
-CLRS webpage).  It runs nginx as web server and has access to Java for running the Tika Apache
-tools for language and mimetype identification.
-
-Alternatively, please use the Makefile, calling
+In the docker directory, call
 
    ```make ```
 
-Expose different ports, given your local computing environment.
+This command will build a docker image that includes the entire content of the build directory (the
+CLRS webpage).  It runs nginx as web server and has access to Java for running the Tika Apache
+tools for language and mimetype identification. 
+
+
+Expose different ports, given your local computing environment, you can run the Docker image with
+
+   ```docker run --name switchboard -d -p 9001:9001 -p 9998:9998 -p 80:80 docker.clarin.eu/clrs:1.0.0 ```
