@@ -1,6 +1,9 @@
 // Uploads a file to the MPG server in Garching.
-// Note that the URL '//weblicht.sfs.uni-tuebingen.de/clrs/storage/' is reverse-proxied to
-// http://ws1-clarind.esc.rzg.mpg.de/drop-off/storage/.
+// 
+// Note that the URL
+//     //weblicht.sfs.uni-tuebingen.de/clrs/storage/
+// is reverse-proxied to
+//     //ws1-clarind.esc.rzg.mpg.de/drop-off/storage/
 
 import Request from 'superagent';
 import {fileStorageServerMPG, fileStorageServerB2DROP} from './util';

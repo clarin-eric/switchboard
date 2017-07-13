@@ -7,9 +7,9 @@ export default class Profiler {
     constructor( resource, caller, remoteFilename ) {
 
 	this.protocol    = window.location.protocol;	// use https or http given parent window
-
 	// TIKA prefix
-	this.tika = "//weblicht.sfs.uni-tuebingen.de/clrs"
+	//this.tika = "//weblicht.sfs.uni-tuebingen.de/clrs"
+	this.tika = "//localhost"	
 	this.resource = resource;
 	this.remoteFilename = remoteFilename;
 	    
