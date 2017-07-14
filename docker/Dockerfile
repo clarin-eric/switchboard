@@ -119,16 +119,16 @@ RUN apk update \
  && echo "installed supervisord"
 
 # Supervisord configuration
-COPY supervisord.conf /etc/supervisor/supervisord.conf
+COPY docker/supervisord.conf /etc/supervisor/supervisord.conf
 
 # todo:use github build
-COPY ./../build/ /etc/nginx/html
+COPY build/ /etc/nginx/html
 
 # nginx configuration
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY docker/nginx.conf /etc/nginx/nginx.conf
 
 # tika-server
-COPY tika-server-1.15.jar /tika-server-1.15.jar
+COPY docker/tika-server-1.15.jar /tika-server-1.15.jar
 
 # Add and define entrypoint
 # -------------------------

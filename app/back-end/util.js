@@ -1,5 +1,6 @@
 // export const fileStorageServerMPG    = '//weblicht.sfs.uni-tuebingen.de/clrs/storage/';
-export const fileStorageServerMPG    = '//localhost/clrs/storage/';
+export const fileStorageServerMPG_localhost  = '//localhost/clrs/storage/';
+export const fileStorageServerMPG_remote     = '//ws1-clarind.esc.rzg.mpg.de/drop-off/storage/';
 // export const fileStorageServerB2DROP = '//weblicht.sfs.uni-tuebingen.de/owncloud';
 
 // VPN @ shannon (reverse proxying)

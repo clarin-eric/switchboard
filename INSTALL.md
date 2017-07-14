@@ -17,6 +17,10 @@ In the future, the directories node_modules/ and build/ will not be hosted on gi
 
 2. Enter the directory LRSwitchboard, and perform
 
+   ```npm install ```
+
+and
+
    ```webpack ```
    
 
@@ -38,7 +42,7 @@ to have your web server serving the pages.
 
 # DOCKERization
 
-In the docker directory, call
+In the main directory, call
 
    ```make ```
 
@@ -50,6 +54,10 @@ Note that the nginx has a number of reverse proxies, see docker/nginx.conf. In p
 the file storage server at the MPG in Garching. All reverse-proxing aims at addressing CORS-related issues.
 
 You can run the Docker image with
+
+   ```docker run --name switchboard -d -p 9001:9001 -p 9998:9998 -p 80:80 clrs ```
+
+or (with the docker image being available in the CLARIN docher hub, see Makefile)
 
    ```docker run --name switchboard -d -p 9001:9001 -p 9998:9998 -p 80:80 docker.clarin.eu/clrs:1.0.0 ```
 
@@ -66,3 +74,7 @@ The address
    ```http://localhost:9001 ```
 
 gives access to the supervisor.
+
+Note that -- for the standalone version of the switchboard (local uploading of resources) -- the host
+running the docker container must be accessible from the outside so that tools connected to the
+switchboard can fetch the resources from there. 

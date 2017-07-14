@@ -9,9 +9,6 @@ can then ask the switchboard to display all tools capable of processing the reso
 Clicking on a tool icon opens the tool in a new tab. All relevant information (link to the
 resource, language code, mimetype etc.) is encoded in the URL used to invoke the tool.
 
-A poor man's webserver has been implemented to temporarily store all uploaded resources, and to
-make them available for download by the invoked tools.
-
 For more information, please contact claus.zinn@uni-tuebingen.de
 
 # Website

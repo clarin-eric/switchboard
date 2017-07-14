@@ -6,10 +6,12 @@ NAME="clrs"
 REPOSITORY="docker.clarin.eu"
 IMAGE_NAME="${REPOSITORY}/${NAME}:${VERSION}"
 
-all: build
+#overwrite
+IMAGE_NAME="clrs"
+all: buildImage
 
-build:
-	docker build -t ${IMAGE_NAME} .
+buildImage:
+	docker build -t ${IMAGE_NAME} -f docker/Dockerfile .
 
 push:
-	@docker push ${IMAGE_NAME}
+	docker push ${IMAGE_NAME}

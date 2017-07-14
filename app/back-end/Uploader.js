@@ -6,7 +6,7 @@
 //     //ws1-clarind.esc.rzg.mpg.de/drop-off/storage/
 
 import Request from 'superagent';
-import {fileStorageServerMPG, fileStorageServerB2DROP} from './util';
+import {fileStorageServerMPG_localhost, fileStorageServerMPG_remote, fileStorageServerB2DROP} from './util';
 
 export default class Uploader {
 
@@ -18,8 +18,8 @@ export default class Uploader {
 	this.filenameWithDate = today.getTime() + "." + fileExtension;
 
 	// default upload 
-	this.remoteFilename = fileStorageServerMPG + this.filenameWithDate;
-
+	this.remoteFilename = fileStorageServerMPG_remote + this.filenameWithDate;
+        this.remoteFilenameReverseProxy = fileStorageServerMPG_localhost + this.filenameWithDate;
 	// the file server at the MPG seems to have problems with certain file types, so we change it here.
 	this.newFileType = this.file.type;
 	if ( (this.newFileType == "text/xml") ||
@@ -33,7 +33,7 @@ export default class Uploader {
 	let that = this;
         return new Promise(function(resolve, reject) {
 	    Request
-		.post(that.protocol.concat(that.remoteFilename))
+		.post(that.protocol.concat(that.remoteFilenameReverseProxy))
 		.send(that.file)	
 		.set('Content-Type', that.newFileType)
 		.end((err, res) => {

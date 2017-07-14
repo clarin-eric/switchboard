@@ -5,8 +5,6 @@ import LanguageMenu from './LanguageMenu.jsx';
 import MimetypeMenu from './MimetypeMenu.jsx';
 import ResourceActions from '../actions/ResourceActions';        
 
-import {fileStorageServerMPG, fileStorageServerB2DROP} from './../back-end/util';
-
 // access to matcher
 import Matcher from '../back-end/Matcher';
 
