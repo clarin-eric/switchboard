@@ -32,8 +32,9 @@ export default class Uploader {
     uploadFile() {
 	let that = this;
         return new Promise(function(resolve, reject) {
+	    console.log('uploadFile', that.remoteFilenameReverseProxy);
 	    Request
-		.post(that.protocol.concat(that.remoteFilenameReverseProxy))
+		.post(that.remoteFilenameReverseProxy)
 		.send(that.file)	
 		.set('Content-Type', that.newFileType)
 		.end((err, res) => {

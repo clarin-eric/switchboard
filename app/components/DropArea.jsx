@@ -69,13 +69,14 @@ export default class DropArea extends React.Component {
 	    function(resolve) {
 		console.log('DropArea/uploadAndProcessFile', resolve);//
 		let profiler = new Profiler( currentFile, "dnd", uploader.remoteFilename );
-		profiler.processFile( currentFile );
+		profiler.convertProcessFile();
+		//profiler.convertFileToPlainText();
 	    },
 	    function(reject) {
 		console.log('DropArea.jsx/upload failed', reject);
 		alert('Error: unable to upload file');
 	    });
-    }    
+    }   
     
     onDrop(files) {
 

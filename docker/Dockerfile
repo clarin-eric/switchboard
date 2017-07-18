@@ -1,7 +1,7 @@
 FROM alpine:3.6
 MAINTAINER claus.zinn@gmail.com
 
-ENV TIKA_SERVER_URL https://www.apache.org/dist/tika/tika-server-1.15.jar
+ENV TIKA_SERVER_URL https://www.apache.org/dist/tika/tika-server-1.16.jar
 ENV JAVA_HOME=/usr/lib/jvm/default-jvm
 ENV PYTHON_VERSION=2.7.13-r1
 ENV PY_PIP_VERSION=9.0.1-r1
@@ -128,7 +128,7 @@ COPY build/ /etc/nginx/html
 COPY docker/nginx.conf /etc/nginx/nginx.conf
 
 # tika-server
-COPY docker/tika-server-1.15.jar /tika-server-1.15.jar
+COPY docker/tika-server-1.16.jar /tika-server-1.16.jar
 
 # Add and define entrypoint
 # -------------------------
