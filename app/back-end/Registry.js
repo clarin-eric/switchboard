@@ -2,7 +2,7 @@
 // 2016-17 Claus Zinn
 // 
 // File: Registry.js
-// Time-stamp: <2017-07-10 15:28:11 (zinn)>
+// Time-stamp: <2017-07-20 15:28:14 (zinn)>
 //
 // ----------------------------------------------------------------------------------------
 
@@ -10,6 +10,455 @@
 
 const Registry =
     [
+
+	{
+	    task: "Chunker",
+	    name: "Iobbber",
+	    logo: "clarin-pl.png",
+	    homepage: "http://ws.clarin-pl.eu",
+	    location: "Wrocław, Poland",
+	    creators: ["Clarin-PL"],
+	    contact: {
+		person: "Tomasz Walkowiak",
+		email: "tomasz.walkowiak@pwr.edu.pl"
+	    },
+	    version: "1.0",
+	    licence: "public",
+	    longDescription: "Chunker for Polish. It recognises shallow syntactic structure (up to three levels) of phrases (chunks) in Polish texts.",
+	    shortDescription: "Chunker for Polish",
+	    languages: ["pol"],
+	    lang_encoding: "639-1",
+	    mimetypes: ["text/plain", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.oasis.opendocument.text", "application/pdf", "text/html", "application/rtf"],
+	    output: ["text/xml"],
+	    url: "http://ws.clarin-pl.eu/weblicht.html",
+	    pid: "",
+	    parameter: {
+		input: "self.linkToResource",
+		lang: "pl",
+		analysis: "chunker"
+	    }
+	},
+
+	{
+	    "task": "Inclusion detection",
+	    "name": "Inkluz",
+	    "logo": "clarin-pl.png",
+	    "homepage": "http://ws.clarin-pl.eu",
+	    "location": "Wrocław, Poland",
+	    "creators": ["Clarin-PL"],
+	    "contact": {
+		"person": "Tomasz Walkowiak",
+		"email": "tomasz.walkowiak@pwr.edu.pl"
+	    },
+	    "version": "1.0",
+	    "licence": "public",
+	    "longDescription": "Inkluz - detects foreign language inclusions in Polish texts.",
+	    "shortDescription": "Foreign language inclusion detection in Polish texts",
+	    "languages": ["pol"],
+	    "lang_encoding": "639-1",
+	    "mimetypes": ["text/plain", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.oasis.opendocument.text", "application/pdf", "text/html", "application/rtf"],
+	    "output": ["application/octet-stream"],
+	    "url": "http://ws.clarin-pl.eu/weblicht.html",
+	    "pid": "",
+	    "parameter": {
+		"input": "self.linkToResource",
+		"lang": "pl",
+		"analysis": "inkluz"
+	    }
+	},
+
+	{
+	    "task": "Morphological Analysis",
+	    "name": "Morfeusz 2",
+	    "logo": "clarin-pl.png",
+	    "homepage": "http://ws.clarin-pl.eu",
+	    "location": "Wrocław, Poland",
+	    "creators": ["Clarin-PL"],
+	    "contact": {
+		"person": "Tomasz Walkowiak",
+		"email": "tomasz.walkowiak@pwr.edu.pl"
+	    },
+	    "version": "1.0",
+	    "licence": "public",
+	    "longDescription": "Morphological analysis of Polish texts by Morfeusz 2 (based on the SGJP dictionary)",
+	    "shortDescription": "Morphological analysis of Polish",
+	    "languages": ["pol"],
+	    "lang_encoding": "639-1",
+	    "mimetypes": ["text/plain", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.oasis.opendocument.text", "application/pdf", "text/html", "application/rtf"],
+	    "output": ["text/xml"],
+	    "url": "http://ws.clarin-pl.eu/weblicht.html",
+	    "pid": "",
+	    "parameter": {
+		"input": "self.linkToResource",
+		"lang": "pl",
+		"analysis": "morpho"
+	    }
+	},
+
+	{
+	    "task": "Named Entity Recognition",
+	    "name": "Liner2",
+	    "logo": "clarin-pl.png",
+	    "homepage": "http://ws.clarin-pl.eu",
+	    "location": "Wrocław, Poland",
+	    "creators": ["Clarin-PL"],
+	    "contact": {
+		"person": "Tomasz Walkowiak",
+		"email": "tomasz.walkowiak@pwr.edu.pl"
+	    },
+	    "version": "1.0",
+	    "licence": "public",
+	    "longDescription": "Name Entity and Temporal Expression recognition",
+	    "shortDescription": "Name Entity Recogniser.",
+	    "languages": ["pol"],
+	    "lang_encoding": "639-1",
+	    "mimetypes": ["text/plain", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.oasis.opendocument.text", "application/pdf", "text/html", "application/rtf"],
+	    "output": ["text/xml"],
+	    "url": "http://ws.clarin-pl.eu/weblicht.html",
+	    "pid": "",
+	    "parameter": {
+		"input": "self.linkToResource",
+		"lang": "pl",
+		"analysis": "ner"
+	    }
+	},
+
+	{
+	    "task": "Named Entity Recognition",
+	    "name": "NER NLTK",
+	    "logo": "clarin-pl.png",
+	    "homepage": "http://ws.clarin-pl.eu",
+	    "location": "Wrocław, Poland",
+	    "creators": ["Clarin-PL"],
+	    "contact": {
+		"person": "Tomasz Walkowiak",
+		"email": "tomasz.walkowiak@pwr.edu.pl"
+	    },
+	    "version": "1.0",
+	    "licence": "public",
+	    "longDescription": "Name Entity Recogniser for English by NLTK",
+	    "shortDescription": "Name Entity Recogniser for English texts.",
+	    "languages": ["eng"],
+	    "lang_encoding": "639-1",
+	    "mimetypes": ["text/plain", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.oasis.opendocument.text", "application/pdf", "text/html", "application/rtf"],
+	    "output": ["text/xml"],
+	    "url": "http://ws.clarin-pl.eu/weblicht.html",
+	    "pid": "",
+	    "parameter": {
+		"input": "self.linkToResource",
+		"lang": "en",
+		"analysis": "nerNLTK"
+	    }
+	},
+
+	{
+	    "task": "Dependency Parsing",
+	    "name": "MaltParser",
+	    "logo": "clarin-pl.png",
+	    "homepage": "http://ws.clarin-pl.eu",
+	    "location": "Wrocław, Poland",
+	    "creators": ["Clarin-PL"],
+	    "contact": {
+		"person": "Tomasz Walkowiak",
+		"email": "tomasz.walkowiak@pwr.edu.pl"
+	    },
+	    "version": "1.0",
+	    "licence": "public",
+	    "longDescription": "Language dependency parser for Polish (MaltParser)",
+	    "shortDescription": "Language dependency parser",
+	    "languages": ["pol"],
+	    "lang_encoding": "639-1",
+	    "mimetypes": ["text/plain", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.oasis.opendocument.text", "application/pdf", "text/html", "application/rtf"],
+	    "output": ["application/octet-stream"],
+	    "url": "http://ws.clarin-pl.eu/weblicht.html",
+	    "pid": "",
+	    "parameter": {
+		"input": "self.linkToResource",
+		"lang": "pl",
+		"analysis": "parser"
+	    }
+	},
+
+	{
+	    "task": "Keyword Extractor",
+	    "name": "ReSpa",
+	    "logo": "clarin-pl.png",
+	    "homepage": "http://ws.clarin-pl.eu",
+	    "location": "Wrocław, Poland",
+	    "creators": ["Clarin-PL"],
+	    "contact": {
+		"person": "Tomasz Walkowiak",
+		"email": "tomasz.walkowiak@pwr.edu.pl"
+	    },
+	    "version": "1.0",
+	    "licence": "public",
+	    "longDescription": "Keywords extraction for Polish by ReSpa based on the representation of text documents as word graphs.",
+	    "shortDescription": "ReSpa keyword extractor.",
+	    "languages": ["pol"],
+	    "lang_encoding": "639-1",
+	    "mimetypes": ["text/plain", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.oasis.opendocument.text", "application/pdf", "text/html", "application/rtf"],
+	    "output": ["text/xml"],
+	    "url": "http://ws.clarin-pl.eu/weblicht.html",
+	    "pid": "",
+	    "parameter": {
+		"input": "self.linkToResource",
+		"lang": "pl",
+		"analysis": "respa"
+	    }
+	},
+
+	{
+	    "task": "Relation between name entities detection",
+	    "name": "Serel",
+	    "logo": "clarin-pl.png",
+	    "homepage": "http://ws.clarin-pl.eu",
+	    "location": "Wrocław, Poland",
+	    "creators": ["Clarin-PL"],
+	    "contact": {
+		"person": "Tomasz Walkowiak",
+		"email": "tomasz.walkowiak@pwr.edu.pl"
+	    },
+	    "version": "1.0",
+	    "licence": "public",
+	    "longDescription": "Detection of semantic relations between Named Entities in Polish texts by Serel",
+	    "shortDescription": "Detection of semantic relations between Named Entities in Polish",
+	    "languages": ["pol"],
+	    "lang_encoding": "639-1",
+	    "mimetypes": ["text/plain", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.oasis.opendocument.text", "application/pdf", "text/html", "application/rtf"],
+	    "output": ["text/xml"],
+	    "url": "http://ws.clarin-pl.eu/weblicht.html",
+	    "pid": "",
+	    "parameter": {
+		"input": "self.linkToResource",
+		"lang": "pl",
+		"analysis": "serel"
+	    }
+	},
+
+	{
+	    "task": "Spatial expression detection",
+	    "name": "Spatial",
+	    "logo": "clarin-pl.png",
+	    "homepage": "http://ws.clarin-pl.eu",
+	    "location": "Wrocław, Poland",
+	    "creators": ["Clarin-PL"],
+	    "contact": {
+		"person": "Tomasz Walkowiak",
+		"email": "tomasz.walkowiak@pwr.edu.pl"
+	    },
+	    "version": "1.0",
+	    "licence": "public",
+	    "longDescription": "Recognition of spatial expressions in Polish texts",
+	    "shortDescription": "Spatial expression recognition in Polish",
+	    "languages": ["pol"],
+	    "lang_encoding": "639-1",
+	    "mimetypes": ["text/plain", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.oasis.opendocument.text", "application/pdf", "text/html", "application/rtf"],
+	    "output": ["application/json"],
+	    "url": "http://ws.clarin-pl.eu/weblicht.html",
+	    "pid": "",
+	    "parameter": {
+		"input": "self.linkToResource",
+		"lang": "pl",
+		"analysis": "spatial"
+	    }
+	},
+
+	{
+	    "task": "Shallow Parsing",
+	    "name": "Spejd",
+	    "logo": "clarin-pl.png",
+	    "homepage": "http://ws.clarin-pl.eu",
+	    "location": "Wrocław, Poland",
+	    "creators": ["Clarin-PL"],
+	    "contact": {
+		"person": "Tomasz Walkowiak",
+		"email": "tomasz.walkowiak@pwr.edu.pl"
+	    },
+	    "version": "1.0",
+	    "licence": "public",
+	    "longDescription": "Spejd - a partial, shallow parser for Polish with rule-based morphosyntactic disambiguation",
+	    "shortDescription": "Spejd",
+	    "languages": ["pol"],
+	    "lang_encoding": "639-1",
+	    "mimetypes": ["text/plain", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.oasis.opendocument.text", "application/pdf", "text/html", "application/rtf"],
+	    "output": ["text/xml"],
+	    "url": "http://ws.clarin-pl.eu/weblicht.html",
+	    "pid": "",
+	    "parameter": {
+		"input": "self.linkToResource",
+		"lang": "pl",
+		"analysis": "spejd"
+	    }
+	},
+
+	{
+	    "task": "Text Summarization",
+	    "name": "Summarize",
+	    "logo": "clarin-pl.png",
+	    "homepage": "http://ws.clarin-pl.eu",
+	    "location": "Wrocław, Poland",
+	    "creators": ["Clarin-PL"],
+	    "contact": {
+		"person": "Tomasz Walkowiak",
+		"email": "tomasz.walkowiak@pwr.edu.pl"
+	    },
+	    "version": "1.0",
+	    "licence": "public",
+	    "longDescription": "Automated word graph based summarisation of Polish texts",
+	    "shortDescription": "Automated summarisation for Polish",
+	    "languages": ["pol"],
+	    "lang_encoding": "639-1",
+	    "mimetypes": ["text/plain", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.oasis.opendocument.text", "application/pdf", "text/html", "application/rtf"],
+	    "output": ["application/octet-stream"],
+	    "url": "http://ws.clarin-pl.eu/weblicht.html",
+	    "pid": "",
+	    "parameter": {
+		"input": "self.linkToResource",
+		"lang": "pl",
+		"analysis": "summarize"
+	    }
+	},
+
+	{
+	    "task": "Morpho-syntactic tagger",
+	    "name": "WCRFT2",
+	    "logo": "clarin-pl.png",
+	    "homepage": "http://nlp.pwr.wroc.pl/redmine/projects/wcrft/wiki/",
+	    "location": "Wrocław, Poland",
+	    "creators": ["Clarin-PL"],
+	    "contact": {
+		"person": "Tomasz Walkowiak",
+		"email": "tomasz.walkowiak@pwr.edu.pl"
+	    },
+	    "version": "1.0",
+	    "licence": "public",
+	    "longDescription": "Morpho-syntactic tagger for Polish - WCRFT2",
+	    "shortDescription": "Morpho-syntactic tagger for Polish",
+	    "languages": ["pol"],
+	    "lang_encoding": "639-1",
+	    "mimetypes": ["text/plain", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.oasis.opendocument.text", "application/pdf", "text/html", "application/rtf"],
+	    "output": ["text/xml"],
+	    "url": "http://ws.clarin-pl.eu/weblicht.html",
+	    "pid": "",
+	    "parameter": {
+		"input": "self.linkToResource",
+		"lang": "pl",
+		"analysis": "tagger"
+	    }
+	},
+
+	{
+	    "task": "Tagger",
+	    "name": "Tager NLTK",
+	    "logo": "clarin-pl.png",
+	    "homepage": "http://ws.clarin-pl.eu",
+	    "location": "Wrocław, Poland",
+	    "creators": ["Clarin-PL"],
+	    "contact": {
+		"person": "Tomasz Walkowiak",
+		"email": "tomasz.walkowiak@pwr.edu.pl"
+	    },
+	    "version": "1.0",
+	    "licence": "public",
+	    "longDescription": "Morpho-syntactic  tagger for English texts, NLTK",
+	    "shortDescription": "Morpho-syntactic Tagger for English texts (from NLTK).",
+	    "languages": ["eng"],
+	    "lang_encoding": "639-1",
+	    "mimetypes": ["text/plain", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.oasis.opendocument.text", "application/pdf", "text/html", "application/rtf"],
+	    "output": ["text/xml"],
+	    "url": "http://ws.clarin-pl.eu/weblicht.html",
+	    "pid": "",
+	    "parameter": {
+		"input": "self.linkToResource",
+		"lang": "en",
+		"analysis": "tagerNLTK"
+	    }
+	},
+
+	{
+	    "task": "Extraction of Polish terminology",
+	    "name": "TermoPL",
+	    "logo": "clarin-pl.png",
+	    "homepage": "http://ws.clarin-pl.eu",
+	    "location": "Wrocław, Poland",
+	    "creators": ["Clarin-PL"],
+	    "contact": {
+		"person": "Tomasz Walkowiak",
+		"email": "tomasz.walkowiak@pwr.edu.pl"
+	    },
+	    "version": "1.0",
+	    "licence": "public",
+	    "longDescription": "TermoPL is a tool for automated extraction of terminology from Polish texts.",
+	    "shortDescription": "Terminology extraction for Polish",
+	    "languages": ["pol"],
+	    "lang_encoding": "639-1",
+	    "mimetypes": ["text/plain", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.oasis.opendocument.text", "application/pdf", "text/html", "application/rtf"],
+	    "output": ["application/json"],
+	    "url": "http://ws.clarin-pl.eu/weblicht.html",
+	    "pid": "",
+	    "parameter": {
+		"input": "self.linkToResource",
+		"lang": "pl",
+		"analysis": "termopl"
+	    }
+	},
+
+	{
+	    "task": "TF, IDF, TF-IDF calculation",
+	    "name": "TF-IDF",
+	    "logo": "clarin-pl.png",
+	    "homepage": "http://ws.clarin-pl.eu",
+	    "location": "Wrocław, Poland",
+	    "creators": ["Clarin-PL"],
+	    "contact": {
+		"person": "Tomasz Walkowiak",
+		"email": "tomasz.walkowiak@pwr.edu.pl"
+	    },
+	    "version": "1.0",
+	    "licence": "public",
+	    "longDescription": "TF, IDF, TF-IDF calculation",
+	    "shortDescription": "TF-IDF",
+	    "languages": ["pol"],
+	    "lang_encoding": "639-1",
+	    "mimetypes": ["text/plain", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.oasis.opendocument.text", "application/pdf", "text/html", "application/rtf"],
+	    "output": ["text/csv"],
+	    "url": "http://ws.clarin-pl.eu/weblicht.html",
+	    "pid": "",
+	    "parameter": {
+		"input": "self.linkToResource",
+		"lang": "pl",
+		"analysis": "tfidf"
+	    }
+	},
+
+	{
+	    "task": "Word sense disambiguation",
+	    "name": "WoSeDon",
+	    "logo": "clarin-pl.png",
+	    "homepage": "http://ws.clarin-pl.eu",
+	    "location": "Wrocław, Poland",
+	    "creators": ["Clarin-PL"],
+	    "contact": {
+		"person": "Tomasz Walkowiak",
+		"email": "tomasz.walkowiak@pwr.edu.pl"
+	    },
+	    "version": "1.0",
+	    "licence": "public",
+	    "longDescription": "Word Sense Disambiguation for Polish texts based on plWordNet - the Polish wordnet (weakly supervised, for all words)",
+	    "shortDescription": "Word Sense Disambiguation for Polish",
+	    "languages": ["pol"],
+	    "lang_encoding": "639-1",
+	    "mimetypes": ["text/plain", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.oasis.opendocument.text", "application/pdf", "text/html", "application/rtf"],
+	    "output": ["text/xml"],
+	    "url": "http://ws.clarin-pl.eu/weblicht.html",
+	    "pid": "",
+	    "parameter": {
+		"input": "self.linkToResource",
+		"lang": "pl",
+		"analysis": "wsd"
+	    }
+	},
+	
 	{ task: "Tokenisation",
 	  name: "Ucto",
 	  logo: "YourLogoComesHere.png",		  

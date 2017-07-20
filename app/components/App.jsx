@@ -54,6 +54,7 @@ require('./../images/clarindk.jpg');
 require('./../images/CLARIN-Logo16-c.jpg');
 require('./../images/zil.png');
 require('./../images/acdh.png');
+require('./../images/clarin-pl.png');
 
 require('./../images/YourLogoComesHere.png');
 require('./../images/metadataListing1.png');
