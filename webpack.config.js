@@ -23,7 +23,7 @@ const common = {
     // The matching will fail without!
     resolve: {
 	extensions: ['', '.js', '.jsx'],
-	modulesDirectories: ['web_modules', 'bower_components', 'node_modules']
+	modulesDirectories: ['node_modules']
     },
 
     node: {

@@ -122,7 +122,7 @@ RUN apk update \
 COPY docker/supervisord.conf /etc/supervisor/supervisord.conf
 
 # todo:use github build
-COPY build/ /etc/nginx/html
+COPY build/ /etc/nginx/html/clrs-dev
 
 # nginx configuration
 COPY docker/nginx.conf /etc/nginx/nginx.conf

@@ -40,7 +40,7 @@ export default class Profiler {
 	let that = this;	
 	return new Promise(function(resolve, reject) {
 	    Request
-		.put(that.tika.concat('/detect/stream'))
+		.put(that.tika.concat('/clrs-dev/detect/stream'))
 		.send(file)	
 		.set('Content-Type', file.type)	
 		.end((err, res) => {
@@ -66,7 +66,7 @@ export default class Profiler {
 	let that = this;
 	return new Promise(function(resolve, reject) {
 	    Request
-		.put(that.tika.concat('/language/string'))
+		.put(that.tika.concat('/clrs-dev/language/string'))
 		.send(file)	
 		.set('Content-Type', file.type)	
 		.end((err, res) => {
@@ -89,7 +89,7 @@ export default class Profiler {
 	let that = this;
 	return new Promise(function(resolve, reject) {
 	    Request
-		.put(that.tika.concat('/language/string'))
+		.put(that.tika.concat('/clrs-dev/language/string'))
 		.send(file)	
 		.set('Content-Type', file.type)	
 		.end((err, res) => {
@@ -112,7 +112,7 @@ export default class Profiler {
 	let that = this;
 	return new Promise(function(resolve, reject) {
 	    Request
-		.put(that.tika.concat('/tika'))
+		.put(that.tika.concat('/clrs-dev/tika'))
 		.send(file)	
 		.set('Accept', 'text/plain')	
 		.end((err, res) => {

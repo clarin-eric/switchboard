@@ -1,13 +1,13 @@
 # Adapted from clarin-eric/docker-nginx-base
 # See https://github.com/clarin-eric/docker-nginx-base/blob/master/Makefile
 
-VERSION="1.0.0"
-NAME="clrs"
-REPOSITORY="docker.clarin.eu"
-IMAGE_NAME="${REPOSITORY}/${NAME}:${VERSION}"
+VERSION="0.9.8"
+NAME="clauszinn/switchboard"
+REPOSITORY="hub.docker.com"
+#IMAGE_NAME="${REPOSITORY}/${NAME}:${VERSION}"
+IMAGE_NAME="${NAME}:${VERSION}"
 
-#overwrite
-IMAGE_NAME="clrs"
+#IMAGE_NAME="clrs"
 all: buildImage
 
 buildImage:

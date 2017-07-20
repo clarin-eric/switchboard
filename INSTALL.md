@@ -5,8 +5,8 @@ The CLRS switchboard has been implemented with ReactJs and related technologies 
 - Webpack, a Javascript module bundler, see https://webpack.github.io Nodejs version 5.12.0 (see
 - https://nodejs.org/en/), together with the javascript package manager npm (v3.8.6), see https://www.npmjs.com.
 
-For the time being, the github contains all you need without recompiling anything. 
-In the future, the directories node_modules/ and build/ will not be hosted on githib. They will be created with
+For the time being, the github contains all the source code for compiling. 
+The directories node_modules/ and build/ are not hosted on GitHub. They must be created with
 'npm install' and 'webpack', respectively.
 
 # Installation
@@ -24,7 +24,7 @@ and
    ```webpack ```
    
 
-to re-build the build directory (if you need to)
+to build the build directory.
 
    Opening build/index.html will open the LRS "locally".
 
@@ -40,7 +40,7 @@ now holding the contents of the build directory).
 to have your web server serving the pages.
 
 
-# DOCKERization
+# DOCKERization (after the build process)
 
 In the main directory, call
 
