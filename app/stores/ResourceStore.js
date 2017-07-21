@@ -61,7 +61,7 @@ class ResourceStore {
 
     getResource(resourceId) {
 	let resource = this.resources.filter((resource) => resource.id == resourceId);
-	console.log('ResourceStore/getResource', { resource: resource[0] });
+	//console.log('ResourceStore/getResource', { resource: resource[0] });
 	return { resource: resource[0] };
     }
 

@@ -28,21 +28,21 @@ export default class Resource extends React.Component {
     }
 
     setLanguage( resource, language ) {
-	console.log('Resource/setLanguage', resource, language);
+	//	console.log('Resource/setLanguage', resource, language);
 	resource.language = { language : language.label,
 			      threeLetterCode: language.value };
 	ResourceActions.update(resource);	
     }
 
     setMimetype( resource, mimetype ) {
-	console.log('Resource/setMimetype', resource, mimetype);	
+	// console.log('Resource/setMimetype', resource, mimetype);	
 	resource.mimetype = mimetype.value;
 	ResourceActions.update(resource);
     }
 
     handleChange (key, event) {
 	this.setState({ [key]: event.target.checked }, function () {
-	    console.log('now, the state has changed...:', key, event, this.state.includeWebServices);
+	    // console.log('now, the state has changed...:', key, event, this.state.includeWebServices);
 	});
 	if (event.target.checked === true) {
 	    document.getElementById("showToolsButton").innerHTML = 'Show Tools and Web Services';
@@ -70,7 +70,7 @@ export default class Resource extends React.Component {
     }
 
     openResource(resource) {
-        console.log('Resource/openResource', resource);
+	//        console.log('Resource/openResource', resource);
 	var win = window.open(resource.remoteFilename, '_blank');
 	win.focus();	
     }

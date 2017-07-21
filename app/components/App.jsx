@@ -102,7 +102,7 @@ export default class App extends React.Component {
     
     handleChange (key, event) {
 	this.setState({ [key]: event.target.checked }, function () {
-	    console.log('The app state has changed...:', this.state.includeWebServices);
+	    //console.log('The app state has changed...:', this.state.includeWebServices);
 	});
 	if (event.target.checked === true) {
 	    document.getElementById("showAllToolsButton").innerHTML = 'Show All Tools and Web Services';

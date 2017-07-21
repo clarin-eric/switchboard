@@ -2,7 +2,7 @@
 // 2016-17 Claus Zinn
 // 
 // File: Registry.js
-// Time-stamp: <2017-07-21 14:02:24 (zinn)>
+// Time-stamp: <2017-07-21 19:36:33 (zinn)>
 //
 // ----------------------------------------------------------------------------------------
 
@@ -2220,9 +2220,8 @@ const Registry =
 
 	{ task: "Conversion",
 	  name: "HTML To TEXT Converter (web service)",
-	  softwareType: "browserBased",
-	  //softwareType: "webService",
-	  requestType: "form",
+	  softwareType: "webService",
+	  requestType: "get",
 	  logo: "YourLogoComesHere.png",		  
 	  homepage: "EXPERIMENTAL",
 	  location: "Copenhagen, Denmark",		  

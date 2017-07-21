@@ -1,4 +1,5 @@
 import React from 'react';
+import Loader from 'react-loader';
 import Dropzone from 'react-dropzone';
 import ResourceActions from '../actions/ResourceActions';
 
@@ -14,6 +15,7 @@ export default class DropArea extends React.Component {
 	this.onDrop      = this.onDrop.bind(this);
 	
 	this.state = {
+	    isLoaded: true,	    
 	    files: []
 	};
     }
@@ -63,18 +65,22 @@ export default class DropArea extends React.Component {
     uploadAndProcessFile( currentFile ) {
 
 	let uploader = new Uploader( currentFile );
+	this.setState( { isLoaded: false });
+	let that = this;
 	let promiseUpload = uploader.uploadFile();
 	//let promiseUpload = uploader.uploadFile_B2DROP();
 	promiseUpload.then(
 	    function(resolve) {
-		console.log('DropArea/uploadAndProcessFile', resolve);//
+		// console.log('DropArea/uploadAndProcessFile', resolve);//
 		let profiler = new Profiler( currentFile, "dnd", uploader.remoteFilename );
 		profiler.convertProcessFile();
+		that.setState( { isLoaded: true });		
 		//profiler.convertFileToPlainText();
 	    },
 	    function(reject) {
 		console.log('DropArea.jsx/upload failed', reject);
 		alert('Error: unable to upload file');
+		that.setState( { isLoaded: true });		
 	    });
     }   
     
@@ -98,7 +104,8 @@ export default class DropArea extends React.Component {
     }
 
     render() {
-	
+
+	const { isLoaded } = this.state;	
         var style = {
             borderWidth: 2,
             borderColor: 'black',
@@ -117,8 +124,8 @@ export default class DropArea extends React.Component {
         };
 
 	return React.createElement(
-            'div',
-            null,
+	    Loader,
+	    { loaded: isLoaded },
             React.createElement(
 		Dropzone,
 		{

@@ -132,7 +132,7 @@ export default class Profiler {
 	let promiseConvert = that.convertToPlainText();
 	promiseConvert.then(
 	    function(resolve) {
-		console.log('convertFileToPlainText/resolve', resolve);
+		//console.log('convertFileToPlainText/resolve', resolve);
 	    },
 	    function(reject) {
 		console.log('convertFileToPlainText/reject', reject);
@@ -161,7 +161,7 @@ export default class Profiler {
 	let promiseMimeType = that.identifyMimeType();
 	promiseMimeType.then(
 	    function(resolve) {
-		console.log('mimetype identification succeeded', resolve);
+		// console.log('mimetype identification succeeded', resolve);
 		if ( (resolve.text == "application/pdf") ||
 		     (resolve.text == "application/vnd.openxmlformats-officedocument.wordprocessingml.document" )) {
 		    let promiseConvert = that.convertToPlainText();
@@ -170,7 +170,7 @@ export default class Profiler {
 			    let promiseLanguage = that.identifyLanguageFromStream(resolve.text);
 			    promiseLanguage.then(
 				function(resolve) {
-				    console.log('language identification from stream succeeded', resolve);
+				    //console.log('language identification from stream succeeded', resolve);
 				},
 				function(reject) {
 				    console.log('Warning: language identification from stream failed', reject);
@@ -181,7 +181,7 @@ export default class Profiler {
 		    let promiseLanguage = that.identifyLanguage();
 		    promiseLanguage.then(
 			function(resolve) {
-			    console.log('language identification from file succeeded', resolve);
+			    //console.log('language identification from file succeeded', resolve);
 			},
 			function(reject) {
 			    console.log('Warning: language identification from file failed', reject);

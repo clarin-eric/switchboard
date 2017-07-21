@@ -67,10 +67,10 @@ export function constructToolURL( toolDescription, resourceDescription ) {
     var parameterType    = toolDescription.parameter.type || "";
 
     if (parameterType !== "") {
-	console.log("ToolInvoker/constructToolURL (before)", mimetype);
+	// console.log("ToolInvoker/constructToolURL (before)", mimetype);
 	var fun = new Function("mimetype", parameterType);
 	mimetype = fun(mimetype);
-	console.log("ToolInvoker/constructToolURL (after)", mimetype);	
+	// console.log("ToolInvoker/constructToolURL (after)", mimetype);	
     } 
 
     // the tool expects an encoding of the language parameter in ISO639-1
@@ -168,6 +168,6 @@ export function constructToolURL( toolDescription, resourceDescription ) {
 	    };
     }
 
-    console.log('ToolInvoker/constructToolURL', rtnValue);
+    // console.log('ToolInvoker/constructToolURL', rtnValue);
     return rtnValue;
 }

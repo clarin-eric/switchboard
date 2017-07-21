@@ -32,7 +32,7 @@ export default class Uploader {
     uploadFile() {
 	let that = this;
         return new Promise(function(resolve, reject) {
-	    console.log('uploadFile', that.remoteFilenameReverseProxy);
+	    // console.log('uploadFile', that.remoteFilenameReverseProxy);
 	    Request
 		.post(that.remoteFilenameReverseProxy)
 		.send(that.file)	
@@ -85,10 +85,10 @@ export default class Uploader {
 				} else {
 				    var parseString = require('xml2js').parseString;
 				    parseString(res.text, function (err, result) {
-					console.log('sharing result', result, err);
-					console.log('url to download', result.ocs.data[0].url[0].concat('/download'));
+					//console.log('sharing result', result, err);
+					//console.log('url to download', result.ocs.data[0].url[0].concat('/download'));
 					that.remoteFilename = result.ocs.data[0].url[0].concat('/download')
-					console.log('stored', that.remoteFilename);
+					//console.log('stored', that.remoteFilename);
 				    });
 				    resolve(res)
 				}})
