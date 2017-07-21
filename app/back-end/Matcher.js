@@ -2,7 +2,7 @@
 // 2016-17 Claus Zinn
 // 
 // File: Matcher.js
-// Time-stamp: <2017-07-09 14:43:36 (zinn)>
+// Time-stamp: <2017-07-21 12:27:27 (zinn)>
 //
 // ----------------------------------------------------------------------------------------
 
@@ -37,7 +37,7 @@ export default class Matcher {
 		parameter       : entry.parameter,
 		lang_encoding   : entry.lang_encoding,
 		softwareType    : entry.softwareType,
-		postSubmit      : entry.postSubmit,
+		requestType     : entry.requestType,
 		mapping         : entry.mapping,
 	    } ];
 

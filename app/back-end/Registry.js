@@ -2,7 +2,7 @@
 // 2016-17 Claus Zinn
 // 
 // File: Registry.js
-// Time-stamp: <2017-07-21 11:38:10 (zinn)>
+// Time-stamp: <2017-07-21 14:02:24 (zinn)>
 //
 // ----------------------------------------------------------------------------------------
 
@@ -462,7 +462,8 @@ const Registry =
 	{ task: "N-Gramming",
 	  name: "CLARIN-DK Tool Chain",
 	  softwareType: "webService",
-	  logo: "YourLogoComesHere.png",		  
+	  requestType: "get",	  
+	  logo: "clarindk.jpg",		  
 	  homepage: "https://clarin.dk/clarindk/toolchains-wizard.jsp",
 	  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
 	  creators: ["Bart Jongejan"],
@@ -486,12 +487,12 @@ const Registry =
 	  url: ["https://clarin.dk/toolchains/run"],
 	  parameter: { 
 	      input    : "self.linkToResource",
-	      type     : "self.linkToResourceMimetype",
+	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'text/rtf' : rtnValue = 'rtf'; break; default: rtnValue = 'flat'; } return rtnValue;",
 	      workflow : "da-frek-ord"
 	  },
 	  mapping: {
 	      input    : "URL",
-	      type     : "lformat",
+	      type     : "Iformat",
 	  }
 	},
 
@@ -1774,7 +1775,7 @@ const Registry =
 	{ task: "Keyword Extractor",
 	  name: "KER (web service)",
 	  softwareType: "webService",
-	  postSubmit: "form",
+	  requestType: "form",
 	  logo: "lindat.jpg",
 	  homepage: "http://lindat.mff.cuni.cz/services/ker/",
 	  location: "Prague, CUNI",
@@ -1804,7 +1805,7 @@ const Registry =
 	{ task: "Dependency Parsing",
 	  name: "UDPipe (web service, CES-only)",
 	  softwareType: "webService",
-	  postSubmit: "form",
+	  requestType: "form",
 	  logo: "lindat.jpg",
 	  homepage: "http://ufal.mff.cuni.cz/udpipe",
 	  location: "Prague, CUNI",
@@ -1839,7 +1840,7 @@ const Registry =
 	{ task: "Named Entity Recognition",
 	  name: "NameTag (web service)",
 	  softwareType: "webService",
-	  postSubmit: "form",
+	  requestType: "form",
 	  logo: "lindat.jpg",
 	  homepage: "http://lindat.mff.cuni.cz/services/nametag/",
 	  location: "Prague, CUNI",
@@ -2000,7 +2001,7 @@ const Registry =
 	  name: "TEI↔TCF encoder+decoder (web service)",
 	  logo: "YourLogoComesHere.png",
 	  softwareType: "webService",
-	  postSubmit: "data",		  
+	  requestType: "data",		  
 	  homepage: "http://kaskade.dwds.de/tei-tcf",
 	  location: "DWDS, Germany",		  
 	  creators: ["Bryan Jurish"],
@@ -2033,7 +2034,7 @@ const Registry =
 	// { task: "Metadata Format Conversion",
 	//   name: "NaLiDa2Marc21 (web service)",
 	//   softwareType: "webService",
-	//   postSubmit: "data",
+	//   requestType: "data",
 	//   logo: "YourLogoComesHere.png",		  
 	//   homepage: "http://shannon.sfs.uni-tuebingen.de/NaLiDa2Marc21",
 	//   location: "Tuebingen, Germany",		  		  
@@ -2062,7 +2063,7 @@ const Registry =
 	{ task: "Metadata Format Conversion",
 	  name: "CMDI2DC (web service)",
 	  softwareType: "webService",
-	  postSubmit: "data",
+	  requestType: "data",
 	  logo: "YourLogoComesHere.png",		  
 	  homepage: "http://weblicht.sfs.uni-tuebingen.de/converter/Cmdi2DC",
 	  location: "Tuebingen, Germany",		  		  
@@ -2089,7 +2090,7 @@ const Registry =
 	{ task: "Metadata Format Conversion",
 	  name: "DC2MARC21 (web service)",
 	  softwareType: "webService",
-	  postSubmit: "data",
+	  requestType: "data",
 	  logo: "YourLogoComesHere.png",		  
 	  homepage: "http://weblicht.sfs.uni-tuebingen.de/converter/DC2Marc",
 	  location: "Tuebingen, Germany",		  		  
@@ -2115,7 +2116,7 @@ const Registry =
 	{ task: "Metadata Format Conversion",
 	  name: "MARC2EAD (web service)",
 	  softwareType: "webService",
-	  postSubmit: "data",
+	  requestType: "data",
 	  logo: "YourLogoComesHere.png",		  
 	  homepage: "http://weblicht.sfs.uni-tuebingen.de/converter/Marc2EAD",
 	  location: "Tuebingen, Germany",		  		  
@@ -2141,7 +2142,7 @@ const Registry =
 	{ task: "Metadata Format Conversion",
 	  name: "Marc2MODS (web service)",
 	  softwareType: "webService",
-	  postSubmit: "data",
+	  requestType: "data",
 	  logo: "YourLogoComesHere.png",		  
 	  homepage: "http://weblicht.sfs.uni-tuebingen.de/converter/Marc2MODS",
 	  location: "Tuebingen, Germany",		  		  
@@ -2167,7 +2168,7 @@ const Registry =
 	{ task: "Metadata Format Conversion",
 	  name: "Marc2RDFDC (web service)",
 	  softwareType: "webService",
-	  postSubmit: "data",
+	  requestType: "data",
 	  logo: "YourLogoComesHere.png",		  
 	  homepage: "http://weblicht.sfs.uni-tuebingen.de/converter/Marc2RDFDC",
 	  location: "Tuebingen, Germany",		  		  
@@ -2193,7 +2194,7 @@ const Registry =
 	{ task: "Metadata Format Conversion",
 	  name: "MODS2RDF (web service)",
 	  softwareType: "webService",
-	  postSubmit: "data",
+	  requestType: "data",
 	  logo: "YourLogoComesHere.png",		  
 	  homepage: "http://weblicht.sfs.uni-tuebingen.de/converter/MODS2RDF",
 	  location: "Tuebingen, Germany",		  		  
@@ -2221,7 +2222,7 @@ const Registry =
 	  name: "HTML To TEXT Converter (web service)",
 	  softwareType: "browserBased",
 	  //softwareType: "webService",
-	  postSubmit: "form",
+	  requestType: "form",
 	  logo: "YourLogoComesHere.png",		  
 	  homepage: "EXPERIMENTAL",
 	  location: "Copenhagen, Denmark",		  

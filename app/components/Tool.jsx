@@ -223,7 +223,7 @@ export default class Tool extends React.Component {
 			 name={element.name}
 			 title={element.name}
 			 softwareType={element.softwareType}
-			 postSubmit={element.postSubmit}
+			 requestType={element.requestType}
 			 location={element.location}
 			 authentication={element.authentication}
 			 homepage={element.homepage}

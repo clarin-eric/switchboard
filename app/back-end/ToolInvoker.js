@@ -8,7 +8,12 @@ export function invokeBrowserBasedTool( URL ) {
 
 export function invokeWebService( URL ) {
     let file = URL.formVal;
-    if (URL.postSubmit == "data") {
+    console.log('ToolInvoker/invokeWebService', URL);
+    if (URL.requestType == "get") {
+	// same as invokeBrowserBasedTool
+	var win = window.open(URL.url, '_blank');
+	win.focus();
+    } else if (URL.requestType == "data") {
 	Request
 	    .post(URL.url)
 	    .send(file)
@@ -58,7 +63,15 @@ export function constructToolURL( toolDescription, resourceDescription ) {
     
     var lang_encoding    = toolDescription.lang_encoding;
     var softwareType     = toolDescription.softwareType;
-    var postSubmit       = toolDescription.postSubmit;
+    var requestType      = toolDescription.requestType;
+    var parameterType    = toolDescription.parameter.type || "";
+
+    if (parameterType !== "") {
+	console.log("ToolInvoker/constructToolURL (before)", mimetype);
+	var fun = new Function("mimetype", parameterType);
+	mimetype = fun(mimetype);
+	console.log("ToolInvoker/constructToolURL (after)", mimetype);	
+    } 
 
     // the tool expects an encoding of the language parameter in ISO639-1
     if (lang_encoding == "639-1") {
@@ -80,7 +93,7 @@ export function constructToolURL( toolDescription, resourceDescription ) {
 		    if (mapping.hasOwnProperty(parameter)) {
 			switch (parameter) {
 			case "input":
-			    if (softwareType == "webService") {
+			    if ( (softwareType == "webService") && (requestType !== "get") ){
 				formParameter = mapping[parameter];
 			    } else {
 				parameterString = parameterString.concat( mapping[parameter]).concat("=").concat( remoteFilename );
@@ -109,7 +122,7 @@ export function constructToolURL( toolDescription, resourceDescription ) {
 	    if (parameters.hasOwnProperty(parameter)) {
 		switch (parameter) {
 		case "input":
-		    if (softwareType == "webService") {
+		    if ((softwareType == "webService") && (requestType !== "get")){
 			formParameter = parameter;
 		    } else {
 			parameterString = parameterString.concat(parameter).concat("=").concat( remoteFilename );
@@ -132,7 +145,7 @@ export function constructToolURL( toolDescription, resourceDescription ) {
 
     // var parameterString = "?input=" + remoteFilename + "&lang=" + toolDescription.parameter.lang + "&analysis=" + toolDescription.parameter.analysis;
     var urlWithParameters = "";
-    if (softwareType == "webService") {
+    if ((softwareType == "webService") && (requestType !== "get")){
 	urlWithParameters = toolDescription.url;
     } else {
 	urlWithParameters = toolDescription.url + "?" + parameterString;
@@ -145,7 +158,7 @@ export function constructToolURL( toolDescription, resourceDescription ) {
 		url        : urlWithParameters,
 		formPar    : formParameter,
 		formVal    : file,
-		postSubmit : postSubmit
+		requestType : requestType
 	    };
     } else	{
 	rtnValue = 
@@ -154,6 +167,7 @@ export function constructToolURL( toolDescription, resourceDescription ) {
 		url      : urlWithParameters
 	    };
     }
-    
+
+    console.log('ToolInvoker/constructToolURL', rtnValue);
     return rtnValue;
 }
