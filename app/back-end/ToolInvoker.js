@@ -1,4 +1,5 @@
 import { map639_1_to_639_3, map639_3_to_639_1 } from './util';
+import Request from 'superagent';
 
 export function invokeBrowserBasedTool( URL ) {
     var win = window.open(URL.url, '_blank');
@@ -52,6 +53,7 @@ export function constructToolURL( toolDescription, resourceDescription ) {
     var remoteFilename   =  resourceDescription.remoteFilename;	
     var file             =  resourceDescription.file;
     var language         =  resourceDescription.language.threeLetterCode;
+    var mimetype         =  resourceDescription.mimetype;
     var upload           =  resourceDescription.upload;
     
     var lang_encoding    = toolDescription.lang_encoding;
@@ -87,6 +89,9 @@ export function constructToolURL( toolDescription, resourceDescription ) {
 			case "lang":
 			    parameterString = parameterString.concat( mapping[parameter]).concat("=").concat( language );
 			    break;
+			case "type":
+			    parameterString = parameterString.concat( mapping[parameter]).concat("=").concat( mimetype );
+			    break;			    
 			default:
 			    parameterString = parameterString.concat( mapping[parameter]).concat("=").concat(parameters[parameter]);
 			}
@@ -113,6 +118,9 @@ export function constructToolURL( toolDescription, resourceDescription ) {
 		case "lang":
 		    parameterString = parameterString.concat(parameter).concat("=").concat( language );
 		    break;
+		case "type":
+		    parameterString = parameterString.concat(parameter).concat("=").concat( mimetype );
+		    break;		    
 		default:
 		    parameterString = parameterString.concat(parameter).concat("=").concat(parameters[parameter]);			
 		}

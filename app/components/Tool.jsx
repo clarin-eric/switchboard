@@ -4,7 +4,6 @@ import Accordion from '../helperComponents/Accordion';
 import AccordionItem from '../helperComponents/AccordionItem';
 
 import { map639_1_to_639_3, map639_3_to_639_1 } from '../back-end/util';
-import Request from 'superagent';
 import {constructToolURL, invokeWebService, invokeBrowserBasedTool} from '../back-end/ToolInvoker';
 
 

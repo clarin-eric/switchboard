@@ -2,7 +2,7 @@
 // 2016-17 Claus Zinn
 // 
 // File: Registry.js
-// Time-stamp: <2017-07-20 15:28:14 (zinn)>
+// Time-stamp: <2017-07-21 11:38:10 (zinn)>
 //
 // ----------------------------------------------------------------------------------------
 
@@ -459,94 +459,40 @@ const Registry =
 	    }
 	},
 	
-	{ task: "Tokenisation",
-	  name: "Ucto",
+	{ task: "N-Gramming",
+	  name: "CLARIN-DK Tool Chain",
+	  softwareType: "webService",
 	  logo: "YourLogoComesHere.png",		  
-	  homepage: "https://languagemachines.github.io/ucto/",
+	  homepage: "https://clarin.dk/clarindk/toolchains-wizard.jsp",
 	  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
-	  creators: ["Maarten van Gompel, Ko van der Sloot (CLST, Radboud University Nijmegen)"],
-	  contact: {
-	      person: "Maarten van Gompel",
-	      email: "proycon@anaproy.nl",
-	  },
-	  version: "0.8.3",
-	  license: "public",                //but webservice is protected with (free) registration
-	  authentication: "yes",
-	  shortDescription: "A tokeniser",
-	  longDescription: "Ucto is a unicode-compliant tokeniser. It takes input in the form of one or more untokenised texts, and subsequently tokenises them. Several languages are supported, but the software is extensible to other languages.",
-	  languages: ["nld", "eng", "deu", "fra", "ita", "fry"], // check with ticket
-	  lang_encoding: "639-1",
-	  mimetypes: [
-	      "text/plain"
-	      // , "text/xml",		      
-	      // , "application/pdf",
-	      // , "application/msword"
-	  ],
-	  output: ["Tadpole Columned Output Format", "text/folia+xml"], 		  		  		  
-	  url: ["https://webservices-lst.science.ru.nl/ucto/"],
-	  parameter: { project      : "new",
-		       input        : "self.linkToResource",
-		       lang         : "self.linkToResourceLanguage",
-		     },
-	  mapping:   { input        : "untokinput_url",
-		       lang         : "untokinput_language"
-		     }
-	},
-	
-	{ task: "Tokenisation",
-	  name: "CLARIN-DK Tool Box (CST Tokenizer)",
-	  softwareType: "browserBased",
-	  logo: "clarindk.jpg",		  
-	  homepage: "https://clarin.dk/clarindk/forside.jsp",		  
-	  location: "Copenhagen, Denmark",
-	  creators: ["Bart Jongejan et al."],
+	  creators: ["Bart Jongejan"],
 	  contact: {
 	      person: "Bart Jongejan",
 	      email: "bartj@hum.ku.dk",
 	  },
-	  version: "0.8.3",
-	  license: "public",
+	  version: "unknown",
+	  license: "public",                //but webservice is protected with (free) registration
 	  authentication: "no",
-	  shortDescription: "CLARIN-DK Tool Box (CST Tokenizer)",
-	  longDescription:  "CLARIN-DK Tool Box (CST Tokenizer for English and Danish)",
+	  shortDescription: "Alphabetic list of words with frequencies",
+	  longDescription: "Alphabetic list of words with frequencies (uses a lemmatiser, but does not output the lemmas.",
+	  languages: ["dan"],
 	  lang_encoding: "639-1",
-	  languages: ["bul", "ces", "dan", "deu", "ell", "eng", "spa", "est", "fas", "fra",
-		      "hun", "isl", "ita", "lat", "mkd", "nld", "pol", "por", "ron", "rus",
-		      "slk", "slv", "srp", "tur", "ukr"],		  
-	  mimetypes: ["application/pdf",
-		      "application/vnd.ms-powerpoint", // (PPT)
-		      "application/vnd.openxmlformats-officedocument.presentationml.presentation", // (PPTX)
-		      "application/vnd.oasis.opendocument.presentation", // (ODP)
-		      "application/vnd.ms-excel", // (XLS)
-		      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // (XLSX)
-		      "application/vnd.oasis.opendocument.spreadsheet", // (ODS)
-		      "application/x-download", //    (If it is PDF or RTF)
-		      "application/octet-stream", //  (If it is PDF or RTF)
-		      "application/msword", //         (RTF, DOC, DOCX)
-		      "application/vnd.oasis.opendocument.text", // (ODT)
-		      "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // (DOCX)
-		      "text/html", // (HTML)
-		      "text/rtf",  // (RTF)
-		      "text/plain", 
-		      "text/x-conll", // (CONLL)
-		      "image/gif", 
-		      "image/jpeg", 
-		      "image/pjpeg", 
-		      "image/png", 
-		      "image/svg+xml", 
-		      "image/tiff", 
-		      "image/vnd.microsoft.icon"
-		     ],
-	  url: ["http://cst.dk:8080/tools/createByGoalChoice"], 
-
-	  parameter: {  input   : "self.linkToResource", 
-			lang    : "self.linkToResourceLanguage",                 
-			analysis: "tok",
-			UIlanguage: "en"
-		     },
-	  mapping:   { input        : "URL",
-		       lang         : "language"
-		     }		  
+	  mimetypes: [
+	      "text/plain"
+	      , "text/rtf"		      
+	      , "application/pdf"
+	  ],
+	  output: ["text/plain"], 		  		  		  
+	  url: ["https://clarin.dk/toolchains/run"],
+	  parameter: { 
+	      input    : "self.linkToResource",
+	      type     : "self.linkToResourceMimetype",
+	      workflow : "da-frek-ord"
+	  },
+	  mapping: {
+	      input    : "URL",
+	      type     : "lformat",
+	  }
 	},
 
 	{ task: "Lemmatization",
