@@ -40,15 +40,18 @@ export default class UrlArea extends React.Component {
 		} else {
 		    var downloadedFile = new File([resolve.text], fileURL, {type: resolve.type});
 		    let profiler = new Profiler( downloadedFile, caller, fileURL );
+		    that.setState( { isLoaded: false });				    
 		    let promiseLanguage = profiler.identifyLanguage();
 		    promiseLanguage.then(
 			function(resolve) {
+			    that.setState( { isLoaded: true });				    			    
 			    let promiseMimeType = profiler.identifyMimeType();
 			    promiseMimeType.catch(
 				function(reject) {
 				    console.log('mimetype id failed', reject);
 				})},
 			function(reject) {
+			    that.setState( { isLoaded: true });				    			    			    
 			    console.log('language identification failed', reject) })}
 	    },
 	    function(reject) {
