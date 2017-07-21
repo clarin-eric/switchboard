@@ -77,4 +77,21 @@ gives access to the supervisor.
 
 Note that -- for the standalone version of the switchboard (local uploading of resources) -- the host
 running the docker container must be accessible from the outside so that tools connected to the
-switchboard can fetch the resources from there. 
+switchboard can fetch the resources from there.
+
+# Current deployment of development server
+
+Currently, the development version of the switchboard (most recent version) is deployed at
+
+	   ```http://weblicht.sfs.uni-tuebingen.de/clrs-dev ```
+
+This is reverse-proxied to
+
+     	   ```<server-name>:4711/clrs-dev ```
+
+On <server-name>, the command
+
+   	   ```docker run --name switchboard -d -p 9001:9001 -p 9998:9998 -p 80:80 clauszinn/switchboard:0.9.8 ```
+
+is run. This fetches the respective (public) Docker image from hub.docker.com and runs it.
+
