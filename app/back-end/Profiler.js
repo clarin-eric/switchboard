@@ -1,5 +1,5 @@
 import Request from 'superagent';
-import {processLanguage} from './util';
+import {urlPath, processLanguage} from './util';
 import ResourceActions from '../actions/ResourceActions';
 
 export default class Profiler {
@@ -10,7 +10,8 @@ export default class Profiler {
 	// TIKA prefix
 	//this.tika = "//weblicht.sfs.uni-tuebingen.de/clrs"
 	// this.tika = "//localhost"
-	this.tika = window.location.origin;
+	// this.tika = window.location.origin;
+	this.tika = window.location.origin.concat(urlPath);	
 	this.resource = resource;
 	this.remoteFilename = remoteFilename;
 	    
@@ -40,7 +41,8 @@ export default class Profiler {
 	let that = this;	
 	return new Promise(function(resolve, reject) {
 	    Request
-		.put(that.tika.concat('/clrs-dev/detect/stream'))
+//		.put(that.tika.concat('/clrs-dev/detect/stream'))
+		.put(that.tika.concat('/detect/stream'))
 		.send(file)	
 		.set('Content-Type', file.type)	
 		.end((err, res) => {
@@ -66,7 +68,8 @@ export default class Profiler {
 	let that = this;
 	return new Promise(function(resolve, reject) {
 	    Request
-		.put(that.tika.concat('/clrs-dev/language/string'))
+//		.put(that.tika.concat('/clrs-dev/language/string'))
+		.put(that.tika.concat('/language/string'))
 		.send(file)	
 		.set('Content-Type', file.type)	
 		.end((err, res) => {
@@ -89,7 +92,8 @@ export default class Profiler {
 	let that = this;
 	return new Promise(function(resolve, reject) {
 	    Request
-		.put(that.tika.concat('/clrs-dev/language/string'))
+//		.put(that.tika.concat('/clrs-dev/language/string'))
+		.put(that.tika.concat('/language/string'))
 		.send(file)	
 		.set('Content-Type', file.type)	
 		.end((err, res) => {
@@ -112,7 +116,8 @@ export default class Profiler {
 	let that = this;
 	return new Promise(function(resolve, reject) {
 	    Request
-		.put(that.tika.concat('/clrs-dev/tika'))
+//		.put(that.tika.concat('/clrs-dev/tika'))
+		.put(that.tika.concat('/tika'))
 		.send(file)	
 		.set('Accept', 'text/plain')	
 		.end((err, res) => {

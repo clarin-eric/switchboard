@@ -1,6 +1,11 @@
+export const urlPath = process.env.URL_PATH;
+
 // export const fileStorageServerMPG    = '//weblicht.sfs.uni-tuebingen.de/clrs/storage/';
 // export const fileStorageServerMPG_localhost  = '//localhost/clrs/storage/';
-export const fileStorageServerMPG_localhost  = window.location.origin.concat('/clrs-dev/storage/');
+
+export const fileStorageServerMPG_localhost  = window.location.origin.concat(urlPath).concat('/storage/');
+// dexport const fileStorageServerMPG_localhost  = window.location.origin.concat('/clrs-dev/storage/');
+
 export const fileStorageServerMPG_remote     = 'http://ws1-clarind.esc.rzg.mpg.de/drop-off/storage/';
 // export const fileStorageServerB2DROP = '//weblicht.sfs.uni-tuebingen.de/owncloud';
 

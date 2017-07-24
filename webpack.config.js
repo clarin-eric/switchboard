@@ -12,6 +12,7 @@ const PATHS = {
 
 process.env.BABEL_ENV = TARGET;
 
+const webpack = require('webpack');
 
 const common = {
   // Entry accepts a path or an object of entries.
@@ -93,11 +94,12 @@ const common = {
 	    appMountId: 'app',
 	    favicon: 'app/images/lrs.png'
 	}),
-  ]
+
+	new webpack.DefinePlugin({
+	    'process.env.URL_PATH': JSON.stringify('/clrs-dev')
+	})
+    ]
 };
-
-const webpack = require('webpack');
-
 
 // Default configuration
 if(TARGET === 'start' || !TARGET) {
