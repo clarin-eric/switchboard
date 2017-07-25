@@ -83,15 +83,15 @@ switchboard can fetch the resources from there.
 
 Currently, the development version of the switchboard (most recent version) is deployed at
 
-	   ```http://weblicht.sfs.uni-tuebingen.de/clrs-dev ```
+   ```http://weblicht.sfs.uni-tuebingen.de/clrs-dev ```
 
 This is reverse-proxied to
 
-     	   ```<server-name>:4711/clrs-dev ```
+   ```<server-name>:4711/clrs-dev ```
 
 On <server-name>, the command
 
-   	   ```docker run --name switchboard -d -p 9001:9001 -p 9998:9998 -p 80:80 clauszinn/switchboard:0.9.8 ```
+   ```docker run --name switchboard -d -p 9001:9001 -p 9998:9998 -p 80:80 clauszinn/switchboard:0.9.8 ```
 
 is run. This fetches the respective (public) Docker image from hub.docker.com and runs it.
 
@@ -101,11 +101,11 @@ is run. This fetches the respective (public) Docker image from hub.docker.com an
 There are three locations that need to be adapted to run the switchboard on a different path, e.g.,
 
 
-	   ```http://weblicht.sfs.uni-tuebingen.de/clrs-dev ```
+   ```http://weblicht.sfs.uni-tuebingen.de/clrs-dev ```
 
 or
 
-	   ```http://weblicht.sfs.uni-tuebingen.de/clrs ```
+   ```http://weblicht.sfs.uni-tuebingen.de/clrs ```
 
 * In webpack.config.js, change ```process.env.URL_PATH ``` accordingly.
 * In Makefile, use the appropriate STATUS flag accordingly.
