@@ -2,7 +2,7 @@
 // 2016-17 Claus Zinn
 // 
 // File: Registry.js
-// Time-stamp: <2017-07-21 19:36:33 (zinn)>
+// Time-stamp: <2017-07-25 10:26:44 (zinn)>
 //
 // ----------------------------------------------------------------------------------------
 
@@ -458,9 +458,10 @@ const Registry =
 		"analysis": "wsd"
 	    }
 	},
-	
+
+	// the tools for CLARIN-DK have little parametrization, everything's hardcoded in the workflow parameter
 	{ task: "N-Gramming",
-	  name: "CLARIN-DK Tool Chain",
+	  name: "CLARIN-DK Tool Chain: Computes alphabetic list of words and their frequencies (web service)",
 	  softwareType: "webService",
 	  requestType: "get",	  
 	  logo: "clarindk.jpg",		  
@@ -475,7 +476,7 @@ const Registry =
 	  license: "public",                //but webservice is protected with (free) registration
 	  authentication: "no",
 	  shortDescription: "Alphabetic list of words with frequencies",
-	  longDescription: "Alphabetic list of words with frequencies (uses a lemmatiser, but does not output the lemmas.",
+	  longDescription: "Alphabetic list of words with frequencies (uses a lemmatiser, but does not output the lemmas). The web service returns a zip file containing original input and the results of all analyses.",
 	  languages: ["dan"],
 	  lang_encoding: "639-1",
 	  mimetypes: [
@@ -496,6 +497,228 @@ const Registry =
 	  }
 	},
 
+	{ task: "N-Gramming",
+	  name: "CLARIN-DK Tool Chain: Computes alphabetic list of words and their frequencies (web service)",
+	  softwareType: "webService",
+	  requestType: "get",	  
+	  logo: "clarindk.jpg",		  
+	  homepage: "https://clarin.dk/clarindk/toolchains-wizard.jsp",
+	  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
+	  creators: ["Bart Jongejan"],
+	  contact: {
+	      person: "Bart Jongejan",
+	      email: "bartj@hum.ku.dk",
+	  },
+	  version: "unknown",
+	  license: "public",                //but webservice is protected with (free) registration
+	  authentication: "no",
+	  shortDescription: "Alphabetic list of words with frequencies",
+	  longDescription: "Alphabetic list of words with frequencies (uses a lemmatiser, but does not output the lemmas). The web service returns a zip file containing original input and the results of all analyses.",
+	  languages: ["eng"],
+	  lang_encoding: "639-1",
+	  mimetypes: [
+	      "text/plain"
+	      , "text/rtf"		      
+	      , "application/pdf"
+	  ],
+	  output: ["text/plain"], 		  		  		  
+	  url: ["https://clarin.dk/toolchains/run"],
+	  parameter: { 
+	      input    : "self.linkToResource",
+	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'text/rtf' : rtnValue = 'rtf'; break; default: rtnValue = 'flat'; } return rtnValue;",
+	      workflow : "en-frek-ord"
+	  },
+	  mapping: {
+	      input    : "URL",
+	      type     : "Iformat",
+	  }
+	},
+
+	{ task: "N-Gramming",
+	  name: "CLARIN-DK Tool Chain: Computes bigrams, lemmas, sorted by frequency (web service)",
+	  softwareType: "webService",
+	  requestType: "get",	  
+	  logo: "clarindk.jpg",		  
+	  homepage: "https://clarin.dk/clarindk/toolchains-wizard.jsp",
+	  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
+	  creators: ["Bart Jongejan"],
+	  contact: {
+	      person: "Bart Jongejan",
+	      email: "bartj@hum.ku.dk",
+	  },
+	  version: "unknown",
+	  license: "public",                //but webservice is protected with (free) registration
+	  authentication: "no",
+	  shortDescription: "N-Gramming Tool",
+	  longDescription: "Computes bigrams, lemmas, sorted by frequency. The web service returns a zip file containing original input and the results of all analyses.",
+	  languages: ["dan"],
+	  lang_encoding: "639-1",
+	  mimetypes: [
+	      "text/plain"
+	      , "text/rtf"		      
+	      , "application/pdf"
+	  ],
+	  output: ["text/plain"], 		  		  		  
+	  url: ["https://clarin.dk/toolchains/run"],
+	  parameter: { 
+	      input    : "self.linkToResource",
+	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'text/rtf' : rtnValue = 'rtf'; break; default: rtnValue = 'flat'; } return rtnValue;",
+	      workflow : "da-frek-bigram-lemmas"
+	  },
+	  mapping: {
+	      input    : "URL",
+	      type     : "Iformat",
+	  }
+	},
+
+	{ task: "N-Gramming",
+	  name: "CLARIN-DK Tool Chain: Computes bigrams, lemmas, sorted by frequency (web service)",
+	  softwareType: "webService",
+	  requestType: "get",	  
+	  logo: "clarindk.jpg",		  
+	  homepage: "https://clarin.dk/clarindk/toolchains-wizard.jsp",
+	  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
+	  creators: ["Bart Jongejan"],
+	  contact: {
+	      person: "Bart Jongejan",
+	      email: "bartj@hum.ku.dk",
+	  },
+	  version: "unknown",
+	  license: "public",                //but webservice is protected with (free) registration
+	  authentication: "no",
+	  shortDescription: "N-Gramming Tool",	  
+	  longDescription: "Computes bigrams, lemmas, sorted by frequency. The web service returns a zip file containing original input and the results of all analyses.",
+	  languages: ["eng"],
+	  lang_encoding: "639-1",
+	  mimetypes: [
+	      "text/plain"
+	      , "text/rtf"		      
+	      , "application/pdf"
+	  ],
+	  output: ["text/plain"], 		  		  		  
+	  url: ["https://clarin.dk/toolchains/run"],
+	  parameter: { 
+	      input    : "self.linkToResource",
+	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'text/rtf' : rtnValue = 'rtf'; break; default: rtnValue = 'flat'; } return rtnValue;",
+	      workflow : "en-frek-bigram-lemmas"
+	  },
+	  mapping: {
+	      input    : "URL",
+	      type     : "Iformat",
+	  }
+	},
+
+	{ task: "N-Gramming",
+	  name: "CLARIN-DK Tool Chain: Computes bigrams, words, sorted by frequency (web service)",
+	  softwareType: "webService",
+	  requestType: "get",	  
+	  logo: "clarindk.jpg",		  
+	  homepage: "https://clarin.dk/clarindk/toolchains-wizard.jsp",
+	  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
+	  creators: ["Bart Jongejan"],
+	  contact: {
+	      person: "Bart Jongejan",
+	      email: "bartj@hum.ku.dk",
+	  },
+	  version: "unknown",
+	  license: "public",                //but webservice is protected with (free) registration
+	  authentication: "no",
+	  shortDescription: "N-Gramming Tool",	  
+	  longDescription: "Computes bigrams, words, sorted by frequency. The web service returns a zip file containing original input and the results of all analyses.",	  
+	  languages: ["dan"],
+	  lang_encoding: "639-1",
+	  mimetypes: [
+	      "text/plain"
+	      , "text/rtf"		      
+	      , "application/pdf"
+	  ],
+	  output: ["text/plain"], 		  		  		  
+	  url: ["https://clarin.dk/toolchains/run"],
+	  parameter: { 
+	      input    : "self.linkToResource",
+	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'text/rtf' : rtnValue = 'rtf'; break; default: rtnValue = 'flat'; } return rtnValue;",
+	      workflow : "da-frek-bigram-ord"
+	  },
+	  mapping: {
+	      input    : "URL",
+	      type     : "Iformat",
+	  }
+	},
+
+	{ task: "N-Gramming",
+	  name: "CLARIN-DK Tool Chain: Computes bigrams, words, sorted by frequency (web service)",
+	  softwareType: "webService",
+	  requestType: "get",	  
+	  logo: "clarindk.jpg",		  
+	  homepage: "https://clarin.dk/clarindk/toolchains-wizard.jsp",
+	  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
+	  creators: ["Bart Jongejan"],
+	  contact: {
+	      person: "Bart Jongejan",
+	      email: "bartj@hum.ku.dk",
+	  },
+	  version: "unknown",
+	  license: "public",                //but webservice is protected with (free) registration
+	  authentication: "no",
+	  shortDescription: "N-Gramming Tool",	  
+	  longDescription: "Computes bigrams, words, sorted by frequency. The web service returns a zip file containing original input and the results of all analyses.",	  
+	  languages: ["eng"],
+	  lang_encoding: "639-1",
+	  mimetypes: [
+	      "text/plain"
+	      , "text/rtf"		      
+	      , "application/pdf"
+	  ],
+	  output: ["text/plain"], 		  		  		  
+	  url: ["https://clarin.dk/toolchains/run"],
+	  parameter: { 
+	      input    : "self.linkToResource",
+	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'text/rtf' : rtnValue = 'rtf'; break; default: rtnValue = 'flat'; } return rtnValue;",
+	      workflow : "en-frek-bigram-ord"
+	  },
+	  mapping: {
+	      input    : "URL",
+	      type     : "Iformat",
+	  }
+	},
+
+	{ task: "Named Entity Recognition",	
+	  name: "CLARIN-DK Tool Chain for NER",
+	  softwareType: "webService",
+	  requestType: "get",	  
+	  logo: "clarindk.jpg",		  
+	  homepage: "https://clarin.dk/clarindk/toolchains-wizard.jsp",
+	  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
+	  creators: ["Bart Jongejan"],
+	  contact: {
+	      person: "Bart Jongejan",
+	      email: "bartj@hum.ku.dk",
+	  },
+	  version: "unknown",
+	  license: "public",                //but webservice is protected with (free) registration
+	  authentication: "no",
+	  shortDescription: "N-Gramming Tool",	  
+	  longDescription: "Performs Named Entity Recognition. The web service returns a zip file containing original input and the results of all analyses.",	  
+	  languages: ["dan"],
+	  lang_encoding: "639-1",
+	  mimetypes: [
+	      "text/plain"
+	      , "text/rtf"		      
+	      , "application/pdf"
+	  ],
+	  output: ["text/plain"], 		  		  		  
+	  url: ["https://clarin.dk/toolchains/run"],
+	  parameter: { 
+	      input    : "self.linkToResource",
+	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'text/rtf' : rtnValue = 'rtf'; break; default: rtnValue = 'flat'; } return rtnValue;",
+	      workflow : "da-navne"
+	  },
+	  mapping: {
+	      input    : "URL",
+	      type     : "Iformat",
+	  }
+	},
+	
 	{ task: "Lemmatization",
 	  name: "CLARIN-DK Tool Box (CST Lemmatizer)",
 	  logo: "clarindk.jpg",
