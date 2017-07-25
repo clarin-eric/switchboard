@@ -2,7 +2,7 @@
 // 2016-17 Claus Zinn
 // 
 // File: Registry.js
-// Time-stamp: <2017-07-25 10:26:44 (zinn)>
+// Time-stamp: <2017-07-25 22:44:06 (zinn)>
 //
 // ----------------------------------------------------------------------------------------
 
@@ -719,59 +719,59 @@ const Registry =
 	  }
 	},
 	
-	{ task: "Lemmatization",
-	  name: "CLARIN-DK Tool Box (CST Lemmatizer)",
-	  logo: "clarindk.jpg",
-	  homepage: "https://clarin.dk/clarindk/forside.jsp",		  
-	  location: "Copenhagen, Denmark (CLAM Webservices)",
-	  creators: ["Bart Jongejan et al."],
-	  contact: {
-	      person: "Bart Jongejan",
-	      email: "bartj@hum.ku.dk",
-	  },
-	  version: "0.8.3",
-	  license: "public",
-	  authentication: "no",		  
-	  shortDescription: "CLARIN-DK Tool Box (CST Lemmatizer)",
-	  longDescription:  "CLARIN-DK Tool Box (CST Lemmatizer). Lemmatiser for Bulgarian, Czech, Danish, Dutch, English, Estonian, Farsi, French, German, Greek, Hungarian, Icelandic, Italian, Latin, Macedonian, Polish, Portuguese, Romanian, Russian, Slovak, Serbian, Slovene, Spanish, and Ukrainian",
-	  lang_encoding: "639-1",
-	  languages: ["bul", "ces", "dan", "deu", "ell", "eng", "spa", "est", "fas", "fra",
-		      "hun", "isl", "ita", "lat", "mkd", "nld", "pol", "por", "ron", "rus",
-		      "slk", "slv", "srp", "tur", "ukr"],
-	  mimetypes: ["application/pdf",
-		      "application/vnd.ms-powerpoint", // (PPT)
-		      "application/vnd.openxmlformats-officedocument.presentationml.presentation", // (PPTX)
-		      "application/vnd.oasis.opendocument.presentation", // (ODP)
-		      "application/vnd.ms-excel", // (XLS)
-		      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // (XLSX)
-		      "application/vnd.oasis.opendocument.spreadsheet", // (ODS)
-		      "application/x-download", //    (If it is PDF or RTF)
-		      "application/octet-stream", //  (If it is PDF or RTF)
-		      "application/msword", //         (RTF, DOC, DOCX)
-		      "application/vnd.oasis.opendocument.text", // (ODT)
-		      "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // (DOCX)
-		      "text/html", // (HTML)
-		      "text/rtf",  // (RTF)
-		      "text/plain", 
-		      "text/x-conll", // (CONLL)
-		      "image/gif", 
-		      "image/jpeg", 
-		      "image/pjpeg", 
-		      "image/png", 
-		      "image/svg+xml", 
-		      "image/tiff", 
-		      "image/vnd.microsoft.icon"
-		     ],
-	  url: ["http://cst.dk:8080/tools/createByGoalChoice"], 
-	  parameter: {  input   : "self.linkToResource", 
-			lang    : "self.linkToResourceLanguage",                 
-			analysis: "lem",
-			UIlanguage: "en"				
-		     },
-	  mapping:   {  input        : "URL",
-		       	lang         : "language"
-		     }		  
-	},
+	// { task: "Lemmatization",
+	//   name: "CLARIN-DK Tool Box (CST Lemmatizer)",
+	//   logo: "clarindk.jpg",
+	//   homepage: "https://clarin.dk/clarindk/forside.jsp",		  
+	//   location: "Copenhagen, Denmark (CLAM Webservices)",
+	//   creators: ["Bart Jongejan et al."],
+	//   contact: {
+	//       person: "Bart Jongejan",
+	//       email: "bartj@hum.ku.dk",
+	//   },
+	//   version: "0.8.3",
+	//   license: "public",
+	//   authentication: "no",		  
+	//   shortDescription: "CLARIN-DK Tool Box (CST Lemmatizer)",
+	//   longDescription:  "CLARIN-DK Tool Box (CST Lemmatizer). Lemmatiser for Bulgarian, Czech, Danish, Dutch, English, Estonian, Farsi, French, German, Greek, Hungarian, Icelandic, Italian, Latin, Macedonian, Polish, Portuguese, Romanian, Russian, Slovak, Serbian, Slovene, Spanish, and Ukrainian",
+	//   lang_encoding: "639-1",
+	//   languages: ["bul", "ces", "dan", "deu", "ell", "eng", "spa", "est", "fas", "fra",
+	// 	      "hun", "isl", "ita", "lat", "mkd", "nld", "pol", "por", "ron", "rus",
+	// 	      "slk", "slv", "srp", "tur", "ukr"],
+	//   mimetypes: ["application/pdf",
+	// 	      "application/vnd.ms-powerpoint", // (PPT)
+	// 	      "application/vnd.openxmlformats-officedocument.presentationml.presentation", // (PPTX)
+	// 	      "application/vnd.oasis.opendocument.presentation", // (ODP)
+	// 	      "application/vnd.ms-excel", // (XLS)
+	// 	      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // (XLSX)
+	// 	      "application/vnd.oasis.opendocument.spreadsheet", // (ODS)
+	// 	      "application/x-download", //    (If it is PDF or RTF)
+	// 	      "application/octet-stream", //  (If it is PDF or RTF)
+	// 	      "application/msword", //         (RTF, DOC, DOCX)
+	// 	      "application/vnd.oasis.opendocument.text", // (ODT)
+	// 	      "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // (DOCX)
+	// 	      "text/html", // (HTML)
+	// 	      "text/rtf",  // (RTF)
+	// 	      "text/plain", 
+	// 	      "text/x-conll", // (CONLL)
+	// 	      "image/gif", 
+	// 	      "image/jpeg", 
+	// 	      "image/pjpeg", 
+	// 	      "image/png", 
+	// 	      "image/svg+xml", 
+	// 	      "image/tiff", 
+	// 	      "image/vnd.microsoft.icon"
+	// 	     ],
+	//   url: ["http://cst.dk:8080/tools/createByGoalChoice"], 
+	//   parameter: {  input   : "self.linkToResource", 
+	// 		lang    : "self.linkToResourceLanguage",                 
+	// 		analysis: "lem",
+	// 		UIlanguage: "en"				
+	// 	     },
+	//   mapping:   {  input        : "URL",
+	// 	       	lang         : "language"
+	// 	     }		  
+	// },
 
 	{ task: "Named Entity Recognition",
 	  name: "Concraft -> Nerf",
@@ -800,126 +800,126 @@ const Registry =
 		     }
 	},
 	
-	{ task: "Named Entity Recognition",
-	  name: "CLARIN-DK Tool Box (CST Name Recognizer)",
-	  logo: "clarindk.jpg",		  
-	  homepage: "https://clarin.dk/clarindk/forside.jsp",		  
-	  location: "Copenhagen, Denmark (CLAM Webservices)",
-	  creators: ["Bart Jongejan et al."],
-	  contact: {
-	      person: "Bart Jongejan",
-	      email: "bartj@hum.ku.dk",
-	  },
-	  version: "0.8.3",
-	  license: "public",
-	  authentication: "no",		  
-	  shortDescription: "CLARIN-DK Tool Box (CST's name recognizer)",
-	  longDescription:  "CLARIN-DK Tool Box (CST). CST's name recogniser classifies names as proper names, locations (with sub-classes of street, city, land and other types of locations), and other names (called MISC)",
-	  lang_encoding: "639-1",
-	  languages: ["dan"],
-	  mimetypes: ["application/pdf",
-		      "application/vnd.ms-powerpoint", // (PPT)
-		      "application/vnd.openxmlformats-officedocument.presentationml.presentation", // (PPTX)
-		      "application/vnd.oasis.opendocument.presentation", // (ODP)
-		      "application/vnd.ms-excel", // (XLS)
-		      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // (XLSX)
-		      "application/vnd.oasis.opendocument.spreadsheet", // (ODS)
-		      "application/x-download", //    (If it is PDF or RTF)
-		      "application/octet-stream", //  (If it is PDF or RTF)
-		      "application/msword", //         (RTF, DOC, DOCX)
-		      "application/vnd.oasis.opendocument.text", // (ODT)
-		      "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // (DOCX)
-		      "text/html", // (HTML)
-		      "text/rtf",  // (RTF)
-		      "text/plain", 
-		      "text/x-conll", // (CONLL)
-		      "image/gif", 
-		      "image/jpeg", 
-		      "image/pjpeg", 
-		      "image/png", 
-		      "image/svg+xml", 
-		      "image/tiff", 
-		      "image/vnd.microsoft.icon"
-		     ],
-	  url: ["http://cst.dk:8080/tools/createByGoalChoice"], 
-	  parameter: {  input   : "self.linkToResource", 
-			lang    : "self.linkToResourceLanguage",                 
-			analysis: "ner",
-			UIlanguage: "en"				
-		     },
-	  mapping:   { input        : "URL",
-		       lang         : "language"
-		     }		  
-	},
+	// { task: "Named Entity Recognition",
+	//   name: "CLARIN-DK Tool Box (CST Name Recognizer)",
+	//   logo: "clarindk.jpg",		  
+	//   homepage: "https://clarin.dk/clarindk/forside.jsp",		  
+	//   location: "Copenhagen, Denmark (CLAM Webservices)",
+	//   creators: ["Bart Jongejan et al."],
+	//   contact: {
+	//       person: "Bart Jongejan",
+	//       email: "bartj@hum.ku.dk",
+	//   },
+	//   version: "0.8.3",
+	//   license: "public",
+	//   authentication: "no",		  
+	//   shortDescription: "CLARIN-DK Tool Box (CST's name recognizer)",
+	//   longDescription:  "CLARIN-DK Tool Box (CST). CST's name recogniser classifies names as proper names, locations (with sub-classes of street, city, land and other types of locations), and other names (called MISC)",
+	//   lang_encoding: "639-1",
+	//   languages: ["dan"],
+	//   mimetypes: ["application/pdf",
+	// 	      "application/vnd.ms-powerpoint", // (PPT)
+	// 	      "application/vnd.openxmlformats-officedocument.presentationml.presentation", // (PPTX)
+	// 	      "application/vnd.oasis.opendocument.presentation", // (ODP)
+	// 	      "application/vnd.ms-excel", // (XLS)
+	// 	      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // (XLSX)
+	// 	      "application/vnd.oasis.opendocument.spreadsheet", // (ODS)
+	// 	      "application/x-download", //    (If it is PDF or RTF)
+	// 	      "application/octet-stream", //  (If it is PDF or RTF)
+	// 	      "application/msword", //         (RTF, DOC, DOCX)
+	// 	      "application/vnd.oasis.opendocument.text", // (ODT)
+	// 	      "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // (DOCX)
+	// 	      "text/html", // (HTML)
+	// 	      "text/rtf",  // (RTF)
+	// 	      "text/plain", 
+	// 	      "text/x-conll", // (CONLL)
+	// 	      "image/gif", 
+	// 	      "image/jpeg", 
+	// 	      "image/pjpeg", 
+	// 	      "image/png", 
+	// 	      "image/svg+xml", 
+	// 	      "image/tiff", 
+	// 	      "image/vnd.microsoft.icon"
+	// 	     ],
+	//   url: ["http://cst.dk:8080/tools/createByGoalChoice"], 
+	//   parameter: {  input   : "self.linkToResource", 
+	// 		lang    : "self.linkToResourceLanguage",                 
+	// 		analysis: "ner",
+	// 		UIlanguage: "en"				
+	// 	     },
+	//   mapping:   { input        : "URL",
+	// 	       lang         : "language"
+	// 	     }		  
+	// },
 
-	{ task: "Voice Synthesis",
-	  name: "CLARIN-DK Tool Box (espeak)",
-	  logo: "clarindk.jpg",		  
-	  homepage: "https://clarin.dk/clarindk/forside.jsp",
-	  location: "Copenhagen, Denmark (CLAM Webservices)",
-	  creators: ["Bart Jongejan et al."],
-	  contact: {
-	      person: "Bart Jongejan",
-	      email: "bartj@hum.ku.dk",
-	  },
-	  version: "0.8.3",
-	  license: "public",
-	  authentication: "no",		  
-	  shortDescription: "CLARIN-DK Tool Box (espeak)",
-	  longDescription:  "Text to speech software. History. Originally known as speak and originally written for Acorn/RISC_OS computers starting in 1995. This version is an enhancement and re-write, including a relaxation of the original memory and processing power constraints, and with support for additional languages.",
-	  lang_encoding: "639-1",
-	  languages: ["afr", "bul", "bos", "cat", "ces", "cym", "dan", "ell", "eng", "epo", "spa", "est", "fin", "fas", "fra", 
-		      "hin", "hrv", "hun", "hye", "ind", "isl", "ita", "kat", "kan", "kur", "lat", "lav", "mkd", "mlg", "nld",
-		      "pol", "por", "ron", "rus", "slk", "sqi", "srp", "swe", "swa", "tam", "tur", "ukr", "vie", "zho"],
-	  mimetypes: [  "text/plain",
-			"application/pdf" // may add other mimetypes
-		     ],
-	  url: ["http://cst.dk:8080/tools/createByGoalChoice"], 
-	  parameter: {  input   : "self.linkToResource", 
-			lang    : "self.linkToResourceLanguage",                 
-			analysis: "voiceSynthesis",
-			UIlanguage: "en"				
-		     },
+	// { task: "Voice Synthesis",
+	//   name: "CLARIN-DK Tool Box (espeak)",
+	//   logo: "clarindk.jpg",		  
+	//   homepage: "https://clarin.dk/clarindk/forside.jsp",
+	//   location: "Copenhagen, Denmark (CLAM Webservices)",
+	//   creators: ["Bart Jongejan et al."],
+	//   contact: {
+	//       person: "Bart Jongejan",
+	//       email: "bartj@hum.ku.dk",
+	//   },
+	//   version: "0.8.3",
+	//   license: "public",
+	//   authentication: "no",		  
+	//   shortDescription: "CLARIN-DK Tool Box (espeak)",
+	//   longDescription:  "Text to speech software. History. Originally known as speak and originally written for Acorn/RISC_OS computers starting in 1995. This version is an enhancement and re-write, including a relaxation of the original memory and processing power constraints, and with support for additional languages.",
+	//   lang_encoding: "639-1",
+	//   languages: ["afr", "bul", "bos", "cat", "ces", "cym", "dan", "ell", "eng", "epo", "spa", "est", "fin", "fas", "fra", 
+	// 	      "hin", "hrv", "hun", "hye", "ind", "isl", "ita", "kat", "kan", "kur", "lat", "lav", "mkd", "mlg", "nld",
+	// 	      "pol", "por", "ron", "rus", "slk", "sqi", "srp", "swe", "swa", "tam", "tur", "ukr", "vie", "zho"],
+	//   mimetypes: [  "text/plain",
+	// 		"application/pdf" // may add other mimetypes
+	// 	     ],
+	//   url: ["http://cst.dk:8080/tools/createByGoalChoice"], 
+	//   parameter: {  input   : "self.linkToResource", 
+	// 		lang    : "self.linkToResourceLanguage",                 
+	// 		analysis: "voiceSynthesis",
+	// 		UIlanguage: "en"				
+	// 	     },
 
-	  mapping:   { input        : "URL",
-		       lang         : "language"
-		     }		  
-	},
+	//   mapping:   { input        : "URL",
+	// 	       lang         : "language"
+	// 	     }		  
+	// },
 
 
 
-	{ task: "OCR Engine",
-	  name: "CLARIN-DK Tool Box (Tesseract | CuneiForm)",
-	  logo: "clarindk.jpg",		  		  
-	  homepage: "https://clarin.dk/clarindk/forside.jsp",		  		  
-	  location: "Copenhagen, Denmark (CLAM Webservices)",
-	  creators: ["Bart Jongejan et al."],
-	  contact: {
-	      person: "Bart Jongejan",
-	      email: "bartj@hum.ku.dk",
-	  },
-	  version: "0.8.3",
-	  license: "public",
-	  authentication: "no",		  
-	  shortDescription: "CLARIN-DK Tool Box (Tesseract | CuneiForm)",
-	  longDescription:  "Tesseract is probably the most accurate open source OCR engine available. Combined with the Leptonica Image Processing Library it can read a wide variety of image formats and convert them to text in over 60 languages. It was one of the top 3 engines in the 1995 UNLV Accuracy test. Between 1995 and 2006 it had little work done on it, but since then it has been improved extensively by Google. It is released under the Apache License 2.0. Note that the CLARIN-DL Tool Box GUI gives you also access to the Russian CuneiForm system.",
-	  lang_encoding: "639-1",		  languages: ["dan","eng","generic"],
-	  mimetypes: [
-	      "image/gif", 
-	      "image/jpeg", 
-	      "image/png", 
-	      "image/tiff", 
-	  ],
-	  url: ["http://cst.dk:8080/tools/createByGoalChoice"], 
-	  parameter: {  input   : "self.linkToResource", 
-			lang    : "self.linkToResourceLanguage",                 
-			analysis: "txt",
-			UIlanguage: "en"				
-		     },
-	  mapping:   { input        : "URL",
-		       lang         : "language"
-		     }		  
-	},		
+	// { task: "OCR Engine",
+	//   name: "CLARIN-DK Tool Box (Tesseract | CuneiForm)",
+	//   logo: "clarindk.jpg",		  		  
+	//   homepage: "https://clarin.dk/clarindk/forside.jsp",		  		  
+	//   location: "Copenhagen, Denmark (CLAM Webservices)",
+	//   creators: ["Bart Jongejan et al."],
+	//   contact: {
+	//       person: "Bart Jongejan",
+	//       email: "bartj@hum.ku.dk",
+	//   },
+	//   version: "0.8.3",
+	//   license: "public",
+	//   authentication: "no",		  
+	//   shortDescription: "CLARIN-DK Tool Box (Tesseract | CuneiForm)",
+	//   longDescription:  "Tesseract is probably the most accurate open source OCR engine available. Combined with the Leptonica Image Processing Library it can read a wide variety of image formats and convert them to text in over 60 languages. It was one of the top 3 engines in the 1995 UNLV Accuracy test. Between 1995 and 2006 it had little work done on it, but since then it has been improved extensively by Google. It is released under the Apache License 2.0. Note that the CLARIN-DL Tool Box GUI gives you also access to the Russian CuneiForm system.",
+	//   lang_encoding: "639-1",		  languages: ["dan","eng","generic"],
+	//   mimetypes: [
+	//       "image/gif", 
+	//       "image/jpeg", 
+	//       "image/png", 
+	//       "image/tiff", 
+	//   ],
+	//   url: ["http://cst.dk:8080/tools/createByGoalChoice"], 
+	//   parameter: {  input   : "self.linkToResource", 
+	// 		lang    : "self.linkToResourceLanguage",                 
+	// 		analysis: "txt",
+	// 		UIlanguage: "en"				
+	// 	     },
+	//   mapping:   { input        : "URL",
+	// 	       lang         : "language"
+	// 	     }		  
+	// },		
 
 	{ task: "Tokenisation",
 	  name: "WebLicht-Tokenization-TUR",
