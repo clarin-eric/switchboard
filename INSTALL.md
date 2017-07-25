@@ -95,3 +95,18 @@ On <server-name>, the command
 
 is run. This fetches the respective (public) Docker image from hub.docker.com and runs it.
 
+
+# Context Path Definition
+
+There are three locations that need to be adapted to run the switchboard on a different path, e.g.,
+
+
+	   ```http://weblicht.sfs.uni-tuebingen.de/clrs-dev ```
+
+or
+
+	   ```http://weblicht.sfs.uni-tuebingen.de/clrs ```
+
+* In webpack.config.js, change ```process.env.URL_PATH ``` accordingly.
+* In Makefile, use the appropriate STATUS flag accordingly.
+* In nginx.conf, adapt the reverse proxy information accordingly.
