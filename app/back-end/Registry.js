@@ -2,7 +2,7 @@
 // 2016-17 Claus Zinn
 // 
 // File: Registry.js
-// Time-stamp: <2017-07-25 22:44:06 (zinn)>
+// Time-stamp: <2017-07-26 09:45:01 (zinn)>
 //
 // ----------------------------------------------------------------------------------------
 
@@ -460,8 +460,8 @@ const Registry =
 	},
 
 	// the tools for CLARIN-DK have little parametrization, everything's hardcoded in the workflow parameter
-	{ task: "N-Gramming",
-	  name: "CLARIN-DK Tool Chain: Computes alphabetic list of words and their frequencies (web service)",
+	{ task: "Segmentation",
+	  name: "CLARIN-DK Tool Chain: Computes segmentation without tokenization (web service)",
 	  softwareType: "webService",
 	  requestType: "get",	  
 	  logo: "clarindk.jpg",		  
@@ -473,10 +473,10 @@ const Registry =
 	      email: "bartj@hum.ku.dk",
 	  },
 	  version: "unknown",
-	  license: "public",                //but webservice is protected with (free) registration
+	  license: "public",                
 	  authentication: "no",
-	  shortDescription: "Alphabetic list of words with frequencies",
-	  longDescription: "Alphabetic list of words with frequencies (uses a lemmatiser, but does not output the lemmas). The web service returns a zip file containing original input and the results of all analyses.",
+	  shortDescription: "Computes segmentation",
+	  longDescription: "Computes segmentation without tokenization. The web service returns a zip file containing original input and the results of all analyses.",
 	  languages: ["dan"],
 	  lang_encoding: "639-1",
 	  mimetypes: [
@@ -484,12 +484,12 @@ const Registry =
 	      , "text/rtf"		      
 	      , "application/pdf"
 	  ],
-	  output: ["text/plain"], 		  		  		  
+	  output: ["application/zip"], 		  		  		  
 	  url: ["https://clarin.dk/toolchains/run"],
 	  parameter: { 
 	      input    : "self.linkToResource",
 	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'text/rtf' : rtnValue = 'rtf'; break; default: rtnValue = 'flat'; } return rtnValue;",
-	      workflow : "da-frek-ord"
+	      workflow : "da-segment"
 	  },
 	  mapping: {
 	      input    : "URL",
@@ -497,6 +497,191 @@ const Registry =
 	  }
 	},
 
+	{ task: "Segmentation",
+	  name: "CLARIN-DK Tool Chain: Computes segmentation without tokenization (web service)",
+	  softwareType: "webService",
+	  requestType: "get",	  
+	  logo: "clarindk.jpg",		  
+	  homepage: "https://clarin.dk/clarindk/toolchains-wizard.jsp",
+	  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
+	  creators: ["Bart Jongejan"],
+	  contact: {
+	      person: "Bart Jongejan",
+	      email: "bartj@hum.ku.dk",
+	  },
+	  version: "unknown",
+	  license: "public",                
+	  authentication: "no",
+	  shortDescription: "Computes segmentation",
+	  longDescription: "Computes segmentation without tokenization. The web service returns a zip file containing original input and the results of all analyses.",
+	  languages: ["eng"],
+	  lang_encoding: "639-1",
+	  mimetypes: [
+	      "text/plain"
+	      , "text/rtf"		      
+	      , "application/pdf"
+	  ],
+	  output: ["application/zip"], 		  		  		  
+	  url: ["https://clarin.dk/toolchains/run"],
+	  parameter: { 
+	      input    : "self.linkToResource",
+	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'text/rtf' : rtnValue = 'rtf'; break; default: rtnValue = 'flat'; } return rtnValue;",
+	      workflow : "en-segment"
+	  },
+	  mapping: {
+	      input    : "URL",
+	      type     : "Iformat",
+	  }
+	},
+
+	{ task: "Segmentation",
+	  name: "CLARIN-DK Tool Chain: Computes segmentation with tokenization (web service)",
+	  softwareType: "webService",
+	  requestType: "get",	  
+	  logo: "clarindk.jpg",		  
+	  homepage: "https://clarin.dk/clarindk/toolchains-wizard.jsp",
+	  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
+	  creators: ["Bart Jongejan"],
+	  contact: {
+	      person: "Bart Jongejan",
+	      email: "bartj@hum.ku.dk",
+	  },
+	  version: "unknown",
+	  license: "public",                
+	  authentication: "no",
+	  shortDescription: "Computes segmentation",
+	  longDescription: "Computes segmentation with tokenization. The web service returns a zip file containing original input and the results of all analyses.",
+	  languages: ["dan"],
+	  lang_encoding: "639-1",
+	  mimetypes: [
+	      "text/plain"
+	      , "text/rtf"		      
+	      , "application/pdf"
+	  ],
+	  output: ["application/zip"], 		  		  		  
+	  url: ["https://clarin.dk/toolchains/run"],
+	  parameter: { 
+	      input    : "self.linkToResource",
+	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'text/rtf' : rtnValue = 'rtf'; break; default: rtnValue = 'flat'; } return rtnValue;",
+	      workflow : "da-tokensegment"
+	  },
+	  mapping: {
+	      input    : "URL",
+	      type     : "Iformat",
+	  }
+	},
+
+	{ task: "Segmentation",
+	  name: "CLARIN-DK Tool Chain: Computes segmentation with tokenization (web service)",
+	  softwareType: "webService",
+	  requestType: "get",	  
+	  logo: "clarindk.jpg",		  
+	  homepage: "https://clarin.dk/clarindk/toolchains-wizard.jsp",
+	  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
+	  creators: ["Bart Jongejan"],
+	  contact: {
+	      person: "Bart Jongejan",
+	      email: "bartj@hum.ku.dk",
+	  },
+	  version: "unknown",
+	  license: "public",                
+	  authentication: "no",
+	  shortDescription: "Computes segmentation",
+	  longDescription: "Computes segmentation with tokenization. The web service returns a zip file containing original input and the results of all analyses.",
+	  languages: ["eng"],
+	  lang_encoding: "639-1",
+	  mimetypes: [
+	      "text/plain"
+	      , "text/rtf"		      
+	      , "application/pdf"
+	  ],
+	  output: ["application/zip"], 		  		  		  
+	  url: ["https://clarin.dk/toolchains/run"],
+	  parameter: { 
+	      input    : "self.linkToResource",
+	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'text/rtf' : rtnValue = 'rtf'; break; default: rtnValue = 'flat'; } return rtnValue;",
+	      workflow : "en-tokensegment"
+	  },
+	  mapping: {
+	      input    : "URL",
+	      type     : "Iformat",
+	  }
+	},
+
+	{ task: "Segmentation",
+	  name: "CLARIN-DK Tool Chain: Computes segmentation with tokenization and BRILL POS-Tagging (web service)",
+	  softwareType: "webService",
+	  requestType: "get",	  
+	  logo: "clarindk.jpg",		  
+	  homepage: "https://clarin.dk/clarindk/toolchains-wizard.jsp",
+	  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
+	  creators: ["Bart Jongejan"],
+	  contact: {
+	      person: "Bart Jongejan",
+	      email: "bartj@hum.ku.dk",
+	  },
+	  version: "unknown",
+	  license: "public",                
+	  authentication: "no",
+	  shortDescription: "Computes segmentation",
+	  longDescription: "Computes segmentation with tokenization and BRILL POS-Tagging . The web service returns a zip file containing original input and the results of all analyses.",
+	  languages: ["dan"],
+	  lang_encoding: "639-1",
+	  mimetypes: [
+	      "text/plain"
+	      , "text/rtf"		      
+	      , "application/pdf"
+	  ],
+	  output: ["application/zip"], 		  		  		  
+	  url: ["https://clarin.dk/toolchains/run"],
+	  parameter: { 
+	      input    : "self.linkToResource",
+	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'text/rtf' : rtnValue = 'rtf'; break; default: rtnValue = 'flat'; } return rtnValue;",
+	      workflow : "da-tokensegmentPOS"
+	  },
+	  mapping: {
+	      input    : "URL",
+	      type     : "Iformat",
+	  }
+	},
+
+	{ task: "Segmentation",
+	  name: "CLARIN-DK Tool Chain: Computes segmentation with tokenization and BRILL POS-Tagging (web service)",
+	  softwareType: "webService",
+	  requestType: "get",	  
+	  logo: "clarindk.jpg",		  
+	  homepage: "https://clarin.dk/clarindk/toolchains-wizard.jsp",
+	  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
+	  creators: ["Bart Jongejan"],
+	  contact: {
+	      person: "Bart Jongejan",
+	      email: "bartj@hum.ku.dk",
+	  },
+	  version: "unknown",
+	  license: "public",                
+	  authentication: "no",
+	  shortDescription: "Computes segmentation",
+	  longDescription: "Computes segmentation with tokenization and BRILL POS-Tagging . The web service returns a zip file containing original input and the results of all analyses.",
+	  languages: ["eng"],
+	  lang_encoding: "639-1",
+	  mimetypes: [
+	      "text/plain"
+	      , "text/rtf"		      
+	      , "application/pdf"
+	  ],
+	  output: ["application/zip"], 		  		  		  
+	  url: ["https://clarin.dk/toolchains/run"],
+	  parameter: { 
+	      input    : "self.linkToResource",
+	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'text/rtf' : rtnValue = 'rtf'; break; default: rtnValue = 'flat'; } return rtnValue;",
+	      workflow : "en-tokensegmentPOS"
+	  },
+	  mapping: {
+	      input    : "URL",
+	      type     : "Iformat",
+	  }
+	},
+	
 	{ task: "N-Gramming",
 	  name: "CLARIN-DK Tool Chain: Computes alphabetic list of words and their frequencies (web service)",
 	  softwareType: "webService",
@@ -510,7 +695,7 @@ const Registry =
 	      email: "bartj@hum.ku.dk",
 	  },
 	  version: "unknown",
-	  license: "public",                //but webservice is protected with (free) registration
+	  license: "public",                
 	  authentication: "no",
 	  shortDescription: "Alphabetic list of words with frequencies",
 	  longDescription: "Alphabetic list of words with frequencies (uses a lemmatiser, but does not output the lemmas). The web service returns a zip file containing original input and the results of all analyses.",
@@ -521,7 +706,7 @@ const Registry =
 	      , "text/rtf"		      
 	      , "application/pdf"
 	  ],
-	  output: ["text/plain"], 		  		  		  
+	  output: ["application/zip"],
 	  url: ["https://clarin.dk/toolchains/run"],
 	  parameter: { 
 	      input    : "self.linkToResource",
@@ -547,7 +732,7 @@ const Registry =
 	      email: "bartj@hum.ku.dk",
 	  },
 	  version: "unknown",
-	  license: "public",                //but webservice is protected with (free) registration
+	  license: "public",                
 	  authentication: "no",
 	  shortDescription: "N-Gramming Tool",
 	  longDescription: "Computes bigrams, lemmas, sorted by frequency. The web service returns a zip file containing original input and the results of all analyses.",
@@ -558,7 +743,7 @@ const Registry =
 	      , "text/rtf"		      
 	      , "application/pdf"
 	  ],
-	  output: ["text/plain"], 		  		  		  
+	  output: ["application/zip"],
 	  url: ["https://clarin.dk/toolchains/run"],
 	  parameter: { 
 	      input    : "self.linkToResource",
@@ -584,7 +769,7 @@ const Registry =
 	      email: "bartj@hum.ku.dk",
 	  },
 	  version: "unknown",
-	  license: "public",                //but webservice is protected with (free) registration
+	  license: "public",                
 	  authentication: "no",
 	  shortDescription: "N-Gramming Tool",	  
 	  longDescription: "Computes bigrams, lemmas, sorted by frequency. The web service returns a zip file containing original input and the results of all analyses.",
@@ -595,7 +780,7 @@ const Registry =
 	      , "text/rtf"		      
 	      , "application/pdf"
 	  ],
-	  output: ["text/plain"], 		  		  		  
+	  output: ["application/zip"],
 	  url: ["https://clarin.dk/toolchains/run"],
 	  parameter: { 
 	      input    : "self.linkToResource",
@@ -621,7 +806,7 @@ const Registry =
 	      email: "bartj@hum.ku.dk",
 	  },
 	  version: "unknown",
-	  license: "public",                //but webservice is protected with (free) registration
+	  license: "public",                
 	  authentication: "no",
 	  shortDescription: "N-Gramming Tool",	  
 	  longDescription: "Computes bigrams, words, sorted by frequency. The web service returns a zip file containing original input and the results of all analyses.",	  
@@ -632,7 +817,7 @@ const Registry =
 	      , "text/rtf"		      
 	      , "application/pdf"
 	  ],
-	  output: ["text/plain"], 		  		  		  
+	  output: ["application/zip"],
 	  url: ["https://clarin.dk/toolchains/run"],
 	  parameter: { 
 	      input    : "self.linkToResource",
@@ -658,7 +843,7 @@ const Registry =
 	      email: "bartj@hum.ku.dk",
 	  },
 	  version: "unknown",
-	  license: "public",                //but webservice is protected with (free) registration
+	  license: "public",                
 	  authentication: "no",
 	  shortDescription: "N-Gramming Tool",	  
 	  longDescription: "Computes bigrams, words, sorted by frequency. The web service returns a zip file containing original input and the results of all analyses.",	  
@@ -669,7 +854,7 @@ const Registry =
 	      , "text/rtf"		      
 	      , "application/pdf"
 	  ],
-	  output: ["text/plain"], 		  		  		  
+	  output: ["application/zip"],
 	  url: ["https://clarin.dk/toolchains/run"],
 	  parameter: { 
 	      input    : "self.linkToResource",
@@ -683,7 +868,7 @@ const Registry =
 	},
 
 	{ task: "Named Entity Recognition",	
-	  name: "CLARIN-DK Tool Chain for NER",
+	  name: "CLARIN-DK Tool Chain for NER (web service)",
 	  softwareType: "webService",
 	  requestType: "get",	  
 	  logo: "clarindk.jpg",		  
@@ -695,9 +880,9 @@ const Registry =
 	      email: "bartj@hum.ku.dk",
 	  },
 	  version: "unknown",
-	  license: "public",                //but webservice is protected with (free) registration
+	  license: "public",                
 	  authentication: "no",
-	  shortDescription: "N-Gramming Tool",	  
+	  shortDescription: "NER Tool for Danish",	  
 	  longDescription: "Performs Named Entity Recognition. The web service returns a zip file containing original input and the results of all analyses.",	  
 	  languages: ["dan"],
 	  lang_encoding: "639-1",
@@ -706,7 +891,7 @@ const Registry =
 	      , "text/rtf"		      
 	      , "application/pdf"
 	  ],
-	  output: ["text/plain"], 		  		  		  
+	  output: ["application/zip"],
 	  url: ["https://clarin.dk/toolchains/run"],
 	  parameter: { 
 	      input    : "self.linkToResource",
@@ -718,61 +903,303 @@ const Registry =
 	      type     : "Iformat",
 	  }
 	},
-	
-	// { task: "Lemmatization",
-	//   name: "CLARIN-DK Tool Box (CST Lemmatizer)",
-	//   logo: "clarindk.jpg",
-	//   homepage: "https://clarin.dk/clarindk/forside.jsp",		  
-	//   location: "Copenhagen, Denmark (CLAM Webservices)",
-	//   creators: ["Bart Jongejan et al."],
-	//   contact: {
-	//       person: "Bart Jongejan",
-	//       email: "bartj@hum.ku.dk",
-	//   },
-	//   version: "0.8.3",
-	//   license: "public",
-	//   authentication: "no",		  
-	//   shortDescription: "CLARIN-DK Tool Box (CST Lemmatizer)",
-	//   longDescription:  "CLARIN-DK Tool Box (CST Lemmatizer). Lemmatiser for Bulgarian, Czech, Danish, Dutch, English, Estonian, Farsi, French, German, Greek, Hungarian, Icelandic, Italian, Latin, Macedonian, Polish, Portuguese, Romanian, Russian, Slovak, Serbian, Slovene, Spanish, and Ukrainian",
-	//   lang_encoding: "639-1",
-	//   languages: ["bul", "ces", "dan", "deu", "ell", "eng", "spa", "est", "fas", "fra",
-	// 	      "hun", "isl", "ita", "lat", "mkd", "nld", "pol", "por", "ron", "rus",
-	// 	      "slk", "slv", "srp", "tur", "ukr"],
-	//   mimetypes: ["application/pdf",
-	// 	      "application/vnd.ms-powerpoint", // (PPT)
-	// 	      "application/vnd.openxmlformats-officedocument.presentationml.presentation", // (PPTX)
-	// 	      "application/vnd.oasis.opendocument.presentation", // (ODP)
-	// 	      "application/vnd.ms-excel", // (XLS)
-	// 	      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // (XLSX)
-	// 	      "application/vnd.oasis.opendocument.spreadsheet", // (ODS)
-	// 	      "application/x-download", //    (If it is PDF or RTF)
-	// 	      "application/octet-stream", //  (If it is PDF or RTF)
-	// 	      "application/msword", //         (RTF, DOC, DOCX)
-	// 	      "application/vnd.oasis.opendocument.text", // (ODT)
-	// 	      "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // (DOCX)
-	// 	      "text/html", // (HTML)
-	// 	      "text/rtf",  // (RTF)
-	// 	      "text/plain", 
-	// 	      "text/x-conll", // (CONLL)
-	// 	      "image/gif", 
-	// 	      "image/jpeg", 
-	// 	      "image/pjpeg", 
-	// 	      "image/png", 
-	// 	      "image/svg+xml", 
-	// 	      "image/tiff", 
-	// 	      "image/vnd.microsoft.icon"
-	// 	     ],
-	//   url: ["http://cst.dk:8080/tools/createByGoalChoice"], 
-	//   parameter: {  input   : "self.linkToResource", 
-	// 		lang    : "self.linkToResourceLanguage",                 
-	// 		analysis: "lem",
-	// 		UIlanguage: "en"				
-	// 	     },
-	//   mapping:   {  input        : "URL",
-	// 	       	lang         : "language"
-	// 	     }		  
-	// },
 
+	{ task: "Named Entity Recognition",	
+	  name: "CLARIN-DK Tool Chain for NER including segmentation (web service)",
+	  softwareType: "webService",
+	  requestType: "get",	  
+	  logo: "clarindk.jpg",		  
+	  homepage: "https://clarin.dk/clarindk/toolchains-wizard.jsp",
+	  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
+	  creators: ["Bart Jongejan"],
+	  contact: {
+	      person: "Bart Jongejan",
+	      email: "bartj@hum.ku.dk",
+	  },
+	  version: "unknown",
+	  license: "public",                
+	  authentication: "no",
+	  shortDescription: "NER Tool for Danish",	  
+	  longDescription: "Performs Named Entity Recognition, including segmentation. The web service returns a zip file containing original input and the results of all analyses.",	  
+	  languages: ["dan"],
+	  lang_encoding: "639-1",
+	  mimetypes: [
+	      "text/plain"
+	      , "text/rtf"		      
+	      , "application/pdf"
+	  ],
+	  output: ["application/zip"],
+	  url: ["https://clarin.dk/toolchains/run"],
+	  parameter: { 
+	      input    : "self.linkToResource",
+	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'text/rtf' : rtnValue = 'rtf'; break; default: rtnValue = 'flat'; } return rtnValue;",
+	      workflow : "da-navne-segments"
+	  },
+	  mapping: {
+	      input    : "URL",
+	      type     : "Iformat",
+	  }
+	},
+
+	{ task: "Named Entity Recognition",	
+	  name: "CLARIN-DK Tool Chain for NER including POS tags (web service)",
+	  softwareType: "webService",
+	  requestType: "get",	  
+	  logo: "clarindk.jpg",		  
+	  homepage: "https://clarin.dk/clarindk/toolchains-wizard.jsp",
+	  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
+	  creators: ["Bart Jongejan"],
+	  contact: {
+	      person: "Bart Jongejan",
+	      email: "bartj@hum.ku.dk",
+	  },
+	  version: "unknown",
+	  license: "public",                
+	  authentication: "no",
+	  shortDescription: "NER Tool for Danish",	  
+	  longDescription: "Performs Named Entity Recognition, including POS tags. The web service returns a zip file containing original input and the results of all analyses.",	  
+	  languages: ["dan"],
+	  lang_encoding: "639-1",
+	  mimetypes: [
+	      "text/plain"
+	      , "text/rtf"		      
+	      , "application/pdf"
+	  ],
+	  output: ["application/zip"],
+	  url: ["https://clarin.dk/toolchains/run"],
+	  parameter: { 
+	      input    : "self.linkToResource",
+	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'text/rtf' : rtnValue = 'rtf'; break; default: rtnValue = 'flat'; } return rtnValue;",
+	      workflow : "da-navne-POS"
+	  },
+	  mapping: {
+	      input    : "URL",
+	      type     : "Iformat",
+	  }
+	},
+
+	{ task: "Lemmatization",	
+	  name: "CLARIN-DK Tool Chain for Lemmatization (web service)",
+	  softwareType: "webService",
+	  requestType: "get",	  
+	  logo: "clarindk.jpg",		  
+	  homepage: "https://clarin.dk/clarindk/toolchains-wizard.jsp",
+	  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
+	  creators: ["Bart Jongejan"],
+	  contact: {
+	      person: "Bart Jongejan",
+	      email: "bartj@hum.ku.dk",
+	  },
+	  version: "unknown",
+	  license: "public",                
+	  authentication: "no",
+	  shortDescription: "Lemmatization Tool for Danish",	  
+	  longDescription: "Performs lemmatization in running text. The web service returns a zip file containing original input and the results of all analyses.",	  
+	  languages: ["dan"],
+	  lang_encoding: "639-1",
+	  mimetypes: [
+	      "text/plain"
+	      , "text/rtf"		      
+	      , "application/pdf"
+	  ],
+	  output: ["application/zip"],
+	  url: ["https://clarin.dk/toolchains/run"],
+	  parameter: { 
+	      input    : "self.linkToResource",
+	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'text/rtf' : rtnValue = 'rtf'; break; default: rtnValue = 'flat'; } return rtnValue;",
+	      workflow : "da-lemmas-notags"
+	  },
+	  mapping: {
+	      input    : "URL",
+	      type     : "Iformat",
+	  }
+	},
+
+	{ task: "Lemmatization",	
+	  name: "CLARIN-DK Tool Chain for Lemmatization (web service)",
+	  softwareType: "webService",
+	  requestType: "get",	  
+	  logo: "clarindk.jpg",		  
+	  homepage: "https://clarin.dk/clarindk/toolchains-wizard.jsp",
+	  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
+	  creators: ["Bart Jongejan"],
+	  contact: {
+	      person: "Bart Jongejan",
+	      email: "bartj@hum.ku.dk",
+	  },
+	  version: "unknown",
+	  license: "public",                
+	  authentication: "no",
+	  shortDescription: "Lemmatization Tool for English",	  
+	  longDescription: "Performs lemmatization in running text. The web service returns a zip file containing original input and the results of all analyses.",	  
+	  languages: ["eng"],
+	  lang_encoding: "639-1",
+	  mimetypes: [
+	      "text/plain"
+	      , "text/rtf"		      
+	      , "application/pdf"
+	  ],
+	  output: ["application/zip"],
+	  url: ["https://clarin.dk/toolchains/run"],
+	  parameter: { 
+	      input    : "self.linkToResource",
+	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'text/rtf' : rtnValue = 'rtf'; break; default: rtnValue = 'flat'; } return rtnValue;",
+	      workflow : "en-lemmas-notags"
+	  },
+	  mapping: {
+	      input    : "URL",
+	      type     : "Iformat",
+	  }
+	},
+
+	{ task: "Lemmatization",	
+	  name: "CLARIN-DK Tool Chain for Lemmatization, including POS tags (web service)",
+	  softwareType: "webService",
+	  requestType: "get",	  
+	  logo: "clarindk.jpg",		  
+	  homepage: "https://clarin.dk/clarindk/toolchains-wizard.jsp",
+	  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
+	  creators: ["Bart Jongejan"],
+	  contact: {
+	      person: "Bart Jongejan",
+	      email: "bartj@hum.ku.dk",
+	  },
+	  version: "unknown",
+	  license: "public",                
+	  authentication: "no",
+	  shortDescription: "Lemmatization Tool for Danish",	  
+	  longDescription: "Performs lemmatization in running text, including POS tags. The web service returns a zip file containing original input and the results of all analyses.",	  
+	  languages: ["dan"],
+	  lang_encoding: "639-1",
+	  mimetypes: [
+	      "text/plain"
+	      , "text/rtf"		      
+	      , "application/pdf"
+	  ],
+	  output: ["application/zip"],
+	  url: ["https://clarin.dk/toolchains/run"],
+	  parameter: { 
+	      input    : "self.linkToResource",
+	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'text/rtf' : rtnValue = 'rtf'; break; default: rtnValue = 'flat'; } return rtnValue;",
+	      workflow : "da-lemmas-wtags"
+	  },
+	  mapping: {
+	      input    : "URL",
+	      type     : "Iformat",
+	  }
+	},
+
+	{ task: "Lemmatization",	
+	  name: "CLARIN-DK Tool Chain for Lemmatization, including POS tags (web service)",
+	  softwareType: "webService",
+	  requestType: "get",	  
+	  logo: "clarindk.jpg",		  
+	  homepage: "https://clarin.dk/clarindk/toolchains-wizard.jsp",
+	  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
+	  creators: ["Bart Jongejan"],
+	  contact: {
+	      person: "Bart Jongejan",
+	      email: "bartj@hum.ku.dk",
+	  },
+	  version: "unknown",
+	  license: "public",                
+	  authentication: "no",
+	  shortDescription: "Lemmatization Tool for English",	  
+	  longDescription: "Performs lemmatization in running text, including POS tags. The web service returns a zip file containing original input and the results of all analyses.",	  
+	  languages: ["eng"],
+	  lang_encoding: "639-1",
+	  mimetypes: [
+	      "text/plain"
+	      , "text/rtf"		      
+	      , "application/pdf"
+	  ],
+	  output: ["application/zip"],
+	  url: ["https://clarin.dk/toolchains/run"],
+	  parameter: { 
+	      input    : "self.linkToResource",
+	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'text/rtf' : rtnValue = 'rtf'; break; default: rtnValue = 'flat'; } return rtnValue;",
+	      workflow : "en-lemmas-wtags"
+	  },
+	  mapping: {
+	      input    : "URL",
+	      type     : "Iformat",
+	  }
+	},
+
+	{ task: "Lemmatization",	
+	  name: "CLARIN-DK Tool Chain for Lemmatization, presented as freqency list (web service).",
+	  softwareType: "webService",
+	  requestType: "get",	  
+	  logo: "clarindk.jpg",		  
+	  homepage: "https://clarin.dk/clarindk/toolchains-wizard.jsp",
+	  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
+	  creators: ["Bart Jongejan"],
+	  contact: {
+	      person: "Bart Jongejan",
+	      email: "bartj@hum.ku.dk",
+	  },
+	  version: "unknown",
+	  license: "public",               
+	  authentication: "no",
+	  shortDescription: "Lemmatization Tool for Danish",	  
+	  longDescription: "Performs lemmatization in running text, presented as freqency list. The web service returns a zip file containing original input and the results of all analyses.",	  
+	  languages: ["dan"],
+	  lang_encoding: "639-1",
+	  mimetypes: [
+	      "text/plain"
+	      , "text/rtf"		      
+	      , "application/pdf"
+	  ],
+	  output: ["application/zip"],
+	  url: ["https://clarin.dk/toolchains/run"],
+	  parameter: { 
+	      input    : "self.linkToResource",
+	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'text/rtf' : rtnValue = 'rtf'; break; default: rtnValue = 'flat'; } return rtnValue;",
+	      workflow : "da-frek-lemmas"
+	  },
+	  mapping: {
+	      input    : "URL",
+	      type     : "Iformat",
+	  }
+	},
+
+	{ task: "Lemmatization",	
+	  name: "CLARIN-DK Tool Chain for Lemmatization, presented as freqency list (web service)",
+	  softwareType: "webService",
+	  requestType: "get",	  
+	  logo: "clarindk.jpg",		  
+	  homepage: "https://clarin.dk/clarindk/toolchains-wizard.jsp",
+	  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
+	  creators: ["Bart Jongejan"],
+	  contact: {
+	      person: "Bart Jongejan",
+	      email: "bartj@hum.ku.dk",
+	  },
+	  version: "unknown",
+	  license: "public",                
+	  authentication: "no",
+	  shortDescription: "Lemmatization Tool for English",	  
+	  longDescription: "Performs lemmatization in running text, presented as freqency list. The web service returns a zip file containing original input and the results of all analyses.",	  
+	  languages: ["eng"],
+	  lang_encoding: "639-1",
+	  mimetypes: [
+	      "text/plain"
+	      , "text/rtf"		      
+	      , "application/pdf"
+	  ],
+	  output: ["application/zip"],
+	  url: ["https://clarin.dk/toolchains/run"],
+	  parameter: { 
+	      input    : "self.linkToResource",
+	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'text/rtf' : rtnValue = 'rtf'; break; default: rtnValue = 'flat'; } return rtnValue;",
+	      workflow : "en-frek-lemmas"
+	  },
+	  mapping: {
+	      input    : "URL",
+	      type     : "Iformat",
+	  }
+	},
+		
 	{ task: "Named Entity Recognition",
 	  name: "Concraft -> Nerf",
 	  logo: "zil.png",		  		  		  
@@ -800,58 +1227,6 @@ const Registry =
 		     }
 	},
 	
-	// { task: "Named Entity Recognition",
-	//   name: "CLARIN-DK Tool Box (CST Name Recognizer)",
-	//   logo: "clarindk.jpg",		  
-	//   homepage: "https://clarin.dk/clarindk/forside.jsp",		  
-	//   location: "Copenhagen, Denmark (CLAM Webservices)",
-	//   creators: ["Bart Jongejan et al."],
-	//   contact: {
-	//       person: "Bart Jongejan",
-	//       email: "bartj@hum.ku.dk",
-	//   },
-	//   version: "0.8.3",
-	//   license: "public",
-	//   authentication: "no",		  
-	//   shortDescription: "CLARIN-DK Tool Box (CST's name recognizer)",
-	//   longDescription:  "CLARIN-DK Tool Box (CST). CST's name recogniser classifies names as proper names, locations (with sub-classes of street, city, land and other types of locations), and other names (called MISC)",
-	//   lang_encoding: "639-1",
-	//   languages: ["dan"],
-	//   mimetypes: ["application/pdf",
-	// 	      "application/vnd.ms-powerpoint", // (PPT)
-	// 	      "application/vnd.openxmlformats-officedocument.presentationml.presentation", // (PPTX)
-	// 	      "application/vnd.oasis.opendocument.presentation", // (ODP)
-	// 	      "application/vnd.ms-excel", // (XLS)
-	// 	      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // (XLSX)
-	// 	      "application/vnd.oasis.opendocument.spreadsheet", // (ODS)
-	// 	      "application/x-download", //    (If it is PDF or RTF)
-	// 	      "application/octet-stream", //  (If it is PDF or RTF)
-	// 	      "application/msword", //         (RTF, DOC, DOCX)
-	// 	      "application/vnd.oasis.opendocument.text", // (ODT)
-	// 	      "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // (DOCX)
-	// 	      "text/html", // (HTML)
-	// 	      "text/rtf",  // (RTF)
-	// 	      "text/plain", 
-	// 	      "text/x-conll", // (CONLL)
-	// 	      "image/gif", 
-	// 	      "image/jpeg", 
-	// 	      "image/pjpeg", 
-	// 	      "image/png", 
-	// 	      "image/svg+xml", 
-	// 	      "image/tiff", 
-	// 	      "image/vnd.microsoft.icon"
-	// 	     ],
-	//   url: ["http://cst.dk:8080/tools/createByGoalChoice"], 
-	//   parameter: {  input   : "self.linkToResource", 
-	// 		lang    : "self.linkToResourceLanguage",                 
-	// 		analysis: "ner",
-	// 		UIlanguage: "en"				
-	// 	     },
-	//   mapping:   { input        : "URL",
-	// 	       lang         : "language"
-	// 	     }		  
-	// },
-
 	// { task: "Voice Synthesis",
 	//   name: "CLARIN-DK Tool Box (espeak)",
 	//   logo: "clarindk.jpg",		  
