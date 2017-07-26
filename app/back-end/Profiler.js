@@ -168,6 +168,7 @@ export default class Profiler {
 	    function(resolve) {
 		// console.log('mimetype identification succeeded', resolve);
 		if ( (resolve.text == "application/pdf") ||
+		     (resolve.text == "application/rtf") ||		     
 		     (resolve.text == "application/vnd.openxmlformats-officedocument.wordprocessingml.document" )) {
 		    let promiseConvert = that.convertToPlainText();
 		    promiseConvert.then(

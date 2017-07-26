@@ -18,6 +18,7 @@ export default class MimetypeMenu extends React.Component {
 		       "application/octet-stream",
 		       "application/ogg",
 		       "application/pdf",
+		       "application/rtf",		       
 		       "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
 		       "application/vnd.sun.wadl+xml",
 		       "application/vnd.ms-powerpoint",
