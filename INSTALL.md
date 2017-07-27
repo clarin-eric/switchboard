@@ -98,7 +98,7 @@ is run. This fetches the respective (public) Docker image from hub.docker.com an
 
 # Context Path Definition
 
-There are three locations that need to be adapted to run the switchboard on a different path, e.g.,
+There are four locations that need to be adapted to run the switchboard on a different path, e.g.,
 
 
    ```http://weblicht.sfs.uni-tuebingen.de/clrs-dev ```
@@ -110,3 +110,4 @@ or
 * In webpack.config.js, change ```process.env.URL_PATH ``` accordingly.
 * In Makefile, use the appropriate STATUS flag accordingly.
 * In nginx.conf, adapt the reverse proxy information accordingly.
+* In Dockerfile, change ENV variable for CLRS_PATH accordingly.

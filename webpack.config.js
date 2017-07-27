@@ -96,7 +96,7 @@ const common = {
 	}),
 
 	new webpack.DefinePlugin({
-	    'process.env.URL_PATH': JSON.stringify('/clrs')
+	    'process.env.URL_PATH': JSON.stringify('/clrs-dev')
 	})
     ]
 };
