@@ -2,7 +2,7 @@
 // 2016-17 Claus Zinn
 // 
 // File: Registry.js
-// Time-stamp: <2017-07-26 09:45:01 (zinn)>
+// Time-stamp: <2017-07-27 10:06:10 (zinn)>
 //
 // ----------------------------------------------------------------------------------------
 
@@ -481,14 +481,14 @@ const Registry =
 	  lang_encoding: "639-1",
 	  mimetypes: [
 	      "text/plain"
-	      , "text/rtf"		      
+	      , "application/rtf"		      
 	      , "application/pdf"
 	  ],
 	  output: ["application/zip"], 		  		  		  
 	  url: ["https://clarin.dk/toolchains/run"],
 	  parameter: { 
 	      input    : "self.linkToResource",
-	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'text/rtf' : rtnValue = 'rtf'; break; default: rtnValue = 'flat'; } return rtnValue;",
+	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'application/rtf' : rtnValue = 'doc'; break; default: rtnValue = 'flat'; } return rtnValue;",
 	      workflow : "da-segment"
 	  },
 	  mapping: {
@@ -518,14 +518,14 @@ const Registry =
 	  lang_encoding: "639-1",
 	  mimetypes: [
 	      "text/plain"
-	      , "text/rtf"		      
+	      , "application/rtf"		      
 	      , "application/pdf"
 	  ],
 	  output: ["application/zip"], 		  		  		  
 	  url: ["https://clarin.dk/toolchains/run"],
 	  parameter: { 
 	      input    : "self.linkToResource",
-	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'text/rtf' : rtnValue = 'rtf'; break; default: rtnValue = 'flat'; } return rtnValue;",
+	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'application/rtf' : rtnValue = 'doc'; break; default: rtnValue = 'flat'; } return rtnValue;",
 	      workflow : "en-segment"
 	  },
 	  mapping: {
@@ -555,14 +555,14 @@ const Registry =
 	  lang_encoding: "639-1",
 	  mimetypes: [
 	      "text/plain"
-	      , "text/rtf"		      
+	      , "application/rtf"		      
 	      , "application/pdf"
 	  ],
 	  output: ["application/zip"], 		  		  		  
 	  url: ["https://clarin.dk/toolchains/run"],
 	  parameter: { 
 	      input    : "self.linkToResource",
-	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'text/rtf' : rtnValue = 'rtf'; break; default: rtnValue = 'flat'; } return rtnValue;",
+	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'application/rtf' : rtnValue = 'doc'; break; default: rtnValue = 'flat'; } return rtnValue;",
 	      workflow : "da-tokensegment"
 	  },
 	  mapping: {
@@ -592,14 +592,14 @@ const Registry =
 	  lang_encoding: "639-1",
 	  mimetypes: [
 	      "text/plain"
-	      , "text/rtf"		      
+	      , "application/rtf"		      
 	      , "application/pdf"
 	  ],
 	  output: ["application/zip"], 		  		  		  
 	  url: ["https://clarin.dk/toolchains/run"],
 	  parameter: { 
 	      input    : "self.linkToResource",
-	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'text/rtf' : rtnValue = 'rtf'; break; default: rtnValue = 'flat'; } return rtnValue;",
+	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'application/rtf' : rtnValue = 'doc'; break; default: rtnValue = 'flat'; } return rtnValue;",
 	      workflow : "en-tokensegment"
 	  },
 	  mapping: {
@@ -629,14 +629,14 @@ const Registry =
 	  lang_encoding: "639-1",
 	  mimetypes: [
 	      "text/plain"
-	      , "text/rtf"		      
+	      , "application/rtf"		      
 	      , "application/pdf"
 	  ],
 	  output: ["application/zip"], 		  		  		  
 	  url: ["https://clarin.dk/toolchains/run"],
 	  parameter: { 
 	      input    : "self.linkToResource",
-	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'text/rtf' : rtnValue = 'rtf'; break; default: rtnValue = 'flat'; } return rtnValue;",
+	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'application/rtf' : rtnValue = 'doc'; break; default: rtnValue = 'flat'; } return rtnValue;",
 	      workflow : "da-tokensegmentPOS"
 	  },
 	  mapping: {
@@ -666,14 +666,14 @@ const Registry =
 	  lang_encoding: "639-1",
 	  mimetypes: [
 	      "text/plain"
-	      , "text/rtf"		      
+	      , "application/rtf"		      
 	      , "application/pdf"
 	  ],
 	  output: ["application/zip"], 		  		  		  
 	  url: ["https://clarin.dk/toolchains/run"],
 	  parameter: { 
 	      input    : "self.linkToResource",
-	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'text/rtf' : rtnValue = 'rtf'; break; default: rtnValue = 'flat'; } return rtnValue;",
+	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'application/rtf' : rtnValue = 'doc'; break; default: rtnValue = 'flat'; } return rtnValue;",
 	      workflow : "en-tokensegmentPOS"
 	  },
 	  mapping: {
@@ -703,14 +703,14 @@ const Registry =
 	  lang_encoding: "639-1",
 	  mimetypes: [
 	      "text/plain"
-	      , "text/rtf"		      
+	      , "application/rtf"		      
 	      , "application/pdf"
 	  ],
 	  output: ["application/zip"],
 	  url: ["https://clarin.dk/toolchains/run"],
 	  parameter: { 
 	      input    : "self.linkToResource",
-	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'text/rtf' : rtnValue = 'rtf'; break; default: rtnValue = 'flat'; } return rtnValue;",
+	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'application/rtf' : rtnValue = 'doc'; break; default: rtnValue = 'flat'; } return rtnValue;",
 	      workflow : "en-frek-ord"
 	  },
 	  mapping: {
@@ -740,14 +740,14 @@ const Registry =
 	  lang_encoding: "639-1",
 	  mimetypes: [
 	      "text/plain"
-	      , "text/rtf"		      
+	      , "application/rtf"		      
 	      , "application/pdf"
 	  ],
 	  output: ["application/zip"],
 	  url: ["https://clarin.dk/toolchains/run"],
 	  parameter: { 
 	      input    : "self.linkToResource",
-	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'text/rtf' : rtnValue = 'rtf'; break; default: rtnValue = 'flat'; } return rtnValue;",
+	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'application/rtf' : rtnValue = 'doc'; break; default: rtnValue = 'flat'; } return rtnValue;",
 	      workflow : "da-frek-bigram-lemmas"
 	  },
 	  mapping: {
@@ -777,14 +777,14 @@ const Registry =
 	  lang_encoding: "639-1",
 	  mimetypes: [
 	      "text/plain"
-	      , "text/rtf"		      
+	      , "application/rtf"		      
 	      , "application/pdf"
 	  ],
 	  output: ["application/zip"],
 	  url: ["https://clarin.dk/toolchains/run"],
 	  parameter: { 
 	      input    : "self.linkToResource",
-	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'text/rtf' : rtnValue = 'rtf'; break; default: rtnValue = 'flat'; } return rtnValue;",
+	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'application/rtf' : rtnValue = 'doc'; break; default: rtnValue = 'flat'; } return rtnValue;",
 	      workflow : "en-frek-bigram-lemmas"
 	  },
 	  mapping: {
@@ -814,14 +814,14 @@ const Registry =
 	  lang_encoding: "639-1",
 	  mimetypes: [
 	      "text/plain"
-	      , "text/rtf"		      
+	      , "application/rtf"		      
 	      , "application/pdf"
 	  ],
 	  output: ["application/zip"],
 	  url: ["https://clarin.dk/toolchains/run"],
 	  parameter: { 
 	      input    : "self.linkToResource",
-	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'text/rtf' : rtnValue = 'rtf'; break; default: rtnValue = 'flat'; } return rtnValue;",
+	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'application/rtf' : rtnValue = 'doc'; break; default: rtnValue = 'flat'; } return rtnValue;",
 	      workflow : "da-frek-bigram-ord"
 	  },
 	  mapping: {
@@ -851,14 +851,14 @@ const Registry =
 	  lang_encoding: "639-1",
 	  mimetypes: [
 	      "text/plain"
-	      , "text/rtf"		      
+	      , "application/rtf"		      
 	      , "application/pdf"
 	  ],
 	  output: ["application/zip"],
 	  url: ["https://clarin.dk/toolchains/run"],
 	  parameter: { 
 	      input    : "self.linkToResource",
-	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'text/rtf' : rtnValue = 'rtf'; break; default: rtnValue = 'flat'; } return rtnValue;",
+	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'application/rtf' : rtnValue = 'doc'; break; default: rtnValue = 'flat'; } return rtnValue;",
 	      workflow : "en-frek-bigram-ord"
 	  },
 	  mapping: {
@@ -888,14 +888,14 @@ const Registry =
 	  lang_encoding: "639-1",
 	  mimetypes: [
 	      "text/plain"
-	      , "text/rtf"		      
+	      , "application/rtf"		      
 	      , "application/pdf"
 	  ],
 	  output: ["application/zip"],
 	  url: ["https://clarin.dk/toolchains/run"],
 	  parameter: { 
 	      input    : "self.linkToResource",
-	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'text/rtf' : rtnValue = 'rtf'; break; default: rtnValue = 'flat'; } return rtnValue;",
+	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'application/rtf' : rtnValue = 'doc'; break; default: rtnValue = 'flat'; } return rtnValue;",
 	      workflow : "da-navne"
 	  },
 	  mapping: {
@@ -925,14 +925,14 @@ const Registry =
 	  lang_encoding: "639-1",
 	  mimetypes: [
 	      "text/plain"
-	      , "text/rtf"		      
+	      , "application/rtf"		      
 	      , "application/pdf"
 	  ],
 	  output: ["application/zip"],
 	  url: ["https://clarin.dk/toolchains/run"],
 	  parameter: { 
 	      input    : "self.linkToResource",
-	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'text/rtf' : rtnValue = 'rtf'; break; default: rtnValue = 'flat'; } return rtnValue;",
+	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'application/rtf' : rtnValue = 'doc'; break; default: rtnValue = 'flat'; } return rtnValue;",
 	      workflow : "da-navne-segments"
 	  },
 	  mapping: {
@@ -962,14 +962,14 @@ const Registry =
 	  lang_encoding: "639-1",
 	  mimetypes: [
 	      "text/plain"
-	      , "text/rtf"		      
+	      , "application/rtf"		      
 	      , "application/pdf"
 	  ],
 	  output: ["application/zip"],
 	  url: ["https://clarin.dk/toolchains/run"],
 	  parameter: { 
 	      input    : "self.linkToResource",
-	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'text/rtf' : rtnValue = 'rtf'; break; default: rtnValue = 'flat'; } return rtnValue;",
+	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'application/rtf' : rtnValue = 'doc'; break; default: rtnValue = 'flat'; } return rtnValue;",
 	      workflow : "da-navne-POS"
 	  },
 	  mapping: {
@@ -999,14 +999,14 @@ const Registry =
 	  lang_encoding: "639-1",
 	  mimetypes: [
 	      "text/plain"
-	      , "text/rtf"		      
+	      , "application/rtf"		      
 	      , "application/pdf"
 	  ],
 	  output: ["application/zip"],
 	  url: ["https://clarin.dk/toolchains/run"],
 	  parameter: { 
 	      input    : "self.linkToResource",
-	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'text/rtf' : rtnValue = 'rtf'; break; default: rtnValue = 'flat'; } return rtnValue;",
+	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'application/rtf' : rtnValue = 'doc'; break; default: rtnValue = 'flat'; } return rtnValue;",
 	      workflow : "da-lemmas-notags"
 	  },
 	  mapping: {
@@ -1036,14 +1036,14 @@ const Registry =
 	  lang_encoding: "639-1",
 	  mimetypes: [
 	      "text/plain"
-	      , "text/rtf"		      
+	      , "application/rtf"		      
 	      , "application/pdf"
 	  ],
 	  output: ["application/zip"],
 	  url: ["https://clarin.dk/toolchains/run"],
 	  parameter: { 
 	      input    : "self.linkToResource",
-	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'text/rtf' : rtnValue = 'rtf'; break; default: rtnValue = 'flat'; } return rtnValue;",
+	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'application/rtf' : rtnValue = 'doc'; break; default: rtnValue = 'flat'; } return rtnValue;",
 	      workflow : "en-lemmas-notags"
 	  },
 	  mapping: {
@@ -1073,14 +1073,14 @@ const Registry =
 	  lang_encoding: "639-1",
 	  mimetypes: [
 	      "text/plain"
-	      , "text/rtf"		      
+	      , "application/rtf"		      
 	      , "application/pdf"
 	  ],
 	  output: ["application/zip"],
 	  url: ["https://clarin.dk/toolchains/run"],
 	  parameter: { 
 	      input    : "self.linkToResource",
-	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'text/rtf' : rtnValue = 'rtf'; break; default: rtnValue = 'flat'; } return rtnValue;",
+	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'application/rtf' : rtnValue = 'doc'; break; default: rtnValue = 'flat'; } return rtnValue;",
 	      workflow : "da-lemmas-wtags"
 	  },
 	  mapping: {
@@ -1110,14 +1110,14 @@ const Registry =
 	  lang_encoding: "639-1",
 	  mimetypes: [
 	      "text/plain"
-	      , "text/rtf"		      
+	      , "application/rtf"		      
 	      , "application/pdf"
 	  ],
 	  output: ["application/zip"],
 	  url: ["https://clarin.dk/toolchains/run"],
 	  parameter: { 
 	      input    : "self.linkToResource",
-	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'text/rtf' : rtnValue = 'rtf'; break; default: rtnValue = 'flat'; } return rtnValue;",
+	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'application/rtf' : rtnValue = 'doc'; break; default: rtnValue = 'flat'; } return rtnValue;",
 	      workflow : "en-lemmas-wtags"
 	  },
 	  mapping: {
@@ -1147,14 +1147,14 @@ const Registry =
 	  lang_encoding: "639-1",
 	  mimetypes: [
 	      "text/plain"
-	      , "text/rtf"		      
+	      , "application/rtf"		      
 	      , "application/pdf"
 	  ],
 	  output: ["application/zip"],
 	  url: ["https://clarin.dk/toolchains/run"],
 	  parameter: { 
 	      input    : "self.linkToResource",
-	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'text/rtf' : rtnValue = 'rtf'; break; default: rtnValue = 'flat'; } return rtnValue;",
+	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'application/rtf' : rtnValue = 'doc'; break; default: rtnValue = 'flat'; } return rtnValue;",
 	      workflow : "da-frek-lemmas"
 	  },
 	  mapping: {
@@ -1184,14 +1184,14 @@ const Registry =
 	  lang_encoding: "639-1",
 	  mimetypes: [
 	      "text/plain"
-	      , "text/rtf"		      
+	      , "application/rtf"		      
 	      , "application/pdf"
 	  ],
 	  output: ["application/zip"],
 	  url: ["https://clarin.dk/toolchains/run"],
 	  parameter: { 
 	      input    : "self.linkToResource",
-	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'text/rtf' : rtnValue = 'rtf'; break; default: rtnValue = 'flat'; } return rtnValue;",
+	      type     : "let rtnValue = 'flat'; switch(mimetype) { case 'text/plain' : rtnValue = 'flat'; break; case 'application/pdf' : rtnValue = 'pdf'; break; case 'application/rtf' : rtnValue = 'doc'; break; default: rtnValue = 'flat'; } return rtnValue;",
 	      workflow : "en-frek-lemmas"
 	  },
 	  mapping: {
@@ -1314,7 +1314,7 @@ const Registry =
 	  languages: ["tur"],
 	  lang_encoding: "639-1",		  
 	  mimetypes: ["text/plain",
-		      "text/rtf",			     
+		      "application/rtf",			     
 		      "application/pdf",
 		      "application/msword",
 		      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
@@ -1346,7 +1346,7 @@ const Registry =
 	  languages: ["deu"],
 	  lang_encoding: "639-1",		  
 	  mimetypes: ["text/plain",
-		      "text/rtf",			     
+		      "application/rtf",			     
 		      "application/pdf",
 		      "application/msword",
 		      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
@@ -1378,7 +1378,7 @@ const Registry =
 	  languages: ["deu"],
 	  lang_encoding: "639-1",		  
 	  mimetypes: ["text/plain",,
-		      "text/rtf",			     
+		      "application/rtf",			     
 		      "application/pdf",
 		      "application/msword",
 		      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
@@ -1409,7 +1409,7 @@ const Registry =
 	  languages: ["eng"],
 	  lang_encoding: "639-1",		  
 	  mimetypes: ["text/plain",
-		      "text/rtf",			     
+		      "application/rtf",			     
 		      "application/pdf",
 		      "application/msword",
 		      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
@@ -1441,7 +1441,7 @@ const Registry =
 	  languages: ["deu"],
 	  lang_encoding: "639-1",		  
 	  mimetypes: ["text/plain",
-		      "text/rtf",			     
+		      "application/rtf",			     
 		      "application/pdf",
 		      "application/msword",
 		      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
@@ -1472,7 +1472,7 @@ const Registry =
 	  languages: ["fra"],
 	  lang_encoding: "639-1",		  
 	  mimetypes: ["text/plain",
-		      "text/rtf",			     
+		      "application/rtf",			     
 		      "application/pdf",
 		      "application/msword",
 		      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
@@ -1503,7 +1503,7 @@ const Registry =
 	  languages: ["ita"],
 	  lang_encoding: "639-1",		  
 	  mimetypes: ["text/plain",
-		      "text/rtf",			     
+		      "application/rtf",			     
 		      "application/pdf",
 		      "application/msword",
 		      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
@@ -1534,7 +1534,7 @@ const Registry =
 	  languages: ["eng"],
 	  lang_encoding: "639-1",		  
 	  mimetypes: ["text/plain",
-		      "text/rtf",			     
+		      "application/rtf",			     
 		      "application/pdf",
 		      "application/msword",
 		      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
@@ -1592,7 +1592,7 @@ const Registry =
 	  languages: ["eng"],
 	  lang_encoding: "639-1",		  
 	  mimetypes: ["text/plain",
-		      "text/rtf",			     
+		      "application/rtf",			     
 		      "application/pdf",
 		      "application/msword",
 		      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
@@ -1626,7 +1626,7 @@ const Registry =
 	  languages: ["eng", "deu", "spa", "nld", "fra", "generic"], 
 	  lang_encoding: "639-1",
 	  mimetypes: ["text/plain",
-		      "text/rtf",			     
+		      "application/rtf",			     
 		      "application/pdf",
 		      "application/msword",
 		      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
@@ -2088,7 +2088,7 @@ const Registry =
 	  languages: ["deu"],
 	  lang_encoding: "639-1",		  
 	  mimetypes: ["text/plain",
-		      "text/rtf",			     
+		      "application/rtf",			     
 		      "application/pdf",
 		      "application/msword",
 		      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
@@ -2119,7 +2119,7 @@ const Registry =
 	  languages: ["eng"],
 	  lang_encoding: "639-1",		  
 	  mimetypes: ["text/plain",
-		      "text/rtf",			     
+		      "application/rtf",			     
 		      "application/pdf",
 		      "application/msword",
 		      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
@@ -2177,7 +2177,7 @@ const Registry =
 	  languages: ["deu"],
 	  lang_encoding: "639-1",		  
 	  mimetypes: ["text/plain",
-		      "text/rtf",			     
+		      "application/rtf",			     
 		      "application/pdf",
 		      "application/msword",
 		      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
@@ -2208,7 +2208,7 @@ const Registry =
 	  languages: ["nld"],
 	  lang_encoding: "639-1",		  
 	  mimetypes: ["text/plain",
-		      "text/rtf",			     
+		      "application/rtf",			     
 		      "application/pdf",
 		      "application/msword",
 		      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
@@ -2240,7 +2240,7 @@ const Registry =
 	  languages: ["eng"],
 	  lang_encoding: "639-1",		  
 	  mimetypes: ["text/plain",
-		      "text/rtf",			     
+		      "application/rtf",			     
 		      "application/pdf",
 		      "application/msword",
 		      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
@@ -2325,7 +2325,7 @@ const Registry =
 	  languages: ["deu"],
 	  lang_encoding: "639-1",		  
 	  mimetypes: ["text/plain",
-		      "text/rtf",			     
+		      "application/rtf",			     
 		      "application/pdf",
 		      "application/msword",
 		      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
@@ -2356,7 +2356,7 @@ const Registry =
 	  languages: ["eng"],
 	  lang_encoding: "639-1",		  
 	  mimetypes: ["text/plain",
-		      "text/rtf",			     
+		      "application/rtf",			     
 		      "application/pdf",
 		      "application/msword",
 		      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
