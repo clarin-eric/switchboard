@@ -36,7 +36,6 @@ import Matcher from '../back-end/Matcher';
 
 // logo images for task-oriented view (CZ: should move to TaskOrientedView
 require('./../images/clarin-logo-wide.png');
-require('./../images/switchboard.png');
 require('./../images/weblicht.jpg');
 require('./../images/voyant-tools.jpg');
 require('./../images/frog.jpg');

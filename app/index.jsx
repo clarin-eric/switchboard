@@ -4,7 +4,6 @@ import './css/selectize.css';
 import './css/ionicons.min.css';
 
 import './css/vlo.css';
-import './css/font-awesome.min.css';
 import './css/toggle.css';
 
 
