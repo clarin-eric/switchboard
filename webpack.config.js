@@ -1,3 +1,5 @@
+
+
 const path = require('path');
 const HtmlwebpackPlugin = require('html-webpack-plugin');
 
@@ -11,9 +13,13 @@ const PATHS = {
 };
 
 //var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-//var Visualizer = require('webpack-visualizer-plugin'); 
+//var Visualizer = require('webpack-visualizer-plugin');
+
+//var ZipPlugin = require('zip-webpack-plugin');
+var ManifestPlugin = require('webpack-manifest-plugin');
 
 process.env.BABEL_ENV = TARGET;
+process.traceDeprecation = true;
 
 //const PROD = (process.env.NODE_ENV === 'production')
 
@@ -28,8 +34,8 @@ const common = {
     // without an extension. Note the .'s before extensions!!!
     // The matching will fail without!
     resolve: {
-	extensions: ['', '.js', '.jsx'],
-	modulesDirectories: ['node_modules']
+	extensions: ['.js', '.jsx'],
+	modules: ['node_modules']
     },
 
     node: {
@@ -56,7 +62,7 @@ const common = {
 	    {
 		// Test expects a RegExp! Note the slashes!
 		test: /\.css$/,
-		loaders: ['style', 'css'],
+		loaders: ['style-loader', 'css-loader'],
 		// Include accepts either a path or an array of paths.
 		include: PATHS.app
 	    },
@@ -68,19 +74,19 @@ const common = {
 		include: PATHS.app.images
 	    },
 
-	    {
-		test: /\.(htm|html)$/,
-		loader: 'file-loader?name=[name].[ext]',
-		include: PATHS.app.html
-	    },
-
+	    // {
+	    // 	test: /\.(htm|html)$/,
+	    // 	loader: 'file-loader?name=[name].[ext]',
+	    // 	include: PATHS.app.html
+	    // },
+	    
 	    // Set up jsx. This accepts js too thanks to RegExp
 	    {
 		test: /\.jsx?$/,
 		// Enable caching for improved performance during development
 		// It uses default OS directory by default. If you need something
 		// more custom, pass a path to it. I.e., babel?cacheDirectory=<path>
-		loader: 'babel',
+		loader: 'babel-loader',
 		query:
 		{
 		    presets:['react', 'es2015', 'stage-0']
@@ -98,8 +104,11 @@ const common = {
 	//     include: /\.min\.js$/,
 	//     minimize: true
 	// }),
+
+	new ManifestPlugin(),
 	new HtmlwebpackPlugin({
-	    template: 'app/template.html',
+	    inject: false,
+	    template: require('html-webpack-template'),
 	    hash: true,
 	    title: 'CLARIN LANGUAGE RESOURCE SWITCHBOARD',
 	    appMountId: 'app',
@@ -109,7 +118,8 @@ const common = {
 	new webpack.DefinePlugin({
 	    'process.env.URL_PATH': JSON.stringify('/clrs-dev')
 	}),
-	
+
+//	new ZipPlugin(),
 	// new webpack.optimize.AggressiveMergingPlugin(),
 	// new webpack.optimize.OccurrenceOrderPlugin(),
 	// new webpack.optimize.DedupePlugin(),
@@ -149,7 +159,7 @@ if(TARGET === 'start' || !TARGET) {
 	    historyApiFallback: true,
 	    hot: true,
 	    inline: true,
-	    progress: true,
+	    //progress: true,
 	    
 	    // Display only errors to reduce the amount of output.
 	    stats: 'errors-only',

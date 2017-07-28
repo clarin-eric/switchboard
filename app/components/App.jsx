@@ -174,15 +174,15 @@ export default class App extends React.Component {
       <Route exact path="/" component={DropArea} />
       <Route exact path="/vlo/:fileURL/:fileMimetype/:fileLanguage"
 	     render={(props) => <UrlArea refreshFun={this.refresh} caller="VLO" {...props} /> } />
-      <Route exact path="/vlo/:fileURL/:fileMimetype"
-             render={(props) => <UrlArea refreshFun={this.refresh} caller="VLO" {...props} /> } />	    
-      <Route path="/vcr/:fileURL"
-            render={(props) => <UrlArea refreshFun={this.refresh} caller="VCR" {...props} /> } />
-      <Route path="/fcs/:fileURL"
-   	    render={(props) => <UrlArea refreshFun={this.refresh} caller="FCS" {...props} /> } />	    
-      <Route path="/b2drop/:fileURL"
-	    render={(props) => <UrlArea refreshFun={this.refresh} caller="B2DROP" {...props} /> } />    
-      <Route path="*"       component={AlertURLFetchError} />
+	<Route exact path="/vlo/:fileURL/:fileMimetype"
+               render={(props) => <UrlArea refreshFun={this.refresh} caller="VLO" {...props} /> } />	    
+	  <Route path="/vcr/:fileURL"
+		 render={(props) => <UrlArea refreshFun={this.refresh} caller="VCR" {...props} /> } />
+	    <Route path="/fcs/:fileURL"
+   		   render={(props) => <UrlArea refreshFun={this.refresh} caller="FCS" {...props} /> } />	    
+	      <Route path="/b2drop/:fileURL"
+		     render={(props) => <UrlArea refreshFun={this.refresh} caller="B2DROP" {...props} /> } />    
+		<Route path="*"       component={AlertURLFetchError} />
     </Switch>
   </HashRouter>
   
@@ -201,6 +201,34 @@ export default class App extends React.Component {
             toolsPerTask = { this.state.toolsPerTask || {} }
 		/>
   <hr />
+
+  <footer id="footer">
+    <div className="container">
+      <div className="row">
+        <div className="col-sm-6 col-sm-push-3 col-xs-12">
+          <div className="text-center">
+            <span className="footer-fineprint">
+              Service provided by <a href="https://www.clarin.eu">CLARIN</a>
+            </span>
+          </div>
+        </div>
+        <div className="col-sm-3 col-sm-pull-6 col-xs-12">
+          <div className="version-info text-center-xs">
+            v1.0.0-alpha/docker (Jul 27, 2017)
+          </div>
+        </div>
+        <div className="col-sm-3 hidden-xs text-right">
+          
+          <a href="mailto:claus.zinn@uni-tuebingen.de?subject=CLARIN-PLUS LRS">Contact</a>
+        </div>
+        <div className="visible-xs-block text-center">
+          
+          <a href="./about">About</a>
+          &nbsp;<a href="mailto:claus.zinn@uni-tuebingen.de?subject=CLARIN-PLUS LRS">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
 </div>
 );
 }}
