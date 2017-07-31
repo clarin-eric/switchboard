@@ -116,7 +116,7 @@ const common = {
 	}),
 
 	new webpack.DefinePlugin({
-	    'process.env.URL_PATH': JSON.stringify('/clrs-dev')
+	    'process.env.URL_PATH': JSON.stringify('/clrs')
 	}),
 
 //	new ZipPlugin(),

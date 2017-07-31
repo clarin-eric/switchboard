@@ -214,7 +214,7 @@ export default class App extends React.Component {
         </div>
         <div className="col-sm-3 col-sm-pull-6 col-xs-12">
           <div className="version-info text-center-xs">
-            v1.0.0-alpha/docker (Jul 27, 2017)
+            v1.0.0-alpha/docker (Jul 31, 2017)
           </div>
         </div>
         <div className="col-sm-3 hidden-xs text-right">
