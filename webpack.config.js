@@ -110,11 +110,15 @@ const common = {
 	}),
 
 	new webpack.DefinePlugin({
+<<<<<<< HEAD
 
 	    'process.env': {
                 'NODE_ENV': JSON.stringify('production'),
 		'URL_PATH': JSON.stringify('/clrs-dev')
 	    }
+=======
+	    'process.env.URL_PATH': JSON.stringify('/clrs')
+>>>>>>> master
 	}),
 
         new webpack.optimize.OccurrenceOrderPlugin(),
