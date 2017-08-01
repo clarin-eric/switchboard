@@ -67,8 +67,8 @@ export default class DropArea extends React.Component {
 	let uploader = new Uploader( currentFile );
 	this.setState( { isLoaded: false });
 	let that = this;
-	let promiseUpload = uploader.uploadFile();
-	//let promiseUpload = uploader.uploadFile_B2DROP();
+	//let promiseUpload = uploader.uploadFile();
+	let promiseUpload = uploader.uploadFile_B2DROP();
 	promiseUpload.then(
 	    function(resolve) {
 		// console.log('DropArea/uploadAndProcessFile', resolve);//
