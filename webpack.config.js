@@ -15,13 +15,10 @@ const PATHS = {
 //var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 //var Visualizer = require('webpack-visualizer-plugin');
 
-//var ZipPlugin = require('zip-webpack-plugin');
 var ManifestPlugin = require('webpack-manifest-plugin');
 
 process.env.BABEL_ENV = TARGET;
 process.traceDeprecation = true;
-
-//const PROD = (process.env.NODE_ENV === 'production')
 
 const webpack = require('webpack');
 
@@ -98,12 +95,9 @@ const common = {
 
     // see https://www.npmjs.com/package/html-webpack-plugin
     plugins: [
-//	new BundleAnalyzerPlugin(),
-	// new Visualizer(),
-	// new webpack.optimize.UglifyJsPlugin({
-	//     include: /\.min\.js$/,
-	//     minimize: true
-	// }),
+	
+// new BundleAnalyzerPlugin(),
+// new Visualizer(),
 
 	new ManifestPlugin(),
 	new HtmlwebpackPlugin({
@@ -116,36 +110,19 @@ const common = {
 	}),
 
 	new webpack.DefinePlugin({
-	    'process.env.URL_PATH': JSON.stringify('/clrs-dev')
+
+	    'process.env': {
+                'NODE_ENV': JSON.stringify('production'),
+		'URL_PATH': JSON.stringify('/clrs-dev')
+	    }
 	}),
 
-//	new ZipPlugin(),
-	// new webpack.optimize.AggressiveMergingPlugin(),
-	// new webpack.optimize.OccurrenceOrderPlugin(),
-	// new webpack.optimize.DedupePlugin(),
-	// new webpack.optimize.UglifyJsPlugin({
-	//     mangle: true,
-	//     compress: {
-	// 	warnings: false, // Suppress uglification warnings
-	// 	pure_getters: true,
-	// 	unsafe: true,
-	// 	unsafe_comps: true,
-	// 	screw_ie8: true,
-	// 	conditionals: true,
-	// 	unused: true,
-	// 	comparisons: true,
-	// 	sequences: true,
-	// 	dead_code: true,
-	// 	evaluate: true,
-	// 	if_return: true,
-	// 	join_vars: true
-	//     },
-	//     output: {
-	// 	comments: false,
-	//     },
-	//     exclude: [/\.min\.js$/gi] // skip pre-minified libs
-	// }),
-	// new webpack.IgnorePlugin(/^\.\/locale$/, [/moment$/]), 
+        new webpack.optimize.OccurrenceOrderPlugin(),
+        new webpack.optimize.UglifyJsPlugin({
+            compressor: {
+                warnings: false
+            }
+        })
     ]
 };
 
