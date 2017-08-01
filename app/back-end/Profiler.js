@@ -125,7 +125,7 @@ export default class Profiler {
 			reject(err);
 			alert('Warning: could not download content');
 		    } else {
-			console.log('Profiler/getContent', res);
+			// console.log('Profiler/getContent', res);
 			resolve(res);
 		    }
 		})
