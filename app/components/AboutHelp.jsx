@@ -82,7 +82,7 @@ class AboutHelpText extends React.Component {
 	    
             <h3 id="licence">Licence</h3>
             <div className="licenceText">
-              <p>Copyright (C) 2016- CLARIN ERIC</p>
+              <p>Copyright (C) 2017- CLARIN ERIC</p>
               <p>This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</p>
               <p>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.</p>
               <p>You should have received a copy of the GNU General Public License along with this program. If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
@@ -90,15 +90,13 @@ class AboutHelpText extends React.Component {
 	    
             <h3>Technology used</h3>
             <ul>
-              <li><a href="http://www.java.com/">Java SE</a></li>
-              <li><a href="http://tika.apache.org/">Apache Tika</a></li>
-              <li><a href="http://getbootstrap.com/">Bootstrap</a> (version 3.3.6)</li>
-              <li><a href="https://facebook.github.io/react/">ReactJS</a> (version 15.3.2)</li>
-	      <li><a href="https://nodejs.org/en/">Nodejs</a> (version 5.12.0)</li>
-	      <li><a href="https://www.npmjs.com">Javascript package manager npm</a> (version 3.8.6)</li>
+              <li><a href="https://facebook.github.io/react/">ReactJS</a> (version 15.5.4)</li>
+	      <li><a href="https://nodejs.org/en/">Nodejs</a> (version 8.1.4)</li>
+	      <li><a href="https://www.npmjs.com">Javascript package manager npm</a> (version 5.3.0)</li>
 	      <li><a href="http://alt.js.org/docs/components/altContainer/">altjs</a> (version 1.0.0)</li>
-	      <li><a href="https://webpack.github.io">Webpack Javascript module bundler</a></li>
+	      <li><a href="https://webpack.github.io">Webpack Javascript module bundler</a>(version 3.4.1)</li>
 	      <li><a href="http://www.json.org">JSON (JavaScript Object Notation)</a></li>
+              <li><a href="http://tika.apache.org/">Apache Tika (tika-server-1.16.jar)</a></li>
             </ul>
 	    
 	    <p>

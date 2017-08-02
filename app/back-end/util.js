@@ -4,7 +4,6 @@ export const urlPath = process.env.URL_PATH;
 // export const fileStorageServerMPG_localhost  = '//localhost/clrs/storage/';
 
 export const fileStorageServerMPG_localhost  = window.location.origin.concat(urlPath).concat('/storage/');
-// dexport const fileStorageServerMPG_localhost  = window.location.origin.concat('/clrs-dev/storage/');
 
 export const fileStorageServerMPG_remote     = 'http://ws1-clarind.esc.rzg.mpg.de/drop-off/storage/';
 // export const fileStorageServerB2DROP = '//weblicht.sfs.uni-tuebingen.de/owncloud';
@@ -19,6 +18,9 @@ export const fileStorageServerB2DROP_offcial_wc = "claus.zinn@uni-tuebingen.de:s
 // on localhost
 export const fileStorageServerB2DROP_localhost_wc = "http://switchboard:clarin-plus@localhost"; 
 export const fileStorageServerB2DROP = "http://localhost/owncloud";
+
+// docker variant (see nginx.conf for reverse-proxying)
+export const fileStorageServerOC_localhost = window.location.origin.concat(urlPath).concat('/nextcloud/');
 
 export function unfoldHandle( handle ) {
     var hdlShortPrefix = "hdl:";

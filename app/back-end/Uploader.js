@@ -6,7 +6,7 @@
 //     //ws1-clarind.esc.rzg.mpg.de/drop-off/storage/
 
 import Request from 'superagent';
-import {fileStorageServerMPG_localhost, fileStorageServerMPG_remote, fileStorageServerB2DROP} from './util';
+import {fileStorageServerMPG_localhost, fileStorageServerMPG_remote, fileStorageServerOC_localhost} from './util';
 
 export default class Uploader {
 
@@ -53,7 +53,7 @@ export default class Uploader {
 	return new Promise(function(resolve, reject) {
 	    // 1a. store in B2DROP 
 	    Request
-		.put(fileStorageServerB2DROP.concat('/remote.php/webdav/').concat(that.filenameWithDate))    
+		.put(fileStorageServerOC_localhost.concat('/remote.php/webdav/').concat(that.filenameWithDate))    
 		.auth('switchboard', 'clarin-plus')
 		.set('Access-Control-Allow-Origin', '*')	
 		.set('Access-Control-Allow-Credentials', 'true')
@@ -68,11 +68,12 @@ export default class Uploader {
 		    } else {
 			// 1b. Create a 'share link' action on the file you uploaded
 			Request
-			    .post(fileStorageServerB2DROP.concat('/ocs/v1.php/apps/files_sharing/api/v1/shares'))
+			    .post(fileStorageServerOC_localhost.concat('/ocs/v1.php/apps/files_sharing/api/v1/shares'))
 			    .set('Content-Type', 'application/json')
 			    .set('Accept', 'application/xml')
 			    .set('Access-Control-Allow-Origin', '*')
 			    .set('Access-Control-Allow-Credentials', 'true')
+			    .set('OCS-APIRequest',  'true') // nextcloud v11+
 			    .send( { path : that.filenameWithDate,
 				     shareType: 3
 				   } )
