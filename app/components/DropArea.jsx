@@ -6,6 +6,7 @@ import ResourceActions from '../actions/ResourceActions';
 // access to profiler
 import Profiler from '../back-end/Profiler';
 import Uploader from '../back-end/Uploader';
+import {fileStoragePath} from '../back-end/util';
 
 export default class DropArea extends React.Component {
     constructor(props) {
@@ -67,8 +68,15 @@ export default class DropArea extends React.Component {
 	let uploader = new Uploader( currentFile );
 	this.setState( { isLoaded: false });
 	let that = this;
-	//let promiseUpload = uploader.uploadFile();
-	let promiseUpload = uploader.uploadFile_B2DROP();
+
+	// use environment variable set in webpack config to decide which file storage server to use
+	let promiseUpload = nil;
+	if (fileStoragePath === "MPCDF") {
+	    promiseUpload = uploader.uploadFile();
+	} else {
+	    promiseUpload = uploader.uploadFile_B2DROP();
+	}
+	
 	promiseUpload.then(
 	    function(resolve) {
 		// console.log('DropArea/uploadAndProcessFile', resolve);//

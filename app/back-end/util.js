@@ -1,4 +1,5 @@
 export const urlPath = process.env.URL_PATH;
+export const fileStoragePath = process.env.FILE_STORAGE;
 
 // export const fileStorageServerMPG    = '//weblicht.sfs.uni-tuebingen.de/clrs/storage/';
 // export const fileStorageServerMPG_localhost  = '//localhost/clrs/storage/';
