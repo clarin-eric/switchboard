@@ -90,6 +90,7 @@ export default class App extends React.Component {
     }
 
     componentDidMount() {
+
 	this.piwik.push(["setDomains", ["*.weblicht.sfs.uni-tuebingen.de/clrs","*.weblicht.sfs.uni-tuebingen.de/clrs"]]);
 	this.piwik.push(['trackPageView']);
 
@@ -123,6 +124,10 @@ export default class App extends React.Component {
     }
 
     render() {
+	var style = {
+	    display: 'none'
+	};
+	
 	return (
 <div>
   <header id="header" role="banner">
@@ -168,6 +173,7 @@ export default class App extends React.Component {
       </div>
     </div>
   </header>
+
   <div id='dragAndDropArea'></div>
   <HashRouter>
     <Switch>

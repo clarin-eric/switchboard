@@ -58,7 +58,7 @@ class UserHelpText extends React.Component {
 	  <ol>
 	    <li>Drag a file from your file manager to the dotted area in the screen. Alternatively, click
 	      on the dotted area, then select a file to be uploaded. <small>[Note that the selected file will be
-		uploaded to a temporary file storage onto a CLARIN-based server.]</small></li>
+		uploaded to a temporary file storage onto a CLARIN-based server. The temporary file storage is not secure, that is, other users might get access to your file.]</small></li>
 	    <li>A file information pane appears with basic information about the file. Please verify
 	      whether the information that has been gathered in the pane is correct. Use the pull-down menus
 	      for 'mimetype' and 'language' to correct existing information, or to add missing
@@ -110,6 +110,9 @@ class UserHelpText extends React.Component {
 		two inputs) </li>
 	      <li><em>Please contact us, when a tool (or web service) does not work as advertised, or when you
 		  would like to have some tool (or web service) added to the LRS.</em></li>
+	      <li><em>By visiting our site, users accept the use of cookies by Piwik and Google
+		Analytics to make visits statistics.</em></li>
+	      
 	    </ul>
             <hr />
 	    <p>
