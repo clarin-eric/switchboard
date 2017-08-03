@@ -2,7 +2,7 @@
 // 2016-17 Claus Zinn
 // 
 // File: Registry.js
-// Time-stamp: <2017-07-27 10:06:10 (zinn)>
+// Time-stamp: <2017-08-03 12:53:09 (zinn)>
 //
 // ----------------------------------------------------------------------------------------
 
@@ -2850,8 +2850,9 @@ const Registry =
 
 	{ task: "Tokenisation",
 	  name: "ILC Tokenizer (web service)",
-	  //softwareType: "webService",
-	  softwareType: "browserBased",
+	  softwareType: "webService",
+	  //softwareType: "browserBased",
+	  requestType: "get",	  
 	  logo: "YourLogoComesHere.png", // Fix this
 	  homepage: "http://ilc4clarin.ilc.cnr.it/services/ltfw/readme",
 	  location: "Pisa, Italiy",
@@ -2866,7 +2867,7 @@ const Registry =
 	  shortDescription: "This is the ILC tokenizer for a number of European languages.",
 	  longDescription: "This is the ILC tokenizer (web service) for Italian, French, German, English, Spanish und Dutch.",
 	  lang_encoding: "639-3",
-	  languages: ["ita", "fra", "deu", "eng", "esp", "nld"],
+	  languages: ["ita", "fra", "deu", "eng", "spa", "nld"],
 	  mimetypes: ["text/plain"],
 	  url: ["http://ilc4clarin.ilc.cnr.it/services/ltfw/wl/tokenizer/lrs"],
 	  parameter: {  input   : "self.linkToResource", 
