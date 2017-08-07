@@ -8,7 +8,7 @@ export function invokeBrowserBasedTool( URL ) {
 
 export function invokeWebService( URL ) {
     let file = URL.formVal;
-    console.log('ToolInvoker/invokeWebService', URL);
+    //console.log('ToolInvoker/invokeWebService', URL);
     if (URL.requestType == "get") {
 	// same as invokeBrowserBasedTool
 	var win = window.open(URL.url, '_blank');
@@ -19,11 +19,11 @@ export function invokeWebService( URL ) {
 	    .send(file)
 	    .end((err, res) => {
 		if (err) {
-		    console.log('Tool.jsx/invokeWebService: error in calling webservice', err, file.name, URL);
+		    console.log('ToolInvoker/invokeWebService: error in calling webservice', err, file.name, URL);
 		    alert('Result of calling web service: ' + err);
 		} else {
 		    var something = window.open("data:text/json," + encodeURIComponent(res.text), "_blank");
-		    console.log('onDrop: success in calling webservice', res, file.name, data, URL);
+		    //console.log('onDrop: success in calling webservice', res, file.name, data, URL);
 		}
 	    });
     } else {
@@ -36,12 +36,12 @@ export function invokeWebService( URL ) {
 	//		.set('Content-Type', 'text/plain')	    
 	    .end((err, res) => {
 		if (err) {
-		    console.log('Tool.jsx/invokeWebService: error in calling webservice', err, file.name, data, URL);
+		    console.log('ToolInvoker/invokeWebService: error in calling webservice', err, file.name, data, URL);
 		    alert('Result of calling web service: ' + err);
 		} else {
 		    var something = window.open("data:text/json," + encodeURIComponent(res.text), "_blank");
 		    // something.focus();
-		    console.log('onDrop: success in calling webservice', res, file.name, data, URL);
+		    // console.log('onDrop: success in calling webservice', res, file.name, data, URL);
 		}
 	    });
     }
@@ -53,7 +53,7 @@ export function constructToolURL( toolDescription, resourceDescription ) {
     var fileServerURL = "";
     var rtnValue = { };	
 
-//    console.log('Tool.jsx/constructToolURL toolDescription:', toolDescription, 'resourceDescription:', resourceDescription);
+//    console.log('ToolInvoker/constructToolURL toolDescription:', toolDescription, 'resourceDescription:', resourceDescription);
 
     // need to encode the remote file name in case it contains special characters
     var remoteFilename   =  encodeURIComponent(resourceDescription.remoteFilename);	
