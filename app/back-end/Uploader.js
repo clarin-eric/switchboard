@@ -6,7 +6,13 @@
 //     //ws1-clarind.esc.rzg.mpg.de/drop-off/storage/
 
 import Request from 'superagent';
-import {fileStorageServerMPG_localhost, fileStorageServerMPG_remote, fileStorageServerOC_localhost} from './util';
+import {fileStorage,
+	fileStorageServerMPG_localhost,
+	fileStorageServerMPG_remote,
+	fileStorageServerNEXTCLOUD_localhost,
+	fileStorageServerB2DROP_localhost,
+	b2drop_user,
+	b2drop_pass} from './util';
 
 export default class Uploader {
 
@@ -47,14 +53,24 @@ export default class Uploader {
 		})});
     }
 
-    // uploading to B2DROP is a two stage process
-    uploadFile_B2DROP() {
+    // uploading to Nextcloud or B2DROP is a two stage process
+    uploadFile_NC_B2DROP() {
 	let that = this;
+	let cloudPath;
+	
+	if (fileStorage === "NEXTCLOUD") {
+	    cloudPath = fileStorageServerNEXTCLOUD_localhost
+	} else {
+	    cloudPath = fileStorageServerB2DROP_localhost
+	}
+
+//	console.log('Uploader/uploadFile_NC_B2DROP', cloudPath);
+	
 	return new Promise(function(resolve, reject) {
 	    // 1a. store in B2DROP 
 	    Request
-		.put(fileStorageServerOC_localhost.concat('/remote.php/webdav/').concat(that.filenameWithDate))    
-		.auth('switchboard', 'clarin-plus')
+		.put(cloudPath.concat('remote.php/webdav/').concat(that.filenameWithDate))    
+		.auth(b2drop_user, b2drop_pass)
 		.set('Access-Control-Allow-Origin', '*')	
 		.set('Access-Control-Allow-Credentials', 'true')
 		.set('Content-Type', that.file.type)
@@ -67,8 +83,9 @@ export default class Uploader {
 			alert('Error in uploading resource to B2Drop instance');
 		    } else {
 			// 1b. Create a 'share link' action on the file you uploaded
+//			console.log('2nd request', cloudPath.concat('ocs/v1.php/apps/files_sharing/api/v1/shares'));
 			Request
-			    .post(fileStorageServerOC_localhost.concat('/ocs/v1.php/apps/files_sharing/api/v1/shares'))
+			    .post(cloudPath.concat('ocs/v1.php/apps/files_sharing/api/v1/shares'))
 			    .set('Content-Type', 'application/json')
 			    .set('Accept', 'application/xml')
 			    .set('Access-Control-Allow-Origin', '*')
@@ -77,7 +94,7 @@ export default class Uploader {
 			    .send( { path : that.filenameWithDate,
 				     shareType: 3
 				   } )
-			    .auth('switchboard', 'clarin-plus')
+			    .auth(b2drop_user, b2drop_pass)			
 			    .withCredentials()
 			    .end((err, res) => {
 				if (err) {

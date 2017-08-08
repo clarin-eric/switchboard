@@ -1,27 +1,15 @@
-export const urlPath = process.env.URL_PATH;
-export const fileStoragePath = process.env.FILE_STORAGE;
+export const urlPath     = process.env.URL_PATH;
+export const fileStorage = process.env.FILE_STORAGE;
+export const b2drop_user = process.env.B2DROP_USER;
+export const b2drop_pass = process.env.B2DROP_PASS;
 
-// export const fileStorageServerMPG    = '//weblicht.sfs.uni-tuebingen.de/clrs/storage/';
-// export const fileStorageServerMPG_localhost  = '//localhost/clrs/storage/';
-
-export const fileStorageServerMPG_localhost  = window.location.origin.concat(urlPath).concat('/storage/');
-
+// for creation of link
 export const fileStorageServerMPG_remote     = 'http://ws1-clarind.esc.rzg.mpg.de/drop-off/storage/';
-// export const fileStorageServerB2DROP = '//weblicht.sfs.uni-tuebingen.de/owncloud';
 
-// VPN @ shannon (reverse proxying)
-export const fileStorageServerB2DROP_wc = "http://switchboard:clarin-plus@shannon.sfs.uni-tuebingen.de";
-
-// official site, won't work because of CORS-related issue, reverse proxying needed
-export const fileStorageServerB2DROP_offical = 'https://b2drop.eudat.eu';
-export const fileStorageServerB2DROP_offcial_wc = "claus.zinn@uni-tuebingen.de:sPL-Fh2-7SS-hCJ@https://b2drop.eudat.eu"
-
-// on localhost
-export const fileStorageServerB2DROP_localhost_wc = "http://switchboard:clarin-plus@localhost"; 
-export const fileStorageServerB2DROP = "http://localhost/owncloud";
-
-// docker variant (see nginx.conf for reverse-proxying)
-export const fileStorageServerOC_localhost = window.location.origin.concat(urlPath).concat('/nextcloud/');
+// see nginx.conf for reverse-proxying
+export const fileStorageServerMPG_localhost       = window.location.origin.concat(urlPath).concat('/storage/');
+export const fileStorageServerNEXTCLOUD_localhost = window.location.origin.concat(urlPath).concat('/nextcloud/');
+export const fileStorageServerB2DROP_localhost    = window.location.origin.concat(urlPath).concat('/b2drop/');
 
 export function unfoldHandle( handle ) {
     var hdlShortPrefix = "hdl:";

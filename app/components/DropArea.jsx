@@ -3,10 +3,11 @@ import Loader from 'react-loader';
 import Dropzone from 'react-dropzone';
 import ResourceActions from '../actions/ResourceActions';
 
+
 // access to profiler
 import Profiler from '../back-end/Profiler';
 import Uploader from '../back-end/Uploader';
-import {fileStoragePath} from '../back-end/util';
+import {fileStorage} from '../back-end/util';
 
 export default class DropArea extends React.Component {
     constructor(props) {
@@ -71,10 +72,10 @@ export default class DropArea extends React.Component {
 
 	// use environment variable set in webpack config to decide which file storage server to use
 	let promiseUpload;
-	if (fileStoragePath === "MPCDF") {
+	if (fileStorage === "MPCDF") {
 	    promiseUpload = uploader.uploadFile();
 	} else {
-	    promiseUpload = uploader.uploadFile_B2DROP();
+	    promiseUpload = uploader.uploadFile_NC_B2DROP();
 	}
 	
 	promiseUpload.then(
@@ -134,7 +135,7 @@ export default class DropArea extends React.Component {
 	return React.createElement(
 	    Loader,
 	    { loaded: isLoaded },
-            React.createElement(
+	    React.createElement(
 		Dropzone,
 		{
 		    onDrop: this.onDrop,
@@ -142,7 +143,7 @@ export default class DropArea extends React.Component {
 		    activeStyle: activeStyle 
 		},
 		'Drop your files here, or click here to select files to upload.'
-            ),
+	    ),
 	    this.showFiles()
         );
     }
