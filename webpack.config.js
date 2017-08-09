@@ -112,8 +112,8 @@ const common = {
 	new webpack.DefinePlugin({
 	    'process.env': {
                 'NODE_ENV': JSON.stringify('production'),
-		'URL_PATH': JSON.stringify('/clrs')
-		//'URL_PATH': JSON.stringify('/clrs-dev'),
+		//'URL_PATH': JSON.stringify('/clrs')
+		'URL_PATH': JSON.stringify('/clrs-dev'),
 		//'FILE_STORAGE': JSON.stringify('MPCDF'),
 		//'FILE_STORAGE': JSON.stringify('NEXTCLOUD'),		
 		'FILE_STORAGE': JSON.stringify('B2DROP'),
