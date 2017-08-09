@@ -53,8 +53,6 @@ export function constructToolURL( toolDescription, resourceDescription ) {
     var fileServerURL = "";
     var rtnValue = { };	
 
-//    console.log('ToolInvoker/constructToolURL toolDescription:', toolDescription, 'resourceDescription:', resourceDescription);
-
     // need to encode the remote file name in case it contains special characters
     var remoteFilename   =  encodeURIComponent(resourceDescription.remoteFilename);	
     var file             =  resourceDescription.file;
