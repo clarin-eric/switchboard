@@ -22,12 +22,6 @@ export default class DropArea extends React.Component {
 	};
     }
 
-    responseGoogle (googleUser) {
-	var id_token = googleUser.getAuthResponse().id_token;
-	console.log({accessToken: id_token});
-	//anything else you want to do(save to localStorage)...
-    }
-
     showFiles() {
 
         var files = this.state.files;
