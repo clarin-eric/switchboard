@@ -22,6 +22,12 @@ export default class DropArea extends React.Component {
 	};
     }
 
+    responseGoogle (googleUser) {
+	var id_token = googleUser.getAuthResponse().id_token;
+	console.log({accessToken: id_token});
+	//anything else you want to do(save to localStorage)...
+    }
+
     showFiles() {
 
         var files = this.state.files;
@@ -132,19 +138,16 @@ export default class DropArea extends React.Component {
             borderRadius: 8
         };
 
-	return React.createElement(
-	    Loader,
-	    { loaded: isLoaded },
-	    React.createElement(
-		Dropzone,
-		{
-		    onDrop: this.onDrop,
-		    style: style,
-		    activeStyle: activeStyle 
-		},
-		'Drop your files here, or click here to select files to upload.'
-	    ),
-	    this.showFiles()
-        );
+	return (
+		<div>
+		  <Loader loaded="isLoaded" />,
+		  <Dropzone onDrop={this.onDrop}
+			    style={style}
+			    activeStyle={activeStyle} >
+		    Drop your files here, or click here to select files to upload.
+		  </Dropzone>
+		  {this.showFiles()}
+		</div>
+	)
     }
 }

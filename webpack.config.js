@@ -113,7 +113,7 @@ const common = {
 	    'process.env': {
                 'NODE_ENV': JSON.stringify('production'),
 		'URL_PATH': JSON.stringify('/clrs-dev'),
-		// 'FILE_STORAGE': JSON.stringify('MPCDF'),
+		//'FILE_STORAGE': JSON.stringify('MPCDF'),
 		//'FILE_STORAGE': JSON.stringify('NEXTCLOUD'),		
 		'FILE_STORAGE': JSON.stringify('B2DROP'),
 		//'B2DROP_USER' : JSON.stringify('switchboard'),
