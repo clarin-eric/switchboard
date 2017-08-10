@@ -34,6 +34,8 @@ import { hashHistory } from 'react-router';
 // access to matcher
 import Matcher from '../back-end/Matcher';
 
+import {lrsVersion} from './../back-end/util';
+
 // logo images for task-oriented view (CZ: should move to TaskOrientedView
 require('./../images/clarin-logo-wide.png');
 require('./../images/weblicht.jpg');
@@ -64,7 +66,7 @@ export default class App extends React.Component {
 	super(props);
 
 	this.refresh = this.refresh.bind(this);
-	this.showTools = this.showTools.bind(this);
+	this.showAllTools = this.showAllTools.bind(this);
         this.clearDropzone = this.clearDropzone.bind(this);
         this.handleWebServicesChange = this.handleChange.bind(this, 'includeWebServices');
 	this.handleToolsPerTaskChange = this.handleToolsPerTaskChange.bind(this);
@@ -110,7 +112,9 @@ export default class App extends React.Component {
 	}
     }
 
-    showTools() {
+    showAllTools() {
+        // clear resource (so that tools don't show URL)
+        this.clearDropzone();
 	let matcher = new Matcher();
 	let toolsPerTask = matcher.allTools( this.state.includeWebServices );
 	this.setState( {toolsPerTask: toolsPerTask} );
@@ -154,7 +158,7 @@ export default class App extends React.Component {
 	      <button className="clearDropzone" onClick={this.clearDropzone}>Clear Dropzone</button>
 	    </li>				
 	    <li>
-	      <button id="showAllToolsButton" className="alltools" onClick={this.showTools}>Show All Tools</button>
+	      <button id="showAllToolsButton" className="alltools" onClick={this.showAllTools}>Show All Tools</button>
 	    </li>
 	    <li><p />
 	      <Toggle
@@ -220,7 +224,7 @@ export default class App extends React.Component {
         </div>
         <div className="col-sm-3 col-sm-pull-6 col-xs-12">
           <div className="version-info text-center-xs">
-            v1.0.0-alpha/docker (Aug 01, 2017)
+            {lrsVersion}
           </div>
         </div>
         <div className="col-sm-3 hidden-xs text-right">

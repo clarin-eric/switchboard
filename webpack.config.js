@@ -115,12 +115,13 @@ const common = {
 		//'URL_PATH': JSON.stringify('/clrs')
 		'URL_PATH': JSON.stringify('/clrs-dev'),
 		//'FILE_STORAGE': JSON.stringify('MPCDF'),
-		//'FILE_STORAGE': JSON.stringify('NEXTCLOUD'),		
-		'FILE_STORAGE': JSON.stringify('B2DROP'),
-		//'B2DROP_USER' : JSON.stringify('switchboard'),
-		//'B2DROP_PASS' : JSON.stringify('clarin-plus'),
-		'B2DROP_USER' : JSON.stringify('claus.zinn@uni-tuebingen.de'),
-		'B2DROP_PASS' : JSON.stringify('sPL-Fh2-7SS-hCJ')
+		'FILE_STORAGE': JSON.stringify('NEXTCLOUD'),		
+		//'FILE_STORAGE': JSON.stringify('B2DROP'),
+		'B2DROP_USER' : JSON.stringify('switchboard'),
+		'B2DROP_PASS' : JSON.stringify('clarin-plus'),
+		//'B2DROP_USER' : JSON.stringify('claus.zinn@uni-tuebingen.de'),
+		//'B2DROP_PASS' : JSON.stringify('sPL-Fh2-7SS-hCJ'),
+		'VERSION'     : JSON.stringify('v1.0.0/docker (Aug 09, 2017)')
 	    }
 	}),
 

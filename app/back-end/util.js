@@ -2,6 +2,7 @@ export const urlPath     = process.env.URL_PATH;
 export const fileStorage = process.env.FILE_STORAGE;
 export const b2drop_user = process.env.B2DROP_USER;
 export const b2drop_pass = process.env.B2DROP_PASS;
+export const lrsVersion  = process.env.VERSION;
 
 // for creation of link
 export const fileStorageServerMPG_remote     = 'http://ws1-clarind.esc.rzg.mpg.de/drop-off/storage/';

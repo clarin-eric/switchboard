@@ -49,9 +49,14 @@ export function invokeWebService( URL ) {
 
 export function constructToolURL( toolDescription, resourceDescription ) {
 
-    // CZ: outsource to global
     var fileServerURL = "";
-    var rtnValue = { };	
+    var rtnValue = { };
+
+    console.log('ToolInvoker/constructToolURL', resourceDescription);
+    if (typeof resourceDescription === undefined || resourceDescription === null || resourceDescription.length == 0) {
+	console.log('ToolInvoker/constructToolURL', false);
+	return false;
+    }
 
     // need to encode the remote file name in case it contains special characters
     var remoteFilename   =  encodeURIComponent(resourceDescription.remoteFilename);	

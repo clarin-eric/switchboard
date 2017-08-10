@@ -67,92 +67,91 @@ export default class Tool extends React.Component {
 	    const fullURL = constructToolURL(props, resource);
 
 	    if (fullURL) 
-	    return(
-             <div style={{ position: 'relative', top: 0 }}>
-		  <header style={styles.cardHeader} className='card-header-details'>
-			<ProfilePicture imgSrc={props.imgSrc} borderColor={props.imgBorderColor} />
-		</header>
-
-		<div style={{color: '#000'}}>
-			<DetailsRow
-	                    icon='icon ion-ios-paper-outline'
-			    title="Description"
-       	                    summary={props.role}	    
-                        />
-    
-			<DetailsRow
-			    icon='ion-ios-home-outline'
-	                    title="Home"
-       	                    summary={props.homepage}
-                        />
-
-			<DetailsRow
-			    icon='ion-ios-locked-outline'
-	                    title="Authentication"
-       	                    summary={props.authentication}
-                        />		
-
-			<DetailsRow
-			    icon='ion-ios-paperplane-outline'
-	                    title="URL"
-       	                    summary={fullURL}
-                        />
-		
-                        <DetailsRow
-				icon='ion-ios-location-outline'
-	                        title="Location"
-	                        summary={props.location}
-	                />
-    
-                        <DetailsRow
-				icon='ion-ios-email-outline'
-				title="e-mail"
-				summary={props.email}	    
-			/>
-
-		</div>
-		</div>
+		return(
+			<div style={{ position: 'relative', top: 0 }}>
+			  <header style={styles.cardHeader} className='card-header-details'>
+			    <ProfilePicture imgSrc={props.imgSrc} borderColor={props.imgBorderColor} />
+			  </header>
+			  
+			  <div style={{color: '#000'}}>
+			    <DetailsRow
+	                       icon='icon ion-ios-paper-outline'
+			       title="Description"
+       	                       summary={props.role}	    
+                               />
+			    
+			    <DetailsRow
+			       icon='ion-ios-home-outline'
+	                       title="Home"
+       	                       summary={props.homepage}
+                               />
+			    
+			    <DetailsRow
+			       icon='ion-ios-locked-outline'
+	                       title="Authentication"
+       	                       summary={props.authentication}
+                               />		
+			    
+			    <DetailsRow
+			       icon='ion-ios-paperplane-outline'
+	                       title="URL"
+       	                       summary={fullURL}
+                               />
+			    
+                            <DetailsRow
+			       icon='ion-ios-location-outline'
+	                       title="Location"
+	                       summary={props.location}
+	                       />
+			    
+                            <DetailsRow
+			       icon='ion-ios-email-outline'
+			       title="e-mail"
+			       summary={props.email}	    
+			       />
+			  </div>
+			</div>
 	    )
 
 	    return (
-		             <div style={{ position: 'relative', top: 0 }}>
-		  <header style={styles.cardHeader} className='card-header-details'>
-			<ProfilePicture imgSrc={props.imgSrc} borderColor={props.imgBorderColor} />
-		</header>
+	     <div style={{ position: 'relative', top: 0 }}>
+	       <header style={styles.cardHeader} className='card-header-details'>
+		 <ProfilePicture imgSrc={props.imgSrc} borderColor={props.imgBorderColor} />
+	       </header>
 
-		<div style={{color: '#000'}}>
-			<DetailsRow
-	                    icon='icon ion-ios-paper-outline'
-			    title="Description"
-       	                    summary={props.role}	    
-                        />
-    
-			<DetailsRow
-			    icon='ion-ios-home-outline'
-	                    title="Home"
-       	                    summary={props.homepage}
-                        />
-
-			<DetailsRow
-			    icon='ion-ios-locked-outline'
-	                    title="Authentication"
-       	                    summary={props.authentication}
-                        />		
-
-                        <DetailsRow
-				icon='ion-ios-location-outline'
-	                        title="Location"
-	                        summary={props.location}
-	                />
-    
-                        <DetailsRow
-				icon='ion-ios-email-outline'
-				title="e-mail"
-				summary={props.email}	    
-			/>
-
-		</div>
-		</div>
+	       <div style={{color: '#000'}}>
+		 <DetailsRow
+	            icon='icon ion-ios-paper-outline'
+		    title="Description"
+       	            summary={props.role}	    
+                    />
+		 
+		 <DetailsRow
+		    icon='ion-ios-home-outline'
+	            title="Home"
+       	            summary={props.homepage}
+                    />
+		 
+		 <DetailsRow
+		    icon='ion-ios-locked-outline'
+	            title="Authentication"
+       	            summary={props.authentication}
+                    />		
+		 
+                 <DetailsRow
+		    icon='ion-ios-location-outline'
+	            title="Location"
+	            summary={props.location}
+	            />
+		 
+                 <DetailsRow
+		    icon='ion-ios-email-outline'
+		    title="e-mail"
+		    summary={props.email}	    
+		    />
+		 
+	       </div>
+	     </div>
 	    )
 	};
 
