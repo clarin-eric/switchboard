@@ -2,7 +2,7 @@
 // 2016-17 Claus Zinn
 // 
 // File: Registry.js
-// Time-stamp: <2017-08-10 11:24:13 (zinn)>
+// Time-stamp: <2017-08-10 11:57:45 (zinn)>
 //
 // ----------------------------------------------------------------------------------------
 
@@ -10,7 +10,6 @@
 
 const Registry =
     [
-
 	{
 	    task: "Chunker",
 	    name: "Iobbber",
@@ -2044,8 +2043,8 @@ const Registry =
 	  authentication: "yes",		  
 	  licence: "public", //but webservice is protected with (free) registration
 	  shortDescription: "NLP tool for building n-grams and skip-grams.",
-	  longDescription: "Colibri core is an NLP tool as well as a C++ and Python library for working with basic linguistic constructions such as n-grams and skipgrams (i.e patte rns with one or more gaps, either of fixed or dynamic size) in a quick and memory-efficient way.",
-	  languages: ["nld", "eng", "deu", "fre", "esp", "por", "fry", "generic"], 
+	  longDescription: "Colibri core is an NLP tool as well as a C++ and Python library for working with basic linguistic constructions such as n-grams and skipgrams (i.e patterns with one or more gaps, either of fixed or dynamic size) in a quick and memory-efficient way.",
+	  languages: ["nld", "eng", "deu", "fra", "spa", "por", "fry", "generic"], 
 	  lang_encoding: "639-1",
 	  mimetypes: ["text/plain"],
 	  output: ["Tadpole Columned Output Format",
@@ -2630,7 +2629,7 @@ const Registry =
 	  authentication: "no",
 	  shortDescription: "OxGarage webservice to transform XML-based TEI documents to plain text. For more conversions, please go to the homepage.",
 	  longDescription: "OxGarage is a web, and RESTful, service to manage the transformation of documents between a variety of formats. The majority of transformations use the Text Encoding Initiative format as a pivot format.",
-	  languages: ["nld", "eng", "deu", "fra", "ita", "spa", "por", "tur", "rus", "swe"], // todo
+	  languages: ["nld", "eng", "deu", "fra", "ita", "spa", "por", "tur", "rus", "swe"], 
 	  lang_encoding: "639-1",
 	  mimetypes: ["application/tei+xml",
 		      "text/tei+xml;format-variant=tei-dta"], 		  
@@ -2670,8 +2669,8 @@ const Registry =
 		      "application/xml;format-variant=weblicht-tcf"
 		     ], 		  
 	  output: ["text/plain"],
-	  url: ["http://kaskade.dwds.de/tei-tcf/encode.perl"], // TODO
-	  parameter: { input : "self.linkToResource" // for demo upload site, to be instantiated
+	  url: ["http://kaskade.dwds.de/tei-tcf/encode.perl"], 
+	  parameter: { input : "self.linkToResource" 
 		     },
 	  
 	  mapping:   { input : "f"
