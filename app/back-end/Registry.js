@@ -2,7 +2,7 @@
 // 2016-17 Claus Zinn
 // 
 // File: Registry.js
-// Time-stamp: <2017-08-09 19:46:22 (zinn)>
+// Time-stamp: <2017-08-10 11:24:13 (zinn)>
 //
 // ----------------------------------------------------------------------------------------
 
@@ -1313,6 +1313,40 @@ const Registry =
 	// 	     }		  
 	// },		
 
+	{ task: "Tokenisation",
+	  name: "Ucto",
+	  logo: "YourLogoComesHere.png",		  
+	  homepage: "https://languagemachines.github.io/ucto/",
+	  location: "Nijmegen, The Netherlands (CLAM Webservices)",		  
+	  creators: ["Maarten van Gompel, Ko van der Sloot (CLST, Radboud University Nijmegen)"],
+	  contact: {
+	      person: "Maarten van Gompel",
+	      email: "proycon@anaproy.nl",
+	  },
+	  version: "0.8.3",
+	  license: "public",                //but webservice is protected with (free) registration
+	  authentification: "yes",
+	  shortDescription: "A tokeniser",
+	  longDescription: "Ucto is a unicode-compliant tokeniser. It takes input in the form of one or more untokenised texts, and subsequently tokenises them. Several languages are supported, but the software is extensible to other languages.",
+	  languages: ["swe", "rus", "spa", "por", "nld", "eng", "deu", "fra", "ita"],
+	  lang_encoding: "639-3",
+	  mimetypes: [
+	      "text/plain"
+	      // , "text/xml",		      
+	      // , "application/pdf",
+	      // , "application/msword"
+	  ],
+	  output: ["Tadpole Columned Output Format", "text/folia+xml"], 		  		  		  
+	  url: ["https://webservices-lst.science.ru.nl/ucto/"],
+	  parameter: { project      : "new",
+		       input        : "self.linkToResource",
+		       lang         : "self.linkToResourceLanguage",
+		     },
+	  mapping:   { input        : "untokinput_url",
+		       lang         : "untokinput_language"
+		     }
+	},
+	
 	{ task: "Tokenisation",
 	  name: "WebLicht-Tokenization-TUR",
 	  logo: "weblicht.jpg",		  
