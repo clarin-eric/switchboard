@@ -2,8 +2,9 @@
 
 The CLRS switchboard has been implemented with ReactJs (v.15.5.4) and related technologies such as
 
-- Webpack, a Javascript module bundler, see https://webpack.github.io (v3.4.1),  Nodejs version 8.1.4 (see
-- https://nodejs.org/en/), together with the javascript package manager npm (v5.3.0), see https://www.npmjs.com.
+- Webpack, a Javascript module bundler, see https://webpack.github.io (v3.4.1),
+- Nodejs version 8.1.4 (see https://nodejs.org/en/), together with
+- the javascript package manager npm (v5.3.0), see https://www.npmjs.com.
 
 For the time being, the github contains all the source code for compiling. 
 The directories node_modules/ and build/ are not hosted on GitHub. They must be created with
