@@ -90,7 +90,7 @@ This is reverse-proxied to
 
    ```<server-name>:4711/clrs-dev ```
 
-On <server-name>, the command
+On ```<server-name> ```, the command
 
    ```docker run --name switchboard -d -p 9001:9001 -p 9998:9998 -p 80:80 clauszinn/switchboard:1.0.0-dev ```
 

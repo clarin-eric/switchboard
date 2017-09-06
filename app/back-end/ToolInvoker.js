@@ -8,7 +8,7 @@ export function invokeBrowserBasedTool( URL ) {
 
 export function invokeWebService( URL ) {
     let file = URL.formVal;
-    //console.log('ToolInvoker/invokeWebService', URL);
+    console.log('ToolInvoker/invokeWebService', URL);
     if (URL.requestType == "get") {
 	// same as invokeBrowserBasedTool
 	var win = window.open(URL.url, '_blank');
@@ -23,7 +23,7 @@ export function invokeWebService( URL ) {
 		    alert('Result of calling web service: ' + err);
 		} else {
 		    var something = window.open("data:text/json," + encodeURIComponent(res.text), "_blank");
-		    //console.log('onDrop: success in calling webservice', res, file.name, data, URL);
+		    console.log('onDrop: success in calling webservice', res, file.name, data, URL);
 		}
 	    });
     } else {
@@ -41,7 +41,7 @@ export function invokeWebService( URL ) {
 		} else {
 		    var something = window.open("data:text/json," + encodeURIComponent(res.text), "_blank");
 		    // something.focus();
-		    // console.log('onDrop: success in calling webservice', res, file.name, data, URL);
+		    console.log('onDrop: success in calling webservice', res, file.name, data, URL);
 		}
 	    });
     }
@@ -52,7 +52,7 @@ export function constructToolURL( toolDescription, resourceDescription ) {
     var fileServerURL = "";
     var rtnValue = { };
 
-    console.log('ToolInvoker/constructToolURL', resourceDescription);
+    //console.log('ToolInvoker/constructToolURL', resourceDescription);
     if (typeof resourceDescription === undefined || resourceDescription === null || resourceDescription.length == 0) {
 	console.log('ToolInvoker/constructToolURL', false);
 	return false;

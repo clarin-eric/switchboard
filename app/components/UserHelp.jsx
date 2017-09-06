@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {ModalContainer, ModalDialog} from 'react-modal-dialog';
+import {emailContactCommand} from './../back-end/util';
 
 export default class UserHelp extends React.Component {
   static propTypes = {
@@ -117,7 +118,7 @@ class UserHelpText extends React.Component {
             <hr />
 	    <p>
 	      
-	      Please contact: <a href="mailto:claus.zinn@uni-tuebingen.de?subject=CLARIN-PLUS LRS">Claus Zinn</a>.
+	      Please contact the <a href={ emailContactCommand }>Switchboard Team</a>.
 	      Alternatively, you can also contact the German CLARIN 
 	      
 	      <a href="https://support.clarin-d.de/mail/?lang=de&QueueID=19&ResponsibleID=15&OwnerID=15" target="_blank">

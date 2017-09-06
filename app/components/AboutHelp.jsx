@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {ModalContainer, ModalDialog} from 'react-modal-dialog';
+import {emailContactCommand} from './../back-end/util';
 
 export default class AboutHelp extends React.Component {
   static propTypes = {
@@ -106,7 +107,7 @@ class AboutHelpText extends React.Component {
           </div>
 
 	  <p>
-	    We value your feedback! For any questions or suggestions, please contact: <a href="mailto:claus.zinn@uni-tuebingen.de?subject=CLARIN-PLUS LRS">Claus Zinn</a>. But please consult the user and developer help beforehand (see top navigation bar).
+	    We value your feedback! For any questions or suggestions, please contact the <a href={ emailContactCommand }>Switchboard Team</a>. But please consult the user and developer help beforehand (see top navigation bar).
 	  </p>
         </ModalDialog>
 </ModalContainer>;

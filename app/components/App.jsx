@@ -17,6 +17,7 @@ import UserHelp from './UserHelp.jsx';              // component displaying user
 import DevHelp from './DevHelp.jsx';                // component displaying help targeted at developers
 import AboutHelp from './AboutHelp.jsx';            // displaying admin. information about the switchboard
 import AlertURLFetchError from './AlertURLFetchError.jsx';
+import ShowAllTools from './ShowAllTools.jsx';      // allow external requests to show all available tools
 
 // actions
 import ResourceActions from '../actions/ResourceActions';   // actions associated with resources: CRUD, attach/detach
@@ -34,9 +35,9 @@ import { hashHistory } from 'react-router';
 // access to matcher
 import Matcher from '../back-end/Matcher';
 
-import {lrsVersion} from './../back-end/util';
+import {lrsVersion, emailContactCommand} from './../back-end/util';
 
-// logo images for task-oriented view (CZ: should move to TaskOrientedView
+// logo images for task-oriented view 
 require('./../images/clarin-logo-wide.png');
 require('./../images/weblicht.jpg');
 require('./../images/voyant-tools.jpg');
@@ -70,7 +71,7 @@ export default class App extends React.Component {
         this.clearDropzone = this.clearDropzone.bind(this);
         this.handleWebServicesChange = this.handleChange.bind(this, 'includeWebServices');
 	this.handleToolsPerTaskChange = this.handleToolsPerTaskChange.bind(this);
-
+	
 	this.state = {
 	    includeWebServices: false,
 	    toolsPerTask : {}
@@ -81,6 +82,7 @@ export default class App extends React.Component {
 	    siteId	: 21,
 	    enableLinkTracking: true
         });
+
     }
 
     handleToolsPerTaskChange( toolsPerTask ) {
@@ -131,7 +133,7 @@ export default class App extends React.Component {
 	var style = {
 	    display: 'none'
 	};
-	
+
 	return (
 <div>
   <header id="header" role="banner">
@@ -191,10 +193,14 @@ export default class App extends React.Component {
 	    <Route path="/fcs/:fileURL"
    		   render={(props) => <UrlArea refreshFun={this.refresh} caller="FCS" {...props} /> } />	    
 	      <Route path="/b2drop/:fileURL"
-		     render={(props) => <UrlArea refreshFun={this.refresh} caller="B2DROP" {...props} /> } />    
-		<Route path="*"       component={AlertURLFetchError} />
+		     render={(props) => <UrlArea refreshFun={this.refresh} caller="B2DROP" {...props} /> } />
+		<Route path="/vto/"
+	               render={(props) => <ShowAllTools showAllToolsFun={this.showAllTools} caller="CLARIN" {...props} /> } />
+		  <Route path="*"       component={AlertURLFetchError} />
     </Switch>
   </HashRouter>
+
+
   
   <p />
   <hr />
@@ -227,14 +233,8 @@ export default class App extends React.Component {
             {lrsVersion}
           </div>
         </div>
-        <div className="col-sm-3 hidden-xs text-right">
-          
-          <a href="mailto:claus.zinn@uni-tuebingen.de?subject=CLARIN-PLUS LRS">Contact</a>
-        </div>
-        <div className="visible-xs-block text-center">
-          
-          <a href="./about">About</a>
-          &nbsp;<a href="mailto:claus.zinn@uni-tuebingen.de?subject=CLARIN-PLUS LRS">Contact</a>
+        <div className="col-sm-3 text-right">
+		<a href={ emailContactCommand }>Contact</a>
         </div>
       </div>
     </div>
