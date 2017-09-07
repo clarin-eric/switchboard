@@ -405,6 +405,37 @@ const Registry =
 	},
 
 	{ task: "Dependency Parsing",
+	  name: "WebLicht-Dep-Parsing-HR (RELDI)",
+	  logo: "weblicht.jpg",		  		  
+	  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+	  location: "Tuebingen, Germany",		  		  		  
+	  creators: ["CLARIN-D Centre at the University of Tuebingen, Germany"],
+	  contact: {
+	      person: "CLARIN WebLicht Support",
+	      email: "wlsupport@sfs.uni-tuebingen.de"
+	  },	    
+	  version: "v1.0",
+	  authentication: "no",		  
+	  licence: "public",
+	  shortDescription: "Dependency Parsing for Croatian",
+	  longDescription: "WebLicht Easy Chain for Dependency Parsing (Croatian). The easy-chain makes use of the RELDI software (see https://github.com/clarinsi), which tokenizes and lemmatizes the text, performs part-of-speech tagging, and subsequently, does dependency parsing. For RELDI specific inquiries, please contact nljubesi@gmail.com.",
+	  languages: ["hrv"],
+	  lang_encoding: "639-1",		  
+	  mimetypes: ["text/plain",
+		      "application/rtf",			     
+		      "application/pdf",
+		      "application/msword",
+		      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
+	  output: ["text/xml"],
+	  url: "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
+	  pid: "",
+	  parameter: {input :     "self.linkToResource",
+		      lang:       "hr",			      
+		      analysis:   "dep-parsing"
+		     }
+	},
+
+	{ task: "Dependency Parsing",
 	  name: "WebLicht-Dep-Parsing-SR (RELDI)",
 	  logo: "weblicht.jpg",		  		  
 	  homepage: "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
