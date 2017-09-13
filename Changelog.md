@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.0.3] - 2017-09-13
+
+### Fixed
+	- Added reverse proxy directives in nginx config to properly handle redirects from switchboard.clarin.eu
+
 ## [1.0.2] - 2017-09-07
 ### Added
 	- Support for the RELDI software (Croatian, Slovenian, Serbian)
