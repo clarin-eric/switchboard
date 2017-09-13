@@ -18,7 +18,8 @@ The switchboard is currently being served at:
 ```http://weblicht.sfs.uni-tuebingen.de/clrs/#/ ```
 
 # Status
-The software is currently being developed. A 1.0 release will be made available soon.
+The software is currently being developed and actively maintaited. A v1.0.0 release was published on Aug 11, 2017.
+
 # Publications
 
 - The Switchboard specification (Milestone 2.2 of the CLARIN-PLUS project), see https://office.clarin.eu/v/CE-2015-0684-LR_switchboard_spec.pdf
