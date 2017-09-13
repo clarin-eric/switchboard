@@ -620,7 +620,7 @@ const Registry =
 	{ task: "Keyword Extractor",
 	  name: "KER (web service)",
 	  softwareType: "webService",
-	  requestType: "form",
+	  requestType: "data",
 	  logo: "lindat.jpg",
 	  homepage: "http://lindat.mff.cuni.cz/services/ker/",
 	  location: "Prague, CUNI",

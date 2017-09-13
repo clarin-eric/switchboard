@@ -8,7 +8,7 @@ export function invokeBrowserBasedTool( URL ) {
 
 export function invokeWebService( URL ) {
     let file = URL.formVal;
-    console.log('ToolInvoker/invokeWebService', URL);
+    //console.log('ToolInvoker/invokeWebService', URL);
     if (URL.requestType == "get") {
 	// same as invokeBrowserBasedTool
 	var win = window.open(URL.url, '_blank');
@@ -19,11 +19,16 @@ export function invokeWebService( URL ) {
 	    .send(file)
 	    .end((err, res) => {
 		if (err) {
-		    console.log('ToolInvoker/invokeWebService: error in calling webservice', err, file.name, URL);
+		    console.log('ToolInvoker/invokeWebService/data: error in calling webservice', err, file.name, URL);
 		    alert('Result of calling web service: ' + err);
 		} else {
-		    var something = window.open("data:text/json," + encodeURIComponent(res.text), "_blank");
-		    console.log('onDrop: success in calling webservice', res, file.name, data, URL);
+		    var jsonDataWindow = window.open("data:text/json," + encodeURIComponent(res.text),
+						     "_blank");
+		    if (window.focus) {
+			jsonDataWindow.focus();
+		    }
+//		    console.log('ToolInvoker/invokeWebService/data: success in calling webservice', "data:text/json," + encodeURIComponent(res.text));
+//		    console.log('ToolInvoker/invokeWebService entire response:', res);
 		}
 	    });
     } else {
@@ -36,12 +41,40 @@ export function invokeWebService( URL ) {
 	//		.set('Content-Type', 'text/plain')	    
 	    .end((err, res) => {
 		if (err) {
-		    console.log('ToolInvoker/invokeWebService: error in calling webservice', err, file.name, data, URL);
+		    console.log('ToolInvoker/invokeWebService/form: error in calling webservice', err, file.name, data, URL);
 		    alert('Result of calling web service: ' + err);
 		} else {
-		    var something = window.open("data:text/json," + encodeURIComponent(res.text), "_blank");
-		    // something.focus();
-		    console.log('onDrop: success in calling webservice', res, file.name, data, URL);
+		    // var jsonDataWindow = window.open("data:text/json," + encodeURIComponent(res.text), "_blank");
+		    // if (window.focus) {		    
+		    // 	jsonDataWindow.focus();
+		    // }
+		    
+		    // var anotherJsonDataWindow = window.open("data:," + encodeURIComponent(res.text), "_blank");
+		    // if (window.focus) {
+		    // 	anotherJsonDataWindow.focus();
+		    // }
+		    
+//		    console.log('ToolInvoker/invokeWebService/form: success in calling webservice', "data:," + encodeURIComponent(res.text));
+//		    console.log('ToolInvoker/invokeWebService entire response:', res);
+
+		    var jsonReturn = JSON.parse(res.text);
+		    console.log('parsed JSON', jsonReturn);
+		    var jsonStr = JSON.stringify(jsonReturn);
+		    console.log('stringified JSON', jsonStr);		    
+		    var jsonDataWindow = window.open("data:text/json," + encodeURIComponent(jsonStr), "_blank");
+		    jsonDataWindow.document.title = "Web Service Result";
+		    if (window.focus) {		    
+			jsonDataWindow.focus();
+		    }
+		    
+		    // var x = window.open();
+		    // x.document.open();
+		    // x.document.write('<html><body><pre>' + res.text + '</pre></body></html>');
+		    // x.document.close();
+		    // x.document.title = URL.url;
+		    // if (window.focus) {
+		    // 	x.focus();
+		    // }		    
 		}
 	    });
     }
