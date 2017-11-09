@@ -39,6 +39,7 @@ import {lrsVersion, emailContactCommand} from './../back-end/util';
 
 // logo images for task-oriented view 
 require('./../images/clarin-logo-wide.png');
+require('./../images/gateCloud.png');
 require('./../images/weblicht.jpg');
 require('./../images/voyant-tools.jpg');
 require('./../images/frog.jpg');

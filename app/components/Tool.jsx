@@ -4,7 +4,7 @@ import Accordion from '../helperComponents/Accordion';
 import AccordionItem from '../helperComponents/AccordionItem';
 
 import { map639_1_to_639_3, map639_3_to_639_1 } from '../back-end/util';
-import {constructToolURL, invokeWebService, invokeBrowserBasedTool} from '../back-end/ToolInvoker';
+import {gatherInvocationParameters, invokeWebService, invokeBrowserBasedTool} from '../back-end/ToolInvoker';
 
 
 export default class Tool extends React.Component {
@@ -13,12 +13,13 @@ export default class Tool extends React.Component {
 	this.invokeTool = this.invokeTool.bind(this);
     }
 
+    // tool invocation informs Piwik
     invokeTool( URL ) {
 	if (URL.toolType == "webService") {
-	    _paq.push(["trackEvent", 'ToolInvocation', URL.url]);	    // inform Piwik
+	    _paq.push(["trackEvent", 'ToolInvocation', URL.url]);	
 	    invokeWebService(URL);
 	} else {
-	    _paq.push(["trackEvent", 'WebServiceInvocation', URL.url]); // inform Piwik
+	    _paq.push(["trackEvent", 'WebServiceInvocation', URL.url]); 
 	    invokeBrowserBasedTool( URL );
 	}
     }
@@ -64,7 +65,7 @@ export default class Tool extends React.Component {
 	);
 
 	const ToolCard = (props) => {
-	    const fullURL = constructToolURL(props, resource);
+	    const fullURL = gatherInvocationParameters(props, resource);
 
 	    if (fullURL) 
 		return(
@@ -227,11 +228,12 @@ export default class Tool extends React.Component {
 			 authentication={element.authentication}
 			 homepage={element.homepage}
                          url={element.url}
-		         parameter={element.parameter}
+		         parameters={element.parameters}
 		         mapping={element.mapping}
-		         lang_encoding={element.lang_encoding}		
+			 output={element.output}
+		         langEncoding={element.langEncoding}		
 			 email={element.email}
-			 role={element.longDescription}
+			 role={element.description}
 			/>			
 		</AccordionItem>
 	    )}

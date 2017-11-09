@@ -12,7 +12,7 @@ export const fileStorageServerMPG_remote     = 'http://ws1-clarind.esc.rzg.mpg.d
 // see nginx.conf for reverse-proxying
 export const fileStorageServerMPG_localhost       = window.location.origin.concat(urlPath).concat('/storage/');
 export const fileStorageServerNEXTCLOUD_localhost = window.location.origin.concat(urlPath).concat('/nextcloud/');
-export const fileStorageServerB2DROP_localhost    = window.location.origin.concat(urlPath).concat('/b2drop/');
+export const fileStorageServerB2DROP_localhost    = window.location.origin.concat(urlPath).concat('/btwodrop/');
 
 export function unfoldHandle( handle ) {
     var hdlShortPrefix = "hdl:";

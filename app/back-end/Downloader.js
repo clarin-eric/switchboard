@@ -10,13 +10,13 @@ export default class Downloader {
 	var that = this;
 	return new Promise(function(resolve, reject) {
 	    Request
-	    .get(that.url)	
-	    .end((err, res) => {
+		.get(that.url)
+                .end((err, res) => {
 		if (err) {
-		    console.log('Downloader/downloadFile Error Case: ', err);
+		    console.log('Downloader/downloadFile Error Case: ', that.url, err);
 		    reject(err);
 		} else {
-		    // console.log('Downloader/downloadFile: ', res, res.header['content-type'], res.header['content-length']);
+//		    console.log('Downloader/downloadFile: ', that.url, res, res.header['content-type'], res.header['content-length']);
 		    resolve(res);
 		}
 	    })});

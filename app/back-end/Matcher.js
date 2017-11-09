@@ -2,7 +2,7 @@
 // 2016-17 Claus Zinn
 // 
 // File: Matcher.js
-// Time-stamp: <2017-07-21 12:27:27 (zinn)>
+// Time-stamp: <2017-11-09 11:57:47 (zinn)>
 //
 // ----------------------------------------------------------------------------------------
 
@@ -27,15 +27,16 @@ export default class Matcher {
 	    const toolInfo = [ {
 		name            : entry.name,
 		logo            : entry.logo,
-		longDescription : entry.longDescription,
+		description     : entry.description,
 		homepage        : entry.homepage,
 		url             : entry.url,
 		location        : entry.location,
 		authentication  : entry.authentication,
 		id              : entry.id,
 		email           : entry.contact.email,
-		parameter       : entry.parameter,
-		lang_encoding   : entry.lang_encoding,
+		parameters      : entry.parameters,
+		langEncoding    : entry.langEncoding,
+		output          : entry.output,
 		softwareType    : entry.softwareType,
 		requestType     : entry.requestType,
 		mapping         : entry.mapping,
@@ -149,7 +150,11 @@ export default class Matcher {
 
 	// CZ: should be dealt with in the React component (rendering task-oriented list)
 	if (Object.keys(toolsPerTask).length == 0) {
-	    alert("Sorry! the app registry has no tools applicable to the given resource!");
+	    if (includeWebServices === true) {
+		alert("The switchboard has no tools or web services registered that can process your resource!");
+	    } else {
+		alert("The switchboard has no tools registered that can process your resource! Please try enabling Web Services to check whether there is a web service that can process your resource.");
+	    }
 	}
 
 	return toolsPerTask;

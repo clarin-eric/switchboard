@@ -1,6 +1,6 @@
 {
   "name": "clrs",
-  "version": "1.0.1",
+  "version": "1.0.5-dev",
   "description": "CLARIN Language Resource Switchboard",
   "main": "index.js",
   "scripts": {
@@ -51,15 +51,17 @@
     "react": "^15.5.4",
     "react-addons-css-transition-group": "^15.3.2",
     "react-addons-shallow-compare": "^15.3.2",
+    "react-autosize-textarea": "^0.4.8",
     "react-dom": "^15.6.1",
     "react-dropzone": "^3.6.0",
+    "react-input-validation": "^1.0.4",
     "react-loader": "^2.4.0",
     "react-modal-dialog": "~3.0.2",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
     "react-selectize": "^2.0.0",
     "react-toggle": "^2.1.0",
-    "superagent": "^2.3.0",
+    "superagent": "^3.7.0",
     "url-loader": "^0.5.7",
     "uuid": "^2.0.3",
     "xml2js": "^0.4.17"

@@ -161,6 +161,9 @@ export default class Profiler {
 
     // mimetype detection, and given the media type of the resource is NOT plain/text,
     // but one where TIKA parsers are available use of tika to convert file (for selected file formats)
+    
+    // TODO: if media type of resource is application/zip, do not attempt to identify language of the zip file's contents.
+    // E.g., by setting language to "unknown", that is, "not set"
     convertProcessFile() {
 	let that = this;
 	let promiseMimeType = that.identifyMimeType();
@@ -183,6 +186,16 @@ export default class Profiler {
 				})},
 			function(reject) {
 			    console.log('Warning: conversion to plain/text failed', reject) })
+		} else if ( (resolve.text == "application/zip") ||
+			    (resolve.text == "application/x-gzip") ) {
+		    alert("Please identify the language of the zip file's content!")
+		} else if ( (resolve.text == "audio/vnd.wave") ||
+			    (resolve.text == "audio/x-wav")    ||
+			    (resolve.text == "audio/wav")      ||
+			    (resolve.text == "audio/mp3")      ||			    
+			    (resolve.text == "audio/mp4")      ||
+			    (resolve.text == "audio/x-mpeg")) {
+		    alert("Please identify the language of the audio/video file!")
 		} else {
 		    let promiseLanguage = that.identifyLanguage();
 		    promiseLanguage.then(
