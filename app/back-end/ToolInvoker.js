@@ -183,7 +183,6 @@ export function invokeWebService( URL ) {
 		    // }		    
 		}
 	    });
->>>>>>> master
     }
 }
 

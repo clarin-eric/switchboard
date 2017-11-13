@@ -9,7 +9,7 @@ import TextareaAutosize from 'react-autosize-textarea';
 import Profiler from '../back-end/Profiler';
 import Uploader from '../back-end/Uploader';
 import Downloader from '../back-end/Downloader';
-import {fileStorage} from '../back-end/util';
+import {urlPath,fileStorage} from '../back-end/util';
 
 export default class DropArea extends React.Component {
     constructor(props) {
@@ -266,7 +266,20 @@ export default class DropArea extends React.Component {
             borderRadius: 8
         };
 
-	return (
+	if ( urlPath === "/clrs" ) {
+	    return (
+		<div>
+		  <Loader loaded={this.state.loaded} />
+		  <Dropzone onDrop={this.onDrop}
+	                    style={style1}
+			    activeStyle={activeStyle} >
+		    Drop your files here, or click here to select files to upload.
+		  </Dropzone>
+	          {this.showFiles()}
+		</div>
+	    )
+	} else {
+	    return (
 		<div>
 		  <Loader loaded={this.state.loaded} />
 		  <Dropzone onDrop={this.onDrop}
@@ -282,8 +295,9 @@ export default class DropArea extends React.Component {
 	                            onKeyPress={this.handleKeyPress}
 				    placeholder='For users of dropbox.com and b2drop.eudat.eu, paste your cloud-based link here. EXPERIMENTAL !' />
 
-	    {this.showFiles()}
+		{this.showFiles()}
 		</div>
-	)
+	    )
+	}
     }
 }
