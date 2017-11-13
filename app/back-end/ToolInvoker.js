@@ -138,7 +138,52 @@ export function invokeWebService( URL ) {
 		});
 	}
     } else {
-	alert("There has been a problem with invoking the web service. Please report the error to switchboard@clarin.eu")
+	let data = new FormData();
+	//data.set( URL.formPar, file, file.name);
+	data.append( URL.formPar, file, file.name);
+	Request
+	    .post(URL.url)
+	    .send(data)
+	//		.set('Content-Type', 'text/plain')	    
+	    .end((err, res) => {
+		if (err) {
+		    console.log('ToolInvoker/invokeWebService/form: error in calling webservice', err, file.name, data, URL);
+		    alert('Result of calling web service: ' + err);
+		} else {
+		    // var jsonDataWindow = window.open("data:text/json," + encodeURIComponent(res.text), "_blank");
+		    // if (window.focus) {		    
+		    // 	jsonDataWindow.focus();
+		    // }
+		    
+		    // var anotherJsonDataWindow = window.open("data:," + encodeURIComponent(res.text), "_blank");
+		    // if (window.focus) {
+		    // 	anotherJsonDataWindow.focus();
+		    // }
+		    
+//		    console.log('ToolInvoker/invokeWebService/form: success in calling webservice', "data:," + encodeURIComponent(res.text));
+//		    console.log('ToolInvoker/invokeWebService entire response:', res);
+
+		    var jsonReturn = JSON.parse(res.text);
+		    console.log('parsed JSON', jsonReturn);
+		    var jsonStr = JSON.stringify(jsonReturn);
+		    console.log('stringified JSON', jsonStr);		    
+		    var jsonDataWindow = window.open("data:text/json," + encodeURIComponent(jsonStr), "_blank");
+		    jsonDataWindow.document.title = "Web Service Result";
+		    if (window.focus) {		    
+			jsonDataWindow.focus();
+		    }
+		    
+		    // var x = window.open();
+		    // x.document.open();
+		    // x.document.write('<html><body><pre>' + res.text + '</pre></body></html>');
+		    // x.document.close();
+		    // x.document.title = URL.url;
+		    // if (window.focus) {
+		    // 	x.focus();
+		    // }		    
+		}
+	    });
+>>>>>>> master
     }
 }
 
