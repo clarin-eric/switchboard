@@ -2,7 +2,7 @@
 // 2016-17 Claus Zinn
 // 
 // File: Registry.js
-// Time-stamp: <2017-11-13 12:14:37 (zinn)>
+// Time-stamp: <2017-12-13 09:57:42 (zinn)>
 //
 // ----------------------------------------------------------------------------------------
 
@@ -507,7 +507,7 @@ const Registry = [
     },
 
     { "task": "Dependency Parsing",
-      "name": "UDPipe (with GUI, CES-only)",
+      "name": "UDPipe (with GUI)",
       "logo": "lindat.jpg",
       "homepage": "http://ufal.mff.cuni.cz/udpipe",
       "location": "Prague, CUNI",
@@ -521,23 +521,21 @@ const Registry = [
       "licence": "UDPipe is a free software under Mozilla Public Licence 2.0 and the linguistic models are free for non-commercial use and distributed under CC BY-NC-SA licence, although for some models the original data used to create the model may impose additional licensing conditions. UDPipe is versioned using Semantic Versioning.", 
       "description":  "UDPipe is an trainable pipeline for tokenization, tagging, lemmatization and dependency parsing of CoNLL-U files. UDPipe is language-agnostic and can be trained given only annotated data in CoNLL-U format. Trained models are provided for nearly all UD treebanks.",
       "langEncoding": "639-1",
-      "languages": ["ces"],
+      "languages": ["grc", "ara", "bel", "bul", "cat", "cop", "hrv", "ces", "dan", "nld", "eng", "eus", "est", "fin", "fra", "glg", "deu", "got", "ell", "heb", "hin", "hun", "ind", "gle", "ita", "jpn", "kaz", "kor", "lat", "lav", "lit", "nor", "chu", "fas", "pol", "por", "ron", "rus", "san", "slk", "slv", "spa", "swe", "tam", "tur", "ukr", "urd", "uig", "vie", "zho"],
       "mimetypes": ["text/plain"],
       "url": "https://lindat.mff.cuni.cz/services/udpipe/",
-      //	  "url": "https://lindat.mff.cuni.cz/services/udpipe/api/process?tokenizer&tagger&parser",
       "parameters": {
 	  "input"   : "self.linkToResource", 
 	  "lang"    : "self.linkToResourceLanguage"
-	  // 			model   : "czech"
       },		  
       "mapping": {
 	  "input"   : "data",
-	  "lang"    : "language"
+	  "lang"    : "model"
       },
     },
 
     { "task": "Dependency Parsing",
-      "name": "UDPipe (web service, CES-only)",
+      "name": "UDPipe (web service)",
       "softwareType": "webService",
       "requestType": "form-data (input key must have file contents)",
       "logo": "lindat.jpg",
@@ -553,18 +551,17 @@ const Registry = [
       "licence": "UDPipe is a free software under Mozilla Public Licence 2.0 and the linguistic models are free for non-commercial use and distributed under CC BY-NC-SA licence, although for some models the original data used to create the model may impose additional licensing conditions. UDPipe is versioned using Semantic Versioning.", 
       "description":  "UDPipe is an trainable pipeline for tokenization, tagging, lemmatization and dependency parsing of CoNLL-U files. UDPipe is language-agnostic and can be trained given only annotated data in CoNLL-U format. Trained models are provided for nearly all UD treebanks.",
       "langEncoding": "639-1",
-      "languages": ["ces"],
+      "languages": ["grc", "ara", "bel", "bul", "cat", "cop", "hrv", "ces", "dan", "nld", "eng", "eus", "est", "fin", "fra", "glg", "deu", "got", "ell", "heb", "hin", "hun", "ind", "gle", "ita", "jpn", "kaz", "kor", "lat", "lav", "lit", "nor", "chu", "fas", "pol", "por", "ron", "rus", "san", "slk", "slv", "spa", "swe", "tam", "tur", "ukr", "urd", "uig", "vie", "zho"],
       "mimetypes": ["text/plain"],
       "output": "application/json",		      
       "url": "https://lindat.mff.cuni.cz/services/udpipe/api/process?tokenizer&tagger&parser",
       "parameters": {
 	  "input"   : "self.linkToResource", 
-	  "lang"    : "self.linkToResourceLanguage",
- 	  "model"   : "czech"
+	  "lang"    : "self.linkToResourceLanguage"
       },		  
       "mapping": {
 	  "input"   : "data",
-	  "lang"    : "language"
+	  "lang"    : "model"
       },
     },
 

@@ -24,6 +24,8 @@ function showWebServiceCallResult_iframe( outputFormat, result, charset, content
     case "application/json":
 	showWebServiceCallResult_write(result);
 	return;
+	//^^^^//
+	
 	var jsonReturn = encodeURIComponent(result); //JSON.parse(result);
 	contentString = "data:text/json,"  + JSON.stringify(jsonReturn);
 	break;
@@ -39,23 +41,33 @@ function showWebServiceCallResult_iframe( outputFormat, result, charset, content
     
     var iframe = "<iframe width='100%' height='100%' src='" + contentString + "'></iframe>"
     var x = window.open();
-    x.document.title = "Web Service Result";
-    x.document.open();
-    x.document.write("<meta http-equiv='Content-Type' content='application/json; charset=utf-8'>");
-    x.document.write(iframe);
-    x.document.close();
+    console.log("after case", x);
+    if (x === null) {
+	alert("Please allow your browser to open pop-up windows!");
+    } else {
+	x.document.title = "Web Service Result";
+	x.document.open();
+	x.document.write("<meta http-equiv='Content-Type' content='application/json; charset=utf-8'>");
+	x.document.write(iframe);
+	x.document.close();
+    }
 }
 
 function showWebServiceCallResult_write( result ) {
     var x = window.open();
-    x.document.open();
-    x.document.title = "Web Service Result";    
-    // x.document.write('<html><body><pre>' + result + '</pre></body></html>');
-    x.document.write('<textarea rows="80" cols="80" style="border:none;">' + result + '</textarea>');
-    //			x.document.write(result);			
-    x.document.close();
-    if (window.focus) {
-	x.focus();
+    if (x === null) {
+	console.log('in functon ToolInvoker/showWebServiceCallResult_write', x);
+	alert("Please allow your browser to open pop-up windows!");
+    } else {
+	x.document.open();
+	x.document.title = "Web Service Result";    
+	// x.document.write('<html><body><pre>' + result + '</pre></body></html>');
+	x.document.write('<textarea rows="80" cols="80" style="border:none;">' + result + '</textarea>');
+	//			x.document.write(result);			
+	x.document.close();
+	if (window.focus) {
+	    x.focus();
+	}
     }
 }
 
@@ -183,7 +195,6 @@ export function invokeWebService( URL ) {
 		    // }		    
 		}
 	    });
->>>>>>> master
     }
 }
 

@@ -24,11 +24,17 @@ export default class LanguageMenu extends React.Component {
 	    { label: "Albanian",
 	      value: "sqi"
 	    },
+	    { label: "Ancient Greek",
+	      value: "grc"
+	    },	    
 	    { label: "Arabic",
 	      value: "ara"
 	    },	    
 	    { label: "Armenian",
 	      value: "hye"
+	    },
+	    { label: "Belarusian",
+	      value: "bel"
 	    },	    	    	    
 	    { label: "Bosnian",
 	      value: "bos"
@@ -42,15 +48,18 @@ export default class LanguageMenu extends React.Component {
 	    { label: "Catalan",
 	      value: "cat"
 	    },
-	    { label: "Czech",
-	      value: "ces"
-	    },
 	    { label: "Chinese",
 	      value: "zho"
-	    },	    
+	    },
+	    { label: "Coptic",
+	      value: "cop"
+	    },	    	    
 	    { label: "Croatian",
 	      value: "hrv"
-	    },	    	    
+	    },
+	    { label: "Czech",
+	      value: "ces"
+	    },	    
 	    { label: "Danish",
 	      value: "dan"
 	    },
@@ -83,10 +92,16 @@ export default class LanguageMenu extends React.Component {
 	    },	    
 	    { label: "German",
 	      value: "deu"
-	    },	    
+	    },
+	    { label: "Gothic",
+	      value: "got"
+	    },	    	    
 	    { label: "Greek",
 	      value: "ell"
 	    },
+	    { label: "Hebrew",
+	      value: "heb"
+	    },	    	    
 	    { label: "Hindi",
 	      value: "hin"
 	    },	    
@@ -111,9 +126,15 @@ export default class LanguageMenu extends React.Component {
 	    { label: "Kannada",
 	      value: "kan"
 	    },
+	    { label: "Kazakh",
+	      value: "kaz"
+	    },	    
 	    { label: "Kurdish",
 	      value: "kur"
-	    },	    	    	    
+	    },
+	    { label: "Korean",
+	      value: "kor"
+	    },	    	    	    	    
 	    { label: "Latin",
 	      value: "lat"
 	    },
@@ -135,9 +156,12 @@ export default class LanguageMenu extends React.Component {
 	    { label: "Norwegian",
 	      value: "nor"
 	    },	    	    
+	    { label: "Old Church Slavonic",
+	      value: "chu"
+	    },
 	    { label: "Polish",
 	      value: "pol"
-	    },
+	    },	    
 	    { label: "Persian",
 	      value: "fas"
 	    },
@@ -150,9 +174,12 @@ export default class LanguageMenu extends React.Component {
 	    { label: "Russian",
 	      value: "rus"
 	    },
+	    { label: "Sanskrit",
+	      value: "san"
+	    },
 	    { label: "Scottish Gaelic",
 	      value: "gla"
-	    },
+	    },	    
 	    { label: "Slovak",
 	      value: "slk"
 	    },	    
@@ -177,9 +204,15 @@ export default class LanguageMenu extends React.Component {
 	    { label: "Tamil",
 	      value: "tam"
 	    },
+	    { label: "Uighur",
+	      value: "uig"
+	    },	    
 	    { label: "Ukrainian",
 	      value: "ukr"
-	    },	    
+	    },
+	    { label: "Urdu",
+	      value: "urd"
+	    },	    	    
 	    { label: "Vietnamese",
 	      value: "vie"
 	    },	    	    
