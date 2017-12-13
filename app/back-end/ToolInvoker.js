@@ -340,12 +340,14 @@ export function gatherInvocationParameters( toolDescription, resourceDescription
 	    };
     }
 
-    console.log('ToolInvoker/gatherInvocationParameters', rtnValue);
+    console.log('ToolInvoker/gatherInvocationParameters', rtnValue, parameterForm);
 
     // FormData cannot be logged easily.
+    /*
     for (var key of parameterForm.entries()) {
         console.log('ToolInvoker/gatherInvocationParameters:', key[0] + ', ' + key[1]);
     }
+    */
 
     return rtnValue;
 }
