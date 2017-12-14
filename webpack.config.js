@@ -121,7 +121,7 @@ const common = {
 		'B2DROP_PASS' : JSON.stringify('clarin-plus'),
 		//'B2DROP_USER' : JSON.stringify('claus.zinn@uni-tuebingen.de'),
 		//'B2DROP_PASS' : JSON.stringify('sPL-Fh2-7SS-hCJ'),
-		'VERSION'     : JSON.stringify('v1.0.8/docker (Dec 13, 2017)'),
+		'VERSION'     : JSON.stringify('v1.0.9/docker (Dec 14, 2017)'),
 		'CONTACT'     : JSON.stringify('switchboard@clarin.eu')
 	    }
 	}),
