@@ -50,7 +50,7 @@ export default class DropArea extends React.Component {
 	ResourceActions.reset();
 
 	// clear task-oriented view
-	this.props.clearDropzoneFun();
+	this.props.clearDropzoneFun(); 
 	
 	this.setState({
 	    textInputValue : "",  // reset textarea
