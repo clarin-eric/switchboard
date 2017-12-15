@@ -16,16 +16,23 @@ import {fileStorage,
 
 export default class Uploader {
 
-    constructor( file ) {
+    constructor( { file, type = 'file' } = {})  {
 	this.file = file;
 	this.protocol = window.location.protocol;
+
 	let today = new Date();
-	let fileExtension = this.file.name.split('.').pop();
-	this.filenameWithDate = today.getTime() + "." + fileExtension;
+	if (type == 'file') {
+	    // todo: some filenames may come without an extension
+	    let fileExtension = this.file.name.split('.').pop();
+	    this.filenameWithDate = today.getTime() + "." + fileExtension;
+	} else {
+	    this.filenameWithDate = today.getTime() + ".txt";
+	}
 
 	// default upload 
 	this.remoteFilename = fileStorageServerMPG_remote + this.filenameWithDate;
         this.remoteFilenameReverseProxy = fileStorageServerMPG_localhost + this.filenameWithDate;
+	
 	// the file server at the MPG seems to have problems with certain file types, so we change it here.
 	this.newFileType = this.file.type;
 	if ( (this.newFileType == "text/xml") ||

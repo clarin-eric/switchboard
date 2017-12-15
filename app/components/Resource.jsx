@@ -15,7 +15,8 @@ export default class Resource extends React.Component {
 
 	const resource = props.resource;
 	this.handleToolsPerTaskChange = props.passChangeToParent;
-	
+
+	this.generateFileName        = this.generateFileName.bind(this); 
 	this.showTools               = this.showTools.bind(this, resource);
 	this.openResource              = this.openResource.bind(this, resource);
 	this.handleWebServicesChange = this.handleChange.bind(this, 'includeWebServices')
@@ -74,6 +75,11 @@ export default class Resource extends React.Component {
 	var win = window.open(resource.remoteFilename, '_blank');
 	win.focus();	
     }
+
+    generateFileName() {
+	let today = new Date();
+	return today.getTime() + ".txt";
+    }
     
     render() {
 	const {resource, passChangeToParent, ...props} = this.props;
@@ -95,7 +101,7 @@ export default class Resource extends React.Component {
 		<ul className="notes">
 		<li className="note" key="resourceName" >
 		  <div>
-		    <span className="note">name: {resource.name}</span>
+   		    <span className="note">name: {resource.name || this.generateFileName()}</span>
 		  </div>		
 		</li>
 		<li className="note" key="resourceSize" >

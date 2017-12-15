@@ -3,6 +3,7 @@ import Loader from 'react-loader';
 import Dropzone from 'react-dropzone';
 import ResourceActions from '../actions/ResourceActions';
 import TextareaAutosize from 'react-autosize-textarea';
+
 // import LinkArea from './LinkArea';
 
 // access to profiler
@@ -21,22 +22,50 @@ export default class DropArea extends React.Component {
 	this.state = {
 	    loaded: true,	    
 	    files: [],
+	    textInputValue: "",
 	    url: ''
 	};
 	
 	this.handlePaste    = this.handlePaste.bind(this);	
 	this.handleChange   = this.handleChange.bind(this);
 	this.handleKeyPress = this.handleKeyPress.bind(this);
+
+	this.handleTextInputChange   = this.handleTextInputChange.bind(this);
+	this.handleTextInputSubmit   = this.handleTextInputSubmit.bind(this);
     }
 
+    
     handleChange(event) {
 	//console.log('A change took place.', event.target.value);
 	this.handlePaste(event);
 	// event.preventDefault();
     }
 
+    handleTextInputSubmit(event) {
+	var textContent = this.state.textInputValue;
+	var blob = new Blob([textContent], {type: "text/plain"});
+	this.uploadAndProcessFile( {currentFile: blob, type: 'data'} );
+
+	// remove prior resources
+	ResourceActions.reset();
+
+	// clear task-oriented view
+	this.props.clearDropzoneFun();
+	
+	this.setState({
+	    textInputValue : "",  // reset textarea
+	    files: [blob]         // put blob into file to trigger Resources
+	});	
+	
+	event.preventDefault();
+    }
+    
+    handleTextInputChange(event) {
+	this.setState({textInputValue: event.target.value});
+    }
+
     handleKeyPress(event) {    
-	console.log('A key has been pressed', event.target.value);
+	console.log('handleKeyPress: A key has been pressed', event.target.value);
 	return false;
 	
 	// Enumerate all supported clipboard, undo and redo keys
@@ -166,11 +195,13 @@ export default class DropArea extends React.Component {
 	    });
     }   
 
-    uploadAndProcessFile( currentFile ) {
+    uploadAndProcessFile( { currentFile, type = 'file' } = {} ) {
 
+	console.log('uploadAndProcessFile', currentFile);
+	
 	this.setState( { loaded: false });
 	let that = this;
-	let uploader = new Uploader( currentFile );
+	let uploader = new Uploader( {file: currentFile, type: type} );
 
 	// use environment variable set in webpack config to decide which file storage server to use
 	let promiseUpload;
@@ -202,9 +233,12 @@ export default class DropArea extends React.Component {
 	    ResourceActions.reset();
 	}	
 
+	// clear task-oriented view
+	this.props.clearDropzoneFun();
+	
 	// process the file(s)
 	for (var i=0; i<files.length; i++) {
-	    this.uploadAndProcessFile( files[i] );	    
+	    this.uploadAndProcessFile( {currentFile: files[i]} );	    
 	}
 
 	// set the state
@@ -217,9 +251,16 @@ export default class DropArea extends React.Component {
     handlePaste(event) {
 
 	var link = event.target.value;
+	console.log('DropArea/handlePaste', link);
 	if ( /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/.test(link) ) {
 	    //console.log('A paste took place.', link);
+
+	    // clear resources view	    
 	    ResourceActions.reset();
+
+	    // clear task-oriented view
+	    this.props.clearDropzoneFun();
+	    
 	    this.downloadAndProcessFile( link );	    
 	    this.setState({
 		files: link
@@ -231,15 +272,17 @@ export default class DropArea extends React.Component {
 	// return false; // event.preventDefault();
     }
 
+
     render() {
         var style1 = {
             borderWidth: 2,
             borderColor: 'black',
             borderStyle: 'dashed',
             borderRadius: 4,
-            margin: 30,
-            padding: 30,
+            margin: 10,
+            padding: 10,
             width: 200,
+	    height:100,
 	    resize: 'none',
 	    transition: 'all 0.5s',
 	    display:'inline-block'
@@ -250,14 +293,12 @@ export default class DropArea extends React.Component {
             borderColor: 'black',
             borderStyle: 'dashed',
             borderRadius: 4,
-            margin: 30,
-            padding: 30,
+            margin: 10,
+            padding: 10,
             width: 300,
 	    resize: 'none',
-	    transition: 'all 0.5s',
-	    display:'inline-block',
-	    position:'relative',
-	    top:'65px'
+	    transition: 'all 0.5s'
+	    // display:'inline-block',position:'relative', top:'65px'
         };
 	
         var activeStyle = {
@@ -266,23 +307,46 @@ export default class DropArea extends React.Component {
             borderRadius: 8
         };
 
+	var dropAreaStyle = {
+	    verticalAlign: 'middle'
+	}
+	
 	return (
 		<div>
-		  <Loader loaded={this.state.loaded} />
-		  <Dropzone onDrop={this.onDrop}
-	                    style={style1}
-			    activeStyle={activeStyle} >
-		    Drop your files here, or click here to select files to upload.
-		  </Dropzone>
-		  <TextareaAutosize rows={6}
-				    maxRows={6}
-				    style={style2}
-				    activeStyle={activeStyle}
-	                            onChange={this.handleChange}
-	                            onKeyPress={this.handleKeyPress}
-				    placeholder='For users of dropbox.com and b2drop.eudat.eu, paste your cloud-based link here. EXPERIMENTAL !' />
-
-	    {this.showFiles()}
+		<Loader loaded={this.state.loaded} />
+		<table>
+		  <tr>
+		    <td>
+		      <Dropzone onDrop={this.onDrop}
+				style={style1}
+				activeStyle={activeStyle} >
+			Drop your files here, or click here to select files to upload.
+		      </Dropzone>
+		    </td>
+		    <td>
+                      <TextareaAutosize rows={5}
+					maxRows={5}
+					style={style1}
+					activeStyle={activeStyle}
+					onChange={this.handleChange}
+					onKeyPress={this.handleKeyPress}
+					placeholder='Drop your shared link from your dropbox.com and b2drop.eudat.eu account here.' />
+		    </td>
+		    <td>
+                      <form onSubmit={this.handleTextInputSubmit}>
+			<TextareaAutosize rows={5}
+					  maxRows={5}
+					  style={style1}
+					  value={this.state.textInputValue}
+					  activeStyle={activeStyle}
+					  onChange={this.handleTextInputChange}
+					  placeholder='Enter your text here. For large input, create a file and drop it in the left-most area.' />		    
+			<input type="submit" value="Submit Text"/>
+		      </form>
+		    </td>
+		  </tr>
+		</table>
+		{this.showFiles()}
 		</div>
 	)
     }

@@ -101,6 +101,16 @@ export default class App extends React.Component {
 
 	// CZ: check whether following is nececessary for cache busting (localStorage)
 	localStorage.removeItem("app");
+
+	const p = window.performance;
+	if (p) {
+	    console.info("window.performance work's fine on this browser");
+	    if (p.navigation.type == 1) {
+		console.info( "This page is reloaded", p.navigation.type);
+	    } else {
+		console.info( "This page is not reloaded", p.navigation.type);
+	    }
+	}
 	this.refresh();
     }
     
@@ -184,7 +194,8 @@ export default class App extends React.Component {
   <div id='dragAndDropArea'></div>
   <HashRouter>
     <Switch>
-      <Route exact path="/" component={DropArea} />
+      <Route exact path="/"
+	     render={(props) => <DropArea clearDropzoneFun={this.clearDropzone} {...props} /> } />
       <Route exact path="/vlo/:fileURL/:fileMimetype/:fileLanguage"
 	     render={(props) => <UrlArea refreshFun={this.refresh} caller="VLO" {...props} /> } />
 	<Route exact path="/vlo/:fileURL/:fileMimetype"
