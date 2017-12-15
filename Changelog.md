@@ -2,16 +2,19 @@
 All notable changes to this project will be documented in this file.
 
 ## [1.0.9] - 2017-12-15
-	### Added
+### Added
 	- extra DropArea where users can enter (plain) text
 	- task-oriented view is now cleared whenever new data arrives
 
 ## [1.0.8] - 2017-12-8
-	### Changed
-	- more information on all the WebLicht easy chains.
+### Changed
+	- improved information on all the WebLicht easy chains (i.e., the components of the pipeline)
+
+## [1.0.4-1.0.7]
+### Changed
+        - Minor improvements, minor code cleaning
 
 ## [1.0.3] - 2017-09-13
-
 ### Fixed
 	- Added reverse proxy directives in nginx config to properly handle redirects from switchboard.clarin.eu
 
