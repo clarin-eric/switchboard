@@ -1,6 +1,6 @@
 {
   "name": "clrs",
-  "version": "1.0.7-pro",
+  "version": "1.0.9-dev",
   "description": "CLARIN Language Resource Switchboard",
   "main": "index.js",
   "scripts": {

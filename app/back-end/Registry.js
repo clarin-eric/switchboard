@@ -2,7 +2,7 @@
 // 2016-17 Claus Zinn
 // 
 // File: Registry.js
-// Time-stamp: <2017-12-14 11:47:49 (zinn)>
+// Time-stamp: <2017-12-18 19:10:03 (zinn)>
 //
 // ----------------------------------------------------------------------------------------
 
@@ -1101,6 +1101,32 @@ const Registry = [
 	    "input" :     "self.linkToResource",
 	    "lang":       "sl",			      
 	    "analysis":   "ne"
+	}
+    },
+
+    {
+	"task": "Named Entity Recognition",
+	"name": "D4Science NER",
+	"logo": "d4science.png",		  	    
+	"homepage": "https://www.d4science.org",
+	"location": "Pisa, Italy",		  		  		  
+	"creators": "D4Science staff",
+	"contact": {
+	    "person": "D4Science Support",
+	    "email": "claus.zinn@sfs.uni-tuebingen.de"
+	},	    
+	"version": "v1.0",
+	"authentication": "no",		  
+	"licence": "public",
+	"description": "This is an experimental integration of a D4Science NLP processing service. This service identifies names of persons, locations, organizations, as well as money amounts, time and date expressions in English texts automatically.",
+	"languages": ["eng"],
+	"langEncoding": "639-1",		  
+	"mimetypes": ["text/plain"],
+	"output": ["text/xml"],
+	"url": "https://next.d4science.org/nlp-hub/",		  
+	"parameters": {
+	    "input" :     "self.linkToResource",
+	    "token":       "a92dc66c-bf09-48cb-9a96-8e765f11e7b1-843339462"			      
 	}
     },
     
