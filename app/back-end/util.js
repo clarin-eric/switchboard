@@ -78,10 +78,12 @@ const langEncodingMap = {
     "mk" : "mkd",
     "ml" : "mlg",
     "nl" : "nld",
-    "nn" : "cop",
-    "nn" : "got",
-    "nn" : "grc",
+    "xx" : "cop",
+    "xx" : "got",
+    "xx" : "grc",
     "no" : "nor",
+    "nn" : "nno",
+    "nb" : "nob",
     "pl" : "pol",
     "pt" : "por",
     "ro" : "ron",
@@ -265,6 +267,12 @@ export function processLanguage( language ) {
     } else if ((language == "no") || (language == "nor")) {
 	languageName = "Norwegian";
     	threeLetterCode = "nor";
+    } else if ((language == "nb") || (language == "nob")) {
+	languageName = "Norwegian Bokmål";
+    	threeLetterCode = "nob";
+    } else if ((language == "nn") || (language == "nno")) {
+	languageName = "Norwegian Nynorsk";
+    	threeLetterCode = "nno";	
     } else if ((language == "fa") || (language == "fas")) {
 	languageName = "Persian";
     	threeLetterCode = "fas";			

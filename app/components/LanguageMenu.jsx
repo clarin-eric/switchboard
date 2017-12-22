@@ -155,7 +155,13 @@ export default class LanguageMenu extends React.Component {
 	    },	    
 	    { label: "Norwegian",
 	      value: "nor"
-	    },	    	    
+	    },
+	    { label: "Norwegian Bokmål",
+	      value: "nob"
+	    },
+	    { label: "Norwegian Nynorsk",
+	      value: "nno"
+	    },	    	    	    
 	    { label: "Old Church Slavonic",
 	      value: "chu"
 	    },
