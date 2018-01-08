@@ -157,10 +157,12 @@ export default class DropArea extends React.Component {
 	    corsLink = corsLink.replace('?dl=0', '?dl=1');
 	} else if ( link.indexOf("https://b2drop.eudat.eu") !== -1 ) {
 	    corsLink = link.replace('https://b2drop.eudat.eu', '/b2drop-eudat-eu').concat('/download');
+	} else if ( link.indexOf("http://data.d4science.org") !== -1 ) {
+	    corsLink = link.replace('http://data.d4science.org', '/data-d4science-org');	    
 	} else if ( link.indexOf("https://weblicht.sfs.uni-tuebingen.de/nextcloud") !== -1 ) {
 	    corsLink = link.replace('https://weblicht.sfs.uni-tuebingen.de/nextcloud', '/weblicht-sfs-nextcloud').concat('/download');
 	} else {
-	    alert('For the time being, only official dropbox and b2drop account links are being processed. Please check your shared link');
+	    alert('For the time being, only official dropbox, b2drop, and d4science account links are being processed. Please check your shared link');
 	    return;
 	}
 	    

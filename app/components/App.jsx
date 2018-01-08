@@ -206,10 +206,12 @@ export default class App extends React.Component {
 	    <Route path="/fcs/:fileURL"
    		   render={(props) => <UrlArea refreshFun={this.refresh} caller="FCS" {...props} /> } />	    
 	      <Route path="/b2drop/:fileURL"
-		     render={(props) => <UrlArea refreshFun={this.refresh} caller="B2DROP" {...props} /> } />
-		<Route path="/vto/"
-	               render={(props) => <ShowAllTools showAllToolsFun={this.showAllTools} caller="CLARIN" {...props} /> } />
-		  <Route path="*"       component={AlertURLFetchError} />
+	             render={(props) => <UrlArea refreshFun={this.refresh} caller="B2DROP" {...props} /> } />
+		<Route path="/d4science/:fileURL"
+		       render={(props) => <UrlArea refreshFun={this.refresh} caller="D4SCIENCE" {...props} /> } />		
+		  <Route path="/vto/"
+			 render={(props) => <ShowAllTools showAllToolsFun={this.showAllTools} caller="CLARIN" {...props} /> } />
+		    <Route path="*"       component={AlertURLFetchError} />
     </Switch>
   </HashRouter>
 
