@@ -137,7 +137,7 @@ export default class DropArea extends React.Component {
 	    
 	//console.log('window.location.origin', window.location.origin, corsLink);
 	var fullCorsLink = window.location.origin.concat('/clrs-dev').concat(corsLink);
-	//console.log('window.location.origin full', fullCorsLink);
+	console.log('DropArea/downloadAndProcessFile: window.location.origin full', fullCorsLink);
 	let downloader = new Downloader( fullCorsLink );
 	this.setState( { loaded: false });
 	//console.log('state', this.state);
