@@ -1,9 +1,11 @@
-FROM alpine:3.6
+# FROM alpine:3.6
+FROM dockage/alpine-openrc:3.7
+
 MAINTAINER claus.zinn@gmail.com
 
 ENV TIKA_SERVER_URL https://www.apache.org/dist/tika/tika-server-1.16.jar
 ENV JAVA_HOME=/usr/lib/jvm/default-jvm
-ENV PYTHON_VERSION=2.7.13-r1
+ENV PYTHON_VERSION=2.7.14-r2
 ENV PY_PIP_VERSION=9.0.1-r1
 ENV SUPERVISOR_VERSION=3.3.1
 ENV NGINX_VERSION 1.11.13
@@ -16,6 +18,9 @@ VOLUME ["/var/cache/nginx"]
 RUN \
     apk add --no-cache --virtual .run-deps \
     ca-certificates openssl pcre zlib
+
+RUN \
+    apk add --update perl && rm -rf /var/cache/apk/*
 
 RUN \
     # Install build and runtime packages
@@ -89,6 +94,10 @@ RUN \
     && rm -rf /var/www/* \
     && echo "installed nginx"
 
+# install fcgi extension
+RUN apk add --update fcgiwrap && \
+    apk add --update spawn-fcgi
+
 # install java/tika
 RUN apk update && \
     apk upgrade && \
@@ -124,6 +133,9 @@ COPY docker/supervisord.conf /etc/supervisor/supervisord.conf
 
 # todo:use github build
 COPY build/ /etc/nginx/html/$CLRS_PATH
+
+# cgi scripting
+COPY docker/cgi-bin/ /etc/nginx/cgi-bin 
 
 # nginx configuration
 COPY docker/nginx.conf /etc/nginx/nginx.conf

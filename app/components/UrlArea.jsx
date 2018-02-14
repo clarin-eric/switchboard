@@ -25,6 +25,53 @@ export default class UrlArea extends React.Component {
 	};
     }
 
+    fetchAndProcessURL_B2DROP_URL( caller, fileURL ) {
+	console.log('fetching a resource from B2DROP...',
+		    fileURL,
+		    fileURL.indexOf("https://fsd-cloud48.zam.kfa-juelich.de"));
+
+	var fullLink = window.location.origin.concat('/clrs/cgi-bin/readFile.pl?file='+encodeURI(fileURL)
+	console.log('UrlArea/fetchAndProcessURL: window.location.origin full', fullLink);
+	
+	let downloader = new Downloader( fullLink );
+	let promiseDownload = downloader.downloadFile();
+	let that = this;
+
+	promiseDownload.then(
+	    function(resolve) {
+		that.setState( { isLoaded: true });		
+		// check whether we've fetched the Shibboleth login
+		if ( (resolve.text.indexOf('Shibboleth') != -1))  {
+		    that.setState({showAlertShibboleth: true});
+		} else {
+		    var downloadedFile = new File([resolve.text], fileURL, {type: resolve.type});
+		    let profiler = new Profiler( downloadedFile, caller, fileURL );
+		    that.setState( { isLoaded: false });				    
+		    let promiseLanguage = profiler.identifyLanguage();
+		    promiseLanguage.then(
+			function(resolve) {
+			    that.setState( { isLoaded: true });				    			    
+			    let promiseMimeType = profiler.identifyMimeType();
+			    promiseMimeType.catch(
+				function(reject) {
+				    console.log('mimetype id failed', reject);
+				})},
+			function(reject) {
+			    that.setState( { isLoaded: true });				    			    			    
+			    console.log('language identification failed', reject) })}
+	    },
+	    function(reject) {
+		// show fetch alert
+		that.setState({showAlertURLFetchError: true} );
+	    })
+    }
+	
+	
+	
+	
+    }
+    
+	
     fetchAndProcessURL( caller, fileURL ) {
 
 	// local b2drop instance
@@ -110,11 +157,13 @@ export default class UrlArea extends React.Component {
 	var fileURL = unfoldHandle( parameters.fileURL);
 	
 	// when called from the VCR, the FCS, or B2DROP, we just get the URL, nothing else.
-	if ( (caller == "VCR") || (caller == "FCS") || (caller == "B2DROP") ) {
+	if ( (caller == "VCR") || (caller == "FCS") ) {
 	    // fetch the resource, and profile it
 	    this.fetchAndProcessURL(caller, fileURL);
-	} else {
-	    
+	} else if ( (caller == "B2DROP") ) {
+	    // fetch the resource, and profile it
+	    this.fetchAndProcess_B2DROP_URL(caller, fileURL);
+	} else {    
 	    if (parameters.fileMimetype == undefined) {
 		alert('Please identify the media type of the resource !');
 	    }
