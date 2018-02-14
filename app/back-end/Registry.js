@@ -2,7 +2,7 @@
 // 2016-17 Claus Zinn
 // 
 // File: Registry.js
-// Time-stamp: <2017-12-22 11:37:56 (zinn)>
+// Time-stamp: <2018-02-14 14:47:38 (zinn)>
 //
 // ----------------------------------------------------------------------------------------
 
@@ -1124,6 +1124,32 @@ const Registry = [
 	"mimetypes": ["text/plain"],
 	"output": ["text/xml"],
 	"url": "https://next.d4science.org/nlp-hub/",		  
+	"parameters": {
+	    "input" :     "self.linkToResource",
+	    "token":       "a92dc66c-bf09-48cb-9a96-8e765f11e7b1-843339462"			      
+	}
+    },
+
+    {
+	"task": "Named Entity Recognition",
+	"name": "Liner2 (D4Science)",
+	"logo": "d4science.png",		  	    
+	"homepage": "https://www.d4science.org",
+	"location": "Pisa, Italy",		  		  		  
+	"creators": "D4Science staff",
+	"contact": {
+	    "person": "D4Science Support",
+	    "email": "claus.zinn@sfs.uni-tuebingen.de"
+	},	    
+	"version": "v1.0",
+	"authentication": "no",		  
+	"licence": "public",
+	"description": "This is an experimental integration of a D4Science NLP processing service (NER Liner 2). This service identifies names of persons, locations, organizations, as well as money amounts, time and date expressions in Polish texts automatically.",
+	"languages": ["pol"],
+	"langEncoding": "639-1",		  
+	"mimetypes": ["text/plain"],
+	"output": ["text/xml"],
+	"url": "https://next.d4science.org/nlp-hub-liner2/",		  
 	"parameters": {
 	    "input" :     "self.linkToResource",
 	    "token":       "a92dc66c-bf09-48cb-9a96-8e765f11e7b1-843339462"			      
