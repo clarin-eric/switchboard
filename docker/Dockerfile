@@ -19,9 +19,10 @@ RUN \
     apk add --no-cache --virtual .run-deps \
     ca-certificates openssl pcre zlib
 
-RUN \
-    apk add --update perl && rm -rf /var/cache/apk/*
-
+RUN apk add --update \
+    uwsgi-python \
+        && rm -rf /var/cache/apk/*
+	
 RUN \
     # Install build and runtime packages
     apk add --no-cache --virtual .build-deps \
@@ -93,10 +94,6 @@ RUN \
     && rm -rf /tmp/* \
     && rm -rf /var/www/* \
     && echo "installed nginx"
-
-# install fcgi extension
-RUN apk add --update fcgiwrap && \
-    apk add --update spawn-fcgi
 
 # install java/tika
 RUN apk update && \
