@@ -2,7 +2,7 @@
 // 2016-17 Claus Zinn
 // 
 // File: Registry.js
-// Time-stamp: <2018-02-14 14:47:38 (zinn)>
+// Time-stamp: <2018-02-16 20:46:30 (zinn)>
 //
 // ----------------------------------------------------------------------------------------
 
@@ -1152,7 +1152,7 @@ const Registry = [
 	"url": "https://next.d4science.org/nlp-hub-liner2/",		  
 	"parameters": {
 	    "input" :     "self.linkToResource",
-	    "token":       "a92dc66c-bf09-48cb-9a96-8e765f11e7b1-843339462"			      
+	    "token":      "27061e4d-3567-482d-9f12-3a1af5e42ab9-843339462"
 	}
     },
     
