@@ -1,62 +1,24 @@
-#!/bin//bash
-
+#!/bin/bash
 set -e
 
-HELP=0
-RUN_TEST=0
+# Get the maximum upload file size for Nginx, default to 0: unlimited
+USE_NGINX_MAX_UPLOAD=${NGINX_MAX_UPLOAD:-0}
+# Generate Nginx config for maximum upload file size
+echo "client_max_body_size $USE_NGINX_MAX_UPLOAD;" > /etc/nginx/conf.d/upload.conf
 
-#
-# Process script arguments
-#
-while [[ $# -gt 0 ]]
-do
-key="$1"
-case $key in
-    --test)
-    RUN_TEST=1
-    ;;
-    -h|--help)
-    HELP=1
-    ;;
-    *)
-    echo "Unkown option: $key"
-    MODE_HELP=1
-    ;;
-esac
-shift # past argument or value
-done
+# Explicitly add installed Python packages and uWSGI Python packages to PYTHONPATH
+# Otherwise uWSGI can't import Flask
+export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python3.6/site-packages:/usr/lib/python3.6/site-packages
 
-#
-# Show help message and exit script
-#
-if [ "${HELP}" -eq 1 ]; then
-    echo ""
-    echo "entrypoint.sh [args]"
-    echo ""
-    echo "  --test           Run in test mode. This will automatically shut down when notified about test completion"
-    echo ""
-    echo "  -h, --help       Show help"
-    echo ""
-    exit 1
+# Get the number of workers for Nginx, default to 1
+USE_NGINX_WORKER_PROCESSES=${NGINX_WORKER_PROCESSES:-1}
+# Modify the number of worker processes in Nginx config
+sed -i "/worker_processes\s/c\worker_processes ${USE_NGINX_WORKER_PROCESSES};" /etc/nginx/nginx.conf
+
+# Get the listen port for Nginx, default to 80
+USE_LISTEN_PORT=${LISTEN_PORT:-80}
+# Modify Nignx config for listen port
+if ! grep -q "listen ${USE_LISTEN_PORT};" /etc/nginx/conf.d/nginx.conf ; then
+    sed -i -e "/server {/a\    listen ${USE_LISTEN_PORT};" /etc/nginx/conf.d/nginx.conf
 fi
-
-#
-# Run script
-#
-if [ "${RUN_TEST}" -eq 1 ]; then
-    echo "Forking check_test.sh"
-    check_test.sh "supervisord" &
-fi
-
-#
-# Initialize configuration
-#
-if [ -f "/app/init.sh" ]; then
-    echo "Initializing"
-    . /app/init.sh
-else
-    echo "Skipping initialization"
-fi
-
-#Start supervisor
-/usr/bin/supervisord -c /etc/supervisor/supervisord.conf >> /var/log/supervisord/supervisor-startup.log
+exec "$@"

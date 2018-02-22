@@ -1,12 +1,12 @@
-# FROM alpine:3.6
-FROM dockage/alpine-openrc:3.7
+FROM alpine:3.6
 
 MAINTAINER claus.zinn@gmail.com
 
 ENV TIKA_SERVER_URL https://www.apache.org/dist/tika/tika-server-1.16.jar
 ENV JAVA_HOME=/usr/lib/jvm/default-jvm
-ENV PYTHON_VERSION=2.7.14-r2
-ENV PY_PIP_VERSION=9.0.1-r1
+#ENV PYTHON_VERSION=2.7.14-r2
+ENV PYTHON_VERSION=3.6
+ENV PY_PIP_VERSION=9.0.1
 ENV SUPERVISOR_VERSION=3.3.1
 ENV NGINX_VERSION 1.11.13
 ENV CLRS_PATH clrs
@@ -19,9 +19,6 @@ RUN \
     apk add --no-cache --virtual .run-deps \
     ca-certificates openssl pcre zlib
 
-RUN apk add --update \
-    uwsgi-python \
-        && rm -rf /var/cache/apk/*
 	
 RUN \
     # Install build and runtime packages
@@ -104,20 +101,13 @@ RUN apk update && \
     rm -rf /var/cache/apk/* \
     && echo "installed java"
 
-# since Jul 13, 2017: get invalid jar file when using this dynamic approach
-#	&& curl -sSL https://people.apache.org/keys/group/tika.asc -o /tmp/tika.asc \
-#	&& gpg --import /tmp/tika.asc \
-#	&& curl -sSL "$TIKA_SERVER_URL.asc" -o /tmp/tika-server-1-15.jar.asc \
-#	&& NEAREST_TIKA_SERVER_URL=$(curl -sSL http://www.apache.org/dyn/closer.cgi/${TIKA_SERVER_URL#https://www.apache.org/dist/}\?asjson\=1 \
-#		| awk '/"path_info": / { pi=$2; }; /"preferred":/ { pref=$2; }; END { print pref " " pi; };' \
-#		| sed -r -e 's/^"//; s/",$//; s/" "//') \
-#	&& echo "Nearest mirror: $NEAREST_TIKA_SERVER_URL" \
-#	&& curl -sSL "$NEAREST_TIKA_SERVER_URL" -o /tika-server-1.15.jar
-
+RUN apk add --update \
+    uwsgi-python3 \
+        && rm -rf /var/cache/apk/*
 
 # Install supervisord
 RUN apk update \
- && apk add -u python=$PYTHON_VERSION py-pip=$PY_PIP_VERSION \
+ && apk add -u py-pip\
  && pip install supervisor==$SUPERVISOR_VERSION \
  && mkdir -p etc/supervisor/conf.d \
  && mkdir -p /var/log/supervisord \
@@ -125,20 +115,29 @@ RUN apk update \
  && rm -rf /tmp/* /var/tmp/* /usr/lib/ruby/gems/*/cache/*.gem \
  && echo "installed supervisord"
 
+
 # Supervisord configuration
 COPY docker/supervisord.conf /etc/supervisor/supervisord.conf
 
 # todo:use github build
 COPY build/ /etc/nginx/html/$CLRS_PATH
 
-# cgi scripting
-COPY docker/cgi-bin/ /etc/nginx/cgi-bin 
-
 # nginx configuration
 COPY docker/nginx.conf /etc/nginx/nginx.conf
 
 # tika-server
 COPY docker/tika-server-1.16.jar /tika-server-1.16.jar
+
+COPY docker/uwsgi.ini /etc/uwsgi/
+
+ENV UWSGI_INI /app/uwsgi.ini
+
+# for the python3 script to download file specified in ?query string
+RUN pip3 install requests
+COPY docker/app /app
+WORKDIR /app
+
+
 
 # Add and define entrypoint
 # -------------------------

@@ -17,6 +17,7 @@ export default class UrlArea extends React.Component {
 
 	this.processParameters   = this.processParameters.bind(this);
 	this.fetchAndProcessURL  = this.fetchAndProcessURL.bind(this);
+	this.fetchAndProcess_B2DROP_URL  = this.fetchAndProcess_B2DROP_URL.bind(this);	
 
 	this.state = {
 	    isLoaded: false,
@@ -25,13 +26,13 @@ export default class UrlArea extends React.Component {
 	};
     }
 
-    fetchAndProcessURL_B2DROP_URL( caller, fileURL ) {
+    fetchAndProcess_B2DROP_URL( caller, fileURL ) {
 	console.log('fetching a resource from B2DROP...',
 		    fileURL,
 		    fileURL.indexOf("https://fsd-cloud48.zam.kfa-juelich.de"));
 
-	var fullLink = window.location.origin.concat('/clrs/cgi-bin/readFile.pl?file='+encodeURI(fileURL)
-	console.log('UrlArea/fetchAndProcessURL: window.location.origin full', fullLink);
+	var fullLink = window.location.origin.concat('/clrs/download?input='+encodeURI(fileURL.concat('/download')))
+	console.log('UrlArea/fetchAndProcessURL_B2DROP_URL: window.location.origin complete', fullLink);
 	
 	let downloader = new Downloader( fullLink );
 	let promiseDownload = downloader.downloadFile();
@@ -44,8 +45,8 @@ export default class UrlArea extends React.Component {
 		if ( (resolve.text.indexOf('Shibboleth') != -1))  {
 		    that.setState({showAlertShibboleth: true});
 		} else {
-		    var downloadedFile = new File([resolve.text], fileURL, {type: resolve.type});
-		    let profiler = new Profiler( downloadedFile, caller, fileURL );
+		    var downloadedFile = new File([resolve.text], fileURL.concat('/download'), {type: resolve.type});
+		    let profiler = new Profiler( downloadedFile, caller, fileURL.concat('/download') );
 		    that.setState( { isLoaded: false });				    
 		    let promiseLanguage = profiler.identifyLanguage();
 		    promiseLanguage.then(
@@ -65,12 +66,6 @@ export default class UrlArea extends React.Component {
 		that.setState({showAlertURLFetchError: true} );
 	    })
     }
-	
-	
-	
-	
-    }
-    
 	
     fetchAndProcessURL( caller, fileURL ) {
 
@@ -101,7 +96,9 @@ export default class UrlArea extends React.Component {
 	}
 
 	var fullFileURL = fileURL; // .concat('/download');
-	
+
+	// todo: when the switchboard is accessed from switchboard.clarin.eu, then do not add clrs to path
+	// check window.location.origin
 	var fullCorsLink = window.location.origin.concat('/clrs').concat(corsLink);
 	console.log('UrlArea/fetchAndProcessURL: window.location.origin full', fullCorsLink);
 	

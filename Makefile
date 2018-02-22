@@ -3,7 +3,7 @@
 
 STATUS="-pro"
 #STATUS="-dev"
-VERSION="1.0.9${STATUS}"
+VERSION="1.1.0${STATUS}"
 NAME="clauszinn/switchboard"
 REPOSITORY="hub.docker.com"
 #IMAGE_NAME="${REPOSITORY}/${NAME}:${VERSION}"
@@ -12,7 +12,7 @@ IMAGE_NAME="${NAME}:${VERSION}"
 all: buildImage
 
 buildImage:
-	docker build -t ${IMAGE_NAME} -f docker/Dockerfile .
+	docker build --no-cache -t ${IMAGE_NAME} -f docker/Dockerfile .
 
 push:
 	docker push ${IMAGE_NAME}
