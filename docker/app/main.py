@@ -10,5 +10,5 @@ def application(environ, start_response):
                                                                               
     res = requests.get(input)                                                 
                                                                               
-    start_response('200 OK', [('Content-Type', 'text/html')])                        
+    start_response('200 OK', [('Content-Type', res.headers['content-type'])])
     return [str.encode(res.text, 'utf-8')]

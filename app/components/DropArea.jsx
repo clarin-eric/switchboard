@@ -122,9 +122,9 @@ export default class DropArea extends React.Component {
 
 	var corsLink = rewriteURL("PASTE", link);
 	let downloader = new Downloader( corsLink );
-	this.setState( { loaded: false });
-	let that = this;
 	let promiseDownload = downloader.downloadFile();
+	let that = this;
+	this.setState( { loaded: false });
 	
 	promiseDownload.then(
 	    function(resolve) {
@@ -135,7 +135,7 @@ export default class DropArea extends React.Component {
 	    },
 	    function(reject) {
 		console.log('DropArea.jsx/download failed', reject);
-		alert('Error: unable to download file');
+		alert('Error: unable to download/process file');
 		that.setState( { loaded: true });
 	    });
     }   
@@ -156,11 +156,9 @@ export default class DropArea extends React.Component {
 	
 	promiseUpload.then(
 	    function(resolve) {
-		// console.log('DropArea/uploadAndProcessFile', resolve);//
 		let profiler = new Profiler( currentFile, "dnd", uploader.remoteFilename );
 		profiler.convertProcessFile();
 		that.setState( { loaded: true });
-		//profiler.convertFileToPlainText();
 	    },
 	    function(reject) {
 		console.log('DropArea.jsx/upload failed', reject);

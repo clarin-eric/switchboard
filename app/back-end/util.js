@@ -43,6 +43,31 @@ export function unfoldHandle( handle ) {
    - paste events are always fetched via the Python script
 */
 
+export function fileExtensionChooser (mimetype) {
+    console.log('util/fileExtensionChooser', mimetype);
+    var extension = "txt";
+    switch (mimetype) {
+    case "application/pdf":
+	extension = "pdf";
+	break;
+    case "text/plain":
+	extension = "txt";
+	break;
+    case "text/html":
+	extension = "html";
+	break;	
+    case "application/msword":
+	extension = "doc";
+	break;
+    case "application/rtf":
+	extension = "rtf";
+	break;
+    default:
+	extension = "txt";
+    }
+    return extension;
+}
+
 export function rewriteURL( caller, fileURL ) {
     var corsLink = "";
     if (caller == "B2DROP") {

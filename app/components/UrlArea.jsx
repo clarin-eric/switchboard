@@ -6,9 +6,9 @@ import AlertShibboleth from './AlertShibboleth.jsx';
 import AlertURLFetchError from './AlertURLFetchError.jsx';
 
 import Request from 'superagent';
-import {processLanguage, unfoldHandle, rewriteURL} from '../back-end/util';
-
+import {fileExtensionChooser, urlPath, fileStorage, processLanguage, unfoldHandle, rewriteURL} from '../back-end/util';
 import Downloader from '../back-end/Downloader';
+import Uploader from '../back-end/Uploader';
 import Resolver from '../back-end/Resolver';
 import Profiler from '../back-end/Profiler';
 
@@ -16,8 +16,9 @@ export default class UrlArea extends React.Component {
     constructor(props) {
 	super(props);
 
-	this.processParameters   = this.processParameters.bind(this);
-	this.fetchAndProcessURL  = this.fetchAndProcessURL.bind(this);
+	this.processParameters         = this.processParameters.bind(this);
+	this.fetchAndProcessURL        = this.fetchAndProcessURL.bind(this);
+	this.fetchUploadAndProcessURL  = this.fetchUploadAndProcessURL.bind(this);	
 
 	this.state = {
 	    isLoaded: false,
@@ -60,6 +61,48 @@ export default class UrlArea extends React.Component {
 		that.setState({showAlertURLFetchError: true} );
 	    })
     }
+
+    fetchUploadAndProcessURL( caller, fileURL ) {
+	var corsLink = rewriteURL( caller, fileURL )
+	let downloader = new Downloader( corsLink );
+	let promiseDownload = downloader.downloadFile();
+	let that = this;
+
+	promiseDownload.then(
+	    function(resolve) {
+		that.setState( { isLoaded: true });		
+		// check whether we've fetched the Shibboleth login
+		if ( (resolve.text.indexOf('Shibboleth') != -1))  {
+		    that.setState({showAlertShibboleth: true});
+		} else {
+		    console.log('UrlArea/fetchUploadAndProcessURL', resolve);
+		    let newFileName = "handle.".concat(fileExtensionChooser( resolve.type ))
+		    var downloadedFile = new File([resolve.text], newFileName, {type: resolve.type});
+		    let uploader = new Uploader( downloadedFile );
+		    // use environment variable set in webpack config to decide which file storage server to use
+		    let promiseUpload;
+		    if (fileStorage === "MPCDF") {
+			promiseUpload = uploader.uploadFile();
+		    } else {
+			promiseUpload = uploader.uploadFile_NC_B2DROP();
+		    }
+
+		    promiseUpload.then(
+			function(resolve) {
+			    let profiler = new Profiler( downloadedFile, "dnd", uploader.remoteFilename );
+			    profiler.convertProcessFile();
+			    that.setState( { loaded: true });
+			},
+			function(reject) {
+			    console.log('DropArea.jsx/upload failed', reject);
+			    alert('Error: unable to upload file');
+			    that.setState( { loaded: true });		
+			});
+		}},
+	    function(reject) {
+		that.setState({showAlertURLFetchError: true} );
+	    })
+    }
     
     processParameters( caller, parameters ) {
 
@@ -72,9 +115,12 @@ export default class UrlArea extends React.Component {
 	var handleFound = fileURL.indexOf('hdl.handle.net');
 
 	// when called from the VCR, the FCS, or B2DROP, we just get the URL, nothing else.
-	if ( (caller == "VCR") || (caller == "FCS") || (caller == "B2DROP") || (handleFound > -1) ) {
+	if ( (caller == "VCR") || (caller == "FCS") || (caller == "B2DROP") ) {
 	    // fetch the resource, and profile it
 	    this.fetchAndProcessURL(caller, fileURL);
+	} else if (handleFound > -1) {
+	    // fetch the resource, and profile it
+	    this.fetchUploadAndProcessURL(caller, fileURL);	    
 	} else {    
 	    if (parameters.fileMimetype == undefined) {
 		alert('Please identify the media type of the resource !');
