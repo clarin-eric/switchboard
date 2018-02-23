@@ -9,7 +9,7 @@ import TextareaAutosize from 'react-autosize-textarea';
 import Profiler from '../back-end/Profiler';
 import Uploader from '../back-end/Uploader';
 import Downloader from '../back-end/Downloader';
-import {urlPath,fileStorage} from '../back-end/util';
+import {urlPath, fileStorage, rewriteURL} from '../back-end/util';
 
 export default class DropArea extends React.Component {
     constructor(props) {
@@ -120,42 +120,16 @@ export default class DropArea extends React.Component {
 
     downloadAndProcessFile( link ) {
 
-	// local b2drop instance
-	// https://weblicht.sfs.uni-tuebingen.de/owncloud/index.php/s/B5nlhfHbPiac3OF/download
-	var corsLink = "";
-	if ( link.indexOf("https://www.dropbox.com") !== -1 ) {
-	    corsLink = link.replace('https://www.dropbox.com', '/www-dropbox-com');
-	    corsLink = corsLink.replace('?dl=0', '?dl=1');
-	} else if ( link.indexOf("https://b2drop.eudat.eu") !== -1 ) {
-	    corsLink = link.replace('https://b2drop.eudat.eu', '/b2drop-eudat-eu').concat('/download');
-	} else if ( link.indexOf("https://weblicht.sfs.uni-tuebingen.de/nextcloud") !== -1 ) {
-	    corsLink = link.replace('https://weblicht.sfs.uni-tuebingen.de/nextcloud', '/weblicht-sfs-nextcloud').concat('/download');
-	} else {
-	    alert('For the time being, only official dropbox and b2drop account links are being processed. Please check your shared link');
-	    return;
-	}
-	    
-	//console.log('window.location.origin', window.location.origin, corsLink);
-	var fullCorsLink = window.location.origin.concat('/clrs-dev').concat(corsLink);
-	console.log('DropArea/downloadAndProcessFile: window.location.origin full', fullCorsLink);
-	let downloader = new Downloader( fullCorsLink );
+	var corsLink = rewriteURL("PASTE", link);
+	let downloader = new Downloader( corsLink );
 	this.setState( { loaded: false });
-	//console.log('state', this.state);
 	let that = this;
 	let promiseDownload = downloader.downloadFile();
 	
 	promiseDownload.then(
 	    function(resolve) {
-		//console.log('DropArea/downloadAndProcessFile', resolve);
 		let file = new File([resolve.text], resolve.req.url, {type: resolve.type});
-		//console.log('DropArea/file', file);
-		let remoteFileName = '';
-		if ( link.indexOf("https://www.dropbox.com") !== -1 ) {
-		    remoteFileName = link.replace('?dl=0', '?dl=1');
-		} else {
-		    remoteFileName = link.concat('/download');
-		}
-		let profiler = new Profiler( file, "dnd", remoteFileName ); //resolve.req.url
+		let profiler = new Profiler( file, "dnd", link ); //resolve.req.url
 		profiler.convertProcessFile();
 		that.setState( { loaded: true });
 	    },

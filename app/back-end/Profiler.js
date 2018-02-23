@@ -116,7 +116,6 @@ export default class Profiler {
 	let that = this;
 	return new Promise(function(resolve, reject) {
 	    Request
-//		.put(that.tika.concat('/clrs-dev/tika'))
 		.put(that.tika.concat('/tika'))
 		.send(file)	
 		.set('Accept', 'text/plain')	
@@ -159,17 +158,12 @@ export default class Profiler {
 		console.log('Warning: language identification failed', reject) })
     }
 
-    // mimetype detection, and given the media type of the resource is NOT plain/text,
-    // but one where TIKA parsers are available use of tika to convert file (for selected file formats)
-    
-    // TODO: if media type of resource is application/zip, do not attempt to identify language of the zip file's contents.
-    // E.g., by setting language to "unknown", that is, "not set"
+    // mimetype detection, given the media type of the resource is NOT plain/text, requires conversion to text/plain
     convertProcessFile() {
 	let that = this;
 	let promiseMimeType = that.identifyMimeType();
 	promiseMimeType.then(
 	    function(resolve) {
-		// console.log('mimetype identification succeeded', resolve);
 		if ( (resolve.text == "application/pdf") ||
 		     (resolve.text == "application/rtf") ||		     
 		     (resolve.text == "application/vnd.openxmlformats-officedocument.wordprocessingml.document" )) {

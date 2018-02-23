@@ -1,3 +1,4 @@
+
 export const urlPath     = process.env.URL_PATH;
 export const fileStorage = process.env.FILE_STORAGE;
 export const b2drop_user = process.env.B2DROP_USER;
@@ -20,15 +21,52 @@ export function unfoldHandle( handle ) {
     var hdlLongPrefix  = protocol.concat("//hdl.handle.net/");	
     var index = handle.indexOf(hdlShortPrefix);
 
-    var result = decodeURIComponent(handle);
+    var expandedHandle = decodeURIComponent(handle);
+
+    console.log('handle', expandedHandle)
 
     if (index > -1) {
-	result = hdlLongPrefix.concat( handle.substring(index+hdlShortPrefix.length, handle.length) );
+	expandedHandle = hdlLongPrefix.concat( handle.substring(index+hdlShortPrefix.length, handle.length) );
     } else {
-	//console.log('UrlArea/unfoldHandle not need to unfold', handle);
+	console.log('util.js/unfoldHandle not need to unfold', handle);
+    }
+    return expandedHandle;
+}
+
+/* This is a CORS relict, see the rewriting in nginx.conf.
+   - Note that B2DROP does not work with this 'trick', so here's a (browser-external)
+     Python script is used for downloading 
+   - iCloud does not provide a direct link to access a shared file (login etc. required)
+   - b2drop.eudat.eu is not active yet, but there is a test instance at https://fsd-cloud48.zam.kfa-juelich.de
+   - the first if condition shadows all subsequent nextcloud-based conditions
+   - aim at getting rid of 'clrs' part of url
+   - paste events are always fetched via the Python script
+*/
+
+export function rewriteURL( caller, fileURL ) {
+    var corsLink = "";
+    if (caller == "B2DROP") {
+	fileURL = fileURL.concat('/download')
+    } else if ( caller == "PASTE") {
+	// nop
+    } else if ( fileURL.indexOf("https://www.dropbox.com") !== -1 ) {
+	corsLink = fileURL.replace('https://www.dropbox.com', '/www-dropbox-com');
+	corsLink = corsLink.replace('?dl=0', '?dl=1');
+    } else if ( fileURL.indexOf("https://b2drop.eudat.eu") !== -1 ) {
+	corsLink = fileURL.replace('https://b2drop.eudat.eu', '/b2drop-eudat-eu').concat('/download');	
+    } else if ( fileURL.indexOf("https://fsd-cloud48.zam.kfa-juelich.de") !== -1 ) {
+	corsLink = fileURL.replace('https://fsd-cloud48.zam.kfa-juelich.de', '/zam-kfa-juelich').concat('/download');
+    } else if ( fileURL.indexOf("https://weblicht.sfs.uni-tuebingen.de/nextcloud") !== -1 ) {
+	corsLink = fileURL.replace('https://weblicht.sfs.uni-tuebingen.de/nextcloud', '/weblicht-sfs-nextcloud').concat('/download');
+    } else {
+	corsLink = fileURL;
     }
 
-    return result;
+    if ( (caller == "B2DROP") || (fileURL.indexOf('hdl.handle.net') > 1) || (caller == "PASTE") ) {
+	return window.location.origin.concat('/clrs/download?input='+encodeURI(fileURL)) // the reverse proxy to the python script
+    } else {
+	return window.location.origin.concat('/clrs').concat(corsLink);                  // the reverse proxy to the clouds
+    }
 }
 
 const langEncodingMap = {

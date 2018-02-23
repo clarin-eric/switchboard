@@ -6,9 +6,10 @@ import AlertShibboleth from './AlertShibboleth.jsx';
 import AlertURLFetchError from './AlertURLFetchError.jsx';
 
 import Request from 'superagent';
-import {processLanguage, unfoldHandle} from '../back-end/util';
+import {processLanguage, unfoldHandle, rewriteURL} from '../back-end/util';
 
 import Downloader from '../back-end/Downloader';
+import Resolver from '../back-end/Resolver';
 import Profiler from '../back-end/Profiler';
 
 export default class UrlArea extends React.Component {
@@ -17,7 +18,6 @@ export default class UrlArea extends React.Component {
 
 	this.processParameters   = this.processParameters.bind(this);
 	this.fetchAndProcessURL  = this.fetchAndProcessURL.bind(this);
-	this.fetchAndProcess_B2DROP_URL  = this.fetchAndProcess_B2DROP_URL.bind(this);	
 
 	this.state = {
 	    isLoaded: false,
@@ -26,95 +26,12 @@ export default class UrlArea extends React.Component {
 	};
     }
 
-    fetchAndProcess_B2DROP_URL( caller, fileURL ) {
-	console.log('fetching a resource from B2DROP...',
-		    fileURL,
-		    fileURL.indexOf("https://fsd-cloud48.zam.kfa-juelich.de"));
-
-	var fullLink = window.location.origin.concat('/clrs/download?input='+encodeURI(fileURL.concat('/download')))
-	console.log('UrlArea/fetchAndProcessURL_B2DROP_URL: window.location.origin complete', fullLink);
-	
-	let downloader = new Downloader( fullLink );
-	let promiseDownload = downloader.downloadFile();
-	let that = this;
-
-	promiseDownload.then(
-	    function(resolve) {
-		that.setState( { isLoaded: true });		
-		// check whether we've fetched the Shibboleth login
-		if ( (resolve.text.indexOf('Shibboleth') != -1))  {
-		    that.setState({showAlertShibboleth: true});
-		} else {
-		    var downloadedFile = new File([resolve.text], fileURL.concat('/download'), {type: resolve.type});
-		    let profiler = new Profiler( downloadedFile, caller, fileURL.concat('/download') );
-		    that.setState( { isLoaded: false });				    
-		    let promiseLanguage = profiler.identifyLanguage();
-		    promiseLanguage.then(
-			function(resolve) {
-			    that.setState( { isLoaded: true });				    			    
-			    let promiseMimeType = profiler.identifyMimeType();
-			    promiseMimeType.catch(
-				function(reject) {
-				    console.log('mimetype id failed', reject);
-				})},
-			function(reject) {
-			    that.setState( { isLoaded: true });				    			    			    
-			    console.log('language identification failed', reject) })}
-	    },
-	    function(reject) {
-		// show fetch alert
-		that.setState({showAlertURLFetchError: true} );
-	    })
-    }
-	
     fetchAndProcessURL( caller, fileURL ) {
-
-	// local b2drop instance
-	// https://weblicht.sfs.uni-tuebingen.de/owncloud/index.php/s/B5nlhfHbPiac3OF/download
-	var corsLink = "";
-	if ( fileURL.indexOf("https://www.dropbox.com") !== -1 ) {
-	    corsLink = fileURL.replace('https://www.dropbox.com', '/www-dropbox-com');
-	    corsLink = corsLink.replace('?dl=0', '?dl=1');
-	} else if ( fileURL.indexOf("https://b2drop.eudat.eu") !== -1 ) {
-	    corsLink = fileURL.replace('https://b2drop.eudat.eu', '/b2drop-eudat-eu').concat('/download');
-	} else if ( fileURL.indexOf("https://weblicht.sfs.uni-tuebingen.de/nextcloud") !== -1 ) {
-	    corsLink = fileURL.replace('https://weblicht.sfs.uni-tuebingen.de/nextcloud', '/weblicht-sfs-nextcloud').concat('/download');
-	} else if ( fileURL.indexOf("https://fsd-cloud48.zam.kfa-juelich.de") !== -1 ) {
-	    corsLink = fileURL.replace('https://fsd-cloud48.zam.kfa-juelich.de', '/zam-kfa-juelich').concat('/download');	    
-	} else if ( fileURL.indexOf("http://cloud.zinnwerk.com") !== -1 ) {
-	    corsLink = fileURL.replace('http://cloud.zinnwerk.com', '/cloud-zinnwerk').concat('/download');
-	    
-	    // https://www.icloud.com/#iclouddrive/0QRZuHeqL47qSZULlOXaX1Aww
-	    // https://www.icloud.com/iclouddrive/0QRZuHeqL47qSZULlOXaX1Aww#englishTextCatalonia.txt
-	    // this is currently not supported as it is undocumented how to download the shared link automatically (e.g., with curl)
-	} else if ( fileURL.indexOf("https://www.icloud.com") !== -1 ) {
-	    corsLink = fileURL.replace('https://www.icloud.com', '/icloud-apple').concat('/download');
-	    
-	} else {
-	    alert('For the time being, only official dropbox and b2drop account links are being processed. Please check your shared link');
-	    return;
-	}
-
-	var fullFileURL = fileURL; // .concat('/download');
-
-	// todo: when the switchboard is accessed from switchboard.clarin.eu, then do not add clrs to path
-	// check window.location.origin
-	var fullCorsLink = window.location.origin.concat('/clrs').concat(corsLink);
-	console.log('UrlArea/fetchAndProcessURL: window.location.origin full', fullCorsLink);
-	
-//	fullCorsLink = "localhost/clrs".concat(corsLink);
-//	console.log('UrlArea/fetchAndProcessURL: localhost', fullCorsLink);	
-
-	// all back
-//	fullCorsLink = fileURL;
-//	corsLink = fileURL;
-//	console.log('UrlArea/fetchAndProcessURL: all reset', fullCorsLink, corsLink);		
-	let downloader = new Downloader( fullCorsLink );
+	var corsLink = rewriteURL( caller, fileURL )
+	let downloader = new Downloader( corsLink );
 	let promiseDownload = downloader.downloadFile();
 	let that = this;
 
-	
-	
 	promiseDownload.then(
 	    function(resolve) {
 		that.setState( { isLoaded: true });		
@@ -123,7 +40,7 @@ export default class UrlArea extends React.Component {
 		    that.setState({showAlertShibboleth: true});
 		} else {
 		    var downloadedFile = new File([resolve.text], corsLink, {type: resolve.type});
-		    let profiler = new Profiler( downloadedFile, caller, fullFileURL );
+		    let profiler = new Profiler( downloadedFile, caller, fileURL );
 		    that.setState( { isLoaded: false });				    
 		    let promiseLanguage = profiler.identifyLanguage();
 		    promiseLanguage.then(
@@ -150,16 +67,14 @@ export default class UrlArea extends React.Component {
 	ResourceActions.reset();
 	// this.forceUpdate();
 	
-	// just in case, we've got a hdl
+	// in case, the URL is a short handle, expand 'hdl:' to 'hdl.handle.net'
 	var fileURL = unfoldHandle( parameters.fileURL);
-	
+	var handleFound = fileURL.indexOf('hdl.handle.net');
+
 	// when called from the VCR, the FCS, or B2DROP, we just get the URL, nothing else.
-	if ( (caller == "VCR") || (caller == "FCS") ) {
+	if ( (caller == "VCR") || (caller == "FCS") || (caller == "B2DROP") || (handleFound > -1) ) {
 	    // fetch the resource, and profile it
 	    this.fetchAndProcessURL(caller, fileURL);
-	} else if ( (caller == "B2DROP") ) {
-	    // fetch the resource, and profile it
-	    this.fetchAndProcess_B2DROP_URL(caller, fileURL);
 	} else {    
 	    if (parameters.fileMimetype == undefined) {
 		alert('Please identify the media type of the resource !');
@@ -167,10 +82,10 @@ export default class UrlArea extends React.Component {
 	    if (parameters.fileLanguage == undefined) {
 		alert('Please identify the language of the resource !');
 	    }
-
+	    
 	    var languageHarmonization = processLanguage(parameters.fileLanguage);	    
 	    var mimeType = decodeURIComponent(parameters.fileMimetype);
-
+	    
 	    // update the Resource panel
 	    var resource = ResourceActions.create( { name: fileURL,
 						     remoteFilename: fileURL,
@@ -180,8 +95,8 @@ export default class UrlArea extends React.Component {
 						     language: languageHarmonization
 						   } );
 	    this.setState( { isLoaded: true });
-//	    this.props.refreshFun();		
 	}
+//	    this.props.refreshFun();		
     }
 
     componentDidMount() {

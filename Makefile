@@ -12,7 +12,7 @@ IMAGE_NAME="${NAME}:${VERSION}"
 all: buildImage
 
 buildImage:
-	docker build --no-cache -t ${IMAGE_NAME} -f docker/Dockerfile .
+	docker build -t ${IMAGE_NAME} -f docker/Dockerfile . #--no-cache
 
 push:
 	docker push ${IMAGE_NAME}
