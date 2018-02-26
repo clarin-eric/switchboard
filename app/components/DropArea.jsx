@@ -146,6 +146,7 @@ export default class DropArea extends React.Component {
 	let that = this;
 	let uploader = new Uploader( currentFile );
 
+	console.log('DropArea/uploadAndProcessFile', currentFile);
 	// use environment variable set in webpack config to decide which file storage server to use
 	let promiseUpload;
 	if (fileStorage === "MPCDF") {

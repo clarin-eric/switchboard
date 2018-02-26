@@ -75,9 +75,10 @@ export default class UrlArea extends React.Component {
 		if ( (resolve.text.indexOf('Shibboleth') != -1))  {
 		    that.setState({showAlertShibboleth: true});
 		} else {
-		    console.log('UrlArea/fetchUploadAndProcessURL', resolve);
+		    console.log('UrlArea/fetchUploadAndProcessURL', resolve, resolve.text.length);
 		    let newFileName = "handle.".concat(fileExtensionChooser( resolve.type ))
 		    var downloadedFile = new File([resolve.text], newFileName, {type: resolve.type});
+		    console.log('UrlArea/fetchUploadAndProcessURL: downloadedFile', downloadedFile);
 		    let uploader = new Uploader( downloadedFile );
 		    // use environment variable set in webpack config to decide which file storage server to use
 		    let promiseUpload;
