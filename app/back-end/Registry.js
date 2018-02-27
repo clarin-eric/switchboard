@@ -2,7 +2,7 @@
 // 2016-17 Claus Zinn
 // 
 // File: Registry.js
-// Time-stamp: <2017-11-13 12:14:37 (zinn)>
+// Time-stamp: <2018-02-16 20:46:30 (zinn)>
 //
 // ----------------------------------------------------------------------------------------
 
@@ -46,7 +46,7 @@ const Registry = [
       "version": "v1.0",
       "authentication": "no",		  
       "licence": "public",
-      "description": "WebLicht Easy Chain for Constituent Parsing (German).",
+      "description": "WebLicht Easy Chain for Constituent Parsing (German). The pipeline makes use of WebLicht's TCF converter, the tokenizer and sentence boundary detector of the IMS/Stuttgart , and the constituent parser from the Berkeley NLP project. WebLicht's Tundra can be used to visualize the result.",
       "languages": ["deu"],
       "langEncoding": "639-1",		  
       "mimetypes": ["text/plain",
@@ -76,7 +76,7 @@ const Registry = [
       "version": "v1.0",
       "authentication": "no",		  
       "licence": "public",
-      "description": "WebLicht Easy Chain for Constituent Parsing (English).",
+      "description": "WebLicht Easy Chain for Constituent Parsing (English). The pipeline makes use of WebLicht's TCF converter, the Stanford tokenizer, and the statistical BLLIP/Charniak parser. WebLicht's Tundra can be used to visualize the result.",
       "languages": ["eng"],
       "langEncoding": "639-1",		  
       "mimetypes": ["text/plain",
@@ -309,7 +309,7 @@ const Registry = [
       "version": "v1.0",
       "authentication": "no",		  
       "licence": "public",
-      "description": "WebLicht Easy Chain for Dependency Parsing (German).",
+      "description": "WebLicht Easy Chain for Dependency Parsing (German). The pipeline makes use of WebLicht's TCF converter, the IMS tokenizer, the POS Tagger from the OpenNLP projet, and the MaltParser, a system for data-driven dependency parsing. WebLicht's Tundra can be used to visualize the result.",
       "languages": ["deu"],
       "langEncoding": "639-1",		  
       "mimetypes": ["text/plain",
@@ -339,7 +339,7 @@ const Registry = [
       "version": "v1.0",
       "authentication": "no",		  
       "licence": "public",
-      "description": "WebLicht Easy Chain for Dependency Parsing (Dutch).",
+      "description": "WebLicht Easy Chain for Dependency Parsing (Dutch). The pipeline makes use of WebLicht's TCF converter, the tokenizer and sentence splitter from Alpino, and the Alpino dependency parser for Dutch. WebLicht's Tundra can be used to visualize the result.",
       "languages": ["nld"],
       "langEncoding": "639-1",		  
       "mimetypes": ["text/plain",
@@ -370,7 +370,7 @@ const Registry = [
       "version": "v1.0",
       "authentication": "no",		  
       "licence": "public",
-      "description": "WebLicht Easy Chain for Dependency Parsing (English).",
+      "description": "WebLicht Easy Chain for Dependency Parsing (English). The pipeline makes use of WebLicht's TCF converter, the Stanford tokenizer, the Jitar POS Tagger, and TurboParser, a multilingual dependency parser based on linear programming relaxations. WebLicht's Tundra can be used to visualize the result.",
       "languages": ["eng"],
       "langEncoding": "639-1",		  
       "mimetypes": ["text/plain",
@@ -507,7 +507,7 @@ const Registry = [
     },
 
     { "task": "Dependency Parsing",
-      "name": "UDPipe (with GUI, CES-only)",
+      "name": "UDPipe (with GUI)",
       "logo": "lindat.jpg",
       "homepage": "http://ufal.mff.cuni.cz/udpipe",
       "location": "Prague, CUNI",
@@ -521,23 +521,21 @@ const Registry = [
       "licence": "UDPipe is a free software under Mozilla Public Licence 2.0 and the linguistic models are free for non-commercial use and distributed under CC BY-NC-SA licence, although for some models the original data used to create the model may impose additional licensing conditions. UDPipe is versioned using Semantic Versioning.", 
       "description":  "UDPipe is an trainable pipeline for tokenization, tagging, lemmatization and dependency parsing of CoNLL-U files. UDPipe is language-agnostic and can be trained given only annotated data in CoNLL-U format. Trained models are provided for nearly all UD treebanks.",
       "langEncoding": "639-1",
-      "languages": ["ces"],
+      "languages": ["grc", "ara", "bel", "bul", "cat", "cop", "hrv", "ces", "dan", "nld", "eng", "eus", "est", "fin", "fra", "glg", "deu", "got", "ell", "heb", "hin", "hun", "ind", "gle", "ita", "jpn", "kaz", "kor", "lat", "lav", "lit", "nor", "nno", "nob", "chu", "fas", "pol", "por", "ron", "rus", "san", "slk", "slv", "spa", "swe", "tam", "tur", "ukr", "urd", "uig", "vie", "zho"],
       "mimetypes": ["text/plain"],
       "url": "https://lindat.mff.cuni.cz/services/udpipe/",
-      //	  "url": "https://lindat.mff.cuni.cz/services/udpipe/api/process?tokenizer&tagger&parser",
       "parameters": {
 	  "input"   : "self.linkToResource", 
 	  "lang"    : "self.linkToResourceLanguage"
-	  // 			model   : "czech"
       },		  
       "mapping": {
 	  "input"   : "data",
-	  "lang"    : "language"
+	  "lang"    : "model"
       },
     },
 
     { "task": "Dependency Parsing",
-      "name": "UDPipe (web service, CES-only)",
+      "name": "UDPipe (web service)",
       "softwareType": "webService",
       "requestType": "form-data (input key must have file contents)",
       "logo": "lindat.jpg",
@@ -553,18 +551,17 @@ const Registry = [
       "licence": "UDPipe is a free software under Mozilla Public Licence 2.0 and the linguistic models are free for non-commercial use and distributed under CC BY-NC-SA licence, although for some models the original data used to create the model may impose additional licensing conditions. UDPipe is versioned using Semantic Versioning.", 
       "description":  "UDPipe is an trainable pipeline for tokenization, tagging, lemmatization and dependency parsing of CoNLL-U files. UDPipe is language-agnostic and can be trained given only annotated data in CoNLL-U format. Trained models are provided for nearly all UD treebanks.",
       "langEncoding": "639-1",
-      "languages": ["ces"],
+      "languages": ["grc", "ara", "bel", "bul", "cat", "cop", "hrv", "ces", "dan", "nld", "eng", "eus", "est", "fin", "fra", "glg", "deu", "got", "ell", "heb", "hin", "hun", "ind", "gle", "ita", "jpn", "kaz", "kor", "lat", "lav", "lit", "nor", "nno", "nob", "chu", "fas", "pol", "por", "ron", "rus", "san", "slk", "slv", "spa", "swe", "tam", "tur", "ukr", "urd", "uig", "vie", "zho"],
       "mimetypes": ["text/plain"],
       "output": "application/json",		      
       "url": "https://lindat.mff.cuni.cz/services/udpipe/api/process?tokenizer&tagger&parser",
       "parameters": {
 	  "input"   : "self.linkToResource", 
-	  "lang"    : "self.linkToResourceLanguage",
- 	  "model"   : "czech"
+	  "lang"    : "self.linkToResourceLanguage"
       },		  
       "mapping": {
 	  "input"   : "data",
-	  "lang"    : "language"
+	  "lang"    : "model"
       },
     },
 
@@ -939,7 +936,7 @@ const Registry = [
       "version": "v1.0",
       "authentication": "no",		  
       "licence": "public",
-      "description": "WebLicht Easy Chain for Lemmatization (German).",
+      "description": "WebLicht Easy Chain for Lemmatization (German). The pipeline makes use of WebLicht's TCF converter, the IMS tokenizer, and the IMS TreeTagger. WebLicht's Tundra can be used to visualize the result.",
       "languages": ["deu"],
       "langEncoding": "639-1",		  
       "mimetypes": ["text/plain",,
@@ -969,7 +966,7 @@ const Registry = [
       "version": "v1.0",
       "authentication": "no",		  
       "licence": "public",
-      "description": "WebLicht Easy Chain for Lemmatization (English).",
+      "description": "WebLicht Easy Chain for Lemmatization (English). The pipeline makes use of WebLicht's TCF converter, the Stanford tokenizer, the Jitar POS Tagger, and the lemmatizer service from MorphAdorner. WebLicht's Tundra can be used to visualize the result.",
       "languages": ["eng"],
       "langEncoding": "639-1",		  
       "mimetypes": ["text/plain",
@@ -1090,7 +1087,7 @@ const Registry = [
 	"version": "v1.0",
 	"authentication": "no",		  
 	"licence": "public",
-	"description": "WebLicht Easy Chain for Named Entity Recognition (Slovenian). The easy-chain makes use of the ReLDI tag, NER JSI software, which performs NER without a parse",
+	"description": "WebLicht Easy Chain for Named Entity Recognition (Slovenian). The easy-chain makes use of the ReLDI tag, NER JSI software, which performs NER without a parse.",
 	"languages": ["slv"],
 	"langEncoding": "639-1",		  
 	"mimetypes": ["text/plain",
@@ -1104,6 +1101,58 @@ const Registry = [
 	    "input" :     "self.linkToResource",
 	    "lang":       "sl",			      
 	    "analysis":   "ne"
+	}
+    },
+
+    {
+	"task": "Named Entity Recognition",
+	"name": "D4Science NER",
+	"logo": "d4science.png",		  	    
+	"homepage": "https://www.d4science.org",
+	"location": "Pisa, Italy",		  		  		  
+	"creators": "D4Science staff",
+	"contact": {
+	    "person": "D4Science Support",
+	    "email": "claus.zinn@sfs.uni-tuebingen.de"
+	},	    
+	"version": "v1.0",
+	"authentication": "no",		  
+	"licence": "public",
+	"description": "This is an experimental integration of a D4Science NLP processing service. This service identifies names of persons, locations, organizations, as well as money amounts, time and date expressions in English texts automatically.",
+	"languages": ["eng"],
+	"langEncoding": "639-1",		  
+	"mimetypes": ["text/plain"],
+	"output": ["text/xml"],
+	"url": "https://next.d4science.org/nlp-hub/",		  
+	"parameters": {
+	    "input" :     "self.linkToResource",
+	    "token":       "a92dc66c-bf09-48cb-9a96-8e765f11e7b1-843339462"			      
+	}
+    },
+
+    {
+	"task": "Named Entity Recognition",
+	"name": "Liner2 (D4Science)",
+	"logo": "d4science.png",		  	    
+	"homepage": "https://www.d4science.org",
+	"location": "Pisa, Italy",		  		  		  
+	"creators": "D4Science staff",
+	"contact": {
+	    "person": "D4Science Support",
+	    "email": "claus.zinn@sfs.uni-tuebingen.de"
+	},	    
+	"version": "v1.0",
+	"authentication": "no",		  
+	"licence": "public",
+	"description": "This is an experimental integration of a D4Science NLP processing service (NER Liner 2). This service identifies names of persons, locations, organizations, as well as money amounts, time and date expressions in Polish texts automatically.",
+	"languages": ["pol"],
+	"langEncoding": "639-1",		  
+	"mimetypes": ["text/plain"],
+	"output": ["text/xml"],
+	"url": "https://next.d4science.org/nlp-hub-liner2/",		  
+	"parameters": {
+	    "input" :     "self.linkToResource",
+	    "token":      "27061e4d-3567-482d-9f12-3a1af5e42ab9-843339462"
 	}
     },
     
@@ -1384,7 +1433,7 @@ const Registry = [
       "version": "v1.0",
       "authentication": "no",
       "licence": "public",
-      "description": "WebLicht Easy Chain for Morphology Analysis (German).",
+      "description": "WebLicht Easy Chain for Morphology Analysis (German). The pipeline makes use of WebLicht's TCF converter, the IMS tokenizer, and the IMS tool on German morphology. WebLicht's Tundra can be used to visualize the result.",
       "languages": ["deu"],
       "langEncoding": "639-1",		  
       "mimetypes": ["text/plain",
@@ -1414,7 +1463,7 @@ const Registry = [
       "version": "v1.0",
       "authentication": "no",		  
       "licence": "public",
-      "description": "WebLicht Easy Chain for Morphology Analysis (English).",
+      "description": "WebLicht Easy Chain for Morphology Analysis (English). The pipeline makes use of WebLicht's TCF converter, the Stanford tokenizer, and the morphology analysis service from MorphAdorner. WebLicht's Tundra can be used to visualize the result.",
       "languages": ["eng"],
       "langEncoding": "639-1",		  
       "mimetypes": ["text/plain",
@@ -1578,7 +1627,8 @@ const Registry = [
       "version": "v1.0",
       "authentication": "no",		  
       "licence": "public",
-      "description": "WebLicht Easy Chain for German Named Entity Recognition (German).",
+      "description": "WebLicht Easy Chain for German Named Entity Recognition (German). The pipeline makes use of WebLicht's TCF converter, the IMS tokenizer, the IMS TreeTagger, and a German Named Entity Recognizer that has been trained based on a maximum entropy approach using the OpenNLP maxent library. WebLicht's Tundra can be used to visualize the result.",
+      "languages": ["eng"],
       "languages": ["deu"],
       "langEncoding": "639-1",		  
       "mimetypes": ["text/plain",
@@ -1608,7 +1658,7 @@ const Registry = [
       "version": "v1.0",
       "authentication": "no",		  
       "licence": "public",
-      "description": "WebLicht Easy Chain for German Named Entity Recognition (English).",
+      "description": "WebLicht Easy Chain for Named Entity Recognition (English). The pipeline makes use of WebLicht's TCF converter, the Stanford tokenizer, and the Illinois Named Entity Recognizer. WebLicht's Tundra can be used to visualize the result.",
       "languages": ["eng"],
       "langEncoding": "639-1",		  
       "mimetypes": ["text/plain",
@@ -2027,7 +2077,7 @@ const Registry = [
       "version": "v1.0",
       "authentication": "no",		  
       "licence": "public",
-      "description": "WebLicht Easy Chain for POS Tagging and Lemmatization (German).",
+      "description": "WebLicht Easy Chain for POS Tagging and Lemmatization (German). The pipeline makes use of WebLicht's TCF converter, the IMS tokenizer, and the IMS TreeTagger. WebLicht's Tundra can be used to visualize the result.",
       "languages": ["deu"],
       "langEncoding": "639-1",		  
       "mimetypes": ["text/plain",
@@ -2057,7 +2107,7 @@ const Registry = [
       "version": "v1.0",
       "authentication": "no",		  
       "licence": "public",
-      "description": "WebLicht Easy Chain for POS Tagging and Lemmatization (French).",
+      "description": "WebLicht Easy Chain for POS Tagging and Lemmatization (French). The pipeline makes use of WebLicht's TCF converter, the IMS tokenizer, and the IMS TreeTagger. WebLicht's Tundra can be used to visualize the result.",
       "languages": ["fra"],
       "langEncoding": "639-1",		  
       "mimetypes": ["text/plain",
@@ -2087,7 +2137,7 @@ const Registry = [
       "version": "v1.0",
       "authentication": "no",		  
       "licence": "public",
-      "description": "WebLicht Easy Chain for POS Tagging and Lemmatization (Italian).",
+      "description": "WebLicht Easy Chain for POS Tagging and Lemmatization (Italian). The pipeline makes use of WebLicht's TCF converter, the IMS tokenizer, and the POS Tagger from the OpenNLP project. The model for Italian is trained on a relatively small training corpus (MIDT) and should therefore be considered experimental. WebLicht's Tundra can be used to visualize the result.",
       "languages": ["ita"],
       "langEncoding": "639-1",		  
       "mimetypes": ["text/plain",
@@ -2117,7 +2167,7 @@ const Registry = [
       "version": "v1.0",
       "authentication": "no",		  
       "licence": "public",
-      "description": "WebLicht Easy Chain for POS Tagging and Lemmatization (English).",
+      "description": "WebLicht Easy Chain for POS Tagging and Lemmatization (English). The pipeline makes use of WebLicht's TCF converter, the Stanford tokenizer, the Jitar POS Tagger, and the lemmatizer service from MorphAdorner. WebLicht's Tundra can be used to visualize the result.",
       "languages": ["eng"],
       "langEncoding": "639-1",		  
       "mimetypes": ["text/plain",
@@ -2948,7 +2998,7 @@ const Registry = [
       "version": "v1.0",
       "authentication": "no",		  
       "licence": "public",
-      "description": "WebLicht Easy Chain for tokenization of Turkish texts.",
+      "description": "WebLicht Easy Chain for tokenization of Turkish texts. The pipeline makes use of WebLicht's TCF converter, and the tokenizer from the OpenNLP project. The 'newlineBounds' parameter treats newlines as a hard break (a sentence boundary). WebLicht's built-in viewer for annotations can be used to visualize the processing result.",
       "languages": ["tur"],
       "langEncoding": "639-1",		  
       "mimetypes": ["text/plain",

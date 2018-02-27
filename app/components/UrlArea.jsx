@@ -18,7 +18,8 @@ export default class UrlArea extends React.Component {
 
 	this.processParameters         = this.processParameters.bind(this);
 	this.fetchAndProcessURL        = this.fetchAndProcessURL.bind(this);
-	this.fetchUploadAndProcessURL  = this.fetchUploadAndProcessURL.bind(this);	
+	this.fetchUploadAndProcessURL  = this.fetchUploadAndProcessURL.bind(this);
+	this.resolveHandle             = this.resolveHandle.bind(this);
 
 	this.state = {
 	    isLoaded: false,
@@ -62,6 +63,26 @@ export default class UrlArea extends React.Component {
 	    })
     }
 
+
+    // this does a Python request to read the location from a 303
+    resolveHandle( caller, fileURL ) {
+	var corsLink = rewriteURL( caller, fileURL )
+	let downloader = new Downloader( corsLink );
+	let promiseDownload = downloader.downloadFile();
+	let that = this;
+	promiseDownload.then(
+	    function(resolve) {
+		that.setState( { isLoaded: true });
+		console.log('URLArea/resolveHandle success', resolve.text)
+	    },
+	    function(reject) {
+		console.log('URLArea/resolveHandle failure', reject)		
+		that.setState({showAlertURLFetchError: true} );
+	    }
+	)
+    }
+
+		
     fetchUploadAndProcessURL( caller, fileURL ) {
 	var corsLink = rewriteURL( caller, fileURL )
 	let downloader = new Downloader( corsLink );
@@ -121,7 +142,42 @@ export default class UrlArea extends React.Component {
 	    this.fetchAndProcessURL(caller, fileURL);
 	} else if (handleFound > -1) {
 	    // fetch the resource, and profile it
-	    this.fetchUploadAndProcessURL(caller, fileURL);	    
+	    // this.fetchUploadAndProcessURL(caller, fileURL);
+	    // just resolve the URL
+	    // this.resolveHandle( caller, fileURL );
+	    var corsLink = rewriteURL( caller, fileURL )
+	    let downloader = new Downloader( corsLink );
+	    let promiseDownload = downloader.downloadFile();
+	    let that = this;
+	    promiseDownload.then(
+		function(resolve) {
+		    that.setState( { isLoaded: true });
+		    console.log('URLArea/resolveHandle success', resolve.text)
+		    fileURL = resolve.text;
+		    if (parameters.fileMimetype == undefined) {
+			alert('Please identify the media type of the resource !');
+		    }
+		    if (parameters.fileLanguage == undefined) {
+			alert('Please identify the language of the resource !');
+		    }
+		    
+		    var languageHarmonization = processLanguage(parameters.fileLanguage);	    
+		    var mimeType = decodeURIComponent(parameters.fileMimetype);
+		    
+		    // update the Resource panel
+		    var resource = ResourceActions.create( { name: fileURL,
+							     remoteFilename: fileURL,
+							     upload: 'VLO',
+							     mimetype: mimeType,
+							     size: parameters.fileSize,
+							     language: languageHarmonization
+							   } );
+		},
+		function(reject) {
+		    console.log('URLArea/resolveHandle failure', reject)		
+		    that.setState({showAlertURLFetchError: true} );
+		}
+	    )
 	} else {    
 	    if (parameters.fileMimetype == undefined) {
 		alert('Please identify the media type of the resource !');

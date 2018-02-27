@@ -8,12 +8,12 @@ function showWebServiceCallResult( result ) {
     if (window.focus) {
 	jsonDataWindow.focus();
     }
-    console.log('ToolInvoker/invokeWebService/data: success in calling webservice', "data:text/json," + result);
+    //console.log('ToolInvoker/invokeWebService/data: success in calling webservice', "data:text/json," + result);
 }
 
 function showWebServiceCallResult_iframe( outputFormat, result, charset, contentType ) {
 
-    console.log('ToolInvoker/showWebServiceCallResult_iframe', outputFormat, result, charset, contentType );
+    //console.log('ToolInvoker/showWebServiceCallResult_iframe', outputFormat, result, charset, contentType );
     var contentString = "";
     switch (outputFormat) {
     case "text/xml":
@@ -93,7 +93,7 @@ export function invokeWebService( URL ) {
 			console.log('ToolInvoker/invokeWebService/form-data: error in calling webservice', err, file.name, URL);
 			alert('Result of calling web service: ' + err);
 		    } else {
-			console.log('ToolInvoker/invokeWebService with requestType/form-data:', res);
+			//console.log('ToolInvoker/invokeWebService with requestType/form-data:', res);
 			showWebServiceCallResult_iframe(URL.output, res.text, res.charset, res.header['content-type']);
 		    }
 		});
@@ -109,7 +109,7 @@ export function invokeWebService( URL ) {
 		    console.log('ToolInvoker/invokeWebService/form-data (key must be file): error in calling webservice', err, file.name, URL);
 		    alert('Result of calling web service: ' + err);
 		} else {
-		    console.log('ToolInvoker/invokeWebService with requestType/form-data (key must be file):', res);
+		    //console.log('ToolInvoker/invokeWebService with requestType/form-data (key must be file):', res);
 		    showWebServiceCallResult_iframe(URL.output, res.text, res.charset, res.header['content-type']);
 		}
 	    });
@@ -164,9 +164,9 @@ export function invokeWebService( URL ) {
 //		    console.log('ToolInvoker/invokeWebService entire response:', res);
 
 		    var jsonReturn = JSON.parse(res.text);
-		    console.log('parsed JSON', jsonReturn);
+		    //console.log('parsed JSON', jsonReturn);
 		    var jsonStr = JSON.stringify(jsonReturn);
-		    console.log('stringified JSON', jsonStr);		    
+		    //console.log('stringified JSON', jsonStr);		    
 		    var jsonDataWindow = window.open("data:text/json," + encodeURIComponent(jsonStr), "_blank");
 		    jsonDataWindow.document.title = "Web Service Result";
 		    if (window.focus) {		    
@@ -190,7 +190,7 @@ export function gatherInvocationParameters( toolDescription, resourceDescription
 
     var rtnValue = { };
 
-    console.log('ToolInvoker/gatherInvocationParameters at start', toolDescription, resourceDescription);
+    // console.log('ToolInvoker/gatherInvocationParameters at start', toolDescription, resourceDescription);
     if (typeof resourceDescription === undefined || resourceDescription === null || resourceDescription.length == 0) {
 	console.log('ToolInvoker/gatherInvocationParameters', false);
 	return false;
@@ -306,16 +306,16 @@ export function gatherInvocationParameters( toolDescription, resourceDescription
     var urlWithParameters = "";
     if ((softwareType == "webService") && (requestType !== "get")) {
 	urlWithParameters = toolDescription.url;
-	console.log('ToolInvoker/urlWithParameters/webService', urlWithParameters, parameterStringURL)
+	//console.log('ToolInvoker/urlWithParameters/webService', urlWithParameters, parameterStringURL)
     } else {
 	var turl = toolDescription.url;
 	// need to check whether toolDescription.url already contains parameters (that is, a '?')
 	if ( (turl.indexOf("\?") !== -1 ) || turl.includes('?') || turl.includes('\?'))  {
 	    urlWithParameters = turl + "&" + parameterStringURL;
-	    console.log('ToolInvoker/urlWithParameters with ?', turl, urlWithParameters, turl.includes('?'), turl.includes('\?'));
+	    //console.log('ToolInvoker/urlWithParameters with ?', turl, urlWithParameters, turl.includes('?'), turl.includes('\?'));
 	} else {
 	    urlWithParameters = turl + "?" + parameterStringURL;
-	    console.log('ToolInvoker/urlWithParameters without ?', turl, urlWithParameters, turl.includes('?'), turl.includes('\?'));	    
+	    //console.log('ToolInvoker/urlWithParameters without ?', turl, urlWithParameters, turl.includes('?'), turl.includes('\?'));	    
 	}
     }
 
@@ -340,7 +340,7 @@ export function gatherInvocationParameters( toolDescription, resourceDescription
 	    };
     }
 
-    console.log('ToolInvoker/gatherInvocationParameters', rtnValue, parameterForm);
+    // console.log('ToolInvoker/gatherInvocationParameters', rtnValue, parameterForm);
 
     // FormData cannot be logged easily.
     /*

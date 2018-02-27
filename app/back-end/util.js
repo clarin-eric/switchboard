@@ -28,7 +28,7 @@ export function unfoldHandle( handle ) {
     if (index > -1) {
 	expandedHandle = hdlLongPrefix.concat( handle.substring(index+hdlShortPrefix.length, handle.length) );
     } else {
-	console.log('util.js/unfoldHandle not need to unfold', handle);
+	console.log('util.js/unfoldHandle: there is no need to unfold the handle', handle);
     }
     return expandedHandle;
 }
