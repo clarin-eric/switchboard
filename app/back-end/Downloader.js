@@ -16,7 +16,7 @@ export default class Downloader {
 		    console.log('Downloader/downloadFile Error Case: ', that.url, err);
 		    reject(err);
 		} else {
-//		    console.log('Downloader/downloadFile: ', that.url, res, res.header['content-type'], res.header['content-length']);
+		    console.log('Downloader/downloadFile: ', that.url, res);
 		    resolve(res);
 		}
 	    })});

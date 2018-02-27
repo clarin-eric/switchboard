@@ -10,7 +10,7 @@ import TextareaAutosize from 'react-autosize-textarea';
 import Profiler from '../back-end/Profiler';
 import Uploader from '../back-end/Uploader';
 import Downloader from '../back-end/Downloader';
-import {fileStorage} from '../back-end/util';
+import {urlPath, fileStorage, rewriteURL} from '../back-end/util';
 
 export default class DropArea extends React.Component {
     constructor(props) {
@@ -148,51 +148,22 @@ export default class DropArea extends React.Component {
     }
 
     downloadAndProcessFile( link ) {
-
-	// local b2drop instance
-	// https://weblicht.sfs.uni-tuebingen.de/owncloud/index.php/s/B5nlhfHbPiac3OF/download
-	var corsLink = "";
-	if ( link.indexOf("https://www.dropbox.com") !== -1 ) {
-	    corsLink = link.replace('https://www.dropbox.com', '/www-dropbox-com');
-	    corsLink = corsLink.replace('?dl=0', '?dl=1');
-	} else if ( link.indexOf("https://b2drop.eudat.eu") !== -1 ) {
-	    corsLink = link.replace('https://b2drop.eudat.eu', '/b2drop-eudat-eu').concat('/download');
-	} else if ( link.indexOf("http://data.d4science.org") !== -1 ) {
-	    corsLink = link.replace('http://data.d4science.org', '/data-d4science-org');	    
-	} else if ( link.indexOf("https://weblicht.sfs.uni-tuebingen.de/nextcloud") !== -1 ) {
-	    corsLink = link.replace('https://weblicht.sfs.uni-tuebingen.de/nextcloud', '/weblicht-sfs-nextcloud').concat('/download');
-	} else {
-	    alert('For the time being, only official dropbox, b2drop, and d4science account links are being processed. Please check your shared link');
-	    return;
-	}
-	    
-	//console.log('window.location.origin', window.location.origin, corsLink);
-	var fullCorsLink = window.location.origin.concat('/clrs-dev').concat(corsLink);
-	//console.log('window.location.origin full', fullCorsLink);
-	let downloader = new Downloader( fullCorsLink );
-	this.setState( { loaded: false });
-	//console.log('state', this.state);
-	let that = this;
+	var corsLink = rewriteURL("PASTE", link);
+	let downloader = new Downloader( corsLink );
 	let promiseDownload = downloader.downloadFile();
+	let that = this;
+	this.setState( { loaded: false });
 	
 	promiseDownload.then(
 	    function(resolve) {
-		//console.log('DropArea/downloadAndProcessFile', resolve);
 		let file = new File([resolve.text], resolve.req.url, {type: resolve.type});
-		//console.log('DropArea/file', file);
-		let remoteFileName = '';
-		if ( link.indexOf("https://www.dropbox.com") !== -1 ) {
-		    remoteFileName = link.replace('?dl=0', '?dl=1');
-		} else {
-		    remoteFileName = link.concat('/download');
-		}
-		let profiler = new Profiler( file, "dnd", remoteFileName ); //resolve.req.url
+		let profiler = new Profiler( file, "dnd", link ); //resolve.req.url
 		profiler.convertProcessFile();
 		that.setState( { loaded: true });
 	    },
 	    function(reject) {
 		console.log('DropArea.jsx/download failed', reject);
-		alert('Error: unable to download file');
+		alert('Error: unable to download/process file');
 		that.setState( { loaded: true });
 	    });
     }   
@@ -205,6 +176,7 @@ export default class DropArea extends React.Component {
 	let that = this;
 	let uploader = new Uploader( {file: currentFile, type: type} );
 
+	console.log('DropArea/uploadAndProcessFile', currentFile);
 	// use environment variable set in webpack config to decide which file storage server to use
 	let promiseUpload;
 	if (fileStorage === "MPCDF") {
@@ -215,11 +187,9 @@ export default class DropArea extends React.Component {
 	
 	promiseUpload.then(
 	    function(resolve) {
-		// console.log('DropArea/uploadAndProcessFile', resolve);//
 		let profiler = new Profiler( currentFile, "dnd", uploader.remoteFilename );
 		profiler.convertProcessFile();
 		that.setState( { loaded: true });
-		//profiler.convertFileToPlainText();
 	    },
 	    function(reject) {
 		console.log('DropArea.jsx/upload failed', reject);
@@ -309,11 +279,21 @@ export default class DropArea extends React.Component {
             borderRadius: 8
         };
 
-	var dropAreaStyle = {
-	    verticalAlign: 'middle'
-	}
-	
-	return (
+	// production version
+	if ( urlPath === "/clrs" ) {
+	    return (
+		<div>
+		  <Loader loaded={this.state.loaded} />
+		  <Dropzone onDrop={this.onDrop}
+	                    style={style1}
+			    activeStyle={activeStyle} >
+		    Drop your files here, or click here to select files to upload.
+		  </Dropzone>
+	          {this.showFiles()}
+		</div>
+	    )
+	} else {
+	    return (
 		<div>
 		<Loader loaded={this.state.loaded} />
 		<table>
@@ -350,6 +330,7 @@ export default class DropArea extends React.Component {
 		</table>
 		{this.showFiles()}
 		</div>
-	)
+	    )
+	}
     }
 }
