@@ -60,6 +60,15 @@ class UserHelpText extends React.Component {
 	    <li>Drag a file from your file manager to the dotted area in the screen. Alternatively, click
 	      on the dotted area, then select a file to be uploaded. <small>[Note that the selected file will be
 		uploaded to a temporary file storage onto a CLARIN-based server. The temporary file storage is not secure, that is, other users might get access to your file.]</small></li>
+	    <li>Alternatively, two more input methods are available now:
+	      <ul>
+		<li>Paste a shared link from your Dropbox or B2DROP account into the middle box. In
+		fact, any URL that directly refers to a resource will do. The switchboard will attempt to
+		download the file and determine its media type and language</li>
+		<li>Type any text into the right-most dotted area. Your text will be saved into a
+		file. Please use this input for plain text only.</li>
+	      </ul>
+	    </li>
 	    <li>A file information pane appears with basic information about the file. Please verify
 	      whether the information that has been gathered in the pane is correct. Use the pull-down menus
 	      for 'mimetype' and 'language' to correct existing information, or to add missing
