@@ -1,6 +1,6 @@
 # C. Zinn
 # -------------------------------------------
-# Time-stamp: <2018-02-27 10:21:22 (zinn)>
+# Time-stamp: <2018-02-27 17:23:04 (zinn)>
 # -------------------------------------------
 # Python script to download resources (or to resolve handles)
 
@@ -33,7 +33,8 @@ def application(environ, start_response):
             return [str.encode(resolve, 'utf-8')]            
         else:
             res = requests.get(input)                                                 
-            start_response('200 OK', [('Content-Type', res.headers['content-type'])])
+            # start_response('200 OK', [('Content-Type', res.headers['content-type'])])
+            start_response(str(res.status_code), [('Content-Type', res.headers['content-type'])])
             return [str.encode(res.text, 'utf-8')]
     else:
         start_response('200 OK', [('Content-Type', 'text/plain')])

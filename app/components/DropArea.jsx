@@ -3,6 +3,8 @@ import Loader from 'react-loader';
 import Dropzone from 'react-dropzone';
 import ResourceActions from '../actions/ResourceActions';
 import TextareaAutosize from 'react-autosize-textarea';
+import AlertURLFetchError from './AlertURLFetchError.jsx';
+import AlertURLUploadError from './AlertURLUploadError.jsx';
 
 // import LinkArea from './LinkArea';
 
@@ -10,7 +12,7 @@ import TextareaAutosize from 'react-autosize-textarea';
 import Profiler from '../back-end/Profiler';
 import Uploader from '../back-end/Uploader';
 import Downloader from '../back-end/Downloader';
-import {urlPath, fileStorage, rewriteURL} from '../back-end/util';
+import {allowTextInput, allowPasteURL, fileStorage, rewriteURL} from '../back-end/util';
 
 export default class DropArea extends React.Component {
     constructor(props) {
@@ -23,7 +25,9 @@ export default class DropArea extends React.Component {
 	    loaded: true,	    
 	    files: [],
 	    textInputValue: "",
-	    url: ''
+	    url: '',
+	    showAlertURLFetchError: false,
+	    showAlertURLUploadError: false
 	};
 	
 	this.handlePaste    = this.handlePaste.bind(this);	
@@ -163,7 +167,8 @@ export default class DropArea extends React.Component {
 	    },
 	    function(reject) {
 		console.log('DropArea.jsx/download failed', reject);
-		alert('Error: unable to download/process file');
+		//alert('Error: unable to download/process file. Please check the shared link.');
+		that.setState({showAlertURLFetchError: true} );		
 		that.setState( { loaded: true });
 	    });
     }   
@@ -193,7 +198,8 @@ export default class DropArea extends React.Component {
 	    },
 	    function(reject) {
 		console.log('DropArea.jsx/upload failed', reject);
-		alert('Error: unable to upload file');
+		that.setState({showAlertURLUploadError: true} );				
+		// alert('Error: unable to upload file');
 		that.setState( { loaded: true });		
 	    });
     }   
@@ -280,19 +286,7 @@ export default class DropArea extends React.Component {
         };
 
 	// production version
-	if ( urlPath === "/clrs" ) {
-	    return (
-		<div>
-		  <Loader loaded={this.state.loaded} />
-		  <Dropzone onDrop={this.onDrop}
-	                    style={style1}
-			    activeStyle={activeStyle} >
-		    Drop your files here, or click here to select files to upload.
-		  </Dropzone>
-	          {this.showFiles()}
-		</div>
-	    )
-	} else {
+	if ( (allowPasteURL === "yes") && (allowTextInput == "yes") ) {
 	    return (
 		<div>
 		<Loader loaded={this.state.loaded} />
@@ -302,7 +296,7 @@ export default class DropArea extends React.Component {
 		      <Dropzone onDrop={this.onDrop}
 				style={style1}
 				activeStyle={activeStyle} >
-			Drop your files here, or click here to select files to upload.
+			Drop your file, or click to select the file to upload.
 		      </Dropzone>
 		    </td>
 		    <td>
@@ -312,7 +306,7 @@ export default class DropArea extends React.Component {
 					activeStyle={activeStyle}
 					onChange={this.handleChange}
 					onKeyPress={this.handleKeyPress}
-					placeholder='Drop your shared link from your dropbox.com and b2drop.eudat.eu account here.' />
+					placeholder='Paste your shared link from Dropbox and B2DROP. Or paste a persistent identifier.' />
 		    </td>
 		    <td>
                       <form onSubmit={this.handleTextInputSubmit}>
@@ -327,8 +321,26 @@ export default class DropArea extends React.Component {
 		      </form>
 		    </td>
 		  </tr>
-		</table>
+  		</table>
+	        {this.state.showAlertURLFetchError ?
+		 <AlertURLFetchError />
+		 : null }
+	        {this.state.showAlertURLUploadError ?
+		 <AlertURLUploadError />
+		 : null }		
 		{this.showFiles()}
+		</div>
+	    )	    
+	} else {
+	    return (
+		<div>
+		  <Loader loaded={this.state.loaded} />
+		  <Dropzone onDrop={this.onDrop}
+	                    style={style1}
+			    activeStyle={activeStyle} >
+		    Drop your files here, or click here to select files to upload.
+		  </Dropzone>
+	          {this.showFiles()}
 		</div>
 	    )
 	}

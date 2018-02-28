@@ -1,10 +1,12 @@
 
-export const urlPath     = process.env.URL_PATH;
-export const fileStorage = process.env.FILE_STORAGE;
-export const b2drop_user = process.env.B2DROP_USER;
-export const b2drop_pass = process.env.B2DROP_PASS;
-export const lrsVersion  = process.env.VERSION;
-export const emailContact = process.env.CONTACT;
+export const urlPath        = process.env.URL_PATH;
+export const allowTextInput = process.env.ALLOW_TEXT_INPUT;
+export const allowPasteURL  = process.env.ALLOW_PASTE_URL;
+export const fileStorage    = process.env.FILE_STORAGE;
+export const b2drop_user    = process.env.B2DROP_USER;
+export const b2drop_pass    = process.env.B2DROP_PASS;
+export const lrsVersion     = process.env.VERSION;
+export const emailContact   = process.env.CONTACT;
 export const emailContactCommand = "mailto:"+emailContact+"?subject=CLARIN-PLUS LRS";
 
 // for creation of link

@@ -33,7 +33,7 @@ class AlertURLFetchError extends React.Component {
         <ModalDialog onClose={this.props.onClose} className="systemAlertDialog"  width={400}>
 	    <h2>Resource Retrieval Error</h2>
 	    <p>
-	  The switchboard was unable to fetch the URL (404 or similar). Please attempt to fetch the resource yourself by clicking on "Link to Resource". If successful, then please use the standalone version of the LRS with the resource in question.
+	  The switchboard was unable to fetch the URL (404 or similar). Please attempt to fetch the resource yourself by pasting its link into a new browser tab. If successul, save the file to your computer, and then upload the resource via drag & drop into the switchboard's left-most drop area.
 	    </p>
         </ModalDialog>
     </ModalContainer>;

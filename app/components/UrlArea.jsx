@@ -4,6 +4,7 @@ import Loader from 'react-loader';
 import ResourceActions from '../actions/ResourceActions';
 import AlertShibboleth from './AlertShibboleth.jsx';
 import AlertURLFetchError from './AlertURLFetchError.jsx';
+import AlertURLUploadError from './AlertURLUploadError.jsx';
 
 import Request from 'superagent';
 import {fileExtensionChooser, urlPath, fileStorage, processLanguage, unfoldHandle, rewriteURL} from '../back-end/util';
@@ -117,7 +118,8 @@ export default class UrlArea extends React.Component {
 			},
 			function(reject) {
 			    console.log('DropArea.jsx/upload failed', reject);
-			    alert('Error: unable to upload file');
+			    // alert('Error: unable to upload file');
+			    that.setState({showAlertURLFetchError: true} );					    
 			    that.setState( { loaded: true });		
 			});
 		}},
@@ -238,6 +240,10 @@ export default class UrlArea extends React.Component {
 	        {this.state.showAlertURLFetchError ?
 		 <AlertURLFetchError />
 		 : null }
+
+	        {this.state.showAlertURLUploadError ?
+		 <AlertURLUploadError />
+		 : null }	    
                </Loader>		    
 	    );
     }

@@ -112,6 +112,10 @@ const common = {
 	new webpack.DefinePlugin({
 	    'process.env': {
                 'NODE_ENV': JSON.stringify('production'),
+		// check whether we should allow manual text input
+		'ALLOW_TEXT_INPUT': JSON.stringify('yes'),
+		// check whether we allow pasting of URLs
+		'ALLOW_PASTE_URL': JSON.stringify('yes'),
 		'URL_PATH': JSON.stringify('/clrs'),
 		//'URL_PATH': JSON.stringify('/clrs-dev'),
 		// 'FILE_STORAGE': JSON.stringify('MPCDF'),
@@ -121,7 +125,7 @@ const common = {
 		'B2DROP_PASS' : JSON.stringify('clarin-plus'),
 		//'B2DROP_USER' : JSON.stringify('claus.zinn@uni-tuebingen.de'),
 		//'B2DROP_PASS' : JSON.stringify('sPL-Fh2-7SS-hCJ'),
-		'VERSION'     : JSON.stringify('v1.1.1-pro/docker (Feb 27, 2018)'),
+		'VERSION'     : JSON.stringify('v1.1.2-pro/docker (Feb 28, 2018)'),
 		'CONTACT'     : JSON.stringify('switchboard@clarin.eu')
 	    }
 	}),

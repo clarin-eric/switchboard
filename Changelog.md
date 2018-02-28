@@ -1,9 +1,26 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.1.2] - 2018-02-28
+### Added
+	- Added AlertURLUploadError to show that file upload failed
+	- activated text input as new input method
+	- active paste URL/PID as new input method
+
+## [1.1.1] - 2018-02-27
+### Added
+	- Activated Nextcloud-based storage rather than MPG storage server. Here, can send Access-Control-Allow-Origin header.
+	- better support for handles
+	- to avoid CORS-related issues, some resources are now downloaded via Python script. That is, support to make uwsgi calls to Python, see app/ directory in distribution, and modified nginx.conf file.
+
+## [1.1.0] - 2017-12-22
+### Added
+	- added more languages for UDPIPE
+	- integrated D4Science tool from switchboard
+
 ## [1.0.9] - 2017-12-15
 ### Added
-	- extra DropArea where users can enter (plain) text
+	- extra DropArea where users can enter (plain) text (development version only)
 	- task-oriented view is now cleared whenever new data arrives
 
 ## [1.0.8] - 2017-12-8
