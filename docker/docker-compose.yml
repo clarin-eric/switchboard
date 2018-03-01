@@ -1,5 +1,5 @@
 # -------------------------------------------
-# Time-stamp: <2018-03-01 13:35:06 (zinn)>
+# Time-stamp: <2018-03-01 15:00:55 (zinn)>
 # -------------------------------------------
 # C. Zinn
 #
@@ -12,6 +12,8 @@
 # 2. docker-compose up -d nextcloud-db
 # 3. sleep 15
 # 4. docker-compose up -d
+# Note that a theme (such as b2drop can be copied into themes,
+# and that an app (such as lrswitchboardbridge) can be copied into apps (must be enabled by admin)
 
 nextcloud:
   image: wonderfall/nextcloud
