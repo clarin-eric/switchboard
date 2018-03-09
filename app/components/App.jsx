@@ -105,9 +105,9 @@ export default class App extends React.Component {
 
 	const p = window.performance;
 	if (p) {
-	    console.info("window.performance work's fine on this browser");
 	    if (p.navigation.type == 1) {
-		console.info( "This page is reloaded", p.navigation.type);
+		console.info( "This page is reloaded, clearing DropZone", p.navigation.type);
+		this.clearDropzone();		
 	    } else {
 		console.info( "This page is not reloaded", p.navigation.type);
 	    }
