@@ -54,7 +54,7 @@ class DevHelpText extends React.Component {
 	    <li>mimetype: automatically detected once the resource has been dragged & dropped into the drop area.</li>
 	    <li>language: the language the resource is in. Apache Tika is used to identify the language of the resource.</li>		
 	  </ul>
-	  <p>For each tool, the LRS switchboard requires a metadata description that gives the switchboard all relevant information for tool applicability. In particular, the metadata description has, you guessed it, slots that describe all the mimetypes and all the languages that the tool can process. </p>
+	  <p>For each tool, the LRS switchboard requires a metadata description that gives the switchboard all relevant information for tool applicability and invocation. In particular, the metadata description has slots that describe all the mimetypes and all the languages that the tool can process. </p>
 	  <p>Example:</p>
 	  <img className="alignCenter" src="metadataListing1.png" width="71%" height="71%" />	  
 	  <p>
@@ -62,7 +62,7 @@ class DevHelpText extends React.Component {
 	    German resources of type 'text/plain'.
 	  </p>
 	  <p>
-	    All applicable tools are identified once the user presses the 'Show Tools' button. Tools are aggregated under a task systematics (preliminary). Selecting a tool opens the info pane about the tool. If the user clicks on 'Click to start tool' link, the respective tool is invoked by passing a number of parameters on, in particular:
+	    All applicable tools are identified once the user presses the 'Show Tools' button. Tools are aggregated under a task systematics. Selecting a tool opens the info pane about the tool. If the user clicks on 'Click to start tool' link, the respective tool is invoked by passing a number of parameters on, in particular:
 	  </p>
 	  <ul>
 	    <li>a pointer to the URL where the resource in question can be downloaded from</li>
