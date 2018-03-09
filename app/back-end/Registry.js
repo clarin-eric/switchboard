@@ -2,7 +2,7 @@
 // 2016-17 Claus Zinn
 // 
 // File: Registry.js
-// Time-stamp: <2018-02-16 20:46:30 (zinn)>
+// Time-stamp: <2018-03-08 10:53:39 (zinn)>
 //
 // ----------------------------------------------------------------------------------------
 
@@ -507,16 +507,16 @@ const Registry = [
     },
 
     { "task": "Dependency Parsing",
-      "name": "UDPipe (with GUI)",
+      "name": "UDPipe",
       "logo": "lindat.jpg",
       "homepage": "http://ufal.mff.cuni.cz/udpipe",
-      "location": "Prague, CUNI",
+      "location": "Charles University, Prague, Czech Republic",      
       "creators": "Milan Straka, Jana Straková",
       "contact": {
 	  "person": "Milan Straka",
 	  "email": "straka@ufal.mff.cuni.cz",
       },
-      "version": "unknown",
+      "version": "v1.2",
       "authentication": "no",		  
       "licence": "UDPipe is a free software under Mozilla Public Licence 2.0 and the linguistic models are free for non-commercial use and distributed under CC BY-NC-SA licence, although for some models the original data used to create the model may impose additional licensing conditions. UDPipe is versioned using Semantic Versioning.", 
       "description":  "UDPipe is an trainable pipeline for tokenization, tagging, lemmatization and dependency parsing of CoNLL-U files. UDPipe is language-agnostic and can be trained given only annotated data in CoNLL-U format. Trained models are provided for nearly all UD treebanks.",
@@ -540,7 +540,7 @@ const Registry = [
       "requestType": "form-data (input key must have file contents)",
       "logo": "lindat.jpg",
       "homepage": "http://ufal.mff.cuni.cz/udpipe",
-      "location": "Prague, CUNI",
+      "location": "Charles University, Prague, Czech Republic",      
       "creators": "Milan Straka, Jana Straková",
       "contact": {
 	  "person": "Milan Straka",
@@ -716,7 +716,7 @@ const Registry = [
       "requestType": "form-data (input key must have file contents)",
       "logo": "lindat.jpg",
       "homepage": "http://lindat.mff.cuni.cz/services/ker/",
-      "location": "Prague, CUNI",
+      "location": "Charles University, Prague, Czech Republic",            
       "creators": "Jindřich Libovický",
       "contact": {
 	  "person": "Jindřich Libovický",
@@ -1118,7 +1118,7 @@ const Registry = [
 	"version": "v1.0",
 	"authentication": "no",		  
 	"licence": "public",
-	"description": "This is an experimental integration of a D4Science NLP processing service. This service identifies names of persons, locations, organizations, as well as money amounts, time and date expressions in English texts automatically.",
+	"description": "This is an experimental integration of a D4Science NLP processing service (based on GATE's ANNIE). This service identifies names of persons, locations, organizations, as well as money amounts, time and date expressions in English texts automatically.",
 	"languages": ["eng"],
 	"langEncoding": "639-1",		  
 	"mimetypes": ["text/plain"],
@@ -1681,7 +1681,7 @@ const Registry = [
       "requestType": "form-data (input key must have file contents)",
       "logo": "lindat.jpg",
       "homepage": "http://lindat.mff.cuni.cz/services/nametag/",
-      "location": "Prague, CUNI",
+      "location": "Charles University, Prague, Czech Republic",            
       "creators": "Milan Straka, Jana Straková",
       "contact": {
 	  "person": "Milan Straka",
@@ -2750,7 +2750,43 @@ const Registry = [
 	  "input"        : "foliainput_url"
       }
     },
-
+    
+    {
+	"task": "Morpho-syntactic tagger",
+	"name": "morphoDiTa",
+	"logo": "clarin-pl.png",	
+	"homepage": "http://ws.clarin-pl.eu",
+	"location": "Wrocław, Poland",
+	"creators": ["Clarin-PL"],
+	"contact": {
+	    "person": "Tomasz Walkowiak",
+	    "email": "tomasz.walkowiak@pwr.edu.pl"
+	},
+	"version": "1.0",
+	"authentication": "no",
+	"licence": "public",
+	"description": "Morphological dictionary and tagger for the analysis of natural language texts in Polish.",
+	"languages": ["pol"],
+	"lang_encoding": "639-1",
+	"mimetypes": ["text/plain",
+		      "application/msword",
+		      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+		      "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+		      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+		      "application/vnd.oasis.opendocument.text",
+		      "application/pdf",
+		      "text/html",
+		      "application/rtf"],
+	"output": ["text/xml"],
+	"url": "http://ws.clarin-pl.eu/weblicht.html",
+	"pid": "",
+	"parameters": {
+	    "input": "self.linkToResource",
+	    "lang": "pl",
+	    "analysis": "morphoDiTa"
+	}
+    },
+    
     {
 	"task": "Tagger",
 	"name": "Tagger NLTK",
@@ -2768,7 +2804,15 @@ const Registry = [
 	"description": "Morpho-syntactic tagger for English texts.",
 	"languages": ["eng"],
 	"langEncoding": "639-1",
-	"mimetypes": ["text/plain", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.oasis.opendocument.text", "application/pdf", "text/html", "application/rtf"],
+	"mimetypes": ["text/plain",
+		      "application/msword",
+		      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+		      "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+		      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+		      "application/vnd.oasis.opendocument.text",
+		      "application/pdf",
+		      "text/html",
+		      "application/rtf"],
 	"output": ["text/xml"],
 	"url": "http://ws.clarin-pl.eu/weblicht.html",
 	"parameters": {
@@ -2811,7 +2855,7 @@ const Registry = [
 
     // TO BE INTEGRATED (Tomasz)
     {   "task": "Text Analytics",
-	"name": "WebSty (Polish)",
+	"name": "WebSty",
 	"logo": "clarin-pl.png",
 	"homepage": "http://ws.clarin-pl.eu",
 	"location": "Wrocław, Poland",
@@ -3128,7 +3172,7 @@ const Registry = [
 	    "email": "acdh-tech@oeaw.ac.at <mailto:acdh-tech@oeaw.ac.at>"
 	},
 	"version": "v1.0",
-	authentification: "no",		
+	"authentification": "no",		
 	"licence": "public",
 	"description": "This is a stateless interface to allow clients to submit content to analyze by the EnhancementEngines and get the resulting RDF enhancements at once without storing anything on the server-side.",
 	"languages": ["eng"],
