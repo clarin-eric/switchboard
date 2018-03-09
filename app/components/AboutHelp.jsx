@@ -64,11 +64,15 @@ class AboutHelpText extends React.Component {
               The following people have contributed to the LRS:
             </p>
             <ul>
-              <li>Claus Zinn (LRS back-end and front-end)</li>
+              <li>Claus Zinn (main developer, responsible for LRS design, back-end and front-end)</li>
+	      <li>Marie Hinrichs, Wei Qui (integration of WebLicht)</li>
               <li>Maarten van Gompel (integration of the CLAM Webservices)</li>
               <li>Bart Jongejan (integration of the CLARIN-DK Tool Box)</li>
+	      <li>Wojtek Rauk (integration of MorphoDoTa, WebSty, Morfeusz, Liner2 etc.)</li>		
+	      <li>Rafael Jaworski (integration of Concraft, Nerf, Spejd etc)</li>		
+	      <li>Josef Misutka and Pavel Stranak (UDPipe)</li>		
+              <li>Twan Goosen (integration of the VLO with the switchboard) </li>		
               <li>Dieter Van Uytvanck (feedback on specification and usability)</li>
-              <li>Twan Goosen (VLO integration) </li>
               <li><em>Your Name Here</em> (integration of <em>your</em> tool)</li>
             </ul>
             <p>

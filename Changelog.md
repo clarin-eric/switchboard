@@ -1,11 +1,18 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.1.3] - 2018-03-09
+### Added
+	- Page reload trigger clearance of DropZone 
+	- added switch to only show tools that do not require authentication
+	- added MorphoDiTa
+        - updated About with developer contribution
+	
 ## [1.1.2] - 2018-02-28
 ### Added
 	- Added AlertURLUploadError to show that file upload failed
 	- activated text input as new input method
-	- active paste URL/PID as new input method
+	- activated paste URL/PID as new input method
 
 ## [1.1.1] - 2018-02-27
 ### Added

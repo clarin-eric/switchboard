@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Registry.js
-// Time-stamp: <2018-03-09 09:53:39 (zinn)>
+// Time-stamp: <2018-03-09 14:13:28 (zinn)>
 // -------------------------------------------
 
 const Registry = [
@@ -327,7 +327,7 @@ const Registry = [
     },
     
     { "task": "Dependency Parsing",
-      "name": "WebLicht-Dep-Parsing-NL",
+      "name": "WebLicht-Dep-Parsing-NL-ALPINO",
       "logo": "weblicht.jpg",		  		  
       "homepage": "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
       "location": "Tuebingen, Germany",		  		  		  
