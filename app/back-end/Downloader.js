@@ -1,3 +1,11 @@
+// -------------------------------------------
+// The CLARIN Language Resource Switchboard
+// 2016-18 Claus Zinn, University of Tuebingen
+// 
+// File: Downloader.js
+// Time-stamp: <2018-03-09 09:52:48 (zinn)>
+// -------------------------------------------
+
 import Request from 'superagent';
 
 export default class Downloader {

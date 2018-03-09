@@ -1,3 +1,11 @@
+// -------------------------------------------
+// The CLARIN Language Resource Switchboard
+// 2016-18 Claus Zinn, University of Tuebingen
+// 
+// File: ToolInvoker.js
+// Time-stamp: <2018-03-09 09:50:41 (zinn)>
+// -------------------------------------------
+
 import { map639_1_to_639_3, map639_3_to_639_1 } from './util';
 import Request from 'superagent';
 

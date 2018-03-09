@@ -1,3 +1,11 @@
+// -------------------------------------------
+// The CLARIN Language Resource Switchboard
+// 2016-18 Claus Zinn, University of Tuebingen
+// 
+// File: util.js
+// Time-stamp: <2018-03-09 09:52:36 (zinn)>
+// -------------------------------------------
+
 
 export const urlPath        = process.env.URL_PATH;
 export const allowTextInput = process.env.ALLOW_TEXT_INPUT;

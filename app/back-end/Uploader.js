@@ -1,9 +1,20 @@
-// Uploads a file to the MPG server in Garching.
+// -------------------------------------------
+// The CLARIN Language Resource Switchboard
+// 2016-18 Claus Zinn, University of Tuebingen
 // 
-// Note that the URL
-//     //weblicht.sfs.uni-tuebingen.de/clrs/storage/
-// is reverse-proxied to
-//     //ws1-clarind.esc.rzg.mpg.de/drop-off/storage/
+// File: Uploader.js
+// Time-stamp: <2018-03-09 09:52:06 (zinn)>
+// -------------------------------------------
+
+/* Uploads a file to the MPG server in Garching, or to a Nextcloud space.
+ 
+   - Note that, for instance, the URL
+
+     //weblicht.sfs.uni-tuebingen.de/clrs/storage/
+
+    is reverse-proxied to
+
+     //ws1-clarind.esc.rzg.mpg.de/drop-off/storage/                      */
 
 import Request from 'superagent';
 import {fileStorage,

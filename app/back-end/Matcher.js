@@ -1,10 +1,10 @@
+// -------------------------------------------
 // The CLARIN Language Resource Switchboard
-// 2016-17 Claus Zinn
+// 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Matcher.js
-// Time-stamp: <2017-11-09 11:57:47 (zinn)>
-//
-// ----------------------------------------------------------------------------------------
+// Time-stamp: <2018-03-09 09:53:10 (zinn)>
+// -------------------------------------------
 
 import React, { Component } from 'react';
 import uuid from 'node-uuid';

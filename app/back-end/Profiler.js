@@ -1,3 +1,11 @@
+// -------------------------------------------
+// The CLARIN Language Resource Switchboard
+// 2016-18 Claus Zinn, University of Tuebingen
+// 
+// File: Profiler.js
+// Time-stamp: <2018-03-09 09:53:26 (zinn)>
+// -------------------------------------------
+
 import Request from 'superagent';
 import {urlPath, processLanguage} from './util';
 import ResourceActions from '../actions/ResourceActions';

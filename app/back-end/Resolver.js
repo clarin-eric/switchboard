@@ -1,3 +1,11 @@
+// -------------------------------------------
+// The CLARIN Language Resource Switchboard
+// 2016-18 Claus Zinn, University of Tuebingen
+// 
+// File: Resolver.js
+// Time-stamp: <2018-03-09 09:53:53 (zinn)>
+// -------------------------------------------
+
 import Request from 'superagent';
 
 /* This is an attempt to resolve the handle by checking http code 302/303, 

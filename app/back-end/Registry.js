@@ -1,10 +1,10 @@
+// -------------------------------------------
 // The CLARIN Language Resource Switchboard
-// 2016-17 Claus Zinn
+// 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Registry.js
-// Time-stamp: <2018-03-08 10:53:39 (zinn)>
-//
-// ----------------------------------------------------------------------------------------
+// Time-stamp: <2018-03-09 09:53:39 (zinn)>
+// -------------------------------------------
 
 const Registry = [
     { "task": "Chunker",
