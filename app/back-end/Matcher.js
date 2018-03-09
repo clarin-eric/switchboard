@@ -3,12 +3,14 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Matcher.js
-// Time-stamp: <2018-03-09 09:53:10 (zinn)>
+// Time-stamp: <2018-03-09 12:27:47 (zinn)>
 // -------------------------------------------
 
 import React, { Component } from 'react';
 import uuid from 'node-uuid';
 import Registry from './Registry.js';
+
+import {inclToolsReqAuth} from './util';
 
 export default class Matcher {
 
@@ -141,12 +143,27 @@ export default class Matcher {
 		    });
 	}
 
-	// --------------------------------	
-	// additional filters coming here..
-	// --------------------------------
-
+	// ---------------------------------	
+	// additional filters coming here...
+	// ---------------------------------
+	
+	var toolsReqAuthExcluded = [];
+	if (inclToolsReqAuth == "yes") {
+	    toolsReqAuthExcluded = languageFilter
+	} else {
+	    toolsReqAuthExcluded = languageFilter.filter(
+		(tool) =>
+		    {
+			if (tool.authentication == "no") {
+			    tool.id = uuid.v4();
+			    return tool;
+			}
+		    }
+	    )
+	}
+	
 	// now, for the task-oriented view
-	var toolsPerTask = this.groupTools( languageFilter );
+	var toolsPerTask = this.groupTools( toolsReqAuthExcluded );
 
 	// CZ: should be dealt with in the React component (rendering task-oriented list)
 	if (Object.keys(toolsPerTask).length == 0) {

@@ -3,18 +3,18 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: util.js
-// Time-stamp: <2018-03-09 09:52:36 (zinn)>
+// Time-stamp: <2018-03-09 10:51:19 (zinn)>
 // -------------------------------------------
 
-
-export const urlPath        = process.env.URL_PATH;
-export const allowTextInput = process.env.ALLOW_TEXT_INPUT;
-export const allowPasteURL  = process.env.ALLOW_PASTE_URL;
-export const fileStorage    = process.env.FILE_STORAGE;
-export const b2drop_user    = process.env.B2DROP_USER;
-export const b2drop_pass    = process.env.B2DROP_PASS;
-export const lrsVersion     = process.env.VERSION;
-export const emailContact   = process.env.CONTACT;
+export const inclToolsReqAuth = process.env.INCL_TOOLS_REQ_AUTH;
+export const urlPath          = process.env.URL_PATH;
+export const allowTextInput   = process.env.ALLOW_TEXT_INPUT;
+export const allowPasteURL    = process.env.ALLOW_PASTE_URL;
+export const fileStorage      = process.env.FILE_STORAGE;
+export const b2drop_user      = process.env.B2DROP_USER;
+export const b2drop_pass      = process.env.B2DROP_PASS;
+export const lrsVersion       = process.env.VERSION;
+export const emailContact     = process.env.CONTACT;
 export const emailContactCommand = "mailto:"+emailContact+"?subject=CLARIN-PLUS LRS";
 
 // for creation of link
