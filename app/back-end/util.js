@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: util.js
-// Time-stamp: <2018-03-09 10:51:19 (zinn)>
+// Time-stamp: <2018-03-13 14:42:42 (zinn)>
 // -------------------------------------------
 
 export const inclToolsReqAuth = process.env.INCL_TOOLS_REQ_AUTH;
@@ -33,7 +33,7 @@ export function unfoldHandle( handle ) {
 
     var expandedHandle = decodeURIComponent(handle);
 
-    console.log('handle', expandedHandle)
+    console.log('util/unfoldHandle', expandedHandle)
 
     if (index > -1) {
 	expandedHandle = hdlLongPrefix.concat( handle.substring(index+hdlShortPrefix.length, handle.length) );
@@ -79,9 +79,10 @@ export function fileExtensionChooser (mimetype) {
 }
 
 export function rewriteURL( caller, fileURL ) {
+    console.log('util/rewriteURL at start', caller, fileURL);
     var corsLink = "";
     if (caller == "B2DROP") {
-	fileURL = fileURL.concat('/download')
+	// nop   -- fileURL = fileURL.concat('/download')
     } else if ( caller == "PASTE") {
 	// nop
     } else if ( fileURL.indexOf("https://www.dropbox.com") !== -1 ) {
@@ -97,6 +98,8 @@ export function rewriteURL( caller, fileURL ) {
 	corsLink = fileURL;
     }
 
+    console.log('util/rewriteURL at end', caller, fileURL);
+    
     if ( (caller == "B2DROP") || (fileURL.indexOf('hdl.handle.net') > 1) || (caller == "PASTE") ) {
 	return window.location.origin.concat('/clrs/download?input='+encodeURI(fileURL)) // the reverse proxy to the python script
     } else {
