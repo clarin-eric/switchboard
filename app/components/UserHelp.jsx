@@ -102,30 +102,72 @@ class UserHelpText extends React.Component {
 	  the <a href="http://weblicht.sfs.uni-tuebingen.de/clrs">standalone version of the LRS. </a>
 	    Before uploading the resource, check whether the resource matches the mimetype you expect.
 	    
-	    <h3>Mind the gap (General Remarks)</h3>
-	    <ul>
-	      <li>For the processing of a large file, please keep in mind that its uploading to the server
-		may take some time. Also, the LRS methods for the identification of the language and
-		mimetype of a resource may take its time toll.</li>
-	      <li>For the processing of a large file, please also keep in mind that many tools may have a
-		restriction that the LR Switchboard is currently unaware of. For instance, the WebLicht
-		workflow engine currently permits the processing of files less than 3 MB.</li>
-	      <li>The LRS now also shows <em>web services</em>. This is experimental. When 'Click to start
-		tool' is pressed, the web service is being called. Upon completion (which may take some
-		time), a new tab opens with the response of the web services. The response either holds the
-		processed data, or a reference to a location where it can be downloaded from. Sometimes,
-		the response also holds metadata about the processing.</li>
-	      <li>At the time of writing, only a single resource can be processed; there is no batch
-		processing of resources, or a procedure to process two files at once (for tools that require
-		two inputs) </li>
-	      <li><em>Please contact us, when a tool (or web service) does not work as advertised, or when you
-		  would like to have some tool (or web service) added to the LRS.</em></li>
-	      <li><em>By visiting our site, users accept the use of cookies by Piwik and Google
+	  <h3>Mind the gap (General Remarks)</h3>
+	  <ul>
+	    <li>For the processing of a large file, please keep in mind that its uploading to the server
+	      may take some time. Also, the LRS methods for the identification of the language and
+	      mimetype of a resource may take its time toll.</li>
+	    <li>For the processing of a large file, please also keep in mind that many tools may have a
+	      restriction that the LR Switchboard is currently unaware of. For instance, the WebLicht
+	      workflow engine currently permits the processing of files less than 3 MB.</li>
+	    <li>The LRS now also shows <em>web services</em>. This is experimental. When 'Click to start
+	      tool' is pressed, the web service is being called. Upon completion (which may take some
+	      time), a new tab opens with the response of the web services. The response either holds the
+	      processed data, or a reference to a location where it can be downloaded from. Sometimes,
+	      the response also holds metadata about the processing.</li>
+	    <li>At the time of writing, only a single resource can be processed; 
+	      We are working on a procedure to process two files at once (for tools that require
+	      two inputs) </li>
+	    <li><em>Please contact us, when a tool (or web service) does not work as advertised, or when you
+		would like to have some tool (or web service) added to the LRS.</em></li>
+	    <li><em>By visiting our site, users accept the use of cookies by Piwik and Google
 		Analytics to make visits statistics.</em></li>
-	      
-	    </ul>
-            <hr />
-	    <p>
+	  </ul>
+	  
+	  <h3>Frequently Asked Questions</h3>
+	  <ul>
+	    <li>
+	      <em>Q: Is there a way to perform a batch processing of files?</em>
+	      <p>
+		A: The switchboard is not able to batch processing many documents itself. It can,
+		however, invoke a tool capable of batch processing. At the time of writing, there is
+		a single tool connected to the switchboard that can batch process documents:
+		"WebSty". To invoke WebSty, upload a zip archive of Polish plain text files and
+		follow the instructions.
+	      </p>	      
+	    </li>
+	    <li>
+	      <em>Q: Is there a way for the switchboard to run tools in a pipeline?</em>
+	      <p>
+		A: The switchboard is not a workflow engine. It can, however, invoke a tool capable
+		of executing pipelines.  In fact, there are many tools connected to the switchboard
+		that offer predefined pipelines. The WebLicht workflow engine, for instance, has
+		multiple switchboard entries advertising to perform complex analyses such as
+		constituency parsing or named entity recognition. To perform these tasks, WebLicht
+		makes use of predefined pipelines and orchestrates the execution of them (feeding
+		the output of one tool to the input of the following tool). There is also the Dutch
+		NLP suite "Frog". Once the switchboard directed users with their resource to the
+		FROG site, users can activate or deactivate various analyses.
+	      </p>	      	      
+	    </li>
+	    <li>
+	      <em>Q: I don't see many well-known tools in the switchboard. Where, for instance, are the NLP tools from Stanford?</em>
+	      <p>	      
+		A: At the time of writing, the Stanford tools are not <em>directly</em> callable from the
+		switchboard. Remember, to connect a tool to the switchboard, the tool developers have to
+		perform some integration work (for details, see "Developer Help"). However, well-known tools work
+		under the hood of WebLicht.  The WebLicht entry for Constituent Parsing, for example,  makes use
+		of the Stanford Tokenizer and the Charniak parser. Also note that the switchboard will
+		continue to integrate more tools <em>directly</em>into the switchboard. And we explicitly ask
+		developers to adapt their tools so that they are callable via the switchboard.
+	      </p>	      	      
+	    </li>
+	    <li>	      
+	      <em>Q: Your question comes here</em>
+	    </li>
+	  </ul>
+          <hr />
+	  <p>
 	      
 	      Please contact the <a href={ emailContactCommand }>Switchboard Team</a>.
 	      Alternatively, you can also contact the German CLARIN 
