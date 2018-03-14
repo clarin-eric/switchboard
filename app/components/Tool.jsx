@@ -65,9 +65,13 @@ export default class Tool extends React.Component {
 	);
 
 	const ToolCard = (props) => {
-	    const fullURL = gatherInvocationParameters(props, resource);
+            const fullURL = gatherInvocationParameters(props, resource);
+	    const authenticationNotRequired = (props.authentication == "no");
+	    console.log('Tool/ToolCard', props);
+	    const outputFormats = (props.output === undefined) || ((props.output instanceof Array) && props.output.join(', ')) || props.output;
 
-	    if (fullURL) 
+	    if (fullURL)
+	
 		return(
 			<div style={{ position: 'relative', top: 0 }}>
 			  <header style={styles.cardHeader} className='card-header-details'>
@@ -86,13 +90,28 @@ export default class Tool extends React.Component {
 	                       title="Home"
        	                       summary={props.homepage}
                                />
-			    
+
+			    { authenticationNotRequired ? (
+
+			       			    <DetailsRow
+						      icon='ion-ios-unlocked-outline'
+						      title="Authentication"
+       						      summary={props.authentication}
+						      />		
+						    ) : (
+			       			    <DetailsRow
+						      icon='ion-ios-locked-outline'
+						      title="Authentication"
+       						      summary={props.authentication}
+						      />								    
+						    )}
+
 			    <DetailsRow
-			       icon='ion-ios-locked-outline'
-	                       title="Authentication"
-       	                       summary={props.authentication}
+			       icon='ion-ios-barcode-outline'
+	                       title="Output Format"
+       	                       summary={outputFormats}
                                />		
-			    
+
 			    <DetailsRow
 			       icon='ion-ios-paperplane-outline'
 	                       title="URL"
@@ -132,13 +151,28 @@ export default class Tool extends React.Component {
 	            title="Home"
        	            summary={props.homepage}
                     />
-		 
-		 <DetailsRow
-		    icon='ion-ios-locked-outline'
-	            title="Authentication"
-       	            summary={props.authentication}
-                    />		
-		 
+
+			    { authenticationNotRequired ? (
+
+			       			    <DetailsRow
+						      icon='ion-ios-unlocked-outline'
+						      title="Authentication"
+       						      summary={props.authentication}
+						      />		
+						    ) : (
+			       			    <DetailsRow
+						      icon='ion-ios-locked-outline'
+						      title="Authentication"
+       						      summary={props.authentication}
+						      />								    
+						    )}
+
+			    <DetailsRow
+			       icon='ion-ios-barcode-outline'
+	                       title="Output Format"
+       	                       summary={outputFormats}
+                               />		
+		
                  <DetailsRow
 		    icon='ion-ios-location-outline'
 	            title="Location"

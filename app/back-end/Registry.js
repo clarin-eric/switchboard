@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Registry.js
-// Time-stamp: <2018-03-14 10:34:23 (zinn)>
+// Time-stamp: <2018-03-14 11:37:38 (zinn)>
 // -------------------------------------------
 
 const Registry = [
@@ -523,6 +523,7 @@ const Registry = [
       "langEncoding": "639-1",
       "languages": ["grc", "ara", "bel", "bul", "cat", "cop", "hrv", "ces", "dan", "nld", "eng", "eus", "est", "fin", "fra", "glg", "deu", "got", "ell", "heb", "hin", "hun", "ind", "gle", "ita", "jpn", "kaz", "kor", "lat", "lav", "lit", "nor", "nno", "nob", "chu", "fas", "pol", "por", "ron", "rus", "san", "slk", "slv", "spa", "swe", "tam", "tur", "ukr", "urd", "uig", "vie", "zho"],
       "mimetypes": ["text/plain"],
+      "output" : ["CoNLL-U Format"],
       "url": "https://lindat.mff.cuni.cz/services/udpipe/",
       "parameters": {
 	  "input"   : "self.linkToResource", 
