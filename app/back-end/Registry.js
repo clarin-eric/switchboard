@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Registry.js
-// Time-stamp: <2018-03-14 10:10:04 (zinn)>
+// Time-stamp: <2018-03-14 10:34:23 (zinn)>
 // -------------------------------------------
 
 const Registry = [
@@ -54,7 +54,7 @@ const Registry = [
 		    "application/pdf",
 		    "application/msword",
 		    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
-      "output": ["text/xml"],
+      "output": ["application/tcf+xml"],
       "url": "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
       "parameters": {
 	  "input" :     "self.linkToResource",
@@ -84,7 +84,7 @@ const Registry = [
 		    "application/pdf",
 		    "application/msword",
 		    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
-      "output": ["text/xml"],
+      "output": ["application/tcf+xml"],
       "url": "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
       "parameters": {
 	  "input" :     "self.linkToResource",
@@ -317,7 +317,7 @@ const Registry = [
 		    "application/pdf",
 		    "application/msword",
 		    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
-      "output": ["text/xml"],
+      "output": ["application/tcf+xml"],      
       "url": "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
       "parameters": {
 	  "input" :     "self.linkToResource",
@@ -347,7 +347,7 @@ const Registry = [
 		    "application/pdf",
 		    "application/msword",
 		    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
-      "output": ["text/xml"],
+      "output": ["application/tcf+xml"],            
       "url": "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
       "parameters": {
 	  "input" :     "self.linkToResource",
@@ -378,7 +378,7 @@ const Registry = [
 		    "application/pdf",
 		    "application/msword",
 		    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
-      "output": ["text/xml"],
+      "output": ["application/tcf+xml"],            
       "url": "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
       "parameters": {
 	  "input" :     "self.linkToResource",
@@ -408,7 +408,7 @@ const Registry = [
 		    "application/pdf",
 		    "application/msword",
 		    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
-      "output": ["text/xml"],
+      "output": ["application/tcf+xml"],                  
       "url": "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
       "parameters": {
 	  "input" :     "self.linkToResource",
@@ -438,7 +438,7 @@ const Registry = [
 		    "application/pdf",
 		    "application/msword",
 		    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
-      "output": ["text/xml"],
+      "output": ["application/tcf+xml"],                        
       "url": "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
       "parameters": {
 	  "input" :     "self.linkToResource",
@@ -468,7 +468,7 @@ const Registry = [
 		    "application/pdf",
 		    "application/msword",
 		    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
-      "output": ["text/xml"],
+      "output": ["application/tcf+xml"],                        
       "url": "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
       "parameters": {
 	  "input" :     "self.linkToResource",
@@ -944,7 +944,7 @@ const Registry = [
 		    "application/pdf",
 		    "application/msword",
 		    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
-      "output": ["text/xml"],
+      "output": ["application/tcf+xml"],
       "url": "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
       "parameters": {
 	  "input" :     "self.linkToResource",
@@ -974,7 +974,7 @@ const Registry = [
 		    "application/pdf",
 		    "application/msword",
 		    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
-      "output": ["text/xml"],
+      "output": ["application/tcf+xml"],      
       "url": "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
       "parameters": {
 	  "input" :     "self.linkToResource",
@@ -1095,7 +1095,7 @@ const Registry = [
 		      "application/pdf",
 		      "application/msword",
 		      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
-	"output": ["text/xml"],
+	"output": ["application/tcf+xml"],                        
 	"url": "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
 	"parameters": {
 	    "input" :     "self.linkToResource",
@@ -1441,7 +1441,7 @@ const Registry = [
 		    "application/pdf",
 		    "application/msword",
 		    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
-      "output": ["text/xml"],
+      "output": ["application/tcf+xml"],            
       "url": "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
       "parameters": {
 	  "input" :     "self.linkToResource",
@@ -1471,7 +1471,7 @@ const Registry = [
 		    "application/pdf",
 		    "application/msword",
 		    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
-      "output": ["text/xml"],
+      "output": ["application/tcf+xml"],            
       "url": "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
       "parameters": {
 	  "input" :     "self.linkToResource",
@@ -1636,7 +1636,7 @@ const Registry = [
 		    "application/pdf",
 		    "application/msword",
 		    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
-      "output": ["text/xml"],
+      "output": ["application/tcf+xml"],            
       "url": "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht",
       "parameters": {
 	  "input"   :  "self.linkToResource", 
@@ -1666,7 +1666,7 @@ const Registry = [
 		    "application/pdf",
 		    "application/msword",
 		    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
-      "output": ["text/xml"],
+      "output": ["application/tcf+xml"],
       "url": "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht",
       "parameters": {
 	  "input"   : "self.linkToResource", 
@@ -2085,7 +2085,7 @@ const Registry = [
 		    "application/pdf",
 		    "application/msword",
 		    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
-      "output": ["text/xml"],
+      "output": ["application/tcf+xml"],
       "url": "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
       "parameters": {
 	  "input" :     "self.linkToResource",
@@ -2115,7 +2115,7 @@ const Registry = [
 		    "application/pdf",
 		    "application/msword",
 		    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
-      "output": ["text/xml"],
+      "output": ["application/tcf+xml"],
       "url": "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
       "parameters": {
 	  "input" :     "self.linkToResource",
@@ -2145,7 +2145,7 @@ const Registry = [
 		    "application/pdf",
 		    "application/msword",
 		    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
-      "output": ["text/xml"],
+      "output": ["application/tcf+xml"],      
       "url": "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
       "parameters": {
 	  "input" :     "self.linkToResource",
@@ -2175,7 +2175,7 @@ const Registry = [
 		    "application/pdf",
 		    "application/msword",
 		    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
-      "output": ["text/xml"],
+      "output": ["application/tcf+xml"],      
       "url": "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
       "parameters": {
 	  "input" :     "self.linkToResource",
@@ -3051,7 +3051,7 @@ const Registry = [
 		    "application/msword",
 		    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
 		   ],
-      "output": ["text/xml"],
+      "output": ["application/tcf+xml"],
       "url": "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht",
       "parameters": {
 	  "input"   :  "self.linkToResource", 
