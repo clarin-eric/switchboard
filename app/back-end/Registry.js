@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Registry.js
-// Time-stamp: <2018-03-09 14:13:28 (zinn)>
+// Time-stamp: <2018-03-14 10:10:04 (zinn)>
 // -------------------------------------------
 
 const Registry = [
@@ -488,8 +488,8 @@ const Registry = [
 	  "email": "proycon@anaproy.nl",
       },
       "version": "x.y.z",
-      "authentication": "yes",		  
-      "licence": "public", //but webservice is protected with (free) registration
+      "authentication": "Yes. Before tool use, please register at https://webservices-lst.science.ru.nl/register.",
+      "licence": "public", 
       "description": "Alpino is a dependency parser for Dutch, developed in the context of the PIONIER Project Algorithms for Linguistic Processing, developed by Gertjan van Noord at the University of Groningen. You can upload either tokenised or untokenised files (which will be automatically tokenised for you using ucto), the output will consist of a zip file containing XML files, one for each sentence in the input document.",
       "languages": ["nld"], 
       "langEncoding": "639-1",
@@ -1194,8 +1194,8 @@ const Registry = [
 	  "email": "proycon@anaproy.nl",
       },
       "version": "x.y.z",
-      "authentication": "yes",		  
-      "licence": "public", //but webservice is protected with (free) registration
+      "authentication": "Yes. Before tool use, please register at https://webservices-lst.science.ru.nl/register.",
+      "licence": "public",
       "description": "Oersetter is a statistical machine translation (SMT) system for Frisian to Dutch and Dutch to Frisian. A parallel training corpus has been established, which has subsequently been used to automatically learn a phrase-based SMT model. The translation system is built around the open-source SMT software Moses.",
       "languages": ["nld"], 
       "langEncoding": "639-1",
@@ -1222,8 +1222,8 @@ const Registry = [
 	  "email": "proycon@anaproy.nl",
       },
       "version": "x.y.z",
-      "authentication": "yes",		  
-      "licence": "public", //but webservice is protected with (free) registration
+      "authentication": "Yes. Before tool use, please register at https://webservices-lst.science.ru.nl/register.",
+      "licence": "public", 
       "description": "Oersetter is a Frisian-Dutch Machine Translation system.",
       "languages": ["fry"], 
       "langEncoding": "639-1",
@@ -1745,8 +1745,8 @@ const Registry = [
 	  "email": "proycon@anaproy.nl",
       },
       "version": "0.2",
-      "authentication": "yes",		  
-      "licence": "public", //but webservice is protected with (free) registration
+      "authentication": "Yes. Before tool use, please register at https://webservices-lst.science.ru.nl/register.",
+      "licence": "public", 
       "description": "N-gram frequency list generation on FoLiA input.",
       "languages": ["nld", "generic"], 
       "langEncoding": "639-1",
@@ -1953,8 +1953,8 @@ const Registry = [
 	  "email": "proycon@anaproy.nl",
       },
       "version": "x.y.z",
-      "authentication": "yes",		  
-      "licence": "public", //but webservice is protected with (free) registration
+      "authentication": "Yes. Before tool use, please register at https://webservices-lst.science.ru.nl/register.",
+      "licence": "public", 
       "description": "Colibri core is an NLP tool as well as a C++ and Python library for working with basic linguistic constructions such as n-grams and skipgrams (i.e patterns with one or more gaps, either of fixed or dynamic size) in a quick and memory-efficient way.",
       "languages": ["nld", "eng", "deu", "fra", "spa", "por", "fry", "generic"], 
       "langEncoding": "639-1",
@@ -1971,7 +1971,7 @@ const Registry = [
       },
       "mapping":   {
 	  "input"        : "textinput_untok_url",
-	  "lang"         : "language"
+	  "lang"         : "textinput_untok_language"
       }
     },
 
@@ -1986,8 +1986,8 @@ const Registry = [
 	  "email": "proycon@anaproy.nl",
       },
       "version": "x.y.z",
-      "authentication": "yes",		  
-      "licence": "public", //but webservice is protected with (free) registration
+      "authentication": "Yes. Before tool use, please register at https://webservices-lst.science.ru.nl/register.",
+      "licence": "public", 
       "description": "Colibri core is an NLP tool as well as a C++ and Python library for working with basic linguistic constructions such as n-grams and skipgrams (i.e patte rns with one or more gaps, either of fixed or dynamic size) in a quick and memory-efficient way.",
       "languages": ["nld", "eng", "deu", "fra", "spa", "por", "fry", "generic"], 
       "langEncoding": "639-1",
@@ -2004,7 +2004,7 @@ const Registry = [
       },
       "mapping":   {
 	  "input"        : "foliainput_url",
-	  "lang"         : "language"
+	  "lang"         : "textinput_untok_language"	  
       }
     },				
     
@@ -2019,8 +2019,8 @@ const Registry = [
 	  "email": "proycon@anaproy.nl",
       },
       "version": "x.y.z",
-      "authentication": "yes",		  
-      "licence": "public", //but webservice is protected with (free) registration
+      "authentication": "Yes. Before tool use, please register at https://webservices-lst.science.ru.nl/register.",
+      "licence": "public", 
       "description": "Frog's current version will tokenize, tag, lemmatize, and morphologically segment word tokens in Dutch text files, will assign a dependency graph to each sentence, will identify the base phrase chunks in the sentence, and will attempt to find and label all named entities.",
       "languages": ["nld"],
       "langEncoding": "639-1",
@@ -2047,8 +2047,8 @@ const Registry = [
 	  "email": "proycon@anaproy.nl",
       },
       "version": "x.y.z",
-      "authentication": "yes",		  
-      "licence": "public", //but webservice is protected with (free) registration
+      "authentication": "Yes. Before tool use, please register at https://webservices-lst.science.ru.nl/register.",
+      "licence": "public", 
       "description": "Frog's current version will tokenize, tag, lemmatize, and morphologically segment word tokens in Dutch text files, will assign a dependency graph to each sentence, will identify the base phrase chunks in the sentence, and will attempt to find and label all named entities.",
       "languages": ["nld"], 
       "langEncoding": "639-1",
@@ -2648,8 +2648,8 @@ const Registry = [
 	  "email": "proycon@anaproy.nl",
       },
       "version": "x.y.z",
-      "authentication": "yes",		  
-      "licence": "public", //but webservice is protected with (free) registration
+      "authentication": "Yes. Before tool use, please register at https://webservices-lst.science.ru.nl/register.",
+      "licence": "public", 
       "description": "Valkuil is a Dutch spelling correction system.",
       "languages": ["nld"], 
       "langEncoding": "639-1",
@@ -2677,8 +2677,8 @@ const Registry = [
 	  "email": "proycon@anaproy.nl",
       },
       "version": "x.y.z",
-      "authentication": "yes",		  
-      "licence": "public", //but webservice is protected with (free) registration
+      "authentication": "Yes. Before tool use, please register at https://webservices-lst.science.ru.nl/register.",
+      "licence": "public",       
       "description": "Valkuil is a Dutch spelling correction system.",
       "languages": ["nld"], 
       "langEncoding": "639-1",
@@ -2706,8 +2706,8 @@ const Registry = [
 	  "email": "proycon@anaproy.nl",
       },
       "version": "x.y.z",
-      "authentication": "yes",		  
-      "licence": "public", //but webservice is protected with (free) registration
+      "authentication": "Yes. Before tool use, please register at https://webservices-lst.science.ru.nl/register.",
+      "licence": "public",
       "description": "Fowlt is an online, free-to-use context-sensitive English spelling checker. It follows the setup of the Dutch spelling checker Valkuil.net. Both Valkuil and Fowlt are unlike the typical spelling checkers: whereas the latter mostly try to find errors by comparing all words to a built-in dictionary and flag the word as an error if they can't find a match, Fowlt is context sensitive, taking into account the words around every word. Fowlt makes use of language models. These models are created by giving lots of texts to machine learning software (TiMBL and WOPR).",
       "languages": ["eng"], 
       "langEncoding": "639-1",
@@ -2734,8 +2734,8 @@ const Registry = [
 	  "email": "proycon@anaproy.nl",
       },
       "version": "x.y.z",
-      "authentication": "yes",		  
-      "licence": "public", //but webservice is protected with (free) registration
+      "authentication": "Yes. Before tool use, please register at https://webservices-lst.science.ru.nl/register.",
+      "licence": "public",
       "description": "Fowlt is an online, free-to-use context-sensitive English spelling checker. It follows the setup of the Dutch spelling checker Valkuil.net. Both Valkuil and Fowlt are unlike the typical spelling checkers: whereas the latter mostly try to find errors by comparing all words to a built-in dictionary and flag the word as an error if they can't find a match, Fowlt is context sensitive, taking into account the words around every word. Fowlt makes use of language models. These models are created by giving lots of texts to machine learning software (TiMBL and WOPR).",
       "languages": ["eng"], 
       "langEncoding": "639-1",
@@ -2974,8 +2974,8 @@ const Registry = [
 	  "email": "proycon@anaproy.nl",
       },
       "version": "0.8.3",
-      license: "public",                //but webservice is protected with (free) registration
-      authentification: "yes",
+      "authentication": "Yes. Before tool use, please register at https://webservices-lst.science.ru.nl/register.",
+      "licence": "public",      
       "description": "Ucto is a unicode-compliant tokeniser. It takes input in the form of one or more untokenised texts, and subsequently tokenises them. Several languages are supported, but the software is extensible to other languages.",
       "languages": ["swe", "rus", "spa", "por", "nld", "eng", "deu", "fra", "ita"],
       "langEncoding": "639-3",
@@ -3140,8 +3140,8 @@ const Registry = [
 	  "email": "proycon@anaproy.nl",
       },
       "version": "x.y.z",
-      "authentication": "yes",		  
-      "licence": "public", //but webservice is protected with (free) registration
+      "authentication": "Yes. Before tool use, please register at https://webservices-lst.science.ru.nl/register.",
+      "licence": "public",
       "description": "T-Scan is a new tool for analyzing Dutch text. It aims at extracting text features that are theoretically interesting, in that they relate to genre and text complexity, as well as practically interesting, in that they enable users and text producers to make text-specific diagnoses. T-Scan derives it features from tools such as Frog and Alpino, and resources such as SoNaR, SUBTLEX-NL and Referentie Bestand Nederlands.",
       "languages": ["nld"], 
       "langEncoding": "639-1",

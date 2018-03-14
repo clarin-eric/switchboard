@@ -1,13 +1,20 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [1.1.3] - 2018-03-09
+## [1.1.4] - 2018-03-14
 ### Added
-	- Page reload trigger clearance of DropZone 
+	- Added first FAQ to FAQs
+	- added registration details for LST webservices to metadata
+	- switchboard now shows the output format.
+
+## [1.1.3] - 2018-03-13
+### Added
+	- Page reload trigger clearance of DropZone
 	- added switch to only show tools that do not require authentication
 	- added MorphoDiTa
         - updated About with developer contribution
-	
+	- Fixed Colibri metadata entry
+
 ## [1.1.2] - 2018-02-28
 ### Added
 	- Added AlertURLUploadError to show that file upload failed
