@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Registry.js
-// Time-stamp: <2018-03-14 11:37:38 (zinn)>
+// Time-stamp: <2018-03-16 10:39:12 (zinn)>
 // -------------------------------------------
 
 const Registry = [
@@ -231,11 +231,11 @@ const Registry = [
       "version": "1.0",
       "licence": "public",
       "authentication": "no",	    	    
-      "description": "MaltParser, a language dependency parser for Polish.",
+      "description": "A language dependency parser chain for Polish. The used tools include Morfeusz-2 with SGJP dictionary (for morphological analysis), wcrft2 (for tagging), and the MaltParser with a model for Polish. The CONLL output can be visualised with DepSVG, a dependency tree and predicate-argument structure visualizer.",
       "languages": ["pol"],
       "langEncoding": "639-1",
       "mimetypes": ["text/plain", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.oasis.opendocument.text", "application/pdf", "text/html", "application/rtf"],
-      "output": ["application/octet-stream"],
+      "output" : ["CoNLL Format"],      
       "url": "http://ws.clarin-pl.eu/weblicht.html",
       "parameters": {
 	  "input": "self.linkToResource",
@@ -596,6 +596,36 @@ const Registry = [
 	},
     },
 
+{
+	"task": "Named Entity Recognition",
+	"name": "NER from GATE Cloud (web service)",
+	"softwareType": "webService",
+	"requestType": "post",
+	"logo": "gateCloud.png",		  
+	"homepage": "https://cloud.gate.ac.uk/shopfront/sampleServices",
+	"location": "Sheffield, UK",
+	"creators": "GATE developers",
+	"contact": {
+	    "person": "The GATE Cloud developers",
+	    "email": "Plase fill out the web form at https://cloud.gate.ac.uk/contact/email",
+	},
+	"version": "unknown",
+	"authentication": "no",		  
+	"licence": "Please go to the GATE Cloud web page", 
+	"description":  "A named entity recognition pipeline that identifies basic entity types, such as Person, Location, and Organization expressions. It works on documents in the French language. This is a web service from the GATE Cloud. THIS IS AN EXPERIMENTAL INTEGRATION. Note that the service is also available at https://cloud.gate.ac.uk/shopfront/sampleServices, offering a nice visualization of the JSON.",
+	"langEncoding": "639-1",
+	"languages": ["fra"],
+	"mimetypes": ["text/plain"],
+	"output": "application/json",	
+	"url": "https://cloud-api.gate.ac.uk/process-document/french-named-entity-recognizer",
+	"parameters": {
+	    "input"   : "self.linkToResource"
+	},		  
+	"mapping": {
+	    "input"   : "data"
+	},
+    },
+        
     {
 	"task": "Named Entity Recognition",
 	"name": "Annie - GATE Cloud (web service)",
@@ -618,6 +648,36 @@ const Registry = [
 	"mimetypes": ["text/plain"],
 	"output": "application/json",	
 	"url": "https://cloud-api.gate.ac.uk/process-document/annie-named-entity-recognizer?annotations=:Person&annotations=:Location&annotations=:Organization&annotations=:Date&annotations=:Money",
+	"parameters": {
+	    "input"   : "self.linkToResource"
+	},		  
+	"mapping": {
+	    "input"   : "data"
+	},
+    },
+
+    {
+	"task": "Named Entity Recognition",
+	"name": "OpenNLP English Pipeline - GATE Cloud (web service)",
+	"softwareType": "webService",
+	"requestType": "post",
+	"logo": "gateCloud.png",		  
+	"homepage": "https://cloud.gate.ac.uk/shopfront/sampleServices",
+	"location": "Sheffield, UK",
+	"creators": "GATE developers",
+	"contact": {
+	    "person": "The GATE Cloud developers",
+	    "email": "Plase fill out the web form at https://cloud.gate.ac.uk/contact/email",
+	},
+	"version": "unknown",
+	"authentication": "no",		  
+	"licence": "Please go to the GATE Cloud web page", 
+	"description":  "The English tokeniser, sentence splitter, POS tagger, phrase chunker and named-entity recogniser from Apache OpenNLP. The components are based on the maxent machine learning algorithm, and produce Token and Sentence annotations in a form compatible with other standard GATE tools. THIS IS AN EXPERIMENTAL INTEGRATION. Note that the service is also available at https://cloud.gate.ac.uk/shopfront/sampleServices, offering a nice visualization of the JSON.",
+	"langEncoding": "639-1",
+	"languages": ["eng"],
+	"mimetypes": ["text/plain"],
+	"output": "application/json",	
+	"url": "https://cloud-api.gate.ac.uk/process-document/opennlp-english-pipeline",
 	"parameters": {
 	    "input"   : "self.linkToResource"
 	},		  
