@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Registry.js
-// Time-stamp: <2018-03-16 10:39:12 (zinn)>
+// Time-stamp: <2018-03-23 11:43:44 (zinn)>
 // -------------------------------------------
 
 const Registry = [
@@ -24,7 +24,7 @@ const Registry = [
       "languages": ["pol"],
       "langEncoding": "639-1",
       "mimetypes": ["text/plain", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.oasis.opendocument.text", "application/pdf", "text/html", "application/rtf"],
-      "output": ["text/xml"],
+      "output": ["application/xml"],
       "url": "http://ws.clarin-pl.eu/weblicht.html",
       "parameters": {
 	  "input": "self.linkToResource",
@@ -112,7 +112,7 @@ const Registry = [
       "languages": ["generic"], 
       "langEncoding": "639-1",
       "mimetypes": ["application/tcf+xml",
-		    "text/xml;format-variant=weblicht-tcf"
+		    "application/xml;format-variant=weblicht-tcf"
 		   ], 		  
       "output": "application/xml",      
       "url": "http://kaskade.dwds.de/tei-tcf/decode.perl", 
@@ -262,7 +262,7 @@ const Registry = [
       "langEncoding": "639-1",		  
       "mimetypes": ["text/plain",
 		    "text/html"],
-      "output": ["text/xml"],
+      "output": ["application/xml"],
       "url": "http://multiservice.nlp.ipipan.waw.pl/en/clrs",		  
       "parameters": {
 	  "input" :     "self.linkToResource",
@@ -288,7 +288,7 @@ const Registry = [
       "langEncoding": "639-1",		  
       "mimetypes": ["text/plain",
 		    "text/html"],
-      "output": ["text/xml"],
+      "output": ["application/xml"],
       "url": "http://multiservice.nlp.ipipan.waw.pl/en/clrs",		  
       "parameters": {
 	  "input" :     "self.linkToResource",
@@ -762,7 +762,7 @@ const Registry = [
 	"languages": ["pol"],
 	"langEncoding": "639-1",
 	"mimetypes": ["text/plain", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.oasis.opendocument.text", "application/pdf", "text/html", "application/rtf"],
-	"output": ["text/xml"],
+	"output": ["application/xml"],
 	"url": "http://ws.clarin-pl.eu/weblicht.html",
 	"parameters": {
 	    "input": "self.linkToResource",
@@ -1043,6 +1043,32 @@ const Registry = [
 	  "analysis":   "lemma"
       }
     },		
+
+    {
+	"task": "Lemmatization",	
+	"name": "CSTLemma (hosted by D4Science)",
+	"logo": "d4science.png",		  	    
+	"homepage": "https://www.d4science.org",
+	"location": "Pisa, Italy",		  		  		  
+	"creators": "Bart Jongejan (tool), D4Science staff (WAR upload)",
+	"contact": {
+	    "person": "D4Science Support",
+	    "email": "claus.zinn@sfs.uni-tuebingen.de, bartj@hum.ku.dk"
+	},	    
+	"version": "v1.0",
+	"authentication": "no",		  
+	"licence": "public",
+	"description": "This is an experimental integration of a D4Science NLP processing service (CSTLemma). The CSTLemma Lemmatizer for English reduces all words in a text to their base form, the lemma.",
+	"languages": ["eng"],
+	"langEncoding": "639-1",		  
+	"mimetypes": ["text/plain"],
+	"output": ["text/csv"],
+	"url": "https://next.d4science.org/nlp-hub-cstlemma/",		  
+	"parameters": {
+	    "input" :     "self.linkToResource",
+	    "token":      "27061e4d-3567-482d-9f12-3a1af5e42ab9-843339462"
+	}
+    },
     
     { "task": "Lemmatization",	
       "name": "CLARIN-DK Tool Chain for Lemmatization, presented as freqency list (web service)",
@@ -1098,7 +1124,7 @@ const Registry = [
 	"languages": ["pol"],
 	"langEncoding": "639-1",
 	"mimetypes": ["text/plain", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.oasis.opendocument.text", "application/pdf", "text/html", "application/rtf"],
-	"output": ["text/xml"],
+	"output": ["application/xml"],
 	"url": "http://ws.clarin-pl.eu/weblicht.html",
 	"parameters": {
 	    "input": "self.linkToResource",
@@ -1125,7 +1151,7 @@ const Registry = [
 	"languages": ["pol"],
 	"langEncoding": "639-1",
 	"mimetypes": ["text/plain", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.oasis.opendocument.text", "application/pdf", "text/html", "application/rtf"],
-	"output": ["text/xml"],
+	"output": ["application/xml"],
 	"url": "http://ws.clarin-pl.eu/weblicht.html",
 	"parameters": {
 	    "input": "self.linkToResource",
@@ -1183,7 +1209,7 @@ const Registry = [
 	"languages": ["eng"],
 	"langEncoding": "639-1",		  
 	"mimetypes": ["text/plain"],
-	"output": ["text/xml"],
+	"output": ["application/xml"],
 	"url": "https://next.d4science.org/nlp-hub/",		  
 	"parameters": {
 	    "input" :     "self.linkToResource",
@@ -1193,7 +1219,7 @@ const Registry = [
 
     {
 	"task": "Named Entity Recognition",
-	"name": "Liner2 (D4Science)",
+	"name": "Liner2 (hosted by D4Science)",
 	"logo": "d4science.png",		  	    
 	"homepage": "https://www.d4science.org",
 	"location": "Pisa, Italy",		  		  		  
@@ -1209,7 +1235,7 @@ const Registry = [
 	"languages": ["pol"],
 	"langEncoding": "639-1",		  
 	"mimetypes": ["text/plain"],
-	"output": ["text/xml"],
+	"output": ["application/xml"],
 	"url": "https://next.d4science.org/nlp-hub-liner2/",		  
 	"parameters": {
 	    "input" :     "self.linkToResource",
@@ -1235,7 +1261,7 @@ const Registry = [
 	"languages": ["pol"],
 	"langEncoding": "639-1",
 	"mimetypes": ["text/plain", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.oasis.opendocument.text", "application/pdf", "text/html", "application/rtf"],
-	"output": ["text/xml"],
+	"output": ["application/xml"],
 	"url": "http://ws.clarin-pl.eu/weblicht.html",
 	"parameters": {
 	    "input": "self.linkToResource",
@@ -1320,8 +1346,8 @@ const Registry = [
     //   "licence": "public",
     //   "description": "Webservice converting NaLiDa-based CMDI profiles to Marc21",
     //   "languages": ["generic"], 
-    //   "mimetypes": ["text/xml"],
-    //   "output": ["text/xml"],
+    //   "mimetypes": ["application/xml"],
+    //   "output": ["application/xml"],
     //   "url": "http://shannon.sfs.uni-tuebingen.de:8080/NaLiDa2Marc-1.0",
     //   "parameters": { input : "self.linkToResource" // for demo upload site, to be instantiated
     // 	     }
@@ -1347,8 +1373,8 @@ const Registry = [
       "licence": "public",
       "description": "Webservice converting CMDI metadata to XML-based Dublin Core metadata.",
       "languages": ["generic"], 
-      "mimetypes": ["text/xml", "application/octet-stream"],
-      "output": ["text/xml"],
+      "mimetypes": ["application/xml", "application/octet-stream"],
+      "output": ["application/xml"],
       "url": "http://weblicht.sfs.uni-tuebingen.de/converter/Cmdi2DC/rest",
       "parameters": {
 	  "input" : "self.linkToResource" // for demo upload site, to be instantiated
@@ -1373,8 +1399,8 @@ const Registry = [
       "licence": "public",
       "description": "Webservice converting XML-based Dublin Core metadata to XML-based MARC 21 metadata.",
       "languages": ["generic"], 
-      "mimetypes": ["text/xml", "application/octet-stream"],
-      "output": ["text/xml"],
+      "mimetypes": ["application/xml", "application/octet-stream"],
+      "output": ["application/xml"],
       "url": "http://weblicht.sfs.uni-tuebingen.de/converter/DC2Marc/rest",
       "parameters": {
 	  "input" : "self.linkToResource" // for demo upload site, to be instantiated
@@ -1398,8 +1424,8 @@ const Registry = [
       "licence": "public",
       "description": "Webservice converting XML-based MARC 21 metadata to XML-based EAD metadata.",
       "languages": ["generic"], 
-      "mimetypes": ["text/xml", "application/octet-stream"],
-      "output": ["text/xml"],
+      "mimetypes": ["application/xml", "application/octet-stream"],
+      "output": ["application/xml"],
       "url": "http://weblicht.sfs.uni-tuebingen.de/converter/Marc2EAD/rest",
       "parameters": {
 	  "input" : "self.linkToResource" // for demo upload site, to be instantiated
@@ -1423,8 +1449,8 @@ const Registry = [
       "licence": "public",
       "description": "Webservice converting XML-based MARC 21 metadata to XML-based MODS metadata.",
       "languages": ["generic"], 
-      "mimetypes": ["text/xml", "application/octet-stream"],
-      "output": ["text/xml"],
+      "mimetypes": ["application/xml", "application/octet-stream"],
+      "output": ["application/xml"],
       "url": "http://weblicht.sfs.uni-tuebingen.de/converter/Marc2MODS/rest",
       "parameters": {
 	  "input" : "self.linkToResource" // for demo upload site, to be instantiated
@@ -1448,8 +1474,8 @@ const Registry = [
       "licence": "public",
       "description": "Webservice converting XML-based MARC 21 metadata to XML-based RDF-DC metadata.",
       "languages": ["generic"], 
-      "mimetypes": ["text/xml", "application/octet-stream"],
-      "output": ["text/xml"],
+      "mimetypes": ["application/xml", "application/octet-stream"],
+      "output": ["application/xml"],
       "url": "http://weblicht.sfs.uni-tuebingen.de/converter/Marc2RDFDC/rest",
       "parameters": {
 	  "input" : "self.linkToResource" // for demo upload site, to be instantiated
@@ -1473,8 +1499,8 @@ const Registry = [
       "licence": "public",
       "description": "Webservice converting XML-based MODS metadata to XML-based RDF metadata.",
       "languages": ["generic"], 
-      "mimetypes": ["text/xml", "application/octet-stream"],
-      "output": ["text/xml"],
+      "mimetypes": ["application/xml", "application/octet-stream"],
+      "output": ["application/xml"],
       "url": "http://weblicht.sfs.uni-tuebingen.de/converter/MODSRDF/rest",
       "parameters": {
 	  "input" : "self.linkToResource" // for demo upload site, to be instantiated
@@ -1668,7 +1694,7 @@ const Registry = [
       "langEncoding": "639-1",		  
       "mimetypes": ["text/plain",
 		    "text/html"],
-      "output": ["text/xml"],
+      "output": ["application/xml"],
       "url": "http://multiservice.nlp.ipipan.waw.pl/en/clrs",		  
       "parameters": {
 	  "input" :     "self.linkToResource",
@@ -1785,7 +1811,7 @@ const Registry = [
 	"languages": ["eng"],
 	"langEncoding": "639-1",
 	"mimetypes": ["text/plain", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.oasis.opendocument.text", "application/pdf", "text/html", "application/rtf"],
-	"output": ["text/xml"],
+	"output": ["application/xml"],
 	"url": "http://ws.clarin-pl.eu/weblicht.html",
 	"parameters": {
 	    "input": "self.linkToResource",
@@ -2263,7 +2289,7 @@ const Registry = [
       "langEncoding": "639-1",		  
       "mimetypes": ["text/plain",
 		    "text/html"],
-      "output": ["text/xml"],
+      "output": ["application/xml"],
       "url": "http://multiservice.nlp.ipipan.waw.pl/en/clrs",		  
       "parameters": {
 	  "input" :     "self.linkToResource",
@@ -2292,7 +2318,7 @@ const Registry = [
       "languages": ["ara", "deu", "eng", "spa", "per", "fra", "ita", "nld", "pol", "ron", "rus", "cmn"],
       "mimetypes": ["audio/vnd.wave", "audio/x-nist", "audio/x-wav", "video/mp4", "video/mpeg"],
       "url": "https://clarin.phonetik.uni-muenchen.de/BASWebServices/services/runASR",
-      "output": "text/xml",
+      "output": "application/xml",
       "parameters": {
 	  "input"       : "self.linkToResource",
 	  "ASRType"     : "callHavenOnDemandASR", 
@@ -2327,7 +2353,7 @@ const Registry = [
       "languages": ["deu", "aus", "cat", "eng", "ekk", "fra", "hun","ita", "pol", "nld", "rus", "spa"],
       "mimetypes": ["audio/wav", "audio/vnd.wave", "audio/x-wav"],
       "url": "https://clarin.phonetik.uni-muenchen.de/BASWebServices/services/runMINNI",
-      "output": "text/xml",      
+      "output": "application/xml",      
       "parameters": {
 	  "input"      : "self.linkToResource", 
 	  "OUTIPA"     : "false", 
@@ -2365,7 +2391,7 @@ const Registry = [
 	"languages": ["pol"],
 	"langEncoding": "639-1",
 	"mimetypes": ["text/plain", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.oasis.opendocument.text", "application/pdf", "text/html", "application/rtf"],
-	"output": ["text/xml"],
+	"output": ["application/xml"],
 	"url": "http://ws.clarin-pl.eu/weblicht.html",
 	"parameters": {
 	    "input": "self.linkToResource",
@@ -2610,7 +2636,7 @@ const Registry = [
       "langEncoding": "639-1",		  
       "mimetypes": ["text/plain",
 		    "text/html"],
-      "output": ["text/xml"],
+      "output": ["application/xml"],
       "url": "http://multiservice.nlp.ipipan.waw.pl/en/clrs",		  
       "parameters": {
 	  "input" :     "self.linkToResource",
@@ -2636,7 +2662,7 @@ const Registry = [
       "langEncoding": "639-1",		  
       "mimetypes": ["text/plain",
 		    "text/html"],
-      "output": ["text/xml"],
+      "output": ["application/xml"],
       "url": "http://multiservice.nlp.ipipan.waw.pl/en/clrs",		  
       "parameters": {
 	  "input" :     "self.linkToResource",
@@ -2662,7 +2688,7 @@ const Registry = [
 	"languages": ["pol"],
 	"langEncoding": "639-1",
 	"mimetypes": ["text/plain", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.oasis.opendocument.text", "application/pdf", "text/html", "application/rtf"],
-	"output": ["text/xml"],
+	"output": ["application/xml"],
 	"url": "http://ws.clarin-pl.eu/weblicht.html",
 	"parameters": {
 	    "input": "self.linkToResource",
@@ -2838,7 +2864,7 @@ const Registry = [
 		      "application/pdf",
 		      "text/html",
 		      "application/rtf"],
-	"output": ["text/xml"],
+	"output": ["application/xml"],
 	"url": "http://ws.clarin-pl.eu/weblicht.html",
 	"pid": "",
 	"parameters": {
@@ -2874,7 +2900,7 @@ const Registry = [
 		      "application/pdf",
 		      "text/html",
 		      "application/rtf"],
-	"output": ["text/xml"],
+	"output": ["application/xml"],
 	"url": "http://ws.clarin-pl.eu/weblicht.html",
 	"parameters": {
 	    "input": "self.linkToResource",
@@ -3042,7 +3068,7 @@ const Registry = [
       "langEncoding": "639-3",
       "mimetypes": [
 	  "text/plain"
-	  // , "text/xml",		      
+	  // , "application/xml",		      
 	  // , "application/pdf",
 	  // , "application/msword"
       ],
@@ -3206,10 +3232,12 @@ const Registry = [
       "description": "T-Scan is a new tool for analyzing Dutch text. It aims at extracting text features that are theoretically interesting, in that they relate to genre and text complexity, as well as practically interesting, in that they enable users and text producers to make text-specific diagnoses. T-Scan derives it features from tools such as Frog and Alpino, and resources such as SoNaR, SUBTLEX-NL and Referentie Bestand Nederlands.",
       "languages": ["nld"], 
       "langEncoding": "639-1",
-      "mimetypes": ["text/plain"], 
-      "output": ["text/folia+xml", "xsl", "wordcsv",
-		 "sencsv", "parcsv", "doccsv",
-		 "totalwordcsv", "totalsencsv", "totalparcsv", "totaldoccsv"],
+      "mimetypes": ["text/plain"],
+      // todo: just say csv
+      "output": ["text/folia+xml", "xsl", "text/csv"
+		 // "word-csv", "sen-csv", "par-csv", "doc-csv",
+		 // "total-word-csv", "total-sen-csv", "total-par-csv", "total-doc-csv"
+		],
       "url": "https://webservices-lst.science.ru.nl/tscan/",
       "parameters": {
 	  "project"      : "new",
@@ -3268,7 +3296,7 @@ const Registry = [
       "langEncoding": "639-1",		  
       "mimetypes": ["text/plain",
 		    "text/html"],
-      "output": ["text/xml"],
+      "output": ["application/xml"],
       "url": "http://multiservice.nlp.ipipan.waw.pl/en/clrs",		  
       "parameters": {
 	  "input" :     "self.linkToResource",
@@ -3332,7 +3360,7 @@ const Registry = [
 	"languages": ["pol"],
 	"langEncoding": "639-1",
 	"mimetypes": ["text/plain", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.oasis.opendocument.text", "application/pdf", "text/html", "application/rtf"],
-	"output": ["text/xml"],
+	"output": ["application/xml"],
 	"url": "http://ws.clarin-pl.eu/weblicht.html",
 	"parameters": {
 	    "input": "self.linkToResource",
