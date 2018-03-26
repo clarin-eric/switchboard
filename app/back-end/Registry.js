@@ -3,12 +3,12 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Registry.js
-// Time-stamp: <2018-03-23 11:43:44 (zinn)>
+// Time-stamp: <2018-03-26 13:57:55 (zinn)>
 // -------------------------------------------
 
 const Registry = [
     { "task": "Chunker",
-      "name": "Iobbber",
+      "name": "Iobber",
       "logo": "clarin-pl.png",
       "homepage": "http://ws.clarin-pl.eu",
       "location": "Wrocław, Poland",
@@ -262,7 +262,7 @@ const Registry = [
       "langEncoding": "639-1",		  
       "mimetypes": ["text/plain",
 		    "text/html"],
-      "output": ["application/xml"],
+      "output": ["application/json", "CoNLL format", "Visualization"],            
       "url": "http://multiservice.nlp.ipipan.waw.pl/en/clrs",		  
       "parameters": {
 	  "input" :     "self.linkToResource",
@@ -288,7 +288,7 @@ const Registry = [
       "langEncoding": "639-1",		  
       "mimetypes": ["text/plain",
 		    "text/html"],
-      "output": ["application/xml"],
+      "output": ["application/json", "CoNLL format", "Visualization"],		            
       "url": "http://multiservice.nlp.ipipan.waw.pl/en/clrs",		  
       "parameters": {
 	  "input" :     "self.linkToResource",
@@ -1694,7 +1694,7 @@ const Registry = [
       "langEncoding": "639-1",		  
       "mimetypes": ["text/plain",
 		    "text/html"],
-      "output": ["application/xml"],
+      "output": ["application/json", "CoNLL format", "Visualization"],		                  
       "url": "http://multiservice.nlp.ipipan.waw.pl/en/clrs",		  
       "parameters": {
 	  "input" :     "self.linkToResource",
@@ -2043,7 +2043,7 @@ const Registry = [
       "authentication": "Yes. Before tool use, please register at https://webservices-lst.science.ru.nl/register.",
       "licence": "public", 
       "description": "Colibri core is an NLP tool as well as a C++ and Python library for working with basic linguistic constructions such as n-grams and skipgrams (i.e patterns with one or more gaps, either of fixed or dynamic size) in a quick and memory-efficient way.",
-      "languages": ["nld", "eng", "deu", "fra", "spa", "por", "fry", "generic"], 
+      "languages": ["nld", "eng", "deu", "fra", "spa", "por", "fry"],  // "generic"
       "langEncoding": "639-1",
       "mimetypes": ["text/plain"],
       "output": ["Tadpole Columned Output Format",
@@ -2076,7 +2076,7 @@ const Registry = [
       "authentication": "Yes. Before tool use, please register at https://webservices-lst.science.ru.nl/register.",
       "licence": "public", 
       "description": "Colibri core is an NLP tool as well as a C++ and Python library for working with basic linguistic constructions such as n-grams and skipgrams (i.e patte rns with one or more gaps, either of fixed or dynamic size) in a quick and memory-efficient way.",
-      "languages": ["nld", "eng", "deu", "fra", "spa", "por", "fry", "generic"], 
+      "languages": ["nld", "eng", "deu", "fra", "spa", "por", "fry"],  // "generic"
       "langEncoding": "639-1",
       "mimetypes": ["text/folia+xml"],
       "output": ["Tadpole Columned Output Format",
@@ -2289,7 +2289,7 @@ const Registry = [
       "langEncoding": "639-1",		  
       "mimetypes": ["text/plain",
 		    "text/html"],
-      "output": ["application/xml"],
+      "output": ["application/json", "CoNLL format", "Visualization"],		                  
       "url": "http://multiservice.nlp.ipipan.waw.pl/en/clrs",		  
       "parameters": {
 	  "input" :     "self.linkToResource",
@@ -2636,7 +2636,7 @@ const Registry = [
       "langEncoding": "639-1",		  
       "mimetypes": ["text/plain",
 		    "text/html"],
-      "output": ["application/xml"],
+      "output": ["application/json", "CoNLL format", "Visualization"],
       "url": "http://multiservice.nlp.ipipan.waw.pl/en/clrs",		  
       "parameters": {
 	  "input" :     "self.linkToResource",
@@ -2662,7 +2662,7 @@ const Registry = [
       "langEncoding": "639-1",		  
       "mimetypes": ["text/plain",
 		    "text/html"],
-      "output": ["application/xml"],
+      "output": ["application/json", "CoNLL format", "Visualization"],      
       "url": "http://multiservice.nlp.ipipan.waw.pl/en/clrs",		  
       "parameters": {
 	  "input" :     "self.linkToResource",
@@ -2741,8 +2741,7 @@ const Registry = [
       "languages": ["nld"], 
       "langEncoding": "639-1",
       "mimetypes": ["text/plain"], 
-      "output": ["Tadpole Columned Output Format",
-		 "text/folia+xml"], 		  
+      "output": ["text/folia+xml"], 		  
       "url": "https://webservices-lst.science.ru.nl/valkuil/",
       "parameters": {
 	  "project"      : "new",
@@ -2770,8 +2769,7 @@ const Registry = [
       "languages": ["nld"], 
       "langEncoding": "639-1",
       "mimetypes": ["text/folia+xml"],
-      "output": ["Tadpole Columned Output Format",
-		 "text/folia+xml"], 
+      "output": ["text/folia+xml"], 
       "url": "https://webservices-lst.science.ru.nl/valkuil/",
       "parameters": {
 	  "project"      : "new",
@@ -3296,7 +3294,7 @@ const Registry = [
       "langEncoding": "639-1",		  
       "mimetypes": ["text/plain",
 		    "text/html"],
-      "output": ["application/xml"],
+      "output": ["application/json", "CoNLL format", "Visualization"],      
       "url": "http://multiservice.nlp.ipipan.waw.pl/en/clrs",		  
       "parameters": {
 	  "input" :     "self.linkToResource",
