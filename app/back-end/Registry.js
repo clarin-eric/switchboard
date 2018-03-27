@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Registry.js
-// Time-stamp: <2018-03-27 10:48:43 (zinn)>
+// Time-stamp: <2018-03-27 12:23:43 (zinn)>
 // -------------------------------------------
 
 const Registry = [
@@ -36,7 +36,7 @@ const Registry = [
     { "task": "Constituent Parsing",
       "name": "WebLicht-Const-Parsing-DE",
       "logo": "weblicht.jpg",		  		  
-      "homepage": "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+      "homepage": "https://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
       "location": "Tuebingen, Germany",		  		  		  
       "creators": "CLARIN-D Centre at the University of Tuebingen, Germany",
       "contact": {
@@ -55,7 +55,8 @@ const Registry = [
 		    "application/msword",
 		    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
       "output": ["application/tcf+xml"],
-      "url": "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
+// old PATH      "url": "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",
+      "url": "https://weblicht.sfs.uni-tuebingen.de/weblicht-switchboard/",		  
       "parameters": {
 	  "input" :     "self.linkToResource",
 	  "lang":       "de",			      
@@ -66,7 +67,7 @@ const Registry = [
     { "task": "Constituent Parsing",
       "name": "WebLicht-Const-Parsing-EN",
       "logo": "weblicht.jpg",		  		  
-      "homepage": "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+      "homepage": "https://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
       "location": "Tuebingen, Germany",		  		  		  
       "creators": "CLARIN-D Centre at the University of Tuebingen, Germany",
       "contact": {
@@ -85,7 +86,7 @@ const Registry = [
 		    "application/msword",
 		    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
       "output": ["application/tcf+xml"],
-      "url": "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
+      "url": "https://weblicht.sfs.uni-tuebingen.de/weblicht-switchboard/",		        
       "parameters": {
 	  "input" :     "self.linkToResource",
 	  "lang":       "en",			      
@@ -299,7 +300,7 @@ const Registry = [
     { "task": "Dependency Parsing",
       "name": "WebLicht-Dep-Parsing-DE",
       "logo": "weblicht.jpg",		  		  
-      "homepage": "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+      "homepage": "https://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
       "location": "Tuebingen, Germany",		  		  		  
       "creators": "CLARIN-D Centre at the University of Tuebingen, Germany",
       "contact": {
@@ -318,7 +319,7 @@ const Registry = [
 		    "application/msword",
 		    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
       "output": ["application/tcf+xml"],      
-      "url": "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
+      "url": "https://weblicht.sfs.uni-tuebingen.de/weblicht-switchboard/",		  
       "parameters": {
 	  "input" :     "self.linkToResource",
 	  "lang":       "de",			      
@@ -329,7 +330,7 @@ const Registry = [
     { "task": "Dependency Parsing",
       "name": "WebLicht-Dep-Parsing-NL-ALPINO",
       "logo": "weblicht.jpg",		  		  
-      "homepage": "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+      "homepage": "https://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
       "location": "Tuebingen, Germany",		  		  		  
       "creators": "CLARIN-D Centre at the University of Tuebingen, Germany",
       "contact": {
@@ -348,7 +349,7 @@ const Registry = [
 		    "application/msword",
 		    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
       "output": ["application/tcf+xml"],            
-      "url": "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
+      "url": "https://weblicht.sfs.uni-tuebingen.de/weblicht-switchboard/",		  
       "parameters": {
 	  "input" :     "self.linkToResource",
 	  "lang":       "nl",			      
@@ -360,7 +361,7 @@ const Registry = [
     { "task": "Dependency Parsing",
       "name": "WebLicht-Dep-Parsing-EN",
       "logo": "weblicht.jpg",		  		  
-      "homepage": "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+      "homepage": "https://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
       "location": "Tuebingen, Germany",		  		  		  
       "creators": "CLARIN-D Centre at the University of Tuebingen, Germany",
       "contact": {
@@ -379,7 +380,7 @@ const Registry = [
 		    "application/msword",
 		    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
       "output": ["application/tcf+xml"],            
-      "url": "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
+      "url": "https://weblicht.sfs.uni-tuebingen.de/weblicht-switchboard/",		  
       "parameters": {
 	  "input" :     "self.linkToResource",
 	  "lang":       "en",			      
@@ -390,7 +391,7 @@ const Registry = [
     { "task": "Dependency Parsing",
       "name": "WebLicht-Dep-Parsing-SL (RELDI)",
       "logo": "weblicht.jpg",		  		  
-      "homepage": "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+      "homepage": "https://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
       "location": "Tuebingen, Germany",		  		  		  
       "creators": "CLARIN-D Centre at the University of Tuebingen, Germany",
       "contact": {
@@ -409,7 +410,7 @@ const Registry = [
 		    "application/msword",
 		    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
       "output": ["application/tcf+xml"],                  
-      "url": "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
+      "url": "https://weblicht.sfs.uni-tuebingen.de/weblicht-switchboard/",		  
       "parameters": {
 	  "input" :     "self.linkToResource",
 	  "lang":       "sl",			      
@@ -420,7 +421,7 @@ const Registry = [
     { "task": "Dependency Parsing",
       "name": "WebLicht-Dep-Parsing-HR (RELDI)",
       "logo": "weblicht.jpg",		  		  
-      "homepage": "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+      "homepage": "https://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
       "location": "Tuebingen, Germany",		  		  		  
       "creators": "CLARIN-D Centre at the University of Tuebingen, Germany",
       "contact": {
@@ -439,7 +440,7 @@ const Registry = [
 		    "application/msword",
 		    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
       "output": ["application/tcf+xml"],                        
-      "url": "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
+      "url": "https://weblicht.sfs.uni-tuebingen.de/weblicht-switchboard/",		  
       "parameters": {
 	  "input" :     "self.linkToResource",
 	  "lang":       "hr",			      
@@ -450,7 +451,7 @@ const Registry = [
     { "task": "Dependency Parsing",
       "name": "WebLicht-Dep-Parsing-SR (RELDI)",
       "logo": "weblicht.jpg",		  		  
-      "homepage": "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+      "homepage": "https://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
       "location": "Tuebingen, Germany",		  		  		  
       "creators": "CLARIN-D Centre at the University of Tuebingen, Germany",
       "contact": {
@@ -469,7 +470,7 @@ const Registry = [
 		    "application/msword",
 		    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
       "output": ["application/tcf+xml"],                        
-      "url": "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
+      "url": "https://weblicht.sfs.uni-tuebingen.de/weblicht-switchboard/",		  
       "parameters": {
 	  "input" :     "self.linkToResource",
 	  "lang":       "sr",			      
@@ -987,7 +988,7 @@ const Registry = [
     { "task": "Lemmatization",
       "name": "WebLicht-Lemmas-DE",
       "logo": "weblicht.jpg",		  		  
-      "homepage": "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+      "homepage": "https://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
       "location": "Tuebingen, Germany",		  		  		  
       "creators": "CLARIN-D Centre at the University of Tuebingen, Germany",
       "contact": {
@@ -1006,7 +1007,7 @@ const Registry = [
 		    "application/msword",
 		    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
       "output": ["application/tcf+xml"],
-      "url": "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
+      "url": "https://weblicht.sfs.uni-tuebingen.de/weblicht-switchboard/",		  
       "parameters": {
 	  "input" :     "self.linkToResource",
 	  "lang":       "de",			      
@@ -1017,7 +1018,7 @@ const Registry = [
     { "task": "Lemmatization",
       "name": "WebLicht-Lemmas-EN",
       "logo": "weblicht.jpg",		  		  
-      "homepage": "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+      "homepage": "https://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
       "location": "Tuebingen, Germany",		  		  		  
       "creators": "CLARIN-D Centre at the University of Tuebingen, Germany",
       "contact": {
@@ -1036,7 +1037,7 @@ const Registry = [
 		    "application/msword",
 		    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
       "output": ["application/tcf+xml"],      
-      "url": "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
+      "url": "https://weblicht.sfs.uni-tuebingen.de/weblicht-switchboard/",		  
       "parameters": {
 	  "input" :     "self.linkToResource",
 	  "lang":       "en",			      
@@ -1164,7 +1165,7 @@ const Registry = [
 	"task": "Named Entity Recognition",
 	"name": "WebLicht-NamedEntities-SL",
 	"logo": "weblicht.jpg",		  	    
-	"homepage": "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+	"homepage": "https://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
 	"location": "Tuebingen, Germany",		  		  		  
 	"creators": "CLARIN-D Centre at the University of Tuebingen, Germany",
 	"contact": {
@@ -1183,7 +1184,7 @@ const Registry = [
 		      "application/msword",
 		      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
 	"output": ["application/tcf+xml"],                        
-	"url": "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
+	"url": "https://weblicht.sfs.uni-tuebingen.de/weblicht-switchboard/",		  
 	"parameters": {
 	    "input" :     "self.linkToResource",
 	    "lang":       "sl",			      
@@ -1327,7 +1328,7 @@ const Registry = [
     },		
     
     
-    // curl -d @germanet.dc.xml -o output.marc.xml http://weblicht.sfs.uni-tuebingen.de/converter/DC2Marc/rest
+    // curl -d @germanet.dc.xml -o output.marc.xml https://weblicht.sfs.uni-tuebingen.de/converter/DC2Marc/rest
 
     // { "task": "Metadata Format Conversion",
     //   "name": "NaLiDa2Marc21 (web service)",
@@ -1361,7 +1362,7 @@ const Registry = [
       "softwareType": "webService",
       "requestType": "data",
       "logo": "YourLogoComesHere.png",		  
-      "homepage": "http://weblicht.sfs.uni-tuebingen.de/converter/Cmdi2DC",
+      "homepage": "https://weblicht.sfs.uni-tuebingen.de/converter/Cmdi2DC",
       "location": "Tuebingen, Germany",		  		  
       "creators": "CLARIN-D Centre at the University of Tuebingen, Germany",
       "contact": {
@@ -1375,7 +1376,7 @@ const Registry = [
       "languages": ["generic"], 
       "mimetypes": ["application/xml", "application/octet-stream"],
       "output": ["application/xml"],
-      "url": "http://weblicht.sfs.uni-tuebingen.de/converter/Cmdi2DC/rest",
+      "url": "https://weblicht.sfs.uni-tuebingen.de/converter/Cmdi2DC/rest",
       "parameters": {
 	  "input" : "self.linkToResource" // for demo upload site, to be instantiated
       }
@@ -1387,7 +1388,7 @@ const Registry = [
       "softwareType": "webService",
       "requestType": "data",
       "logo": "YourLogoComesHere.png",		  
-      "homepage": "http://weblicht.sfs.uni-tuebingen.de/converter/DC2Marc",
+      "homepage": "https://weblicht.sfs.uni-tuebingen.de/converter/DC2Marc",
       "location": "Tuebingen, Germany",		  		  
       "creators": "CLARIN-D Centre at the University of Tuebingen, Germany",
       "contact": {
@@ -1401,7 +1402,7 @@ const Registry = [
       "languages": ["generic"], 
       "mimetypes": ["application/xml", "application/octet-stream"],
       "output": ["application/xml"],
-      "url": "http://weblicht.sfs.uni-tuebingen.de/converter/DC2Marc/rest",
+      "url": "https://weblicht.sfs.uni-tuebingen.de/converter/DC2Marc/rest",
       "parameters": {
 	  "input" : "self.linkToResource" // for demo upload site, to be instantiated
       }
@@ -1412,7 +1413,7 @@ const Registry = [
       "softwareType": "webService",
       "requestType": "data",
       "logo": "YourLogoComesHere.png",		  
-      "homepage": "http://weblicht.sfs.uni-tuebingen.de/converter/Marc2EAD",
+      "homepage": "https://weblicht.sfs.uni-tuebingen.de/converter/Marc2EAD",
       "location": "Tuebingen, Germany",		  		  
       "creators": "CLARIN-D Centre at the University of Tuebingen, Germany",
       "contact": {
@@ -1426,7 +1427,7 @@ const Registry = [
       "languages": ["generic"], 
       "mimetypes": ["application/xml", "application/octet-stream"],
       "output": ["application/xml"],
-      "url": "http://weblicht.sfs.uni-tuebingen.de/converter/Marc2EAD/rest",
+      "url": "https://weblicht.sfs.uni-tuebingen.de/converter/Marc2EAD/rest",
       "parameters": {
 	  "input" : "self.linkToResource" // for demo upload site, to be instantiated
       }
@@ -1437,7 +1438,7 @@ const Registry = [
       "softwareType": "webService",
       "requestType": "data",
       "logo": "YourLogoComesHere.png",		  
-      "homepage": "http://weblicht.sfs.uni-tuebingen.de/converter/Marc2MODS",
+      "homepage": "https://weblicht.sfs.uni-tuebingen.de/converter/Marc2MODS",
       "location": "Tuebingen, Germany",		  		  
       "creators": "CLARIN-D Centre at the University of Tuebingen, Germany",
       "contact": {
@@ -1451,7 +1452,7 @@ const Registry = [
       "languages": ["generic"], 
       "mimetypes": ["application/xml", "application/octet-stream"],
       "output": ["application/xml"],
-      "url": "http://weblicht.sfs.uni-tuebingen.de/converter/Marc2MODS/rest",
+      "url": "https://weblicht.sfs.uni-tuebingen.de/converter/Marc2MODS/rest",
       "parameters": {
 	  "input" : "self.linkToResource" // for demo upload site, to be instantiated
       }
@@ -1462,7 +1463,7 @@ const Registry = [
       "softwareType": "webService",
       "requestType": "data",
       "logo": "YourLogoComesHere.png",		  
-      "homepage": "http://weblicht.sfs.uni-tuebingen.de/converter/Marc2RDFDC",
+      "homepage": "https://weblicht.sfs.uni-tuebingen.de/converter/Marc2RDFDC",
       "location": "Tuebingen, Germany",		  		  
       "creators": "CLARIN-D Centre at the University of Tuebingen, Germany",
       "contact": {
@@ -1476,7 +1477,7 @@ const Registry = [
       "languages": ["generic"], 
       "mimetypes": ["application/xml", "application/octet-stream"],
       "output": ["application/xml"],
-      "url": "http://weblicht.sfs.uni-tuebingen.de/converter/Marc2RDFDC/rest",
+      "url": "https://weblicht.sfs.uni-tuebingen.de/converter/Marc2RDFDC/rest",
       "parameters": {
 	  "input" : "self.linkToResource" // for demo upload site, to be instantiated
       }
@@ -1487,7 +1488,7 @@ const Registry = [
       "softwareType": "webService",
       "requestType": "data",
       "logo": "YourLogoComesHere.png",		  
-      "homepage": "http://weblicht.sfs.uni-tuebingen.de/converter/MODS2RDF",
+      "homepage": "https://weblicht.sfs.uni-tuebingen.de/converter/MODS2RDF",
       "location": "Tuebingen, Germany",		  		  
       "creators": "CLARIN-D Centre at the University of Tuebingen, Germany",
       "contact": {
@@ -1501,7 +1502,7 @@ const Registry = [
       "languages": ["generic"], 
       "mimetypes": ["application/xml", "application/octet-stream"],
       "output": ["application/xml"],
-      "url": "http://weblicht.sfs.uni-tuebingen.de/converter/MODSRDF/rest",
+      "url": "https://weblicht.sfs.uni-tuebingen.de/converter/MODSRDF/rest",
       "parameters": {
 	  "input" : "self.linkToResource" // for demo upload site, to be instantiated
       }
@@ -1510,7 +1511,7 @@ const Registry = [
     { "task": "Morphology Analysis",
       "name": "WebLicht-Morphology-DE",
       "logo": "weblicht.jpg",		  		  
-      "homepage": "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+      "homepage": "https://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
       "location": "Tuebingen, Germany",		  		  		  
       "creators": "CLARIN-D Centre at the University of Tuebingen, Germany",
       "contact": {
@@ -1529,7 +1530,7 @@ const Registry = [
 		    "application/msword",
 		    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
       "output": ["application/tcf+xml"],            
-      "url": "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
+      "url": "https://weblicht.sfs.uni-tuebingen.de/weblicht-switchboard/",		  
       "parameters": {
 	  "input" :     "self.linkToResource",
 	  "lang":       "de",			      
@@ -1540,7 +1541,7 @@ const Registry = [
     { "task": "Morphology Analysis",
       "name": "WebLicht-Morphology-EN",
       "logo": "weblicht.jpg",		  		  
-      "homepage": "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+      "homepage": "https://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
       "location": "Tuebingen, Germany",		  		  		  
       "creators": "CLARIN-D Centre at the University of Tuebingen, Germany",
       "contact": {
@@ -1559,7 +1560,7 @@ const Registry = [
 		    "application/msword",
 		    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
       "output": ["application/tcf+xml"],            
-      "url": "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
+      "url": "https://weblicht.sfs.uni-tuebingen.de/weblicht-switchboard/",		  
       "parameters": {
 	  "input" :     "self.linkToResource",
 	  "lang":       "en",			      
@@ -1704,7 +1705,7 @@ const Registry = [
     { "task": "Named Entity Recognition",
       "name": "WebLicht-NamedEntities-DE",
       "logo": "weblicht.jpg",		  
-      "homepage": "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+      "homepage": "https://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
       "location": "Tuebingen, Germany",		  		  		  
       "creators": "CLARIN-D Centre at the University of Tuebingen, Germany",
       "contact": {
@@ -1735,7 +1736,7 @@ const Registry = [
     { "task": "Named Entity Recognition",
       "name": "WebLicht-NamedEntities-EN",
       "logo": "weblicht.jpg",		  		  
-      "homepage": "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+      "homepage": "https://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
       "location": "Tuebingen, Germany",		  		  		  
       "creators": "CLARIN-D Centre at the University of Tuebingen, Germany",
       "contact": {
@@ -2154,7 +2155,7 @@ const Registry = [
     { "task": "Part-Of-Speech Tagging",
       "name": "WebLicht-POSTags-Lemmas-DE",
       "logo": "weblicht.jpg",		  		  
-      "homepage": "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+      "homepage": "https://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
       "location": "Tuebingen, Germany",		  		  		  
       "creators": "CLARIN-D Centre at the University of Tuebingen, Germany",
       "contact": {
@@ -2173,7 +2174,7 @@ const Registry = [
 		    "application/msword",
 		    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
       "output": ["application/tcf+xml"],
-      "url": "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
+      "url": "https://weblicht.sfs.uni-tuebingen.de/weblicht-switchboard/",		  
       "parameters": {
 	  "input" :     "self.linkToResource",
 	  "lang":       "de",			      
@@ -2184,7 +2185,7 @@ const Registry = [
     { "task": "Part-Of-Speech Tagging",
       "name": "WebLicht-POSTags-Lemmas-FR",
       "logo": "weblicht.jpg",		  		  
-      "homepage": "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+      "homepage": "https://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
       "location": "Tuebingen, Germany",		  		  		  
       "creators": "CLARIN-D Centre at the University of Tuebingen, Germany",
       "contact": {
@@ -2203,7 +2204,7 @@ const Registry = [
 		    "application/msword",
 		    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
       "output": ["application/tcf+xml"],
-      "url": "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
+      "url": "https://weblicht.sfs.uni-tuebingen.de/weblicht-switchboard/",		  
       "parameters": {
 	  "input" :     "self.linkToResource",
 	  "lang":       "fr",			      
@@ -2214,7 +2215,7 @@ const Registry = [
     { "task": "Part-Of-Speech Tagging",
       "name": "WebLicht-POSTags-Lemmas-IT",
       "logo": "weblicht.jpg",		  		  
-      "homepage": "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+      "homepage": "https://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
       "location": "Tuebingen, Germany",		  		  		  
       "creators": "CLARIN-D Centre at the University of Tuebingen, Germany",
       "contact": {
@@ -2233,7 +2234,7 @@ const Registry = [
 		    "application/msword",
 		    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
       "output": ["application/tcf+xml"],      
-      "url": "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
+      "url": "https://weblicht.sfs.uni-tuebingen.de/weblicht-switchboard/",		  
       "parameters": {
 	  "input" :     "self.linkToResource",
 	  "lang":       "it",			      
@@ -2244,7 +2245,7 @@ const Registry = [
     { "task": "Part-Of-Speech Tagging",
       "name": "WebLicht-POSTags-Lemmas-EN",
       "logo": "weblicht.jpg",		  		  
-      "homepage": "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+      "homepage": "https://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
       "location": "Tuebingen, Germany",		  		  		  
       "creators": "CLARIN-D Centre at the University of Tuebingen, Germany",
       "contact": {
@@ -2263,7 +2264,7 @@ const Registry = [
 		    "application/msword",
 		    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
       "output": ["application/tcf+xml"],      
-      "url": "http://tuebingen.weblicht.sfs.uni-tuebingen.de:8080/weblicht/",		  
+      "url": "https://weblicht.sfs.uni-tuebingen.de/weblicht-switchboard/",		  
       "parameters": {
 	  "input" :     "self.linkToResource",
 	  "lang":       "en",			      
@@ -3117,7 +3118,7 @@ const Registry = [
     { "task": "Tokenisation",
       "name": "WebLicht-Tokenization-TUR",
       "logo": "weblicht.jpg",		  
-      "homepage": "http://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+      "homepage": "https://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
       "location": "Tuebingen, Germany",		  		  		  
       "creators": "CLARIN-D Centre at the University of Tuebingen, Germany",
       "contact": {

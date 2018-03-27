@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 	- switchboard now shows the output format.
 	- output formats has been curated
 	- Added CSTLemma (hosted by D4Science
+	- Changed path to WebLicht from http to https
 
 ## [1.1.3] - 2018-03-13
 ### Added
