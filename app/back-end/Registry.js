@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Registry.js
-// Time-stamp: <2018-03-26 13:57:55 (zinn)>
+// Time-stamp: <2018-03-27 10:48:43 (zinn)>
 // -------------------------------------------
 
 const Registry = [
@@ -3245,6 +3245,37 @@ const Registry = [
 	  "input"        : "textinput_url" 
       }
     },
+
+    // NEEDS MOR TESTING BEFORE INCLUSION
+    
+    // { "task": "OCR Engine",
+    //   "name": "PICCL",
+    //   "logo": "tscan.jpg",		  
+    //   "homepage": "https://webservices-lst.science.ru.nl/piccl/info/",
+    //   "location": "Nijmegen, The Netherlands (CLAM Webservices)",		  
+    //   "creators": "Maarten van Gompel, Ko van der Sloot (CLST, Radboud University Nijmegen)",
+    //   "contact": {
+    // 	  "person": "Maarten van Gompel",
+    // 	  "email": "proycon@anaproy.nl",
+    //   },
+    //   "version": "Early version",
+    //   "authentication": "Yes. Before tool use, please register at https://webservices-lst.science.ru.nl/register.",
+    //   "licence": "public",
+    //   "description": "An OCR (Tesseract) and OCR post-correction pipeline (TICCL).",
+    //   "languages": ["nld"], 
+    //   "langEncoding": "639-1",
+    //   "mimetypes": ["application/pdf"],
+    //   // todo: just say csv
+    //   "output": ["text/folia+xml"],
+    //   "url": "https://webservices-lst.science.ru.nl/piccl/",
+    //   "parameters": {
+    // 	  "project"      : "new",
+    // 	  "input"        : "self.linkToResource"
+    //   },
+    //   "mapping":   {
+    // 	  "input"        : "pdftext_url" 
+    //   }
+    // },    
 
     {
 	"task": "Text Enhancement",
