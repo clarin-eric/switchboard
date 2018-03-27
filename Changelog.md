@@ -1,11 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [1.1.4] - 2018-03-21
+## [1.1.4] - 2018-03-27
 ### Added
 	- Added first FAQ to FAQs
 	- added registration details for LST webservices to metadata
 	- switchboard now shows the output format.
+	- output formats has been curated
 	- Added CSTLemma (hosted by D4Science
 
 ## [1.1.3] - 2018-03-13
