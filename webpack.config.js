@@ -126,17 +126,17 @@ const common = {
 		'B2DROP_PASS' : JSON.stringify('clarin-plus'),
 		//'B2DROP_USER' : JSON.stringify('claus.zinn@uni-tuebingen.de'),
 		//'B2DROP_PASS' : JSON.stringify('sPL-Fh2-7SS-hCJ'),
-		'VERSION'     : JSON.stringify('v1.1.4-pro/docker (Mar 27, 2018 - noon)'),
+		'VERSION'     : JSON.stringify('v1.1.4-pro/docker (Apr 11, 2018)'),
 		'CONTACT'     : JSON.stringify('switchboard@clarin.eu')
 	    }
 	}),
 
         new webpack.optimize.OccurrenceOrderPlugin(),
-        new webpack.optimize.UglifyJsPlugin({
-            compressor: {
-                warnings: false
-            }
-        })
+        // new webpack.optimize.UglifyJsPlugin({
+        //     compressor: {
+        //         warnings: false
+        //     }
+        // })
     ]
 };
 
