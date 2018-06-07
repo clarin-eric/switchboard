@@ -1,6 +1,14 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.1.5] - 2018-06-07
+### Added
+	- Added NLP-HUB/D4Science for multiple languages (NER)
+
+### Changed
+	- fixed bug, where shared link from NC had http rather than https (needs further work)
+
+
 ## [1.1.4] - 2018-03-27
 ### Added
 	- Added first FAQ to FAQs

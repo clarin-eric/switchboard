@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: ToolInvoker.js
-// Time-stamp: <2018-03-09 09:50:41 (zinn)>
+// Time-stamp: <2018-06-07 11:29:30 (zinn)>
 // -------------------------------------------
 
 import { map639_1_to_639_3, map639_3_to_639_1 } from './util';
@@ -210,7 +210,6 @@ export function gatherInvocationParameters( toolDescription, resourceDescription
 
     var rtnValue = { };
 
-    // console.log('ToolInvoker/gatherInvocationParameters at start', toolDescription, resourceDescription);
     if (typeof resourceDescription === undefined || resourceDescription === null || resourceDescription.length == 0) {
 	console.log('ToolInvoker/gatherInvocationParameters', false);
 	return false;
@@ -228,6 +227,8 @@ export function gatherInvocationParameters( toolDescription, resourceDescription
     var requestType      = toolDescription.requestType;
     var output           = toolDescription.output;
 
+    console.log('ToolInvoker/gatherInvocationParameters at start', toolDescription, resourceDescription, remoteFilename);
+    
     // Some tools in the registry require an alternative naming of mediatypes, see e.g.,
     // the CLARIN-DK tools. The registry slot for 'type' is a function that is being evaluated here.
     var parameterType    = toolDescription.parameters.type || "";

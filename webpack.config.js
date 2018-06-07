@@ -48,7 +48,7 @@ const common = {
 
     devtool: 'inline-source-map',
     module: {
-	loaders: [
+	rules: [
 	    
 	    {
 		test: /\.(png|woff|woff2|eot|ttf|svg)/,
@@ -126,7 +126,7 @@ const common = {
 		'B2DROP_PASS' : JSON.stringify('clarin-plus'),
 		//'B2DROP_USER' : JSON.stringify('claus.zinn@uni-tuebingen.de'),
 		//'B2DROP_PASS' : JSON.stringify('sPL-Fh2-7SS-hCJ'),
-		'VERSION'     : JSON.stringify('v1.1.4-pro/docker (Apr 11, 2018)'),
+		'VERSION'     : JSON.stringify('v1.1.5-pro/docker (Jun 07, 2018)'),
 		'CONTACT'     : JSON.stringify('switchboard@clarin.eu')
 	    }
 	}),

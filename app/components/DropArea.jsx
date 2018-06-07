@@ -175,8 +175,6 @@ export default class DropArea extends React.Component {
 
     uploadAndProcessFile( { currentFile, type = 'file' } = {} ) {
 
-	console.log('uploadAndProcessFile', currentFile);
-	
 	this.setState( { loaded: false });
 	let that = this;
 	let uploader = new Uploader( {file: currentFile, type: type} );

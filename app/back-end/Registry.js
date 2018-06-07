@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Registry.js
-// Time-stamp: <2018-04-11 13:46:45 (zinn)>
+// Time-stamp: <2018-06-07 13:58:14 (zinn)>
 // -------------------------------------------
 
 const Registry = [
@@ -1194,7 +1194,7 @@ const Registry = [
 
     {
 	"task": "Named Entity Recognition",
-	"name": "D4Science NER",
+	"name": "D4Science NER (GATE's Annie)",
 	"logo": "d4science.png",		  	    
 	"homepage": "https://www.d4science.org",
 	"location": "Pisa, Italy",		  		  		  
@@ -1220,6 +1220,32 @@ const Registry = [
 
     {
 	"task": "Named Entity Recognition",
+	"name": "NLP-HUB (multiple NER tools)",
+	"logo": "d4science.png",		  	    
+	"homepage": "https://www.d4science.org",
+	"location": "Pisa, Italy",		  		  		  
+	"creators": "D4Science staff",
+	"contact": {
+	    "person": "D4Science Support",
+	    "email": "claus.zinn@sfs.uni-tuebingen.de"
+	},	    
+	"version": "v1.0",
+	"authentication": "no",		  
+	"licence": "public",
+	"description": "This is an experimental integration of a D4Science NLP processing service hub. This service runs a number of NER tools in parallel, and merges their results. It identifies names of persons, locations, organizations, as well as money amounts, time and date expressions -- and other expressions -- in English, French, Italian, Spanish and German texts automatically.",
+	"languages": ["eng", "fra", "ita", "spa", "ger"],
+	"langEncoding": "639-1",		  
+	"mimetypes": ["text/plain"],
+	"output": ["application/xml"],
+	"url": "https://nlp.d4science.org/hub",		  
+	"parameters": {
+	    "input" :     "self.linkToResource",
+	    "token":       "a92dc66c-bf09-48cb-9a96-8e765f11e7b1-843339462"			      	    
+	}
+    },
+    
+    {
+	"task": "Named Entity Recognition",
 	"name": "Liner2 (hosted by D4Science)",
 	"logo": "d4science.png",		  	    
 	"homepage": "https://www.d4science.org",
@@ -1243,7 +1269,8 @@ const Registry = [
 	    "token":      "27061e4d-3567-482d-9f12-3a1af5e42ab9-843339462"
 	}
     },
-    
+
+   
     {
 	"task": "Named Entity Recognition",
 	"name": "Liner2",

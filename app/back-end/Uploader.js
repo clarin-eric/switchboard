@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Uploader.js
-// Time-stamp: <2018-03-09 09:52:06 (zinn)>
+// Time-stamp: <2018-06-07 12:20:42 (zinn)>
 // -------------------------------------------
 
 /* Uploads a file to the MPG server in Garching, or to a Nextcloud space.
@@ -82,7 +82,7 @@ export default class Uploader {
 	    cloudPath = fileStorageServerB2DROP_localhost
 	}
 
-//	console.log('Uploader/uploadFile_NC_B2DROP', cloudPath);
+	console.log('Uploader/uploadFile_NC_B2DROP', cloudPath);
 	
 	return new Promise(function(resolve, reject) {
 	    // 1a. store in B2DROP 
@@ -98,7 +98,7 @@ export default class Uploader {
 		.end((err, res) => {
 		    if (err) {
 			reject(err);
-			alert('Error in uploading resource to B2Drop instance');
+			alert('Error in uploading resource to NC/B2Drop instance');
 		    } else {
 			// 1b. Create a 'share link' action on the file you uploaded
 //			console.log('2nd request', cloudPath.concat('ocs/v1.php/apps/files_sharing/api/v1/shares'));
@@ -121,10 +121,12 @@ export default class Uploader {
 				} else {
 				    var parseString = require('xml2js').parseString;
 				    parseString(res.text, function (err, result) {
-					//console.log('sharing result', result, err);
-					//console.log('url to download', result.ocs.data[0].url[0].concat('/download'));
+					console.log('sharing result', result, err);
 					that.remoteFilename = result.ocs.data[0].url[0].concat('/download')
-					//console.log('stored', that.remoteFilename);
+					// hack!
+					console.log('Uploader/stored before', that.remoteFilename);					
+					that.remoteFilename = that.remoteFilename.replace('http', 'https');
+					console.log('Uploader/stored after', that.remoteFilename);
 				    });
 				    resolve(res)
 				}})
