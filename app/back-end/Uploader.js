@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Uploader.js
-// Time-stamp: <2018-06-07 12:20:42 (zinn)>
+// Time-stamp: <2018-06-08 11:24:54 (zinn)>
 // -------------------------------------------
 
 /* Uploads a file to the MPG server in Garching, or to a Nextcloud space.
@@ -14,7 +14,11 @@
 
     is reverse-proxied to
 
-     //ws1-clarind.esc.rzg.mpg.de/drop-off/storage/                      */
+     //ws1-clarind.esc.rzg.mpg.de/drop-off/storage/                      
+
+   The use of the MPG server in Garching is deprecated due to privacy concerns (all can download uploads from there)
+
+*/
 
 import Request from 'superagent';
 import {fileStorage,
@@ -40,7 +44,7 @@ export default class Uploader {
 	    this.filenameWithDate = today.getTime() + ".txt";
 	}
 
-	// default upload 
+	// default upload (overwritten during sharing, todo: clean-up)
 	this.remoteFilename = fileStorageServerMPG_remote + this.filenameWithDate;
         this.remoteFilenameReverseProxy = fileStorageServerMPG_localhost + this.filenameWithDate;
 	
