@@ -111,23 +111,29 @@ const common = {
 
 	new webpack.DefinePlugin({
 	    'process.env': {
-                'NODE_ENV': JSON.stringify('production'),
+                'NODE_ENV'           : JSON.stringify('production'),
 		'INCL_TOOLS_REQ_AUTH': JSON.stringify('yes'),
 		// check whether we should allow manual text input
-		'ALLOW_TEXT_INPUT': JSON.stringify('yes'),
+		'ALLOW_TEXT_INPUT'   : JSON.stringify('yes'),
 		// check whether we allow pasting of URLs
-		'ALLOW_PASTE_URL': JSON.stringify('yes'),
-		'URL_PATH': JSON.stringify('/clrs'),
-		//'URL_PATH': JSON.stringify('/clrs-dev'),
-		// 'FILE_STORAGE': JSON.stringify('MPCDF'),
-		'FILE_STORAGE': JSON.stringify('NEXTCLOUD'),		
-		//'FILE_STORAGE': JSON.stringify('B2DROP'),
-		'B2DROP_USER' : JSON.stringify('switchboard'),
-		'B2DROP_PASS' : JSON.stringify('clarin-plus'),
-		//'B2DROP_USER' : JSON.stringify('claus.zinn@uni-tuebingen.de'),
-		//'B2DROP_PASS' : JSON.stringify('sPL-Fh2-7SS-hCJ'),
-		'VERSION'     : JSON.stringify('v1.1.5-pro/docker (Jun 07, 2018)'),
-		'CONTACT'     : JSON.stringify('switchboard@clarin.eu')
+		'ALLOW_PASTE_URL'    : JSON.stringify('yes'),
+		// 'FILE_STORAGE'    : JSON.stringify('MPCDF'),
+		'FILE_STORAGE'       : JSON.stringify('NEXTCLOUD'),		
+		//'FILE_STORAGE'     : JSON.stringify('B2DROP'),
+		'B2DROP_USER'        : JSON.stringify('switchboard'),
+		'B2DROP_PASS'        : JSON.stringify('clarin-plus'),
+		//'B2DROP_USER'      : JSON.stringify('claus.zinn@uni-tuebingen.de'),
+		//'B2DROP_PASS'      : JSON.stringify('sPL-Fh2-7SS-hCJ'),
+		'VERSION'            : JSON.stringify('v1.1.5-dev/docker (Jun 19, 2018)'),
+		'CONTACT'            : JSON.stringify('switchboard@clarin.eu'),
+		
+		// We need to cater for the circumstance that the switchboard is invoked (indirectly) from
+		// switchboard.clarin.eu or (directly) via weblicht.sfs.uni-tuebingen.de/clrs.
+		// 
+		// Deprecated.
+		// This is now taken care of by componentDidMount function in the main App component.
+		
+		'APP_CONTEXT_PATH'   : JSON.stringify('/clrs/')
 	    }
 	}),
 

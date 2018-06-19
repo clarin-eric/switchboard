@@ -97,6 +97,24 @@ export default class App extends React.Component {
 
     componentDidMount() {
 
+	window.APP_CONTEXT_PATH = (function() {
+
+            const links = Array.prototype.slice.call(
+                document.getElementsByTagName('link'), 0);
+            const favicon = links.find(e => e.rel == "shortcut icon");
+            if (!favicon) return "";
+            let href = favicon.href;
+            if (href.startsWith(window.origin)) {
+                href = href.substr(window.origin.length);
+            }
+            const components = href.split("/");
+            if (components.length >= 3) {
+		console.log('setting componentDidMount/APP_CONTEXT_PATH to /', components[1]);
+                return "/"+components[1];
+            }
+            return "";
+         })();
+
 	this.piwik.push(["setDomains", ["*.weblicht.sfs.uni-tuebingen.de/clrs","*.weblicht.sfs.uni-tuebingen.de/clrs"]]);
 	this.piwik.push(['trackPageView']);
 
@@ -149,6 +167,7 @@ export default class App extends React.Component {
 	return (
 <div>
   <header id="header" role="banner">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
     <div className="navbar-static-top  navbar-default navbar" role="navigation">
       <div className="container">
         <div className="navbar-header">
@@ -176,8 +195,8 @@ export default class App extends React.Component {
 	    </li>
 	    <li><p />
 	      <Toggle
-	         defaultChecked={false}
-		 onChange={this.handleWebServicesChange} />
+	        defaultChecked={false}
+		onChange={this.handleWebServicesChange} />
 	    </li>
           </ul>
 	  <ul className="nav navbar-nav navbar-right" id="id723">

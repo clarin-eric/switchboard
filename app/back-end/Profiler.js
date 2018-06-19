@@ -3,11 +3,11 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Profiler.js
-// Time-stamp: <2018-03-09 09:53:26 (zinn)>
+// Time-stamp: <2018-06-19 15:46:58 (zinn)>
 // -------------------------------------------
 
 import Request from 'superagent';
-import {urlPath, processLanguage} from './util';
+import {appContextPath, processLanguage} from './util';
 import ResourceActions from '../actions/ResourceActions';
 
 export default class Profiler {
@@ -15,10 +15,9 @@ export default class Profiler {
     constructor( resource, caller, remoteFilename ) {
 
 	this.protocol    = window.location.protocol;	// use https or http given parent window
-	this.tika = window.location.origin.concat(urlPath);	
 	this.resource = resource;
 	this.remoteFilename = remoteFilename;
-	    
+	this.windowAppContextPath = window.APP_CONTEXT_PATH;
 	// default values
 	this.resourceProps =
 	    { name: resource.name,
@@ -45,8 +44,7 @@ export default class Profiler {
 	let that = this;	
 	return new Promise(function(resolve, reject) {
 	    Request
-//		.put(that.tika.concat('/clrs-dev/detect/stream'))
-		.put(that.tika.concat('/detect/stream'))
+		.put(that.windowAppContextPath + '/detect/stream')
 		.send(file)	
 		.set('Content-Type', file.type)	
 		.end((err, res) => {
@@ -72,8 +70,7 @@ export default class Profiler {
 	let that = this;
 	return new Promise(function(resolve, reject) {
 	    Request
-//		.put(that.tika.concat('/clrs-dev/language/string'))
-		.put(that.tika.concat('/language/string'))
+		.put(that.windowAppContextPath + '/language/string')
 		.send(file)	
 		.set('Content-Type', file.type)	
 		.end((err, res) => {
@@ -96,8 +93,7 @@ export default class Profiler {
 	let that = this;
 	return new Promise(function(resolve, reject) {
 	    Request
-//		.put(that.tika.concat('/clrs-dev/language/string'))
-		.put(that.tika.concat('/language/string'))
+		.put(that.windowAppContextPath + '/language/string')
 		.send(file)	
 		.set('Content-Type', file.type)	
 		.end((err, res) => {
@@ -117,10 +113,9 @@ export default class Profiler {
     convertToPlainText() {
 	let file = this.resourceProps.file;
 	let protocol = this.protocol;
-	let that = this;
 	return new Promise(function(resolve, reject) {
 	    Request
-		.put(that.tika.concat('/tika'))
+		.put(that.windowAppContextPath + '/tika')
 		.send(file)	
 		.set('Accept', 'text/plain')	
 		.end((err, res) => {

@@ -9,7 +9,6 @@ ENV PYTHON_VERSION=3.6
 ENV PY_PIP_VERSION=9.0.1
 ENV SUPERVISOR_VERSION=3.3.1
 ENV NGINX_VERSION 1.11.13
-ENV CLRS_PATH clrs
 
 # install nginx
 VOLUME ["/var/cache/nginx"]
@@ -119,8 +118,7 @@ RUN apk update \
 # Supervisord configuration
 COPY docker/supervisord.conf /etc/supervisor/supervisord.conf
 
-# todo:use github build
-COPY build/ /etc/nginx/html/$CLRS_PATH
+COPY build/ /etc/nginx/html
 
 # nginx configuration
 COPY docker/nginx.conf /etc/nginx/nginx.conf

@@ -3,11 +3,10 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: util.js
-// Time-stamp: <2018-03-13 14:42:42 (zinn)>
+// Time-stamp: <2018-06-19 15:34:39 (zinn)>
 // -------------------------------------------
 
 export const inclToolsReqAuth = process.env.INCL_TOOLS_REQ_AUTH;
-export const urlPath          = process.env.URL_PATH;
 export const allowTextInput   = process.env.ALLOW_TEXT_INPUT;
 export const allowPasteURL    = process.env.ALLOW_PASTE_URL;
 export const fileStorage      = process.env.FILE_STORAGE;
@@ -15,15 +14,16 @@ export const b2drop_user      = process.env.B2DROP_USER;
 export const b2drop_pass      = process.env.B2DROP_PASS;
 export const lrsVersion       = process.env.VERSION;
 export const emailContact     = process.env.CONTACT;
+export const appContextPath   = process.env.APP_CONTEXT_PATH;
 export const emailContactCommand = "mailto:"+emailContact+"?subject=CLARIN-PLUS LRS";
 
 // for creation of link
 export const fileStorageServerMPG_remote     = 'http://ws1-clarind.esc.rzg.mpg.de/drop-off/storage/';
 
-// see nginx.conf for reverse-proxying
-export const fileStorageServerMPG_localhost       = window.location.origin.concat(urlPath).concat('/storage/');
-export const fileStorageServerNEXTCLOUD_localhost = window.location.origin.concat(urlPath).concat('/nextcloud/');
-export const fileStorageServerB2DROP_localhost    = window.location.origin.concat(urlPath).concat('/btwodrop/');
+// see nginx.conf for reverse-proxying (all pathnames are local0
+export const fileStorageServerMPG_localhost       = '/storage/';
+export const fileStorageServerNEXTCLOUD_localhost = '/nextcloud/';
+export const fileStorageServerB2DROP_localhost    = '/btwodrop/';
 
 export function unfoldHandle( handle ) {
     var hdlShortPrefix = "hdl:";
@@ -49,7 +49,6 @@ export function unfoldHandle( handle ) {
    - iCloud does not provide a direct link to access a shared file (login etc. required)
    - b2drop.eudat.eu is not active yet, but there is a test instance at https://fsd-cloud48.zam.kfa-juelich.de
    - the first if condition shadows all subsequent nextcloud-based conditions
-   - aim at getting rid of 'clrs' part of url
    - paste events are always fetched via the Python script
 */
 
@@ -79,31 +78,38 @@ export function fileExtensionChooser (mimetype) {
 }
 
 export function rewriteURL( caller, fileURL ) {
-    console.log('util/rewriteURL at start', caller, fileURL);
+    var href = window.location.origin.concat(window.location.pathname);
+
+    console.log('util/rewriteURL at start', caller, fileURL, href);
+
     var corsLink = "";
     if (caller == "B2DROP") {
 	// nop   -- fileURL = fileURL.concat('/download')
     } else if ( caller == "PASTE") {
 	// nop
     } else if ( fileURL.indexOf("https://www.dropbox.com") !== -1 ) {
-	corsLink = fileURL.replace('https://www.dropbox.com', '/www-dropbox-com');
+	corsLink = fileURL.replace('https://www.dropbox.com', 'www-dropbox-com');
 	corsLink = corsLink.replace('?dl=0', '?dl=1');
-    } else if ( fileURL.indexOf("https://b2drop.eudat.eu") !== -1 ) {
-	corsLink = fileURL.replace('https://b2drop.eudat.eu', '/b2drop-eudat-eu').concat('/download');	
-    } else if ( fileURL.indexOf("https://fsd-cloud48.zam.kfa-juelich.de") !== -1 ) {
-	corsLink = fileURL.replace('https://fsd-cloud48.zam.kfa-juelich.de', '/zam-kfa-juelich').concat('/download');
-    } else if ( fileURL.indexOf("https://weblicht.sfs.uni-tuebingen.de/nextcloud") !== -1 ) {
-	corsLink = fileURL.replace('https://weblicht.sfs.uni-tuebingen.de/nextcloud', '/weblicht-sfs-nextcloud').concat('/download');
+	
+    } else if (    fileURL.indexOf("https://b2drop.eudat.eu") !== -1 ) {
+	corsLink = fileURL.replace('https://b2drop.eudat.eu', 'b2drop-eudat-eu').concat('/download');
+	
+    } else if (    fileURL.indexOf("https://fsd-cloud48.zam.kfa-juelich.de") !== -1 ) {
+	corsLink = fileURL.replace('https://fsd-cloud48.zam.kfa-juelich.de', 'zam-kfa-juelich').concat('/download');
+	
+    } else if (    fileURL.indexOf("https://weblicht.sfs.uni-tuebingen.de/nextcloud") !== -1 ) {
+	corsLink = fileURL.replace('https://weblicht.sfs.uni-tuebingen.de/nextcloud', 'weblicht-sfs-nextcloud').concat('/download');
+	
     } else {
 	corsLink = fileURL;
     }
 
-    console.log('util/rewriteURL at end', caller, fileURL);
+    console.log('util/rewriteURL at end', caller, fileURL, href);
     
     if ( (caller == "B2DROP") || (fileURL.indexOf('hdl.handle.net') > 1) || (caller == "PASTE") ) {
-	return window.location.origin.concat('/clrs/download?input='+encodeURI(fileURL)) // the reverse proxy to the python script
+	return href.concat('download?input='+encodeURI(fileURL)) // the reverse proxy to the python script
     } else {
-	return window.location.origin.concat('/clrs').concat(corsLink);                  // the reverse proxy to the clouds
+	return href.concat(corsLink);                            // the reverse proxy to the clouds
     }
 }
 

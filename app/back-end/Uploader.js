@@ -3,14 +3,14 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Uploader.js
-// Time-stamp: <2018-06-08 11:24:54 (zinn)>
+// Time-stamp: <2018-06-19 15:56:13 (zinn)>
 // -------------------------------------------
 
 /* Uploads a file to the MPG server in Garching, or to a Nextcloud space.
  
    - Note that, for instance, the URL
 
-     //weblicht.sfs.uni-tuebingen.de/clrs/storage/
+     /storage/
 
     is reverse-proxied to
 
@@ -21,7 +21,8 @@
 */
 
 import Request from 'superagent';
-import {fileStorage,
+import {appContextPath,
+	fileStorage,
 	fileStorageServerMPG_localhost,
 	fileStorageServerMPG_remote,
 	fileStorageServerNEXTCLOUD_localhost,
@@ -34,6 +35,7 @@ export default class Uploader {
     constructor( { file, type = 'file' } = {})  {
 	this.file = file;
 	this.protocol = window.location.protocol;
+	this.windowAppContextPath = window.APP_CONTEXT_PATH;
 
 	let today = new Date();
 	if (type == 'file') {
@@ -44,10 +46,14 @@ export default class Uploader {
 	    this.filenameWithDate = today.getTime() + ".txt";
 	}
 
+	console.log('new appContextPath', this.windowAppContextPath);
 	// default upload (overwritten during sharing, todo: clean-up)
 	this.remoteFilename = fileStorageServerMPG_remote + this.filenameWithDate;
-        this.remoteFilenameReverseProxy = fileStorageServerMPG_localhost + this.filenameWithDate;
-	
+        this.remoteFilenameReverseProxy = this.windowAppContextPath
+	    + fileStorageServerMPG_localhost
+	    + this.filenameWithDate;
+
+	// needs to be deprecated as MPG server is no longer used.
 	// the file server at the MPG seems to have problems with certain file types, so we change it here.
 	this.newFileType = this.file.type;
 	if ( (this.newFileType == "text/xml") ||
@@ -79,14 +85,14 @@ export default class Uploader {
     uploadFile_NC_B2DROP() {
 	let that = this;
 	let cloudPath;
-	
+
 	if (fileStorage === "NEXTCLOUD") {
-	    cloudPath = fileStorageServerNEXTCLOUD_localhost
+	    cloudPath = this.windowAppContextPath + fileStorageServerNEXTCLOUD_localhost
 	} else {
-	    cloudPath = fileStorageServerB2DROP_localhost
+	    cloudPath = this.windowAppContextPath + fileStorageServerB2DROP_localhost
 	}
 
-	console.log('Uploader/uploadFile_NC_B2DROP', cloudPath);
+	console.log('Uploader/uploadFile_NC_B2DROP cloudPath', cloudPath);
 	
 	return new Promise(function(resolve, reject) {
 	    // 1a. store in B2DROP 
