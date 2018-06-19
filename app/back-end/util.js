@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: util.js
-// Time-stamp: <2018-06-19 15:34:39 (zinn)>
+// Time-stamp: <2018-06-19 16:23:24 (zinn)>
 // -------------------------------------------
 
 export const inclToolsReqAuth = process.env.INCL_TOOLS_REQ_AUTH;
@@ -105,7 +105,8 @@ export function rewriteURL( caller, fileURL ) {
     }
 
     console.log('util/rewriteURL at end', caller, fileURL, href);
-    
+
+    // todo: harmonize this with the use of APP_CONTEXT_PATH in main App component.
     if ( (caller == "B2DROP") || (fileURL.indexOf('hdl.handle.net') > 1) || (caller == "PASTE") ) {
 	return href.concat('download?input='+encodeURI(fileURL)) // the reverse proxy to the python script
     } else {

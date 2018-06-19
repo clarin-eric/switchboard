@@ -99,7 +99,7 @@ class UserHelpText extends React.Component {
 	  If the tool suggested by the LRS has problems processing the resource of interest, please
 	  consider downloading the resource from the resource provider (an authentication may be
 	  required). Then save the resource to your harddrive, and use
-	  the <a href="http://weblicht.sfs.uni-tuebingen.de/clrs">standalone version of the LRS. </a>
+	  the <a href="https://switchboard.clarin.eu">standalone version of the LRS. </a>
 	    Before uploading the resource, check whether the resource matches the mimetype you expect.
 	    
 	  <h3>Mind the gap (General Remarks)</h3>
