@@ -116,6 +116,7 @@ const common = {
 		// check whether we should allow manual text input
 		'ALLOW_TEXT_INPUT'   : JSON.stringify('yes'),
 		// check whether we allow pasting of URLs
+
 		'ALLOW_PASTE_URL'    : JSON.stringify('yes'),
 		// 'FILE_STORAGE'    : JSON.stringify('MPCDF'),
 		'FILE_STORAGE'       : JSON.stringify('NEXTCLOUD'),		
