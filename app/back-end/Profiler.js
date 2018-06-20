@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Profiler.js
-// Time-stamp: <2018-06-19 15:46:58 (zinn)>
+// Time-stamp: <2018-06-20 13:39:32 (zinn)>
 // -------------------------------------------
 
 import Request from 'superagent';
@@ -113,6 +113,7 @@ export default class Profiler {
     convertToPlainText() {
 	let file = this.resourceProps.file;
 	let protocol = this.protocol;
+	let that = this;
 	return new Promise(function(resolve, reject) {
 	    Request
 		.put(that.windowAppContextPath + '/tika')
