@@ -1,8 +1,5 @@
-
-
 const path = require('path');
 const HtmlwebpackPlugin = require('html-webpack-plugin');
-
 const merge = require('webpack-merge');
 
 const TARGET = process.env.npm_lifecycle_event;
@@ -12,33 +9,17 @@ const PATHS = {
   build: path.join(__dirname, 'build')
 };
 
-//var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-//var Visualizer = require('webpack-visualizer-plugin');
-
-var ManifestPlugin = require('webpack-manifest-plugin');
-
 process.env.BABEL_ENV = TARGET;
 process.traceDeprecation = true;
 
 const webpack = require('webpack');
 
 const common = {
-  // Entry accepts a path or an object of entries.
-  // The build chapter contains an example of the latter.
+    mode: 'production',
     entry: PATHS.app,
-
-    // Add resolve.extensions. '' is needed to allow imports
-    // without an extension. Note the .'s before extensions!!!
-    // The matching will fail without!
     resolve: {
 	extensions: ['.js', '.jsx'],
 	modules: ['node_modules']
-    },
-
-    node: {
-	fs: 'empty',
-	net: 'empty',
-	tls: 'empty'
     },
 
     output: {
@@ -46,7 +27,9 @@ const common = {
 	filename: 'bundle.js'
     },
 
+    // see https://webpack.js.org/configuration/devtool/
     devtool: 'inline-source-map',
+    
     module: {
 	rules: [
 	    
@@ -57,10 +40,8 @@ const common = {
 	    
 	    
 	    {
-		// Test expects a RegExp! Note the slashes!
 		test: /\.css$/,
 		loaders: ['style-loader', 'css-loader'],
-		// Include accepts either a path or an array of paths.
 		include: PATHS.app
 	    },
 	    
@@ -71,22 +52,29 @@ const common = {
 		include: PATHS.app.images
 	    },
 
-	    // {
-	    // 	test: /\.(htm|html)$/,
-	    // 	loader: 'file-loader?name=[name].[ext]',
-	    // 	include: PATHS.app.html
-	    // },
+	    {
+	    	test: /\.(htm|html)$/,
+	    	loader: 'file-loader?name=[name].[ext]',
+	    	include: PATHS.app.html
+	    },
+
+	    {
+		test: /\.js$/,
+		loader: 'babel-loader',
+		include: PATHS.app
+	    },
 	    
-	    // Set up jsx. This accepts js too thanks to RegExp
 	    {
 		test: /\.jsx?$/,
-		// Enable caching for improved performance during development
-		// It uses default OS directory by default. If you need something
-		// more custom, pass a path to it. I.e., babel?cacheDirectory=<path>
 		loader: 'babel-loader',
 		query:
 		{
-		    presets:['react', 'es2015', 'stage-0']
+		    // presets:['react', 'es2015', 'stage-0']
+		    "presets": ["@babel/preset-env",
+				"@babel/preset-react",
+				["@babel/preset-stage-0", { "decoratorsLegacy": true }],
+			//	"@babel/preset-stage-0"
+			       ]
 		},
 		include: PATHS.app
 	    }	    
@@ -95,11 +83,6 @@ const common = {
 
     // see https://www.npmjs.com/package/html-webpack-plugin
     plugins: [
-	
-// new BundleAnalyzerPlugin(),
-// new Visualizer(),
-
-	new ManifestPlugin(),
 	new HtmlwebpackPlugin({
 	    inject: false,
 	    template: require('html-webpack-template'),
@@ -112,42 +95,33 @@ const common = {
 	new webpack.DefinePlugin({
 	    'process.env': {
                 'NODE_ENV'           : JSON.stringify('production'),
+
+		// all include tools that require authentication
 		'INCL_TOOLS_REQ_AUTH': JSON.stringify('yes'),
+		
 		// check whether we should allow manual text input
 		'ALLOW_TEXT_INPUT'   : JSON.stringify('yes'),
+		
 		// check whether we allow pasting of URLs
-
 		'ALLOW_PASTE_URL'    : JSON.stringify('yes'),
-		// 'FILE_STORAGE'    : JSON.stringify('MPCDF'),
-		'FILE_STORAGE'       : JSON.stringify('NEXTCLOUD'),		
-		//'FILE_STORAGE'     : JSON.stringify('B2DROP'),
+		
+		// file storage provider (alt: MPCDF || B2DROP)
+		'FILE_STORAGE'       : JSON.stringify('NEXTCLOUD'),
+
+		// credentials for B2DROP/NEXTCLOUD (alt: 'claus.zinn@uni-tuebingen.de':'sPL-Fh2-7SS-hCJ')
 		'B2DROP_USER'        : JSON.stringify('switchboard'),
 		'B2DROP_PASS'        : JSON.stringify('clarin-plus'),
-		//'B2DROP_USER'      : JSON.stringify('claus.zinn@uni-tuebingen.de'),
-		//'B2DROP_PASS'      : JSON.stringify('sPL-Fh2-7SS-hCJ'),
-		'VERSION'            : JSON.stringify('v1.1.5-dev/docker (Jun 19, 2018)'),
-		'CONTACT'            : JSON.stringify('switchboard@clarin.eu'),
-		
-		// We need to cater for the circumstance that the switchboard is invoked (indirectly) from
-		// switchboard.clarin.eu or (directly) via weblicht.sfs.uni-tuebingen.de/clrs.
-		// 
-		// Deprecated.
-		// This is now taken care of by componentDidMount function in the main App component.
-		
-		'APP_CONTEXT_PATH'   : JSON.stringify('/clrs/')
+
+		// version as displayed on the main page
+		'VERSION'            : JSON.stringify('v1.1.5-dev/docker (Jun 20, 2018)'),
+
+		// contact as displayed of the main page
+		'CONTACT'            : JSON.stringify('switchboard@clarin.eu')
 	    }
 	}),
-
-        new webpack.optimize.OccurrenceOrderPlugin(),
-        // new webpack.optimize.UglifyJsPlugin({
-        //     compressor: {
-        //         warnings: false
-        //     }
-        // })
     ]
 };
 
-// Default configuration
 if(TARGET === 'start' || !TARGET) {
 
     module.exports = merge(common, {
