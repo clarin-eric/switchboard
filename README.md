@@ -9,16 +9,24 @@ can then ask the switchboard to display all tools capable of processing the reso
 Clicking on a tool icon opens the tool in a new tab. All relevant information (link to the
 resource, language code, mimetype etc.) is encoded in the URL used to invoke the tool.
 
-For more information, please contact claus.zinn@uni-tuebingen.de
+For more information, please see the publications below, or contact claus.zinn@uni-tuebingen.de 
 
 # Website
 
 The switchboard is currently being served at:
 
-```http://weblicht.sfs.uni-tuebingen.de/clrs/#/ ```
+```https://weblicht.sfs.uni-tuebingen.de/clrs/#/ ```
+
+Its official site at:
+
+```https://switchboard.clarin.eu ```
+
+is also active.
+
+
 
 # Status
-The software is currently being developed and actively maintaited. A v1.0.0 release was published on Aug 11, 2017.
+The software is currently being developed and actively maintained. A v1.0.0 release was published on Aug 11, 2017.
 
 # Publications
 
