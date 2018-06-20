@@ -132,7 +132,7 @@ ENV UWSGI_INI /app/uwsgi.ini
 
 # for the python3 script to download file specified in ?query string
 RUN pip3 install requests
-COPY docker/app /app
+COPY app/python /app
 WORKDIR /app
 
 
