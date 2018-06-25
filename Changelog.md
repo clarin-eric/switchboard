@@ -1,6 +1,19 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.1.6] - 2018-06-25
+
+### Changed
+	- part bug-fixing, part enhancement: a resource pasted as shared link into the middle box of the LRS
+	is now uploaded/copied to the switchboard's file storage server. Tools connected to the switchboard
+	will fetch it from there. This also addresses CORS-related issues as it extends shared link from
+	stemming from dropbox's or eudat's cloud storage to arbitrary locations. The also addresses
+	issue https://github.com/clarin-eric/LRSwitchboard/issues/28.
+	- main.py has been relocated, see https://github.com/clarin-eric/LRSwitchboard/issues/27.
+	- main.py has been extended to cope with non-textual files.
+	- application context path has been introduced; nginx configuration has been simplified.
+	- update to latest stable version of node (v8.11.3); and webpack 4, and updated relevant packages
+
 ## [1.1.5] - 2018-06-07
 ### Added
 	- Added NLP-HUB/D4Science for multiple languages (NER)

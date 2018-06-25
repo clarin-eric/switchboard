@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: util.js
-// Time-stamp: <2018-06-20 08:47:31 (zinn)>
+// Time-stamp: <2018-06-25 12:33:40 (zinn)>
 // -------------------------------------------
 
 export const inclToolsReqAuth = process.env.INCL_TOOLS_REQ_AUTH;
@@ -53,7 +53,6 @@ export function unfoldHandle( handle ) {
 */
 
 export function fileExtensionChooser (mimetype) {
-    console.log('util/fileExtensionChooser', mimetype);
     var extension = "txt";
     switch (mimetype) {
     case "application/pdf":
@@ -74,6 +73,9 @@ export function fileExtensionChooser (mimetype) {
     default:
 	extension = "txt";
     }
+
+    console.log('util/fileExtensionChooser', mimetype, extension);
+    
     return extension;
 }
 

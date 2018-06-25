@@ -151,23 +151,37 @@ export default class DropArea extends React.Component {
         // );
     }
 
-    downloadAndProcessFile( link ) {
+    /* 
+       Todo: For the time being, the PASTE facility is advertised for Dropbox/B2DROP users where
+       we rewrite the URL and then use nginx reverse proxying to tackle CORS-related issues.
+
+       When users paste arbitrary links, (or any other link is not reverse-proxied), the tools
+       that download the URL from there face the CORS issue.
+
+       That means: the switchboard should upload each file to its own nextcloud space, and this space is hosted
+       where the switchboard is hosted. So that all tools can download the resource from there without running 
+       into CORS.
+     */
+    downloadAndProcessSharedLink( link ) {
 	var corsLink = rewriteURL("PASTE", link);
+	console.log('downloadAndProcessSharedLink', corsLink);
 	let downloader = new Downloader( corsLink );
-	let promiseDownload = downloader.downloadFile();
+	//let promiseDownload = downloader.downloadFile();
+	let promiseDownload = downloader.downloadBlob();
 	let that = this;
 	this.setState( { loaded: false });
-	
 	promiseDownload.then(
 	    function(resolve) {
-		let file = new File([resolve.text], resolve.req.url, {type: resolve.type});
-		let profiler = new Profiler( file, "dnd", link ); //resolve.req.url
-		profiler.convertProcessFile();
+		console.log('DropArea.jsx/downloadAndProcessSharedLink succeeded', resolve, resolve.type);
+		let file = new File([resolve.body], resolve.req.url, {type: resolve.type});
+
+		that.uploadAndProcessFile( {currentFile: file, type: 'file'} );		
+		//let profiler = new Profiler( file, "dnd", link ); //resolve.req.url
+		//profiler.convertProcessFile();
 		that.setState( { loaded: true });
 	    },
 	    function(reject) {
-		console.log('DropArea.jsx/download failed', reject);
-		//alert('Error: unable to download/process file. Please check the shared link.');
+		console.log('DropArea.jsx/downloadAndProcessSharedLink failed', reject);
 		that.setState({showAlertURLFetchError: true} );		
 		that.setState( { loaded: true });
 	    });
@@ -237,7 +251,7 @@ export default class DropArea extends React.Component {
 	    // clear task-oriented view
 	    this.props.clearDropzoneFun();
 	    
-	    this.downloadAndProcessFile( link );	    
+	    this.downloadAndProcessSharedLink( link );	    
 	    this.setState({
 		files: link
 	    });

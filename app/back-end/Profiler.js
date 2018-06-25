@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Profiler.js
-// Time-stamp: <2018-06-20 13:39:32 (zinn)>
+// Time-stamp: <2018-06-20 23:49:24 (zinn)>
 // -------------------------------------------
 
 import Request from 'superagent';
@@ -118,13 +118,13 @@ export default class Profiler {
 	    Request
 		.put(that.windowAppContextPath + '/tika')
 		.send(file)	
-		.set('Accept', 'text/plain')	
+//		.set('Accept', 'text/plain')	
 		.end((err, res) => {
 		    if (err) {
 			reject(err);
 			alert('Warning: could not download content');
 		    } else {
-			//console.log('Profiler/getContent', res);
+			console.log('Profiler/getContent', res, file);
 			resolve(res);
 		    }
 		})
@@ -136,7 +136,7 @@ export default class Profiler {
 	let promiseConvert = that.convertToPlainText();
 	promiseConvert.then(
 	    function(resolve) {
-		//console.log('convertFileToPlainText/resolve', resolve);
+		console.log('convertFileToPlainText/resolve', resolve);
 	    },
 	    function(reject) {
 		console.log('convertFileToPlainText/reject', reject);
@@ -173,7 +173,7 @@ export default class Profiler {
 			    let promiseLanguage = that.identifyLanguageFromStream(resolve.text);
 			    promiseLanguage.then(
 				function(resolve) {
-				    //console.log('language identification from stream succeeded', resolve);
+				    console.log('language identification from stream succeeded', resolve);
 				},
 				function(reject) {
 				    console.log('Warning: language identification from stream failed', reject);

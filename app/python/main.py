@@ -1,10 +1,13 @@
+
 # C. Zinn
 # -------------------------------------------
-# Time-stamp: <2018-02-27 17:23:04 (zinn)>
+# Time-stamp: <2018-06-22 17:32:11 (zinn)>
 # -------------------------------------------
 # Python script to download resources (or to resolve handles)
 
-import requests                      
+import requests
+from io import BytesIO
+
 from cgi import parse_qs, escape                             
 
 def resolveHandle( handleURL ):
@@ -21,6 +24,8 @@ def resolveHandle( handleURL ):
     except requests.exceptions.TooManyRedirects:
         print("There were too many redirects.  I can't count that high.")
 
+def isTextFile( contentType ):
+    return ('text/' in contentType)
 
 # checks for ?input=<url>
 def application(environ, start_response):                         
@@ -30,12 +35,22 @@ def application(environ, start_response):
         if "hdl.handle.net" in input:
             resolve = resolveHandle(input)
             start_response('200 OK', [('Content-Type', 'text/plain')])
-            return [str.encode(resolve, 'utf-8')]            
+            return [str.encode(resolve, 'utf-8')]
         else:
-            res = requests.get(input)                                                 
-            # start_response('200 OK', [('Content-Type', res.headers['content-type'])])
-            start_response(str(res.status_code), [('Content-Type', res.headers['content-type'])])
-            return [str.encode(res.text, 'utf-8')]
+            res = requests.get(input)
+            if ( isTextFile( res.headers['content-type'] ) ):
+                start_response(str(res.status_code), [('Content-Type', res.headers['content-type'])])
+                return [str.encode(res.text, 'utf-8')]
+            else:
+                content = res.content
+                buffer = BytesIO()
+                buffer.write(content)
+                status  = str(res.status_code)
+                headers = [('Content-Type',   res.headers['content-type']),
+                           ('Content-Length', str(len(content)))]
+                start_response(status, headers)
+                return buffer.getvalue()
+                #return [content]
     else:
         start_response('200 OK', [('Content-Type', 'text/plain')])
         return [str.encode('Switchboard says: improper URL passed' , 'utf-8')]

@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Uploader.js
-// Time-stamp: <2018-06-19 15:56:13 (zinn)>
+// Time-stamp: <2018-06-25 12:33:23 (zinn)>
 // -------------------------------------------
 
 /* Uploads a file to the MPG server in Garching, or to a Nextcloud space.
@@ -27,6 +27,7 @@ import {appContextPath,
 	fileStorageServerMPG_remote,
 	fileStorageServerNEXTCLOUD_localhost,
 	fileStorageServerB2DROP_localhost,
+	fileExtensionChooser,
 	b2drop_user,
 	b2drop_pass} from './util';
 
@@ -38,10 +39,23 @@ export default class Uploader {
 	this.windowAppContextPath = window.APP_CONTEXT_PATH;
 
 	let today = new Date();
+
+	/* type = paste 
+
+	TODO: the link may or may not show the file extension properly, see e.g.
+	- https://weblicht.sfs.uni-tuebingen.de/nextcloud/s/rXaQg3seMTwbtEN/download
+	- https://office.clarin.eu/pp/D8S-2.2.pdf
+
+	*/
+
 	if (type == 'file') {
 	    // todo: some filenames may come without an extension
 	    let fileExtension = this.file.name.split('.').pop();
 	    this.filenameWithDate = today.getTime() + "." + fileExtension;
+
+	    // overwrite
+	    fileExtension = fileExtensionChooser(file.type);
+	    this.filenameWithDate = today.getTime() + "." + fileExtension;	    
 	} else {
 	    this.filenameWithDate = today.getTime() + ".txt";
 	}
@@ -50,8 +64,10 @@ export default class Uploader {
 	// default upload (overwritten during sharing, todo: clean-up)
 	this.remoteFilename = fileStorageServerMPG_remote + this.filenameWithDate;
         this.remoteFilenameReverseProxy = this.windowAppContextPath
-	    + fileStorageServerMPG_localhost
+	    + fileStorageServerMPG_localhost // TODO must go, deprecate MPG
 	    + this.filenameWithDate;
+
+	console.log('Uploader/constructor', this.filenameWithDate, this.remoteFilename, this.remoteFilenameReverseProxy, file, file.type);
 
 	// needs to be deprecated as MPG server is no longer used.
 	// the file server at the MPG seems to have problems with certain file types, so we change it here.
@@ -66,7 +82,7 @@ export default class Uploader {
     uploadFile() {
 	let that = this;
         return new Promise(function(resolve, reject) {
-	    // console.log('uploadFile', that.remoteFilenameReverseProxy);
+	    console.log('uploadFile', that.remoteFilenameReverseProxy);
 	    Request
 		.post(that.remoteFilenameReverseProxy)
 		.send(that.file)	
