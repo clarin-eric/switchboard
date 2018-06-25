@@ -113,7 +113,7 @@ const common = {
 		'B2DROP_PASS'        : JSON.stringify('clarin-plus'),
 
 		// version as displayed on the main page
-		'VERSION'            : JSON.stringify('v1.1.6-dev/docker (Jun 25, 2018)'),
+		'VERSION'            : JSON.stringify('v1.1.6-pro/docker (Jun 25, 2018)'),
 
 		// contact as displayed of the main page
 		'CONTACT'            : JSON.stringify('switchboard@clarin.eu')
