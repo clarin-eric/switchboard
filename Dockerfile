@@ -7,8 +7,9 @@ COPY . /tmp/lrs
 RUN apk update \
     && apk add --upgrade --no-cache nodejs \        
     && rm -rf /var/cache/apk/* \
+    && npm i npm@latest -g \
+    && npm ci -g \
     && (cd /tmp/lrs \
-    && npm install -g \
     && webpack \
     && cp -r build/* /srv/html/$CLRS_PATH \
     && mkdir -p /srv/uwsgi \
