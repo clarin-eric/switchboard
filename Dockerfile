@@ -8,6 +8,7 @@ RUN apk update \
     && apk add --upgrade --no-cache nodejs \        
     && rm -rf /var/cache/apk/* \
     && npm i npm@latest -g \
+    && npm i webpack -g \
     && (cd /tmp/lrs \
     && npm ci \
     && webpack \
