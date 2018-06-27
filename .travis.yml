@@ -1,7 +1,6 @@
 branches:
   only:
-  - master
-  - development
+  - CI
 sudo: required
 services:
   - docker
