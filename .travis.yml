@@ -1,0 +1,19 @@
+branches:
+  only:
+  - master
+  - development
+sudo: required
+services:
+  - docker
+before_install:
+  - docker build --tag clarin/LRSwitchboard .
+  - docker run -d clarin/LRSwitchboard bash
+  - docker cp clarin/LRSwitchboard:/tmp/lrs/build target/CLRSwitchboard/http
+  - docker cp clarin/LRSwitchboard:/tmp/lrs/app/python target/CLRSwitchboard/uwsgi
+env:
+  global:
+  - COMMIT_AUTHOR_EMAIL: "travis-bot@clarin.eu"
+notifications:
+  email:
+    on_success: change
+    on_failure: never
