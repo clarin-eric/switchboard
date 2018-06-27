@@ -2,8 +2,17 @@ FROM registry.gitlab.com/clarin-eric/docker-alpine-base:1.1.0
 
 MAINTAINER andre@clarin.eu
 
-# Build LRS files for wsgi and http servers
+COPY . /tmp/lrs
+
 RUN apk update \
-    && apk add --upgrade --no-cache nodejs \ 
-    && npm ci \
-    && webpack
+    && apk add --upgrade --no-cache nodejs \        
+    && rm -rf /var/cache/apk/* \
+    && (cd /tmp/lrs \
+    && npm install -g \
+    && webpack \
+    && cp -r build/* /srv/html/$CLRS_PATH \
+    && mkdir -p /srv/uwsgi \
+    && cp -r docker/app/main.py /srv/uwsgi/) \
+    && rm -rf /tmp/lrs \ 
+    && apk del nodejs
+
