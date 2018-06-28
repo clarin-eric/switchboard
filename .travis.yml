@@ -10,6 +10,15 @@ script:
 env:
   global:
   - COMMIT_AUTHOR_EMAIL: "travis-bot@clarin.eu"
+deploy:
+  api_key:
+    secure: "$DEPLOY_OAUTH_TOKEN"
+  file: "target/CLRSwitchboard-${TRAVIS_TAG}.tgz"
+  on:
+    tags: true
+  overwrite: true
+  provider: releases
+  skip_cleanup: true
 notifications:
   email:
     on_success: change
