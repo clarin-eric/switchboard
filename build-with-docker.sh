@@ -1,5 +1,5 @@
 #!/bin/sh
-
+set +x
 rm -rf build
 mkdir -p build/CLRSwitchboard
 

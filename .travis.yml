@@ -4,7 +4,7 @@ branches:
 sudo: required
 services:
   - docker
-script:
+before_install:
   - build-with-docker.sh
 env:
   global:
