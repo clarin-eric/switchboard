@@ -6,7 +6,6 @@ import AlertShibboleth from './AlertShibboleth.jsx';
 import AlertURLFetchError from './AlertURLFetchError.jsx';
 import AlertURLUploadError from './AlertURLUploadError.jsx';
 
-import Request from 'superagent';
 import {fileExtensionChooser, urlPath, fileStorage, processLanguage, unfoldHandle, rewriteURL} from '../back-end/util';
 import Downloader from '../back-end/Downloader';
 import Uploader from '../back-end/Uploader';
@@ -214,6 +213,31 @@ export default class UrlArea extends React.Component {
 
 	// process parameters
 	this.processParameters(caller, parameters);
+	console.log('UrlArea/componentDidMount');	
+    }
+
+    // can go (TODO)
+    componentWillReceiveProps(nextProps) {
+	console.log('UrlArea/componentWillReceiveProps', nextProps, window.APP_CONTEXT_PATH);
+	window.APP_CONTEXT_PATH = (function() {
+
+	    console.log('App/componentDidMount');
+            const links = Array.prototype.slice.call(
+                document.getElementsByTagName('link'), 0);
+            const favicon = links.find(e => e.rel == "shortcut icon");
+            if (!favicon) return "";
+            let href = favicon.href;
+            if (href.startsWith(window.origin)) {
+                href = href.substr(window.origin.length);
+            }
+            const components = href.split("/");
+            if (components.length >= 3) {
+		console.log('setting componentDidMount/APP_CONTEXT_PATH to /', components[1]);
+                return "/"+components[1];
+            }
+            return "";
+        })();
+	console.log('UrlArea/componentWillReceiveProps after', nextProps, window.APP_CONTEXT_PATH);
     }
 	
     render() {

@@ -97,24 +97,6 @@ export default class App extends React.Component {
 
     componentDidMount() {
 
-	window.APP_CONTEXT_PATH = (function() {
-
-            const links = Array.prototype.slice.call(
-                document.getElementsByTagName('link'), 0);
-            const favicon = links.find(e => e.rel == "shortcut icon");
-            if (!favicon) return "";
-            let href = favicon.href;
-            if (href.startsWith(window.origin)) {
-                href = href.substr(window.origin.length);
-            }
-            const components = href.split("/");
-            if (components.length >= 3) {
-		console.log('setting componentDidMount/APP_CONTEXT_PATH to /', components[1]);
-                return "/"+components[1];
-            }
-            return "";
-         })();
-
 	this.piwik.push(["setDomains", ["*.weblicht.sfs.uni-tuebingen.de/clrs","*.weblicht.sfs.uni-tuebingen.de/clrs"]]);
 	this.piwik.push(['trackPageView']);
 
@@ -160,6 +142,27 @@ export default class App extends React.Component {
     }
 
     render() {
+
+	window.APP_CONTEXT_PATH = (function() {
+
+	    console.log('App/componentDidMount');
+            const links = Array.prototype.slice.call(
+                document.getElementsByTagName('link'), 0);
+            const favicon = links.find(e => e.rel == "shortcut icon");
+            if (!favicon) return "";
+            let href = favicon.href;
+            if (href.startsWith(window.origin)) {
+                href = href.substr(window.origin.length);
+            }
+            const components = href.split("/");
+            if (components.length >= 3) {
+		console.log('setting componentDidMount/APP_CONTEXT_PATH to /', components[1]);
+                return "/"+components[1];
+            }
+            return "";
+         })();
+	
+	console.log('App/render', window);
 	var style = {
 	    display: 'none'
 	};

@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlwebpackPlugin = require('html-webpack-plugin');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 const merge = require('webpack-merge');
 
 const TARGET = process.env.npm_lifecycle_event;
@@ -16,6 +17,17 @@ const webpack = require('webpack');
 
 const common = {
     mode: 'production',
+    optimization: {
+	minimizer: [
+	    new UglifyJSPlugin({
+		uglifyOptions: {
+		    compress: {
+			drop_console: true,
+		    }
+		}
+	    })
+	]
+    },    
     entry: PATHS.app,
     resolve: {
 	extensions: ['.js', '.jsx'],
@@ -44,7 +56,6 @@ const common = {
 		loaders: ['style-loader', 'css-loader'],
 		include: PATHS.app
 	    },
-	    
 	    
 	    {
 		test: /\.(png|jpg)$/,
@@ -113,7 +124,7 @@ const common = {
 		'B2DROP_PASS'        : JSON.stringify('clarin-plus'),
 
 		// version as displayed on the main page
-		'VERSION'            : JSON.stringify('v1.1.6-pro/docker (Jun 25, 2018)'),
+		'VERSION'            : JSON.stringify('v1.1.6-pro/docker (Jun 28, 2018)'),
 
 		// contact as displayed of the main page
 		'CONTACT'            : JSON.stringify('switchboard@clarin.eu')

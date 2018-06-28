@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: ToolInvoker.js
-// Time-stamp: <2018-06-07 11:29:30 (zinn)>
+// Time-stamp: <2018-06-26 19:44:30 (zinn)>
 // -------------------------------------------
 
 import { map639_1_to_639_3, map639_3_to_639_1 } from './util';
@@ -49,7 +49,6 @@ function showWebServiceCallResult_iframe( outputFormat, result, charset, content
     
     var iframe = "<iframe width='100%' height='100%' src='" + contentString + "'></iframe>"
     var x = window.open();
-    console.log("after case", x);
     if (x === null) {
 	alert("Please allow your browser to open pop-up windows!");
     } else {
@@ -64,7 +63,7 @@ function showWebServiceCallResult_iframe( outputFormat, result, charset, content
 function showWebServiceCallResult_write( result ) {
     var x = window.open();
     if (x === null) {
-	console.log('in functon ToolInvoker/showWebServiceCallResult_write', x);
+	//console.log('in functon ToolInvoker/showWebServiceCallResult_write', x);
 	alert("Please allow your browser to open pop-up windows!");
     } else {
 	x.document.open();
@@ -211,7 +210,7 @@ export function gatherInvocationParameters( toolDescription, resourceDescription
     var rtnValue = { };
 
     if (typeof resourceDescription === undefined || resourceDescription === null || resourceDescription.length == 0) {
-	console.log('ToolInvoker/gatherInvocationParameters', false);
+//	console.log('ToolInvoker/gatherInvocationParameters', false);
 	return false;
     }
 
@@ -227,7 +226,7 @@ export function gatherInvocationParameters( toolDescription, resourceDescription
     var requestType      = toolDescription.requestType;
     var output           = toolDescription.output;
 
-    console.log('ToolInvoker/gatherInvocationParameters at start', toolDescription, resourceDescription, remoteFilename);
+//    console.log('ToolInvoker/gatherInvocationParameters at start', toolDescription, resourceDescription, remoteFilename);
     
     // Some tools in the registry require an alternative naming of mediatypes, see e.g.,
     // the CLARIN-DK tools. The registry slot for 'type' is a function that is being evaluated here.
@@ -361,7 +360,7 @@ export function gatherInvocationParameters( toolDescription, resourceDescription
 	    };
     }
 
-    console.log('ToolInvoker/gatherInvocationParameters', rtnValue, parameterForm);
+    //console.log('ToolInvoker/gatherInvocationParameters', rtnValue, parameterForm);
     // FormData cannot be logged easily, and the following does not work in Safari, only Chrome and Firefix
     /*
     for (var key of parameterForm.entries()) {

@@ -67,7 +67,7 @@ export default class Tool extends React.Component {
 	const ToolCard = (props) => {
             const fullURL = gatherInvocationParameters(props, resource);
 	    const authenticationNotRequired = (props.authentication == "no");
-	    console.log('Tool/ToolCard', props);
+//	    console.log('Tool/ToolCard', props);
 	    const outputFormats = (props.output === undefined) || ((props.output instanceof Array) && props.output.join(', ')) || props.output;
 
 	    if (fullURL)
