@@ -1,7 +1,7 @@
 #!/bin/sh
 
-rm -rf target
-mkdir -p target/CLRSwitchboard
+rm -rf build
+mkdir -p build/CLRSwitchboard
 
 docker build --no-cache --tag clarin/switchboard .
 
@@ -12,5 +12,5 @@ fi
 
 docker run --name alpinelrs-build clarin/switchboard
 
-docker cp alpinelrs-build:/tmp/lrs/build target/CLRSwitchboard/http
-cp -r app/python target/CLRSwitchboard/uwsgi
+docker cp alpinelrs-build:/tmp/lrs/build build/CLRSwitchboard/http
+cp -r app/python build/CLRSwitchboard/uwsgi
