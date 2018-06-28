@@ -1,6 +1,7 @@
 branches:
-  only:
-  - CI
+  except:
+  - master
+  - development
 sudo: required
 language: generic
 services:
