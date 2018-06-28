@@ -5,10 +5,7 @@ sudo: required
 services:
   - docker
 before_install:
-  - docker build --tag clarin/switchboard .
-  - docker run -d clarin/switchboard bash
-  - docker cp clarin/switchboard:/tmp/lrs/build target/CLRSwitchboard/http
-  - docker cp clarin/switchboard:/tmp/lrs/app/python target/CLRSwitchboard/uwsgi
+  - build-with-docker.sh
 env:
   global:
   - COMMIT_AUTHOR_EMAIL: "travis-bot@clarin.eu"
