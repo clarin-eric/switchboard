@@ -1,5 +1,5 @@
 #!/bin/sh
-set +x
+
 rm -rf build
 mkdir -p build/CLRSwitchboard
 
@@ -14,3 +14,5 @@ docker run --name alpinelrs-build clarin/switchboard
 
 docker cp alpinelrs-build:/tmp/lrs/build build/CLRSwitchboard/http
 cp -r app/python build/CLRSwitchboard/uwsgi
+
+tar cvf build/CLRSwitchboard build/CLRSwitchboard.tar.gz 

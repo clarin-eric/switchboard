@@ -4,17 +4,20 @@ branches:
   - development
 sudo: required
 language: generic
+addons:
+  - bsdtar
 services:
   - docker
 script:
   - sh -x ./build-with-docker.sh
+  - cp build/CLRSwitchboard.tar.gz build/CLRSwitchboard-${TRAVIS_TAG}.tgz
 env:
   global:
   - COMMIT_AUTHOR_EMAIL: "travis-bot@clarin.eu"
 deploy:
   api_key:
     secure: "$DEPLOY_OAUTH_TOKEN"
-  file: "target/CLRSwitchboard-${TRAVIS_TAG}.tgz"
+  file: "build/CLRSwitchboard-${TRAVIS_TAG}.tgz"
   on:
     tags: true
   overwrite: true
