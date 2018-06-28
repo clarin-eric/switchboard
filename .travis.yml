@@ -5,7 +5,7 @@ sudo: required
 services:
   - docker
 before_install:
-  - sh build-with-docker.sh
+  - sh -x ./build-with-docker.sh
 env:
   global:
   - COMMIT_AUTHOR_EMAIL: "travis-bot@clarin.eu"
