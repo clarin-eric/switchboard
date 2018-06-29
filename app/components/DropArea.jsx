@@ -12,7 +12,7 @@ import AlertURLUploadError from './AlertURLUploadError.jsx';
 import Profiler from '../back-end/Profiler';
 import Uploader from '../back-end/Uploader';
 import Downloader from '../back-end/Downloader';
-import {allowTextInput, allowPasteURL, fileStorage, rewriteURL} from '../back-end/util';
+import {allowTextInput, allowPasteURL, rewriteURL} from '../back-end/util';
 
 export default class DropArea extends React.Component {
     constructor(props) {
@@ -152,15 +152,16 @@ export default class DropArea extends React.Component {
     }
 
     /* 
-       Todo: For the time being, the PASTE facility is advertised for Dropbox/B2DROP users where
-       we rewrite the URL and then use nginx reverse proxying to tackle CORS-related issues.
+       Originally, the PASTE facility was advertised for Dropbox/B2DROP users (coming from known locations).
+       Here, URL was rewritten and reverse-proxyied by nginx to tackle CORS-related issues.
 
-       When users paste arbitrary links, (or any other link is not reverse-proxied), the tools
-       that download the URL from there face the CORS issue.
+       Now, users are allowed to paste arbitrary links. The switchboard uploads each file to its
+       storage space, which is hosted on the same domain than the switchboard. Hence, all tools
+       connected to the switchboard can download the resource from this location without running
+       into CORS issues. 
 
-       That means: the switchboard should upload each file to its own nextcloud space, and this space is hosted
-       where the switchboard is hosted. So that all tools can download the resource from there without running 
-       into CORS.
+       Note that the behaviour is extended to switchboard invocations from the VLO, VCR, FCS, B2DROP, D4SCIENCE.
+
      */
     downloadAndProcessSharedLink( link ) {
 	var corsLink = rewriteURL("PASTE", link);
@@ -176,8 +177,6 @@ export default class DropArea extends React.Component {
 		let file = new File([resolve.body], resolve.req.url, {type: resolve.type});
 
 		that.uploadAndProcessFile( {currentFile: file, type: 'file'} );		
-		//let profiler = new Profiler( file, "dnd", link ); //resolve.req.url
-		//profiler.convertProcessFile();
 		that.setState( { loaded: true });
 	    },
 	    function(reject) {
@@ -194,13 +193,7 @@ export default class DropArea extends React.Component {
 	let uploader = new Uploader( {file: currentFile, type: type} );
 
 	console.log('DropArea/uploadAndProcessFile', currentFile);
-	// use environment variable set in webpack config to decide which file storage server to use
-	let promiseUpload;
-	if (fileStorage === "MPCDF") {
-	    promiseUpload = uploader.uploadFile();
-	} else {
-	    promiseUpload = uploader.uploadFile_NC_B2DROP();
-	}
+	let promiseUpload = uploader.uploadFile();
 	
 	promiseUpload.then(
 	    function(resolve) {

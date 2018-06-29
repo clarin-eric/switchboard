@@ -101,14 +101,7 @@ export default class UrlArea extends React.Component {
 		    var downloadedFile = new File([resolve.text], newFileName, {type: resolve.type});
 		    console.log('UrlArea/fetchUploadAndProcessURL: downloadedFile', downloadedFile);
 		    let uploader = new Uploader( downloadedFile );
-		    // use environment variable set in webpack config to decide which file storage server to use
-		    let promiseUpload;
-		    if (fileStorage === "MPCDF") {
-			promiseUpload = uploader.uploadFile();
-		    } else {
-			promiseUpload = uploader.uploadFile_NC_B2DROP();
-		    }
-
+		    let promiseUpload = uploader.uploadFile();
 		    promiseUpload.then(
 			function(resolve) {
 			    let profiler = new Profiler( downloadedFile, "dnd", uploader.remoteFilename );
@@ -117,8 +110,7 @@ export default class UrlArea extends React.Component {
 			},
 			function(reject) {
 			    console.log('DropArea.jsx/upload failed', reject);
-			    // alert('Error: unable to upload file');
-			    that.setState({showAlertURLFetchError: true} );					    
+			    that.setState({showAlertURLFetchError: true} );
 			    that.setState( { loaded: true });		
 			});
 		}},
@@ -213,33 +205,9 @@ export default class UrlArea extends React.Component {
 
 	// process parameters
 	this.processParameters(caller, parameters);
-	console.log('UrlArea/componentDidMount');	
+	console.log('UrlArea/componentDidMount', caller, parameters);	
     }
 
-    // can go (TODO)
-    componentWillReceiveProps(nextProps) {
-	console.log('UrlArea/componentWillReceiveProps', nextProps, window.APP_CONTEXT_PATH);
-	window.APP_CONTEXT_PATH = (function() {
-
-	    console.log('App/componentDidMount');
-            const links = Array.prototype.slice.call(
-                document.getElementsByTagName('link'), 0);
-            const favicon = links.find(e => e.rel == "shortcut icon");
-            if (!favicon) return "";
-            let href = favicon.href;
-            if (href.startsWith(window.origin)) {
-                href = href.substr(window.origin.length);
-            }
-            const components = href.split("/");
-            if (components.length >= 3) {
-		console.log('setting componentDidMount/APP_CONTEXT_PATH to /', components[1]);
-                return "/"+components[1];
-            }
-            return "";
-        })();
-	console.log('UrlArea/componentWillReceiveProps after', nextProps, window.APP_CONTEXT_PATH);
-    }
-	
     render() {
 	const { isLoaded } = this.state;
 

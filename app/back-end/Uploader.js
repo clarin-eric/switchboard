@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Uploader.js
-// Time-stamp: <2018-06-25 12:33:23 (zinn)>
+// Time-stamp: <2018-06-28 14:02:20 (zinn)>
 // -------------------------------------------
 
 /* Uploads a file to the MPG server in Garching, or to a Nextcloud space.
@@ -80,6 +80,14 @@ export default class Uploader {
     }
 
     uploadFile() {
+	if (fileStorage === "MPCDF") {
+	    return uploader.uploadFile_MPCDF();
+	} else {
+	    return uploader.uploadFile_NC_B2DROP();
+	}
+    }
+
+    uploadFile_MPCDF() {
 	let that = this;
         return new Promise(function(resolve, reject) {
 	    console.log('uploadFile', that.remoteFilenameReverseProxy);
