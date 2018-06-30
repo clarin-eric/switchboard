@@ -5,7 +5,8 @@ All notable changes to this project will be documented in this file.
 ### Changed
 	- integrated UrlArea with DropArea (code refactoring)
 	- removed references to B2DROP as upload storage for the switchboard
-	- all files transferred to the switchboard are now uploaded to switchboard’s storage server (including those stemmi	ng from VLO/VCR/B2DROP invocations)
+	- all files transferred to the switchboard are now uploaded to switchboard’s storage server
+	(including those stemmi	ng from VLO/VCR/B2DROP invocations)
 	- mime type and language information from the VLO is now ignored (no cross-checking, for time being)
 	- added comment headers to all js/jsx files
 
