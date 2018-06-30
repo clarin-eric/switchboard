@@ -1,3 +1,11 @@
+// -------------------------------------------
+// The CLARIN Language Resource Switchboard
+// 2016-18 Claus Zinn, University of Tuebingen
+// 
+// File: DropArea.jsx
+// Time-stamp: <2018-06-29 20:23:23 (zinn)>
+// -------------------------------------------
+
 import React from 'react';
 import Loader from 'react-loader';
 import Dropzone from 'react-dropzone';
@@ -5,14 +13,14 @@ import ResourceActions from '../actions/ResourceActions';
 import TextareaAutosize from 'react-autosize-textarea';
 import AlertURLFetchError from './AlertURLFetchError.jsx';
 import AlertURLUploadError from './AlertURLUploadError.jsx';
+import AlertShibboleth from './AlertShibboleth.jsx';
 
-// import LinkArea from './LinkArea';
 
-// access to profiler
+import Resolver from '../back-end/Resolver';
 import Profiler from '../back-end/Profiler';
 import Uploader from '../back-end/Uploader';
 import Downloader from '../back-end/Downloader';
-import {allowTextInput, allowPasteURL, rewriteURL} from '../back-end/util';
+import {fileExtensionChooser, processLanguage, unfoldHandle} from '../back-end/util';
 
 export default class DropArea extends React.Component {
     constructor(props) {
@@ -22,10 +30,11 @@ export default class DropArea extends React.Component {
 	this.onDrop      = this.onDrop.bind(this);
 	
 	this.state = {
-	    loaded: true,	    
+	    isLoaded: true,	    
 	    files: [],
 	    textInputValue: "",
 	    url: '',
+	    showAlertShibboleth: false,	    
 	    showAlertURLFetchError: false,
 	    showAlertURLUploadError: false
 	};
@@ -36,8 +45,42 @@ export default class DropArea extends React.Component {
 
 	this.handleTextInputChange   = this.handleTextInputChange.bind(this);
 	this.handleTextInputSubmit   = this.handleTextInputSubmit.bind(this);
+
+	this.processParameters         = this.processParameters.bind(this);
     }
 
+    componentDidMount() {
+
+	// fetch all parameter from router
+	const parameters = this.props.match.params;
+
+	// get the caller, one of VLO, VCR, FCS, or B2DROP, or D4SCIENCE
+	const caller = this.props.caller;
+
+	// process parameters
+	this.processParameters(caller, parameters);
+    }
+
+    processParameters( caller, parameters ) {
+
+	console.log('DropArea/processParameters', caller, parameters);	
+
+	// when called from the VLO, these _might_ be set
+	const language = parameters.fileLanguage;
+	const mimeType = decodeURIComponent(parameters.fileMimetype);
+	
+	if ( (caller == "VCR")    || (caller == "FCS") || (caller == "VLO") || 
+	     (caller == "B2DROP") || (caller == "D4SCIENCE") ) {
+	    // remove prior resources
+	    ResourceActions.reset();
+
+	    // retrieve URL, and take care of 'hdl:' to be expanded 'hdl.handle.net'
+	    var fileURL = unfoldHandle( parameters.fileURL);
+	    var handleFound = fileURL.indexOf('hdl.handle.net');
+	    
+	    this.downloadAndProcessSharedLink( "VLO", fileURL);
+	}
+    }
     
     handleChange(event) {
 	//console.log('A change took place.', event.target.value);
@@ -163,32 +206,28 @@ export default class DropArea extends React.Component {
        Note that the behaviour is extended to switchboard invocations from the VLO, VCR, FCS, B2DROP, D4SCIENCE.
 
      */
-    downloadAndProcessSharedLink( link ) {
-	var corsLink = rewriteURL("PASTE", link);
-	console.log('downloadAndProcessSharedLink', corsLink);
-	let downloader = new Downloader( corsLink );
-	//let promiseDownload = downloader.downloadFile();
+    downloadAndProcessSharedLink( caller, link ) {
+	let downloader = new Downloader( link );
 	let promiseDownload = downloader.downloadBlob();
 	let that = this;
-	this.setState( { loaded: false });
+	this.setState( { isLoaded: false });
 	promiseDownload.then(
 	    function(resolve) {
-		console.log('DropArea.jsx/downloadAndProcessSharedLink succeeded', resolve, resolve.type);
+		console.log('DropArea.jsx/downloadAndProcessSharedLink succeeded', resolve);
 		let file = new File([resolve.body], resolve.req.url, {type: resolve.type});
-
 		that.uploadAndProcessFile( {currentFile: file, type: 'file'} );		
-		that.setState( { loaded: true });
+		that.setState( { isLoaded: true });
 	    },
 	    function(reject) {
 		console.log('DropArea.jsx/downloadAndProcessSharedLink failed', reject);
 		that.setState({showAlertURLFetchError: true} );		
-		that.setState( { loaded: true });
+		that.setState( { isLoaded: true });
 	    });
     }   
 
     uploadAndProcessFile( { currentFile, type = 'file' } = {} ) {
 
-	this.setState( { loaded: false });
+	this.setState( { isLoaded: false });
 	let that = this;
 	let uploader = new Uploader( {file: currentFile, type: type} );
 
@@ -199,13 +238,13 @@ export default class DropArea extends React.Component {
 	    function(resolve) {
 		let profiler = new Profiler( currentFile, "dnd", uploader.remoteFilename );
 		profiler.convertProcessFile();
-		that.setState( { loaded: true });
+		that.setState( { isLoaded: true });
 	    },
 	    function(reject) {
 		console.log('DropArea.jsx/upload failed', reject);
 		that.setState({showAlertURLUploadError: true} );				
 		// alert('Error: unable to upload file');
-		that.setState( { loaded: true });		
+		that.setState( { isLoaded: true });		
 	    });
     }   
     
@@ -244,7 +283,7 @@ export default class DropArea extends React.Component {
 	    // clear task-oriented view
 	    this.props.clearDropzoneFun();
 	    
-	    this.downloadAndProcessSharedLink( link );	    
+	    this.downloadAndProcessSharedLink( "PASTE", link );	    
 	    this.setState({
 		files: link
 	    });
@@ -257,7 +296,17 @@ export default class DropArea extends React.Component {
 
 
     render() {
-        var style1 = {
+
+	const { isLoaded } = this.state;		
+	const transferalInfoStyle = {
+	    fontSize: '0.5em',
+	    margin: 2,
+	    padding: 2	    
+	};
+		
+	const transferalInfo = `Resource transferal from ${this.props.caller}. Please check the information below, then press "Show Tools"`;
+	
+        var styleDropbox = {
             borderWidth: 2,
             borderColor: 'black',
             borderStyle: 'dashed',
@@ -271,82 +320,78 @@ export default class DropArea extends React.Component {
 	    display:'inline-block'
         };
 
-        var style2 = {
-            borderWidth: 2,
-            borderColor: 'black',
-            borderStyle: 'dashed',
-            borderRadius: 4,
-            margin: 10,
-            padding: 10,
-            width: 300,
-	    resize: 'none',
-	    transition: 'all 0.5s'
-	    // display:'inline-block',position:'relative', top:'65px'
-        };
-	
-        var activeStyle = {
+        var activeStyleDropbox = {
             borderStyle: 'solid',
             backgroundColor: '#eee',
             borderRadius: 8
         };
 
-	// production version
-	if ( (allowPasteURL === "yes") && (allowTextInput == "yes") ) {
+	// when invoked via VLO/B2DROP/D4Science/etc, we don't show the 3 areas for dropping resources
+	if ( this.props.caller == "standalone" ) {
 	    return (
 		<div>
-		<Loader loaded={this.state.loaded} />
+		<Loader loaded={this.state.isLoaded} />
 		<table>
-		  <tr>
-		    <td>
-		      <Dropzone onDrop={this.onDrop}
-				style={style1}
-				activeStyle={activeStyle} >
-			Drop your file, or click to select the file to upload.
-		      </Dropzone>
-		    </td>
-		    <td>
-                      <TextareaAutosize rows={5}
-					maxRows={5}
-					style={style1}
-					activeStyle={activeStyle}
-					onChange={this.handleChange}
-					onKeyPress={this.handleKeyPress}
-					placeholder='Paste your shared link from Dropbox and B2DROP. Or paste a persistent identifier.' />
-		    </td>
-		    <td>
-                      <form onSubmit={this.handleTextInputSubmit}>
+		  <tbody>
+		    <tr>
+		      <td>
+			<Dropzone onDrop={this.onDrop}
+				  style={styleDropbox}
+				  activeStyle={activeStyleDropbox} >
+			  Drop your file, or click to select the file to upload.
+			</Dropzone>
+		      </td>
+		      <td>
 			<TextareaAutosize rows={5}
 					  maxRows={5}
-					  style={style1}
-					  value={this.state.textInputValue}
-					  activeStyle={activeStyle}
-					  onChange={this.handleTextInputChange}
-					  placeholder='Enter your text here. For large input, create a file and drop it in the left-most area.' />		    
-			<input type="submit" value="Submit Text"/>
-		      </form>
-		    </td>
-		  </tr>
+					  style={styleDropbox}
+					  onChange={this.handleChange}
+					  onKeyPress={this.handleKeyPress}
+					  placeholder='Paste your shared link from Dropbox and B2DROP. Or paste a persistent identifier.' />
+		      </td>
+		      <td>
+			<form onSubmit={this.handleTextInputSubmit}>
+			  <TextareaAutosize rows={5}
+					    maxRows={5}
+					    style={styleDropbox}
+					    value={this.state.textInputValue}
+					    onChange={this.handleTextInputChange}
+					    placeholder='Enter your text here. For large input, create a file and drop it in the left-most area.' />		    
+			  <input type="submit" value="Submit Text"/>
+			</form>
+		      </td>
+		    </tr>
+		  </tbody>
   		</table>
 	        {this.state.showAlertURLFetchError ?
 		 <AlertURLFetchError />
 		 : null }
 	        {this.state.showAlertURLUploadError ?
 		 <AlertURLUploadError />
-		 : null }		
+		 : null }
 		{this.showFiles()}
 		</div>
 	    )	    
 	} else {
 	    return (
-		<div>
-		  <Loader loaded={this.state.loaded} />
-		  <Dropzone onDrop={this.onDrop}
-	                    style={style1}
-			    activeStyle={activeStyle} >
-		    Drop your files here, or click here to select files to upload.
-		  </Dropzone>
-	          {this.showFiles()}
-		</div>
+	       <Loader loaded={isLoaded}>
+		<h2>
+		   <div style={transferalInfoStyle} >
+		     {transferalInfo}
+                   </div>
+		</h2>
+		{this.state.showAlertShibboleth ?
+    		 <AlertShibboleth />
+		 : null }
+
+	        {this.state.showAlertURLFetchError ?
+		 <AlertURLFetchError />
+		 : null }
+
+	        {this.state.showAlertURLUploadError ?
+		 <AlertURLUploadError />
+		 : null }	    
+               </Loader>		    
 	    )
 	}
     }

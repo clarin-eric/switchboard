@@ -1,3 +1,11 @@
+// -------------------------------------------
+// The CLARIN Language Resource Switchboard
+// 2016-18 Claus Zinn, University of Tuebingen
+// 
+// File: Resource.jsx
+// Time-stamp: <2018-06-30 11:48:44 (zinn)>
+// -------------------------------------------
+
 import AltContainer from 'alt-container';
 import React from 'react';
 import Toggle   from 'react-toggle';
@@ -14,9 +22,10 @@ export default class Resource extends React.Component {
 	super(props);
 
 	const resource = props.resource;
+	console.log('Resource/constructor', resource);
 	this.handleToolsPerTaskChange = props.passChangeToParent;
 
-	this.generateFileName        = this.generateFileName.bind(this); 
+	this.hideName                = this.hideName.bind(this); 
 	this.showTools               = this.showTools.bind(this, resource);
 	this.openResource              = this.openResource.bind(this, resource);
 	this.handleWebServicesChange = this.handleChange.bind(this, 'includeWebServices')
@@ -71,14 +80,13 @@ export default class Resource extends React.Component {
     }
 
     openResource(resource) {
-	//        console.log('Resource/openResource', resource);
+	console.log('Resource/openResource', resource);
 	var win = window.open(resource.remoteFilename, '_blank');
 	win.focus();	
     }
 
-    generateFileName() {
-	let today = new Date();
-	return today.getTime() + ".txt";
+    hideName( fileName ) {
+	return fileName.replace('/download?input=', '');
     }
     
     render() {
@@ -101,7 +109,7 @@ export default class Resource extends React.Component {
 		<ul className="notes">
 		<li className="note" key="resourceName" >
 		  <div>
-   		    <span className="note">name: {resource.name || this.generateFileName()}</span>
+   		    <span className="note">name: {this.hideName( resource.name )}</span>
 		  </div>		
 		</li>
 		<li className="note" key="resourceSize" >

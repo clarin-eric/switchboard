@@ -1,3 +1,11 @@
+// -------------------------------------------
+// The CLARIN Language Resource Switchboard
+// 2016-18 Claus Zinn, University of Tuebingen
+// 
+// File: TaskOrientedView.jsx
+// Time-stamp: <2018-06-29 20:24:19 (zinn)>
+// -------------------------------------------
+
 import React from 'react';
 import Tool from './Tool.jsx';
 

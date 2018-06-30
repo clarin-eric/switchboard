@@ -1,3 +1,11 @@
+// -------------------------------------------
+// The CLARIN Language Resource Switchboard
+// 2016-18 Claus Zinn, University of Tuebingen
+// 
+// File: ResourceStore.js
+// Time-stamp: <2018-06-29 20:25:23 (zinn)>
+// -------------------------------------------
+
 import uuid from 'node-uuid';
 import assign from 'object-assign';
 import alt from '../libs/alt';

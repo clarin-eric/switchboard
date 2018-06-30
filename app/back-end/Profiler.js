@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Profiler.js
-// Time-stamp: <2018-06-20 23:49:24 (zinn)>
+// Time-stamp: <2018-06-29 14:37:38 (zinn)>
 // -------------------------------------------
 
 import Request from 'superagent';
@@ -35,6 +35,7 @@ export default class Profiler {
 
 	// create the resource in the store
 	this.resourceStateItem = ResourceActions.create( this.resourceProps );
+	console.log('Profiler/constructor', this.resourceProps);
     }
 
     // not called (info from browser and VLO is being trusted)

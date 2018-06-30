@@ -17,6 +17,7 @@ const webpack = require('webpack');
 
 const common = {
     mode: 'production',
+    //mode: 'development',    
     optimization: {
 	minimizer: [
 	    new UglifyJSPlugin({
@@ -105,26 +106,21 @@ const common = {
 
 	new webpack.DefinePlugin({
 	    'process.env': {
-                'NODE_ENV'           : JSON.stringify('production'),
+                //'NODE_ENV'           : JSON.stringify('development'),
+                'NODE_ENV'           : JSON.stringify('production'),		
 
-		// all include tools that require authentication
+		// include tools that require authentication
 		'INCL_TOOLS_REQ_AUTH': JSON.stringify('yes'),
 		
-		// check whether we should allow manual text input
-		'ALLOW_TEXT_INPUT'   : JSON.stringify('yes'),
-		
-		// check whether we allow pasting of URLs
-		'ALLOW_PASTE_URL'    : JSON.stringify('yes'),
-		
-		// file storage provider (alt: MPCDF || B2DROP)
+		// file storage provider (alt: MPCDF, deprecated )
 		'FILE_STORAGE'       : JSON.stringify('NEXTCLOUD'),
 
-		// credentials for B2DROP/NEXTCLOUD (alt: 'claus.zinn@uni-tuebingen.de':'sPL-Fh2-7SS-hCJ')
-		'B2DROP_USER'        : JSON.stringify('switchboard'),
-		'B2DROP_PASS'        : JSON.stringify('clarin-plus'),
+		// credentials for NEXTCLOUD (alt: 'claus.zinn@uni-tuebingen.de':'sPL-Fh2-7SS-hCJ')
+		'NEXTCLOUD_USER'     : JSON.stringify('switchboard'),
+		'NEXTCLOUD_PASS'     : JSON.stringify('clarin-plus'),
 
 		// version as displayed on the main page
-		'VERSION'            : JSON.stringify('v1.1.6-pro/docker (Jun 28, 2018)'),
+		'VERSION'            : JSON.stringify('v1.1.7-pro/docker (Jun 30, 2018)'),
 
 		// contact as displayed of the main page
 		'CONTACT'            : JSON.stringify('switchboard@clarin.eu')

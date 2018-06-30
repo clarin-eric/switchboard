@@ -3,16 +3,20 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Downloader.js
-// Time-stamp: <2018-06-22 16:33:57 (zinn)>
+// Time-stamp: <2018-06-29 15:22:08 (zinn)>
 // -------------------------------------------
 
 import Request from 'superagent';
 import binaryParser from 'superagent-binary-parser';
+import {rewriteURL} from './util';
 
 export default class Downloader {
 
     constructor( url ) {
-	this.url = url;
+
+	var corsLink = rewriteURL( url );
+	console.log('downloadAndProcessSharedLink', corsLink);
+	this.url = corsLink;
     }
 
     downloadFile() {
@@ -25,7 +29,6 @@ export default class Downloader {
 		    console.log('Downloader/downloadFile Error Case: ', that.url, err);
 		    reject(err);
 		} else {
-		    console.log('Downloader/downloadFile Success Case: ', that.url, res);
 		    resolve(res);
 		}
 	    })});
@@ -43,7 +46,6 @@ export default class Downloader {
 		    console.log('Downloader/downloadBlob Error Case: ', that.url, err);
 		    reject(err);
 		} else {
-		    console.log('Downloader/downloadBlob Success Case: ', that.url, res);
 		    resolve(res);
 		}
 	    })});
@@ -62,7 +64,6 @@ export default class Downloader {
 			console.log('Downloader/downloadFile Error Case: ', that.url, err);
 			reject(err);
 		    } else {
-			console.log('Downloader/downloadFile Success Case: ', that.url, res);
 			resolve(res)
 		    }})})
     };

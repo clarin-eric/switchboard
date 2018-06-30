@@ -1,6 +1,10 @@
-// -- C. Zinn, claus.zinn@uni-tuebingen.de
-// -- CLARIN-PLUS, Language Resources Switchboard
-// -- Spring 2016
+// -------------------------------------------
+// The CLARIN Language Resource Switchboard
+// 2016-18 Claus Zinn, University of Tuebingen
+// 
+// File: App.jsx
+// Time-stamp: <2018-06-29 20:23:02 (zinn)>
+// -------------------------------------------
 
 import AltContainer from 'alt-container';
 import React from 'react';
@@ -11,7 +15,6 @@ import PropTypes from 'prop-types';
 import Resources from './Resources.jsx';            // render all the resources
 import TaskOrientedView from './TaskOrientedView';  // component to render the task-oriented view
 import DropArea from './DropArea.jsx';              // drop & drag area for resources
-import UrlArea  from './UrlArea.jsx';               // all resource information given in parameters
 import Toggle   from 'react-toggle';                // toggle button for enables/disabling web services
 import UserHelp from './UserHelp.jsx';              // component displaying user help
 import DevHelp from './DevHelp.jsx';                // component displaying help targeted at developers
@@ -28,7 +31,7 @@ import ResourceStore from '../stores/ResourceStore';        // storing resources
 // Piwik support
 import PiwikReactRouter from 'piwik-react-router';
 
-// routing between DropArea and UrlArea
+// routing 
 import { HashRouter, Route, Switch } from 'react-router-dom';
 import { hashHistory } from 'react-router';
 
@@ -145,7 +148,6 @@ export default class App extends React.Component {
 
 	window.APP_CONTEXT_PATH = (function() {
 
-	    console.log('App/componentDidMount');
             const links = Array.prototype.slice.call(
                 document.getElementsByTagName('link'), 0);
             const favicon = links.find(e => e.rel == "shortcut icon");
@@ -156,7 +158,6 @@ export default class App extends React.Component {
             }
             const components = href.split("/");
             if (components.length >= 3) {
-		console.log('setting componentDidMount/APP_CONTEXT_PATH to /', components[1]);
                 return "/"+components[1];
             }
             return "";
@@ -218,26 +219,24 @@ export default class App extends React.Component {
   <HashRouter>
     <Switch>
       <Route exact path="/"
-	     render={(props) => <DropArea clearDropzoneFun={this.clearDropzone} {...props} /> } />
-      <Route exact path="/vlo/:fileURL/:fileMimetype/:fileLanguage"
-	     render={(props) => <UrlArea refreshFun={this.refresh} caller="VLO" {...props} /> } />
-	<Route exact path="/vlo/:fileURL/:fileMimetype"
-               render={(props) => <UrlArea refreshFun={this.refresh} caller="VLO" {...props} /> } />	    
-	  <Route path="/vcr/:fileURL"
-		 render={(props) => <UrlArea refreshFun={this.refresh} caller="VCR" {...props} /> } />
-	    <Route path="/fcs/:fileURL"
-   		   render={(props) => <UrlArea refreshFun={this.refresh} caller="FCS" {...props} /> } />	    
-	      <Route path="/b2drop/:fileURL"
-	             render={(props) => <UrlArea refreshFun={this.refresh} caller="B2DROP" {...props} /> } />
-		<Route path="/d4science/:fileURL"
-		       render={(props) => <UrlArea refreshFun={this.refresh} caller="D4SCIENCE" {...props} /> } />		
-		  <Route path="/vto/"
-			 render={(props) => <ShowAllTools showAllToolsFun={this.showAllTools} caller="CLARIN" {...props} /> } />
-		    <Route path="*"       component={AlertURLFetchError} />
+	    render={(props) => <DropArea clearDropzoneFun={this.clearDropzone} caller="standalone" {...props} /> } />
+	<Route exact path="/vlo/:fileURL/:fileMimetype/:fileLanguage"
+	       render={(props) => <DropArea clearDropzoneFun={this.clearDropzone} caller="VLO" {...props} /> } />
+	  <Route exact path="/vlo/:fileURL/:fileMimetype"
+		 render={(props) => <DropArea clearDropzoneFun={this.clearDropzone} caller="VLO" {...props} /> } />	    
+	    <Route path="/vcr/:fileURL"
+		   render={(props) => <DropArea clearDropzoneFun={this.clearDropzone} caller="VCR" {...props} /> } />
+	      <Route path="/fcs/:fileURL"
+   		     render={(props) => <DropArea clearDropzoneFun={this.clearDropzone} caller="FCS" {...props} /> } />	    
+		<Route path="/b2drop/:fileURL"
+	               render={(props) => <DropArea clearDropzoneFun={this.clearDropzone} caller="B2DROP" {...props} /> } />
+		  <Route path="/d4science/:fileURL"
+			 render={(props) => <DropArea clearDropzoneFun={this.clearDropzone} caller="D4SCIENCE" {...props} /> } />		
+		    <Route path="/vto/"
+			   render={(props) => <ShowAllTools showAllToolsFun={this.showAllTools} caller="CLARIN" {...props} /> } />
+		      <Route path="*" component={AlertURLFetchError} />
     </Switch>
   </HashRouter>
-
-
   
   <p />
   <hr />
