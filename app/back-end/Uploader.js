@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Uploader.js
-// Time-stamp: <2018-06-29 20:31:02 (zinn)>
+// Time-stamp: <2018-06-30 11:49:57 (zinn)>
 // -------------------------------------------
 
 /* Uploads a file to the MPG server in Garching, or to a Nextcloud instance.
@@ -42,9 +42,6 @@ export default class Uploader {
 	    this.filenameWithDate = today.getTime() + ".txt";
 	    if (file.name == undefined) {file.name = this.filenameWithDate}
 	}
-
-
-	console.log('Uploader/constructor', this.filenameWithDate, file);
     }
 
     uploadFile() {
@@ -91,7 +88,6 @@ export default class Uploader {
     uploadFile_NEXTCLOUD() {
 	let that = this;
 	let cloudPath = this.windowAppContextPath + fileStorageServerNEXTCLOUD_localhost
-	console.log('Uploader/uploadFile_NEXTCLOUD cloudPath', cloudPath);
 	
 	return new Promise(function(resolve, reject) {
 	    // 1a. store in NEXTCLOUD 
