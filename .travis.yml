@@ -1,7 +1,3 @@
-branches:
-  except:
-  - master
-  - development
 sudo: required
 language: generic
 addons:
