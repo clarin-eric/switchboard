@@ -15,4 +15,5 @@ docker run --name alpinelrs-build clarin/switchboard
 docker cp alpinelrs-build:/tmp/lrs/build build/CLRSwitchboard/http
 cp -r app/python build/CLRSwitchboard/uwsgi
 
-tar cvf build/CLRSwitchboard.tar.gz build/CLRSwitchboard
+cd build
+tar cvf CLRSwitchboard.tar.gz CLRSwitchboard
