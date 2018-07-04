@@ -3,14 +3,14 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: AlertShibboleth.jsx
-// Time-stamp: <2018-06-29 20:21:38 (zinn)>
+// Time-stamp: <2018-07-04 09:52:07 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
 import PropTypes from 'prop-types';
 import {ModalContainer, ModalDialog} from 'react-modal-dialog';
 
-export default class UserHelp extends React.Component {
+export default class AlertShibboleth extends React.Component {
   static propTypes = {
     className: PropTypes.string,
   }
@@ -26,13 +26,13 @@ export default class UserHelp extends React.Component {
   render() {
     return <a className={this.props.className} onClick={this.openModal}>
       {this.state.showModal ?
-        <AlertShibboleth onClose={this.closeModal}/>
+        <AlertShibbolethText onClose={this.closeModal}/>
       : null}
     </a>;
   }
 }
 
-class AlertShibboleth extends React.Component {
+class AlertShibbolethText extends React.Component {
   static propTypes = {
     onClose: PropTypes.func,
   }
