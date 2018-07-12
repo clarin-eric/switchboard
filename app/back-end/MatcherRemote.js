@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: MatcherRemote.js
-// Time-stamp: <2018-07-12 12:57:09 (zinn)>
+// Time-stamp: <2018-07-12 22:03:18 (zinn)>
 // -------------------------------------------
 
 import Request from 'superagent';
@@ -14,14 +14,17 @@ export default class MatcherRemote {
 
     constructor( includeWebServices ) {
 	this.includeWebServices = includeWebServices;
+	this.windowAppContextPath = window.APP_CONTEXT_PATH;
     }
 
     getAllTools() {
 	const includeWS = (this.includeWebServices ? "yes" : "no");
+	const that = this;
 	return new Promise(function(resolve, reject) {
 	    Request
-		.get(matcherURL+'/api/getAllTools?includeWS='+includeWS
-		     +'&sortTools=yes')
+		.get(that.windowAppContextPath+matcherURL
+		     + '/api/getAllTools?includeWS='+includeWS
+		     + '&sortTools=yes')
 		.set('Accept', 'application/json')
                 .end((err, res) => {
 		if (err) {
@@ -35,9 +38,11 @@ export default class MatcherRemote {
 
     getApplicableTools(mimetype, language) {
 	const includeWS = (this.includeWebServices ? "yes" : "no");
+	const that = this;	
 	return new Promise(function(resolve, reject) {
 	    Request
-		.get(matcherURL+'/api/getTools?includeWS='+includeWS
+		.get(that.windowAppContextPath+matcherURL
+		     + '/api/getTools?includeWS='+includeWS
 		     + '&language=' + language
 		     + '&mimetype=' + mimetype
 		     + '&sortTools=yes')
