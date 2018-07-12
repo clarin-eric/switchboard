@@ -1,0 +1,56 @@
+// -------------------------------------------
+// The CLARIN Language Resource Switchboard
+// 2016-18 Claus Zinn, University of Tuebingen
+// 
+// File: MatcherRemote.js
+// Time-stamp: <2018-07-12 12:57:09 (zinn)>
+// -------------------------------------------
+
+import Request from 'superagent';
+import binaryParser from 'superagent-binary-parser';
+import {matcherURL} from './util';
+
+export default class MatcherRemote {
+
+    constructor( includeWebServices ) {
+	this.includeWebServices = includeWebServices;
+    }
+
+    getAllTools() {
+	const includeWS = (this.includeWebServices ? "yes" : "no");
+	return new Promise(function(resolve, reject) {
+	    Request
+		.get(matcherURL+'/api/getAllTools?includeWS='+includeWS
+		     +'&sortTools=yes')
+		.set('Accept', 'application/json')
+                .end((err, res) => {
+		if (err) {
+		    console.log('MatcherRemote/getAllTools failed: ', err);
+		    reject(err);
+		} else {
+		    resolve(res.body);
+		}
+		})});
+    }
+
+    getApplicableTools(mimetype, language) {
+	const includeWS = (this.includeWebServices ? "yes" : "no");
+	return new Promise(function(resolve, reject) {
+	    Request
+		.get(matcherURL+'/api/getTools?includeWS='+includeWS
+		     + '&language=' + language
+		     + '&mimetype=' + mimetype
+		     + '&sortTools=yes')
+		.set('Accept', 'application/json')	    
+                .end((err, res) => {
+		if (err) {
+		    console.log('MatcherRemote/getApplicableTools failed: ', err);
+		    reject(err);
+		} else {
+		    resolve(res.body);
+		}
+		})});
+    }
+}
+
+

@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Resource.jsx
-// Time-stamp: <2018-06-30 11:48:44 (zinn)>
+// Time-stamp: <2018-07-11 22:17:09 (zinn)>
 // -------------------------------------------
 
 import AltContainer from 'alt-container';
@@ -14,7 +14,7 @@ import MimetypeMenu from './MimetypeMenu.jsx';
 import ResourceActions from '../actions/ResourceActions';        
 
 // access to matcher
-import Matcher from '../back-end/Matcher';
+import MatcherRemote from '../back-end/MatcherRemote';
 
 
 export default class Resource extends React.Component {
@@ -63,7 +63,7 @@ export default class Resource extends React.Component {
     
     showTools(resource) {
 
-	let includeWebServices = this.state.includeWebServices;
+	const includeWebServices = this.state.includeWebServices;
 	if (resource.language == null) {
 	    alert('CLRS: Please identify the language of the resource!');
 	    return;
@@ -74,9 +74,17 @@ export default class Resource extends React.Component {
 	    return;
 	}
 
-	let matcher = new Matcher();
-	let toolsPerTask = matcher.findApplicableTools( resource, includeWebServices );
-	this.handleToolsPerTaskChange( toolsPerTask );
+	const matcher = new MatcherRemote( includeWebServices );
+	const toolsPerTaskPromise = matcher.getApplicableTools( resource.mimetype, resource.language.threeLetterCode );
+	const that = this;
+	toolsPerTaskPromise.then(
+	    function(resolve) {
+		console.log('Resource.jsx/showTools succeeded', resolve);		
+		that.handleToolsPerTaskChange( resolve );
+	    },
+	    function(reject) {
+		console.log('Resource.jsx/showTools failed', reject);
+	    });	    
     }
 
     openResource(resource) {

@@ -3,9 +3,10 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Matcher.js
-// Time-stamp: <2018-06-18 21:04:03 (zinn)>
+// Time-stamp: <2018-07-12 12:56:16 (zinn)>
 // -------------------------------------------
-
+//
+// deprecated, now makes use of MatcherRemote
 import uuid from 'node-uuid';
 import Registry from './Registry.js';
 

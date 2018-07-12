@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: App.jsx
-// Time-stamp: <2018-06-29 20:23:02 (zinn)>
+// Time-stamp: <2018-07-11 22:17:24 (zinn)>
 // -------------------------------------------
 
 import AltContainer from 'alt-container';
@@ -36,7 +36,7 @@ import { HashRouter, Route, Switch } from 'react-router-dom';
 import { hashHistory } from 'react-router';
 
 // access to matcher
-import Matcher from '../back-end/Matcher';
+import MatcherRemote from '../back-end/MatcherRemote';
 
 import {lrsVersion, emailContactCommand} from './../back-end/util';
 
@@ -132,9 +132,18 @@ export default class App extends React.Component {
     showAllTools() {
         // clear resource (so that tools don't show URL)
         this.clearDropzone();
-	let matcher = new Matcher();
-	let toolsPerTask = matcher.allTools( this.state.includeWebServices );
-	this.setState( {toolsPerTask: toolsPerTask} );
+	const matcher = new MatcherRemote( this.state.includeWebServices );
+	const toolsPerTaskPromise = matcher.getAllTools();
+	const that = this;
+
+	toolsPerTaskPromise.then(
+	    function(resolve) {
+		console.log('App.jsx/showTools succeeded', resolve);		
+		that.setState( {toolsPerTask: resolve} );		
+	    },
+	    function(reject) {
+		console.log('App.jsx/showTools failed', reject);
+	    });	    	
     }
 
     clearDropzone() {
