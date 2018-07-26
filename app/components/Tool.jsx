@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Tool.jsx
-// Time-stamp: <2018-06-29 20:24:25 (zinn)>
+// Time-stamp: <2018-07-26 14:56:31 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -24,10 +24,10 @@ export default class Tool extends React.Component {
     // tool invocation informs Piwik
     invokeTool( URL ) {
 	if (URL.toolType == "webService") {
-	    _paq.push(["trackEvent", 'ToolInvocation', URL.url]);	
+	    _paq.push(["trackEvent", 'WebServiceInvocation', URL.url]);	
 	    invokeWebService(URL);
 	} else {
-	    _paq.push(["trackEvent", 'WebServiceInvocation', URL.url]); 
+	    _paq.push(["trackEvent", 'ToolInvocation', URL.url]); 
 	    invokeBrowserBasedTool( URL );
 	}
     }
