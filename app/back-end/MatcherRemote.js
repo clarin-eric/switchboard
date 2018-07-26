@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: MatcherRemote.js
-// Time-stamp: <2018-07-25 12:53:53 (zinn)>
+// Time-stamp: <2018-07-26 10:53:27 (zinn)>
 // -------------------------------------------
 
 import Request from 'superagent';
@@ -24,7 +24,7 @@ export default class MatcherRemote {
 	    Request
 		.get(that.windowAppContextPath+matcherURL
 		     + '/api/tools?includeWS='+includeWS
-		     + '&sortTools=yes')
+		     + '&sortBy=tasks')
 		.set('Accept', 'application/json')
                 .end((err, res) => {
 		if (err) {
@@ -45,7 +45,7 @@ export default class MatcherRemote {
 		     + '/api/tools?includeWS='+includeWS
 		     + '&language=' + language
 		     + '&mimetype=' + mimetype
-		     + '&sortTools=yes')
+		     + '&sortBy=tasks')
 		.set('Accept', 'application/json')	    
                 .end((err, res) => {
 		if (err) {
