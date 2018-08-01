@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: App.jsx
-// Time-stamp: <2018-07-11 22:17:24 (zinn)>
+// Time-stamp: <2018-07-26 15:11:53 (zinn)>
 // -------------------------------------------
 
 import AltContainer from 'alt-container';
@@ -100,7 +100,7 @@ export default class App extends React.Component {
 
     componentDidMount() {
 
-	this.piwik.push(["setDomains", ["*.weblicht.sfs.uni-tuebingen.de/clrs","*.weblicht.sfs.uni-tuebingen.de/clrs"]]);
+	this.piwik.push(["setDomains", ["*.weblicht.sfs.uni-tuebingen.de/clrs","*.weblicht.sfs.uni-tuebingen.de/clrs-dev", "switchboard.clarin.eu"]]);
 	this.piwik.push(['trackPageView']);
 
 	// CZ: check whether following is nececessary for cache busting (localStorage)
