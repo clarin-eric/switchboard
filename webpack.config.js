@@ -101,7 +101,7 @@ const common = {
 	    hash: true,
 	    title: 'CLARIN LRS',
 	    appMountId: 'app',
-	    favicon: 'app/images/favicon-cog.ico'
+	    favicon: 'app/images/favicon-cog-cblue.ico'
 	}),
 
 	new webpack.DefinePlugin({

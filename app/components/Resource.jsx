@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Resource.jsx
-// Time-stamp: <2018-06-30 11:48:44 (zinn)>
+// Time-stamp: <2018-09-20 17:00:58 (zinn)>
 // -------------------------------------------
 
 import AltContainer from 'alt-container';
@@ -114,7 +114,7 @@ export default class Resource extends React.Component {
 		</li>
 		<li className="note" key="resourceSize" >
 		  <div>
-		    <span className="note">size: {resource.size}</span>
+		    <span className="note">size: {resource.size} bytes</span>
 		  </div>				 
    		</li>
 		<li className="note" key="resourceMimetype" >
