@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: DevHelp.jsx
-// Time-stamp: <2018-06-29 20:23:15 (zinn)>
+// Time-stamp: <2018-09-20 20:38:19 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -26,7 +26,7 @@ export default class DevHelp extends React.Component {
   }
   render() {
     return <a className={this.props.className} onClick={this.openModal}>
-      Developer
+      For Developers
       {this.state.showModal ?
         <DevHelpText onClose={this.closeModal}/>
       : null}

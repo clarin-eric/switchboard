@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: App.jsx
-// Time-stamp: <2018-09-20 16:44:17 (zinn)>
+// Time-stamp: <2018-09-20 20:36:27 (zinn)>
 // -------------------------------------------
 
 import AltContainer from 'alt-container';
@@ -186,12 +186,6 @@ export default class App extends React.Component {
 	      <UserHelp className="header-link" />		 
             </li>
 	    <li>
-	      <DevHelp className="header-link" />
-	    </li>
-	    <li>
-	      <AboutHelp className="header-link" />
-	    </li>	       	    
-	    <li>
 	      <button className="clearDropzone" onClick={this.clearDropzone}>Clear Dropzone</button>
 	    </li>				
 	    <li>
@@ -203,13 +197,11 @@ export default class App extends React.Component {
 		onChange={this.handleWebServicesChange} />
 	    </li>
           </ul>
-	  <ul className="nav navbar-nav navbar-right" id="id723">
-            <li>
-              <a href="http://www.clarin.eu/" className="clarin-logo hidden-xs">
-		<span>CLARIN</span>
-	      </a>
-            </li>
-          </ul>
+	  <div className="col-sm-3 text-right">
+            <a href="http://www.clarin.eu/">
+	      <img src="clarin-logo-wide.png" width="119px" height="46px" background-position-x="15px" background-position-y="2px" />
+	    </a>
+	  </div>
         </div>
       </div>
     </div>
@@ -259,18 +251,29 @@ export default class App extends React.Component {
       <div className="row">
         <div className="col-sm-6 col-sm-push-3 col-xs-12">
           <div className="text-center">
+	    <div>
+  	      <DevHelp className="header-link" />
+	    </div>
             <span className="footer-fineprint">
               Service provided by <a href="https://www.clarin.eu">CLARIN</a>
             </span>
           </div>
         </div>
         <div className="col-sm-3 col-sm-pull-6 col-xs-12">
+    	  <AboutHelp className="header-link" />
           <div className="version-info text-center-xs">
             {lrsVersion}
           </div>
         </div>
         <div className="col-sm-3 text-right">
-		<a href={ emailContactCommand }>Contact</a>
+	  <a href={ emailContactCommand }>Contact</a>
+	  <div>
+	    <a href="https://support.clarin-d.de/mail/?lang=de&QueueID=19&ResponsibleID=15&OwnerID=15" target="_blank">
+	      <span>
+		<i class="fa fa-info fa-2x" aria-hidden="true"></i>Help Desk
+	      </span>
+	    </a>
+	  </div>
         </div>
       </div>
     </div>

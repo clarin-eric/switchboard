@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: AboutHelp.jsx
-// Time-stamp: <2018-06-29 20:21:25 (zinn)>
+// Time-stamp: <2018-09-20 19:20:59 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -119,7 +119,7 @@ class AboutHelpText extends React.Component {
           </div>
 
 	  <p>
-	    We value your feedback! For any questions or suggestions, please contact the <a href={ emailContactCommand }>Switchboard Team</a>. But please consult the user and developer help beforehand (see top navigation bar).
+	    We value your feedback! For any questions or suggestions, please contact the <a href={ emailContactCommand }>Switchboard Team</a>. But please consult the user help beforehand (see top navigation bar).
 	  </p>
         </ModalDialog>
 </ModalContainer>;
