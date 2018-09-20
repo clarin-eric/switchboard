@@ -99,9 +99,9 @@ const common = {
 	    inject: false,
 	    template: require('html-webpack-template'),
 	    hash: true,
-	    title: 'CLARIN LANGUAGE RESOURCE SWITCHBOARD',
+	    title: 'CLARIN LRS',
 	    appMountId: 'app',
-	    favicon: 'app/images/lrs.png'
+	    favicon: 'app/images/favicon-cog.ico'
 	}),
 
 	new webpack.DefinePlugin({

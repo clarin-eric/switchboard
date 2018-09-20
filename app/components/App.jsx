@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: App.jsx
-// Time-stamp: <2018-06-29 20:23:02 (zinn)>
+// Time-stamp: <2018-09-20 16:44:17 (zinn)>
 // -------------------------------------------
 
 import AltContainer from 'alt-container';
@@ -171,12 +171,12 @@ export default class App extends React.Component {
 	return (
 <div>
   <header id="header" role="banner">
-    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="./../images/favicon-cog.ico" />
     <div className="navbar-static-top  navbar-default navbar" role="navigation">
       <div className="container">
         <div className="navbar-header">
           <a className="navbar-brand" href="./" id="idce">
-            <span><i className="fa fa-cog fa-spin fa-1x fa-fw" aria-hidden="true"></i> Language Resource Switchboard</span>
+            <span><i className="fa fa-cog fa-1x" aria-hidden="true"></i> Language Resource Switchboard</span>
           </a>
         </div>
 	
