@@ -16,8 +16,8 @@ process.traceDeprecation = true;
 const webpack = require('webpack');
 
 const common = {
-    mode: 'production',
-    //mode: 'development',    
+    //mode: 'production', //omit console.log messages
+    mode: 'development',    
     optimization: {
 	minimizer: [
 	    new UglifyJSPlugin({

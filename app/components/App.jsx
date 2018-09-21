@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: App.jsx
-// Time-stamp: <2018-09-20 20:36:27 (zinn)>
+// Time-stamp: <2018-09-21 08:57:41 (zinn)>
 // -------------------------------------------
 
 import AltContainer from 'alt-container';
@@ -15,7 +15,6 @@ import PropTypes from 'prop-types';
 import Resources from './Resources.jsx';            // render all the resources
 import TaskOrientedView from './TaskOrientedView';  // component to render the task-oriented view
 import DropArea from './DropArea.jsx';              // drop & drag area for resources
-import Toggle   from 'react-toggle';                // toggle button for enables/disabling web services
 import UserHelp from './UserHelp.jsx';              // component displaying user help
 import DevHelp from './DevHelp.jsx';                // component displaying help targeted at developers
 import AboutHelp from './AboutHelp.jsx';            // displaying admin. information about the switchboard
@@ -120,13 +119,8 @@ export default class App extends React.Component {
     
     handleChange (key, event) {
 	this.setState({ [key]: event.target.checked }, function () {
-	    //console.log('The app state has changed...:', this.state.includeWebServices);
+	    console.log('The app state has changed...:', this.state.includeWebServices);
 	});
-	if (event.target.checked === true) {
-	    document.getElementById("showAllToolsButton").innerHTML = 'Show All Tools and Web Services';
-	} else {
-	    document.getElementById("showAllToolsButton").innerHTML = 'Show All Tools';	    
-	}
     }
 
     showAllTools() {
@@ -189,12 +183,7 @@ export default class App extends React.Component {
 	      <button className="clearDropzone" onClick={this.clearDropzone}>Clear Dropzone</button>
 	    </li>				
 	    <li>
-	      <button id="showAllToolsButton" className="alltools" onClick={this.showAllTools}>Show All Tools</button>
-	    </li>
-	    <li><p />
-	      <Toggle
-	        defaultChecked={false}
-		onChange={this.handleWebServicesChange} />
+	      <button id="showAllToolsButton" className="alltools" onClick={this.showAllTools}>Tool Inventory</button>
 	    </li>
           </ul>
 	  <div className="col-sm-3 text-right">
@@ -242,6 +231,7 @@ export default class App extends React.Component {
     <Resources passChangeToParent = { this.handleToolsPerTaskChange } />
   </AltContainer>
   <TaskOrientedView resource = { ResourceStore.getState().resources[0] || [] }
+		    passChangeToParent = { this.handleWebServicesChange }
             toolsPerTask = { this.state.toolsPerTask || {} }
 		/>
   <hr />
