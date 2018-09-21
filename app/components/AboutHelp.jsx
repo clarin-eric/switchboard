@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: AboutHelp.jsx
-// Time-stamp: <2018-09-21 09:18:45 (zinn)>
+// Time-stamp: <2018-09-21 09:48:55 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -40,11 +40,10 @@ class AboutHelpText extends React.Component {
   }
   render() {
     return <ModalContainer onClose={this.props.onClose}>
-        <ModalDialog onClose={this.props.onClose} className="aboutDialog" width={800} top={200}>
+          <ModalDialog onClose={this.props.onClose} className="aboutDialog" width={800} margin={50}>
           <div className="content" id="about">
 	  
             <h2>About</h2>
-	    <center><p><small><b><em>Leave Help with ESC</em></b></small></p></center>
             <p>
               The Language Resource Switchboard (LRS) is being developed 
               within the <a href="http://www.clarin.eu/">CLARIN-PLUS</a> project

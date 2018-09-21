@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: UserHelp.jsx
-// Time-stamp: <2018-09-21 09:24:23 (zinn)>
+// Time-stamp: <2018-09-21 09:48:57 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -40,9 +40,8 @@ class UserHelpText extends React.Component {
   }
   render() {
     return <ModalContainer onClose={this.props.onClose}>
-        <ModalDialog onClose={this.props.onClose} className="userHelpDialog"  width={800}>
+        <ModalDialog onClose={this.props.onClose} className="userHelpDialog"  width={800} margin={50}>
 	    <h2>How to use the Language Resource Switchboard</h2>
-	    <center><p><small><b><em>Leave Help with ESC</em></b></small></p></center>
 	  <p>Currently, there are two versions of the Language Resources Switchboard (LRS): the standalone version,
 	    where users can drag and drop their own resources from the file system into the LRS drop area, and the VLO version,
 	    where users can call the LRS for a selected resource from the Virtual Language Observatory. This

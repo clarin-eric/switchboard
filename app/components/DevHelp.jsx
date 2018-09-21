@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: DevHelp.jsx
-// Time-stamp: <2018-09-21 09:22:40 (zinn)>
+// Time-stamp: <2018-09-21 09:49:01 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -40,9 +40,8 @@ class DevHelpText extends React.Component {
   }
   render() {
     return <ModalContainer onClose={this.props.onClose}>
-        <ModalDialog onClose={this.props.onClose} className="devHelpDialog"  width={800}>
+        <ModalDialog onClose={this.props.onClose} className="devHelpDialog"  width={800} margin={50}>
 	    <h2>How to get your tool listed in the CLARIN LRS</h2>
-	    <center><p><small><b><em>Leave Help with ESC</em></b></small></p></center>
 	  <p>For the time being, two pieces of information about a resource are used to identify whether there is any tool
 	    that can process the resource:</p>
 	  <ul>
