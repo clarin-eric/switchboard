@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: UserHelp.jsx
-// Time-stamp: <2018-09-21 09:48:57 (zinn)>
+// Time-stamp: <2018-09-21 09:52:14 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -149,7 +149,7 @@ class UserHelpText extends React.Component {
 	      <p>	      
 		A: At the time of writing, the Stanford tools are not <em>directly</em> callable from the
 		switchboard. Remember, to connect a tool to the switchboard, the tool developers have to
-		perform some integration work (for details, see "Developer Help"). However, well-known tools work
+		perform some integration work (for details, see "For Developers"). However, well-known tools work
 		under the hood of WebLicht.  The WebLicht entry for Constituent Parsing, for example,  makes use
 		of the Stanford Tokenizer and the Charniak parser. Also note that the switchboard will
 		continue to integrate more tools <em>directly</em>into the switchboard. And we explicitly ask

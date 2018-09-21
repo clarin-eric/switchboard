@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: App.jsx
-// Time-stamp: <2018-09-21 08:57:41 (zinn)>
+// Time-stamp: <2018-09-21 10:38:07 (zinn)>
 // -------------------------------------------
 
 import AltContainer from 'alt-container';
@@ -120,6 +120,7 @@ export default class App extends React.Component {
     handleChange (key, event) {
 	this.setState({ [key]: event.target.checked }, function () {
 	    console.log('The app state has changed...:', this.state.includeWebServices);
+	    this.showAllTools();
 	});
     }
 
