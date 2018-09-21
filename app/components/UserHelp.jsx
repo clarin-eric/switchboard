@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: UserHelp.jsx
-// Time-stamp: <2018-06-29 20:24:34 (zinn)>
+// Time-stamp: <2018-09-21 09:24:23 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -38,22 +38,9 @@ class UserHelpText extends React.Component {
   static propTypes = {
     onClose: PropTypes.func,
   }
-  state = {
-    showSecondModal: false
-  }
-  openModal = () => {
-    this.setState({showSecondModal: true});
-  }
-  closeModal = () => {
-    this.setState({showSecondModal: false});
-  }
   render() {
     return <ModalContainer onClose={this.props.onClose}>
         <ModalDialog onClose={this.props.onClose} className="userHelpDialog"  width={800}>
-          {this.state.showSecondModal ?
-            <SecondModal onClose={this.closeModal}/>
-          : null}
-
 	    <h2>How to use the Language Resource Switchboard</h2>
 	    <center><p><small><b><em>Leave Help with ESC</em></b></small></p></center>
 	  <p>Currently, there are two versions of the Language Resources Switchboard (LRS): the standalone version,
@@ -189,16 +176,3 @@ class UserHelpText extends React.Component {
   }
 }
 
-class SecondModal extends React.Component {
-  static propTypes = {
-    onClose: PropTypes.func,
-  }
-  render() {
-    return <ModalContainer onClose={this.props.onClose}>
-      <ModalDialog onClose={this.props.onClose} width={350} className="userHelpDialog">
-        <h1>Second Dialog</h1>
-        <p>When you hit esc, only this one will close</p>
-      </ModalDialog>
-    </ModalContainer>;
-  }
-}
