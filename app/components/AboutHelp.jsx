@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: AboutHelp.jsx
-// Time-stamp: <2018-09-20 19:20:59 (zinn)>
+// Time-stamp: <2018-09-21 09:18:45 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -40,7 +40,7 @@ class AboutHelpText extends React.Component {
   }
   render() {
     return <ModalContainer onClose={this.props.onClose}>
-        <ModalDialog onClose={this.props.onClose} className="devHelpDialog" width={800} top={100}>
+        <ModalDialog onClose={this.props.onClose} className="aboutDialog" width={800} top={200}>
           <div className="content" id="about">
 	  
             <h2>About</h2>
@@ -55,8 +55,8 @@ class AboutHelpText extends React.Component {
             
             <h3>Documentation</h3>
             <ul>
-	      <li>Please consult "Help" (for users) and "Developer" in the LRS Navigation bar.</li>
-              <li>Tool Metadata, see "Developer"</li>
+	      <li>Users, please consult "Help" navigation bar.</li>
+	      <li>Developers, please consult "For Developers" in the footer of the page.</li>	      
               <li>Frequently Asked Questions, please ask questions now, so we can add them to the FAQ!</li>
             </ul>
 	    
