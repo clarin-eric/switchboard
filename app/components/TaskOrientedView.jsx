@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: TaskOrientedView.jsx
-// Time-stamp: <2018-09-21 09:07:53 (zinn)>
+// Time-stamp: <2018-09-24 12:32:24 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -30,15 +30,21 @@ export default class TaskOrientedView extends React.Component {
     render() {
 	const toolsPerTask = this.props.toolsPerTask;
 	const resource = this.props.resource;
+	console.log('TaskOrientedView/render', toolsPerTask);
 	return (
-	    <div className="task-oriented-view-container">
-	      <h2 id="toolHeading"> Tools </h2>
-	      <h5 className="text-center">(ordered by task)</h5>
-	      <h5 className="text-center">
-		<Toggle
-	          defaultChecked={false}
-		  onChange={this.handleChange} />
-	      </h5>
+		<div className="task-oriented-view-container">
+		{ Object.keys(toolsPerTask).length ?
+		  <div>
+		    <h2 id="toolHeading"> Tools </h2>
+		    <h5 className="text-left">(ordered by task)</h5>
+		    <h5 className="text-left">
+		      <Toggle
+			defaultChecked={false}
+			onChange={this.handleChange} />
+		    </h5>
+		  </div>
+		  : null }
+		
 		{ Object.keys(toolsPerTask).map((task) =>
 	      <h3 className="taskHead" key={task}>{task}
 		<hr />

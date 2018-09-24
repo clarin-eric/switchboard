@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: App.jsx
-// Time-stamp: <2018-09-21 10:38:07 (zinn)>
+// Time-stamp: <2018-09-24 10:42:31 (zinn)>
 // -------------------------------------------
 
 import AltContainer from 'alt-container';
@@ -120,7 +120,7 @@ export default class App extends React.Component {
     handleChange (key, event) {
 	this.setState({ [key]: event.target.checked }, function () {
 	    console.log('The app state has changed...:', this.state.includeWebServices);
-	    this.showAllTools();
+	    //this.showAllTools();
 	});
     }
 
@@ -184,7 +184,7 @@ export default class App extends React.Component {
 	      <button className="clearDropzone" onClick={this.clearDropzone}>Clear Dropzone</button>
 	    </li>				
 	    <li>
-	      <button id="showAllToolsButton" className="alltools" onClick={this.showAllTools}>Tool Inventory</button>
+	      <button id="showAllToolsButton" className="clearDropzone" onClick={this.showAllTools}>Tool Inventory</button>
 	    </li>
           </ul>
 	  <div className="col-sm-3 text-right">
@@ -229,7 +229,7 @@ export default class App extends React.Component {
                    inject={{
 		       resources: () => ResourceStore.getState().resources || []
 		   }} >
-    <Resources passChangeToParent = { this.handleToolsPerTaskChange } />
+    <Resources passChangeToParent = { this.handleToolsPerTaskChange }  includeWebServices = { this.state.includeWebServices }/>
   </AltContainer>
   <TaskOrientedView resource = { ResourceStore.getState().resources[0] || [] }
 		    passChangeToParent = { this.handleWebServicesChange }

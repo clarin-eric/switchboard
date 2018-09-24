@@ -397,7 +397,8 @@ h4 .small, h5 .small, h6 .small, .h1 .small, .h2 .small, .h3 .small, .h4 .small,
 
 h1, .h1, h2, .h2, h3, .h3 {
     margin-top: 20px;
-    margin-bottom: 10px
+    margin-bottom: 10px;
+    margin-left: 20px;
 }
 
 h1 small, .h1 small, h2 small, .h2 small, h3 small, .h3 small, h1 .small,
@@ -420,7 +421,7 @@ h1, .h1 {
 }
 
 h2, .h2 {
-    font-size: 30px
+    font-size: 30px;
 }
 
 h3, .h3 {
@@ -466,7 +467,8 @@ mark, .mark {
 }
 
 .text-left {
-    text-align: left
+    text-align: left;
+    margin-left: 20px;
 }
 
 .text-right {
@@ -3733,7 +3735,8 @@ select[multiple].input-group-sm > .input-group-addon, select[multiple].input-gro
 }
 
 .navbar-nav {
-    margin: 7.5px -15px
+    margin: 7.5px -15px;
+    cursor: default;	     
 }
 
 .navbar-nav > li > a {

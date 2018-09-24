@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: DropArea.jsx
-// Time-stamp: <2018-06-29 20:23:23 (zinn)>
+// Time-stamp: <2018-09-24 11:22:10 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -329,9 +329,10 @@ export default class DropArea extends React.Component {
 	// when invoked via VLO/B2DROP/D4Science/etc, we don't show the 3 areas for dropping resources
 	if ( this.props.caller == "standalone" ) {
 	    return (
-		<div>
+	      <div>
+   	        <h2 id="dropAreaHeading">Provision of Input</h2>		    
 		<Loader loaded={this.state.isLoaded} />
-		<table>
+		<table className="dropAreaTable">
 		  <tbody>
 		    <tr>
 		      <td>
