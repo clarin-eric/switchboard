@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: App.jsx
-// Time-stamp: <2018-09-24 10:42:31 (zinn)>
+// Time-stamp: <2018-09-24 16:11:29 (zinn)>
 // -------------------------------------------
 
 import AltContainer from 'alt-container';
@@ -78,7 +78,9 @@ export default class App extends React.Component {
 	
 	this.state = {
 	    includeWebServices: false,
+	    showToolInventory: false,
 	    toolsPerTask : {}
+	    
 	};
 
 	this.piwik = PiwikReactRouter({
@@ -120,16 +122,21 @@ export default class App extends React.Component {
     handleChange (key, event) {
 	this.setState({ [key]: event.target.checked }, function () {
 	    console.log('The app state has changed...:', this.state.includeWebServices);
-	    //this.showAllTools();
+
+	    if (this.state.showToolInventory) {
+		this.showAllTools();
+	    }
 	});
     }
 
     showAllTools() {
         // clear resource (so that tools don't show URL)
-        this.clearDropzone();
-	let matcher = new Matcher();
-	let toolsPerTask = matcher.allTools( this.state.includeWebServices );
-	this.setState( {toolsPerTask: toolsPerTask} );
+	this.setState({ showToolInventory: true }, function () {
+            this.clearDropzone();
+	    let matcher = new Matcher();
+	    let toolsPerTask = matcher.allTools( this.state.includeWebServices );
+	    this.setState( {toolsPerTask: toolsPerTask} );
+	});
     }
 
     clearDropzone() {
@@ -233,7 +240,7 @@ export default class App extends React.Component {
   </AltContainer>
   <TaskOrientedView resource = { ResourceStore.getState().resources[0] || [] }
 		    passChangeToParent = { this.handleWebServicesChange }
-            toolsPerTask = { this.state.toolsPerTask || {} }
+                    toolsPerTask = { this.state.toolsPerTask || {} }
 		/>
   <hr />
 

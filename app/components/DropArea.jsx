@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: DropArea.jsx
-// Time-stamp: <2018-09-24 11:22:10 (zinn)>
+// Time-stamp: <2018-09-24 20:52:57 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -330,7 +330,7 @@ export default class DropArea extends React.Component {
 	if ( this.props.caller == "standalone" ) {
 	    return (
 	      <div>
-   	        <h2 id="dropAreaHeading">Provision of Input</h2>		    
+   	        <h3 id="dropAreaHeading">Provision of Input</h3>		    
 		<Loader loaded={this.state.isLoaded} />
 		<table className="dropAreaTable">
 		  <tbody>

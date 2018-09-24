@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: TaskOrientedView.jsx
-// Time-stamp: <2018-09-24 12:32:24 (zinn)>
+// Time-stamp: <2018-09-24 20:52:30 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -35,7 +35,7 @@ export default class TaskOrientedView extends React.Component {
 		<div className="task-oriented-view-container">
 		{ Object.keys(toolsPerTask).length ?
 		  <div>
-		    <h2 id="toolHeading"> Tools </h2>
+		    <h3 id="toolHeading"> Tools </h3>
 		    <h5 className="text-left">(ordered by task)</h5>
 		    <h5 className="text-left">
 		      <Toggle
