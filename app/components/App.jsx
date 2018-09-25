@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: App.jsx
-// Time-stamp: <2018-07-26 15:11:53 (zinn)>
+// Time-stamp: <2018-09-25 21:54:56 (zinn)>
 // -------------------------------------------
 
 import AltContainer from 'alt-container';
@@ -15,7 +15,6 @@ import PropTypes from 'prop-types';
 import Resources from './Resources.jsx';            // render all the resources
 import TaskOrientedView from './TaskOrientedView';  // component to render the task-oriented view
 import DropArea from './DropArea.jsx';              // drop & drag area for resources
-import Toggle   from 'react-toggle';                // toggle button for enables/disabling web services
 import UserHelp from './UserHelp.jsx';              // component displaying user help
 import DevHelp from './DevHelp.jsx';                // component displaying help targeted at developers
 import AboutHelp from './AboutHelp.jsx';            // displaying admin. information about the switchboard
@@ -79,7 +78,9 @@ export default class App extends React.Component {
 	
 	this.state = {
 	    includeWebServices: false,
+	    showToolInventory: false,
 	    toolsPerTask : {}
+	    
 	};
 
 	this.piwik = PiwikReactRouter({
@@ -120,16 +121,16 @@ export default class App extends React.Component {
     
     handleChange (key, event) {
 	this.setState({ [key]: event.target.checked }, function () {
-	    //console.log('The app state has changed...:', this.state.includeWebServices);
+	    console.log('The app state has changed...:', this.state.includeWebServices);
+
+	    if (this.state.showToolInventory) {
+		this.showAllTools();
+	    }
 	});
-	if (event.target.checked === true) {
-	    document.getElementById("showAllToolsButton").innerHTML = 'Show All Tools and Web Services';
-	} else {
-	    document.getElementById("showAllToolsButton").innerHTML = 'Show All Tools';	    
-	}
     }
 
     showAllTools() {
+
         // clear resource (so that tools don't show URL)
         this.clearDropzone();
 	const matcher = new MatcherRemote( this.state.includeWebServices );
@@ -180,12 +181,12 @@ export default class App extends React.Component {
 	return (
 <div>
   <header id="header" role="banner">
-    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="./../images/favicon-cog.ico" />
     <div className="navbar-static-top  navbar-default navbar" role="navigation">
       <div className="container">
         <div className="navbar-header">
           <a className="navbar-brand" href="./" id="idce">
-            <span><i className="fa fa-cog fa-spin fa-1x fa-fw" aria-hidden="true"></i> Language Resource Switchboard</span>
+            <span><i className="fa fa-cog fa-1x" aria-hidden="true"></i> Language Resource Switchboard</span>
           </a>
         </div>
 	
@@ -195,30 +196,17 @@ export default class App extends React.Component {
 	      <UserHelp className="header-link" />		 
             </li>
 	    <li>
-	      <DevHelp className="header-link" />
-	    </li>
-	    <li>
-	      <AboutHelp className="header-link" />
-	    </li>	       	    
-	    <li>
 	      <button className="clearDropzone" onClick={this.clearDropzone}>Clear Dropzone</button>
 	    </li>				
 	    <li>
-	      <button id="showAllToolsButton" className="alltools" onClick={this.showAllTools}>Show All Tools</button>
-	    </li>
-	    <li><p />
-	      <Toggle
-	        defaultChecked={false}
-		onChange={this.handleWebServicesChange} />
+	      <button id="showAllToolsButton" className="clearDropzone" onClick={this.showAllTools}>Tool Inventory</button>
 	    </li>
           </ul>
-	  <ul className="nav navbar-nav navbar-right" id="id723">
-            <li>
-              <a href="http://www.clarin.eu/" className="clarin-logo hidden-xs">
-		<span>CLARIN</span>
-	      </a>
-            </li>
-          </ul>
+	  <div className="col-sm-3 text-right">
+            <a href="http://www.clarin.eu/">
+	      <img src="clarin-logo-wide.png" width="119px" height="46px" background-position-x="15px" background-position-y="2px" />
+	    </a>
+	  </div>
         </div>
       </div>
     </div>
@@ -256,10 +244,16 @@ export default class App extends React.Component {
                    inject={{
 		       resources: () => ResourceStore.getState().resources || []
 		   }} >
-    <Resources passChangeToParent = { this.handleToolsPerTaskChange } />
+    <Resources passChangeToParent = { this.handleToolsPerTaskChange }  includeWebServices = { this.state.includeWebServices }/>
   </AltContainer>
+
+  <p />
+  <hr />
+  <p />
+		
   <TaskOrientedView resource = { ResourceStore.getState().resources[0] || [] }
-            toolsPerTask = { this.state.toolsPerTask || {} }
+		    passChangeToParent = { this.handleWebServicesChange }
+                    toolsPerTask = { this.state.toolsPerTask || {} }
 		/>
   <hr />
 
@@ -268,18 +262,29 @@ export default class App extends React.Component {
       <div className="row">
         <div className="col-sm-6 col-sm-push-3 col-xs-12">
           <div className="text-center">
+	    <div>
+  	      <DevHelp className="header-link" />
+	    </div>
             <span className="footer-fineprint">
               Service provided by <a href="https://www.clarin.eu">CLARIN</a>
             </span>
           </div>
         </div>
         <div className="col-sm-3 col-sm-pull-6 col-xs-12">
+    	  <AboutHelp className="header-link" />
           <div className="version-info text-center-xs">
             {lrsVersion}
           </div>
         </div>
         <div className="col-sm-3 text-right">
-		<a href={ emailContactCommand }>Contact</a>
+	  <a href={ emailContactCommand }>Contact</a>
+	  <div>
+	    <a href="https://support.clarin-d.de/mail/?lang=de&QueueID=19&ResponsibleID=15&OwnerID=15" target="_blank">
+	      <span>
+		<i class="fa fa-info fa-2x" aria-hidden="true"></i>Help Desk
+	      </span>
+	    </a>
+	  </div>
         </div>
       </div>
     </div>

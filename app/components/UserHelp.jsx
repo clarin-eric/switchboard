@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: UserHelp.jsx
-// Time-stamp: <2018-06-29 20:24:34 (zinn)>
+// Time-stamp: <2018-09-21 09:52:14 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -38,24 +38,10 @@ class UserHelpText extends React.Component {
   static propTypes = {
     onClose: PropTypes.func,
   }
-  state = {
-    showSecondModal: false
-  }
-  openModal = () => {
-    this.setState({showSecondModal: true});
-  }
-  closeModal = () => {
-    this.setState({showSecondModal: false});
-  }
   render() {
     return <ModalContainer onClose={this.props.onClose}>
-        <ModalDialog onClose={this.props.onClose} className="userHelpDialog"  width={800}>
-          {this.state.showSecondModal ?
-            <SecondModal onClose={this.closeModal}/>
-          : null}
-
+        <ModalDialog onClose={this.props.onClose} className="userHelpDialog"  width={800} margin={50}>
 	    <h2>How to use the Language Resource Switchboard</h2>
-	    <center><p><small><b><em>Leave Help with ESC</em></b></small></p></center>
 	  <p>Currently, there are two versions of the Language Resources Switchboard (LRS): the standalone version,
 	    where users can drag and drop their own resources from the file system into the LRS drop area, and the VLO version,
 	    where users can call the LRS for a selected resource from the Virtual Language Observatory. This
@@ -163,7 +149,7 @@ class UserHelpText extends React.Component {
 	      <p>	      
 		A: At the time of writing, the Stanford tools are not <em>directly</em> callable from the
 		switchboard. Remember, to connect a tool to the switchboard, the tool developers have to
-		perform some integration work (for details, see "Developer Help"). However, well-known tools work
+		perform some integration work (for details, see "For Developers"). However, well-known tools work
 		under the hood of WebLicht.  The WebLicht entry for Constituent Parsing, for example,  makes use
 		of the Stanford Tokenizer and the Charniak parser. Also note that the switchboard will
 		continue to integrate more tools <em>directly</em>into the switchboard. And we explicitly ask
@@ -189,16 +175,3 @@ class UserHelpText extends React.Component {
   }
 }
 
-class SecondModal extends React.Component {
-  static propTypes = {
-    onClose: PropTypes.func,
-  }
-  render() {
-    return <ModalContainer onClose={this.props.onClose}>
-      <ModalDialog onClose={this.props.onClose} width={350} className="userHelpDialog">
-        <h1>Second Dialog</h1>
-        <p>When you hit esc, only this one will close</p>
-      </ModalDialog>
-    </ModalContainer>;
-  }
-}

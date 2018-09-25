@@ -99,9 +99,9 @@ const common = {
 	    inject: false,
 	    template: require('html-webpack-template'),
 	    hash: true,
-	    title: 'CLARIN LANGUAGE RESOURCE SWITCHBOARD',
+	    title: 'CLARIN LRS',
 	    appMountId: 'app',
-	    favicon: 'app/images/lrs.png'
+	    favicon: 'app/images/favicon-cog-cblue.ico'
 	}),
 
 	new webpack.DefinePlugin({
@@ -120,7 +120,7 @@ const common = {
 		'NEXTCLOUD_PASS'     : JSON.stringify('clarin-plus'),
 
 		// version as displayed on the main page
-		'VERSION'            : JSON.stringify('v1.2.1-dev/docker (Jul 26, 2018)'),
+		'VERSION'            : JSON.stringify('v1.1.8-pro/docker (Sept 25, 2018)'),
 
 		// contact as displayed of the main page
 		'CONTACT'            : JSON.stringify('switchboard@clarin.eu')

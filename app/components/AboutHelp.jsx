@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: AboutHelp.jsx
-// Time-stamp: <2018-06-29 20:21:25 (zinn)>
+// Time-stamp: <2018-09-21 09:48:55 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -40,11 +40,10 @@ class AboutHelpText extends React.Component {
   }
   render() {
     return <ModalContainer onClose={this.props.onClose}>
-        <ModalDialog onClose={this.props.onClose} className="devHelpDialog" width={800} top={100}>
+          <ModalDialog onClose={this.props.onClose} className="aboutDialog" width={800} margin={50}>
           <div className="content" id="about">
 	  
             <h2>About</h2>
-	    <center><p><small><b><em>Leave Help with ESC</em></b></small></p></center>
             <p>
               The Language Resource Switchboard (LRS) is being developed 
               within the <a href="http://www.clarin.eu/">CLARIN-PLUS</a> project
@@ -55,8 +54,8 @@ class AboutHelpText extends React.Component {
             
             <h3>Documentation</h3>
             <ul>
-	      <li>Please consult "Help" (for users) and "Developer" in the LRS Navigation bar.</li>
-              <li>Tool Metadata, see "Developer"</li>
+	      <li>Users, please consult "Help" navigation bar.</li>
+	      <li>Developers, please consult "For Developers" in the footer of the page.</li>	      
               <li>Frequently Asked Questions, please ask questions now, so we can add them to the FAQ!</li>
             </ul>
 	    
@@ -119,7 +118,7 @@ class AboutHelpText extends React.Component {
           </div>
 
 	  <p>
-	    We value your feedback! For any questions or suggestions, please contact the <a href={ emailContactCommand }>Switchboard Team</a>. But please consult the user and developer help beforehand (see top navigation bar).
+	    We value your feedback! For any questions or suggestions, please contact the <a href={ emailContactCommand }>Switchboard Team</a>. But please consult the user help beforehand (see top navigation bar).
 	  </p>
         </ModalDialog>
 </ModalContainer>;
