@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: TaskOrientedView.jsx
-// Time-stamp: <2018-09-25 15:12:31 (zinn)>
+// Time-stamp: <2018-09-25 15:28:03 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -87,8 +87,8 @@ export default class TaskOrientedView extends React.Component {
 		      </td>
 		    </table>
 		  </div>
-		  : null }
-		
+		    : null }
+
 		{ Object.keys(toolsPerTask).map((task) =>
 	      <h3 className="taskHead" key={task}>{task}
 		<hr />
