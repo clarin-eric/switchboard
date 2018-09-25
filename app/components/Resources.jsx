@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Resources.jsx
-// Time-stamp: <2018-09-24 12:08:41 (zinn)>
+// Time-stamp: <2018-09-25 10:16:18 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -23,7 +23,7 @@ export default class Resources extends React.Component {
      		<div className="resources">
 
 
-	    { resources.length > 0 ? <h2 id="resourceHeading">Input Analysis</h2> : null }
+	    { resources.length > 0 ? <h3 id="resourceHeading">Input Analysis</h3> : null }
 	    
 	    {resources.map((resource) =>
 			     <Resource className="resource"

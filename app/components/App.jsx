@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: App.jsx
-// Time-stamp: <2018-09-24 16:11:29 (zinn)>
+// Time-stamp: <2018-09-25 12:09:09 (zinn)>
 // -------------------------------------------
 
 import AltContainer from 'alt-container';
@@ -130,8 +130,8 @@ export default class App extends React.Component {
     }
 
     showAllTools() {
-        // clear resource (so that tools don't show URL)
 	this.setState({ showToolInventory: true }, function () {
+            // clear resource (so that tools don't show URL)
             this.clearDropzone();
 	    let matcher = new Matcher();
 	    let toolsPerTask = matcher.allTools( this.state.includeWebServices );
@@ -238,6 +238,11 @@ export default class App extends React.Component {
 		   }} >
     <Resources passChangeToParent = { this.handleToolsPerTaskChange }  includeWebServices = { this.state.includeWebServices }/>
   </AltContainer>
+
+  <p />
+  <hr />
+  <p />
+		
   <TaskOrientedView resource = { ResourceStore.getState().resources[0] || [] }
 		    passChangeToParent = { this.handleWebServicesChange }
                     toolsPerTask = { this.state.toolsPerTask || {} }
