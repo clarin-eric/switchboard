@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Resource.jsx
-// Time-stamp: <2018-09-25 21:53:25 (zinn)>
+// Time-stamp: <2018-09-27 11:08:49 (zinn)>
 // -------------------------------------------
 
 import AltContainer from 'alt-container';
@@ -21,11 +21,9 @@ export default class Resource extends React.Component {
 	super(props);
 
 	const resource = props.resource;
-	this.handleToolsPerTaskChange = props.passChangeToParent;
-	this.includeWebServices       = props.includeWebServices;
-
+	
 	this.hideName                = this.hideName.bind(this); 
-	this.showTools               = this.showTools.bind(this, resource);
+	this.showTools               = this.showTools.bind(this, props, resource);
 	this.openResource              = this.openResource.bind(this, resource);
 	this.setLanguage             = this.setLanguage.bind(this, resource);
 	this.setMimetype             = this.setMimetype.bind(this, resource);
@@ -44,9 +42,11 @@ export default class Resource extends React.Component {
 	ResourceActions.update(resource);
     }
 
-    showTools(resource) {
+    showTools(props, resource) {
 
-	const includeWebServices = this.state.includeWebServices;
+	console.log('Resource/showTools', resource, props);
+
+	const handleToolsChange = props.passToolsChangeToParent;
 	if (resource.language == null) {
 	    alert('CLRS: Please identify the language of the resource!');
 	    return;
@@ -57,13 +57,13 @@ export default class Resource extends React.Component {
 	    return;
 	}
 
-	const matcher = new MatcherRemote( includeWebServices );
-	const toolsPerTaskPromise = matcher.getApplicableTools( resource.mimetype, resource.language.threeLetterCode );
+	const matcher = new MatcherRemote( true );
+	const toolsPromise = matcher.getApplicableTools( resource.mimetype, resource.language.threeLetterCode );
 	const that = this;
-	toolsPerTaskPromise.then(
+	toolsPromise.then(
 	    function(resolve) {
 		console.log('Resource.jsx/showTools succeeded', resolve);		
-		that.handleToolsPerTaskChange( resolve );
+		handleToolsChange( resolve );
 	    },
 	    function(reject) {
 		console.log('Resource.jsx/showTools failed', reject);
@@ -81,53 +81,70 @@ export default class Resource extends React.Component {
     }
     
     render() {
-        const {resource, passChangeToParent, ...props} = this.props;
+        const {resource, ...props} = this.props;
 	const thStyle = {textAlign:'center'};
 	const colStyle = {width:'300px'};
+	const tableStyle = {
+	    borderWidth: 2,
+            borderColor: 'black',
+            borderStyle: 'dashed',
+            borderRadius: 4,
+            margin: 10,
+            padding: 10,
+            width: 600,
+	    height:200,
+	    resize: 'none',
+	    transition: 'all 0.5s',
+	    display:'inline-block'
+	};
 	return (
-            <div {...props}>
-		
-  	      <table padding="1em 1em" border="1px solid #fff">
-		<col style={colStyle}/>
-		<col style={colStyle}/>
-		<col style={colStyle}/>						    
-		<tr>
-		  <th style={thStyle}>resource</th>
-		  <th style={thStyle}>mimetype</th>
-		  <th style={thStyle}>language</th>
-		</tr>
-		<tr className="notes">
-		  <td className="note">
-  	            <a className="resource-name" href='#' onClick={this.openResource} >
-   		      <span>
-			<b>name:</b> {this.hideName( resource.name )}
-		      </span>
-		    </a>		    
-		    <div>
-		      <b>size:</b> {resource.size} bytes
-		    </div>
-		  </td>
-
-		  <td className="note">
-    		    <MimetypeMenu defaultValue = { {label: resource.mimetype,
-		  		                    value: resource.mimetype
-						   }
-						 }
+            <div>
+  	      <table style={tableStyle} >
+		<colgroup>
+		  <col style={colStyle}/>
+		  <col style={colStyle}/>
+		  <col style={colStyle}/>
+		</colgroup>
+		<thead>
+		  <tr>
+		    <th style={thStyle}>resource</th>
+		    <th style={thStyle}>mimetype</th>
+		    <th style={thStyle}>language</th>
+		  </tr>
+		</thead>
+		<tbody>
+		  <tr className="notes">
+		    <td className="note">
+  	              <a className="resource-name" href='#' onClick={this.openResource} >
+   			<span>
+			  <b>name:</b> {this.hideName( resource.name )}
+			</span>
+		      </a>		    
+		      <div>
+			<b>size:</b> {resource.size} bytes
+		      </div>
+		    </td>
+		    
+		    <td className="note">
+    		      <MimetypeMenu defaultValue = { {label: resource.mimetype,
+		  		    value: resource.mimetype
+				    }
+				    }
 				    onMimetypeSelection={this.setMimetype} />	
-		  </td>
-		  <td className="note">
+		    </td>
+		    <td className="note">
 		      <LanguageMenu defaultValue = { { label: resource.language.language,
-						     value: resource.language.threeLetterCode
-						   }
-						 }
-				  onLanguageSelection={this.setLanguage} />	
-		  </td>		  
-                </tr>
+				    value: resource.language.threeLetterCode
+				    }
+				    }
+				    onLanguageSelection={this.setLanguage} />	
+		    </td>		  
+                  </tr>
+		</tbody>
 	      </table>
-
-	        <div className="resource-footer">
-  	          <button id="showToolsButton" onClick={this.showTools}>Show Tools</button>
-	        </div>
+	      <div className="resource-footer">
+  	        <button id="showToolsButton" onClick={this.showTools}>Show Tools</button>
+	      </div>
 	    </div>
 	);
     }

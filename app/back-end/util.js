@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: util.js
-// Time-stamp: <2018-07-12 21:53:26 (zinn)>
+// Time-stamp: <2018-09-26 14:00:07 (zinn)>
 // -------------------------------------------
 
 export const inclToolsReqAuth = process.env.INCL_TOOLS_REQ_AUTH;
@@ -23,6 +23,13 @@ export const fileStorageServerMPG_localhost       = '/storage/';
 export const fileStorageServerNEXTCLOUD_localhost = '/nextcloud/';
 
 export const matcherURL = '/matcher';
+
+export const TOOLTYPE_TOOLS_ONLY = 0;
+export const TOOLTYPE_TOOLS_PLUS_WEBSERVICES = 1;
+export const TOOLTYPE_WEBSERVICES_ONLY = 2;
+    
+export const TOOLORDER_BY_TOOL_TASK = 0;
+export const TOOLORDER_BY_TOOL_NAME = 1;
 
 export function unfoldHandle( handle ) {
     var hdlShortPrefix = "hdl:";

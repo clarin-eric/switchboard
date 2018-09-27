@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: App.jsx
-// Time-stamp: <2018-09-25 21:54:56 (zinn)>
+// Time-stamp: <2018-09-26 20:42:39 (zinn)>
 // -------------------------------------------
 
 import AltContainer from 'alt-container';
@@ -37,7 +37,9 @@ import { hashHistory } from 'react-router';
 // access to matcher
 import MatcherRemote from '../back-end/MatcherRemote';
 
-import {lrsVersion, emailContactCommand} from './../back-end/util';
+import {lrsVersion, emailContactCommand,
+	TOOLTYPE_TOOLS_ONLY, TOOLTYPE_TOOLS_PLUS_WEBSERVICES, TOOLTYPE_WEBSERVICES_ONLY,
+	TOOLORDER_BY_TOOL_TASK, TOOLORDER_BY_TOOL_NAME} from './../back-end/util';
 
 // logo images for task-oriented view 
 require('./../images/clarin-logo-wide.png');
@@ -66,21 +68,17 @@ require('./../images/metadataListing1.png');
 require('./../images/metadataListing2.png');
 
 export default class App extends React.Component {
-
+    
     constructor(props) {
 	super(props);
 
 	this.refresh = this.refresh.bind(this);
 	this.showAllTools = this.showAllTools.bind(this);
         this.clearDropzone = this.clearDropzone.bind(this);
-        this.handleWebServicesChange = this.handleChange.bind(this, 'includeWebServices');
-	this.handleToolsPerTaskChange = this.handleToolsPerTaskChange.bind(this);
-	
+	this.handleToolsChange = this.handleToolsChange.bind(this);
+
 	this.state = {
-	    includeWebServices: false,
-	    showToolInventory: false,
-	    toolsPerTask : {}
-	    
+	    tools : [],
 	};
 
 	this.piwik = PiwikReactRouter({
@@ -91,8 +89,8 @@ export default class App extends React.Component {
 
     }
 
-    handleToolsPerTaskChange( toolsPerTask ) {
-	this.setState( {toolsPerTask: toolsPerTask} );
+    handleToolsChange( tools ) {
+	this.setState( {tools: tools} );
     }
     
     refresh() {
@@ -119,13 +117,10 @@ export default class App extends React.Component {
 	this.refresh();
     }
     
-    handleChange (key, event) {
-	this.setState({ [key]: event.target.checked }, function () {
-	    console.log('The app state has changed...:', this.state.includeWebServices);
-
-	    if (this.state.showToolInventory) {
-		this.showAllTools();
-	    }
+    handleChange (key, selected) {
+	console.log('App/handleChange', selected);
+	this.setState({ [key]: selected }, function () {
+	    console.log('The app state has changed...:', key, selected, this.state);
 	});
     }
 
@@ -133,24 +128,24 @@ export default class App extends React.Component {
 
         // clear resource (so that tools don't show URL)
         this.clearDropzone();
-	const matcher = new MatcherRemote( this.state.includeWebServices );
-	const toolsPerTaskPromise = matcher.getAllTools();
+	const matcher = new MatcherRemote( true ); 
+	const toolsPromise = matcher.getAllTools();
 	const that = this;
 
-	toolsPerTaskPromise.then(
+	toolsPromise.then(
 	    function(resolve) {
-		console.log('App.jsx/showTools succeeded', resolve);		
-		that.setState( {toolsPerTask: resolve} );		
+		console.log('App.jsx/showAllTools succeeded', resolve);		
+		that.setState( {tools: resolve} );		
 	    },
 	    function(reject) {
-		console.log('App.jsx/showTools failed', reject);
+		console.log('App.jsx/showAllTools failed', reject);
 	    });	    	
     }
 
     clearDropzone() {
 	localStorage.removeItem("app"); // CZ: check whether necessary for cache busting
 
-	this.setState( {toolsPerTask: {} } );
+	this.setState( {tools: [] } );
 	ResourceActions.reset();
     }
 
@@ -204,7 +199,7 @@ export default class App extends React.Component {
           </ul>
 	  <div className="col-sm-3 text-right">
             <a href="http://www.clarin.eu/">
-	      <img src="clarin-logo-wide.png" width="119px" height="46px" background-position-x="15px" background-position-y="2px" />
+	      <img src="clarin-logo-wide.png" width="119px" height="46px" />
 	    </a>
 	  </div>
         </div>
@@ -244,7 +239,7 @@ export default class App extends React.Component {
                    inject={{
 		       resources: () => ResourceStore.getState().resources || []
 		   }} >
-    <Resources passChangeToParent = { this.handleToolsPerTaskChange }  includeWebServices = { this.state.includeWebServices }/>
+    <Resources passToolsChangeToParent = { this.handleToolsChange }  />
   </AltContainer>
 
   <p />
@@ -252,11 +247,12 @@ export default class App extends React.Component {
   <p />
 		
   <TaskOrientedView resource = { ResourceStore.getState().resources[0] || [] }
-		    passChangeToParent = { this.handleWebServicesChange }
-                    toolsPerTask = { this.state.toolsPerTask || {} }
+                      tools  = { this.state.tools || [] }
 		/>
+  <p />		
   <hr />
-
+  <p />
+		
   <footer id="footer">
     <div className="container">
       <div className="row">
@@ -281,7 +277,7 @@ export default class App extends React.Component {
 	  <div>
 	    <a href="https://support.clarin-d.de/mail/?lang=de&QueueID=19&ResponsibleID=15&OwnerID=15" target="_blank">
 	      <span>
-		<i class="fa fa-info fa-2x" aria-hidden="true"></i>Help Desk
+		<i className="fa fa-info fa-2x" aria-hidden="true"></i>Help Desk
 	      </span>
 	    </a>
 	  </div>

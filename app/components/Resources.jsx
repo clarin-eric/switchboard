@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Resources.jsx
-// Time-stamp: <2018-09-25 10:16:18 (zinn)>
+// Time-stamp: <2018-09-26 10:24:47 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -16,8 +16,7 @@ export default class Resources extends React.Component {
 
     render() {
 	const resources = this.props.resources;
-	const passChangeToParent = this.props.passChangeToParent;
-	const includeWebServices = this.props.includeWebServices;
+	const passToolsChangeToParent = this.props.passToolsChangeToParent;
 
 	return (
      		<div className="resources">
@@ -27,8 +26,7 @@ export default class Resources extends React.Component {
 	    
 	    {resources.map((resource) =>
 			     <Resource className="resource"
-			               passChangeToParent = {passChangeToParent}
-				       includeWebServices = {includeWebServices}
+			               passToolsChangeToParent = {passToolsChangeToParent}
              		               key  = {resource.id}
 			               resource = {resource}
 			           />

@@ -85,7 +85,6 @@ const common = {
 		    "presets": ["@babel/preset-env",
 				"@babel/preset-react",
 				["@babel/preset-stage-0", { "decoratorsLegacy": true }],
-			//	"@babel/preset-stage-0"
 			       ]
 		},
 		include: PATHS.app
@@ -120,7 +119,7 @@ const common = {
 		'NEXTCLOUD_PASS'     : JSON.stringify('clarin-plus'),
 
 		// version as displayed on the main page
-		'VERSION'            : JSON.stringify('v1.1.8-pro/docker (Sept 25, 2018)'),
+		'VERSION'            : JSON.stringify('v1.3.0-dev/docker (Sept 27, 2018)'),
 
 		// contact as displayed of the main page
 		'CONTACT'            : JSON.stringify('switchboard@clarin.eu')

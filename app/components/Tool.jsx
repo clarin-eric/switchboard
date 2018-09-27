@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Tool.jsx
-// Time-stamp: <2018-07-26 14:56:31 (zinn)>
+// Time-stamp: <2018-09-26 19:34:17 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -257,9 +257,9 @@ export default class Tool extends React.Component {
 
 	return (
 	    <Accordion allowMultiple={true}>
-	    { items.map( (element) => 
-		<AccordionItem title={element.name} key={element.id} >
-		  <ToolCard key={element.name}
+	    { items.map( (element, index) => 
+		<AccordionItem title={element.name} key={index} >
+		  <ToolCard key={index}
 			 imgSrc={element.logo}
 			 imgBorderColor='#6A067A'
 			 name={element.name}
