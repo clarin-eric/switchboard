@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: App.jsx
-// Time-stamp: <2018-09-26 20:42:39 (zinn)>
+// Time-stamp: <2018-09-27 13:26:38 (zinn)>
 // -------------------------------------------
 
 import AltContainer from 'alt-container';

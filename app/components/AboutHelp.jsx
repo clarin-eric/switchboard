@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: AboutHelp.jsx
-// Time-stamp: <2018-09-21 09:48:55 (zinn)>
+// Time-stamp: <2018-09-27 13:33:56 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -83,7 +83,7 @@ class AboutHelpText extends React.Component {
               <li><em>Your Name Here</em> (integration of <em>your</em> tool)</li>
             </ul>
             <p>
-              Icons by <a href="http://glyphicons.com/">Glyphicons</a> and <a href="http://fontawesome.io/icons/">Font Awesome</a>.
+              Icons by <a href="http://glyphicons.com/">Glyphicons</a> and <a href="https://fontawesome.com/license/free">Font Awesome</a>.
             </p>
 	    
             <h3 id="sources">Source code</h3>

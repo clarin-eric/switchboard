@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Resource.jsx
-// Time-stamp: <2018-09-27 11:08:49 (zinn)>
+// Time-stamp: <2018-09-27 12:26:09 (zinn)>
 // -------------------------------------------
 
 import AltContainer from 'alt-container';
@@ -87,12 +87,13 @@ export default class Resource extends React.Component {
 	const tableStyle = {
 	    borderWidth: 2,
             borderColor: 'black',
-            borderStyle: 'dashed',
+            borderStyle: 'solid',
             borderRadius: 4,
             margin: 10,
             padding: 10,
-            width: 600,
-	    height:200,
+	    marginLeft: 20,
+            width: 800,
+	    height:160,
 	    resize: 'none',
 	    transition: 'all 0.5s',
 	    display:'inline-block'
@@ -140,11 +141,17 @@ export default class Resource extends React.Component {
 				    onLanguageSelection={this.setLanguage} />	
 		    </td>		  
                   </tr>
+		  <tr>
+		    <td></td>
+		    <td></td>
+		    <td>
+		      <div className="resource-footer">
+  			<button id="showToolsButton" onClick={this.showTools}>Show Tools</button>
+		      </div>
+		    </td>
+		  </tr>
 		</tbody>
 	      </table>
-	      <div className="resource-footer">
-  	        <button id="showToolsButton" onClick={this.showTools}>Show Tools</button>
-	      </div>
 	    </div>
 	);
     }
