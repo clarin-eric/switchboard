@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Resource.jsx
-// Time-stamp: <2018-09-28 13:05:13 (zinn)>
+// Time-stamp: <2018-09-28 13:33:00 (zinn)>
 // -------------------------------------------
 
 import AltContainer from 'alt-container';
@@ -12,6 +12,7 @@ import LanguageMenu from './LanguageMenu.jsx';
 import MimetypeMenu from './MimetypeMenu.jsx';
 import ResourceActions from '../actions/ResourceActions';
 import AlertMissingInfo from './AlertMissingInfo.jsx';
+import AlertNoTools from './AlertNoTools.jsx';
 
 // access to matcher
 import MatcherRemote from '../back-end/MatcherRemote';
@@ -29,7 +30,9 @@ export default class Resource extends React.Component {
 	this.setLanguage             = this.setLanguage.bind(this, resource);
 	this.setMimetype             = this.setMimetype.bind(this, resource);
 
-	this.state = { showAlertMissingInfo: false };
+	this.state = { showAlertMissingInfo: false,
+		       showAlertNoTools: false,
+		     };
     }
 
     setLanguage( resource, language ) {
@@ -62,7 +65,7 @@ export default class Resource extends React.Component {
 	    function(resolve) {
 		console.log('Resource.jsx/showTools succeeded', resolve);
 		if (resolve.length == 0) {
-		    alert("No applicable tools. Please try for another combination of mimetype and language");
+		    that.setState({showAlertNoTools: true} );			    		    
 		} else {
 		    handleToolsChange( resolve );
 		}
@@ -156,6 +159,9 @@ export default class Resource extends React.Component {
 	      </table>
 	      {this.state.showAlertMissingInfo ?
 		 <AlertMissingInfo onCloseProp={ () => this.setState( {showAlertMissingInfo: false} ) } /> 
+	       : null }
+	      {this.state.showAlertNoTools ?
+		 <AlertNoTools onCloseProp={ () => this.setState( {showAlertNoTools: false} ) } /> 
 		 : null }		    		
 	    </div>
 	);
