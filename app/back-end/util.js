@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: util.js
-// Time-stamp: <2018-09-26 14:00:07 (zinn)>
+// Time-stamp: <2018-09-28 11:19:06 (zinn)>
 // -------------------------------------------
 
 export const inclToolsReqAuth = process.env.INCL_TOOLS_REQ_AUTH;
@@ -73,52 +73,32 @@ export function fileExtensionChooser (mimetype) {
     return extension;
 }
 
-/* This is a CORS relict, see the rewriting in nginx.conf.
-   - Note that B2DROP does not work with this 'trick', so here's a (browser-external)
-     Python script is used for downloading 
-   - iCloud does not provide a direct link to access a shared file (login etc. required)
-   - b2drop.eudat.eu is not active yet, but there is a test instance at https://fsd-cloud48.zam.kfa-juelich.de
-   - the first if condition shadows all subsequent nextcloud-based conditions
-   - paste events are always fetched via the Python script
+/* What B2DROP advertises as shared link is not a true one as the link points
+   to a HTML page with a download button. Only if '/download' is appended, the link
+   points directly to the source. Similar behaviour for Dropbox.
+
+   Some users may know that and provide the correct suffixes, hence the second conjuction
+   in the if condition.
+
+   This is only required for PASTE actions. When the LRS is invoked from the B2DROP interface,
+   the plugin takes care of the suffix.
 */
 
 export function rewriteURL( fileURL ) {
-    var windowAppContextPath = window.APP_CONTEXT_PATH;
+    const windowAppContextPath = window.APP_CONTEXT_PATH;
 
-    // todo: delete rest of body
+    if ( (fileURL.indexOf("https://b2drop.eudat.eu") !== -1) &&
+	 (fileURL.indexOf("/download") == -1)) {
+	fileURL = fileURL.concat('/download');
+    }
+    
+    if ( (fileURL.indexOf("https://www.dropbox.com") !== -1) &&
+	 (fileURL.indexOf("?dl=1") == -1)) {
+	
+	fileURL = fileURL.replace('?dl=0', '?dl=1');
+    }
+
     return windowAppContextPath.concat('/download?input='+encodeURI(fileURL));
-
-    var href = window.location.origin.concat(window.location.pathname);
-    var corsLink = "";
-    if ( (caller == "B2DROP") || (caller == "VLO"))  {
-	// nop   -- fileURL = fileURL.concat('/download')
-    } else if ( caller == "PASTE") {
-	// nop
-    } else if ( fileURL.indexOf("https://www.dropbox.com") !== -1 ) {
-	corsLink = fileURL.replace('https://www.dropbox.com', 'www-dropbox-com');
-	corsLink = corsLink.replace('?dl=0', '?dl=1');
-	
-    } else if (    fileURL.indexOf("https://b2drop.eudat.eu") !== -1 ) {
-	corsLink = fileURL.replace('https://b2drop.eudat.eu', 'b2drop-eudat-eu').concat('/download');
-	
-    } else if (    fileURL.indexOf("https://fsd-cloud48.zam.kfa-juelich.de") !== -1 ) {
-	corsLink = fileURL.replace('https://fsd-cloud48.zam.kfa-juelich.de', 'zam-kfa-juelich').concat('/download');
-	
-    } else if (    fileURL.indexOf("https://weblicht.sfs.uni-tuebingen.de/nextcloud") !== -1 ) {
-	corsLink = fileURL.replace('https://weblicht.sfs.uni-tuebingen.de/nextcloud', 'weblicht-sfs-nextcloud').concat('/download');
-	
-    } else {
-	corsLink = fileURL;
-    }
-
-    console.log('util/rewriteURL', caller, fileURL, href, windowAppContextPath, corsLink);
-
-    // todo: harmonize this with the use of APP_CONTEXT_PATH in main App component.
-    if ( (caller == "B2DROP") || (fileURL.indexOf('hdl.handle.net') > 1) || (caller == "PASTE") || true ) {
-	return windowAppContextPath.concat('/download?input='+encodeURI(fileURL));
-    } else {
-	return windowAppContextPath.concat('/').concat(corsLink);
-    }
 }
 
 const langEncodingMap = {

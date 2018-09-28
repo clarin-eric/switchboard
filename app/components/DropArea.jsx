@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: DropArea.jsx
-// Time-stamp: <2018-09-28 09:51:17 (zinn)>
+// Time-stamp: <2018-09-28 12:12:58 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -13,8 +13,8 @@ import ResourceActions from '../actions/ResourceActions';
 import TextareaAutosize from 'react-autosize-textarea';
 import AlertURLFetchError from './AlertURLFetchError.jsx';
 import AlertURLUploadError from './AlertURLUploadError.jsx';
+import AlertURLIncorrectError from './AlertURLIncorrectError.jsx';
 import AlertShibboleth from './AlertShibboleth.jsx';
-
 
 import Resolver from '../back-end/Resolver';
 import Profiler from '../back-end/Profiler';
@@ -40,6 +40,7 @@ export default class DropArea extends React.Component {
 	    urlInputValue: "",	    
 	    showAlertShibboleth: false,	    
 	    showAlertURLFetchError: false,
+	    showAlertURLIncorrectError: false,
 	    showAlertURLUploadError: false
 	};
 	
@@ -92,6 +93,7 @@ export default class DropArea extends React.Component {
 
     handleTextInputSubmit(event) {
 	var textContent = this.state.textInputValue;
+	console.log('DropArea/handleTextInputSubmit', textContent, this.state);	
 	var blob = new Blob([textContent], {type: "text/plain"});
 	this.uploadAndProcessFile( {currentFile: blob, type: 'data'} );
 
@@ -102,7 +104,7 @@ export default class DropArea extends React.Component {
 	this.props.clearDropzoneFun(); 
 	
 	this.setState({
-	    textInputValue : "",  // reset textarea
+	    textInputValue : "",  // reset textarea for textual input
 	    files: [blob]         // put blob into file to trigger Resources
 	});	
 	
@@ -111,7 +113,7 @@ export default class DropArea extends React.Component {
 
     handleUrlInputSubmit(event) {
 	var link = this.state.urlInputValue;
-	console.log('DropArea/handleUrlInputSubmit', link);
+	console.log('DropArea/handleUrlInputSubmit', link, this.state);
 	if ( /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/.test(link) ) {
 
 	    // clear resources view	    
@@ -122,11 +124,12 @@ export default class DropArea extends React.Component {
 	    
 	    this.downloadAndProcessSharedLink( "PASTE", link );	    
 	    this.setState({
+		urlInputValue : "",  // reset textarea for url input
 		files: link
 	    });
 	    event.target.value = "";
 	} else {
-	    alert('The paste is not a URL:' + link);
+	    this.setState({showAlertURLIncorrectError: true} );		
 	}	
     }
     
@@ -226,7 +229,6 @@ export default class DropArea extends React.Component {
 	    function(reject) {
 		console.log('DropArea.jsx/upload failed', reject);
 		that.setState({showAlertURLUploadError: true} );				
-		// alert('Error: unable to upload file');
 		that.setState( { isLoaded: true });		
 	    });
     }   
@@ -366,9 +368,15 @@ export default class DropArea extends React.Component {
 		    </tr>
 		  </tbody>
   		</table>
+		{this.state.showAlertShibboleth ?
+    		 <AlertShibboleth />
+		 : null }		    
 	        {this.state.showAlertURLFetchError ?
 		 <AlertURLFetchError />
 		 : null }
+	        {this.state.showAlertURLIncorrectError ?
+		 <AlertURLIncorrectError onCloseProp={ () => this.setState( {showAlertURLIncorrectError: false} ) }/>
+		 : null }		
 	        {this.state.showAlertURLUploadError ?
 		 <AlertURLUploadError />
 		 : null }
@@ -390,6 +398,10 @@ export default class DropArea extends React.Component {
 	        {this.state.showAlertURLFetchError ?
 		 <AlertURLFetchError />
 		 : null }
+
+	        {this.state.showAlertURLIncorrectError ?
+		 <AlertURLIncorrectError />
+		 : null }				
 
 	        {this.state.showAlertURLUploadError ?
 		 <AlertURLUploadError />
