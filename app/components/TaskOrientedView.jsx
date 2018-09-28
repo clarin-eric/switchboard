@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: TaskOrientedView.jsx
-// Time-stamp: <2018-09-27 09:08:01 (zinn)>
+// Time-stamp: <2018-09-27 20:38:34 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -131,7 +131,7 @@ export default class TaskOrientedView extends React.Component {
 			    <SegmentedControl
 			      segments={toolTypeSegments}
 			      selected={this.state.toolType} 
-			      variant="base"
+			      variant="dark"
 			      onChangeSegment={this.handleToolTypeChange}           
 			      />
 			  </td>
@@ -139,7 +139,7 @@ export default class TaskOrientedView extends React.Component {
 			    <SegmentedControl
 			      segments={toolOrderSegments}
 			      selected={this.state.toolOrder} 
-			      variant="base"
+			      variant="dark"
 			      onChangeSegment={this.handleToolOrderChange}           
 			      />
 			  </td>

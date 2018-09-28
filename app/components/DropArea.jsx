@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: DropArea.jsx
-// Time-stamp: <2018-09-24 20:52:57 (zinn)>
+// Time-stamp: <2018-09-28 09:51:17 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -22,6 +22,10 @@ import Uploader from '../back-end/Uploader';
 import Downloader from '../back-end/Downloader';
 import {fileExtensionChooser, processLanguage, unfoldHandle} from '../back-end/util';
 
+import BackgroundFile from './../images/file-solid.png';
+import BackgroundLink from './../images/location-arrow-solid.png';
+import BackgroundText from './../images/keyboard-solid.png';
+
 export default class DropArea extends React.Component {
     constructor(props) {
 	super(props);
@@ -33,19 +37,18 @@ export default class DropArea extends React.Component {
 	    isLoaded: true,	    
 	    files: [],
 	    textInputValue: "",
-	    url: '',
+	    urlInputValue: "",	    
 	    showAlertShibboleth: false,	    
 	    showAlertURLFetchError: false,
 	    showAlertURLUploadError: false
 	};
 	
-	this.handlePaste    = this.handlePaste.bind(this);	
-	this.handleChange   = this.handleChange.bind(this);
-	this.handleKeyPress = this.handleKeyPress.bind(this);
-
 	this.handleTextInputChange   = this.handleTextInputChange.bind(this);
 	this.handleTextInputSubmit   = this.handleTextInputSubmit.bind(this);
-
+	
+	this.handleUrlInputChange   = this.handleUrlInputChange.bind(this);
+	this.handleUrlInputSubmit   = this.handleUrlInputSubmit.bind(this);
+	
 	this.processParameters         = this.processParameters.bind(this);
     }
 
@@ -82,10 +85,9 @@ export default class DropArea extends React.Component {
 	}
     }
     
-    handleChange(event) {
-	//console.log('A change took place.', event.target.value);
-	this.handlePaste(event);
-	// event.preventDefault();
+   
+    handleTextInputChange(event) {
+	this.setState({textInputValue: event.target.value});
     }
 
     handleTextInputSubmit(event) {
@@ -106,51 +108,32 @@ export default class DropArea extends React.Component {
 	
 	event.preventDefault();
     }
+
+    handleUrlInputSubmit(event) {
+	var link = this.state.urlInputValue;
+	console.log('DropArea/handleUrlInputSubmit', link);
+	if ( /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/.test(link) ) {
+
+	    // clear resources view	    
+	    ResourceActions.reset();
+
+	    // clear task-oriented view
+	    this.props.clearDropzoneFun();
+	    
+	    this.downloadAndProcessSharedLink( "PASTE", link );	    
+	    this.setState({
+		files: link
+	    });
+	    event.target.value = "";
+	} else {
+	    alert('The paste is not a URL:' + link);
+	}	
+    }
     
-    handleTextInputChange(event) {
-	this.setState({textInputValue: event.target.value});
+    handleUrlInputChange(event) {
+	this.setState({urlInputValue: event.target.value});
     }
 
-    handleKeyPress(event) {    
-	console.log('handleKeyPress: A key has been pressed', event.target.value);
-	return false;
-	
-	// Enumerate all supported clipboard, undo and redo keys
-	var clipboardKeys = {
-		winInsert : 45,
-		winDelete : 46,
-		SelectAll : 97,
-		macCopy : 99,
-		macPaste : 118,
-		macCut : 120,
-		redo : 121,	
-		undo : 122
-	}
-	// Simulate readonly but allow all clipboard, undo and redo action keys
-	var charCode = event.which;
-
-	// Accept ctrl+v, ctrl+c, ctrl+z, ctrl+insert, shift+insert, shift+del and ctrl+a
-	if (
-		event.ctrlKey && charCode == clipboardKeys.redo ||		/* ctrl+y redo			*/
-		event.ctrlKey && charCode == clipboardKeys.undo ||		/* ctrl+z undo			*/
-		event.ctrlKey && charCode == clipboardKeys.macCut ||		/* ctrl+x mac cut		*/
-		event.ctrlKey && charCode == clipboardKeys.macPaste ||		/* ctrl+v mac paste		*/
-		event.ctrlKey && charCode == clipboardKeys.macCopy ||		/* ctrl+c mac copy		*/ 
-		event.shiftKey && event.keyCode == clipboardKeys.winInsert ||	/* shift+ins windows paste	*/ 
-		event.shiftKey && event.keyCode == clipboardKeys.winDelete ||	/* shift+del windows cut	*/ 
-		event.ctrlKey && event.keyCode == clipboardKeys.winInsert  ||	/* ctrl+ins windows copy	*/ 
-		event.ctrlKey && charCode == clipboardKeys.SelectAll		/* ctrl+a select all		*/
-		){ return 0; }
-	// Shun all remaining keys simulating readonly textbox
-	var theEvent = event || window.event;
-	var key = theEvent.keyCode || theEvent.which;
-	key = String.fromCharCode(key);
-	var regex = /[]|\./;
-	if(!regex.test(key)) {
-		theEvent.returnValue = false;
-		theEvent.preventDefault();
-	}
-    }
 
     showFiles() {
 
@@ -270,31 +253,6 @@ export default class DropArea extends React.Component {
 	});
     }
 
-    handlePaste(event) {
-
-	var link = event.target.value;
-	console.log('DropArea/handlePaste', link);
-	if ( /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/.test(link) ) {
-	    //console.log('A paste took place.', link);
-
-	    // clear resources view	    
-	    ResourceActions.reset();
-
-	    // clear task-oriented view
-	    this.props.clearDropzoneFun();
-	    
-	    this.downloadAndProcessSharedLink( "PASTE", link );	    
-	    this.setState({
-		files: link
-	    });
-	    event.target.value = "";
-	} else {
-	    console.log('The paste is not a URL', link);
-	}
-	// return false; // event.preventDefault();
-    }
-
-
     render() {
 
 	const { isLoaded } = this.state;		
@@ -313,12 +271,47 @@ export default class DropArea extends React.Component {
             borderRadius: 4,
             margin: 10,
             padding: 10,
-            width: 200,
+            width: 248,
+	    height:100,
+	    resize: 'none',
+	    transition: 'all 0.5s',
+	    display:'inline-block'
+	};
+
+        var styleTextareaLink = {
+            borderWidth: 2,
+            borderColor: 'black',
+            borderStyle: 'dashed',
+            borderRadius: 4,
+	    backgroundImage: "url(" + BackgroundLink + ")",
+	    backgroundPosition: 'bottom right',
+	    backgroundRepeat: 'no-repeat',
+            margin: 10,
+            padding: 10,
+            width: 248,
 	    height:100,
 	    resize: 'none',
 	    transition: 'all 0.5s',
 	    display:'inline-block'
         };
+
+        var styleTextareaText = {
+            borderWidth: 2,
+            borderColor: 'black',
+            borderStyle: 'dashed',
+            borderRadius: 4,
+	    backgroundImage: 'location-arrow-solid.png',
+	    backgroundPosition: 'bottom right',
+	    backgroundRepeat: 'no-repeat',
+            margin: 10,
+            padding: 10,
+            width: 248,
+	    height:100,
+	    resize: 'none',
+	    transition: 'all 0.5s',
+	    display:'inline-block'
+        };
+	
 
         var activeStyleDropbox = {
             borderStyle: 'solid',
@@ -343,23 +336,32 @@ export default class DropArea extends React.Component {
 			</Dropzone>
 		      </td>
 		      <td>
-			<TextareaAutosize rows={5}
-					  maxRows={5}
-					  style={styleDropbox}
-					  onChange={this.handleChange}
-					  onKeyPress={this.handleKeyPress}
-					  placeholder='Paste your shared link from Dropbox and B2DROP. Or paste a persistent identifier.' />
+			<div className="relativeDiv">
+			  <form onSubmit={this.handleUrlInputSubmit}>
+			    <TextareaAutosize rows={5}
+					      maxRows={5}
+					      style={styleTextareaLink}
+		                              value={this.state.urlInputValue}
+					      onChange={this.handleUrlInputChange}
+					      placeholder='Paste your shared link from Dropbox and B2DROP. Or paste a persistent identifier.' >
+			    </TextareaAutosize>
+			    <input className="inputAbsolute" type="submit" value="Submit URL"/>
+			  </form>
+			</div>			  
 		      </td>
 		      <td>
+			<div className="relativeDiv">
 			<form onSubmit={this.handleTextInputSubmit}>
 			  <TextareaAutosize rows={5}
 					    maxRows={5}
-					    style={styleDropbox}
+					    style={styleTextareaText}
 					    value={this.state.textInputValue}
 					    onChange={this.handleTextInputChange}
-					    placeholder='Enter your text here. For large input, create a file and drop it in the left-most area.' />		    
-			  <input type="submit" value="Submit Text"/>
+					    placeholder='Enter your text here. For large input, create a file and drop it in the left-most area.' >
+			  </TextareaAutosize>
+			  <input className="inputAbsolute" type="submit" value="Submit Text"/>
 			</form>
+			</div>
 		      </td>
 		    </tr>
 		  </tbody>

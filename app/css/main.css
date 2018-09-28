@@ -88,6 +88,19 @@ h2 {
     color: green;
 }
 
+.relativeDiv {
+  position: relative;
+}
+
+.inputAbsolute {
+  position: absolute;
+  bottom: 2px;
+  right: 30px;
+  background-color: #000;
+  color: white;
+  border: 2px solid #fff;  
+}
+
 .dropAreaTable {
     margin-left: 20px
 }
@@ -230,12 +243,15 @@ h2 {
 .resource-footer {
   float: right;
   margin-left: 0.5em;
+  margin-top: 0.5em;  
 }
 
 .add-resource, .resource-footer button {
     background-color: #000;
     color: white;
+    /*
     border: 2px solid #ccc;
+    */
 }
 
 

@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Resource.jsx
-// Time-stamp: <2018-09-27 12:26:09 (zinn)>
+// Time-stamp: <2018-09-27 21:31:10 (zinn)>
 // -------------------------------------------
 
 import AltContainer from 'alt-container';
@@ -92,7 +92,7 @@ export default class Resource extends React.Component {
             margin: 10,
             padding: 10,
 	    marginLeft: 20,
-            width: 800,
+            width: 785,
 	    height:160,
 	    resize: 'none',
 	    transition: 'all 0.5s',

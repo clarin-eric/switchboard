@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: App.jsx
-// Time-stamp: <2018-09-27 13:26:38 (zinn)>
+// Time-stamp: <2018-09-27 17:07:08 (zinn)>
 // -------------------------------------------
 
 import AltContainer from 'alt-container';
@@ -66,6 +66,11 @@ require('./../images/d4science.png');
 require('./../images/YourLogoComesHere.png');
 require('./../images/metadataListing1.png');
 require('./../images/metadataListing2.png');
+
+require('./../images/file-solid.png');
+require('./../images/location-arrow-solid.png');
+require('./../images/keyboard-solid.png');
+
 
 export default class App extends React.Component {
     
@@ -277,7 +282,7 @@ export default class App extends React.Component {
 	  <div>
 	    <a href="https://support.clarin-d.de/mail/?lang=de&QueueID=19&ResponsibleID=15&OwnerID=15" target="_blank">
 	      <span>
-		<i className="fa fa-info fa-2x" aria-hidden="true"></i>Help Desk
+		Help Desk
 	      </span>
 	    </a>
 	  </div>
