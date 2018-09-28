@@ -3,14 +3,15 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Resource.jsx
-// Time-stamp: <2018-09-27 21:31:10 (zinn)>
+// Time-stamp: <2018-09-28 13:05:13 (zinn)>
 // -------------------------------------------
 
 import AltContainer from 'alt-container';
 import React from 'react';
 import LanguageMenu from './LanguageMenu.jsx';
 import MimetypeMenu from './MimetypeMenu.jsx';
-import ResourceActions from '../actions/ResourceActions';        
+import ResourceActions from '../actions/ResourceActions';
+import AlertMissingInfo from './AlertMissingInfo.jsx';
 
 // access to matcher
 import MatcherRemote from '../back-end/MatcherRemote';
@@ -27,6 +28,8 @@ export default class Resource extends React.Component {
 	this.openResource              = this.openResource.bind(this, resource);
 	this.setLanguage             = this.setLanguage.bind(this, resource);
 	this.setMimetype             = this.setMimetype.bind(this, resource);
+
+	this.state = { showAlertMissingInfo: false };
     }
 
     setLanguage( resource, language ) {
@@ -47,13 +50,8 @@ export default class Resource extends React.Component {
 	console.log('Resource/showTools', resource, props);
 
 	const handleToolsChange = props.passToolsChangeToParent;
-	if (resource.language == null) {
-	    alert('CLRS: Please identify the language of the resource!');
-	    return;
-	}
-
-	if (resource.mimetype == null) {
-	    alert('CLRS: Please identify the mimetype of the resource!');
+	if ( (resource.language == null) || (resource.mimetype == null)) {
+	    this.setState({showAlertMissingInfo: true} );			    
 	    return;
 	}
 
@@ -62,8 +60,12 @@ export default class Resource extends React.Component {
 	const that = this;
 	toolsPromise.then(
 	    function(resolve) {
-		console.log('Resource.jsx/showTools succeeded', resolve);		
-		handleToolsChange( resolve );
+		console.log('Resource.jsx/showTools succeeded', resolve);
+		if (resolve.length == 0) {
+		    alert("No applicable tools. Please try for another combination of mimetype and language");
+		} else {
+		    handleToolsChange( resolve );
+		}
 	    },
 	    function(reject) {
 		console.log('Resource.jsx/showTools failed', reject);
@@ -152,6 +154,9 @@ export default class Resource extends React.Component {
 		  </tr>
 		</tbody>
 	      </table>
+	      {this.state.showAlertMissingInfo ?
+		 <AlertMissingInfo onCloseProp={ () => this.setState( {showAlertMissingInfo: false} ) } /> 
+		 : null }		    		
 	    </div>
 	);
     }

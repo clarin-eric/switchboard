@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Profiler.js
-// Time-stamp: <2018-06-29 14:37:38 (zinn)>
+// Time-stamp: <2018-09-28 12:38:16 (zinn)>
 // -------------------------------------------
 
 import Request from 'superagent';
@@ -123,7 +123,7 @@ export default class Profiler {
 		.end((err, res) => {
 		    if (err) {
 			reject(err);
-			alert('Warning: could not download content');
+			alert('Warning: could not convert to plain text.');
 		    } else {
 			console.log('Profiler/getContent', res, file);
 			resolve(res);

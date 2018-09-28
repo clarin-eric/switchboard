@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: DropArea.jsx
-// Time-stamp: <2018-09-28 12:12:58 (zinn)>
+// Time-stamp: <2018-09-28 12:56:55 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -400,7 +400,7 @@ export default class DropArea extends React.Component {
 		 : null }
 
 	        {this.state.showAlertURLIncorrectError ?
-		 <AlertURLIncorrectError />
+		 <AlertURLIncorrectError onCloseProp={ () => this.setState( {showAlertURLIncorrectError: false} ) }/>		 
 		 : null }				
 
 	        {this.state.showAlertURLUploadError ?
