@@ -3736,7 +3736,7 @@ select[multiple].input-group-sm > .input-group-addon, select[multiple].input-gro
 
 .navbar-nav {
     margin: 7.5px -15px;
-    cursor: default;	     
+    cursor: pointer;	     
 }
 
 .navbar-nav > li > a {

@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: App.jsx
-// Time-stamp: <2018-09-27 17:07:08 (zinn)>
+// Time-stamp: <2018-10-02 10:03:55 (zinn)>
 // -------------------------------------------
 
 import AltContainer from 'alt-container';
@@ -202,7 +202,7 @@ export default class App extends React.Component {
 	      <button id="showAllToolsButton" className="clearDropzone" onClick={this.showAllTools}>Tool Inventory</button>
 	    </li>
           </ul>
-	  <div className="col-sm-3 text-right">
+	  <div className="pull-right">
             <a href="http://www.clarin.eu/">
 	      <img src="clarin-logo-wide.png" width="119px" height="46px" />
 	    </a>
@@ -278,14 +278,7 @@ export default class App extends React.Component {
           </div>
         </div>
         <div className="col-sm-3 text-right">
-	  <a href={ emailContactCommand }>Contact</a>
-	  <div>
-	    <a href="https://support.clarin-d.de/mail/?lang=de&QueueID=19&ResponsibleID=15&OwnerID=15" target="_blank">
-	      <span>
-		Help Desk
-	      </span>
-	    </a>
-	  </div>
+	  <a href={ emailContactCommand }>Contact & Support</a>
         </div>
       </div>
     </div>

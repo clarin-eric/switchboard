@@ -165,7 +165,7 @@ h2 {
 
   border: 3px solid #ccc;
   border-radius: 0.5em;
-  cursor: default;  
+  cursor: pointer;  
 
   min-width: 7em;
   vertical-align: center;
@@ -285,6 +285,9 @@ h2 {
   visibility: hidden;
 }
 
+.header-link {
+    cursor: pointer;
+}
 
 .logoAlignLeft {
     align: left;

@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: util.js
-// Time-stamp: <2018-09-28 11:19:06 (zinn)>
+// Time-stamp: <2018-10-02 10:05:12 (zinn)>
 // -------------------------------------------
 
 export const inclToolsReqAuth = process.env.INCL_TOOLS_REQ_AUTH;
@@ -13,7 +13,8 @@ export const nextcloud_pass   = process.env.NEXTCLOUD_PASS;
 export const lrsVersion       = process.env.VERSION;
 export const emailContact     = process.env.CONTACT;
 export const appContextPath   = process.env.APP_CONTEXT_PATH;
-export const emailContactCommand = "mailto:"+emailContact+"?subject=CLARIN-PLUS LRS";
+//export const emailContactCommand = "mailto:"+emailContact+"?subject=CLARIN-PLUS LRS";
+export const emailContactCommand = "mailto:"+emailContact;
 
 // for creation of link
 export const fileStorageServerMPG_remote     = 'http://ws1-clarind.esc.rzg.mpg.de/drop-off/storage/';
