@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Profiler.js
-// Time-stamp: <2018-09-28 12:38:16 (zinn)>
+// Time-stamp: <2018-10-04 15:35:52 (zinn)>
 // -------------------------------------------
 
 import Request from 'superagent';
@@ -38,7 +38,6 @@ export default class Profiler {
 	console.log('Profiler/constructor', this.resourceProps);
     }
 
-    // not called (info from browser and VLO is being trusted)
     identifyMimeType( ) {
 	let file = this.resourceProps.file;
 	let protocol = this.protocol;

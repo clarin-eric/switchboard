@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: DropArea.jsx
-// Time-stamp: <2018-10-04 11:56:51 (zinn)>
+// Time-stamp: <2018-10-04 12:14:34 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -202,10 +202,10 @@ export default class DropArea extends React.Component {
 
      */
     downloadAndProcessSharedLink( caller, link ) {
+	this.setState( { isLoaded: false });
 	let downloader = new Downloader( link );
 	let promiseDownload = downloader.downloadBlob();
 	let that = this;
-	this.setState( { isLoaded: false });
 	promiseDownload.then(
 	    function(resolve) {
 		console.log('DropArea.jsx/downloadAndProcessSharedLink succeeded', resolve);
@@ -274,6 +274,8 @@ export default class DropArea extends React.Component {
 	};
 		
 	const transferalInfo = `Resource transferal from ${this.props.caller}. Please check the information below, then press "Show Tools"`;
+
+	console.log('DropArea/render', isLoaded, this.state.isLoaded);
 	
         var styleDropbox = {
             borderWidth: 2,
