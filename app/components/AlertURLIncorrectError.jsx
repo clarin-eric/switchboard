@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: AlertURLIncorrectError.jsx
-// Time-stamp: <2018-09-28 12:13:22 (zinn)>
+// Time-stamp: <2018-10-04 11:52:39 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -46,7 +46,7 @@ class AlertURLIncorrectErrorText extends React.Component {
   render() {
     return <ModalContainer onClose={this.props.onClose}>
         <ModalDialog onClose={this.props.onClose} className="systemAlertDialog"  width={400}>
-	    <h2>Incorrect URL Error</h2>
+	    <h2>Incorrect URL</h2>
 	    <p>
 	      It seems that you have entered an incorrect or partial URL. Please correct the URL and then try again.
 	    </p>

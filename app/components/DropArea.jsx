@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: DropArea.jsx
-// Time-stamp: <2018-09-28 12:56:55 (zinn)>
+// Time-stamp: <2018-10-04 11:56:51 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -15,6 +15,7 @@ import AlertURLFetchError from './AlertURLFetchError.jsx';
 import AlertURLUploadError from './AlertURLUploadError.jsx';
 import AlertURLIncorrectError from './AlertURLIncorrectError.jsx';
 import AlertShibboleth from './AlertShibboleth.jsx';
+import AlertMissingInfoText from './AlertMissingInputText.jsx'; 
 
 import Resolver from '../back-end/Resolver';
 import Profiler from '../back-end/Profiler';
@@ -41,7 +42,8 @@ export default class DropArea extends React.Component {
 	    showAlertShibboleth: false,	    
 	    showAlertURLFetchError: false,
 	    showAlertURLIncorrectError: false,
-	    showAlertURLUploadError: false
+	    showAlertURLUploadError: false,
+	    showAlertMissingInputText: false	    
 	};
 	
 	this.handleTextInputChange   = this.handleTextInputChange.bind(this);
@@ -91,22 +93,29 @@ export default class DropArea extends React.Component {
 	this.setState({textInputValue: event.target.value});
     }
 
+    // todo: check minimum number of bytes that need to be submitted.
     handleTextInputSubmit(event) {
 	var textContent = this.state.textInputValue;
-	console.log('DropArea/handleTextInputSubmit', textContent, this.state);	
-	var blob = new Blob([textContent], {type: "text/plain"});
-	this.uploadAndProcessFile( {currentFile: blob, type: 'data'} );
 
-	// remove prior resources
-	ResourceActions.reset();
+	console.log('DropArea/handleTextInputSubmit', textContent, this.state);		
+	if (textContent == "") {
+	    this.setState({showAlertMissingInputText: true} );			    
+	} else {
 
-	// clear task-oriented view
-	this.props.clearDropzoneFun(); 
-	
-	this.setState({
-	    textInputValue : "",  // reset textarea for textual input
-	    files: [blob]         // put blob into file to trigger Resources
-	});	
+	    var blob = new Blob([textContent], {type: "text/plain"});
+	    this.uploadAndProcessFile( {currentFile: blob, type: 'data'} );
+	    
+	    // remove prior resources
+	    ResourceActions.reset();
+	    
+	    // clear task-oriented view
+	    this.props.clearDropzoneFun(); 
+	    
+	    this.setState({
+		textInputValue : "",  // reset textarea for textual input
+		files: [blob]         // put blob into file to trigger Resources
+	    });
+	}
 	
 	event.preventDefault();
     }
@@ -376,7 +385,10 @@ export default class DropArea extends React.Component {
 		 : null }
 	        {this.state.showAlertURLIncorrectError ?
 		 <AlertURLIncorrectError onCloseProp={ () => this.setState( {showAlertURLIncorrectError: false} ) }/>
-		 : null }		
+		 : null }
+	        {this.state.showAlertMissingInputText ?
+		 <AlertMissingInfoText onCloseProp={ () => this.setState( {showAlertMissingInputText: false} ) }/>
+		 : null }				
 	        {this.state.showAlertURLUploadError ?
 		 <AlertURLUploadError />
 		 : null }
@@ -403,6 +415,10 @@ export default class DropArea extends React.Component {
 		 <AlertURLIncorrectError onCloseProp={ () => this.setState( {showAlertURLIncorrectError: false} ) }/>		 
 		 : null }				
 
+	        {this.state.showAlertMissingInputText ?
+		 <AlertMissingInfoText onCloseProp={ () => this.setState( {showAlertMissingInputText: false} ) }/>
+		 : null }
+		
 	        {this.state.showAlertURLUploadError ?
 		 <AlertURLUploadError />
 		 : null }	    
