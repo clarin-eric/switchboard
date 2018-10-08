@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Resource.jsx
-// Time-stamp: <2018-09-28 13:33:00 (zinn)>
+// Time-stamp: <2018-10-08 10:00:26 (zinn)>
 // -------------------------------------------
 
 import AltContainer from 'alt-container';
@@ -82,7 +82,14 @@ export default class Resource extends React.Component {
     }
 
     hideName( fileName ) {
-	return fileName.replace('/download?input=', '');
+	/* omit old URL prefixes
+	   invoking the switchboard from https://weblicht.sfs.uni-tuebingen.de/clrs-dev/#/ or
+	    https://weblicht.sfs.uni-tuebingen.de/clrs/#/
+	*/
+	
+    	var fileNameNoPrefix = fileName.replace('/clrs-dev', '');
+	fileNameNoPrefix = fileNameNoPrefix.replace('/clrs', '');
+	return fileNameNoPrefix.replace('/download?input=', '');
     }
     
     render() {
