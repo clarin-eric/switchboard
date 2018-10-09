@@ -1,6 +1,17 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.3.0] - 2018-10-08
+### Changed
+	- modified look & feel of the resource panel
+	- added sorting options to the "task oriented view"; design changes, removed switch for showing WSs
+	- icon no longer spinning
+	- improved design of boxes for URL and text drop, including submit buttons
+	- fixed bug where help menus did not display the closing X
+	- moved About and For Developer Help to footer, changed Contact&Support
+	- fixed CLARIN logo (visibility and right alignment)
+	- making now use of CLRS-REST service (outsourcing Matcher & Registry)
+
 ## [1.1.7] - 2018-06-30
 ### Changed
 	- integrated UrlArea with DropArea (code refactoring)
