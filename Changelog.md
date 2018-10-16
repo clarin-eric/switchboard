@@ -1,5 +1,9 @@
 # Changelog
-All notable changes to this project will be documented in this file.
+	All notable changes to this project will be documented in this file.
+
+## [1.3.1] - 2018-10-16
+### Added
+	- calls to clrs-rest back-end now passes-on URL parameter 'includeBetaSoftware' with 'yes'/'no' value
 
 ## [1.3.0] - 2018-10-08
 ### Changed

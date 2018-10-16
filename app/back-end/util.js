@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: util.js
-// Time-stamp: <2018-10-02 10:05:12 (zinn)>
+// Time-stamp: <2018-10-16 10:26:24 (zinn)>
 // -------------------------------------------
 
 export const inclToolsReqAuth = process.env.INCL_TOOLS_REQ_AUTH;
@@ -15,6 +15,15 @@ export const emailContact     = process.env.CONTACT;
 export const appContextPath   = process.env.APP_CONTEXT_PATH;
 //export const emailContactCommand = "mailto:"+emailContact+"?subject=CLARIN-PLUS LRS";
 export const emailContactCommand = "mailto:"+emailContact;
+
+/* new environment variable:
+   - used to communicate between CLRS and CLRS-TEST
+   - production version of the switchboard only calls tools deemed to have production status
+   - development version of the switchboard includes tools with a more beta-like development status
+   - used by MatcherRemote.js
+*/
+export const deploymentStatus = process.env.NODE_ENV;
+
 
 // for creation of link
 export const fileStorageServerMPG_remote     = 'http://ws1-clarind.esc.rzg.mpg.de/drop-off/storage/';
