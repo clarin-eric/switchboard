@@ -119,7 +119,7 @@ const common = {
 		'NEXTCLOUD_PASS'     : JSON.stringify('clarin-plus'),
 
 		// version as displayed on the main page
-		'VERSION'            : JSON.stringify('v1.3.0-pro/docker (Oct 8, 2018)'),
+		'VERSION'            : JSON.stringify('v1.3.1-pro/docker (Oct 16, 2018)'),
 
 		// contact as displayed of the main page
 		'CONTACT'            : JSON.stringify('switchboard@clarin.eu')
