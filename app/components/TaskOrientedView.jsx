@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: TaskOrientedView.jsx
-// Time-stamp: <2018-10-04 11:07:23 (zinn)>
+// Time-stamp: <2018-11-08 21:26:03 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -100,9 +100,26 @@ export default class TaskOrientedView extends React.Component {
 		toolGroups[ entry.task ] = [].concat( toolInfo );		
 	    }
 	}
-	return toolGroups;
+
+	var toolGroupsSorted = {};
+
+	// now, sort tasks alphabetically
+	var keys = [];
+	for (var key in toolGroups) {
+	    if (toolGroups.hasOwnProperty(key)) {
+		keys.push(key);
+	    }
+	}
+
+	keys.sort();
+	
+	for (i in keys) {
+	    var key = keys[i];
+	    toolGroupsSorted[ key ] = toolGroups[key];
+	}
+	
+	return toolGroupsSorted;
     }
-    
     
     render() {
 	const tools = this.props.tools;

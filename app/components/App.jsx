@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: App.jsx
-// Time-stamp: <2018-10-02 10:03:55 (zinn)>
+// Time-stamp: <2018-11-08 16:18:19 (zinn)>
 // -------------------------------------------
 
 import AltContainer from 'alt-container';
@@ -16,6 +16,7 @@ import Resources from './Resources.jsx';            // render all the resources
 import TaskOrientedView from './TaskOrientedView';  // component to render the task-oriented view
 import DropArea from './DropArea.jsx';              // drop & drag area for resources
 import UserHelp from './UserHelp.jsx';              // component displaying user help
+import UserFAQ from './UserFAQ.jsx';                // component displaying user faq
 import DevHelp from './DevHelp.jsx';                // component displaying help targeted at developers
 import AboutHelp from './AboutHelp.jsx';            // displaying admin. information about the switchboard
 import AlertURLFetchError from './AlertURLFetchError.jsx';
@@ -70,6 +71,8 @@ require('./../images/metadataListing2.png');
 require('./../images/file-solid.png');
 require('./../images/location-arrow-solid.png');
 require('./../images/keyboard-solid.png');
+
+require('./../images/dropResources.png');
 
 
 export default class App extends React.Component {
@@ -173,7 +176,6 @@ export default class App extends React.Component {
             return "";
          })();
 	
-	console.log('App/render', window);
 	var style = {
 	    display: 'none'
 	};
@@ -278,8 +280,13 @@ export default class App extends React.Component {
           </div>
         </div>
         <div className="col-sm-3 text-right">
-	  <a href={ emailContactCommand }>Contact & Support</a>
-        </div>
+	  <div className="text-center">
+	    <a href={ emailContactCommand }>Contact & Support</a>
+	    <div>
+  	      <UserFAQ className="header-link" />
+	    </div>
+	  </div>
+	  </div>
       </div>
     </div>
   </footer>

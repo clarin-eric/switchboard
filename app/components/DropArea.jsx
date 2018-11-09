@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: DropArea.jsx
-// Time-stamp: <2018-10-04 12:14:34 (zinn)>
+// Time-stamp: <2018-11-08 09:58:40 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -332,11 +332,17 @@ export default class DropArea extends React.Component {
             borderRadius: 8
         };
 
+	var parStyle = {
+	    width: 600,
+	    margin: 10,
+	    padding: 10
+	}
+
 	// when invoked via VLO/B2DROP/D4Science/etc, we don't show the 3 areas for dropping resources
 	if ( this.props.caller == "standalone" ) {
 	    return (
 	      <div>
-   	        <h3 id="dropAreaHeading">Provision of Input</h3>		    
+ 	        <h3 id="dropAreaHeading">Provision of Input</h3>
 		<Loader loaded={this.state.isLoaded} />
 		<table className="dropAreaTable">
 		  <tbody>
@@ -356,7 +362,7 @@ export default class DropArea extends React.Component {
 					      style={styleTextareaLink}
 		                              value={this.state.urlInputValue}
 					      onChange={this.handleUrlInputChange}
-					      placeholder='Paste your shared link from Dropbox and B2DROP. Or paste a persistent identifier.' >
+					      placeholder='Paste the URL of the file to process.' >
 			    </TextareaAutosize>
 			    <input className="inputAbsolute" type="submit" value="Submit URL"/>
 			  </form>
@@ -370,7 +376,7 @@ export default class DropArea extends React.Component {
 					    style={styleTextareaText}
 					    value={this.state.textInputValue}
 					    onChange={this.handleTextInputChange}
-					    placeholder='Enter your text here. For large input, create a file and drop it in the left-most area.' >
+					    placeholder='Enter your text to be processed here.' >
 			  </TextareaAutosize>
 			  <input className="inputAbsolute" type="submit" value="Submit Text"/>
 			</form>

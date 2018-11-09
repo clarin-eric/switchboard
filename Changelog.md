@@ -1,6 +1,13 @@
 # Changelog
 	All notable changes to this project will be documented in this file.
 
+## [1.3.2] - 2018-11-08
+### Changed
+	- ameliorated the Help Menu; FAQ section outsourced with extra link in footer.
+	- updated AboutHelp.
+	- shortened text in the drop areas
+	- Tool View now also sorts task groups alphabetically
+
 ## [1.3.1] - 2018-10-16
 ### Added
 	- calls to clrs-rest back-end now passes-on URL parameter 'includeBetaSoftware' with 'yes'/'no' value

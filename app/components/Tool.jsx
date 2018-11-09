@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Tool.jsx
-// Time-stamp: <2018-09-26 19:34:17 (zinn)>
+// Time-stamp: <2018-11-07 22:00:02 (zinn)>
 // -------------------------------------------
 
 import React from 'react';

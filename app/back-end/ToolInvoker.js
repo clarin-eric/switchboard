@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: ToolInvoker.js
-// Time-stamp: <2018-06-26 19:44:30 (zinn)>
+// Time-stamp: <2018-11-02 14:18:30 (zinn)>
 // -------------------------------------------
 
 import { map639_1_to_639_3, map639_3_to_639_1 } from './util';
@@ -332,10 +332,8 @@ export function gatherInvocationParameters( toolDescription, resourceDescription
 	// need to check whether toolDescription.url already contains parameters (that is, a '?')
 	if ( (turl.indexOf("\?") !== -1 ) || turl.includes('?') || turl.includes('\?'))  {
 	    urlWithParameters = turl + "&" + parameterStringURL;
-	    //console.log('ToolInvoker/urlWithParameters with ?', turl, urlWithParameters, turl.includes('?'), turl.includes('\?'));
 	} else {
 	    urlWithParameters = turl + "?" + parameterStringURL;
-	    //console.log('ToolInvoker/urlWithParameters without ?', turl, urlWithParameters, turl.includes('?'), turl.includes('\?'));	    
 	}
     }
 
@@ -360,7 +358,6 @@ export function gatherInvocationParameters( toolDescription, resourceDescription
 	    };
     }
 
-    //console.log('ToolInvoker/gatherInvocationParameters', rtnValue, parameterForm);
     // FormData cannot be logged easily, and the following does not work in Safari, only Chrome and Firefix
     /*
     for (var key of parameterForm.entries()) {

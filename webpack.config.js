@@ -51,7 +51,6 @@ const common = {
 		loader: 'url-loader?limit=100000'
 	    },
 	    
-	    
 	    {
 		test: /\.css$/,
 		loaders: ['style-loader', 'css-loader'],
@@ -119,7 +118,7 @@ const common = {
 		'NEXTCLOUD_PASS'     : JSON.stringify('clarin-plus'),
 
 		// version as displayed on the main page
-		'VERSION'            : JSON.stringify('v1.3.1-pro/docker (Oct 16, 2018)'),
+		'VERSION'            : JSON.stringify('v1.3.2-pro/docker (Nov 9, 2018)'),
 
 		// contact as displayed of the main page
 		'CONTACT'            : JSON.stringify('switchboard@clarin.eu')
