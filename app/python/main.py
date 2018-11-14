@@ -1,7 +1,7 @@
 
 # C. Zinn
 # -------------------------------------------
-# Time-stamp: <2018-06-22 17:32:11 (zinn)>
+# Time-stamp: <2018-11-14 14:12:41 (zinn)>
 # -------------------------------------------
 # Python script to download resources (or to resolve handles)
 
@@ -32,7 +32,7 @@ def application(environ, start_response):
     parameters = parse_qs(environ.get('QUERY_STRING', ''))           
     if 'input' in parameters:                                        
         input = escape(parameters['input'][0])
-        if "hdl.handle.net" in input:
+        if "NOMATCHhdl.handle.net" in input:
             resolve = resolveHandle(input)
             start_response('200 OK', [('Content-Type', 'text/plain')])
             return [str.encode(resolve, 'utf-8')]

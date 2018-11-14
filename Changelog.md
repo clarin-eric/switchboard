@@ -1,6 +1,12 @@
 # Changelog
 	All notable changes to this project will be documented in this file.
 
+## [1.3.3] - 2018-11-14
+### Changed
+	- changed handling of handle-based urls
+	- fixed bug where there are only web-based tools applicable, but no segmented controls being shown
+	- replaced all JS alerts by reactjs ones.
+	
 ## [1.3.2] - 2018-11-08
 ### Changed
 	- ameliorated the Help Menu; FAQ section outsourced with extra link in footer.

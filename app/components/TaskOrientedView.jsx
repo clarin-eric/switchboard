@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: TaskOrientedView.jsx
-// Time-stamp: <2018-11-14 11:46:19 (zinn)>
+// Time-stamp: <2018-11-14 15:59:56 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -141,7 +141,7 @@ export default class TaskOrientedView extends React.Component {
 	console.log('TaskOrientedView/re-rendering', this.state, toolsAfterFilter);
 	return (
 		<div className="task-oriented-view-container">
-		  { toolsAfterFilter.length ?
+		  { (toolsAfterFilter.length || tools.length ) ? 
 		  <div>
 		    <h3 id="toolHeading"> Tools </h3>
 		    <table width="800px">
