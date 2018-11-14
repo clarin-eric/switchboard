@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Uploader.js
-// Time-stamp: <2018-06-30 11:49:57 (zinn)>
+// Time-stamp: <2018-11-14 09:09:46 (zinn)>
 // -------------------------------------------
 
 /* Uploads a file to the MPG server in Garching, or to a Nextcloud instance.
@@ -103,7 +103,7 @@ export default class Uploader {
 		.end((err, res) => {
 		    if (err) {
 			reject(err);
-			alert('Error in uploading resource to Nextcloud instance');
+			console.log('Error in uploading resource to Nextcloud instance');
 		    } else {
 			// 1b. Create a 'share link' action on the file you uploaded
 			Request
@@ -121,7 +121,7 @@ export default class Uploader {
 			    .end((err, res) => {
 				if (err) {
 				    reject(err);			
-				    alert('Error in creating a share-link with Nextcloud'.concat(that.filenameWithDate));
+				    console.log('Error in creating a share-link with Nextcloud'.concat(that.filenameWithDate));
 				} else {
 				    var parseString = require('xml2js').parseString;
 				    parseString(res.text, function (err, result) {

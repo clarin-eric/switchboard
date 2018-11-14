@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: ToolInvoker.js
-// Time-stamp: <2018-11-02 14:18:30 (zinn)>
+// Time-stamp: <2018-11-14 11:45:52 (zinn)>
 // -------------------------------------------
 
 import { map639_1_to_639_3, map639_3_to_639_1 } from './util';
@@ -19,18 +19,18 @@ function showWebServiceCallResult( result ) {
     //console.log('ToolInvoker/invokeWebService/data: success in calling webservice', "data:text/json," + result);
 }
 
-function showWebServiceCallResult_iframe( outputFormat, result, charset, contentType ) {
+function showWebServiceCallResult_iframe( outputFormat, result, charset, contentType, cb ) {
 
-    //console.log('ToolInvoker/showWebServiceCallResult_iframe', outputFormat, result, charset, contentType );
+    console.log('ToolInvoker/showWebServiceCallResult_iframe', outputFormat, result, charset, contentType, cb );
     var contentString = "";
     switch (outputFormat) {
     case "text/xml":
 	contentString = result;
-	showWebServiceCallResult_write(result);
+	showWebServiceCallResult_write(result, cb);
 	return;
 	break;
     case "application/json":
-	showWebServiceCallResult_write(result);
+	showWebServiceCallResult_write(result, cb);
 	return;
 	//^^^^//
 	
@@ -50,7 +50,7 @@ function showWebServiceCallResult_iframe( outputFormat, result, charset, content
     var iframe = "<iframe width='100%' height='100%' src='" + contentString + "'></iframe>"
     var x = window.open();
     if (x === null) {
-	alert("Please allow your browser to open pop-up windows!");
+	cb();
     } else {
 	x.document.title = "Web Service Result";
 	x.document.open();
@@ -60,11 +60,11 @@ function showWebServiceCallResult_iframe( outputFormat, result, charset, content
     }
 }
 
-function showWebServiceCallResult_write( result ) {
+function showWebServiceCallResult_write( result, cb ) {
     var x = window.open();
     if (x === null) {
 	//console.log('in functon ToolInvoker/showWebServiceCallResult_write', x);
-	alert("Please allow your browser to open pop-up windows!");
+	cb();
     } else {
 	x.document.open();
 	x.document.title = "Web Service Result";    
@@ -78,13 +78,12 @@ function showWebServiceCallResult_write( result ) {
     }
 }
 
-
 export function invokeBrowserBasedTool( URL ) {
     var win = window.open(URL.url, '_blank');
     win.focus();	
 }
 
-export function invokeWebService( URL ) {
+export function invokeWebService( URL, cb ) {
     let file = URL.formVal;
 
     // there are a number of web services that are invoked with HTTP GET
@@ -110,10 +109,9 @@ export function invokeWebService( URL ) {
 		.end((err, res) => {
 		    if (err) {
 			console.log('ToolInvoker/invokeWebService/form-data: error in calling webservice', err, file.name, URL);
-			alert('Result of calling web service: ' + err);
 		    } else {
 			//console.log('ToolInvoker/invokeWebService with requestType/form-data:', res);
-			showWebServiceCallResult_iframe(URL.output, res.text, res.charset, res.header['content-type']);
+			showWebServiceCallResult_iframe(URL.output, res.text, res.charset, res.header['content-type'], cb);
 		    }
 		});
 	}
@@ -126,10 +124,9 @@ export function invokeWebService( URL ) {
 	    .end((err, res) => {
 		if (err) {
 		    console.log('ToolInvoker/invokeWebService/form-data (key must be file): error in calling webservice', err, file.name, URL);
-		    alert('Result of calling web service: ' + err);
 		} else {
 		    //console.log('ToolInvoker/invokeWebService with requestType/form-data (key must be file):', res);
-		    showWebServiceCallResult_iframe(URL.output, res.text, res.charset, res.header['content-type']);
+		    showWebServiceCallResult_iframe(URL.output, res.text, res.charset, res.header['content-type'], cb);
 		}
 	    });
     }    
@@ -150,9 +147,8 @@ export function invokeWebService( URL ) {
 		.end((err, res) => {
 		    if (err) {
 			console.log('ToolInvoker/invokeWebService/post: error in calling webservice', err, file.name, URL);
-			alert('Result of calling web service: ' + err);
 		    } else {
-			showWebServiceCallResult_iframe( URL.output, res.text, res.charset, res.header['content-type']);
+			showWebServiceCallResult_iframe( URL.output, res.text, res.charset, res.header['content-type'], cb);
 		    }
 		});
 	}
@@ -167,7 +163,6 @@ export function invokeWebService( URL ) {
 	    .end((err, res) => {
 		if (err) {
 		    console.log('ToolInvoker/invokeWebService/form: error in calling webservice', err, file.name, data, URL);
-		    alert('Result of calling web service: ' + err);
 		} else {
 		    // var jsonDataWindow = window.open("data:text/json," + encodeURIComponent(res.text), "_blank");
 		    // if (window.focus) {		    

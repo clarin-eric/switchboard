@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: AlertMissingInfo.jsx
-// Time-stamp: <2018-09-28 12:51:55 (zinn)>
+// Time-stamp: <2018-11-14 08:52:20 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -48,7 +48,8 @@ class AlertMissingInfoText extends React.Component {
         <ModalDialog onClose={this.props.onClose} className="systemAlertDialog"  width={400}>
 	    <h2>Missing Information</h2>
 	    <p>
-	  Please specify the language AND mimetype of the given resource, then try again.
+	  The switchboard was unable to identify the language and/or mimetype of the given resource.
+	  Please specify the information manually.
 	    </p>
         </ModalDialog>
     </ModalContainer>;

@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Profiler.js
-// Time-stamp: <2018-10-04 15:35:52 (zinn)>
+// Time-stamp: <2018-11-14 08:53:11 (zinn)>
 // -------------------------------------------
 
 import Request from 'superagent';
@@ -12,11 +12,13 @@ import ResourceActions from '../actions/ResourceActions';
 
 export default class Profiler {
 
-    constructor( resource, caller, remoteFilename ) {
+    constructor( resource, caller, remoteFilename, cb ) {
 
 	this.protocol    = window.location.protocol;	// use https or http given parent window
 	this.resource = resource;
 	this.remoteFilename = remoteFilename;
+	this.cb = cb;
+	
 	this.windowAppContextPath = window.APP_CONTEXT_PATH;
 	// default values
 	this.resourceProps =
@@ -50,7 +52,7 @@ export default class Profiler {
 		.end((err, res) => {
 		    if (err) {
 			reject(err);
-			alert('Warning: could not identify media type.');
+			that.cb();		    
 		    } else {
 			that.resourceStateItem.mimetype = res.text;
 			ResourceActions.update(that.resourceStateItem);			
@@ -76,7 +78,7 @@ export default class Profiler {
 		.end((err, res) => {
 		    if (err) {
 			reject(err);
-			alert('Warning: could not identify language');
+			that.cb();		    
 		    } else {
 			let langStructure = processLanguage(res.text);
 			that.resourceStateItem.language = langStructure;
@@ -99,7 +101,7 @@ export default class Profiler {
 		.end((err, res) => {
 		    if (err) {
 			reject(err);
-			alert('Warning: could not identify language');
+			that.cb();		    
 		    } else {
 			let langStructure = processLanguage(res.text);
 			that.resourceStateItem.language = langStructure;
@@ -122,7 +124,7 @@ export default class Profiler {
 		.end((err, res) => {
 		    if (err) {
 			reject(err);
-			alert('Warning: could not convert to plain text.');
+			that.cb();		    			
 		    } else {
 			console.log('Profiler/getContent', res, file);
 			resolve(res);
@@ -182,14 +184,14 @@ export default class Profiler {
 			    console.log('Warning: conversion to plain/text failed', reject) })
 		} else if ( (resolve.text == "application/zip") ||
 			    (resolve.text == "application/x-gzip") ) {
-		    alert("Please identify the language of the zip file's content!")
+		    that.cb();
 		} else if ( (resolve.text == "audio/vnd.wave") ||
 			    (resolve.text == "audio/x-wav")    ||
 			    (resolve.text == "audio/wav")      ||
 			    (resolve.text == "audio/mp3")      ||			    
 			    (resolve.text == "audio/mp4")      ||
 			    (resolve.text == "audio/x-mpeg")) {
-		    alert("Please identify the language of the audio/video file!")
+		    that.cb();		    
 		} else {
 		    let promiseLanguage = that.identifyLanguage();
 		    promiseLanguage.then(

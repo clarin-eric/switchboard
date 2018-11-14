@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: AlertURLUploadError.jsx
-// Time-stamp: <2018-07-04 09:53:03 (zinn)>
+// Time-stamp: <2018-11-13 17:04:10 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -14,6 +14,12 @@ export default class AlertURLUploadError extends React.Component {
   static propTypes = {
     className: PropTypes.string,
   }
+
+  constructor(props) {
+	super(props);
+	this.propagateFun = this.props.onCloseProp;
+  }
+    
   state = {
     showModal: true
   }
@@ -21,7 +27,8 @@ export default class AlertURLUploadError extends React.Component {
     this.setState({showModal: true});
   }
   closeModal = () => {
-    this.setState({showModal: false});
+      this.setState({showModal: false});
+      this.propagateFun();            
   }
   render() {
     return <a className={this.props.className} onClick={this.openModal}>

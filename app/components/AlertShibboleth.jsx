@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: AlertShibboleth.jsx
-// Time-stamp: <2018-07-04 09:52:07 (zinn)>
+// Time-stamp: <2018-11-13 17:04:05 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -14,6 +14,12 @@ export default class AlertShibboleth extends React.Component {
   static propTypes = {
     className: PropTypes.string,
   }
+
+  constructor(props) {
+	super(props);
+	this.propagateFun = this.props.onCloseProp;
+    }
+    
   state = {
     showModal: true
   }
@@ -22,7 +28,9 @@ export default class AlertShibboleth extends React.Component {
   }
   closeModal = () => {
     this.setState({showModal: false});
+    this.propagateFun();      
   }
+    
   render() {
     return <a className={this.props.className} onClick={this.openModal}>
       {this.state.showModal ?

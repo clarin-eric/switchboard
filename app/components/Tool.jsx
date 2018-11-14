@@ -3,11 +3,10 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Tool.jsx
-// Time-stamp: <2018-11-07 22:00:02 (zinn)>
+// Time-stamp: <2018-11-14 11:40:43 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
-// import ReactTooltip from 'react-tooltip';
 import Accordion from '../helperComponents/Accordion';         
 import AccordionItem from '../helperComponents/AccordionItem';
 
@@ -18,6 +17,9 @@ import {gatherInvocationParameters, invokeWebService, invokeBrowserBasedTool} fr
 export default class Tool extends React.Component {
     constructor(props) {
 	super(props);
+
+	const {cb, items, resource, ...otherProps} = this.props;
+	this.cb = cb;
 	this.invokeTool = this.invokeTool.bind(this);
     }
 
@@ -25,7 +27,7 @@ export default class Tool extends React.Component {
     invokeTool( URL ) {
 	if (URL.toolType == "webService") {
 	    _paq.push(["trackEvent", 'WebServiceInvocation', URL.url]);	
-	    invokeWebService(URL);
+	    invokeWebService(URL, this.cb);
 	} else {
 	    _paq.push(["trackEvent", 'ToolInvocation', URL.url]); 
 	    invokeBrowserBasedTool( URL );

@@ -3,12 +3,14 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: TaskOrientedView.jsx
-// Time-stamp: <2018-11-08 21:26:03 (zinn)>
+// Time-stamp: <2018-11-14 11:46:19 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
 import Tool from './Tool.jsx';
 import Toggle   from 'react-toggle';
+import AlertAllowPopupWindows from './AlertAllowPopupWindows.jsx';
+
 import { SegmentedControl } from 'segmented-control-react';
 
 import { TOOLTYPE_TOOLS_ONLY, TOOLTYPE_TOOLS_PLUS_WEBSERVICES, TOOLTYPE_WEBSERVICES_ONLY,
@@ -37,7 +39,8 @@ export default class TaskOrientedView extends React.Component {
 	
 	this.state = {
 	    toolType:  TOOLTYPE_TOOLS_ONLY,
-	    toolOrder: TOOLORDER_BY_TOOL_TASK
+	    toolOrder: TOOLORDER_BY_TOOL_TASK,
+	    showAlertAllowPopupWindows: false	    	    	    
 	};	
     }
 
@@ -165,14 +168,22 @@ export default class TaskOrientedView extends React.Component {
 		    </table>
 	            </div>
 		    : null }
-		    
+
+	    {this.state.showAlertAllowPopupWindows ?
+	     <AlertAllowPopupWindows onCloseProp={ () => this.setState( {showAlertAllowPopupWindows: false} ) } />
+	     : null }
+	    
 	    { this.state.toolOrder == TOOLORDER_BY_TOOL_TASK ?
 	      <div>
 	      {	
 		  Object.keys(toolsPerTask).map((task, index) =>
 						      <h3 className="taskHead" key={task}>{task}
 						      <hr />
-  						      <Tool key={index} resource={resource} items={toolsPerTask[task]} />
+  						      <Tool key={index}
+							    resource={resource}
+							    items={toolsPerTask[task]}
+							    cb={ () => this.setState( {showAlertAllowPopupWindows: true} ) }
+							    />
 						      </h3>
 					       )
 	      }
@@ -182,7 +193,11 @@ export default class TaskOrientedView extends React.Component {
 		  Object.keys(toolsPerAlphabet).map((task, index) =>
 						      <h3 className="taskHead" key={task}>{task}
 						      <hr />
-  						      <Tool key={index} resource={resource} items={toolsPerAlphabet[task]} />
+  						      <Tool key={index}
+							    resource={resource}
+							    items={toolsPerAlphabet[task]}
+							    cb={ () => this.setState( {showAlertAllowPopupWindows: true} ) }
+							    />
 						      </h3>
 					       )
 	      }	      

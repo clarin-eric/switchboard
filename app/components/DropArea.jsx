@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: DropArea.jsx
-// Time-stamp: <2018-11-08 09:58:40 (zinn)>
+// Time-stamp: <2018-11-14 11:32:37 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -15,7 +15,8 @@ import AlertURLFetchError from './AlertURLFetchError.jsx';
 import AlertURLUploadError from './AlertURLUploadError.jsx';
 import AlertURLIncorrectError from './AlertURLIncorrectError.jsx';
 import AlertShibboleth from './AlertShibboleth.jsx';
-import AlertMissingInfoText from './AlertMissingInputText.jsx'; 
+import AlertMissingInputText from './AlertMissingInputText.jsx'; 
+
 
 import Resolver from '../back-end/Resolver';
 import Profiler from '../back-end/Profiler';
@@ -43,7 +44,8 @@ export default class DropArea extends React.Component {
 	    showAlertURLFetchError: false,
 	    showAlertURLIncorrectError: false,
 	    showAlertURLUploadError: false,
-	    showAlertMissingInputText: false	    
+	    showAlertMissingInputText: false,
+	    showAlertMissingInfo: false
 	};
 	
 	this.handleTextInputChange   = this.handleTextInputChange.bind(this);
@@ -215,7 +217,7 @@ export default class DropArea extends React.Component {
 	    },
 	    function(reject) {
 		console.log('DropArea.jsx/downloadAndProcessSharedLink failed', reject);
-		that.setState({showAlertURLFetchError: true} );		
+		that.setState( {showAlertURLFetchError: true} );		
 		that.setState( { isLoaded: true });
 	    });
     }   
@@ -224,14 +226,19 @@ export default class DropArea extends React.Component {
 
 	this.setState( { isLoaded: false });
 	let that = this;
+	let tthat = this;
 	let uploader = new Uploader( {file: currentFile, type: type} );
 
-	console.log('DropArea/uploadAndProcessFile', currentFile);
+	console.log('DropArea/uploadAndProcessFile', currentFile, that);
 	let promiseUpload = uploader.uploadFile();
 	
 	promiseUpload.then(
 	    function(resolve) {
-		let profiler = new Profiler( currentFile, "dnd", uploader.remoteFilename );
+		let profiler = new Profiler( currentFile,
+					     "dnd",
+					     uploader.remoteFilename,
+					     () => tthat.setState( {showAlertMissingInfo: true} )
+					   );
 		profiler.convertProcessFile();
 		that.setState( { isLoaded: true });
 	    },
@@ -386,19 +393,22 @@ export default class DropArea extends React.Component {
 		  </tbody>
   		</table>
 		{this.state.showAlertShibboleth ?
-    		 <AlertShibboleth />
-		 : null }		    
+    		 <AlertShibboleth        onCloseProp={ () => this.setState( {showAlertShibboleth: false} ) } />
+		 : null }
 	        {this.state.showAlertURLFetchError ?
-		 <AlertURLFetchError />
+		 <AlertURLFetchError     onCloseProp={ () => this.setState( {showAlertURLFetchError: false} ) }/>
 		 : null }
 	        {this.state.showAlertURLIncorrectError ?
-		 <AlertURLIncorrectError onCloseProp={ () => this.setState( {showAlertURLIncorrectError: false} ) }/>
+		 <AlertURLIncorrectError onCloseProp={ () => this.setState( {showAlertURLIncorrectError: false} ) } />
 		 : null }
 	        {this.state.showAlertMissingInputText ?
-		 <AlertMissingInfoText onCloseProp={ () => this.setState( {showAlertMissingInputText: false} ) }/>
-		 : null }				
+		 <AlertMissingInputText  onCloseProp={ () => this.setState( {showAlertMissingInputText: false} ) } />
+		 : null }
+	        {this.state.showAlertMissingInfo ?
+		 <AlertMissingInfo       onCloseProp={ () => this.setState( {showAlertMissingInfo: false} ) } />
+		 : null }
 	        {this.state.showAlertURLUploadError ?
-		 <AlertURLUploadError />
+		 <AlertURLUploadError    onCloseProp={ () => this.setState( {showAlertURLUploadError: false} ) } />
 		 : null }
 		{this.showFiles()}
 		</div>
@@ -412,23 +422,27 @@ export default class DropArea extends React.Component {
                    </div>
 		</h2>
 		{this.state.showAlertShibboleth ?
-    		 <AlertShibboleth />
+    		 <AlertShibboleth onCloseProp={ () => this.setState( {showAlertShibboleth: false} ) } />
 		 : null }
 
 	        {this.state.showAlertURLFetchError ?
-		 <AlertURLFetchError />
+		 <AlertURLFetchError onCloseProp={ () => this.setState( {showAlertURLFetchError: false} ) } />
 		 : null }
 
 	        {this.state.showAlertURLIncorrectError ?
-		 <AlertURLIncorrectError onCloseProp={ () => this.setState( {showAlertURLIncorrectError: false} ) }/>		 
+		 <AlertURLIncorrectError onCloseProp={ () => this.setState( {showAlertURLIncorrectError: false} ) } />		 
 		 : null }				
 
 	        {this.state.showAlertMissingInputText ?
-		 <AlertMissingInfoText onCloseProp={ () => this.setState( {showAlertMissingInputText: false} ) }/>
+		 <AlertMissingInputText onCloseProp={ () => this.setState( {showAlertMissingInputText: false} ) } />
+		 : null }
+
+	        {this.state.showAlertMissingInfo ?
+		 <AlertMissingInfo onCloseProp={ () => this.setState( {showAlertMissingInfo: false} ) } />
 		 : null }
 		
 	        {this.state.showAlertURLUploadError ?
-		 <AlertURLUploadError />
+		 <AlertURLUploadError onCloseProp={ () => this.setState( {showAlertURLUploadError: false} ) } />
 		 : null }	    
                </Loader>		    
 	    )
