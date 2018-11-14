@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: DropArea.jsx
-// Time-stamp: <2018-11-14 11:32:37 (zinn)>
+// Time-stamp: <2018-11-14 12:30:45 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -12,11 +12,10 @@ import Dropzone from 'react-dropzone';
 import ResourceActions from '../actions/ResourceActions';
 import TextareaAutosize from 'react-autosize-textarea';
 import AlertURLFetchError from './AlertURLFetchError.jsx';
-import AlertURLUploadError from './AlertURLUploadError.jsx';
 import AlertURLIncorrectError from './AlertURLIncorrectError.jsx';
 import AlertShibboleth from './AlertShibboleth.jsx';
+import AlertMissingInfo from './AlertMissingInfo.jsx';
 import AlertMissingInputText from './AlertMissingInputText.jsx'; 
-
 
 import Resolver from '../back-end/Resolver';
 import Profiler from '../back-end/Profiler';
