@@ -104,8 +104,8 @@ const common = {
 
 	new webpack.DefinePlugin({
 	    'process.env': {
-                'NODE_ENV'           : JSON.stringify('development'),
-                //'NODE_ENV'           : JSON.stringify('production'),		
+                //'NODE_ENV'           : JSON.stringify('development'),
+                'NODE_ENV'           : JSON.stringify('production'),		
 
 		// include tools that require authentication
 		'INCL_TOOLS_REQ_AUTH': JSON.stringify('yes'),
@@ -118,7 +118,7 @@ const common = {
 		'NEXTCLOUD_PASS'     : JSON.stringify('clarin-plus'),
 
 		// version as displayed on the main page
-		'VERSION'            : JSON.stringify('v1.3.3-dev/docker (Nov 14, 2018)'),
+		'VERSION'            : JSON.stringify('v1.3.3-pro/docker (Nov 15, 2018)'),
 
 		// contact as displayed of the main page
 		'CONTACT'            : JSON.stringify('switchboard@clarin.eu')
