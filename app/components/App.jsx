@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: App.jsx
-// Time-stamp: <2018-11-08 16:18:19 (zinn)>
+// Time-stamp: <2018-11-09 13:59:03 (zinn)>
 // -------------------------------------------
 
 import AltContainer from 'alt-container';
@@ -230,7 +230,7 @@ export default class App extends React.Component {
 		<Route path="/b2drop/:fileURL"
 	               render={(props) => <DropArea clearDropzoneFun={this.clearDropzone} caller="B2DROP" {...props} /> } />
 		  <Route path="/d4science/:fileURL"
-			 render={(props) => <DropArea clearDropzoneFun={this.clearDropzone} caller="D4SCIENCE" {...props} /> } />		
+			 render={(props) => <DropArea clearDropzoneFun={this.clearDropzone} caller="D4SCIENCE" {...props} /> } />
 		    <Route path="/vto/"
 			   render={(props) => <ShowAllTools showAllToolsFun={this.showAllTools} caller="CLARIN" {...props} /> } />
 		      <Route path="*" component={AlertURLFetchError} />
