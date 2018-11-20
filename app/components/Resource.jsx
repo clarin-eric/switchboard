@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Resource.jsx
-// Time-stamp: <2018-10-08 10:00:26 (zinn)>
+// Time-stamp: <2018-11-20 10:08:25 (zinn)>
 // -------------------------------------------
 
 import AltContainer from 'alt-container';
@@ -89,7 +89,8 @@ export default class Resource extends React.Component {
 	
     	var fileNameNoPrefix = fileName.replace('/clrs-dev', '');
 	fileNameNoPrefix = fileNameNoPrefix.replace('/clrs', '');
-	return fileNameNoPrefix.replace('/download?input=', '');
+	fileNameNoPrefix = fileNameNoPrefix.replace('/download?input=', '');
+	return fileNameNoPrefix.substring(0,40);
     }
     
     render() {
