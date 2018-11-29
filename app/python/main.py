@@ -1,7 +1,7 @@
 
 # C. Zinn
 # -------------------------------------------
-# Time-stamp: <2018-11-14 14:12:41 (zinn)>
+# Time-stamp: <2018-11-20 13:48:59 (zinn)>
 # -------------------------------------------
 # Python script to download resources (or to resolve handles)
 
@@ -38,7 +38,7 @@ def application(environ, start_response):
             return [str.encode(resolve, 'utf-8')]
         else:
             res = requests.get(input)
-            if ( isTextFile( res.headers['content-type'] ) ):
+            if ( ('content-type' in res.headers) and isTextFile( res.headers['content-type'] ) ):
                 start_response(str(res.status_code), [('Content-Type', res.headers['content-type'])])
                 return [str.encode(res.text, 'utf-8')]
             else:
@@ -46,8 +46,12 @@ def application(environ, start_response):
                 buffer = BytesIO()
                 buffer.write(content)
                 status  = str(res.status_code)
-                headers = [('Content-Type',   res.headers['content-type']),
-                           ('Content-Length', str(len(content)))]
+                if ('content-type' in res.headers):
+                    headers = [('Content-Type',   res.headers['content-type']),
+                               ('Content-Length', str(len(content)))]
+                else:
+                    headers = [('Content-Length', str(len(content)))]
+                    
                 start_response(status, headers)
                 return buffer.getvalue()
                 #return [content]
