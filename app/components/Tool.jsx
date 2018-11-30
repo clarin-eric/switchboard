@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Tool.jsx
-// Time-stamp: <2018-11-14 11:40:43 (zinn)>
+// Time-stamp: <2018-11-29 23:07:05 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -11,7 +11,7 @@ import Accordion from '../helperComponents/Accordion';
 import AccordionItem from '../helperComponents/AccordionItem';
 
 import { map639_1_to_639_3, map639_3_to_639_1 } from '../back-end/util';
-import {gatherInvocationParameters, invokeWebService, invokeBrowserBasedTool} from '../back-end/ToolInvoker';
+import {gatherInvocationParameters, invokeBrowserBasedTool} from '../back-end/ToolInvoker';
 
 
 export default class Tool extends React.Component {
@@ -25,13 +25,8 @@ export default class Tool extends React.Component {
 
     // tool invocation informs Piwik
     invokeTool( URL ) {
-	if (URL.toolType == "webService") {
-	    _paq.push(["trackEvent", 'WebServiceInvocation', URL.url]);	
-	    invokeWebService(URL, this.cb);
-	} else {
-	    _paq.push(["trackEvent", 'ToolInvocation', URL.url]); 
-	    invokeBrowserBasedTool( URL );
-	}
+	_paq.push(["trackEvent", 'ToolInvocation', URL.url]); 
+	invokeBrowserBasedTool( URL );
     }
     
     render() {

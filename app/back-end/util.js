@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: util.js
-// Time-stamp: <2018-10-16 10:26:24 (zinn)>
+// Time-stamp: <2018-11-30 09:54:24 (zinn)>
 // -------------------------------------------
 
 export const inclToolsReqAuth = process.env.INCL_TOOLS_REQ_AUTH;
@@ -34,9 +34,12 @@ export const fileStorageServerNEXTCLOUD_localhost = '/nextcloud/';
 
 export const matcherURL = '/matcher';
 
-export const TOOLTYPE_TOOLS_ONLY = 0;
-export const TOOLTYPE_TOOLS_PLUS_WEBSERVICES = 1;
-export const TOOLTYPE_WEBSERVICES_ONLY = 2;
+export const TOOLTYPE_QUANTITATIVE_TOOLS = 0;
+export const TOOLTYPE_ALL_TOOLS = 1;
+export const TOOLTYPE_QUALITATIVE_TOOLS = 2;
+
+export const TOOL_AUTH_REQUIRED  = 0;
+export const TOOL_AUTH_ALL_TOOLS = 1;
     
 export const TOOLORDER_BY_TOOL_TASK = 0;
 export const TOOLORDER_BY_TOOL_NAME = 1;

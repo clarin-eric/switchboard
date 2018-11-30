@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: UserFAQ.jsx
-// Time-stamp: <2018-11-09 09:31:32 (zinn)>
+// Time-stamp: <2018-11-29 23:06:11 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -73,8 +73,8 @@ class UserFAQText extends React.Component {
 	    </li>
 	    <li>
 	      <em>Q: A tool is not working. What should I do? </em>
-	      <p>A: Please contact us when a tool (or web service) does not work as advertised, or when you
-		would like to have some tool (or web service) added to the switchboard.
+	      <p>A: Please contact us when a tool does not work as advertised, or when you
+		would like to have some tool added to the switchboard.
 	      </p>
 	    </li>
 	    <li>

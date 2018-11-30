@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: TaskOrientedView.jsx
-// Time-stamp: <2018-11-14 15:59:56 (zinn)>
+// Time-stamp: <2018-11-30 11:51:06 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -13,15 +13,24 @@ import AlertAllowPopupWindows from './AlertAllowPopupWindows.jsx';
 
 import { SegmentedControl } from 'segmented-control-react';
 
-import { TOOLTYPE_TOOLS_ONLY, TOOLTYPE_TOOLS_PLUS_WEBSERVICES, TOOLTYPE_WEBSERVICES_ONLY,
+import { TOOLTYPE_QUANTITATIVE_TOOLS,
+	 TOOLTYPE_ALL_TOOLS,
+	 TOOLTYPE_QUALITATIVE_TOOLS,
+	 TOOL_AUTH_ALL_TOOLS,
+	 TOOL_AUTH_REQUIRED,
 	 TOOLORDER_BY_TOOL_TASK, TOOLORDER_BY_TOOL_NAME
        } from './../back-end/util';
 
 const toolTypeSegments = [
-	{ name: 'Only Tools' },
-	{ name: 'Both Tools & Web Services' },
-	{ name: 'Only Web Services' }
- ];
+	{ name: 'Quantitative Analysis Tools' },
+	{ name: 'All Tools' },
+	{ name: 'Qualitative Analysis Tools' }
+];
+
+const toolAuthSegments = [
+	{ name: 'Only Tools Without Authentication' },
+	{ name: 'All Tools' }
+];
 
 const toolOrderSegments = [
 	{ name: 'Sort by Task' },
@@ -32,35 +41,44 @@ export default class TaskOrientedView extends React.Component {
    
     constructor(props) {
 	super(props);
+	this.handleToolAuthChange  = this.handleToolAuthChange.bind(this);
 	this.handleToolTypeChange  = this.handleToolTypeChange.bind(this);
 	this.handleToolOrderChange = this.handleToolOrderChange.bind(this);
 	this.groupTools = this.groupTools.bind(this);
-	this.sieve = this.sieve.bind(this);
+	this.wsSieve = this.wsSieve.bind(this);
+	this.authSieve = this.authSieve.bind(this);
 	
 	this.state = {
-	    toolType:  TOOLTYPE_TOOLS_ONLY,
+	    toolAuth:  TOOL_AUTH_ALL_TOOLS,
+	    toolType:  TOOLTYPE_ALL_TOOLS,
 	    toolOrder: TOOLORDER_BY_TOOL_TASK,
 	    showAlertAllowPopupWindows: false	    	    	    
 	};	
     }
 
-    sieve(tool) {
+    wsSieve(tool) {
+	return ( tool.softwareType == "webService" ? false : true );
+    }
+
+    authSieve(tool) {
 	var result = true;
 	
-	switch (this.state.toolType) {
-	case TOOLTYPE_TOOLS_ONLY:
-	    result = ( tool.softwareType == "webService" ? false : true)
+	switch (this.state.toolAuth) {
+	case TOOL_AUTH_REQUIRED:
+	    result = ( tool.authentication == "no" ? true : false )
 	    break;
-	case TOOLTYPE_TOOLS_PLUS_WEBSERVICES:
+	default:
 	    result = true;
 	    break;
-	default: // TOOLTYPE_WEBSERVICES_ONLY
-	    result = ( tool.softwareType == "webService" ? true : false)
 	}
 	return result;
     }
     
-
+    handleToolAuthChange(index) {
+	console.log(`TaskOrientedView/handleToolAuthChange: selected index for inclusion: ${index}`);
+	this.setState( {toolAuth: index} );			
+    }
+    
     handleToolTypeChange(index) {
 	console.log(`TaskOrientedView/handleToolTypeChange: selected index for inclusion: ${index}`);
 	this.setState( {toolType: index} );			
@@ -126,7 +144,10 @@ export default class TaskOrientedView extends React.Component {
     
     render() {
 	const tools = this.props.tools;
-	const toolsAfterFilter = tools.filter( this.sieve );
+
+	// filter out all web services
+	const onlyTools = tools.filter( this.wsSieve );
+	const toolsAfterFilter = onlyTools.filter( this.authSieve );
 
 	toolsAfterFilter.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0)); 
 	
@@ -147,6 +168,8 @@ export default class TaskOrientedView extends React.Component {
 		    <table width="800px">
 		      <tbody>
 			<tr>
+		    
+		    { /*
 			  <td>
 			    <SegmentedControl
 			      segments={toolTypeSegments}
@@ -155,6 +178,8 @@ export default class TaskOrientedView extends React.Component {
 			      onChangeSegment={this.handleToolTypeChange}           
 			      />
 			  </td>
+		      */
+		    }
 			  <td>
 			    <SegmentedControl
 			      segments={toolOrderSegments}
@@ -163,6 +188,15 @@ export default class TaskOrientedView extends React.Component {
 			      onChangeSegment={this.handleToolOrderChange}           
 			      />
 			  </td>
+
+			  <td>
+			    <SegmentedControl
+			      segments={toolAuthSegments}
+			      selected={this.state.toolAuth} 
+			      variant="dark"
+			      onChangeSegment={this.handleToolAuthChange}           
+			      />
+			  </td>			  
 			</tr>
 		      </tbody>
 		    </table>

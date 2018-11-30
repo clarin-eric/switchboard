@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: AlertNoTools.jsx
-// Time-stamp: <2018-09-28 13:38:07 (zinn)>
+// Time-stamp: <2018-11-29 23:06:31 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -48,7 +48,7 @@ class AlertNoToolsText extends React.Component {
         <ModalDialog onClose={this.props.onClose} className="systemAlertDialog"  width={400}>
 	    <h2>No Applicable Tools</h2>
 	  <p>
-	  The Switchboard has currently no applicable tool or web service than can process the given resource (given its mediatype and language). Please try again with another resource.
+	  The Switchboard has currently no applicable tool than can process the given resource (given its mediatype and language). Please try again with another resource.
 	    </p>
         </ModalDialog>
     </ModalContainer>;

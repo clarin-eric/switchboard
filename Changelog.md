@@ -1,6 +1,11 @@
 # Changelog
 	All notable changes to this project will be documented in this file.
 
+## [1.4.0] - 2018-11-30
+### Removed
+	- removed support for web services
+	- this includes update of registry in clrs-rest backend
+
 ## [1.3.4] - 2018-11-20
 ### Changed
 	- changed nginx configuration for D4Science integration

@@ -3,201 +3,15 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: ToolInvoker.js
-// Time-stamp: <2018-11-14 11:45:52 (zinn)>
+// Time-stamp: <2018-11-29 23:04:53 (zinn)>
 // -------------------------------------------
 
 import { map639_1_to_639_3, map639_3_to_639_1 } from './util';
 import Request from 'superagent';
 
-function showWebServiceCallResult( result ) {
-    var jsonDataWindow = window.open("data:text/json," + result, // data:text/xml
-				     "_blank");
-    jsonDataWindow.document.title = "Web Service Result";
-    if (window.focus) {
-	jsonDataWindow.focus();
-    }
-    //console.log('ToolInvoker/invokeWebService/data: success in calling webservice', "data:text/json," + result);
-}
-
-function showWebServiceCallResult_iframe( outputFormat, result, charset, contentType, cb ) {
-
-    console.log('ToolInvoker/showWebServiceCallResult_iframe', outputFormat, result, charset, contentType, cb );
-    var contentString = "";
-    switch (outputFormat) {
-    case "text/xml":
-	contentString = result;
-	showWebServiceCallResult_write(result, cb);
-	return;
-	break;
-    case "application/json":
-	showWebServiceCallResult_write(result, cb);
-	return;
-	//^^^^//
-	
-	var jsonReturn = encodeURIComponent(result); //JSON.parse(result);
-	contentString = "data:text/json,"  + JSON.stringify(jsonReturn);
-	break;
-    default:
-	contentString = result;
-    }
-	
-    // var jsonDataWindow  = window.open("data:text/json," + encodeURIComponent(jsonStr), "_blank");
-    // jsonDataWindow.document.title = "Web Service Result";
-    // if (window.focus) {
-    // 	jsonDataWindow.focus();
-    // }    
-    
-    var iframe = "<iframe width='100%' height='100%' src='" + contentString + "'></iframe>"
-    var x = window.open();
-    if (x === null) {
-	cb();
-    } else {
-	x.document.title = "Web Service Result";
-	x.document.open();
-	x.document.write("<meta http-equiv='Content-Type' content='application/json; charset=utf-8'>");
-	x.document.write(iframe);
-	x.document.close();
-    }
-}
-
-function showWebServiceCallResult_write( result, cb ) {
-    var x = window.open();
-    if (x === null) {
-	//console.log('in functon ToolInvoker/showWebServiceCallResult_write', x);
-	cb();
-    } else {
-	x.document.open();
-	x.document.title = "Web Service Result";    
-	// x.document.write('<html><body><pre>' + result + '</pre></body></html>');
-	x.document.write('<textarea rows="80" cols="80" style="border:none;">' + result + '</textarea>');
-	//			x.document.write(result);			
-	x.document.close();
-	if (window.focus) {
-	    x.focus();
-	}
-    }
-}
-
 export function invokeBrowserBasedTool( URL ) {
     var win = window.open(URL.url, '_blank');
     win.focus();	
-}
-
-export function invokeWebService( URL, cb ) {
-    let file = URL.formVal;
-
-    // there are a number of web services that are invoked with HTTP GET
-    // here, we invoke them in the same way than browser-based tools.
-    if (URL.requestType == "get") {
-	var win = window.open(URL.url, '_blank');
-	win.focus();
-    }
-
-    // e.g., the TEI-TCF converter, Nametag, KER
-    else if (URL.requestType == "form-data (input key must have file contents)") {
-	var read = new FileReader(); 
-	read.readAsText(file);  
-	read.onloadend = function(){
-	    // change the file object into its file contents
-	    URL.parameterForm.set(URL.formPar, read.result);
-	    for (var key of URL.parameterForm.entries()) {
-		console.log('updated values', key[0] + ', ' + key[1]);
-	    }
-	    Request
-		.post(URL.url)
-		.send(URL.parameterForm)
-		.end((err, res) => {
-		    if (err) {
-			console.log('ToolInvoker/invokeWebService/form-data: error in calling webservice', err, file.name, URL);
-		    } else {
-			//console.log('ToolInvoker/invokeWebService with requestType/form-data:', res);
-			showWebServiceCallResult_iframe(URL.output, res.text, res.charset, res.header['content-type'], cb);
-		    }
-		});
-	}
-    }
-    else if (URL.requestType == "form-data (input key must have file value)") {
-	Request
-	    .post(URL.url)
-	    .send(URL.parameterForm)	
-	    //.field(URL.formPar, URL.formVal)
-	    .end((err, res) => {
-		if (err) {
-		    console.log('ToolInvoker/invokeWebService/form-data (key must be file): error in calling webservice', err, file.name, URL);
-		} else {
-		    //console.log('ToolInvoker/invokeWebService with requestType/form-data (key must be file):', res);
-		    showWebServiceCallResult_iframe(URL.output, res.text, res.charset, res.header['content-type'], cb);
-		}
-	    });
-    }    
-    // e.g., for the GATE Annie web service (for plain text files, the raw data is being posted)
-    else if (URL.requestType == "post") {
-	var read = new FileReader(); 
-	read.readAsText(file);  
-
-	// deprecated
-	// read.readAsBinaryString(file);
-	// read.readAsText(file, 'ISO-8859-1'); // by default, UTF-8 is assumed
-	
-	read.onloadend = function(){
-	    Request
-		.post(URL.url)
-		.send(read.result)
-		.set('Content-Type', 'text/plain')	    	    
-		.end((err, res) => {
-		    if (err) {
-			console.log('ToolInvoker/invokeWebService/post: error in calling webservice', err, file.name, URL);
-		    } else {
-			showWebServiceCallResult_iframe( URL.output, res.text, res.charset, res.header['content-type'], cb);
-		    }
-		});
-	}
-    } else {
-	let data = new FormData();
-	//data.set( URL.formPar, file, file.name);
-	data.append( URL.formPar, file, file.name);
-	Request
-	    .post(URL.url)
-	    .send(data)
-	//		.set('Content-Type', 'text/plain')	    
-	    .end((err, res) => {
-		if (err) {
-		    console.log('ToolInvoker/invokeWebService/form: error in calling webservice', err, file.name, data, URL);
-		} else {
-		    // var jsonDataWindow = window.open("data:text/json," + encodeURIComponent(res.text), "_blank");
-		    // if (window.focus) {		    
-		    // 	jsonDataWindow.focus();
-		    // }
-		    
-		    // var anotherJsonDataWindow = window.open("data:," + encodeURIComponent(res.text), "_blank");
-		    // if (window.focus) {
-		    // 	anotherJsonDataWindow.focus();
-		    // }
-		    
-//		    console.log('ToolInvoker/invokeWebService/form: success in calling webservice', "data:," + encodeURIComponent(res.text));
-//		    console.log('ToolInvoker/invokeWebService entire response:', res);
-
-		    var jsonReturn = JSON.parse(res.text);
-		    //console.log('parsed JSON', jsonReturn);
-		    var jsonStr = JSON.stringify(jsonReturn);
-		    //console.log('stringified JSON', jsonStr);		    
-		    var jsonDataWindow = window.open("data:text/json," + encodeURIComponent(jsonStr), "_blank");
-		    jsonDataWindow.document.title = "Web Service Result";
-		    if (window.focus) {		    
-			jsonDataWindow.focus();
-		    }
-		    
-		    // var x = window.open();
-		    // x.document.open();
-		    // x.document.write('<html><body><pre>' + res.text + '</pre></body></html>');
-		    // x.document.close();
-		    // x.document.title = URL.url;
-		    // if (window.focus) {
-		    // 	x.focus();
-		    // }		    
-		}
-	    });
-    }
 }
 
 export function gatherInvocationParameters( toolDescription, resourceDescription ) {
@@ -241,7 +55,7 @@ export function gatherInvocationParameters( toolDescription, resourceDescription
     // parameterStringURL holds the URL encoding of the parameters (browser-based tools using GET)
     var parameterStringURL = "";
 
-    // parameterForm holds the FORM encoding of the parameters (web services using POST)
+    // parameterForm holds the FORM encoding of the parameters
     var parameterForm = new FormData();
     var formParameter = "data";                  // default value for form
 
@@ -256,12 +70,7 @@ export function gatherInvocationParameters( toolDescription, resourceDescription
 		    if (mapping.hasOwnProperty(parameter)) {
 			switch (parameter) {
 			case "input":
-			    if ( (softwareType == "webService") && (requestType !== "get") ){
-				formParameter = mapping[parameter];
-				parameterForm.append( formParameter, file, file.name);				
-			    } else {
-				parameterStringURL = parameterStringURL.concat( mapping[parameter]).concat("=").concat( remoteFilename );
-			    }
+			    parameterStringURL = parameterStringURL.concat( mapping[parameter]).concat("=").concat( remoteFilename );
 			    break;
 			case "lang":
 			    parameterStringURL = parameterStringURL.concat( mapping[parameter]).concat("=").concat( language );
@@ -292,13 +101,8 @@ export function gatherInvocationParameters( toolDescription, resourceDescription
 	    if (parameters.hasOwnProperty(parameter)) {
 		switch (parameter) {
 		case "input":
-		    if ((softwareType == "webService") && (requestType !== "get")){
-			formParameter = parameter;
-			parameterForm.append( formParameter, file, file.name);							
-		    } else {
-			parameterStringURL = parameterStringURL.concat(parameter).concat("=").concat( remoteFilename );
-			parameterForm.append( parameter, remoteFilename );			
-		    }
+		    parameterStringURL = parameterStringURL.concat(parameter).concat("=").concat( remoteFilename );
+		    parameterForm.append( parameter, remoteFilename );			
 		    break;
 		case "lang":
 		    parameterStringURL = parameterStringURL.concat(parameter).concat("=").concat( language );
@@ -319,39 +123,19 @@ export function gatherInvocationParameters( toolDescription, resourceDescription
     }
 
     var urlWithParameters = "";
-    if ((softwareType == "webService") && (requestType !== "get")) {
-	urlWithParameters = toolDescription.url;
-	//console.log('ToolInvoker/urlWithParameters/webService', urlWithParameters, parameterStringURL)
+    var turl = toolDescription.url;
+    // need to check whether toolDescription.url already contains parameters (that is, a '?')
+    if ( (turl.indexOf("\?") !== -1 ) || turl.includes('?') || turl.includes('\?'))  {
+	urlWithParameters = turl + "&" + parameterStringURL;
     } else {
-	var turl = toolDescription.url;
-	// need to check whether toolDescription.url already contains parameters (that is, a '?')
-	if ( (turl.indexOf("\?") !== -1 ) || turl.includes('?') || turl.includes('\?'))  {
-	    urlWithParameters = turl + "&" + parameterStringURL;
-	} else {
-	    urlWithParameters = turl + "?" + parameterStringURL;
-	}
+	urlWithParameters = turl + "?" + parameterStringURL;
     }
 
-    if (softwareType == "webService") {
-	// with web services, things get complicated
-	rtnValue =
-	    {
-		toolType      : "webService",
-		url           : urlWithParameters,
-		parameterForm : parameterForm,
-		formPar       : formParameter,
-		formVal       : file,
-		requestType   : requestType,
-		output        : output
-	    };
-    } else {
-	// browser based tools are invoked with an HTTP get request with parameters URL-encoded
-	rtnValue = 
-	    {
-		toolType    : "browserBased",
-		url         : urlWithParameters
-	    };
-    }
+    rtnValue = 
+	{
+	    toolType    : "browserBased",
+	    url         : urlWithParameters
+	};
 
     // FormData cannot be logged easily, and the following does not work in Safari, only Chrome and Firefix
     /*
