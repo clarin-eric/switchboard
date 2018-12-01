@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Resource.jsx
-// Time-stamp: <2018-11-20 10:08:25 (zinn)>
+// Time-stamp: <2018-12-01 12:42:27 (zinn)>
 // -------------------------------------------
 
 import AltContainer from 'alt-container';
@@ -36,20 +36,23 @@ export default class Resource extends React.Component {
     }
 
     setLanguage( resource, language ) {
-	//	console.log('Resource/setLanguage', resource, language);
+	_paq.push(["trackEvent", 'setLanguage', language.label]); 	    	
+	console.log('Resource/setLanguage', resource, language, _paq);
 	resource.language = { language : language.label,
 			      threeLetterCode: language.value };
 	ResourceActions.update(resource);	
     }
 
     setMimetype( resource, mimetype ) {
-	// console.log('Resource/setMimetype', resource, mimetype);	
+	_paq.push(["trackEvent", 'setMimetype', resource.mimetype]); 	    
+	console.log('Resource/setMimetype', resource, mimetype, _paq);	
 	resource.mimetype = mimetype.value;
 	ResourceActions.update(resource);
     }
 
     showTools(props, resource) {
 
+	_paq.push(["trackEvent", 'showTools', resource.language.label, resource.mimetype]); 	    
 	console.log('Resource/showTools', resource, props);
 
 	const handleToolsChange = props.passToolsChangeToParent;
@@ -141,16 +144,16 @@ export default class Resource extends React.Component {
 		    
 		    <td className="note">
     		      <MimetypeMenu defaultValue = { {label: resource.mimetype,
-		  		    value: resource.mimetype
-				    }
-				    }
+		  				      value: resource.mimetype
+						     }
+						   }
 				    onMimetypeSelection={this.setMimetype} />	
 		    </td>
 		    <td className="note">
 		      <LanguageMenu defaultValue = { { label: resource.language.language,
-				    value: resource.language.threeLetterCode
-				    }
-				    }
+						       value: resource.language.threeLetterCode
+						     }
+						   }
 				    onLanguageSelection={this.setLanguage} />	
 		    </td>		  
                   </tr>

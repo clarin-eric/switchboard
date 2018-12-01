@@ -3,11 +3,10 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: ToolInvoker.js
-// Time-stamp: <2018-11-29 23:04:53 (zinn)>
+// Time-stamp: <2018-11-30 22:58:42 (zinn)>
 // -------------------------------------------
 
 import { map639_1_to_639_3, map639_3_to_639_1 } from './util';
-import Request from 'superagent';
 
 export function invokeBrowserBasedTool( URL ) {
     var win = window.open(URL.url, '_blank');

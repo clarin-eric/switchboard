@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: DropArea.jsx
-// Time-stamp: <2018-11-30 12:37:16 (zinn)>
+// Time-stamp: <2018-12-01 14:02:23 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -117,6 +117,8 @@ export default class DropArea extends React.Component {
 		textInputValue : "",  // reset textarea for textual input
 		files: [blob]         // put blob into file to trigger Resources
 	    });
+
+	    _paq.push(["trackEvent", 'textInput', textContent, textContent.length]);
 	}
 	
 	event.preventDefault();
@@ -139,6 +141,8 @@ export default class DropArea extends React.Component {
 		files: link
 	    });
 	    event.target.value = "";
+
+	    _paq.push(["trackEvent", 'urlInput', link, link.length]);	    
 	} else {
 	    this.setState({showAlertURLIncorrectError: true} );		
 	}	
@@ -269,6 +273,8 @@ export default class DropArea extends React.Component {
 	this.setState({
 	    files: files
 	});
+
+	_paq.push(["trackEvent", 'fileInput', files[0].name]);
     }
 
     render() {
@@ -282,7 +288,8 @@ export default class DropArea extends React.Component {
 		
 	const transferalInfo = `Resource transferal from ${this.props.caller}. Please check the information below, then press "Show Tools"`;
 
-	console.log('DropArea/render', isLoaded, this.state.isLoaded);
+	console.log('DropArea/render', isLoaded, this.state.isLoaded, this.props.caller);
+	_paq.push(["trackEvent", 'enterSwitchboard', this.props.caller]); 	    		
 	
         var styleDropbox = {
             borderWidth: 2,
