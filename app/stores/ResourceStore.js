@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: ResourceStore.js
-// Time-stamp: <2018-06-29 20:25:23 (zinn)>
+// Time-stamp: <2018-12-14 10:27:16 (zinn)>
 // -------------------------------------------
 
 import uuid from 'node-uuid';
@@ -44,7 +44,6 @@ class ResourceStore {
 	    resources: resources.concat(resource)
 	});
 
-	//console.log('ResourceStore/create', resource);
 	return resource;
     }
     
@@ -57,7 +56,6 @@ class ResourceStore {
 	    return resource;
 	});
 
-	//console.log('ResourceStore/update', resources);
 	this.setState({resources});
     }
 
@@ -69,7 +67,6 @@ class ResourceStore {
 
     getResource(resourceId) {
 	let resource = this.resources.filter((resource) => resource.id == resourceId);
-	//console.log('ResourceStore/getResource', { resource: resource[0] });
 	return { resource: resource[0] };
     }
 

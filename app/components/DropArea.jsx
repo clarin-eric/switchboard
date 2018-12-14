@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: DropArea.jsx
-// Time-stamp: <2018-12-01 14:02:23 (zinn)>
+// Time-stamp: <2018-12-14 14:24:21 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -24,20 +24,25 @@ import Uploader from '../back-end/Uploader';
 import Downloader from '../back-end/Downloader';
 import {fileExtensionChooser, processLanguage, unfoldHandle} from '../back-end/util';
 
+// not used yet; might replace or add to drop boxes as background image
 import BackgroundFile from './../images/file-solid.png';
 import BackgroundLink from './../images/location-arrow-solid.png';
 import BackgroundText from './../images/keyboard-solid.png';
+
+import FadeProps from 'fade-props';
 
 export default class DropArea extends React.Component {
     constructor(props) {
 	super(props);
 
-	this.showFiles   = this.showFiles.bind(this);
+	// passed from main component to allow trash bin to clear task oriented view
+	this.handleToolsChange = props.passToolsChangeToParent;
+	
+	console.log('DropArea', props);
 	this.onDrop      = this.onDrop.bind(this);
 	
 	this.state = {
-	    isLoaded: true,	    
-	    files: [],
+	    isLoaded: true,
 	    textInputValue: "",
 	    urlInputValue: "",	    
 	    showAlertShibboleth: false,	    
@@ -54,7 +59,8 @@ export default class DropArea extends React.Component {
 	this.handleUrlInputChange   = this.handleUrlInputChange.bind(this);
 	this.handleUrlInputSubmit   = this.handleUrlInputSubmit.bind(this);
 	
-	this.processParameters         = this.processParameters.bind(this);
+	this.processParameters      = this.processParameters.bind(this);
+	this.clearDropzone          = this.clearDropzone.bind(this);
     }
 
     componentDidMount() {
@@ -62,34 +68,35 @@ export default class DropArea extends React.Component {
 	// fetch all parameter from router
 	const parameters = this.props.match.params;
 
-	// get the caller, one of VLO, VCR, FCS, or B2DROP, or D4SCIENCE
-	const caller = this.props.caller;
-
 	// process parameters
-	this.processParameters(caller, parameters);
+	this.processParameters(this.props.caller, parameters);
+
     }
 
     processParameters( caller, parameters ) {
 
 	console.log('DropArea/processParameters', caller, parameters);	
 
-	// when called from the VLO, these _might_ be set
-	const language = parameters.fileLanguage;
-	const mimeType = decodeURIComponent(parameters.fileMimetype);
+	/* Change in policy:
+
+	   parameters.fileLanguage 
+	   parameters.fileMimetype
+
+	   now ignored. Our own Apache Tika takes care of this
+
+	*/
 	
 	if ( (caller == "VCR")    || (caller == "FCS") || (caller == "VLO") || 
 	     (caller == "B2DROP") || (caller == "D4SCIENCE") ) {
 	    // remove prior resources
 	    ResourceActions.reset();
 
-	    // retrieve URL, and take care of 'hdl:' to be expanded 'hdl.handle.net'
+	    // some minor treatment for hdl: in the fileURL
 	    var fileURL = unfoldHandle( parameters.fileURL);
-	    var handleFound = fileURL.indexOf('hdl.handle.net');
 	    
-	    this.downloadAndProcessSharedLink( "VLO", fileURL);
+	    this.downloadAndProcessSharedLink( fileURL);
 	}
     }
-    
    
     handleTextInputChange(event) {
 	this.setState({textInputValue: event.target.value});
@@ -108,20 +115,35 @@ export default class DropArea extends React.Component {
 	    this.uploadAndProcessFile( {currentFile: blob, type: 'data'} );
 	    
 	    // remove prior resources
-	    ResourceActions.reset();
+	    // ResourceActions.reset();
 	    
 	    // clear task-oriented view
-	    this.props.clearDropzoneFun(); 
-	    
-	    this.setState({
-		textInputValue : "",  // reset textarea for textual input
-		files: [blob]         // put blob into file to trigger Resources
-	    });
+	    // this.props.history.push("/");
+	    this.clearDropzone();
+
+	    // reset textarea for textual input	    
+	    this.setState({ textInputValue : "" });
 
 	    _paq.push(["trackEvent", 'textInput', textContent, textContent.length]);
 	}
-	
+
 	event.preventDefault();
+    }
+
+    clearDropzone() {
+	console.log('DropArea/clearDropzone', this.state);
+
+	// signal to parent that tool list is empty
+	this.handleToolsChange( [] );
+	
+	// check whether necessary for cache busting	
+	localStorage.removeItem("app"); 
+
+	// delete old resource 
+	ResourceActions.reset();
+
+	// manipulate the history
+	this.props.history.push("/");
     }
 
     handleUrlInputSubmit(event) {
@@ -130,16 +152,19 @@ export default class DropArea extends React.Component {
 	if ( /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/.test(link) ) {
 
 	    // clear resources view	    
-	    ResourceActions.reset();
+	    // ResourceActions.reset();
 
 	    // clear task-oriented view
-	    this.props.clearDropzoneFun();
+	    // this.props.history.push("/");
+	    // this.props.clearDropzoneFun();
+	    this.clearDropzone();
 	    
-	    this.downloadAndProcessSharedLink( "PASTE", link );	    
-	    this.setState({
-		urlInputValue : "",  // reset textarea for url input
-		files: link
-	    });
+	    
+	    this.downloadAndProcessSharedLink( link );
+
+	    // reset textarea for url input	    
+	    this.setState({ urlInputValue : "" });
+	    
 	    event.target.value = "";
 
 	    _paq.push(["trackEvent", 'urlInput', link, link.length]);	    
@@ -150,49 +175,6 @@ export default class DropArea extends React.Component {
     
     handleUrlInputChange(event) {
 	this.setState({urlInputValue: event.target.value});
-    }
-
-
-    showFiles() {
-
-        var files = this.state.files;
-        if (files.length <= 0) {
-            return '';
-        }
-
-	// don't duplicate file information (apart from the preview)
-	return '';
-
-        // return React.createElement(
-        //     'div',
-        //     null,
-        //     React.createElement(
-        //         'h2',
-	// 	{ className: 'resource' },		
-        //         'Dropped file(s): '
-        //     ),
-        //     React.createElement(
-        //         'ul',
-	// 	{ className: 'resource' },		
-        //         [].map.call(files, function (f, i) {
-        //             return React.createElement(
-	// 		'li',
-	// 		{
-        //                     key: i 
-	// 		},
-	// 		React.createElement('img', {
-        //                     src: f.preview,
-        //                     width: 100 
-	// 		}),
-	// 		React.createElement(
-	// 		    'div',
-	// 		    null,
-	// 		    f.name + ' : ' + f.size + ' bytes.'
-	// 		)
-        //             );
-        //         })
-        //     )
-        // );
     }
 
     /* 
@@ -207,14 +189,13 @@ export default class DropArea extends React.Component {
        Note that the behaviour is extended to switchboard invocations from the VLO, VCR, FCS, B2DROP, D4SCIENCE.
 
      */
-    downloadAndProcessSharedLink( caller, link ) {
+    downloadAndProcessSharedLink( link ) {
 	this.setState( { isLoaded: false });
 	let downloader = new Downloader( link );
 	let promiseDownload = downloader.downloadBlob();
 	let that = this;
 	promiseDownload.then(
 	    function(resolve) {
-		console.log('DropArea.jsx/downloadAndProcessSharedLink succeeded', resolve);
 		let file = new File([resolve.body], resolve.req.url, {type: resolve.type});
 		that.uploadAndProcessFile( {currentFile: file, type: 'file'} );		
 		that.setState( { isLoaded: true });
@@ -229,11 +210,10 @@ export default class DropArea extends React.Component {
     uploadAndProcessFile( { currentFile, type = 'file' } = {} ) {
 
 	this.setState( { isLoaded: false });
-	let that = this;
-	let tthat = this;
+	let thatThis = this;
 	let uploader = new Uploader( {file: currentFile, type: type} );
 
-	console.log('DropArea/uploadAndProcessFile', currentFile, that);
+	console.log('DropArea/uploadAndProcessFile', currentFile, thatThis);
 	let promiseUpload = uploader.uploadFile();
 	
 	promiseUpload.then(
@@ -241,15 +221,15 @@ export default class DropArea extends React.Component {
 		let profiler = new Profiler( currentFile,
 					     "dnd",
 					     uploader.remoteFilename,
-					     () => tthat.setState( {showAlertMissingInfo: true} )
+					     () => thatThis.setState( {showAlertMissingInfo: true} )
 					   );
 		profiler.convertProcessFile();
-		that.setState( { isLoaded: true });
+		thatThis.setState( { isLoaded: true });
 	    },
 	    function(reject) {
 		console.log('DropArea.jsx/upload failed', reject);
-		that.setState({showAlertURLUploadError: true} );				
-		that.setState( { isLoaded: true });		
+		thatThis.setState({showAlertURLUploadError: true} );				
+		thatThis.setState( { isLoaded: true });		
 	    });
     }   
     
@@ -260,33 +240,38 @@ export default class DropArea extends React.Component {
 	    ResourceActions.reset();
 	}	
 
-	// clear task-oriented view
-	this.props.clearDropzoneFun();
+	// clear dropzone and hence its task-oriented view
+	// this.props.history.push("/");	
+	// this.props.clearDropzoneFun();
+	this.clearDropzone();
 	
 	// process the file(s)
 	for (var i=0; i<files.length; i++) {
 	    this.uploadAndProcessFile( {currentFile: files[i]} );	    
 	}
 
-	// set the state
-	// CZ: check whether no longer needed
-	this.setState({
-	    files: files
-	});
-
 	_paq.push(["trackEvent", 'fileInput', files[0].name]);
     }
 
     render() {
 
+	console.log('DropArea/render', this.state);
+
+	// when invoked via VLO/B2DROP/D4Science/etc, we add transferal info to the middle box
+	const transferalInfo = `Resource transferal from ${this.props.caller}. Please check the information below, then press "Show Tools"`;
+	/*
+	if (! ( this.props.caller == "standalone" )) {
+				      
+	    this.setState( { urlInputValue: transferalInfo })
+	};
+	*/
+	
 	const { isLoaded } = this.state;		
 	const transferalInfoStyle = {
 	    fontSize: '0.5em',
 	    margin: 2,
 	    padding: 2	    
 	};
-		
-	const transferalInfo = `Resource transferal from ${this.props.caller}. Please check the information below, then press "Show Tools"`;
 
 	console.log('DropArea/render', isLoaded, this.state.isLoaded, this.props.caller);
 	_paq.push(["trackEvent", 'enterSwitchboard', this.props.caller]); 	    		
@@ -352,9 +337,7 @@ export default class DropArea extends React.Component {
 	    padding: 10
 	}
 
-	// when invoked via VLO/B2DROP/D4Science/etc, we don't show the 3 areas for dropping resources
-	if ( this.props.caller == "standalone" ) {
-	    return (
+	return (
 	      <div>
  	        <h3 id="dropAreaHeading">Provision of Input</h3>
 		<Loader loaded={this.state.isLoaded} />
@@ -368,13 +351,14 @@ export default class DropArea extends React.Component {
 			  Drop your file, or click to select the file to upload.
 			</Dropzone>
 		      </td>
+		      <FadeProps animationLength={this.props.caller == "standalone" ? 1 : 1000} direction={0} >
 		      <td>
 			<div className="relativeDiv">
 			  <form onSubmit={this.handleUrlInputSubmit}>
 			    <TextareaAutosize rows={5}
 					      maxRows={5}
 					      style={styleTextareaLink}
-		                              value={this.state.urlInputValue}
+		                              value={this.props.caller == "standalone" ? this.state.urlInputValue : transferalInfo}
 					      onChange={this.handleUrlInputChange}
 					      placeholder='Paste the URL of the file to process.' >
 			    </TextareaAutosize>
@@ -382,6 +366,7 @@ export default class DropArea extends React.Component {
 			  </form>
 			</div>			  
 		      </td>
+		      </FadeProps>
 		      <td>
 			<div className="relativeDiv">
 			<form onSubmit={this.handleTextInputSubmit}>
@@ -394,6 +379,14 @@ export default class DropArea extends React.Component {
 			  </TextareaAutosize>
 			  <input className="inputAbsolute" type="submit" value="Submit Text"/>
 			</form>
+			</div>
+		      </td>
+		      <td>
+			<div>
+                          <span onClick={ () => this.clearDropzone()} >
+                            <i className="fa fa-trash fa-3x" aria-hidden="true" >
+			    </i>
+                          </span>
 			</div>
 		      </td>
 		    </tr>
@@ -417,42 +410,7 @@ export default class DropArea extends React.Component {
 	        {this.state.showAlertURLUploadError ?
 		 <AlertURLUploadError    onCloseProp={ () => this.setState( {showAlertURLUploadError: false} ) } />
 		 : null }
-		{this.showFiles()}
 		</div>
-	    )	    
-	} else {
-	    return (
-	       <Loader loaded={isLoaded}>
-		<h2>
-		   <div style={transferalInfoStyle} >
-		     {transferalInfo}
-                   </div>
-		</h2>
-		{this.state.showAlertShibboleth ?
-    		 <AlertShibboleth onCloseProp={ () => this.setState( {showAlertShibboleth: false} ) } />
-		 : null }
-
-	        {this.state.showAlertURLFetchError ?
-		 <AlertURLFetchError onCloseProp={ () => this.setState( {showAlertURLFetchError: false} ) } />
-		 : null }
-
-	        {this.state.showAlertURLIncorrectError ?
-		 <AlertURLIncorrectError onCloseProp={ () => this.setState( {showAlertURLIncorrectError: false} ) } />		 
-		 : null }				
-
-	        {this.state.showAlertMissingInputText ?
-		 <AlertMissingInputText onCloseProp={ () => this.setState( {showAlertMissingInputText: false} ) } />
-		 : null }
-
-	        {this.state.showAlertMissingInfo ?
-		 <AlertMissingInfo onCloseProp={ () => this.setState( {showAlertMissingInfo: false} ) } />
-		 : null }
-		
-	        {this.state.showAlertURLUploadError ?
-		 <AlertURLUploadError onCloseProp={ () => this.setState( {showAlertURLUploadError: false} ) } />
-		 : null }	    
-               </Loader>		    
-	    )
-	}
+	);
     }
 }

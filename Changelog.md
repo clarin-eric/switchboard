@@ -1,10 +1,20 @@
 # Changelog
 	All notable changes to this project will be documented in this file.
 
+## [1.4.1] - 2018-12-14
+### Updated
+	- github instructions
+	- code cleaning:
+	* deleted superfluous methods (App.jsx: showFiles, handleChange)
+	* deleted superfluous state information
+	* move clearDropbox code to DropArea
+	- new UI behaviour when invoked from VLO/D4Science/B2DROP
+	- cross-referenced to switchboard back-end in README.md
+
 ## [1.4.0] - 2018-11-30
 ### Removed
 	- removed support for web services
-	- this includes update of registry in clrs-rest backend
+	* this clrs-rest backend (registry) has not been updated yet
 
 ## [1.3.4] - 2018-11-20
 ### Changed

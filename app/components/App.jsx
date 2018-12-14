@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: App.jsx
-// Time-stamp: <2018-11-30 23:14:25 (zinn)>
+// Time-stamp: <2018-12-14 14:26:53 (zinn)>
 // -------------------------------------------
 
 import AltContainer from 'alt-container';
@@ -33,7 +33,6 @@ import PiwikReactRouter from 'piwik-react-router';
 
 // routing 
 import { HashRouter, Route, Switch } from 'react-router-dom';
-import { hashHistory } from 'react-router';
 
 // access to matcher
 import MatcherRemote from '../back-end/MatcherRemote';
@@ -71,6 +70,7 @@ require('./../images/metadataListing2.png');
 require('./../images/file-solid.png');
 require('./../images/location-arrow-solid.png');
 require('./../images/keyboard-solid.png');
+require('./../images/trash-alt-solid.jpg');
 
 require('./../images/dropResources.png');
 
@@ -107,7 +107,11 @@ export default class App extends React.Component {
 
     componentDidMount() {
 
-	this.piwik.push(["setDomains", ["*.weblicht.sfs.uni-tuebingen.de/clrs","*.weblicht.sfs.uni-tuebingen.de/clrs-dev", "switchboard.clarin.eu"]]);
+	this.piwik.push(["setDomains",
+			 ["*.weblicht.sfs.uni-tuebingen.de/clrs",
+			  "*.weblicht.sfs.uni-tuebingen.de/clrs-dev",
+			  "switchboard.clarin.eu"]]);
+	
 	this.piwik.push(['trackPageView']);
 
 	// CZ: check whether following is nececessary for cache busting (localStorage)
@@ -122,16 +126,10 @@ export default class App extends React.Component {
 		console.info( "This page is not reloaded", p.navigation.type);
 	    }
 	}
-	this.refresh();
+	
+	//	this.refresh();
     }
     
-    handleChange (key, selected) {
-	console.log('App/handleChange', selected);
-	this.setState({ [key]: selected }, function () {
-	    console.log('The app state has changed...:', key, selected, this.state);
-	});
-    }
-
     showAllTools() {
 
         // clear resource (so that tools don't show URL)
@@ -143,7 +141,6 @@ export default class App extends React.Component {
 	_paq.push(["trackEvent", 'showAllTools', null, null]); 	    	
 	toolsPromise.then(
 	    function(resolve) {
-		console.log('App.jsx/showAllTools succeeded', resolve);		
 		that.setState( {tools: resolve} );		
 	    },
 	    function(reject) {
@@ -152,9 +149,7 @@ export default class App extends React.Component {
     }
 
     clearDropzone() {
-	_paq.push(["trackEvent", 'clearDropzone', null, null]); 	    		
-	localStorage.removeItem("app"); // CZ: check whether necessary for cache busting
-
+	localStorage.removeItem("app"); // check whether necessary for cache busting
 	this.setState( {tools: [] } );
 	ResourceActions.reset();
     }
@@ -182,6 +177,8 @@ export default class App extends React.Component {
 	    display: 'none'
 	};
 
+	console.log('App/render', window.APP_CONTEXT_PATH);
+
 	return (
 <div>
   <header id="header" role="banner">
@@ -198,12 +195,9 @@ export default class App extends React.Component {
           <ul className="nav navbar-nav" id="idcf">
             <li>
 	      <UserHelp className="header-link" />		 
-            </li>
+	    </li>
 	    <li>
-	      <button className="clearDropzone" onClick={this.clearDropzone}>Clear Dropzone</button>
-	    </li>				
-	    <li>
-	      <button id="showAllToolsButton" className="clearDropzone" onClick={this.showAllTools}>Tool Inventory</button>
+	      <button id="showAllToolsButton" className="allTools" onClick={this.showAllTools}>Tool Inventory</button>
 	    </li>
           </ul>
 	  <div className="pull-right">
@@ -217,22 +211,22 @@ export default class App extends React.Component {
   </header>
 
   <div id='dragAndDropArea'></div>
-  <HashRouter>
+  <HashRouter history={history}>
     <Switch>
       <Route exact path="/"
-	    render={(props) => <DropArea clearDropzoneFun={this.clearDropzone} caller="standalone" {...props} /> } />
+	    render={(props) => <DropArea passToolsChangeToParent={this.handleToolsChange} caller="standalone" {...props} /> } />
 	<Route exact path="/vlo/:fileURL/:fileMimetype/:fileLanguage"
-	       render={(props) => <DropArea clearDropzoneFun={this.clearDropzone} caller="VLO" {...props} /> } />
+	       render={(props) => <DropArea passToolsChangeToParent={this.handleToolsChange} caller="VLO" {...props} /> } />
 	  <Route exact path="/vlo/:fileURL/:fileMimetype"
-		 render={(props) => <DropArea clearDropzoneFun={this.clearDropzone} caller="VLO" {...props} /> } />	    
+		 render={(props) => <DropArea passToolsChangeToParent={this.handleToolsChange} caller="VLO" {...props} /> } />	    
 	    <Route path="/vcr/:fileURL"
-		   render={(props) => <DropArea clearDropzoneFun={this.clearDropzone} caller="VCR" {...props} /> } />
+		   render={(props) => <DropArea passToolsChangeToParent={this.handleToolsChange} caller="VCR" {...props} /> } />
 	      <Route path="/fcs/:fileURL"
-   		     render={(props) => <DropArea clearDropzoneFun={this.clearDropzone} caller="FCS" {...props} /> } />	    
+   		     render={(props) => <DropArea passToolsChangeToParent={this.handleToolsChange} caller="FCS" {...props} /> } />	    
 		<Route path="/b2drop/:fileURL"
-	               render={(props) => <DropArea clearDropzoneFun={this.clearDropzone} caller="B2DROP" {...props} /> } />
+	               render={(props) => <DropArea passToolsChangeToParent={this.handleToolsChange} caller="B2DROP" {...props} /> } />
 		  <Route path="/d4science/:fileURL"
-			 render={(props) => <DropArea clearDropzoneFun={this.clearDropzone} caller="D4SCIENCE" {...props} /> } />
+			 render={(props) => <DropArea passToolsChangeToParent={this.handleToolsChange} caller="D4SCIENCE" {...props} /> } />
 		    <Route path="/vto/"
 			   render={(props) => <ShowAllTools showAllToolsFun={this.showAllTools} caller="CLARIN" {...props} /> } />
 		      <Route path="*" component={AlertURLFetchError} />
