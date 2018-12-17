@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: App.jsx
-// Time-stamp: <2018-12-14 15:44:11 (zinn)>
+// Time-stamp: <2018-12-17 09:58:44 (zinn)>
 // -------------------------------------------
 
 import AltContainer from 'alt-container';
@@ -37,9 +37,7 @@ import { HashRouter, Route, Switch } from 'react-router-dom';
 // access to matcher
 import MatcherRemote from '../back-end/MatcherRemote';
 
-import {lrsVersion, emailContactCommand,
-	TOOLTYPE_TOOLS_ONLY, TOOLTYPE_TOOLS_PLUS_WEBSERVICES, TOOLTYPE_WEBSERVICES_ONLY,
-	TOOLORDER_BY_TOOL_TASK, TOOLORDER_BY_TOOL_NAME} from './../back-end/util';
+import { lrsVersion, emailContactCommand } from './../back-end/util';
 
 // logo images for task-oriented view 
 require('./../images/clarin-logo-wide.png');

@@ -16,8 +16,8 @@ process.traceDeprecation = true;
 const webpack = require('webpack');
 
 const common = {
-//    mode: 'production',
-    mode: 'development',    
+    mode: 'production',
+//    mode: 'development',    
     optimization: {
 	minimizer: [
 	    new UglifyJSPlugin({
@@ -118,7 +118,7 @@ const common = {
 		'NEXTCLOUD_PASS'     : JSON.stringify('clarin-plus'),
 
 		// version as displayed on the main page
-		'VERSION'            : JSON.stringify('v1.4.1-dev/docker (Dec 15, 2018)'),
+		'VERSION'            : JSON.stringify('v1.4.1/docker (Dec 17, 2018)'),
 
 		// contact as displayed of the main page
 		'CONTACT'            : JSON.stringify('switchboard@clarin.eu')

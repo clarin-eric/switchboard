@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: DropArea.jsx
-// Time-stamp: <2018-12-14 14:24:21 (zinn)>
+// Time-stamp: <2018-12-17 10:06:18 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -114,11 +114,7 @@ export default class DropArea extends React.Component {
 	    var blob = new Blob([textContent], {type: "text/plain"});
 	    this.uploadAndProcessFile( {currentFile: blob, type: 'data'} );
 	    
-	    // remove prior resources
-	    // ResourceActions.reset();
-	    
 	    // clear task-oriented view
-	    // this.props.history.push("/");
 	    this.clearDropzone();
 
 	    // reset textarea for textual input	    
@@ -151,14 +147,8 @@ export default class DropArea extends React.Component {
 	console.log('DropArea/handleUrlInputSubmit', link, this.state);
 	if ( /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/.test(link) ) {
 
-	    // clear resources view	    
-	    // ResourceActions.reset();
-
 	    // clear task-oriented view
-	    // this.props.history.push("/");
-	    // this.props.clearDropzoneFun();
 	    this.clearDropzone();
-	    
 	    
 	    this.downloadAndProcessSharedLink( link );
 
@@ -241,8 +231,6 @@ export default class DropArea extends React.Component {
 	}	
 
 	// clear dropzone and hence its task-oriented view
-	// this.props.history.push("/");	
-	// this.props.clearDropzoneFun();
 	this.clearDropzone();
 	
 	// process the file(s)
@@ -255,28 +243,15 @@ export default class DropArea extends React.Component {
 
     render() {
 
-	console.log('DropArea/render', this.state);
-
 	// when invoked via VLO/B2DROP/D4Science/etc, we add transferal info to the middle box
 	const transferalInfo = `Resource transferal from ${this.props.caller}. Please check the information below, then press "Show Tools"`;
-	/*
-	if (! ( this.props.caller == "standalone" )) {
-				      
-	    this.setState( { urlInputValue: transferalInfo })
-	};
-	*/
 	
 	const { isLoaded } = this.state;		
-	const transferalInfoStyle = {
-	    fontSize: '0.5em',
-	    margin: 2,
-	    padding: 2	    
-	};
 
 	console.log('DropArea/render', isLoaded, this.state.isLoaded, this.props.caller);
 	_paq.push(["trackEvent", 'enterSwitchboard', this.props.caller]); 	    		
 	
-        var styleDropbox = {
+        var styleDropzone = {
             borderWidth: 2,
             borderColor: 'black',
             borderStyle: 'dashed',
@@ -290,42 +265,7 @@ export default class DropArea extends React.Component {
 	    display:'inline-block'
 	};
 
-        var styleTextareaLink = {
-            borderWidth: 2,
-            borderColor: 'black',
-            borderStyle: 'dashed',
-            borderRadius: 4,
-	    backgroundImage: "url(" + BackgroundLink + ")",
-	    backgroundPosition: 'bottom right',
-	    backgroundRepeat: 'no-repeat',
-            margin: 10,
-            padding: 10,
-            width: 248,
-	    height:100,
-	    resize: 'none',
-	    transition: 'all 0.5s',
-	    display:'inline-block'
-        };
-
-        var styleTextareaText = {
-            borderWidth: 2,
-            borderColor: 'black',
-            borderStyle: 'dashed',
-            borderRadius: 4,
-	    backgroundImage: 'location-arrow-solid.png',
-	    backgroundPosition: 'bottom right',
-	    backgroundRepeat: 'no-repeat',
-            margin: 10,
-            padding: 10,
-            width: 248,
-	    height:100,
-	    resize: 'none',
-	    transition: 'all 0.5s',
-	    display:'inline-block'
-        };
-	
-
-        var activeStyleDropbox = {
+        var activeStyleDropzone = {
             borderStyle: 'solid',
             backgroundColor: '#eee',
             borderRadius: 8
@@ -346,8 +286,8 @@ export default class DropArea extends React.Component {
 		    <tr>
 		      <td>
 			<Dropzone onDrop={this.onDrop}
-				  style={styleDropbox}
-				  activeStyle={activeStyleDropbox} >
+				  style={styleDropzone}
+				  activeStyle={activeStyleDropzone} >
 			  Drop your file, or click to select the file to upload.
 			</Dropzone>
 		      </td>
@@ -357,7 +297,7 @@ export default class DropArea extends React.Component {
 			  <form onSubmit={this.handleUrlInputSubmit}>
 			    <TextareaAutosize rows={5}
 					      maxRows={5}
-					      style={styleTextareaLink}
+					      style={styleDropzone}
 		                              value={this.props.caller == "standalone" ? this.state.urlInputValue : transferalInfo}
 					      onChange={this.handleUrlInputChange}
 					      placeholder='Paste the URL of the file to process.' >
@@ -372,7 +312,7 @@ export default class DropArea extends React.Component {
 			<form onSubmit={this.handleTextInputSubmit}>
 			  <TextareaAutosize rows={5}
 					    maxRows={5}
-					    style={styleTextareaText}
+					    style={styleDropzone}
 					    value={this.state.textInputValue}
 					    onChange={this.handleTextInputChange}
 					    placeholder='Enter your text to be processed here.' >

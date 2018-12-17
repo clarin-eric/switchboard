@@ -7,14 +7,15 @@
 	- code cleaning:
 	* deleted superfluous methods (App.jsx: showFiles, handleChange)
 	* deleted superfluous state information
-	* move clearDropbox code to DropArea
+	* deleted superfluous constants in util wrt. web services support
+	* move code to clear Dropzones to DropArea component
 	- new UI behaviour when invoked from VLO/D4Science/B2DROP
-	- cross-referenced to switchboard back-end in README.md
+	- added cross-references to switchboard back-end repository in README.md
 
 ## [1.4.0] - 2018-11-30
 ### Removed
 	- removed support for web services
-	* this clrs-rest backend (registry) has not been updated yet
+	* (clrs-rest backend (registry) has not been updated yet)
 
 ## [1.3.4] - 2018-11-20
 ### Changed
