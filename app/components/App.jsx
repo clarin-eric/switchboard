@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: App.jsx
-// Time-stamp: <2018-12-14 14:26:53 (zinn)>
+// Time-stamp: <2018-12-14 15:44:11 (zinn)>
 // -------------------------------------------
 
 import AltContainer from 'alt-container';
@@ -70,7 +70,6 @@ require('./../images/metadataListing2.png');
 require('./../images/file-solid.png');
 require('./../images/location-arrow-solid.png');
 require('./../images/keyboard-solid.png');
-require('./../images/trash-alt-solid.jpg');
 
 require('./../images/dropResources.png');
 
