@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: DropArea.jsx
-// Time-stamp: <2018-12-17 10:06:18 (zinn)>
+// Time-stamp: <2018-12-20 09:19:14 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -40,11 +40,17 @@ export default class DropArea extends React.Component {
 	
 	console.log('DropArea', props);
 	this.onDrop      = this.onDrop.bind(this);
-	
 	this.state = {
 	    isLoaded: true,
+	    
 	    textInputValue: "",
-	    urlInputValue: "",	    
+	    urlInputValue: "",
+
+	    // for disabled/enabling the 3 drop zone areas
+	    textInputAreaRef: "",
+	    urlInputAreaRef: "",
+	    fileInputAreaRef: "",
+	    
 	    showAlertShibboleth: false,	    
 	    showAlertURLFetchError: false,
 	    showAlertURLIncorrectError: false,
@@ -241,6 +247,7 @@ export default class DropArea extends React.Component {
 	_paq.push(["trackEvent", 'fileInput', files[0].name]);
     }
 
+    
     render() {
 
 	// when invoked via VLO/B2DROP/D4Science/etc, we add transferal info to the middle box
@@ -251,10 +258,8 @@ export default class DropArea extends React.Component {
 	console.log('DropArea/render', isLoaded, this.state.isLoaded, this.props.caller);
 	_paq.push(["trackEvent", 'enterSwitchboard', this.props.caller]); 	    		
 	
-        var styleDropzone = {
+        const styleDropzone = {
             borderWidth: 2,
-            borderColor: 'black',
-            borderStyle: 'dashed',
             borderRadius: 4,
             margin: 10,
             padding: 10,
@@ -265,17 +270,29 @@ export default class DropArea extends React.Component {
 	    display:'inline-block'
 	};
 
-        var activeStyleDropzone = {
+	const disabledStyleDropzone = {
+	    color: 'grey',
+	    borderColor: 'grey',	    
+	    borderStyle: 'dashed'	    
+	}
+
+				      
+	const enabledStyleDropzone = {
+	    color: 'black',
+	    borderColor: 'black',	    	    
+	    borderStyle: 'solid'	    	    
+	}
+
+	const textColor = {
+	    color: 'grey'
+	}
+
+	// when a file is dragged over the dropzone (left box), that's the style being used
+        const activeStyleDropzone = {
             borderStyle: 'solid',
             backgroundColor: '#eee',
             borderRadius: 8
         };
-
-	var parStyle = {
-	    width: 600,
-	    margin: 10,
-	    padding: 10
-	}
 
 	return (
 	      <div>
@@ -285,19 +302,23 @@ export default class DropArea extends React.Component {
 		  <tbody>
 		    <tr>
 		      <td>
-			<Dropzone onDrop={this.onDrop}
-				  style={styleDropzone}
+			<Dropzone className="inputZone"
+				  onDrop={this.onDrop}
+			          disabled={this.props.caller == "standalone" ? false : true}
+				  style={ this.props.caller == "standalone" ? {...styleDropzone, ...enabledStyleDropzone, ...textColor} : {...styleDropzone, ...disabledStyleDropzone, ...textColor} }
 				  activeStyle={activeStyleDropzone} >
 			  Drop your file, or click to select the file to upload.
 			</Dropzone>
 		      </td>
-		      <FadeProps animationLength={this.props.caller == "standalone" ? 1 : 1000} direction={0} >
+		{/*		      <FadeProps animationLength={this.props.caller == "standalone" ? 1 : 1000} direction={0} > */}
 		      <td>
 			<div className="relativeDiv">
 			  <form onSubmit={this.handleUrlInputSubmit}>
-			    <TextareaAutosize rows={5}
+			    <TextareaAutosize className="inputZone"
+					      rows={5}
+	                                      disabled={this.props.caller == "standalone" ? false : true}
 					      maxRows={5}
-					      style={styleDropzone}
+					      style={ {...styleDropzone, ...enabledStyleDropzone} }
 		                              value={this.props.caller == "standalone" ? this.state.urlInputValue : transferalInfo}
 					      onChange={this.handleUrlInputChange}
 					      placeholder='Paste the URL of the file to process.' >
@@ -306,13 +327,15 @@ export default class DropArea extends React.Component {
 			  </form>
 			</div>			  
 		      </td>
-		      </FadeProps>
+		{/*		      </FadeProps> */ }
 		      <td>
 			<div className="relativeDiv">
 			<form onSubmit={this.handleTextInputSubmit}>
-			  <TextareaAutosize rows={5}
+			  <TextareaAutosize className="inputZone"
+					    rows={5}
+	                                    disabled={this.props.caller == "standalone" ? false : true}
 					    maxRows={5}
-					    style={styleDropzone}
+					    style={ this.props.caller == "standalone" ? {...styleDropzone, ...enabledStyleDropzone} : {...styleDropzone, ...disabledStyleDropzone} }
 					    value={this.state.textInputValue}
 					    onChange={this.handleTextInputChange}
 					    placeholder='Enter your text to be processed here.' >

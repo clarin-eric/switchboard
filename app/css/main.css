@@ -158,6 +158,10 @@ h2 {
   vertical-align: top;
 }
 
+.inputZone[disabled] {
+    cursor: not-allowed
+}
+
 .allTools {
   display: inline-block;
   background-color: #afafaf;

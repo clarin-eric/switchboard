@@ -142,6 +142,6 @@ WORKDIR /app
 # COPY entrypoint.sh /usr/bin/entrypoint.sh
 # RUN chmod u+x /usr/bin/entrypoint.sh
 
-# supervisord, apacke-tika, nginx ports
+# supervisord, apache-tika, nginx ports
 EXPOSE 9001 9998 80 443
 ENTRYPOINT ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]

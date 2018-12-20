@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: App.jsx
-// Time-stamp: <2018-12-17 09:58:44 (zinn)>
+// Time-stamp: <2018-12-20 09:37:04 (zinn)>
 // -------------------------------------------
 
 import AltContainer from 'alt-container';
@@ -129,6 +129,9 @@ export default class App extends React.Component {
     
     showAllTools() {
 
+	// clear history
+	history.pushState({}, "", "#");
+	
         // clear resource (so that tools don't show URL)
         this.clearDropzone();
 	const matcher = new MatcherRemote( true ); 
@@ -142,13 +145,14 @@ export default class App extends React.Component {
 	    },
 	    function(reject) {
 		console.log('App.jsx/showAllTools failed', reject);
-	    });	    	
+	    });
     }
 
     clearDropzone() {
 	localStorage.removeItem("app"); // check whether necessary for cache busting
 	this.setState( {tools: [] } );
 	ResourceActions.reset();
+
     }
 
     render() {

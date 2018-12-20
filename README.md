@@ -13,13 +13,13 @@ For more information, please see the publications below, or contact claus.zinn@u
 
 # Website
 
-The development version of the switchboard is currently being served at:
-
-```https://weblicht.sfs.uni-tuebingen.de/clrs-dev/#/ ```
-
 The production version of the switchboard, its official site, is served at:
 
 ```https://switchboard.clarin.eu ```
+
+The development version of the switchboard is currently being served at:
+
+```https://weblicht.sfs.uni-tuebingen.de/clrs-dev/#/ ```
 
 # Dependencies
 
@@ -32,7 +32,7 @@ For more details, follow the instruction in this back-end repository.
 - The switchboard depends on a file storage solution, which is based on an off-the-shelves Nextclound container.
 It runs here:
 
-```https://weblicht.sfs.uni-tuebingen.de/nextcloud/login ```
+```https://weblicht.sfs.uni-tuebingen.de/nextcloud ```
 
 By default, the switchboard front-end communicates with the productive versions of the back-end and the nextcloud container.
 
