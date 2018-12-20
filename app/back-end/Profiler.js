@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Profiler.js
-// Time-stamp: <2018-11-14 08:53:11 (zinn)>
+// Time-stamp: <2018-12-20 16:32:40 (zinn)>
 // -------------------------------------------
 
 import Request from 'superagent';
@@ -161,7 +161,7 @@ export default class Profiler {
     }
 
     // mimetype detection, given the media type of the resource is NOT plain/text, requires conversion to text/plain
-    convertProcessFile() {
+    convertProcessFile( signalDone ) {
 	let that = this;
 	let promiseMimeType = that.identifyMimeType();
 	promiseMimeType.then(
@@ -176,6 +176,7 @@ export default class Profiler {
 			    promiseLanguage.then(
 				function(resolve) {
 				    console.log('language identification from stream succeeded', resolve);
+				    signalDone();
 				},
 				function(reject) {
 				    console.log('Warning: language identification from stream failed', reject);
@@ -196,6 +197,7 @@ export default class Profiler {
 		    let promiseLanguage = that.identifyLanguage();
 		    promiseLanguage.then(
 			function(resolve) {
+			    signalDone();
 			    //console.log('language identification from file succeeded', resolve);
 			},
 			function(reject) {

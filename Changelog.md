@@ -1,7 +1,12 @@
 # Changelog
 	All notable changes to this project will be documented in this file.
 
-## [1.4.1] - 2018-12-19
+
+## [1.4.2] - 2018-12-20
+### Updated
+	- tackled https://github.com/clarin-eric/LRSwitchboard/issues/40
+	
+## [1.4.1] - 2018-12-20
 ### Updated
 	- github instructions
 	- code cleaning:

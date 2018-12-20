@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: DropArea.jsx
-// Time-stamp: <2018-12-20 09:19:14 (zinn)>
+// Time-stamp: <2018-12-20 16:39:50 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -144,7 +144,7 @@ export default class DropArea extends React.Component {
 	// delete old resource 
 	ResourceActions.reset();
 
-	// manipulate the history
+	// manipulate the history (todo: does not work)
 	this.props.history.push("/");
     }
 
@@ -219,13 +219,12 @@ export default class DropArea extends React.Component {
 					     uploader.remoteFilename,
 					     () => thatThis.setState( {showAlertMissingInfo: true} )
 					   );
-		profiler.convertProcessFile();
-		thatThis.setState( { isLoaded: true });
+		profiler.convertProcessFile( () => thatThis.setState( {isLoaded: true} ) );
 	    },
 	    function(reject) {
 		console.log('DropArea.jsx/upload failed', reject);
-		thatThis.setState({showAlertURLUploadError: true} );				
-		thatThis.setState( { isLoaded: true });		
+		thatThis.setState( {showAlertURLUploadError: true} );				
+		thatThis.setState( { isLoaded: true } );		
 	    });
     }   
     
@@ -253,9 +252,7 @@ export default class DropArea extends React.Component {
 	// when invoked via VLO/B2DROP/D4Science/etc, we add transferal info to the middle box
 	const transferalInfo = `Resource transferal from ${this.props.caller}. Please check the information below, then press "Show Tools"`;
 	
-	const { isLoaded } = this.state;		
-
-	console.log('DropArea/render', isLoaded, this.state.isLoaded, this.props.caller);
+	console.log('DropArea/render', this.state.isLoaded, this.props.caller);
 	_paq.push(["trackEvent", 'enterSwitchboard', this.props.caller]); 	    		
 	
         const styleDropzone = {
