@@ -1,27 +1,40 @@
+// -------------------------------------------
+// The CLARIN Language Resource Switchboard
+// 2016-18 Claus Zinn, University of Tuebingen
+// 
+// File: Tool.jsx
+// Time-stamp: <2018-11-30 22:59:04 (zinn)>
+// -------------------------------------------
+
 import React from 'react';
-// import ReactTooltip from 'react-tooltip';
 import Accordion from '../helperComponents/Accordion';         
 import AccordionItem from '../helperComponents/AccordionItem';
 
 import { map639_1_to_639_3, map639_3_to_639_1 } from '../back-end/util';
-import {gatherInvocationParameters, invokeWebService, invokeBrowserBasedTool} from '../back-end/ToolInvoker';
-
+import {gatherInvocationParameters, invokeBrowserBasedTool} from '../back-end/ToolInvoker';
+import Request from 'superagent';
 
 export default class Tool extends React.Component {
     constructor(props) {
 	super(props);
+
+	const {cb, items, resource, ...otherProps} = this.props;
+	this.cb = cb;
 	this.invokeTool = this.invokeTool.bind(this);
     }
 
     // tool invocation informs Piwik
     invokeTool( URL ) {
-	if (URL.toolType == "webService") {
-	    _paq.push(["trackEvent", 'ToolInvocation', URL.url]);	
-	    invokeWebService(URL);
-	} else {
-	    _paq.push(["trackEvent", 'WebServiceInvocation', URL.url]); 
-	    invokeBrowserBasedTool( URL );
-	}
+	Request
+	    .head(URL.url)
+	    .end((err, res) => {
+		 if (err) {
+		     console.log('Tool/invokeTool:', URL.url, err);
+		 } else {
+		     console.log('Tool/invokeTool:', URL.url, res);
+		     invokeBrowserBasedTool( URL );
+		     _paq.push(["trackEvent", 'ToolInvocation', URL.url, res.status]); 	    
+		 }});
     }
     
     render() {
@@ -67,7 +80,7 @@ export default class Tool extends React.Component {
 	const ToolCard = (props) => {
             const fullURL = gatherInvocationParameters(props, resource);
 	    const authenticationNotRequired = (props.authentication == "no");
-	    console.log('Tool/ToolCard', props);
+//	    console.log('Tool/ToolCard', props);
 	    const outputFormats = (props.output === undefined) || ((props.output instanceof Array) && props.output.join(', ')) || props.output;
 
 	    if (fullURL)
@@ -249,9 +262,9 @@ export default class Tool extends React.Component {
 
 	return (
 	    <Accordion allowMultiple={true}>
-	    { items.map( (element) => 
-		<AccordionItem title={element.name} key={element.id} >
-		  <ToolCard key={element.name}
+	    { items.map( (element, index) => 
+		<AccordionItem title={element.name} key={index} >
+		  <ToolCard key={index}
 			 imgSrc={element.logo}
 			 imgBorderColor='#6A067A'
 			 name={element.name}

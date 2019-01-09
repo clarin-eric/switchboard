@@ -2,20 +2,20 @@
 // The CLARIN Language Resource Switchboard
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
-// File: AlertShibboleth.jsx
-// Time-stamp: <2018-11-13 17:04:05 (zinn)>
+// File: AlertAllowPopupWindows.jsx
+// Time-stamp: <2018-11-14 10:44:21 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
 import PropTypes from 'prop-types';
 import {ModalContainer, ModalDialog} from 'react-modal-dialog';
 
-export default class AlertShibboleth extends React.Component {
+export default class AlertAllowPopupWindows extends React.Component {
   static propTypes = {
     className: PropTypes.string,
   }
 
-  constructor(props) {
+    constructor(props) {
 	super(props);
 	this.propagateFun = this.props.onCloseProp;
     }
@@ -27,31 +27,29 @@ export default class AlertShibboleth extends React.Component {
     this.setState({showModal: true});
   }
   closeModal = () => {
-    this.setState({showModal: false});
-    this.propagateFun();      
+      this.setState({showModal: false});
+      this.propagateFun();
   }
-    
   render() {
     return <a className={this.props.className} onClick={this.openModal}>
       {this.state.showModal ?
-        <AlertShibbolethText onClose={this.closeModal}/>
+        <AlertAllowPopupWindowsText onClose={this.closeModal}/>
       : null}
     </a>;
   }
 }
 
-class AlertShibbolethText extends React.Component {
+class AlertAllowPopupWindowsText extends React.Component {
   static propTypes = {
     onClose: PropTypes.func,
   }
   render() {
     return <ModalContainer onClose={this.props.onClose}>
         <ModalDialog onClose={this.props.onClose} className="systemAlertDialog"  width={400}>
-	    <h2>Resource Retrieval Error</h2>
+	    <h2>Unable to Open Tool in New Window</h2>
 	    <p>
-	    The resource seems to be behind a Shibboleth authentication wall. Please fetch the resource with your authentication credentials by clicking on "Link to Resource". Then use the standalone version of the LRS to upload the resource.
+	  Please configure your browser to allow pop-up windows from this site. 
 	    </p>
-	    
         </ModalDialog>
     </ModalContainer>;
   }

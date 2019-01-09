@@ -1,6 +1,10 @@
-// -- C. Zinn, claus.zinn@uni-tuebingen.de
-// -- CLARIN-PLUS, Language Resources Switchboard
-// -- Spring 2016
+// -------------------------------------------
+// The CLARIN Language Resource Switchboard
+// 2016-18 Claus Zinn, University of Tuebingen
+// 
+// File: App.jsx
+// Time-stamp: <2018-12-20 09:37:04 (zinn)>
+// -------------------------------------------
 
 import AltContainer from 'alt-container';
 import React from 'react';
@@ -11,9 +15,8 @@ import PropTypes from 'prop-types';
 import Resources from './Resources.jsx';            // render all the resources
 import TaskOrientedView from './TaskOrientedView';  // component to render the task-oriented view
 import DropArea from './DropArea.jsx';              // drop & drag area for resources
-import UrlArea  from './UrlArea.jsx';               // all resource information given in parameters
-import Toggle   from 'react-toggle';                // toggle button for enables/disabling web services
 import UserHelp from './UserHelp.jsx';              // component displaying user help
+import UserFAQ from './UserFAQ.jsx';                // component displaying user faq
 import DevHelp from './DevHelp.jsx';                // component displaying help targeted at developers
 import AboutHelp from './AboutHelp.jsx';            // displaying admin. information about the switchboard
 import AlertURLFetchError from './AlertURLFetchError.jsx';
@@ -28,14 +31,13 @@ import ResourceStore from '../stores/ResourceStore';        // storing resources
 // Piwik support
 import PiwikReactRouter from 'piwik-react-router';
 
-// routing between DropArea and UrlArea
+// routing 
 import { HashRouter, Route, Switch } from 'react-router-dom';
-import { hashHistory } from 'react-router';
 
 // access to matcher
-import Matcher from '../back-end/Matcher';
+import MatcherRemote from '../back-end/MatcherRemote';
 
-import {lrsVersion, emailContactCommand} from './../back-end/util';
+import { lrsVersion, emailContactCommand } from './../back-end/util';
 
 // logo images for task-oriented view 
 require('./../images/clarin-logo-wide.png');
@@ -63,20 +65,25 @@ require('./../images/YourLogoComesHere.png');
 require('./../images/metadataListing1.png');
 require('./../images/metadataListing2.png');
 
-export default class App extends React.Component {
+require('./../images/file-solid.png');
+require('./../images/location-arrow-solid.png');
+require('./../images/keyboard-solid.png');
 
+require('./../images/dropResources.png');
+
+
+export default class App extends React.Component {
+    
     constructor(props) {
 	super(props);
 
 	this.refresh = this.refresh.bind(this);
 	this.showAllTools = this.showAllTools.bind(this);
         this.clearDropzone = this.clearDropzone.bind(this);
-        this.handleWebServicesChange = this.handleChange.bind(this, 'includeWebServices');
-	this.handleToolsPerTaskChange = this.handleToolsPerTaskChange.bind(this);
-	
+	this.handleToolsChange = this.handleToolsChange.bind(this);
+
 	this.state = {
-	    includeWebServices: false,
-	    toolsPerTask : {}
+	    tools : [],
 	};
 
 	this.piwik = PiwikReactRouter({
@@ -87,8 +94,8 @@ export default class App extends React.Component {
 
     }
 
-    handleToolsPerTaskChange( toolsPerTask ) {
-	this.setState( {toolsPerTask: toolsPerTask} );
+    handleToolsChange( tools ) {
+	this.setState( {tools: tools} );
     }
     
     refresh() {
@@ -97,25 +104,11 @@ export default class App extends React.Component {
 
     componentDidMount() {
 
-	window.APP_CONTEXT_PATH = (function() {
-
-            const links = Array.prototype.slice.call(
-                document.getElementsByTagName('link'), 0);
-            const favicon = links.find(e => e.rel == "shortcut icon");
-            if (!favicon) return "";
-            let href = favicon.href;
-            if (href.startsWith(window.origin)) {
-                href = href.substr(window.origin.length);
-            }
-            const components = href.split("/");
-            if (components.length >= 3) {
-		console.log('setting componentDidMount/APP_CONTEXT_PATH to /', components[1]);
-                return "/"+components[1];
-            }
-            return "";
-         })();
-
-	this.piwik.push(["setDomains", ["*.weblicht.sfs.uni-tuebingen.de/clrs","*.weblicht.sfs.uni-tuebingen.de/clrs"]]);
+	this.piwik.push(["setDomains",
+			 ["*.weblicht.sfs.uni-tuebingen.de/clrs",
+			  "*.weblicht.sfs.uni-tuebingen.de/clrs-dev",
+			  "switchboard.clarin.eu"]]);
+	
 	this.piwik.push(['trackPageView']);
 
 	// CZ: check whether following is nececessary for cache busting (localStorage)
@@ -130,49 +123,72 @@ export default class App extends React.Component {
 		console.info( "This page is not reloaded", p.navigation.type);
 	    }
 	}
-	this.refresh();
+	
+	//	this.refresh();
     }
     
-    handleChange (key, event) {
-	this.setState({ [key]: event.target.checked }, function () {
-	    //console.log('The app state has changed...:', this.state.includeWebServices);
-	});
-	if (event.target.checked === true) {
-	    document.getElementById("showAllToolsButton").innerHTML = 'Show All Tools and Web Services';
-	} else {
-	    document.getElementById("showAllToolsButton").innerHTML = 'Show All Tools';	    
-	}
-    }
-
     showAllTools() {
+
+	// clear history
+	history.pushState({}, "", "#");
+	
         // clear resource (so that tools don't show URL)
         this.clearDropzone();
-	let matcher = new Matcher();
-	let toolsPerTask = matcher.allTools( this.state.includeWebServices );
-	this.setState( {toolsPerTask: toolsPerTask} );
+	const matcher = new MatcherRemote( true ); 
+	const toolsPromise = matcher.getAllTools();
+	const that = this;
+
+	_paq.push(["trackEvent", 'showAllTools', null, null]); 	    	
+	toolsPromise.then(
+	    function(resolve) {
+		that.setState( {tools: resolve} );		
+	    },
+	    function(reject) {
+		console.log('App.jsx/showAllTools failed', reject);
+	    });
     }
 
     clearDropzone() {
-	localStorage.removeItem("app"); // CZ: check whether necessary for cache busting
-
-	this.setState( {toolsPerTask: {} } );
+	localStorage.removeItem("app"); // check whether necessary for cache busting
+	this.setState( {tools: [] } );
 	ResourceActions.reset();
+
     }
 
     render() {
+
+	window.APP_CONTEXT_PATH = (function() {
+
+            const links = Array.prototype.slice.call(
+                document.getElementsByTagName('link'), 0);
+            const favicon = links.find(e => e.rel == "shortcut icon");
+            if (!favicon) return "";
+            let href = favicon.href;
+            if (href.startsWith(window.origin)) {
+                href = href.substr(window.origin.length);
+            }
+            const components = href.split("/");
+            if (components.length >= 3) {
+                return "/"+components[1];
+            }
+            return "";
+         })();
+	
 	var style = {
 	    display: 'none'
 	};
 
+	console.log('App/render', window.APP_CONTEXT_PATH);
+
 	return (
 <div>
   <header id="header" role="banner">
-    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="./../images/favicon-cog.ico" />
     <div className="navbar-static-top  navbar-default navbar" role="navigation">
       <div className="container">
         <div className="navbar-header">
           <a className="navbar-brand" href="./" id="idce">
-            <span><i className="fa fa-cog fa-spin fa-1x fa-fw" aria-hidden="true"></i> Language Resource Switchboard</span>
+            <span><i className="fa fa-cog fa-1x" aria-hidden="true"></i> Language Resource Switchboard</span>
           </a>
         </div>
 	
@@ -180,61 +196,43 @@ export default class App extends React.Component {
           <ul className="nav navbar-nav" id="idcf">
             <li>
 	      <UserHelp className="header-link" />		 
-            </li>
-	    <li>
-	      <DevHelp className="header-link" />
 	    </li>
 	    <li>
-	      <AboutHelp className="header-link" />
-	    </li>	       	    
-	    <li>
-	      <button className="clearDropzone" onClick={this.clearDropzone}>Clear Dropzone</button>
-	    </li>				
-	    <li>
-	      <button id="showAllToolsButton" className="alltools" onClick={this.showAllTools}>Show All Tools</button>
-	    </li>
-	    <li><p />
-	      <Toggle
-	        defaultChecked={false}
-		onChange={this.handleWebServicesChange} />
+	      <button id="showAllToolsButton" className="allTools" onClick={this.showAllTools}>Tool Inventory</button>
 	    </li>
           </ul>
-	  <ul className="nav navbar-nav navbar-right" id="id723">
-            <li>
-              <a href="http://www.clarin.eu/" className="clarin-logo hidden-xs">
-		<span>CLARIN</span>
-	      </a>
-            </li>
-          </ul>
+	  <div className="pull-right">
+            <a href="http://www.clarin.eu/">
+	      <img src="clarin-logo-wide.png" width="119px" height="46px" />
+	    </a>
+	  </div>
         </div>
       </div>
     </div>
   </header>
 
   <div id='dragAndDropArea'></div>
-  <HashRouter>
+  <HashRouter history={history}>
     <Switch>
       <Route exact path="/"
-	     render={(props) => <DropArea clearDropzoneFun={this.clearDropzone} {...props} /> } />
-      <Route exact path="/vlo/:fileURL/:fileMimetype/:fileLanguage"
-	     render={(props) => <UrlArea refreshFun={this.refresh} caller="VLO" {...props} /> } />
-	<Route exact path="/vlo/:fileURL/:fileMimetype"
-               render={(props) => <UrlArea refreshFun={this.refresh} caller="VLO" {...props} /> } />	    
-	  <Route path="/vcr/:fileURL"
-		 render={(props) => <UrlArea refreshFun={this.refresh} caller="VCR" {...props} /> } />
-	    <Route path="/fcs/:fileURL"
-   		   render={(props) => <UrlArea refreshFun={this.refresh} caller="FCS" {...props} /> } />	    
-	      <Route path="/b2drop/:fileURL"
-	             render={(props) => <UrlArea refreshFun={this.refresh} caller="B2DROP" {...props} /> } />
-		<Route path="/d4science/:fileURL"
-		       render={(props) => <UrlArea refreshFun={this.refresh} caller="D4SCIENCE" {...props} /> } />		
-		  <Route path="/vto/"
-			 render={(props) => <ShowAllTools showAllToolsFun={this.showAllTools} caller="CLARIN" {...props} /> } />
-		    <Route path="*"       component={AlertURLFetchError} />
+	    render={(props) => <DropArea passToolsChangeToParent={this.handleToolsChange} caller="standalone" {...props} /> } />
+	<Route exact path="/vlo/:fileURL/:fileMimetype/:fileLanguage"
+	       render={(props) => <DropArea passToolsChangeToParent={this.handleToolsChange} caller="VLO" {...props} /> } />
+	  <Route exact path="/vlo/:fileURL/:fileMimetype"
+		 render={(props) => <DropArea passToolsChangeToParent={this.handleToolsChange} caller="VLO" {...props} /> } />	    
+	    <Route path="/vcr/:fileURL"
+		   render={(props) => <DropArea passToolsChangeToParent={this.handleToolsChange} caller="VCR" {...props} /> } />
+	      <Route path="/fcs/:fileURL"
+   		     render={(props) => <DropArea passToolsChangeToParent={this.handleToolsChange} caller="FCS" {...props} /> } />	    
+		<Route path="/b2drop/:fileURL"
+	               render={(props) => <DropArea passToolsChangeToParent={this.handleToolsChange} caller="B2DROP" {...props} /> } />
+		  <Route path="/d4science/:fileURL"
+			 render={(props) => <DropArea passToolsChangeToParent={this.handleToolsChange} caller="D4SCIENCE" {...props} /> } />
+		    <Route path="/vto/"
+			   render={(props) => <ShowAllTools showAllToolsFun={this.showAllTools} caller="CLARIN" {...props} /> } />
+		      <Route path="*" component={AlertURLFetchError} />
     </Switch>
   </HashRouter>
-
-
   
   <p />
   <hr />
@@ -245,31 +243,47 @@ export default class App extends React.Component {
                    inject={{
 		       resources: () => ResourceStore.getState().resources || []
 		   }} >
-    <Resources passChangeToParent = { this.handleToolsPerTaskChange } />
+    <Resources passToolsChangeToParent = { this.handleToolsChange }  />
   </AltContainer>
-  <TaskOrientedView resource = { ResourceStore.getState().resources[0] || [] }
-            toolsPerTask = { this.state.toolsPerTask || {} }
-		/>
-  <hr />
 
+  <p />
+  <hr />
+  <p />
+		
+  <TaskOrientedView resource = { ResourceStore.getState().resources[0] || [] }
+                      tools  = { this.state.tools || [] }
+		/>
+  <p />		
+  <hr />
+  <p />
+		
   <footer id="footer">
     <div className="container">
       <div className="row">
         <div className="col-sm-6 col-sm-push-3 col-xs-12">
           <div className="text-center">
+	    <div>
+  	      <DevHelp className="header-link" />
+	    </div>
             <span className="footer-fineprint">
               Service provided by <a href="https://www.clarin.eu">CLARIN</a>
             </span>
           </div>
         </div>
         <div className="col-sm-3 col-sm-pull-6 col-xs-12">
+    	  <AboutHelp className="header-link" />
           <div className="version-info text-center-xs">
             {lrsVersion}
           </div>
         </div>
         <div className="col-sm-3 text-right">
-		<a href={ emailContactCommand }>Contact</a>
-        </div>
+	  <div className="text-center">
+	    <a href={ emailContactCommand }>Contact & Support</a>
+	    <div>
+  	      <UserFAQ className="header-link" />
+	    </div>
+	  </div>
+	  </div>
       </div>
     </div>
   </footer>

@@ -1,11 +1,25 @@
+// -------------------------------------------
+// The CLARIN Language Resource Switchboard
+// 2016-18 Claus Zinn, University of Tuebingen
+// 
+// File: AlertURLUploadError.jsx
+// Time-stamp: <2018-11-13 17:04:10 (zinn)>
+// -------------------------------------------
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import {ModalContainer, ModalDialog} from 'react-modal-dialog';
 
-export default class UserHelp extends React.Component {
+export default class AlertURLUploadError extends React.Component {
   static propTypes = {
     className: PropTypes.string,
   }
+
+  constructor(props) {
+	super(props);
+	this.propagateFun = this.props.onCloseProp;
+  }
+    
   state = {
     showModal: true
   }
@@ -13,18 +27,19 @@ export default class UserHelp extends React.Component {
     this.setState({showModal: true});
   }
   closeModal = () => {
-    this.setState({showModal: false});
+      this.setState({showModal: false});
+      this.propagateFun();            
   }
   render() {
     return <a className={this.props.className} onClick={this.openModal}>
       {this.state.showModal ?
-        <AlertURLUploadError onClose={this.closeModal}/>
+        <AlertURLUploadErrorText onClose={this.closeModal}/>
       : null}
     </a>;
   }
 }
 
-class AlertURLUploadError extends React.Component {
+class AlertURLUploadErrorText extends React.Component {
   static propTypes = {
     onClose: PropTypes.func,
   }

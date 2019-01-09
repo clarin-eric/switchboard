@@ -1,5 +1,68 @@
 # Changelog
-All notable changes to this project will be documented in this file.
+	All notable changes to this project will be documented in this file.
+
+
+## [1.4.2] - 2018-12-20
+### Updated
+	- tackled https://github.com/clarin-eric/LRSwitchboard/issues/40
+	
+## [1.4.1] - 2018-12-20
+### Updated
+	- github instructions
+	- code cleaning:
+	* deleted superfluous methods (App.jsx: showFiles, handleChange)
+	* deleted superfluous state information
+	* deleted superfluous constants in util wrt. web services support
+	* move code to clear Dropzones to DropArea component
+	- new UI behaviour when invoked from VLO/D4Science/B2DROP
+	- added cross-references to switchboard back-end repository in README.md
+
+## [1.4.0] - 2018-11-30
+### Removed
+	- removed support for web services
+	* (clrs-rest backend (registry) has not been updated yet)
+
+## [1.3.4] - 2018-11-20
+### Changed
+	- changed nginx configuration for D4Science integration
+	- reduced URL name display to 40 characters.
+
+## [1.3.3] - 2018-11-14
+### Changed
+	- changed handling of handle-based urls
+	- fixed bug where there are only web-based tools applicable, but no segmented controls being shown
+	- replaced all JS alerts by reactjs ones.
+
+## [1.3.2] - 2018-11-08
+### Changed
+	- ameliorated the Help Menu; FAQ section outsourced with extra link in footer.
+	- updated AboutHelp.
+	- shortened text in the drop areas
+	- Tool View now also sorts task groups alphabetically
+
+## [1.3.1] - 2018-10-16
+### Added
+	- calls to clrs-rest back-end now passes-on URL parameter 'includeBetaSoftware' with 'yes'/'no' value
+
+## [1.3.0] - 2018-10-08
+### Changed
+	- modified look & feel of the resource panel
+	- added sorting options to the "task oriented view"; design changes, removed switch for showing WSs
+	- icon no longer spinning
+	- improved design of boxes for URL and text drop, including submit buttons
+	- fixed bug where help menus did not display the closing X
+	- moved About and For Developer Help to footer, changed Contact&Support
+	- fixed CLARIN logo (visibility and right alignment)
+	- making now use of CLRS-REST service (outsourcing Matcher & Registry)
+
+## [1.1.7] - 2018-06-30
+### Changed
+	- integrated UrlArea with DropArea (code refactoring)
+	- removed references to B2DROP as upload storage for the switchboard
+	- all files transferred to the switchboard are now uploaded to switchboard’s storage server
+	(including those stemmi	ng from VLO/VCR/B2DROP invocations)
+	- mime type and language information from the VLO is now ignored (no cross-checking, for time being)
+	- added comment headers to all js/jsx files
 
 ## [1.1.6] - 2018-06-25
 

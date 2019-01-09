@@ -1,3 +1,11 @@
+// -------------------------------------------
+// The CLARIN Language Resource Switchboard
+// 2016-18 Claus Zinn, University of Tuebingen
+// 
+// File: DevHelp.jsx
+// Time-stamp: <2018-09-21 09:49:01 (zinn)>
+// -------------------------------------------
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import {ModalContainer, ModalDialog} from 'react-modal-dialog';
@@ -18,7 +26,7 @@ export default class DevHelp extends React.Component {
   }
   render() {
     return <a className={this.props.className} onClick={this.openModal}>
-      Developer
+      For Developers
       {this.state.showModal ?
         <DevHelpText onClose={this.closeModal}/>
       : null}
@@ -30,24 +38,10 @@ class DevHelpText extends React.Component {
   static propTypes = {
     onClose: PropTypes.func,
   }
-  state = {
-    showSecondModal: false
-  }
-  openModal = () => {
-    this.setState({showSecondModal: true});
-  }
-  closeModal = () => {
-    this.setState({showSecondModal: false});
-  }
   render() {
     return <ModalContainer onClose={this.props.onClose}>
-        <ModalDialog onClose={this.props.onClose} className="devHelpDialog"  width={800}>
-          {this.state.showSecondModal ?
-            <SecondModal onClose={this.closeModal}/>
-          : null}
-	    
+        <ModalDialog onClose={this.props.onClose} className="devHelpDialog"  width={800} margin={50}>
 	    <h2>How to get your tool listed in the CLARIN LRS</h2>
-	    <center><p><small><b><em>Leave Help with ESC</em></b></small></p></center>
 	  <p>For the time being, two pieces of information about a resource are used to identify whether there is any tool
 	    that can process the resource:</p>
 	  <ul>
@@ -91,16 +85,4 @@ class DevHelpText extends React.Component {
   }
 }
 
-class SecondModal extends React.Component {
-  static propTypes = {
-    onClose: PropTypes.func,
-  }
-  render() {
-    return <ModalContainer onClose={this.props.onClose}>
-      <ModalDialog onClose={this.props.onClose} width={350} className="devHelpDialog">
-        <h1>Second Dialog</h1>
-        <p>When you hit esc, only this one will close</p>
-      </ModalDialog>
-    </ModalContainer>;
-  }
-}
+

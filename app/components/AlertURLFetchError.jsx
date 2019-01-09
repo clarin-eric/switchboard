@@ -1,11 +1,25 @@
+// -------------------------------------------
+// The CLARIN Language Resource Switchboard
+// 2016-18 Claus Zinn, University of Tuebingen
+// 
+// File: AlertURLFetchError.jsx
+// Time-stamp: <2018-11-13 17:03:33 (zinn)>
+// -------------------------------------------
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import {ModalContainer, ModalDialog} from 'react-modal-dialog';
 
-export default class UserHelp extends React.Component {
+export default class AlertURLFetchError extends React.Component {
   static propTypes = {
     className: PropTypes.string,
   }
+
+  constructor(props) {
+	super(props);
+	this.propagateFun = this.props.onCloseProp;
+    }
+    
   state = {
     showModal: true
   }
@@ -14,17 +28,18 @@ export default class UserHelp extends React.Component {
   }
   closeModal = () => {
     this.setState({showModal: false});
+    this.propagateFun();            
   }
   render() {
     return <a className={this.props.className} onClick={this.openModal}>
       {this.state.showModal ?
-        <AlertURLFetchError onClose={this.closeModal}/>
+        <AlertURLFetchErrorText onClose={this.closeModal}/>
       : null}
     </a>;
   }
 }
 
-class AlertURLFetchError extends React.Component {
+class AlertURLFetchErrorText extends React.Component {
   static propTypes = {
     onClose: PropTypes.func,
   }

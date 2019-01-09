@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Profiler.js
-// Time-stamp: <2018-06-20 23:49:24 (zinn)>
+// Time-stamp: <2018-12-20 16:32:40 (zinn)>
 // -------------------------------------------
 
 import Request from 'superagent';
@@ -12,11 +12,13 @@ import ResourceActions from '../actions/ResourceActions';
 
 export default class Profiler {
 
-    constructor( resource, caller, remoteFilename ) {
+    constructor( resource, caller, remoteFilename, cb ) {
 
 	this.protocol    = window.location.protocol;	// use https or http given parent window
 	this.resource = resource;
 	this.remoteFilename = remoteFilename;
+	this.cb = cb;
+	
 	this.windowAppContextPath = window.APP_CONTEXT_PATH;
 	// default values
 	this.resourceProps =
@@ -35,9 +37,9 @@ export default class Profiler {
 
 	// create the resource in the store
 	this.resourceStateItem = ResourceActions.create( this.resourceProps );
+	console.log('Profiler/constructor', this.resourceProps);
     }
 
-    // not called (info from browser and VLO is being trusted)
     identifyMimeType( ) {
 	let file = this.resourceProps.file;
 	let protocol = this.protocol;
@@ -50,7 +52,7 @@ export default class Profiler {
 		.end((err, res) => {
 		    if (err) {
 			reject(err);
-			alert('Warning: could not identify media type.');
+			that.cb();		    
 		    } else {
 			that.resourceStateItem.mimetype = res.text;
 			ResourceActions.update(that.resourceStateItem);			
@@ -76,7 +78,7 @@ export default class Profiler {
 		.end((err, res) => {
 		    if (err) {
 			reject(err);
-			alert('Warning: could not identify language');
+			that.cb();		    
 		    } else {
 			let langStructure = processLanguage(res.text);
 			that.resourceStateItem.language = langStructure;
@@ -99,7 +101,7 @@ export default class Profiler {
 		.end((err, res) => {
 		    if (err) {
 			reject(err);
-			alert('Warning: could not identify language');
+			that.cb();		    
 		    } else {
 			let langStructure = processLanguage(res.text);
 			that.resourceStateItem.language = langStructure;
@@ -122,7 +124,7 @@ export default class Profiler {
 		.end((err, res) => {
 		    if (err) {
 			reject(err);
-			alert('Warning: could not download content');
+			that.cb();		    			
 		    } else {
 			console.log('Profiler/getContent', res, file);
 			resolve(res);
@@ -159,7 +161,7 @@ export default class Profiler {
     }
 
     // mimetype detection, given the media type of the resource is NOT plain/text, requires conversion to text/plain
-    convertProcessFile() {
+    convertProcessFile( signalDone ) {
 	let that = this;
 	let promiseMimeType = that.identifyMimeType();
 	promiseMimeType.then(
@@ -174,6 +176,7 @@ export default class Profiler {
 			    promiseLanguage.then(
 				function(resolve) {
 				    console.log('language identification from stream succeeded', resolve);
+				    signalDone();
 				},
 				function(reject) {
 				    console.log('Warning: language identification from stream failed', reject);
@@ -182,18 +185,19 @@ export default class Profiler {
 			    console.log('Warning: conversion to plain/text failed', reject) })
 		} else if ( (resolve.text == "application/zip") ||
 			    (resolve.text == "application/x-gzip") ) {
-		    alert("Please identify the language of the zip file's content!")
+		    that.cb();
 		} else if ( (resolve.text == "audio/vnd.wave") ||
 			    (resolve.text == "audio/x-wav")    ||
 			    (resolve.text == "audio/wav")      ||
 			    (resolve.text == "audio/mp3")      ||			    
 			    (resolve.text == "audio/mp4")      ||
 			    (resolve.text == "audio/x-mpeg")) {
-		    alert("Please identify the language of the audio/video file!")
+		    that.cb();		    
 		} else {
 		    let promiseLanguage = that.identifyLanguage();
 		    promiseLanguage.then(
 			function(resolve) {
+			    signalDone();
 			    //console.log('language identification from file succeeded', resolve);
 			},
 			function(reject) {

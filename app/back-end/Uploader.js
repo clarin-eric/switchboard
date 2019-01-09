@@ -3,20 +3,18 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Uploader.js
-// Time-stamp: <2018-06-25 12:33:23 (zinn)>
+// Time-stamp: <2018-11-14 09:09:46 (zinn)>
 // -------------------------------------------
 
-/* Uploads a file to the MPG server in Garching, or to a Nextcloud space.
+/* Uploads a file to the MPG server in Garching, or to a Nextcloud instance.
  
-   - Note that, for instance, the URL
+   - Note that, for instance, the URL '/storage/' is reverse-proxied to
 
-     /storage/
-
-    is reverse-proxied to
-
-     //ws1-clarind.esc.rzg.mpg.de/drop-off/storage/                      
+       //ws1-clarind.esc.rzg.mpg.de/drop-off/storage/                      
 
    The use of the MPG server in Garching is deprecated due to privacy concerns (all can download uploads from there)
+
+   See docker/nginx.conf
 
 */
 
@@ -26,50 +24,36 @@ import {appContextPath,
 	fileStorageServerMPG_localhost,
 	fileStorageServerMPG_remote,
 	fileStorageServerNEXTCLOUD_localhost,
-	fileStorageServerB2DROP_localhost,
 	fileExtensionChooser,
-	b2drop_user,
-	b2drop_pass} from './util';
+	nextcloud_user,
+	nextcloud_pass} from './util';
 
 export default class Uploader {
 
     constructor( { file, type = 'file' } = {})  {
 	this.file = file;
-	this.protocol = window.location.protocol;
 	this.windowAppContextPath = window.APP_CONTEXT_PATH;
 
-	let today = new Date();
-
-	/* type = paste 
-
-	TODO: the link may or may not show the file extension properly, see e.g.
-	- https://weblicht.sfs.uni-tuebingen.de/nextcloud/s/rXaQg3seMTwbtEN/download
-	- https://office.clarin.eu/pp/D8S-2.2.pdf
-
-	*/
+	const today = new Date();
 
 	if (type == 'file') {
-	    // todo: some filenames may come without an extension
-	    let fileExtension = this.file.name.split('.').pop();
-	    this.filenameWithDate = today.getTime() + "." + fileExtension;
-
-	    // overwrite
-	    fileExtension = fileExtensionChooser(file.type);
-	    this.filenameWithDate = today.getTime() + "." + fileExtension;	    
-	} else {
+	    this.filenameWithDate = today.getTime() + "." + fileExtensionChooser(file.type);
+	} else { // type = blob (taken to be typed text)
 	    this.filenameWithDate = today.getTime() + ".txt";
+	    if (file.name == undefined) {file.name = this.filenameWithDate}
 	}
+    }
 
-	console.log('new appContextPath', this.windowAppContextPath);
-	// default upload (overwritten during sharing, todo: clean-up)
+    uploadFile() {
+	if (fileStorage === "MPCDF") {
+	    return this.uploadFile_MPCDF();
+	} else {
+	    return this.uploadFile_NEXTCLOUD();
+	}
+    }
+
+    uploadFile_MPCDF() {
 	this.remoteFilename = fileStorageServerMPG_remote + this.filenameWithDate;
-        this.remoteFilenameReverseProxy = this.windowAppContextPath
-	    + fileStorageServerMPG_localhost // TODO must go, deprecate MPG
-	    + this.filenameWithDate;
-
-	console.log('Uploader/constructor', this.filenameWithDate, this.remoteFilename, this.remoteFilenameReverseProxy, file, file.type);
-
-	// needs to be deprecated as MPG server is no longer used.
 	// the file server at the MPG seems to have problems with certain file types, so we change it here.
 	this.newFileType = this.file.type;
 	if ( (this.newFileType == "text/xml") ||
@@ -77,10 +61,13 @@ export default class Uploader {
 	     (this.newFileType == "") ) {
 	    this.newFileType = "application/octet_stream"
 	}
-    }
+	
+        this.remoteFilenameReverseProxy = this.windowAppContextPath
+	    + fileStorageServerMPG_localhost 
+	    + this.filenameWithDate;
 
-    uploadFile() {
 	let that = this;
+	
         return new Promise(function(resolve, reject) {
 	    console.log('uploadFile', that.remoteFilenameReverseProxy);
 	    Request
@@ -97,24 +84,16 @@ export default class Uploader {
 		})});
     }
 
-    // uploading to Nextcloud or B2DROP is a two stage process
-    uploadFile_NC_B2DROP() {
+    // uploading to Nextcloud is a two stage process
+    uploadFile_NEXTCLOUD() {
 	let that = this;
-	let cloudPath;
-
-	if (fileStorage === "NEXTCLOUD") {
-	    cloudPath = this.windowAppContextPath + fileStorageServerNEXTCLOUD_localhost
-	} else {
-	    cloudPath = this.windowAppContextPath + fileStorageServerB2DROP_localhost
-	}
-
-	console.log('Uploader/uploadFile_NC_B2DROP cloudPath', cloudPath);
+	let cloudPath = this.windowAppContextPath + fileStorageServerNEXTCLOUD_localhost
 	
 	return new Promise(function(resolve, reject) {
-	    // 1a. store in B2DROP 
+	    // 1a. store in NEXTCLOUD 
 	    Request
 		.put(cloudPath.concat('remote.php/webdav/').concat(that.filenameWithDate))    
-		.auth(b2drop_user, b2drop_pass)
+		.auth(nextcloud_user, nextcloud_pass)
 		.set('Access-Control-Allow-Origin', '*')	
 		.set('Access-Control-Allow-Credentials', 'true')
 		.set('Content-Type', that.file.type)
@@ -124,10 +103,9 @@ export default class Uploader {
 		.end((err, res) => {
 		    if (err) {
 			reject(err);
-			alert('Error in uploading resource to NC/B2Drop instance');
+			console.log('Error in uploading resource to Nextcloud instance');
 		    } else {
 			// 1b. Create a 'share link' action on the file you uploaded
-//			console.log('2nd request', cloudPath.concat('ocs/v1.php/apps/files_sharing/api/v1/shares'));
 			Request
 			    .post(cloudPath.concat('ocs/v1.php/apps/files_sharing/api/v1/shares'))
 			    .set('Content-Type', 'application/json')
@@ -138,21 +116,19 @@ export default class Uploader {
 			    .send( { path : that.filenameWithDate,
 				     shareType: 3
 				   } )
-			    .auth(b2drop_user, b2drop_pass)			
+			    .auth(nextcloud_user, nextcloud_pass)			
 			    .withCredentials()
 			    .end((err, res) => {
 				if (err) {
 				    reject(err);			
-				    alert('Error in creating a share-link with B2Drop'.concat(that.filenameWithDate));
+				    console.log('Error in creating a share-link with Nextcloud'.concat(that.filenameWithDate));
 				} else {
 				    var parseString = require('xml2js').parseString;
 				    parseString(res.text, function (err, result) {
-					console.log('sharing result', result, err);
 					that.remoteFilename = result.ocs.data[0].url[0].concat('/download')
-					// hack!
-					console.log('Uploader/stored before', that.remoteFilename);					
+					// hack as shared link returned by nextcloud has wrong protocol (!)
 					that.remoteFilename = that.remoteFilename.replace('http', 'https');
-					console.log('Uploader/stored after', that.remoteFilename);
+					console.log('Uploader/shared link', that.remoteFilename);
 				    });
 				    resolve(res)
 				}})

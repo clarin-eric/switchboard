@@ -13,17 +13,28 @@ For more information, please see the publications below, or contact claus.zinn@u
 
 # Website
 
-The switchboard is currently being served at:
-
-```https://weblicht.sfs.uni-tuebingen.de/clrs/#/ ```
-
-Its official site at:
+The production version of the switchboard, its official site, is served at:
 
 ```https://switchboard.clarin.eu ```
 
-is also active.
+The development version of the switchboard is currently being served at:
 
+```https://weblicht.sfs.uni-tuebingen.de/clrs-dev/#/ ```
 
+# Dependencies
+
+- The switchboard depends on its back-end, see
+
+```https://github.com/clarin-eric/LRSwitchboard-rest.git ```
+
+For more details, follow the instruction in this back-end repository.
+
+- The switchboard depends on a file storage solution, which is based on an off-the-shelves Nextclound container.
+It runs here:
+
+```https://weblicht.sfs.uni-tuebingen.de/nextcloud ```
+
+By default, the switchboard front-end communicates with the productive versions of the back-end and the nextcloud container.
 
 # Status
 The software is currently being developed and actively maintained. A v1.0.0 release was published on Aug 11, 2017.
@@ -34,6 +45,12 @@ The software is currently being developed and actively maintained. A v1.0.0 rele
 
 - Claus Zinn. The CLARIN Language Resource Switchboard. CLARIN 2016 Annual Conference, Aix-en-Provence, France, 2016.
 See https://www.clarin.eu/sites/default/files/zinn-CLARIN2016_paper_26.pdf
+
+- C. Zinn: A Bridge from EUDAT's B2DROP Cloud Service to CLARIN's Language Resource Switchboard, Proceedings of the CLARIN Annual Conference, Budapest, Hungary, 2017. See below for an extended version.
+
+- Claus Zinn. <a href="http://www.ep.liu.se/ecp/147/004/ecp17147004.pdf"> A Bridge from EUDAT's B2DROP cloud service to CLARIN's Language Resource Switchboard.</a> Selected papers from the CLARIN Annual Conference 2017, Budapest, 18-20 September 2017, Linköping University Electronic Press, vol. 147, pages 36-45, 2018.
+
+
 
 
 

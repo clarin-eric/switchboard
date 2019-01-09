@@ -6,7 +6,7 @@ ENV TIKA_SERVER_URL https://www.apache.org/dist/tika/tika-server-1.16.jar
 ENV JAVA_HOME=/usr/lib/jvm/default-jvm
 #ENV PYTHON_VERSION=2.7.14-r2
 ENV PYTHON_VERSION=3.6
-ENV PY_PIP_VERSION=9.0.1
+ENV PY_PIP_VERSION=18.0
 ENV SUPERVISOR_VERSION=3.3.1
 ENV NGINX_VERSION 1.11.13
 
@@ -142,6 +142,6 @@ WORKDIR /app
 # COPY entrypoint.sh /usr/bin/entrypoint.sh
 # RUN chmod u+x /usr/bin/entrypoint.sh
 
-# supervisord, apacke-tika, nginx ports
+# supervisord, apache-tika, nginx ports
 EXPOSE 9001 9998 80 443
 ENTRYPOINT ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]

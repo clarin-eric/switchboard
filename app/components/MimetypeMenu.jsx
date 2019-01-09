@@ -1,3 +1,11 @@
+// -------------------------------------------
+// The CLARIN Language Resource Switchboard
+// 2016-18 Claus Zinn, University of Tuebingen
+// 
+// File: MimetypeMenu.jsx
+// Time-stamp: <2018-06-29 20:23:42 (zinn)>
+// -------------------------------------------
+
 import React from 'react';
 import ReactSelectize from 'react-selectize';
 

@@ -397,7 +397,8 @@ h4 .small, h5 .small, h6 .small, .h1 .small, .h2 .small, .h3 .small, .h4 .small,
 
 h1, .h1, h2, .h2, h3, .h3 {
     margin-top: 20px;
-    margin-bottom: 10px
+    margin-bottom: 10px;
+    margin-left: 20px;
 }
 
 h1 small, .h1 small, h2 small, .h2 small, h3 small, .h3 small, h1 .small,
@@ -420,7 +421,7 @@ h1, .h1 {
 }
 
 h2, .h2 {
-    font-size: 30px
+    font-size: 30px;
 }
 
 h3, .h3 {
@@ -466,7 +467,8 @@ mark, .mark {
 }
 
 .text-left {
-    text-align: left
+    text-align: left;
+    margin-left: 20px;
 }
 
 .text-right {
@@ -3733,7 +3735,8 @@ select[multiple].input-group-sm > .input-group-addon, select[multiple].input-gro
 }
 
 .navbar-nav {
-    margin: 7.5px -15px
+    margin: 7.5px -15px;
+    cursor: pointer;	     
 }
 
 .navbar-nav > li > a {
@@ -6432,7 +6435,7 @@ button.close {
 #header .clarin-top .logo {
     width: 10em;
     height: 4em;
-    background-image: url('./../images/clarin-logo-wide.png');
+    background-image: url('/images/clarin-logo-wide.png');
     background-size: 100%;
     background-repeat: no-repeat
 }
@@ -6440,21 +6443,23 @@ button.close {
 #header .navbar-nav a.clarin-logo {
     min-height: 50px;
     width: 119px;
-    background-image: url('./../images/clarin-logo-wide.png');
-    opacity: 0.1;
+    background-image: url('/images/clarin-logo-wide.png');
+    opacity: 0.5;
     background-size: 115px 46px;
     background-position-x: 15px;
     background-position-y: 2px;
     background-repeat: no-repeat
 }
 
+
+/*
 #header .navbar-nav a.clarin-logo span {
     display: none
 }
-
 #header .navbar-nav a.clarin-logo:hover {
     background-color: inherit;
 }
+*/
 
 #topnavigation.row {
     background: #f5f5f5;

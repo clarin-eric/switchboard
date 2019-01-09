@@ -2,20 +2,20 @@
 // The CLARIN Language Resource Switchboard
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
-// File: AlertShibboleth.jsx
-// Time-stamp: <2018-11-13 17:04:05 (zinn)>
+// File: AlertNoTools.jsx
+// Time-stamp: <2018-11-29 23:06:31 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
 import PropTypes from 'prop-types';
 import {ModalContainer, ModalDialog} from 'react-modal-dialog';
 
-export default class AlertShibboleth extends React.Component {
+export default class AlertNoTools extends React.Component {
   static propTypes = {
     className: PropTypes.string,
   }
 
-  constructor(props) {
+    constructor(props) {
 	super(props);
 	this.propagateFun = this.props.onCloseProp;
     }
@@ -27,31 +27,29 @@ export default class AlertShibboleth extends React.Component {
     this.setState({showModal: true});
   }
   closeModal = () => {
-    this.setState({showModal: false});
-    this.propagateFun();      
+      this.setState({showModal: false});
+      this.propagateFun();
   }
-    
   render() {
     return <a className={this.props.className} onClick={this.openModal}>
       {this.state.showModal ?
-        <AlertShibbolethText onClose={this.closeModal}/>
+        <AlertNoToolsText onClose={this.closeModal}/>
       : null}
     </a>;
   }
 }
 
-class AlertShibbolethText extends React.Component {
+class AlertNoToolsText extends React.Component {
   static propTypes = {
     onClose: PropTypes.func,
   }
   render() {
     return <ModalContainer onClose={this.props.onClose}>
         <ModalDialog onClose={this.props.onClose} className="systemAlertDialog"  width={400}>
-	    <h2>Resource Retrieval Error</h2>
-	    <p>
-	    The resource seems to be behind a Shibboleth authentication wall. Please fetch the resource with your authentication credentials by clicking on "Link to Resource". Then use the standalone version of the LRS to upload the resource.
+	    <h2>No Applicable Tools</h2>
+	  <p>
+	  The Switchboard has currently no applicable tool than can process the given resource (given its mediatype and language). Please try again with another resource.
 	    </p>
-	    
         </ModalDialog>
     </ModalContainer>;
   }

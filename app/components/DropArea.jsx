@@ -1,218 +1,230 @@
+// -------------------------------------------
+// The CLARIN Language Resource Switchboard
+// 2016-18 Claus Zinn, University of Tuebingen
+// 
+// File: DropArea.jsx
+// Time-stamp: <2018-12-20 16:39:50 (zinn)>
+// -------------------------------------------
+
 import React from 'react';
 import Loader from 'react-loader';
 import Dropzone from 'react-dropzone';
 import ResourceActions from '../actions/ResourceActions';
 import TextareaAutosize from 'react-autosize-textarea';
 import AlertURLFetchError from './AlertURLFetchError.jsx';
+import AlertURLIncorrectError from './AlertURLIncorrectError.jsx';
 import AlertURLUploadError from './AlertURLUploadError.jsx';
+import AlertShibboleth from './AlertShibboleth.jsx';
+import AlertMissingInfo from './AlertMissingInfo.jsx';
+import AlertMissingInputText from './AlertMissingInputText.jsx'; 
 
-// import LinkArea from './LinkArea';
-
-// access to profiler
+import Resolver from '../back-end/Resolver';
 import Profiler from '../back-end/Profiler';
 import Uploader from '../back-end/Uploader';
 import Downloader from '../back-end/Downloader';
-import {allowTextInput, allowPasteURL, fileStorage, rewriteURL} from '../back-end/util';
+import {fileExtensionChooser, processLanguage, unfoldHandle} from '../back-end/util';
+
+// not used yet; might replace or add to drop boxes as background image
+import BackgroundFile from './../images/file-solid.png';
+import BackgroundLink from './../images/location-arrow-solid.png';
+import BackgroundText from './../images/keyboard-solid.png';
+
+import FadeProps from 'fade-props';
 
 export default class DropArea extends React.Component {
     constructor(props) {
 	super(props);
 
-	this.showFiles   = this.showFiles.bind(this);
-	this.onDrop      = this.onDrop.bind(this);
+	// passed from main component to allow trash bin to clear task oriented view
+	this.handleToolsChange = props.passToolsChangeToParent;
 	
+	console.log('DropArea', props);
+	this.onDrop      = this.onDrop.bind(this);
 	this.state = {
-	    loaded: true,	    
-	    files: [],
+	    isLoaded: true,
+	    
 	    textInputValue: "",
-	    url: '',
+	    urlInputValue: "",
+
+	    // for disabled/enabling the 3 drop zone areas
+	    textInputAreaRef: "",
+	    urlInputAreaRef: "",
+	    fileInputAreaRef: "",
+	    
+	    showAlertShibboleth: false,	    
 	    showAlertURLFetchError: false,
-	    showAlertURLUploadError: false
+	    showAlertURLIncorrectError: false,
+	    showAlertURLUploadError: false,
+	    showAlertMissingInputText: false,
+	    showAlertMissingInfo: false
 	};
 	
-	this.handlePaste    = this.handlePaste.bind(this);	
-	this.handleChange   = this.handleChange.bind(this);
-	this.handleKeyPress = this.handleKeyPress.bind(this);
-
 	this.handleTextInputChange   = this.handleTextInputChange.bind(this);
 	this.handleTextInputSubmit   = this.handleTextInputSubmit.bind(this);
-    }
-
-    
-    handleChange(event) {
-	//console.log('A change took place.', event.target.value);
-	this.handlePaste(event);
-	// event.preventDefault();
-    }
-
-    handleTextInputSubmit(event) {
-	var textContent = this.state.textInputValue;
-	var blob = new Blob([textContent], {type: "text/plain"});
-	this.uploadAndProcessFile( {currentFile: blob, type: 'data'} );
-
-	// remove prior resources
-	ResourceActions.reset();
-
-	// clear task-oriented view
-	this.props.clearDropzoneFun(); 
 	
-	this.setState({
-	    textInputValue : "",  // reset textarea
-	    files: [blob]         // put blob into file to trigger Resources
-	});	
+	this.handleUrlInputChange   = this.handleUrlInputChange.bind(this);
+	this.handleUrlInputSubmit   = this.handleUrlInputSubmit.bind(this);
 	
-	event.preventDefault();
+	this.processParameters      = this.processParameters.bind(this);
+	this.clearDropzone          = this.clearDropzone.bind(this);
     }
-    
+
+    componentDidMount() {
+
+	// fetch all parameter from router
+	const parameters = this.props.match.params;
+
+	// process parameters
+	this.processParameters(this.props.caller, parameters);
+
+    }
+
+    processParameters( caller, parameters ) {
+
+	console.log('DropArea/processParameters', caller, parameters);	
+
+	/* Change in policy:
+
+	   parameters.fileLanguage 
+	   parameters.fileMimetype
+
+	   now ignored. Our own Apache Tika takes care of this
+
+	*/
+	
+	if ( (caller == "VCR")    || (caller == "FCS") || (caller == "VLO") || 
+	     (caller == "B2DROP") || (caller == "D4SCIENCE") ) {
+	    // remove prior resources
+	    ResourceActions.reset();
+
+	    // some minor treatment for hdl: in the fileURL
+	    var fileURL = unfoldHandle( parameters.fileURL);
+	    
+	    this.downloadAndProcessSharedLink( fileURL);
+	}
+    }
+   
     handleTextInputChange(event) {
 	this.setState({textInputValue: event.target.value});
     }
 
-    handleKeyPress(event) {    
-	console.log('handleKeyPress: A key has been pressed', event.target.value);
-	return false;
-	
-	// Enumerate all supported clipboard, undo and redo keys
-	var clipboardKeys = {
-		winInsert : 45,
-		winDelete : 46,
-		SelectAll : 97,
-		macCopy : 99,
-		macPaste : 118,
-		macCut : 120,
-		redo : 121,	
-		undo : 122
-	}
-	// Simulate readonly but allow all clipboard, undo and redo action keys
-	var charCode = event.which;
+    // todo: check minimum number of bytes that need to be submitted.
+    handleTextInputSubmit(event) {
+	var textContent = this.state.textInputValue;
 
-	// Accept ctrl+v, ctrl+c, ctrl+z, ctrl+insert, shift+insert, shift+del and ctrl+a
-	if (
-		event.ctrlKey && charCode == clipboardKeys.redo ||		/* ctrl+y redo			*/
-		event.ctrlKey && charCode == clipboardKeys.undo ||		/* ctrl+z undo			*/
-		event.ctrlKey && charCode == clipboardKeys.macCut ||		/* ctrl+x mac cut		*/
-		event.ctrlKey && charCode == clipboardKeys.macPaste ||		/* ctrl+v mac paste		*/
-		event.ctrlKey && charCode == clipboardKeys.macCopy ||		/* ctrl+c mac copy		*/ 
-		event.shiftKey && event.keyCode == clipboardKeys.winInsert ||	/* shift+ins windows paste	*/ 
-		event.shiftKey && event.keyCode == clipboardKeys.winDelete ||	/* shift+del windows cut	*/ 
-		event.ctrlKey && event.keyCode == clipboardKeys.winInsert  ||	/* ctrl+ins windows copy	*/ 
-		event.ctrlKey && charCode == clipboardKeys.SelectAll		/* ctrl+a select all		*/
-		){ return 0; }
-	// Shun all remaining keys simulating readonly textbox
-	var theEvent = event || window.event;
-	var key = theEvent.keyCode || theEvent.which;
-	key = String.fromCharCode(key);
-	var regex = /[]|\./;
-	if(!regex.test(key)) {
-		theEvent.returnValue = false;
-		theEvent.preventDefault();
+	console.log('DropArea/handleTextInputSubmit', textContent, this.state);		
+	if (textContent == "") {
+	    this.setState({showAlertMissingInputText: true} );			    
+	} else {
+
+	    var blob = new Blob([textContent], {type: "text/plain"});
+	    this.uploadAndProcessFile( {currentFile: blob, type: 'data'} );
+	    
+	    // clear task-oriented view
+	    this.clearDropzone();
+
+	    // reset textarea for textual input	    
+	    this.setState({ textInputValue : "" });
+
+	    _paq.push(["trackEvent", 'textInput', textContent, textContent.length]);
 	}
+
+	event.preventDefault();
     }
 
-    showFiles() {
+    clearDropzone() {
+	console.log('DropArea/clearDropzone', this.state);
 
-        var files = this.state.files;
-        if (files.length <= 0) {
-            return '';
-        }
+	// signal to parent that tool list is empty
+	this.handleToolsChange( [] );
+	
+	// check whether necessary for cache busting	
+	localStorage.removeItem("app"); 
 
-	// don't duplicate file information (apart from the preview)
-	return '';
+	// delete old resource 
+	ResourceActions.reset();
 
-        // return React.createElement(
-        //     'div',
-        //     null,
-        //     React.createElement(
-        //         'h2',
-	// 	{ className: 'resource' },		
-        //         'Dropped file(s): '
-        //     ),
-        //     React.createElement(
-        //         'ul',
-	// 	{ className: 'resource' },		
-        //         [].map.call(files, function (f, i) {
-        //             return React.createElement(
-	// 		'li',
-	// 		{
-        //                     key: i 
-	// 		},
-	// 		React.createElement('img', {
-        //                     src: f.preview,
-        //                     width: 100 
-	// 		}),
-	// 		React.createElement(
-	// 		    'div',
-	// 		    null,
-	// 		    f.name + ' : ' + f.size + ' bytes.'
-	// 		)
-        //             );
-        //         })
-        //     )
-        // );
+	// manipulate the history (todo: does not work)
+	this.props.history.push("/");
+    }
+
+    handleUrlInputSubmit(event) {
+	var link = this.state.urlInputValue;
+	console.log('DropArea/handleUrlInputSubmit', link, this.state);
+	if ( /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/.test(link) ) {
+
+	    // clear task-oriented view
+	    this.clearDropzone();
+	    
+	    this.downloadAndProcessSharedLink( link );
+
+	    // reset textarea for url input	    
+	    this.setState({ urlInputValue : "" });
+	    
+	    event.target.value = "";
+
+	    _paq.push(["trackEvent", 'urlInput', link, link.length]);	    
+	} else {
+	    this.setState({showAlertURLIncorrectError: true} );		
+	}	
+    }
+    
+    handleUrlInputChange(event) {
+	this.setState({urlInputValue: event.target.value});
     }
 
     /* 
-       Todo: For the time being, the PASTE facility is advertised for Dropbox/B2DROP users where
-       we rewrite the URL and then use nginx reverse proxying to tackle CORS-related issues.
+       Originally, the PASTE facility was advertised for Dropbox/B2DROP users (coming from known locations).
+       Here, URL was rewritten and reverse-proxyied by nginx to tackle CORS-related issues.
 
-       When users paste arbitrary links, (or any other link is not reverse-proxied), the tools
-       that download the URL from there face the CORS issue.
+       Now, users are allowed to paste arbitrary links. The switchboard uploads each file to its
+       storage space, which is hosted on the same domain than the switchboard. Hence, all tools
+       connected to the switchboard can download the resource from this location without running
+       into CORS issues. 
 
-       That means: the switchboard should upload each file to its own nextcloud space, and this space is hosted
-       where the switchboard is hosted. So that all tools can download the resource from there without running 
-       into CORS.
+       Note that the behaviour is extended to switchboard invocations from the VLO, VCR, FCS, B2DROP, D4SCIENCE.
+
      */
     downloadAndProcessSharedLink( link ) {
-	var corsLink = rewriteURL("PASTE", link);
-	console.log('downloadAndProcessSharedLink', corsLink);
-	let downloader = new Downloader( corsLink );
-	//let promiseDownload = downloader.downloadFile();
+	this.setState( { isLoaded: false });
+	let downloader = new Downloader( link );
 	let promiseDownload = downloader.downloadBlob();
 	let that = this;
-	this.setState( { loaded: false });
 	promiseDownload.then(
 	    function(resolve) {
-		console.log('DropArea.jsx/downloadAndProcessSharedLink succeeded', resolve, resolve.type);
 		let file = new File([resolve.body], resolve.req.url, {type: resolve.type});
-
 		that.uploadAndProcessFile( {currentFile: file, type: 'file'} );		
-		//let profiler = new Profiler( file, "dnd", link ); //resolve.req.url
-		//profiler.convertProcessFile();
-		that.setState( { loaded: true });
+		that.setState( { isLoaded: true });
 	    },
 	    function(reject) {
 		console.log('DropArea.jsx/downloadAndProcessSharedLink failed', reject);
-		that.setState({showAlertURLFetchError: true} );		
-		that.setState( { loaded: true });
+		that.setState( {showAlertURLFetchError: true} );		
+		that.setState( { isLoaded: true });
 	    });
     }   
 
     uploadAndProcessFile( { currentFile, type = 'file' } = {} ) {
 
-	this.setState( { loaded: false });
-	let that = this;
+	this.setState( { isLoaded: false });
+	let thatThis = this;
 	let uploader = new Uploader( {file: currentFile, type: type} );
 
-	console.log('DropArea/uploadAndProcessFile', currentFile);
-	// use environment variable set in webpack config to decide which file storage server to use
-	let promiseUpload;
-	if (fileStorage === "MPCDF") {
-	    promiseUpload = uploader.uploadFile();
-	} else {
-	    promiseUpload = uploader.uploadFile_NC_B2DROP();
-	}
+	console.log('DropArea/uploadAndProcessFile', currentFile, thatThis);
+	let promiseUpload = uploader.uploadFile();
 	
 	promiseUpload.then(
 	    function(resolve) {
-		let profiler = new Profiler( currentFile, "dnd", uploader.remoteFilename );
-		profiler.convertProcessFile();
-		that.setState( { loaded: true });
+		let profiler = new Profiler( currentFile,
+					     "dnd",
+					     uploader.remoteFilename,
+					     () => thatThis.setState( {showAlertMissingInfo: true} )
+					   );
+		profiler.convertProcessFile( () => thatThis.setState( {isLoaded: true} ) );
 	    },
 	    function(reject) {
 		console.log('DropArea.jsx/upload failed', reject);
-		that.setState({showAlertURLUploadError: true} );				
-		// alert('Error: unable to upload file');
-		that.setState( { loaded: true });		
+		thatThis.setState( {showAlertURLUploadError: true} );				
+		thatThis.setState( { isLoaded: true } );		
 	    });
     }   
     
@@ -223,138 +235,142 @@ export default class DropArea extends React.Component {
 	    ResourceActions.reset();
 	}	
 
-	// clear task-oriented view
-	this.props.clearDropzoneFun();
+	// clear dropzone and hence its task-oriented view
+	this.clearDropzone();
 	
 	// process the file(s)
 	for (var i=0; i<files.length; i++) {
 	    this.uploadAndProcessFile( {currentFile: files[i]} );	    
 	}
 
-	// set the state
-	// CZ: check whether no longer needed
-	this.setState({
-	    files: files
-	});
+	_paq.push(["trackEvent", 'fileInput', files[0].name]);
     }
 
-    handlePaste(event) {
-
-	var link = event.target.value;
-	console.log('DropArea/handlePaste', link);
-	if ( /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/.test(link) ) {
-	    //console.log('A paste took place.', link);
-
-	    // clear resources view	    
-	    ResourceActions.reset();
-
-	    // clear task-oriented view
-	    this.props.clearDropzoneFun();
-	    
-	    this.downloadAndProcessSharedLink( link );	    
-	    this.setState({
-		files: link
-	    });
-	    event.target.value = "";
-	} else {
-	    console.log('The paste is not a URL', link);
-	}
-	// return false; // event.preventDefault();
-    }
-
-
+    
     render() {
-        var style1 = {
+
+	// when invoked via VLO/B2DROP/D4Science/etc, we add transferal info to the middle box
+	const transferalInfo = `Resource transferal from ${this.props.caller}. Please check the information below, then press "Show Tools"`;
+	
+	console.log('DropArea/render', this.state.isLoaded, this.props.caller);
+	_paq.push(["trackEvent", 'enterSwitchboard', this.props.caller]); 	    		
+	
+        const styleDropzone = {
             borderWidth: 2,
-            borderColor: 'black',
-            borderStyle: 'dashed',
             borderRadius: 4,
             margin: 10,
             padding: 10,
-            width: 200,
+            width: 248,
 	    height:100,
 	    resize: 'none',
 	    transition: 'all 0.5s',
 	    display:'inline-block'
-        };
+	};
 
-        var style2 = {
-            borderWidth: 2,
-            borderColor: 'black',
-            borderStyle: 'dashed',
-            borderRadius: 4,
-            margin: 10,
-            padding: 10,
-            width: 300,
-	    resize: 'none',
-	    transition: 'all 0.5s'
-	    // display:'inline-block',position:'relative', top:'65px'
-        };
-	
-        var activeStyle = {
+	const disabledStyleDropzone = {
+	    color: 'grey',
+	    borderColor: 'grey',	    
+	    borderStyle: 'dashed'	    
+	}
+
+				      
+	const enabledStyleDropzone = {
+	    color: 'black',
+	    borderColor: 'black',	    	    
+	    borderStyle: 'solid'	    	    
+	}
+
+	const textColor = {
+	    color: 'grey'
+	}
+
+	// when a file is dragged over the dropzone (left box), that's the style being used
+        const activeStyleDropzone = {
             borderStyle: 'solid',
             backgroundColor: '#eee',
             borderRadius: 8
         };
 
-	// production version
-	if ( (allowPasteURL === "yes") && (allowTextInput == "yes") ) {
-	    return (
-		<div>
-		<Loader loaded={this.state.loaded} />
-		<table>
-		  <tr>
-		    <td>
-		      <Dropzone onDrop={this.onDrop}
-				style={style1}
-				activeStyle={activeStyle} >
-			Drop your file, or click to select the file to upload.
-		      </Dropzone>
-		    </td>
-		    <td>
-                      <TextareaAutosize rows={5}
-					maxRows={5}
-					style={style1}
-					activeStyle={activeStyle}
-					onChange={this.handleChange}
-					onKeyPress={this.handleKeyPress}
-					placeholder='Paste your shared link from Dropbox and B2DROP. Or paste a persistent identifier.' />
-		    </td>
-		    <td>
-                      <form onSubmit={this.handleTextInputSubmit}>
-			<TextareaAutosize rows={5}
-					  maxRows={5}
-					  style={style1}
-					  value={this.state.textInputValue}
-					  activeStyle={activeStyle}
-					  onChange={this.handleTextInputChange}
-					  placeholder='Enter your text here. For large input, create a file and drop it in the left-most area.' />		    
-			<input type="submit" value="Submit Text"/>
-		      </form>
-		    </td>
-		  </tr>
+	return (
+	      <div>
+ 	        <h3 id="dropAreaHeading">Provision of Input</h3>
+		<Loader loaded={this.state.isLoaded} />
+		<table className="dropAreaTable">
+		  <tbody>
+		    <tr>
+		      <td>
+			<Dropzone className="inputZone"
+				  onDrop={this.onDrop}
+			          disabled={this.props.caller == "standalone" ? false : true}
+				  style={ this.props.caller == "standalone" ? {...styleDropzone, ...enabledStyleDropzone, ...textColor} : {...styleDropzone, ...disabledStyleDropzone, ...textColor} }
+				  activeStyle={activeStyleDropzone} >
+			  Drop your file, or click to select the file to upload.
+			</Dropzone>
+		      </td>
+		{/*		      <FadeProps animationLength={this.props.caller == "standalone" ? 1 : 1000} direction={0} > */}
+		      <td>
+			<div className="relativeDiv">
+			  <form onSubmit={this.handleUrlInputSubmit}>
+			    <TextareaAutosize className="inputZone"
+					      rows={5}
+	                                      disabled={this.props.caller == "standalone" ? false : true}
+					      maxRows={5}
+					      style={ {...styleDropzone, ...enabledStyleDropzone} }
+		                              value={this.props.caller == "standalone" ? this.state.urlInputValue : transferalInfo}
+					      onChange={this.handleUrlInputChange}
+					      placeholder='Paste the URL of the file to process.' >
+			    </TextareaAutosize>
+			    <input className="inputAbsolute" type="submit" value="Submit URL"/>
+			  </form>
+			</div>			  
+		      </td>
+		{/*		      </FadeProps> */ }
+		      <td>
+			<div className="relativeDiv">
+			<form onSubmit={this.handleTextInputSubmit}>
+			  <TextareaAutosize className="inputZone"
+					    rows={5}
+	                                    disabled={this.props.caller == "standalone" ? false : true}
+					    maxRows={5}
+					    style={ this.props.caller == "standalone" ? {...styleDropzone, ...enabledStyleDropzone} : {...styleDropzone, ...disabledStyleDropzone} }
+					    value={this.state.textInputValue}
+					    onChange={this.handleTextInputChange}
+					    placeholder='Enter your text to be processed here.' >
+			  </TextareaAutosize>
+			  <input className="inputAbsolute" type="submit" value="Submit Text"/>
+			</form>
+			</div>
+		      </td>
+		      <td>
+			<div>
+                          <span onClick={ () => this.clearDropzone()} >
+                            <i className="fa fa-trash fa-3x" aria-hidden="true" >
+			    </i>
+                          </span>
+			</div>
+		      </td>
+		    </tr>
+		  </tbody>
   		</table>
+		{this.state.showAlertShibboleth ?
+    		 <AlertShibboleth        onCloseProp={ () => this.setState( {showAlertShibboleth: false} ) } />
+		 : null }
 	        {this.state.showAlertURLFetchError ?
-		 <AlertURLFetchError />
+		 <AlertURLFetchError     onCloseProp={ () => this.setState( {showAlertURLFetchError: false} ) }/>
+		 : null }
+	        {this.state.showAlertURLIncorrectError ?
+		 <AlertURLIncorrectError onCloseProp={ () => this.setState( {showAlertURLIncorrectError: false} ) } />
+		 : null }
+	        {this.state.showAlertMissingInputText ?
+		 <AlertMissingInputText  onCloseProp={ () => this.setState( {showAlertMissingInputText: false} ) } />
+		 : null }
+	        {this.state.showAlertMissingInfo ?
+		 <AlertMissingInfo       onCloseProp={ () => this.setState( {showAlertMissingInfo: false} ) } />
 		 : null }
 	        {this.state.showAlertURLUploadError ?
-		 <AlertURLUploadError />
-		 : null }		
-		{this.showFiles()}
+		 <AlertURLUploadError    onCloseProp={ () => this.setState( {showAlertURLUploadError: false} ) } />
+		 : null }
 		</div>
-	    )	    
-	} else {
-	    return (
-		<div>
-		  <Loader loaded={this.state.loaded} />
-		  <Dropzone onDrop={this.onDrop}
-	                    style={style1}
-			    activeStyle={activeStyle} >
-		    Drop your files here, or click here to select files to upload.
-		  </Dropzone>
-	          {this.showFiles()}
-		</div>
-	    )
-	}
+	);
     }
 }

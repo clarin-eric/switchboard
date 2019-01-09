@@ -52,15 +52,11 @@ CLRS webpage).  It runs nginx as web server and has access to Java for running t
 tools for language and mimetype identification. It uses supervisord to spawn/control the various processes.
 
 Note that the nginx has a number of reverse proxies, see docker/nginx.conf. In particular, it gives access to
-the file storage server at the MPDCF in Garching. All reverse-proxing aims at addressing CORS-related issues.
+a file storage server (based on Nextcloud). All reverse-proxing aims at addressing CORS-related issues.
 
-You can run the Docker image with
+You can run the Docker image with, say:
 
-   ```docker run --name switchboard -d -p 9001:9001 -p 9998:9998 -p 80:80 clrs ```
-
-or (with the docker image being available in the Claus Zinn's docker hub , see Makefile)
-
-   ```docker run --name switchboard -d -p 9001:9001 -p 9998:9998 -p 80:80 docker.clarin.eu/clrs:1.0.0 ```
+   ```docker run --name switchboard -d -p 9001:9001 -p 9998:9998 -p 80:80 clauszinn/switchboard:1.4.0-dev ```
 
 (but this may depend on your local computing environment).
 
@@ -92,26 +88,9 @@ This is reverse-proxied to
 
 On ```<server-name> ```, the command
 
-   ```docker run --name switchboard -d -p 9001:9001 -p 9998:9998 -p 80:80 clauszinn/switchboard:1.0.0-dev ```
+   ```docker run --name switchboard -d -p 9001:9001 -p 9998:9998 -p 80:80 clauszinn/switchboard:1.4.0-dev ```
 
 is run. This fetches the respective (public) Docker image from hub.docker.com and runs it.
-
-
-# Context Path Definition
-
-There are four locations that need to be adapted to run the switchboard on a different path, e.g.,
-
-
-   ```http://weblicht.sfs.uni-tuebingen.de/clrs-dev ```
-
-or
-
-   ```http://weblicht.sfs.uni-tuebingen.de/clrs ```
-
-* In webpack.config.js, change ```process.env.URL_PATH ``` accordingly.
-* In Makefile, use the appropriate STATUS flag accordingly.
-* In nginx.conf, adapt the reverse proxy information accordingly.
-* In Dockerfile, change ENV variable for CLRS_PATH accordingly.
 
 
 # Docker hub.

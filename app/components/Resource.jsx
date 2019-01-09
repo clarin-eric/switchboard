@@ -1,12 +1,21 @@
+// -------------------------------------------
+// The CLARIN Language Resource Switchboard
+// 2016-18 Claus Zinn, University of Tuebingen
+// 
+// File: Resource.jsx
+// Time-stamp: <2018-12-01 12:42:27 (zinn)>
+// -------------------------------------------
+
 import AltContainer from 'alt-container';
 import React from 'react';
-import Toggle   from 'react-toggle';
 import LanguageMenu from './LanguageMenu.jsx';
 import MimetypeMenu from './MimetypeMenu.jsx';
-import ResourceActions from '../actions/ResourceActions';        
+import ResourceActions from '../actions/ResourceActions';
+import AlertMissingInfo from './AlertMissingInfo.jsx';
+import AlertNoTools from './AlertNoTools.jsx';
 
 // access to matcher
-import Matcher from '../back-end/Matcher';
+import MatcherRemote from '../back-end/MatcherRemote';
 
 
 export default class Resource extends React.Component {
@@ -14,125 +23,158 @@ export default class Resource extends React.Component {
 	super(props);
 
 	const resource = props.resource;
-	this.handleToolsPerTaskChange = props.passChangeToParent;
-
-	this.generateFileName        = this.generateFileName.bind(this); 
-	this.showTools               = this.showTools.bind(this, resource);
+	
+	this.hideName                = this.hideName.bind(this); 
+	this.showTools               = this.showTools.bind(this, props, resource);
 	this.openResource              = this.openResource.bind(this, resource);
-	this.handleWebServicesChange = this.handleChange.bind(this, 'includeWebServices')
 	this.setLanguage             = this.setLanguage.bind(this, resource);
 	this.setMimetype             = this.setMimetype.bind(this, resource);
-	
-	this.state = {
-	    includeWebServices: false
-	};
+
+	this.state = { showAlertMissingInfo: false,
+		       showAlertNoTools: false,
+		     };
     }
 
     setLanguage( resource, language ) {
-	//	console.log('Resource/setLanguage', resource, language);
+	_paq.push(["trackEvent", 'setLanguage', language.label]); 	    	
+	console.log('Resource/setLanguage', resource, language, _paq);
 	resource.language = { language : language.label,
 			      threeLetterCode: language.value };
 	ResourceActions.update(resource);	
     }
 
     setMimetype( resource, mimetype ) {
-	// console.log('Resource/setMimetype', resource, mimetype);	
+	_paq.push(["trackEvent", 'setMimetype', resource.mimetype]); 	    
+	console.log('Resource/setMimetype', resource, mimetype, _paq);	
 	resource.mimetype = mimetype.value;
 	ResourceActions.update(resource);
     }
 
-    handleChange (key, event) {
-	this.setState({ [key]: event.target.checked }, function () {
-	    // console.log('now, the state has changed...:', key, event, this.state.includeWebServices);
-	});
-	if (event.target.checked === true) {
-	    document.getElementById("showToolsButton").innerHTML = 'Show Tools and Web Services';
-	} else {
-	    document.getElementById("showToolsButton").innerHTML = 'Show Tools';	    
-	}
-    }
-    
-    showTools(resource) {
+    showTools(props, resource) {
 
-	let includeWebServices = this.state.includeWebServices;
-	if (resource.language == null) {
-	    alert('CLRS: Please identify the language of the resource!');
+	_paq.push(["trackEvent", 'showTools', resource.language.label, resource.mimetype]); 	    
+	console.log('Resource/showTools', resource, props);
+
+	const handleToolsChange = props.passToolsChangeToParent;
+	if ( (resource.language == null) || (resource.mimetype == null)) {
+	    this.setState({showAlertMissingInfo: true} );			    
 	    return;
 	}
 
-	if (resource.mimetype == null) {
-	    alert('CLRS: Please identify the mimetype of the resource!');
-	    return;
-	}
-
-	let matcher = new Matcher();
-	let toolsPerTask = matcher.findApplicableTools( resource, includeWebServices );
-	this.handleToolsPerTaskChange( toolsPerTask );
+	const matcher = new MatcherRemote( true );
+	const toolsPromise = matcher.getApplicableTools( resource.mimetype, resource.language.threeLetterCode );
+	const that = this;
+	toolsPromise.then(
+	    function(resolve) {
+		console.log('Resource.jsx/showTools succeeded', resolve);
+		if (resolve.length == 0) {
+		    that.setState({showAlertNoTools: true} );			    		    
+		} else {
+		    handleToolsChange( resolve );
+		}
+	    },
+	    function(reject) {
+		console.log('Resource.jsx/showTools failed', reject);
+	    });	    
     }
 
     openResource(resource) {
-	//        console.log('Resource/openResource', resource);
+	console.log('Resource/openResource', resource);
 	var win = window.open(resource.remoteFilename, '_blank');
 	win.focus();	
     }
 
-    generateFileName() {
-	let today = new Date();
-	return today.getTime() + ".txt";
+    hideName( fileName ) {
+	/* omit old URL prefixes
+	   invoking the switchboard from https://weblicht.sfs.uni-tuebingen.de/clrs-dev/#/ or
+	    https://weblicht.sfs.uni-tuebingen.de/clrs/#/
+	*/
+	
+    	var fileNameNoPrefix = fileName.replace('/clrs-dev', '');
+	fileNameNoPrefix = fileNameNoPrefix.replace('/clrs', '');
+	fileNameNoPrefix = fileNameNoPrefix.replace('/download?input=', '');
+	return fileNameNoPrefix.substring(0,40);
     }
     
     render() {
-	const {resource, passChangeToParent, ...props} = this.props;
+        const {resource, ...props} = this.props;
+	const thStyle = {textAlign:'center'};
+	const colStyle = {width:'300px'};
+	const tableStyle = {
+	    borderWidth: 2,
+            borderColor: 'black',
+            borderStyle: 'solid',
+            borderRadius: 4,
+            margin: 10,
+            padding: 10,
+	    marginLeft: 20,
+            width: 785,
+	    height:160,
+	    resize: 'none',
+	    transition: 'all 0.5s',
+	    display:'inline-block'
+	};
 	return (
-            <div {...props}>
-  	      <div className="resource-header">
-  	        <a className="resource-name"
-	           href='#' onClick={this.openResource}
-		   >
-	    	   <span>Link to Resource</span>
-		</a>
-		  <Toggle
-	             defaultChecked={false}
-	             onChange={this.handleWebServicesChange} />	    
-	        <div className="resource-add-note">
-  	          <button id="showToolsButton" onClick={this.showTools}>Show Tools</button>
-	        </div>
-	      </div>
-		<ul className="notes">
-		<li className="note" key="resourceName" >
-		  <div>
-   		    <span className="note">name: {resource.name || this.generateFileName()}</span>
-		  </div>		
-		</li>
-		<li className="note" key="resourceSize" >
-		  <div>
-		    <span className="note">size: {resource.size}</span>
-		  </div>				 
-   		</li>
-		<li className="note" key="resourceMimetype" >
- 		  <div>
-		    <span className="note">mimetype</span>
-    		    <MimetypeMenu defaultValue = { {label: resource.mimetype,
-						    value: resource.mimetype
+            <div>
+  	      <table style={tableStyle} >
+		<colgroup>
+		  <col style={colStyle}/>
+		  <col style={colStyle}/>
+		  <col style={colStyle}/>
+		</colgroup>
+		<thead>
+		  <tr>
+		    <th style={thStyle}>resource</th>
+		    <th style={thStyle}>mimetype</th>
+		    <th style={thStyle}>language</th>
+		  </tr>
+		</thead>
+		<tbody>
+		  <tr className="notes">
+		    <td className="note">
+  	              <a className="resource-name" href='#' onClick={this.openResource} >
+   			<span>
+			  <b>name:</b> {this.hideName( resource.name )}
+			</span>
+		      </a>		    
+		      <div>
+			<b>size:</b> {resource.size} bytes
+		      </div>
+		    </td>
+		    
+		    <td className="note">
+    		      <MimetypeMenu defaultValue = { {label: resource.mimetype,
+		  				      value: resource.mimetype
+						     }
 						   }
-						 }
-				  onMimetypeSelection={this.setMimetype} />	
-		  </div>		
-		  </li>		  		  				
-		<li className="note" key="resourceLanguage" >
- 		  <div>
-		    <span className="note">language</span>
-		    <LanguageMenu defaultValue = { { label: resource.language.language,
-						     value: resource.language.threeLetterCode
+				    onMimetypeSelection={this.setMimetype} />	
+		    </td>
+		    <td className="note">
+		      <LanguageMenu defaultValue = { { label: resource.language.language,
+						       value: resource.language.threeLetterCode
+						     }
 						   }
-						 }
-				  onLanguageSelection={this.setLanguage} />	
-		  </div>		  
-   		</li>
-		</ul>		
+				    onLanguageSelection={this.setLanguage} />	
+		    </td>		  
+                  </tr>
+		  <tr>
+		    <td></td>
+		    <td></td>
+		    <td>
+		      <div className="resource-footer">
+  			<button id="showToolsButton" onClick={this.showTools}>Show Tools</button>
+		      </div>
+		    </td>
+		  </tr>
+		</tbody>
+	      </table>
+	      {this.state.showAlertMissingInfo ?
+		 <AlertMissingInfo onCloseProp={ () => this.setState( {showAlertMissingInfo: false} ) } /> 
+	       : null }
+	      {this.state.showAlertNoTools ?
+		 <AlertNoTools onCloseProp={ () => this.setState( {showAlertNoTools: false} ) } /> 
+		 : null }		    		
 	    </div>
 	);
     }
-
-
 }

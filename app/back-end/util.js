@@ -3,54 +3,61 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: util.js
-// Time-stamp: <2018-06-25 12:33:40 (zinn)>
+// Time-stamp: <2018-11-30 09:54:24 (zinn)>
 // -------------------------------------------
 
 export const inclToolsReqAuth = process.env.INCL_TOOLS_REQ_AUTH;
-export const allowTextInput   = process.env.ALLOW_TEXT_INPUT;
-export const allowPasteURL    = process.env.ALLOW_PASTE_URL;
 export const fileStorage      = process.env.FILE_STORAGE;
-export const b2drop_user      = process.env.B2DROP_USER;
-export const b2drop_pass      = process.env.B2DROP_PASS;
+export const nextcloud_user   = process.env.NEXTCLOUD_USER;
+export const nextcloud_pass   = process.env.NEXTCLOUD_PASS;
 export const lrsVersion       = process.env.VERSION;
 export const emailContact     = process.env.CONTACT;
 export const appContextPath   = process.env.APP_CONTEXT_PATH;
-export const emailContactCommand = "mailto:"+emailContact+"?subject=CLARIN-PLUS LRS";
+//export const emailContactCommand = "mailto:"+emailContact+"?subject=CLARIN-PLUS LRS";
+export const emailContactCommand = "mailto:"+emailContact;
+
+/* new environment variable:
+   - used to communicate between CLRS and CLRS-TEST
+   - production version of the switchboard only calls tools deemed to have production status
+   - development version of the switchboard includes tools with a more beta-like development status
+   - used by MatcherRemote.js
+*/
+export const deploymentStatus = process.env.NODE_ENV;
+
 
 // for creation of link
 export const fileStorageServerMPG_remote     = 'http://ws1-clarind.esc.rzg.mpg.de/drop-off/storage/';
 
-// see nginx.conf for reverse-proxying (all pathnames are local0
+// see nginx.conf for reverse-proxying (all pathnames are local)
 export const fileStorageServerMPG_localhost       = '/storage/';
 export const fileStorageServerNEXTCLOUD_localhost = '/nextcloud/';
-export const fileStorageServerB2DROP_localhost    = '/btwodrop/';
+
+export const matcherURL = '/matcher';
+
+export const TOOLTYPE_QUANTITATIVE_TOOLS = 0;
+export const TOOLTYPE_ALL_TOOLS = 1;
+export const TOOLTYPE_QUALITATIVE_TOOLS = 2;
+
+export const TOOL_AUTH_REQUIRED  = 0;
+export const TOOL_AUTH_ALL_TOOLS = 1;
+    
+export const TOOLORDER_BY_TOOL_TASK = 0;
+export const TOOLORDER_BY_TOOL_NAME = 1;
 
 export function unfoldHandle( handle ) {
     var hdlShortPrefix = "hdl:";
     var protocol = window.location.protocol;
     var hdlLongPrefix  = protocol.concat("//hdl.handle.net/");	
     var index = handle.indexOf(hdlShortPrefix);
-
     var expandedHandle = decodeURIComponent(handle);
-
-    console.log('util/unfoldHandle', expandedHandle)
 
     if (index > -1) {
 	expandedHandle = hdlLongPrefix.concat( handle.substring(index+hdlShortPrefix.length, handle.length) );
-    } else {
-	console.log('util.js/unfoldHandle: there is no need to unfold the handle', handle);
+	console.log('util/unfoldHandle expanded handle', handle, expandedHandle)
     }
     return expandedHandle;
 }
 
-/* This is a CORS relict, see the rewriting in nginx.conf.
-   - Note that B2DROP does not work with this 'trick', so here's a (browser-external)
-     Python script is used for downloading 
-   - iCloud does not provide a direct link to access a shared file (login etc. required)
-   - b2drop.eudat.eu is not active yet, but there is a test instance at https://fsd-cloud48.zam.kfa-juelich.de
-   - the first if condition shadows all subsequent nextcloud-based conditions
-   - paste events are always fetched via the Python script
-*/
 
 export function fileExtensionChooser (mimetype) {
     var extension = "txt";
@@ -79,44 +86,32 @@ export function fileExtensionChooser (mimetype) {
     return extension;
 }
 
-export function rewriteURL( caller, fileURL ) {
-    var href = window.location.origin.concat(window.location.pathname);
-    var windowAppContextPath = window.APP_CONTEXT_PATH;
+/* What B2DROP advertises as shared link is not a true one as the link points
+   to a HTML page with a download button. Only if '/download' is appended, the link
+   points directly to the source. Similar behaviour for Dropbox.
 
-    console.log('util/rewriteURL at start', caller, fileURL, href, windowAppContextPath);
+   Some users may know that and provide the correct suffixes, hence the second conjuction
+   in the if condition.
 
-    var corsLink = "";
-    if (caller == "B2DROP") {
-	// nop   -- fileURL = fileURL.concat('/download')
-    } else if ( caller == "PASTE") {
-	// nop
-    } else if ( fileURL.indexOf("https://www.dropbox.com") !== -1 ) {
-	corsLink = fileURL.replace('https://www.dropbox.com', 'www-dropbox-com');
-	corsLink = corsLink.replace('?dl=0', '?dl=1');
+   This is only required for PASTE actions. When the LRS is invoked from the B2DROP interface,
+   the plugin takes care of the suffix.
+*/
+
+export function rewriteURL( fileURL ) {
+    const windowAppContextPath = window.APP_CONTEXT_PATH;
+
+    if ( (fileURL.indexOf("https://b2drop.eudat.eu") !== -1) &&
+	 (fileURL.indexOf("/download") == -1)) {
+	fileURL = fileURL.concat('/download');
+    }
+    
+    if ( (fileURL.indexOf("https://www.dropbox.com") !== -1) &&
+	 (fileURL.indexOf("?dl=1") == -1)) {
 	
-    } else if (    fileURL.indexOf("https://b2drop.eudat.eu") !== -1 ) {
-	corsLink = fileURL.replace('https://b2drop.eudat.eu', 'b2drop-eudat-eu').concat('/download');
-	
-    } else if (    fileURL.indexOf("https://fsd-cloud48.zam.kfa-juelich.de") !== -1 ) {
-	corsLink = fileURL.replace('https://fsd-cloud48.zam.kfa-juelich.de', 'zam-kfa-juelich').concat('/download');
-	
-    } else if (    fileURL.indexOf("https://weblicht.sfs.uni-tuebingen.de/nextcloud") !== -1 ) {
-	corsLink = fileURL.replace('https://weblicht.sfs.uni-tuebingen.de/nextcloud', 'weblicht-sfs-nextcloud').concat('/download');
-	
-    } else {
-	corsLink = fileURL;
+	fileURL = fileURL.replace('?dl=0', '?dl=1');
     }
 
-    console.log('util/rewriteURL at end', caller, fileURL, href, windowAppContextPath);
-
-    // todo: harmonize this with the use of APP_CONTEXT_PATH in main App component.
-    if ( (caller == "B2DROP") || (fileURL.indexOf('hdl.handle.net') > 1) || (caller == "PASTE") ) {
-	return windowAppContextPath.concat('/download?input='+encodeURI(fileURL));
-	//return href.concat('download?input='+encodeURI(fileURL)) // the reverse proxy to the python script
-    } else {
-	return windowAppContextPath.concat('/').concat(corsLink);
-//	return href.concat(corsLink);                            // the reverse proxy to the clouds
-    }
+    return windowAppContextPath.concat('/download?input='+encodeURI(fileURL));
 }
 
 const langEncodingMap = {
