@@ -81,10 +81,10 @@ const common = {
 		query:
 		{
 		    // presets:['react', 'es2015', 'stage-0']
-		    "presets": ["@babel/preset-env",
-				"@babel/preset-react",
-				["@babel/preset-stage-0", { "decoratorsLegacy": true }],
-			       ]
+		    // "presets": ["@babel/preset-env",
+		    // 		"@babel/preset-react",
+		    // 		["@babel/preset-stage-0", { "decoratorsLegacy": true }],
+		    // 	       ]
 		},
 		include: PATHS.app
 	    }	    
@@ -93,6 +93,7 @@ const common = {
 
     // see https://www.npmjs.com/package/html-webpack-plugin
     plugins: [
+
 	new HtmlwebpackPlugin({
 	    inject: false,
 	    template: require('html-webpack-template'),
@@ -118,7 +119,7 @@ const common = {
 		'NEXTCLOUD_PASS'     : JSON.stringify('clarin-plus'),
 
 		// version as displayed on the main page
-		'VERSION'            : JSON.stringify('v1.4.2 (Dec 20, 2018)'),
+		'VERSION'            : JSON.stringify('v1.4.2 (Jan 11, 2019)'),
 
 		// contact as displayed of the main page
 		'CONTACT'            : JSON.stringify('switchboard@clarin.eu')
@@ -146,8 +147,11 @@ if(TARGET === 'start' || !TARGET) {
 	    port: process.env.PORT
 	},
 	plugins: [
+
 	    new webpack.HotModuleReplacementPlugin()
-	]
+	],
+
+	
     });
 }
 
