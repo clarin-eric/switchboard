@@ -1,11 +1,15 @@
 # Changelog
 	All notable changes to this project will be documented in this file.
 
+## [1.4.3] - 2018-01-14
+	- updated to latest version of babel
+	- removed reference to CLARIN help desk in HELP pop-ups
+	- updated help desk
 
 ## [1.4.2] - 2018-12-20
 ### Updated
 	- tackled https://github.com/clarin-eric/LRSwitchboard/issues/40
-	
+
 ## [1.4.1] - 2018-12-20
 ### Updated
 	- github instructions
