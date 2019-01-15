@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: DropArea.jsx
-// Time-stamp: <2018-12-20 16:39:50 (zinn)>
+// Time-stamp: <2019-01-15 11:30:56 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -18,7 +18,6 @@ import AlertShibboleth from './AlertShibboleth.jsx';
 import AlertMissingInfo from './AlertMissingInfo.jsx';
 import AlertMissingInputText from './AlertMissingInputText.jsx'; 
 
-import Resolver from '../back-end/Resolver';
 import Profiler from '../back-end/Profiler';
 import Uploader from '../back-end/Uploader';
 import Downloader from '../back-end/Downloader';
