@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Tool.jsx
-// Time-stamp: <2018-11-30 22:59:04 (zinn)>
+// Time-stamp: <2019-01-15 09:22:07 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -23,8 +23,14 @@ export default class Tool extends React.Component {
 	this.invokeTool = this.invokeTool.bind(this);
     }
 
-    // tool invocation informs Piwik
     invokeTool( URL ) {
+	console.log('Tool/invokeTool:', URL.url);	
+	_paq.push(["trackEvent", 'ToolInvocation', URL.url]); 
+	invokeBrowserBasedTool( URL );
+    }
+    
+    // de-activated as it may yield a CORS-related error.
+    invokeToolInactive( URL ) {
 	Request
 	    .head(URL.url)
 	    .end((err, res) => {
