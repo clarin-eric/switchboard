@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: AboutHelp.jsx
-// Time-stamp: <2018-11-09 09:26:43 (zinn)>
+// Time-stamp: <2019-01-14 10:31:03 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -58,6 +58,7 @@ class AboutHelpText extends React.Component {
 	    
             <h3>Publications</h3>
             <ul>
+	      <li>Claus Zinn, The Language Resource Switchboard. Computational Linguistics 44(4), pages 631-639, December 2018.</li>
               <li>Claus Zinn. <a href="http://www.ep.liu.se/ecp/147/004/ecp17147004.pdf">A Bridge
               from EUDAT's B2DROP cloud service to CLARIN's Language Resource
               Switchboard </a>Selected papers from the CLARIN Annual Conference 2017, Budapest,
@@ -93,26 +94,37 @@ class AboutHelpText extends React.Component {
               <li><em>Your Name Here</em> (integration of <em>your</em> tool)</li>
             </ul>
             <p>
-              Icons by <a href="http://glyphicons.com/">Glyphicons</a> and <a href="https://fontawesome.com/license/free">Font Awesome</a>.
+              Icons by <a href="http://glyphicons.com/">Glyphicons</a>
+              and <a href="https://fontawesome.com/license/free">Font Awesome</a>.
             </p>
 	    
-            <h3 id="sources">Source code</h3>
-            <p>
-              The <a href="https://github.com/clarin-eric/LRSwitchboard">LRS GitHub repository</a> provides
-	      the source code.
-            </p>
-	    
+    
             <h3 id="licence">Licence</h3>
             <div className="licenceText">
               <p>Copyright (C) 2017- CLARIN ERIC</p>
-              <p>This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</p>
-              <p>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.</p>
-              <p>You should have received a copy of the GNU General Public License along with this program. If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
+	      
+              <p>
+		This program is free software: you can redistribute it and/or modify it under the
+		terms of the GNU General Public License as published by the Free Software Foundation,
+		either version 3 of the License, or (at your option) any later version.
+	      </p>
+	      
+              <p>
+		This program is distributed in the hope that it will be useful, but WITHOUT ANY
+		WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+		PARTICULAR PURPOSE. See the GNU General Public License for more details.
+	      </p>
+	      
+              <p>
+		You should have received a copy of the GNU General Public License along with this
+		program. If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.
+	      </p>
+	      
             </div>
 	    
-            <h3>Technology used</h3>
+          <h3>Technology and Source Code</h3>
             <ul>
-              <li><a href="https://facebook.github.io/react/">ReactJS</a> (version 15.6.1)</li>
+              <li><a href="https://facebook.github.io/react/">ReactJS</a> (version 15.6.2</li>
 	      <li><a href="https://nodejs.org/en/">Nodejs</a> (version 8.11.3)</li>
 	      <li><a href="https://www.npmjs.com">Javascript package manager npm</a> (version 5.6.0)</li>
 	      <li><a href="http://alt.js.org/docs/components/altContainer/">altjs</a> (version 0.18.6)</li>
@@ -120,11 +132,11 @@ class AboutHelpText extends React.Component {
 	      <li><a href="http://www.json.org">JSON (JavaScript Object Notation)</a></li>
               <li><a href="http://tika.apache.org/">Apache Tika (tika-server-1.16.jar)</a></li>
 	      <li><a href="https://www.docker.com/">Docker</a> (for deployment)</li>
-            </ul>
-	    
-	    <p>
-	      The <a href="https://github.com/clarin-eric/LRSwitchboard">LRS GitHub
-		repository</a> hosts a <code>package.json</code> file that defines all Javascript dependencies.
+          </ul>
+
+            <p>
+              The <a href="https://github.com/clarin-eric/LRSwitchboard">LRS GitHub repository</a> provides
+	      the source code. It also hosts a <code>package.json</code> file that defines all Javascript dependencies.
 	    </p>
           </div>
 

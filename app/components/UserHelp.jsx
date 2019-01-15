@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: UserHelp.jsx
-// Time-stamp: <2018-11-09 09:25:23 (zinn)>
+// Time-stamp: <2019-01-14 10:33:45 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -63,8 +63,8 @@ class UserHelpText extends React.Component {
 	    </ul>
 	    
 	    Note. When the switchboard is invoked via the Virtual Language Observatory, or via
-	    B2DROP, or via the Virtual Collection Registry, the "file drop" happens during the
-	    transferal, so you will not see the drop areas.
+	    B2DROP, or (in the future) via the Virtual Collection Registry, the "file drop" happens during the
+	    transferal.
 	  </p>
 
 	  <p>
@@ -94,12 +94,7 @@ class UserHelpText extends React.Component {
 	    </p>
 	    <hr />
 	    <p>
-	      Questions? Please contact the <a href={ emailContactCommand }>Switchboard Team</a>,
-	      or the German CLARIN help desk.
-	      
-	      <a href="https://support.clarin-d.de/mail/?lang=de&QueueID=19&ResponsibleID=15&OwnerID=15" target="_blank">
-		<img className="alignRight" src="button_helpdesk_forhelp.png" width="10%" height="10%" />
-	      </a>
+	      Questions? Please contact the <a href={ emailContactCommand }>Switchboard Team</a>.
 	    </p>
         </ModalDialog>
     </ModalContainer>;

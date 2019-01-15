@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Profiler.js
-// Time-stamp: <2018-12-20 16:32:40 (zinn)>
+// Time-stamp: <2019-01-14 11:52:32 (zinn)>
 // -------------------------------------------
 
 import Request from 'superagent';
@@ -185,6 +185,9 @@ export default class Profiler {
 			    console.log('Warning: conversion to plain/text failed', reject) })
 		} else if ( (resolve.text == "application/zip") ||
 			    (resolve.text == "application/x-gzip") ) {
+		    // to do: acknowledge that a zip file has been received, but that a manual identification
+		    //        of its parts wrt. language should be made by the user.
+		    signalDone();
 		    that.cb();
 		} else if ( (resolve.text == "audio/vnd.wave") ||
 			    (resolve.text == "audio/x-wav")    ||
