@@ -6,6 +6,7 @@ COPY ./build.sh /tmp/lrs/build.sh
 COPY /package.json /tmp/lrs/package.json
 COPY /package-lock.json /tmp/lrs/package-lock.json
 COPY /webpack.config.js /tmp/lrs/webpack.config.js
+COPY /.babelrc /tmp/lrs/.babelrc
 COPY /app /tmp/lrs/app
 
 WORKDIR /tmp/lrs/
