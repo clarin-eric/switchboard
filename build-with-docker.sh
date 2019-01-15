@@ -5,7 +5,7 @@ mkdir -p build/CLRSwitchboard
 
 
 # Create docker image which builds the code.
-# The necessary build environment is supplied by the FROM image registry.gitlab.com/clarin-eric/docker-alpine-clrs-build_env:1.0.0
+# The necessary build environment is supplied by the FROM image registry.gitlab.com/clarin-eric/docker-alpine-clrs-build_env
 docker build --no-cache --tag clarin/switchboard .
 
 EXISTING_CONTAINER=$(docker ps -aq --filter name=alpinelrs-build)
