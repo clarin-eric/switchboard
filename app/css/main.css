@@ -289,3 +289,37 @@ h2 {
 .logoAlignRight {
     align: right;
 }
+
+.card-header-details .icon::before {
+    position: relative;
+  right: 7px;
+  top: 10px; }
+
+.task-oriented-view-container {
+  padding: 20px;
+  width: 100%; }
+
+.task-oriented-view container h1 {
+    border-bottom: 1px solid #ccc;
+    color: #03a9f4;
+    margin-bottom: 40px;
+    padding-bottom: 40px;
+    text-align: center; }
+
+.task-oriented-view-container h1 {
+    color: #aaa;
+    font-size: 1.00rem;    
+}
+
+.tooltip {
+  background-color: #000;
+  bottom: 10px;
+  border-radius: 3px;
+  color: #fff;
+  left: 10px;
+  opacity: 0;
+  padding: 10px;
+  position: absolute;
+  transition: opacity .3s;
+}
+

@@ -3,12 +3,12 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Tool.jsx
-// Time-stamp: <2019-01-15 11:47:56 (zinn)>
+// Time-stamp: <2019-01-16 10:53:55 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
-import Accordion from '../helperComponents/Accordion';         
-import AccordionItem from '../helperComponents/AccordionItem';
+import { Accordion, AccordionItem, AccordionItemTitle,
+    AccordionItemBody } from 'react-accessible-accordion';
 
 import { map639_1_to_639_3, map639_3_to_639_1 } from '../back-end/util';
 import {gatherInvocationParameters, invokeBrowserBasedTool} from '../back-end/ToolInvoker';
@@ -266,31 +266,34 @@ export default class Tool extends React.Component {
 	};
 
 	return (
-	    <Accordion allowMultiple={true}>
-	    { items.map( (element, index) => 
-		<AccordionItem title={element.name} key={index} >
-		  <ToolCard key={index}
-			 imgSrc={element.logo}
-			 imgBorderColor='#6A067A'
-			 name={element.name}
-			 title={element.name}
-			 softwareType={element.softwareType}
-			 requestType={element.requestType}
-			 location={element.location}
-			 authentication={element.authentication}
-			 homepage={element.homepage}
-                         url={element.url}
-		         parameters={element.parameters}
-		         mapping={element.mapping}
-			 output={element.output}
-		         langEncoding={element.langEncoding}		
-			 email={element.email}
-			 role={element.description}
-			/>			
-		</AccordionItem>
-	    )}
+		<Accordion accordion={false} >
+		  { items.map( (element, index) => 
+		  <AccordionItem key={index} >
+		    <AccordionItemTitle>
+                      <h4>{element.name}</h4>
+		    </AccordionItemTitle>
+		    <AccordionItemBody>
+		      <ToolCard key={index}
+				imgSrc={element.logo}
+				imgBorderColor='#6A067A'
+				name={element.name}
+				title={element.name}
+				softwareType={element.softwareType}
+				requestType={element.requestType}
+				location={element.location}
+				authentication={element.authentication}
+				homepage={element.homepage}
+				url={element.url}
+				parameters={element.parameters}
+				mapping={element.mapping}
+				output={element.output}
+				langEncoding={element.langEncoding}		
+				email={element.email}
+				role={element.description}
+				/>
+		    </AccordionItemBody>
+		  </AccordionItem>
+			     )}
 	    </Accordion> 	    
 	)}
-
-
 }
