@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: ResourceStore.js
-// Time-stamp: <2018-12-14 10:27:16 (zinn)>
+// Time-stamp: <2019-01-16 19:06:12 (zinn)>
 // -------------------------------------------
 
 import uuid from 'node-uuid';
@@ -35,7 +35,6 @@ class ResourceStore {
 	resource.id = uuid.v4();
 	resource.file             = resource.file || null;
 	resource.remoteFilename   = resource.remoteFilename || null;
-	resource.upload           = resource.upload   || null;
 	resource.mimetype         = resource.mimetype || null;	
 	resource.size             = resource.size || null;
 	resource.language         = resource.language || null;

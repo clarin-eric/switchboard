@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: DropArea.jsx
-// Time-stamp: <2019-01-15 11:30:56 (zinn)>
+// Time-stamp: <2019-01-16 19:07:13 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -214,7 +214,6 @@ export default class DropArea extends React.Component {
 	promiseUpload.then(
 	    function(resolve) {
 		let profiler = new Profiler( currentFile,
-					     "dnd",
 					     uploader.remoteFilename,
 					     () => thatThis.setState( {showAlertMissingInfo: true} )
 					   );

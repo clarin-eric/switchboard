@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Profiler.js
-// Time-stamp: <2019-01-14 11:52:32 (zinn)>
+// Time-stamp: <2019-01-16 19:06:35 (zinn)>
 // -------------------------------------------
 
 import Request from 'superagent';
@@ -12,7 +12,7 @@ import ResourceActions from '../actions/ResourceActions';
 
 export default class Profiler {
 
-    constructor( resource, caller, remoteFilename, cb ) {
+    constructor( resource, remoteFilename, cb ) {
 
 	this.protocol    = window.location.protocol;	// use https or http given parent window
 	this.resource = resource;
@@ -26,16 +26,15 @@ export default class Profiler {
 	      remoteFilename: remoteFilename,
 	      file: resource,
 	      size: resource.size,
-	      upload: caller, 
 	      
-	      // next two pieces are overwritten by Tika.
+	      // next two pieces are overwritten using Apache Tika.
 	      mimetype: resource.type, 
 	      language: { language  : "Please identify language",
 			  threeLetterCode: "any"
 			}
 	    }
 
-	// create the resource in the store
+	// create the resource in the store (todo: this should happen in DropArea)
 	this.resourceStateItem = ResourceActions.create( this.resourceProps );
 	console.log('Profiler/constructor', this.resourceProps);
     }

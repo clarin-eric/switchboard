@@ -3,10 +3,10 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Resource.jsx
-// Time-stamp: <2018-12-01 12:42:27 (zinn)>
+// Time-stamp: <2019-01-16 12:45:09 (zinn)>
 // -------------------------------------------
 
-import AltContainer from 'alt-container';
+import AltContainer from 'alt-container'; // todo: not needed
 import React from 'react';
 import LanguageMenu from './LanguageMenu.jsx';
 import MimetypeMenu from './MimetypeMenu.jsx';
