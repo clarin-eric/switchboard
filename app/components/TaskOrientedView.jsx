@@ -3,12 +3,11 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: TaskOrientedView.jsx
-// Time-stamp: <2018-11-30 11:51:06 (zinn)>
+// Time-stamp: <2019-01-17 17:31:31 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
 import Tool from './Tool.jsx';
-import Toggle   from 'react-toggle';
 import AlertAllowPopupWindows from './AlertAllowPopupWindows.jsx';
 
 import { SegmentedControl } from 'segmented-control-react';
