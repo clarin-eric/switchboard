@@ -3,44 +3,30 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Profiler.js
-// Time-stamp: <2019-01-16 19:06:35 (zinn)>
+// Time-stamp: <2019-01-17 17:13:24 (zinn)>
 // -------------------------------------------
 
 import Request from 'superagent';
 import {appContextPath, processLanguage} from './util';
-import ResourceActions from '../actions/ResourceActions';
 
 export default class Profiler {
 
-    constructor( resource, remoteFilename, cb ) {
+    constructor( resource, onChange, cb ) {
 
-	this.protocol    = window.location.protocol;	// use https or http given parent window
-	this.resource = resource;
-	this.remoteFilename = remoteFilename;
+	this.resource = resource;	
+	this.onChange = onChange;
 	this.cb = cb;
+			  
+	console.log('clone', this.resource);
 	
+	this.protocol = window.location.protocol;	// use https or http given parent window
 	this.windowAppContextPath = window.APP_CONTEXT_PATH;
-	// default values
-	this.resourceProps =
-	    { name: resource.name,
-	      remoteFilename: remoteFilename,
-	      file: resource,
-	      size: resource.size,
-	      
-	      // next two pieces are overwritten using Apache Tika.
-	      mimetype: resource.type, 
-	      language: { language  : "Please identify language",
-			  threeLetterCode: "any"
-			}
-	    }
-
-	// create the resource in the store (todo: this should happen in DropArea)
-	this.resourceStateItem = ResourceActions.create( this.resourceProps );
-	console.log('Profiler/constructor', this.resourceProps);
+	
+	console.log('Profiler/constructor', this.resource);
     }
 
     identifyMimeType( ) {
-	let file = this.resourceProps.file;
+	let file = this.resource.file;
 	let protocol = this.protocol;
 	let that = this;	
 	return new Promise(function(resolve, reject) {
@@ -53,8 +39,9 @@ export default class Profiler {
 			reject(err);
 			that.cb();		    
 		    } else {
-			that.resourceStateItem.mimetype = res.text;
-			ResourceActions.update(that.resourceStateItem);			
+			console.log('Profiler/identifyMimetype', res);
+			that.resource.mimetype = res.text;
+			that.onChange(that.resource);			
 			resolve(res);
 		    }
 		})
@@ -66,7 +53,7 @@ export default class Profiler {
     // Apache Tika seems to support at least these 18 languages:
     // da, en, hu, no, sv, de, es, is, pl, th, et, fi, it, pt, el, fr, nl, ru
     identifyLanguage() {
-	let file = this.resourceProps.file;
+	let file = this.resource.file;
 	let protocol = this.protocol;
 	let that = this;
 	return new Promise(function(resolve, reject) {
@@ -79,9 +66,10 @@ export default class Profiler {
 			reject(err);
 			that.cb();		    
 		    } else {
+			console.log('Profiler/identifyLanguage', res);			
 			let langStructure = processLanguage(res.text);
-			that.resourceStateItem.language = langStructure;
-			ResourceActions.update(that.resourceStateItem);
+			that.resource.language = langStructure;
+			that.onChange(that.resource);						
 			resolve(res);
 		    }
 		})
@@ -89,7 +77,7 @@ export default class Profiler {
     }
 
     identifyLanguageFromStream( textStream ) {
-	let file = new File([textStream], this.resourceProps.name.concat(".txt"), {type: "text/plain"});    	
+	let file = new File([textStream], this.resource.name.concat(".txt"), {type: "text/plain"});    	
 	let protocol = this.protocol;
 	let that = this;
 	return new Promise(function(resolve, reject) {
@@ -103,8 +91,8 @@ export default class Profiler {
 			that.cb();		    
 		    } else {
 			let langStructure = processLanguage(res.text);
-			that.resourceStateItem.language = langStructure;
-			ResourceActions.update(that.resourceStateItem);
+			that.resource.language = langStructure;
+			that.onChange(that.resource);									
 			resolve(res);
 		    }
 		})
@@ -112,7 +100,7 @@ export default class Profiler {
     }
 	
     convertToPlainText() {
-	let file = this.resourceProps.file;
+	let file = this.resource;
 	let protocol = this.protocol;
 	let that = this;
 	return new Promise(function(resolve, reject) {

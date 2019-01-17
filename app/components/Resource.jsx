@@ -3,14 +3,12 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Resource.jsx
-// Time-stamp: <2019-01-16 12:45:09 (zinn)>
+// Time-stamp: <2019-01-17 14:55:01 (zinn)>
 // -------------------------------------------
 
-import AltContainer from 'alt-container'; // todo: not needed
 import React from 'react';
 import LanguageMenu from './LanguageMenu.jsx';
 import MimetypeMenu from './MimetypeMenu.jsx';
-import ResourceActions from '../actions/ResourceActions';
 import AlertMissingInfo from './AlertMissingInfo.jsx';
 import AlertNoTools from './AlertNoTools.jsx';
 
@@ -22,47 +20,53 @@ export default class Resource extends React.Component {
     constructor(props) {
 	super(props);
 
-	const resource = props.resource;
+	this.resource = props.resource;
+
+	this.handleResourcesChange = props.onResourcesChange;
+	this.handleToolsChange     = props.onToolsChange;	
 	
-	this.hideName                = this.hideName.bind(this); 
-	this.showTools               = this.showTools.bind(this, props, resource);
-	this.openResource              = this.openResource.bind(this, resource);
-	this.setLanguage             = this.setLanguage.bind(this, resource);
-	this.setMimetype             = this.setMimetype.bind(this, resource);
+	this.hideName      = this.hideName.bind(this); 
+	this.showTools     = this.showTools.bind(this);
+	this.openResource  = this.openResource.bind(this);
+	this.setLanguage   = this.setLanguage.bind(this);
+	this.setMimetype   = this.setMimetype.bind(this);
 
 	this.state = { showAlertMissingInfo: false,
 		       showAlertNoTools: false,
 		     };
+
+	console.log('Resource/constructor', this.resource);
     }
 
-    setLanguage( resource, language ) {
+    setLanguage( language ) {
+	console.log('Resource/setLanguage', this.resource, language, _paq);
+
 	_paq.push(["trackEvent", 'setLanguage', language.label]); 	    	
-	console.log('Resource/setLanguage', resource, language, _paq);
-	resource.language = { language : language.label,
-			      threeLetterCode: language.value };
-	ResourceActions.update(resource);	
+	this.resource.language = { language : language.label,
+				   threeLetterCode: language.value };
+	this.handleResourcesChange(this.resource);	
     }
 
-    setMimetype( resource, mimetype ) {
-	_paq.push(["trackEvent", 'setMimetype', resource.mimetype]); 	    
-	console.log('Resource/setMimetype', resource, mimetype, _paq);	
-	resource.mimetype = mimetype.value;
-	ResourceActions.update(resource);
+    setMimetype( mimetype ) {
+	console.log('Resource/setMimetype', this.resource, mimetype, _paq);	
+
+	_paq.push(["trackEvent", 'setMimetype', this.resource.mimetype]); 	    
+	this.resource.mimetype = mimetype.value;
+	this.handleResourcesChange(this.resource);		
     }
 
-    showTools(props, resource) {
+    showTools() {
 
-	_paq.push(["trackEvent", 'showTools', resource.language.label, resource.mimetype]); 	    
-	console.log('Resource/showTools', resource, props);
+	_paq.push(["trackEvent", 'showTools', this.resource.language.label, this.resource.mimetype]); 	    
+	console.log('Resource/showTools', this.resource);
 
-	const handleToolsChange = props.passToolsChangeToParent;
-	if ( (resource.language == null) || (resource.mimetype == null)) {
+	if ( (this.resource.language == null) || (this.resource.mimetype == null)) {
 	    this.setState({showAlertMissingInfo: true} );			    
 	    return;
 	}
 
 	const matcher = new MatcherRemote( true );
-	const toolsPromise = matcher.getApplicableTools( resource.mimetype, resource.language.threeLetterCode );
+	const toolsPromise = matcher.getApplicableTools( this.resource.mimetype, this.resource.language.threeLetterCode );
 	const that = this;
 	toolsPromise.then(
 	    function(resolve) {
@@ -70,7 +74,7 @@ export default class Resource extends React.Component {
 		if (resolve.length == 0) {
 		    that.setState({showAlertNoTools: true} );			    		    
 		} else {
-		    handleToolsChange( resolve );
+		    that.handleToolsChange( resolve );
 		}
 	    },
 	    function(reject) {
@@ -78,9 +82,9 @@ export default class Resource extends React.Component {
 	    });	    
     }
 
-    openResource(resource) {
-	console.log('Resource/openResource', resource);
-	var win = window.open(resource.remoteFilename, '_blank');
+    openResource() {
+	console.log('Resource/openResource', this.resource);
+	var win = window.open(this.resource.remoteFilename, '_blank');
 	win.focus();	
     }
 
@@ -98,6 +102,8 @@ export default class Resource extends React.Component {
     
     render() {
         const {resource, ...props} = this.props;
+	this.resource = resource;
+	
 	const thStyle = {textAlign:'center'};
 	const colStyle = {width:'300px'};
 	const tableStyle = {
@@ -114,9 +120,16 @@ export default class Resource extends React.Component {
 	    transition: 'all 0.5s',
 	    display:'inline-block'
 	};
-	return (
-            <div>
-  	      <table style={tableStyle} >
+
+	console.log('Resource/render', resource);
+
+	if (resource === undefined)  {
+	    return null;
+	} else {
+	    return (
+	     <div className="resources">
+		<h3 id="resourceHeading">Input Analysis</h3>
+  		<table style={tableStyle} >
 		<colgroup>
 		  <col style={colStyle}/>
 		  <col style={colStyle}/>
@@ -147,14 +160,14 @@ export default class Resource extends React.Component {
 		  				      value: resource.mimetype
 						     }
 						   }
-				    onMimetypeSelection={this.setMimetype} />	
+		onMimetypeSelection={this.setMimetype} />	
 		    </td>
 		    <td className="note">
 		      <LanguageMenu defaultValue = { { label: resource.language.language,
 						       value: resource.language.threeLetterCode
 						     }
 						   }
-				    onLanguageSelection={this.setLanguage} />	
+		onLanguageSelection={this.setLanguage} />	
 		    </td>		  
                   </tr>
 		  <tr>
@@ -162,7 +175,7 @@ export default class Resource extends React.Component {
 		    <td></td>
 		    <td>
 		      <div className="resource-footer">
-  			<button id="showToolsButton" onClick={this.showTools}>Show Tools</button>
+  		    <button id="showToolsButton" onClick={this.showTools}>Show Tools</button>
 		      </div>
 		    </td>
 		  </tr>
@@ -175,6 +188,7 @@ export default class Resource extends React.Component {
 		 <AlertNoTools onCloseProp={ () => this.setState( {showAlertNoTools: false} ) } /> 
 		 : null }		    		
 	    </div>
-	);
+	    );
+	}
     }
 }

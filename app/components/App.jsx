@@ -3,30 +3,23 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: App.jsx
-// Time-stamp: <2018-12-20 09:37:04 (zinn)>
+// Time-stamp: <2019-01-17 15:28:36 (zinn)>
 // -------------------------------------------
 
-import AltContainer from 'alt-container';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
 // components
-import Resources from './Resources.jsx';            // render all the resources
+import Resource from './Resource.jsx';              // render the resource
 import TaskOrientedView from './TaskOrientedView';  // component to render the task-oriented view
-import DropArea from './DropArea.jsx';              // drop & drag area for resources
+import DropArea from './DropArea.jsx';              // drop & drag area for the resource
 import UserHelp from './UserHelp.jsx';              // component displaying user help
 import UserFAQ from './UserFAQ.jsx';                // component displaying user faq
 import DevHelp from './DevHelp.jsx';                // component displaying help targeted at developers
 import AboutHelp from './AboutHelp.jsx';            // displaying admin. information about the switchboard
 import AlertURLFetchError from './AlertURLFetchError.jsx';
 import ShowAllTools from './ShowAllTools.jsx';      // allow external requests to show all available tools
-
-// actions
-import ResourceActions from '../actions/ResourceActions';   // actions associated with resources: CRUD, attach/detach
-
-// stores
-import ResourceStore from '../stores/ResourceStore';        // storing resources (state)
 
 // Piwik support
 import PiwikReactRouter from 'piwik-react-router';
@@ -71,7 +64,6 @@ require('./../images/keyboard-solid.png');
 
 require('./../images/dropResources.png');
 
-
 export default class App extends React.Component {
     
     constructor(props) {
@@ -80,10 +72,13 @@ export default class App extends React.Component {
 	this.refresh = this.refresh.bind(this);
 	this.showAllTools = this.showAllTools.bind(this);
         this.clearDropzone = this.clearDropzone.bind(this);
-	this.handleToolsChange = this.handleToolsChange.bind(this);
+	
+	this.handleToolsChange     = this.handleToolsChange.bind(this);
+	this.handleResourcesChange = this.handleResourcesChange.bind(this);
 
 	this.state = {
-	    tools : [],
+	    tools     : [],
+	    resource  : undefined
 	};
 
 	this.piwik = PiwikReactRouter({
@@ -95,7 +90,12 @@ export default class App extends React.Component {
     }
 
     handleToolsChange( tools ) {
-	this.setState( {tools: tools} );
+	this.setState( { tools : tools } );
+    }
+
+    handleResourcesChange( resource ) {
+	console.log('App/handleResourceChange', resource);
+	this.setState( { resource : resource } );
     }
     
     refresh() {
@@ -150,9 +150,9 @@ export default class App extends React.Component {
 
     clearDropzone() {
 	localStorage.removeItem("app"); // check whether necessary for cache busting
-	this.setState( {tools: [] } );
-	ResourceActions.reset();
-
+	
+	this.setState( { tools     : [],
+			 resource  : undefined} );
     }
 
     render() {
@@ -178,7 +178,8 @@ export default class App extends React.Component {
 	    display: 'none'
 	};
 
-	console.log('App/render', window.APP_CONTEXT_PATH);
+	let resource = this.state.resource;
+	console.log('App/render', window.APP_CONTEXT_PATH, this.state, resource);
 
 	return (
 <div>
@@ -215,22 +216,30 @@ export default class App extends React.Component {
   <HashRouter history={history}>
     <Switch>
       <Route exact path="/"
-	    render={(props) => <DropArea passToolsChangeToParent={this.handleToolsChange} caller="standalone" {...props} /> } />
-	<Route exact path="/vlo/:fileURL/:fileMimetype/:fileLanguage"
-	       render={(props) => <DropArea passToolsChangeToParent={this.handleToolsChange} caller="VLO" {...props} /> } />
-	  <Route exact path="/vlo/:fileURL/:fileMimetype"
-		 render={(props) => <DropArea passToolsChangeToParent={this.handleToolsChange} caller="VLO" {...props} /> } />	    
-	    <Route path="/vcr/:fileURL"
-		   render={(props) => <DropArea passToolsChangeToParent={this.handleToolsChange} caller="VCR" {...props} /> } />
-	      <Route path="/fcs/:fileURL"
-   		     render={(props) => <DropArea passToolsChangeToParent={this.handleToolsChange} caller="FCS" {...props} /> } />	    
-		<Route path="/b2drop/:fileURL"
-	               render={(props) => <DropArea passToolsChangeToParent={this.handleToolsChange} caller="B2DROP" {...props} /> } />
-		  <Route path="/d4science/:fileURL"
-			 render={(props) => <DropArea passToolsChangeToParent={this.handleToolsChange} caller="D4SCIENCE" {...props} /> } />
-		    <Route path="/vto/"
-			   render={(props) => <ShowAllTools showAllToolsFun={this.showAllTools} caller="CLARIN" {...props} /> } />
-		      <Route path="*" component={AlertURLFetchError} />
+	    render={(props) => <DropArea onToolsChange={this.handleToolsChange}
+		    onResourcesChange={this.handleResourcesChange} caller="standalone" {...props} /> } />
+      <Route exact path="/vlo/:fileURL/:fileMimetype/:fileLanguage"
+	    render={(props) => <DropArea onToolsChange={this.handleToolsChange}
+		    onResourcesChange={this.handleResourcesChange} caller="VLO"        {...props} /> } />
+      <Route exact path="/vlo/:fileURL/:fileMimetype"
+	    render={(props) => <DropArea onToolsChange={this.handleToolsChange}
+		    onResourcesChange={this.handleResourcesChange} caller="VLO"        {...props} /> } />	    
+      <Route path="/vcr/:fileURL"
+	    render={(props) => <DropArea onToolsChange={this.handleToolsChange}
+		    onResourcesChange={this.handleResourcesChange} caller="VCR"        {...props} /> } />
+      <Route path="/fcs/:fileURL"
+   	    render={(props) => <DropArea onToolsChange={this.handleToolsChange}
+		    onResourcesChange={this.handleResourcesChange} caller="FCS"        {...props} /> } />	    
+      <Route path="/b2drop/:fileURL"
+	    render={(props) => <DropArea onToolsChange={this.handleToolsChange}
+		    onResourcesChange={this.handleResourcesChange} caller="B2DROP"     {...props} /> } />
+      <Route path="/d4science/:fileURL"
+	    render={(props) => <DropArea onToolsChange={this.handleToolsChange}
+		    onResourcesChange={this.handleResourcesChange} caller="D4SCIENCE"  {...props} /> } />
+      <Route path="/vto/"
+	    render={(props) => <ShowAllTools showAllToolsFun={this.showAllTools}
+		    onResourcesChange={this.handleResourcesChange}  caller="CLARIN"    {...props} /> } />
+      <Route path="*" component={AlertURLFetchError} />
     </Switch>
   </HashRouter>
   
@@ -238,20 +247,18 @@ export default class App extends React.Component {
   <hr />
   <p />
   
-  <AltContainer
-     stores={[ResourceStore]}
-                   inject={{
-		       resources: () => ResourceStore.getState().resources || []
-		   }} >
-    <Resources passToolsChangeToParent = { this.handleToolsChange }  />
-  </AltContainer>
+  <Resource className         = "resource"
+	    onToolsChange     = { this.handleToolsChange    }
+            onResourcesChange = { this.handleResourcesChange }
+	    resource          = { this.state.resource || undefined }
+	/>
 
   <p />
   <hr />
   <p />
 		
-  <TaskOrientedView resource = { ResourceStore.getState().resources[0] || [] }
-                      tools  = { this.state.tools || [] }
+  <TaskOrientedView resource = { this.state.resource || undefined }
+                      tools  = { this.state.tools    || [] }
 		/>
   <p />		
   <hr />

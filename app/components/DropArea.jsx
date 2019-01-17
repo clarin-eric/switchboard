@@ -3,13 +3,12 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: DropArea.jsx
-// Time-stamp: <2019-01-16 19:07:13 (zinn)>
+// Time-stamp: <2019-01-17 12:51:41 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
 import Loader from 'react-loader';
 import Dropzone from 'react-dropzone';
-import ResourceActions from '../actions/ResourceActions';
 import TextareaAutosize from 'react-autosize-textarea';
 import AlertURLFetchError from './AlertURLFetchError.jsx';
 import AlertURLIncorrectError from './AlertURLIncorrectError.jsx';
@@ -27,15 +26,15 @@ import {fileExtensionChooser, processLanguage, unfoldHandle} from '../back-end/u
 import BackgroundFile from './../images/file-solid.png';
 import BackgroundLink from './../images/location-arrow-solid.png';
 import BackgroundText from './../images/keyboard-solid.png';
-
-import FadeProps from 'fade-props';
+import uuid from 'node-uuid';
 
 export default class DropArea extends React.Component {
     constructor(props) {
 	super(props);
 
 	// passed from main component to allow trash bin to clear task oriented view
-	this.handleToolsChange = props.passToolsChangeToParent;
+	this.handleToolsChange     = props.onToolsChange;
+	this.handleResourcesChange = props.onResourcesChange;	
 	
 	console.log('DropArea', props);
 	this.onDrop      = this.onDrop.bind(this);
@@ -94,7 +93,7 @@ export default class DropArea extends React.Component {
 	if ( (caller == "VCR")    || (caller == "FCS") || (caller == "VLO") || 
 	     (caller == "B2DROP") || (caller == "D4SCIENCE") ) {
 	    // remove prior resources
-	    ResourceActions.reset();
+	    this.handleResourcesChange( undefined );		    
 
 	    // some minor treatment for hdl: in the fileURL
 	    var fileURL = unfoldHandle( parameters.fileURL);
@@ -137,11 +136,11 @@ export default class DropArea extends React.Component {
 	// signal to parent that tool list is empty
 	this.handleToolsChange( [] );
 	
+	// delete old resource(s)
+	this.handleResourcesChange( undefined );	
+
 	// check whether necessary for cache busting	
 	localStorage.removeItem("app"); 
-
-	// delete old resource 
-	ResourceActions.reset();
 
 	// manipulate the history (todo: does not work)
 	this.props.history.push("/");
@@ -213,10 +212,27 @@ export default class DropArea extends React.Component {
 	
 	promiseUpload.then(
 	    function(resolve) {
-		let profiler = new Profiler( currentFile,
-					     uploader.remoteFilename,
+
+		var res =
+		    { remoteFilename  : uploader.remoteFilename,
+		      name            : currentFile.name,
+		      file            : currentFile,
+		      id              : uuid.v4(),
+		      mimetype        : currentFile.type,
+		      language        : { language  : "Please identify language",
+					  threeLetterCode: "any"
+					}
+		    };
+		
+		// create the resource in the store (todo: this should happen in DropArea)
+		thatThis.handleResourcesChange( res );
+		
+		// let the profile do its jobs
+		let profiler = new Profiler( res,
+					     (resource) => thatThis.handleResourcesChange( resource ), 
 					     () => thatThis.setState( {showAlertMissingInfo: true} )
 					   );
+		
 		profiler.convertProcessFile( () => thatThis.setState( {isLoaded: true} ) );
 	    },
 	    function(reject) {
@@ -228,11 +244,7 @@ export default class DropArea extends React.Component {
     
     onDrop(files) {
 
-	// clear resources view
-	if (files.length > 0) {
-	    ResourceActions.reset();
-	}	
-
+	console.log('DropArea/onDrop', files);
 	// clear dropzone and hence its task-oriented view
 	this.clearDropzone();
 	
@@ -298,14 +310,14 @@ export default class DropArea extends React.Component {
 		    <tr>
 		      <td>
 			<Dropzone className="inputZone"
-				  onDrop={this.onDrop}
+	                          multiple={false}
+	                          onDrop={this.onDrop}
 			          disabled={this.props.caller == "standalone" ? false : true}
 				  style={ this.props.caller == "standalone" ? {...styleDropzone, ...enabledStyleDropzone, ...textColor} : {...styleDropzone, ...disabledStyleDropzone, ...textColor} }
 				  activeStyle={activeStyleDropzone} >
 			  Drop your file, or click to select the file to upload.
 			</Dropzone>
 		      </td>
-		{/*		      <FadeProps animationLength={this.props.caller == "standalone" ? 1 : 1000} direction={0} > */}
 		      <td>
 			<div className="relativeDiv">
 			  <form onSubmit={this.handleUrlInputSubmit}>
@@ -322,7 +334,6 @@ export default class DropArea extends React.Component {
 			  </form>
 			</div>			  
 		      </td>
-		{/*		      </FadeProps> */ }
 		      <td>
 			<div className="relativeDiv">
 			<form onSubmit={this.handleTextInputSubmit}>

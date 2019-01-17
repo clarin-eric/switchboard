@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: ToolInvoker.js
-// Time-stamp: <2019-01-15 11:46:52 (zinn)>
+// Time-stamp: <2019-01-17 14:54:45 (zinn)>
 // -------------------------------------------
 
 import { map639_1_to_639_3, map639_3_to_639_1 } from './util';
@@ -17,16 +17,15 @@ export function gatherInvocationParameters( toolDescription, resourceDescription
 
     var rtnValue = undefined;
 
-    if (typeof resourceDescription === undefined || resourceDescription === null || resourceDescription.length == 0) {
+    if (typeof resourceDescription === undefined ) {
 	return false;
     }
 
     // need to encode the remote file name in case it contains special characters
     var remoteFilename   =  encodeURIComponent(resourceDescription.remoteFilename);	
-    var file             =  resourceDescription.file;
     var language         =  resourceDescription.language.threeLetterCode;
     var mimetype         =  resourceDescription.mimetype;
-    var langEncoding     = toolDescription.langEncoding;
+    var langEncoding     =  toolDescription.langEncoding;
     
     // Some tools in the registry require an alternative naming of mediatypes, see e.g.,
     // the CLARIN-DK tools. The registry slot for 'type' is a function that is being evaluated here.
