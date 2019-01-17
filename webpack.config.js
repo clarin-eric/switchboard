@@ -114,9 +114,9 @@ const common = {
 		// file storage provider (alt: MPCDF, deprecated )
 		'FILE_STORAGE'       : JSON.stringify('NEXTCLOUD'),
 
-		// credentials for NEXTCLOUD (alt: 'claus.zinn@uni-tuebingen.de':'sPL-Fh2-7SS-hCJ')
-		'NEXTCLOUD_USER'     : JSON.stringify('switchboard'),
-		'NEXTCLOUD_PASS'     : JSON.stringify('clarin-plus'),
+		// the shell building the bundle must have $NUSER and $NPASS defined
+		'NEXTCLOUD_USER'     : JSON.stringify(process.env.NUSER),
+		'NEXTCLOUD_PASS'     : JSON.stringify(process.env.NPASS),
 
 		// version as displayed on the main page
 		'VERSION'            : JSON.stringify('v1.4.5-dev (Jan 17, 2019)'),
