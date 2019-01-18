@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: App.jsx
-// Time-stamp: <2019-01-18 09:37:04 (zinn)>
+// Time-stamp: <2019-01-18 10:06:43 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -39,7 +39,6 @@ require('./../images/voyant-tools.jpg');
 require('./../images/frog.jpg');
 require('./../images/colibriCore.jpg');
 require('./../images/valkuil.jpg');
-require('./../images/button_helpdesk_forhelp.png');
 require('./../images/lindat.jpg');
 require('./../images/foliastats.jpg');
 require('./../images/mary.jpg');
