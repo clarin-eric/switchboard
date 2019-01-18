@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: App.jsx
-// Time-stamp: <2019-01-17 21:57:54 (zinn)>
+// Time-stamp: <2019-01-18 09:37:04 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -19,7 +19,6 @@ import UserFAQ from './UserFAQ.jsx';                // component displaying user
 import DevHelp from './DevHelp.jsx';                // component displaying help targeted at developers
 import AboutHelp from './AboutHelp.jsx';            // displaying admin. information about the switchboard
 import AlertURLFetchError from './AlertURLFetchError.jsx';
-import ShowAllTools from './ShowAllTools.jsx';      // allow external requests to show all available tools
 
 // Piwik support
 import PiwikReactRouter from 'piwik-react-router';
@@ -236,9 +235,6 @@ export default class App extends React.Component {
       <Route path="/d4science/:fileURL"
 	    render={(props) => <DropArea onToolsChange={this.handleToolsChange}
 		    onResourcesChange={this.handleResourcesChange} caller="D4SCIENCE"  {...props} /> } />
-      <Route path="/vto/"
-	    render={(props) => <ShowAllTools showAllToolsFun={this.showAllTools}
-		    onResourcesChange={this.handleResourcesChange}  caller="CLARIN"    {...props} /> } />
       <Route path="*" component={AlertURLFetchError} />
     </Switch>
   </HashRouter>
