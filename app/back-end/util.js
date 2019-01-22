@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: util.js
-// Time-stamp: <2019-01-17 21:30:25 (zinn)>
+// Time-stamp: <2019-01-22 07:54:58 (zinn)>
 // -------------------------------------------
 
 export const inclToolsReqAuth = process.env.INCL_TOOLS_REQ_AUTH;
@@ -17,7 +17,7 @@ export const appContextPath   = process.env.APP_CONTEXT_PATH;
 export const emailContactCommand = "mailto:"+emailContact;
 
 /* new environment variable:
-   - used to communicate between CLRS and CLRS-TEST
+   - used to communicate between CLRS and CLRS-REST
    - production version of the switchboard only calls tools deemed to have production status
    - development version of the switchboard includes tools with a more beta-like development status
    - used by MatcherRemote.js

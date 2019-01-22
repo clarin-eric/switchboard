@@ -16,8 +16,8 @@ process.traceDeprecation = true;
 const webpack = require('webpack');
 
 const common = {
-//    mode: 'production',
-    mode: 'development',    
+    mode: 'production',
+//    mode: 'development',
     optimization: {
 	minimizer: [
 	    new UglifyJSPlugin({
@@ -105,8 +105,8 @@ const common = {
 
 	new webpack.DefinePlugin({
 	    'process.env': {
-                'NODE_ENV'           : JSON.stringify('development'),
-                //'NODE_ENV'           : JSON.stringify('production'),		
+                //'NODE_ENV'           : JSON.stringify('development'),
+                'NODE_ENV'           : JSON.stringify('production'),
 
 		// include tools that require authentication
 		'INCL_TOOLS_REQ_AUTH': JSON.stringify('yes'),
