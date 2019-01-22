@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: DropArea.jsx
-// Time-stamp: <2019-01-15 11:30:56 (zinn)>
+// Time-stamp: <2019-01-22 08:34:34 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -28,7 +28,6 @@ import BackgroundFile from './../images/file-solid.png';
 import BackgroundLink from './../images/location-arrow-solid.png';
 import BackgroundText from './../images/keyboard-solid.png';
 
-import FadeProps from 'fade-props';
 
 export default class DropArea extends React.Component {
     constructor(props) {
@@ -306,7 +305,6 @@ export default class DropArea extends React.Component {
 			  Drop your file, or click to select the file to upload.
 			</Dropzone>
 		      </td>
-		{/*		      <FadeProps animationLength={this.props.caller == "standalone" ? 1 : 1000} direction={0} > */}
 		      <td>
 			<div className="relativeDiv">
 			  <form onSubmit={this.handleUrlInputSubmit}>
@@ -323,7 +321,6 @@ export default class DropArea extends React.Component {
 			  </form>
 			</div>			  
 		      </td>
-		{/*		      </FadeProps> */ }
 		      <td>
 			<div className="relativeDiv">
 			<form onSubmit={this.handleTextInputSubmit}>

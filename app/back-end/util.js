@@ -3,13 +3,17 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: util.js
-// Time-stamp: <2018-11-30 09:54:24 (zinn)>
+// Time-stamp: <2019-01-22 08:51:24 (zinn)>
 // -------------------------------------------
 
 export const inclToolsReqAuth = process.env.INCL_TOOLS_REQ_AUTH;
-export const fileStorage      = process.env.FILE_STORAGE;
-export const nextcloud_user   = process.env.NEXTCLOUD_USER;
-export const nextcloud_pass   = process.env.NEXTCLOUD_PASS;
+export const fileStorage      = "optionNoLongerActive"; // process.env.FILE_STORAGE;
+//export const nextcloud_user   = process.env.NEXTCLOUD_USER;
+//export const nextcloud_pass   = process.env.NEXTCLOUD_PASS;
+//export const software_status  = process.env.SOFTWARE_STATUS;
+//export const software_built   = process.env.SOFTWARE_BUILT;
+export const nextcloud_user   = process.env.SOFTWARE_STATUS;
+export const nextcloud_pass   = process.env.SOFTWARE_BUILT;
 export const lrsVersion       = process.env.VERSION;
 export const emailContact     = process.env.CONTACT;
 export const appContextPath   = process.env.APP_CONTEXT_PATH;
