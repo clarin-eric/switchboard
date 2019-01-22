@@ -112,14 +112,14 @@ const common = {
 		'INCL_TOOLS_REQ_AUTH': JSON.stringify('yes'),
 		
 		// file storage provider (alt: MPCDF, deprecated )
-		'FILE_STORAGE'       : JSON.stringify('NEXTCLOUD'),
+		// 'FILE_STORAGE'       : JSON.stringify('NEXTCLOUD'),
 
-		// credentials for NEXTCLOUD (alt: 'claus.zinn@uni-tuebingen.de':'sPL-Fh2-7SS-hCJ')
-		'NEXTCLOUD_USER'     : JSON.stringify('switchboard'),
-		'NEXTCLOUD_PASS'     : JSON.stringify('clarin-plus'),
+		// the shell building the bundle must have $NUSER and $NPASS defined
+		'SOFTWARE_STATUS'     : JSON.stringify(process.env.SOFTWARE_STATUS),
+		'SOFTWARE_BUILT'      : JSON.stringify(process.env.SOFTWARE_BUILT),
 
 		// version as displayed on the main page
-		'VERSION'            : JSON.stringify('v1.4.3 (Jan 15, 2019)'),
+		'VERSION'            : JSON.stringify('v1.4.6 (Jan 22, 2019)'),
 
 		// contact as displayed of the main page
 		'CONTACT'            : JSON.stringify('switchboard@clarin.eu')

@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Tool.jsx
-// Time-stamp: <2019-01-15 09:22:07 (zinn)>
+// Time-stamp: <2019-01-15 11:47:56 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -24,22 +24,21 @@ export default class Tool extends React.Component {
     }
 
     invokeTool( URL ) {
-	console.log('Tool/invokeTool:', URL.url);	
-	_paq.push(["trackEvent", 'ToolInvocation', URL.url]); 
+	_paq.push(["trackEvent", 'ToolInvocation', URL]); 
 	invokeBrowserBasedTool( URL );
     }
     
     // de-activated as it may yield a CORS-related error.
     invokeToolInactive( URL ) {
 	Request
-	    .head(URL.url)
+	    .head(URL)
 	    .end((err, res) => {
 		 if (err) {
-		     console.log('Tool/invokeTool:', URL.url, err);
+		     console.log('Tool/invokeTool:', URL, err);
 		 } else {
-		     console.log('Tool/invokeTool:', URL.url, res);
+		     console.log('Tool/invokeTool:', URL, res);
 		     invokeBrowserBasedTool( URL );
-		     _paq.push(["trackEvent", 'ToolInvocation', URL.url, res.status]); 	    
+		     _paq.push(["trackEvent", 'ToolInvocation', URL, res.status]); 	    
 		 }});
     }
     
@@ -235,7 +234,7 @@ export default class Tool extends React.Component {
 	    };
 	    
 	    const renderSummary = () => {
-		if ((title == "URL") && ( summary.url )) return (
+		if ((title == "URL") && ( summary )) return (
 		    <p style={{ fontWeight: 100, fontSize: '16px', lineHeight: 1.5 }}>
 		    <button onClick={this.invokeTool.bind(this,summary)} > Click to start tool </button>		    
 		    </p>
