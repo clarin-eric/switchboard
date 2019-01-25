@@ -22,8 +22,19 @@ const common = {
 	minimizer: [
 	    new UglifyJSPlugin({
 		uglifyOptions: {
+			output: {
+				comments: false
+			},
 		    compress: {
-			drop_console: true,
+		    	drop_console: true,
+				evaluate: false
+		    },
+		    mangle: {
+		    	toplevel: true,
+		    	eval: true,
+		    	properties: {
+		    		regex: /^[A-Z]+([A-Z_]+)?$/
+		    	},
 		    }
 		}
 	    })
@@ -115,8 +126,8 @@ const common = {
 		// 'FILE_STORAGE'       : JSON.stringify('NEXTCLOUD'),
 
 		// the shell building the bundle must have $NUSER and $NPASS defined
-		'SOFTWARE_STATUS'     : JSON.stringify(process.env.SOFTWARE_STATUS),
-		'SOFTWARE_BUILT'      : JSON.stringify(process.env.SOFTWARE_BUILT),
+		'FILE_STORAGE_USER'     : JSON.stringify(process.env.FILE_STORAGE_USER),
+		'FILE_STORAGE_TOKEN'    : JSON.stringify(process.env.FILE_STORAGE_TOKEN),
 
 		// version as displayed on the main page
 		'VERSION'            : JSON.stringify('v1.4.6 (Jan 22, 2019)'),
