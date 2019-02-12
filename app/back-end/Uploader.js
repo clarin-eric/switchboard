@@ -126,8 +126,6 @@ export default class Uploader {
 				    var parseString = require('xml2js').parseString;
 				    parseString(res.text, function (err, result) {
 					that.remoteFilename = result.ocs.data[0].url[0].concat('/download')
-					// hack as shared link returned by nextcloud has wrong protocol (!)
-					that.remoteFilename = that.remoteFilename.replace('http', 'https');
 					console.log('Uploader/shared link', that.remoteFilename);
 				    });
 				    resolve(res)
