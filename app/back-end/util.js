@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: util.js
-// Time-stamp: <2019-01-22 11:01:16 (zinn)>
+// Time-stamp: <2019-01-25 15:55:13 (zinn)>
 // -------------------------------------------
 
 export const inclToolsReqAuth = process.env.INCL_TOOLS_REQ_AUTH;
@@ -33,6 +33,7 @@ export const fileStorageServerMPG_remote     = 'http://ws1-clarind.esc.rzg.mpg.d
 // see nginx.conf for reverse-proxying (all pathnames are local)
 export const fileStorageServerMPG_localhost       = '/storage/';
 export const fileStorageServerNEXTCLOUD_localhost = '/nextcloud/';
+export const fileStorageServerNEXPRESS_localhost  = '/nexpress/';
 
 export const matcherURL = '/matcher';
 

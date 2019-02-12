@@ -1,4 +1,5 @@
-FROM alpine:3.6
+FROM node:8.15.0-alpine
+# FROM alpine:3.6
 
 MAINTAINER claus.zinn@gmail.com
 
@@ -135,6 +136,8 @@ RUN pip3 install requests
 COPY app/python /app
 WORKDIR /app
 
+# install nodejs server
+COPY fileserver /fileserver
 
 
 # Add and define entrypoint

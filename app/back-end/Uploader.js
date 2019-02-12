@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Uploader.js
-// Time-stamp: <2019-01-22 11:00:18 (zinn)>
+// Time-stamp: <2019-01-25 23:22:50 (zinn)>
 // -------------------------------------------
 
 /* Uploads a file to the MPG server in Garching, or to a Nextcloud instance.
@@ -24,6 +24,7 @@ import {appContextPath,
 	fileStorageServerMPG_localhost,
 	fileStorageServerMPG_remote,
 	fileStorageServerNEXTCLOUD_localhost,
+	fileStorageServerNEXPRESS_localhost,	
 	fileExtensionChooser,
 	nextcloud_user,
 	nextcloud_pass} from './util';
@@ -48,7 +49,8 @@ export default class Uploader {
 	if (fileStorage === "MPCDF") {
 	    return this.uploadFile_MPCDF();
 	} else {
-	    return this.uploadFile_NC();
+	    return this.uploadFile_NE();
+	    //return this.uploadFile_NC();	    
 	}
     }
 
@@ -84,6 +86,26 @@ export default class Uploader {
 		})});
     }
 
+    uploadFile_NE() {
+	let that = this;
+	let cloudPath = this.windowAppContextPath + fileStorageServerNEXPRESS_localhost + 'api/upload';
+	that.remoteFilename = that.windowAppContextPath + fileStorageServerNEXPRESS_localhost + that.file.name;
+	
+	console.log('uploadFile_NE', cloudPath, that.file, that.remoteFilename);
+	return new Promise(function(resolve, reject) {
+	    Request
+		.post(cloudPath)
+		.attach('langResource', that.file, that.file.name)
+		.end((err, res) => {
+		    if (err) {
+			console.log('Error in uploading resource to the temporary file storage server.');
+			reject(err);
+		    } else {
+			resolve(res)
+		    }})
+	});
+    }
+		    
     // uploading to Nextcloud is a two stage process
     uploadFile_NC() {
 	let that = this;
