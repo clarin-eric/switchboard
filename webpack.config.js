@@ -119,7 +119,7 @@ const common = {
 		'SOFTWARE_BUILT'      : JSON.stringify(process.env.SOFTWARE_BUILT),
 
 		// version as displayed on the main page
-		'VERSION'            : JSON.stringify('v1.4.6-dev (Jan 22, 2019)'),
+		'VERSION'            : JSON.stringify('v1.4.7-dev (Feb 19, 2019)'),
 
 		// contact as displayed of the main page
 		'CONTACT'            : JSON.stringify('switchboard@clarin.eu')
