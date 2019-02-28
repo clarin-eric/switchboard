@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: DropArea.jsx
-// Time-stamp: <2019-01-22 08:34:34 (zinn)>
+// Time-stamp: <2019-02-28 15:01:59 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -18,6 +18,7 @@ import AlertShibboleth from './AlertShibboleth.jsx';
 import AlertMissingInfo from './AlertMissingInfo.jsx';
 import AlertMissingInputText from './AlertMissingInputText.jsx'; 
 
+import MatcherRemote from '../back-end/MatcherRemote';
 import Profiler from '../back-end/Profiler';
 import Uploader from '../back-end/Uploader';
 import Downloader from '../back-end/Downloader';
@@ -38,8 +39,11 @@ export default class DropArea extends React.Component {
 	
 	console.log('DropArea', props);
 	this.onDrop      = this.onDrop.bind(this);
+	this.getPermissableMimetypes = this.getPermissableMimetypes.bind(this);
+	
 	this.state = {
 	    isLoaded: true,
+	    mimetypes : [],
 	    
 	    textInputValue: "",
 	    urlInputValue: "",
@@ -75,6 +79,8 @@ export default class DropArea extends React.Component {
 	// process parameters
 	this.processParameters(this.props.caller, parameters);
 
+	// set state for permissable mediatypes
+	this.getPermissableMimetypes();
     }
 
     processParameters( caller, parameters ) {
@@ -225,11 +231,35 @@ export default class DropArea extends React.Component {
 		thatThis.setState( { isLoaded: true } );		
 	    });
     }   
-    
-    onDrop(files) {
 
+    getPermissableMimetypes() {
+	const matcher = new MatcherRemote( true ); 
+	const mediatypePromise = matcher.getSupportedMimetypes();
+	const that = this;
+
+	mediatypePromise.then(
+	    function(resolve) {
+		console.log('DropArea.jsx/getPermissableMimetypes succeeded', resolve);		
+		that.setState( {mimetypes: resolve} );		
+	    },
+	    function(reject) {
+		console.log('DropArea.jsx/getPermissableMimetypes failed', reject);
+	    });	
+    }
+    
+    // for time being, only single file is accepted (multiple=false)
+    onDrop(acceptedFiles, rejectedFiles) {
+
+	// deal with rejected files
+	if (rejectedFiles.length) {
+	    console.log("A file was rejected", rejectedFiles.length, rejectedFiles[0].name)
+	    _paq.push(["trackEvent", 'fileInputRejected', rejectedFiles[0].name]);
+            // todo: show message that some files were rejected
+	    return;
+	}
+	
 	// clear resources view
-	if (files.length > 0) {
+	if (acceptedFiles.length > 0) {
 	    ResourceActions.reset();
 	}	
 
@@ -237,11 +267,11 @@ export default class DropArea extends React.Component {
 	this.clearDropzone();
 	
 	// process the file(s)
-	for (var i=0; i<files.length; i++) {
-	    this.uploadAndProcessFile( {currentFile: files[i]} );	    
+	for (var i=0; i<acceptedFiles.length; i++) {
+	    this.uploadAndProcessFile( {currentFile: acceptedFiles[i]} );	    
 	}
 
-	_paq.push(["trackEvent", 'fileInput', files[0].name]);
+	_paq.push(["trackEvent", 'fileInput', acceptedFiles[0].name]);
     }
 
     
@@ -289,6 +319,9 @@ export default class DropArea extends React.Component {
             borderRadius: 8
         };
 
+	const permissableMimetypes = [...this.state.mimetypes].toString();
+	console.log('Permissable mimetypes', permissableMimetypes);
+
 	return (
 	      <div>
  	        <h3 id="dropAreaHeading">Provision of Input</h3>
@@ -299,6 +332,10 @@ export default class DropArea extends React.Component {
 		      <td>
 			<Dropzone className="inputZone"
 				  onDrop={this.onDrop}
+				  maxSize={5000000}
+				  multiple={false}
+//	    accept = "text/plain, application/pdf"
+				  accept = {permissableMimetypes}
 			          disabled={this.props.caller == "standalone" ? false : true}
 				  style={ this.props.caller == "standalone" ? {...styleDropzone, ...enabledStyleDropzone, ...textColor} : {...styleDropzone, ...disabledStyleDropzone, ...textColor} }
 				  activeStyle={activeStyleDropzone} >

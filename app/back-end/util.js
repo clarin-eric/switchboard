@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: util.js
-// Time-stamp: <2019-01-22 08:51:24 (zinn)>
+// Time-stamp: <2019-02-28 11:14:31 (zinn)>
 // -------------------------------------------
 
 export const inclToolsReqAuth = process.env.INCL_TOOLS_REQ_AUTH;
@@ -81,8 +81,9 @@ export function fileExtensionChooser (mimetype) {
     case "application/rtf":
 	extension = "rtf";
 	break;
+	// https://github.com/clarin-eric/LRSwitchboard/issues/63
     default:
-	extension = "txt";
+	extension = "mp4";
     }
 
     console.log('util/fileExtensionChooser', mimetype, extension);
