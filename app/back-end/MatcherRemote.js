@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: MatcherRemote.js
-// Time-stamp: <2018-10-16 15:32:00 (zinn)>
+// Time-stamp: <2019-02-28 14:55:48 (zinn)>
 // -------------------------------------------
 
 import Request from 'superagent';
@@ -25,12 +25,28 @@ export default class MatcherRemote {
 	    Request
 		.get(that.windowAppContextPath+matcherURL
 		     + '/api/tools?includeWS='+includeWS
-		     + '/api/tools?includeBetaSoftware='+includeBetaSoftware
+		     + '&includeBetaSoftware='+includeBetaSoftware
 		     + '&sortBy=tools')
 		.set('Accept', 'application/json')
                 .end((err, res) => {
 		if (err) {
 		    console.log('MatcherRemote/getAllTools failed: ', err);
+		    reject(err);
+		} else {
+		    resolve(res.body);
+		}
+		})});
+    }
+
+    getSupportedMimetypes() {
+	const that = this;
+	return new Promise(function(resolve, reject) {
+	    Request
+		.get(that.windowAppContextPath+matcherURL + '/api/mimetypes')
+		.set('Accept', 'application/json')
+                .end((err, res) => {
+		if (err) {
+		    console.log('MatcherRemote/getSupportedMimetypes failed: ', err);
 		    reject(err);
 		} else {
 		    resolve(res.body);

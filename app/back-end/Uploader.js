@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Uploader.js
-// Time-stamp: <2019-02-12 21:53:01 (zinn)>
+// Time-stamp: <2019-02-28 16:34:59 (zinn)>
 // -------------------------------------------
 
 /* Uploads a file to the MPG server in Garching, or to a Nextcloud instance.
@@ -148,8 +148,6 @@ export default class Uploader {
 				    var parseString = require('xml2js').parseString;
 				    parseString(res.text, function (err, result) {
 					that.remoteFilename = result.ocs.data[0].url[0].concat('/download')
-					// hack as shared link returned by nextcloud has wrong protocol (!)
-					that.remoteFilename = that.remoteFilename.replace('http', 'https');
 					console.log('Uploader/shared link', that.remoteFilename);
 				    });
 				    resolve(res)

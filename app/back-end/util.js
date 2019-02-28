@@ -3,15 +3,18 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: util.js
-// Time-stamp: <2019-01-25 15:55:13 (zinn)>
+// Time-stamp: <2019-02-28 16:34:29 (zinn)>
 // -------------------------------------------
 
 export const inclToolsReqAuth = process.env.INCL_TOOLS_REQ_AUTH;
 export const fileStorage      = "optionNoLongerActive"; // process.env.FILE_STORAGE;
-//export const nextcloud_user   = process.env.NEXTCLOUD_USER;
-//export const nextcloud_pass   = process.env.NEXTCLOUD_PASS;
+
 export const nextcloud_user   = process.env.SOFTWARE_STATUS;
 export const nextcloud_pass   = process.env.SOFTWARE_BUILT;
+// todo
+export const nextcloud_user   = process.env.FILE_STORAGE_USER;
+export const nextcloud_pass   = process.env.FILE_STORAGE_TOKEN;
+
 export const lrsVersion       = process.env.VERSION;
 export const emailContact     = process.env.CONTACT;
 export const appContextPath   = process.env.APP_CONTEXT_PATH;
@@ -80,8 +83,9 @@ export function fileExtensionChooser (mimetype) {
     case "application/rtf":
 	extension = "rtf";
 	break;
+	// https://github.com/clarin-eric/LRSwitchboard/issues/63
     default:
-	extension = "txt";
+	extension = "mp4";
     }
 
     console.log('util/fileExtensionChooser', mimetype, extension);
