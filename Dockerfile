@@ -1,4 +1,4 @@
-FROM registry.gitlab.com/clarin-eric/docker-alpine-clrs-build_env:1.0.2
+FROM registry.gitlab.com/clarin-eric/docker-alpine-clrs-build_env:1.0.3
 
 MAINTAINER andre@clarin.eu
 
