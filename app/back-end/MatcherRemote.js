@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: MatcherRemote.js
-// Time-stamp: <2019-02-28 14:55:48 (zinn)>
+// Time-stamp: <2019-03-06 21:08:25 (zinn)>
 // -------------------------------------------
 
 import Request from 'superagent';
@@ -53,6 +53,22 @@ export default class MatcherRemote {
 		}
 		})});
     }
+
+    getSupportedLanguages() {
+	const that = this;
+	return new Promise(function(resolve, reject) {
+	    Request
+		.get(that.windowAppContextPath+matcherURL + '/api/languages')
+		.set('Accept', 'application/json')
+                .end((err, res) => {
+		if (err) {
+		    console.log('MatcherRemote/getSupportedLanguages failed: ', err);
+		    reject(err);
+		} else {
+		    resolve(res.body);
+		}
+		})});
+    }    
 
     getApplicableTools(mimetype, language) {
 	const includeWS = (this.includeWebServices ? "yes" : "no");

@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: DropArea.jsx
-// Time-stamp: <2019-02-28 16:32:52 (zinn)>
+// Time-stamp: <2019-03-06 21:12:50 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -40,10 +40,12 @@ export default class DropArea extends React.Component {
 	console.log('DropArea', props);
 	this.onDrop      = this.onDrop.bind(this);
 	this.getPermissableMimetypes = this.getPermissableMimetypes.bind(this);
+	this.getPermissableLanguages = this.getPermissableLanguages.bind(this);	
 	
 	this.state = {
 	    isLoaded: true,
 	    mimetypes : [],
+	    languages : [],	    
 	    
 	    textInputValue: "",
 	    urlInputValue: "",
@@ -81,6 +83,9 @@ export default class DropArea extends React.Component {
 
 	// set state for permissable mediatypes
 	this.getPermissableMimetypes();
+
+	// set state for permissable languages
+	this.getPermissableLanguages();
     }
 
     processParameters( caller, parameters ) {
@@ -262,10 +267,25 @@ export default class DropArea extends React.Component {
 		console.log('DropArea.jsx/getPermissableMimetypes failed', reject);
 	    });	
     }
+
+    getPermissableLanguages() {
+	const matcher = new MatcherRemote( true ); 
+	const languagePromise = matcher.getSupportedLanguages();
+	const that = this;
+
+	languagePromise.then(
+	    function(resolve) {
+		console.log('DropArea.jsx/getPermissableLanguages succeeded', resolve);		
+		that.setState( {languages: resolve} );		
+	    },
+	    function(reject) {
+		console.log('DropArea.jsx/getPermissableLanguages failed', reject);
+	    });	
+    }    
     
     // for time being, only single file is accepted (multiple=false)
     onDrop(acceptedFiles, rejectedFiles) {
-	console.log('DropArea/onDrop', files);
+	console.log('DropArea/onDrop', acceptedFiles, rejectedFiles);
 
 	// deal with rejected files
 	if (rejectedFiles.length) {
@@ -275,12 +295,6 @@ export default class DropArea extends React.Component {
 	    return;
 	}
 	
-	// clear resources view
-	if (acceptedFiles.length > 0) {
-	    ResourceActions.reset();
-	}	
-
->>>>>>> master
 	// clear dropzone and hence its task-oriented view
 	this.clearDropzone();
 	

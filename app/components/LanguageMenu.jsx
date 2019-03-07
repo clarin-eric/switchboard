@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: LanguageMenu.jsx
-// Time-stamp: <2018-06-29 20:23:32 (zinn)>
+// Time-stamp: <2019-03-06 21:41:22 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -18,6 +18,17 @@ export default class LanguageMenu extends React.Component {
 	super(props);
     }
 
+    filterLanguages( toolLanguages, langOptions ) {
+    	var langOptionsFiltered = langOptions.filter(
+		    (lo) =>   {
+			if (toolLanguages.indexOf( lo.value ) != -1) {
+			    return lo;
+			} 
+		    });
+
+	return langOptionsFiltered;
+    }
+    
     render() {
 	const {defaultValue, ...props } = this.props;
 	const that = this;
