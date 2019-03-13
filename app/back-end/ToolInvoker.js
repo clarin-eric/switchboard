@@ -17,7 +17,7 @@ export function gatherInvocationParameters( toolDescription, resourceDescription
 
     var rtnValue = undefined;
 
-    if (typeof resourceDescription === undefined ) {
+    if (typeof resourceDescription === "undefined" ) {
 	return false;
     }
 
