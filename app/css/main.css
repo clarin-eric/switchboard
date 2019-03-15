@@ -277,6 +277,10 @@ h2 {
   visibility: hidden;
 }
 
+.fa-trash {
+    cursor: pointer;
+}
+    
 .header-link {
     cursor: pointer;
 }

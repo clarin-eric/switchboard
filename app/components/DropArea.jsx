@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: DropArea.jsx
-// Time-stamp: <2019-03-06 21:12:50 (zinn)>
+// Time-stamp: <2019-03-14 16:18:05 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -132,9 +132,6 @@ export default class DropArea extends React.Component {
 	    // clear task-oriented view
 	    this.clearDropzone();
 
-	    // reset textarea for textual input	    
-	    this.setState({ textInputValue : "" });
-
 	    _paq.push(["trackEvent", 'textInput', textContent, textContent.length]);
 	}
 
@@ -144,6 +141,12 @@ export default class DropArea extends React.Component {
     clearDropzone() {
 	console.log('DropArea/clearDropzone', this.state);
 
+	// reset textarea for url input	    
+	this.setState({ urlInputValue : "" });
+
+	// reset textarea for textual input	    
+	this.setState({ textInputValue : "" });
+	
 	// signal to parent that tool list is empty
 	this.handleToolsChange( [] );
 	
@@ -166,9 +169,6 @@ export default class DropArea extends React.Component {
 	    this.clearDropzone();
 	    
 	    this.downloadAndProcessSharedLink( link );
-
-	    // reset textarea for url input	    
-	    this.setState({ urlInputValue : "" });
 	    
 	    event.target.value = "";
 
