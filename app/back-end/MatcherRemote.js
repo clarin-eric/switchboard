@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: MatcherRemote.js
-// Time-stamp: <2019-03-06 21:08:25 (zinn)>
+// Time-stamp: <2019-03-15 16:25:23 (zinn)>
 // -------------------------------------------
 
 import Request from 'superagent';
@@ -19,13 +19,13 @@ export default class MatcherRemote {
 
     getAllTools() {
 	const includeWS = (this.includeWebServices ? "yes" : "no");
-	const includeBetaSoftware = ((deploymentStatus == "development") ? "yes" : "no");
+	const deployment = ((deploymentStatus == "production") ? "production" : "development");
 	const that = this;
 	return new Promise(function(resolve, reject) {
 	    Request
 		.get(that.windowAppContextPath+matcherURL
 		     + '/api/tools?includeWS='+includeWS
-		     + '&includeBetaSoftware='+includeBetaSoftware
+		     + '&deployment='+deployment
 		     + '&sortBy=tools')
 		.set('Accept', 'application/json')
                 .end((err, res) => {
@@ -72,13 +72,13 @@ export default class MatcherRemote {
 
     getApplicableTools(mimetype, language) {
 	const includeWS = (this.includeWebServices ? "yes" : "no");
-	const includeBetaSoftware = ((deploymentStatus == "development") ? "yes" : "no");	
+	const deployment = ((deploymentStatus == "production") ? "production" : "development");	
 	const that = this;	
 	return new Promise(function(resolve, reject) {
 	    Request
 		.get(that.windowAppContextPath+matcherURL
 		     + '/api/tools?includeWS='+includeWS
-		     + '/api/tools?includeBetaSoftware='+includeBetaSoftware		     
+		     + '&deployment='+deployment
 		     + '&language=' + language
 		     + '&mimetype=' + mimetype
 		     + '&sortBy=tools')
