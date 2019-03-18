@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: UserFAQ.jsx
-// Time-stamp: <2019-01-14 10:31:39 (zinn)>
+// Time-stamp: <2019-03-18 14:21:57 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -46,25 +46,25 @@ class UserFAQText extends React.Component {
 	    <li>
 	      <em>Q: Is there a way to perform a batch processing of files?</em>
 	      <p>
-		A: The switchboard is not able to batch processing many documents itself. It can,
+		A: The Switchboard is not able to batch processing many documents itself. It can,
 		however, invoke a tool capable of batch processing. At the time of writing, there is
-		a single tool connected to the switchboard that can batch process documents:
+		a single tool connected to the Switchboard that can batch process documents:
 		"WebSty". To invoke WebSty, upload a zip archive of Polish plain text files and
 		follow the instructions.
 	      </p>	      
 	    </li>
 	    <li>
-	      <em>Q: Is there a way for the switchboard to run tools in a pipeline?</em>
+	      <em>Q: Is there a way for the Switchboard to run tools in a pipeline?</em>
 	      <p>
-		A: The switchboard is not a workflow engine. It can, however, invoke a tool capable
+		A: The Switchboard is not a workflow engine. It can, however, invoke a tool capable
 		of executing pipelines.  The WebLicht workflow engine, for instance, has
-		multiple switchboard entries each advertising a complex analysis such as
+		multiple Switchboard entries each advertising a complex analysis such as
 		constituency parsing or named entity recognition. WebLicht then orchestrates the
 		execution of the pipeline that divides the complex analysis in simpler tasks.
 	      </p>	      	      
 	    </li>
 	    <li>
-	      <em>Q: Is there a way to give the switchboard two or more resources at once?</em>	    
+	      <em>Q: Is there a way to give the Switchboard two or more resources at once?</em>	    
 	      <p>A: At the time of writing, only a single resource can be processed. But we are
 		well aware of tools that need two or more inputs (e.g., for aligning speech with
 		text).  Please drop us an email so we know that there is considerable interest to
@@ -74,42 +74,44 @@ class UserFAQText extends React.Component {
 	    <li>
 	      <em>Q: A tool is not working. What should I do? </em>
 	      <p>A: Please contact us when a tool does not work as advertised, or when you
-		would like to have some tool added to the switchboard.
+		would like to have some tool added to the Switchboard.
 	      </p>
 	    </li>
 	    <li>
-	      <em>Q: I do not see many well-known tools in the switchboard. Where, for instance, are the NLP tools from Stanford?</em>
+	      <em>Q: I do not see many well-known tools in the Switchboard. Where, for instance, are the NLP tools from Stanford?</em>
 	      <p>	      
 		A: At the time of writing, the Stanford tools are not <em>directly</em> callable from the
-		switchboard. Remember, to connect a tool to the switchboard, the tool developers have to
+		Switchboard. Remember, to connect a tool to the Switchboard, the tool developers have to
 		perform some integration work (for details, see "For Developers"). However, well-known tools work
 		under the hood of WebLicht.  The WebLicht entry for Constituent Parsing, for example,  makes use
-		of the Stanford Tokenizer and the Charniak parser. Be assured, the switchboard will
-		continue to integrate more tools <em>directly</em> into the switchboard. 
+		of the Stanford Tokenizer and the Charniak parser. Be assured, the Switchboard will
+		continue to integrate more tools <em>directly</em> into the Switchboard. 
 	      </p>	      	      
 	    </li>
 	    <li>
-	      <em>Q: What happens to the research data that is transfered to the switchboard?</em>
+	      <em>Q: What happens to the research data that is transfered to the Switchboard?</em>
 	      <p>
 		A: The tools that process your resource need to have access to it. For this, your
 		research data is uploaded to a temporary file storage onto a CLARIN-based server
 		for a limited time. The storage server is secured with a password, so access is restricted to authorized 
-		personnel only. All uploaded research data is deleted at regular intervals.
+		personnel only. Tools that process your resource, will only be able to access the resource via a <em>shared link</em>.
+		All uploaded research data is deleted from the temporary file storage at regular intervals. 
+		Do not upload data to the Switchboard that is private, sensitive or has legal restrictions on redistribution.
 	      </p>
 	    </li>
 	    <li>
-	      <em>Q: What information is collected when visiting the switchboard site?</em>
-	      <p> A: The switchboard makes use of cookies and uses Piwik and Google
+	      <em>Q: What information is collected when visiting the Switchboard site?</em>
+	      <p> A: The Switchboard makes use of cookies and uses Piwik and Google
 		Analytics to track user visits.
 	      </p>
 	    </li>	    
 	    <li>
-	      <em>Q: Can I use the switchboard to process large files?</em>
+	      <em>Q: Can I use the Switchboard to process large files?</em>
 	      <p>
-		A: It depends on the tool you want the switchboard to call. There are tools that
+		A: It depends on the tool you want the Switchboard to call. There are tools that
 		only work well and fast for limit file sizes, say less than 5MB. But the
-		switchboard makes it easy to call alternative tools for the same input. Use the
-		switchboard to find the tools most suitable for your input. And let us know when
+		Switchboard makes it easy to call alternative tools for the same input. Use the
+		Switchboard to find the tools most suitable for your input. And let us know when
 		you are not happy with the performance of a tool!
 	      </p>
 	    </li>
