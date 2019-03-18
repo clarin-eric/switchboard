@@ -3,7 +3,7 @@
 
 #STATUS="-dev"
 STATUS="-pro"
-VERSION="1.4.8${STATUS}"
+VERSION="1.4.9${STATUS}"
 NAME="clauszinn/switchboard"
 REPOSITORY="hub.docker.com"
 #IMAGE_NAME="${REPOSITORY}/${NAME}:${VERSION}"
