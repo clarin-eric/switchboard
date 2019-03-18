@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Resource.jsx
-// Time-stamp: <2019-01-17 14:55:01 (zinn)>
+// Time-stamp: <2019-03-18 13:08:02 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -137,9 +137,9 @@ export default class Resource extends React.Component {
 		</colgroup>
 		<thead>
 		  <tr>
-		    <th style={thStyle}>resource</th>
-		    <th style={thStyle}>mimetype</th>
-		    <th style={thStyle}>language</th>
+		    <th style={thStyle}>Resource</th>
+		    <th style={thStyle}>MIME type</th>
+		    <th style={thStyle}>Language</th>
 		  </tr>
 		</thead>
 		<tbody>
@@ -147,11 +147,11 @@ export default class Resource extends React.Component {
 		    <td className="note">
   	              <a className="resource-name" href='#' onClick={this.openResource} >
    			<span>
-			  <b>name:</b> {this.hideName( resource.name )}
+			  <b>File name:</b> {this.hideName( resource.name )}
 			</span>
 		      </a>		    
 		      <div>
-			<b>size:</b> {resource.size} bytes
+			<b>File size:</b> {resource.size} bytes
 		      </div>
 		    </td>
 		    
