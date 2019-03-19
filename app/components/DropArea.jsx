@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: DropArea.jsx
-// Time-stamp: <2019-03-19 15:37:10 (zinn)>
+// Time-stamp: <2019-03-19 15:51:00 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -18,6 +18,7 @@ import AlertURLUploadError from './AlertURLUploadError.jsx';
 import AlertShibboleth from './AlertShibboleth.jsx';
 import AlertMissingInfo from './AlertMissingInfo.jsx';
 import AlertMissingInputText from './AlertMissingInputText.jsx'; 
+import UserFAQ from './UserFAQ.jsx';                // component displaying user faq
 
 import MatcherRemote from '../back-end/MatcherRemote';
 import Profiler from '../back-end/Profiler';
@@ -360,13 +361,10 @@ export default class DropArea extends React.Component {
 	      <div>
  	        <h3 id="dropAreaHeading">Input</h3>
                 <div className="dropAreaTable">
-		  <h6>The Switchboard helps you find tools that can process your resources. Use one of the three boxes below to upload your data
-		  <a data-tip data-for='disclaimer'> (upload policy).</a></h6>
-		    <ReactTooltip id="disclaimer" type="warning" place="bottom">
- 		      <span>
-			Your data will be shared with the tools via public links. For more details, see the FAQ.
-		      </span>
-   		    </ReactTooltip>
+		  <p>The Switchboard helps you find tools that can process your resources. Use one of the three boxes below to upload your data.
+		    <br />Your data will be shared with the tools via public links. For more details, see the {' '}
+   		    <UserFAQ className="header-link" />.
+                   </p>
 		</div>		
 		<Loader loaded={this.state.isLoaded} />
 		<table className="dropAreaTable">

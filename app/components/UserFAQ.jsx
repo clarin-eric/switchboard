@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: UserFAQ.jsx
-// Time-stamp: <2019-03-19 12:13:02 (zinn)>
+// Time-stamp: <2019-03-19 16:37:25 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -70,7 +70,7 @@ class UserFAQText extends React.Component {
 	    </li>
 	    <li>
 	      <em>Q: What information is collected when visiting the Switchboard site?</em>
-	      <p> A: The Switchboard makes use of cookies and uses Piwik and Matomo
+	      <p> A: The Switchboard makes use of cookies and uses Matomo (Piwik)
 		to track user visits.
 	      </p>
 	    </li>	    	      
