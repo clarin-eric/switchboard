@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: UserFAQ.jsx
-// Time-stamp: <2019-03-18 14:36:51 (zinn)>
+// Time-stamp: <2019-03-19 11:09:39 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -42,7 +42,38 @@ class UserFAQText extends React.Component {
     return <ModalContainer onClose={this.props.onClose}>
         <ModalDialog onClose={this.props.onClose} className="userHelpDialog"  width={800} margin={50}>
 	    <h2>Frequently Asked Questions</h2>
-	  <ul>
+	    <ul>
+	    <li>
+	      <em>Q: What happens to the research data that is transfered to the Switchboard?</em>
+	      <p>
+		A: The tools that process your resource need to have access to it. For this, your
+		research data is uploaded to a temporary file storage on a CLARIN-based server for
+		a limited time. The resource is shared on the basis of a unique URL that is not
+		publicly listed and hard to guess. This URL is shared with the tool, which may or
+		may not redistribute or store this location. Note that in some cases the URL cannot
+		be passed through the tool over an secure (encrypted) channel. All uploaded
+		research data is deleted at regular intervals. This procedure is carried out for
+		uploaded files, resources provided by reference (pasted URLs and incoming via other
+		services) as well as text inserted manually into the input box on the Switchboard
+		web page.
+	      </p>
+	    </li>
+	    <li>
+	      <em>Q: Can I use the Switchboard with resources containing sensitive or private
+	      information, or which are subject to restrictions regarding redistribution?</em>
+	      <p>
+		A: No. CLARIN does not have full control over the shared resource and therefore cannot
+		guarantee its secure transfer, storage or processing. Therefore it is not advised
+		to upload files or enter content that contains sensitive or private information, or
+		is subject to restrictions regarding redistribution.
+	      </p>
+	    </li>
+	    <li>
+	      <em>Q: What information is collected when visiting the Switchboard site?</em>
+	      <p> A: The Switchboard makes use of cookies and uses Piwik and Matomo
+		to track user visits.
+	      </p>
+	    </li>	    	      
 	    <li>
 	      <em>Q: Is there a way to perform a batch processing of files?</em>
 	      <p>
@@ -88,37 +119,7 @@ class UserFAQText extends React.Component {
 		continue to integrate more tools <em>directly</em> into the Switchboard. 
 	      </p>	      	      
 	    </li>
-	    <li>
-	      <em>Q: What happens to the research data that is transfered to the Switchboard?</em>
-	      <p>
-		A: The tools that process your resource need to have access to it. For this, your
-		research data is uploaded to a temporary file storage on a CLARIN-based server for
-		a limited time. The resource is shared on the basis of a unique URL that is not
-		publicly listed and hard to guess. This URL is shared with the tool, which may or
-		may not redistribute or store this location. Note that in some cases the URL cannot
-		be passed through the tool over an secure (encrypted) channel. All uploaded
-		research data is deleted at regular intervals. This procedure is carried out for
-		uploaded files, resources provided by reference (pasted URLs and incoming via other
-		services) as well as text inserted manually into the input box on the Switchboard
-		web page.
-	      </p>
-	    </li>
-	    <li>
-	      <em>Q: Can I use the Switchboard with resources containing sensitive or private
-	      information, or which are subject to restrictions regarding redistribution?</em>
-	      <p>
-		A: CLARIN does not have full control over the shared resource and therefore cannot
-		guarantee its secure transfer, storage or processing. Therefore it is not advised
-		to upload files or enter content that contains sensitive or private information, or
-		is subject to restrictions regarding redistribution.
-	      </p>
-	    </li>
-	    <li>
-	      <em>Q: What information is collected when visiting the Switchboard site?</em>
-	      <p> A: The Switchboard makes use of cookies and uses Piwik and Google
-		Analytics to track user visits.
-	      </p>
-	    </li>	    
+
 	    <li>
 	      <em>Q: Can I use the Switchboard to process large files?</em>
 	      <p>
