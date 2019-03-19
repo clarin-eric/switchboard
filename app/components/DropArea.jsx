@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: DropArea.jsx
-// Time-stamp: <2019-03-18 15:46:12 (zinn)>
+// Time-stamp: <2019-03-19 15:37:10 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -360,11 +360,11 @@ export default class DropArea extends React.Component {
 	      <div>
  	        <h3 id="dropAreaHeading">Input</h3>
                 <div className="dropAreaTable">
-		  <h6>The Switchboard helps you finding tools that can process your input. Use one of the three modes to upload your data,
-		  <a data-tip data-for='disclaimer'> but read this.</a></h6>
+		  <h6>The Switchboard helps you find tools that can process your resources. Use one of the three boxes below to upload your data
+		  <a data-tip data-for='disclaimer'> (upload policy).</a></h6>
 		    <ReactTooltip id="disclaimer" type="warning" place="bottom">
- 		      <span>Do not upload data that contains sensitive or private information,
-			or data that is subject to restrictions regarding redistribution.
+ 		      <span>
+			Your data will be shared with the tools via public links. For more details, see the FAQ.
 		      </span>
    		    </ReactTooltip>
 		</div>		

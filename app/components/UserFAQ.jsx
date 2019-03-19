@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: UserFAQ.jsx
-// Time-stamp: <2019-03-19 11:09:39 (zinn)>
+// Time-stamp: <2019-03-19 12:13:02 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -51,7 +51,7 @@ class UserFAQText extends React.Component {
 		a limited time. The resource is shared on the basis of a unique URL that is not
 		publicly listed and hard to guess. This URL is shared with the tool, which may or
 		may not redistribute or store this location. Note that in some cases the URL cannot
-		be passed through the tool over an secure (encrypted) channel. All uploaded
+		be passed through the tool over a secure (encrypted) channel. All uploaded
 		research data is deleted at regular intervals. This procedure is carried out for
 		uploaded files, resources provided by reference (pasted URLs and incoming via other
 		services) as well as text inserted manually into the input box on the Switchboard
