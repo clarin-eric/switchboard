@@ -150,9 +150,6 @@ export default class Resource extends React.Component {
 			  <b>File name:</b> {this.hideName( resource.name )}
 			</span>
 		      </a>		    
-		      <div>
-			<b>File size:</b> {resource.size} bytes
-		      </div>
 		    </td>
 		    
 		    <td className="note">
