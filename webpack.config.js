@@ -125,10 +125,6 @@ const common = {
 		// file storage provider (alt: MPCDF, deprecated )
 		//'FILE_STORAGE'       : JSON.stringify('NEXTCLOUD'),
 
-		// the shell building the bundle must have these values defined
-		'SOFTWARE_STATUS'     : JSON.stringify(process.env.SOFTWARE_STATUS),
-		'SOFTWARE_BUILT'      : JSON.stringify(process.env.SOFTWARE_BUILT),
-
 		// the shell building the bundle must have $NUSER and $NPASS defined
 		'FILE_STORAGE_USER'     : JSON.stringify(process.env.FILE_STORAGE_USER),
 		'FILE_STORAGE_TOKEN'    : JSON.stringify(process.env.FILE_STORAGE_TOKEN),

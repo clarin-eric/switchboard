@@ -9,8 +9,6 @@
 export const inclToolsReqAuth = process.env.INCL_TOOLS_REQ_AUTH;
 export const fileStorage      = "optionNoLongerActive"; // process.env.FILE_STORAGE;
 
-//export const nextcloud_user   = process.env.SOFTWARE_STATUS;
-//export const nextcloud_pass   = process.env.SOFTWARE_BUILT;
 // todo
 export const nextcloud_user   = process.env.FILE_STORAGE_USER;
 export const nextcloud_pass   = process.env.FILE_STORAGE_TOKEN;
