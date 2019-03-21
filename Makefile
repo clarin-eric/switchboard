@@ -1,8 +1,8 @@
 # Adapted from clarin-eric/docker-nginx-base
 # See https://github.com/clarin-eric/docker-nginx-base/blob/master/Makefile
 
-STATUS="-dev"
-#STATUS="-pro"
+#STATUS="-dev"
+STATUS="-pro"
 VERSION="1.4.9${STATUS}"
 NAME="clauszinn/switchboard"
 REPOSITORY="hub.docker.com"
