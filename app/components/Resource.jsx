@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Resource.jsx
-// Time-stamp: <2019-03-18 13:08:02 (zinn)>
+// Time-stamp: <2019-03-21 20:44:01 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -151,7 +151,7 @@ export default class Resource extends React.Component {
 			</span>
 		      </a>		    
 		      <div>
-			<b>File size:</b> {resource.size} bytes
+			<b>File size:</b> {resource.file.size} bytes
 		      </div>
 		    </td>
 		    
