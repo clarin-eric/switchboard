@@ -48,7 +48,7 @@ class AlertURLUploadErrorText extends React.Component {
         <ModalDialog onClose={this.props.onClose} className="systemAlertDialog"  width={400}>
 	    <h2>Resource Upload Error</h2>
 	    <p>
-	  The switchboard was unable to upload your resource to a file storage location (so that the resource becomes accessible for the tools connected to the switchboard). Please try again. If failure persists, please contact the switchboard development team at "switchboard@clarin.eu". 
+	  The switchboard was unable to upload your resource to a file storage location (so that the resource becomes accessible for the tools connected to the switchboard). Likely the resource is too large or its MIME type is not allowed. Please select a different resource with file size smaller than 5 MB. If failure persists, please contact "switchboard@clarin.eu". 
 	    </p>
         </ModalDialog>
     </ModalContainer>;
