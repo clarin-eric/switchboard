@@ -293,8 +293,9 @@ export default class DropArea extends React.Component {
 	// deal with rejected files
 	if (rejectedFiles.length) {
 	    console.log("A file was rejected", rejectedFiles.length, rejectedFiles[0].name)
+	    this.setState( {showAlertURLUploadError: true} );	
 	    _paq.push(["trackEvent", 'fileInputRejected', rejectedFiles[0].name]);
-            // todo: show message that some files were rejected
+        // todo: show more proper message to users that some files were rejected
 	    return;
 	}
 	

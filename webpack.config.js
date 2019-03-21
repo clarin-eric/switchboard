@@ -16,8 +16,8 @@ process.traceDeprecation = true;
 const webpack = require('webpack');
 
 const common = {
-//    mode: 'production',
-    mode: 'development',
+    mode: 'production',
+//    mode: 'development',
     optimization: {
 	minimizer: [
 	    new UglifyJSPlugin({
@@ -116,8 +116,8 @@ const common = {
 
 	new webpack.DefinePlugin({
 	    'process.env': {
-                'NODE_ENV'           : JSON.stringify('development'),
-//                'NODE_ENV'           : JSON.stringify('production'),		
+//                'NODE_ENV'           : JSON.stringify('development'),
+                'NODE_ENV'           : JSON.stringify('production'),		
 
 		// include tools that require authentication
 		'INCL_TOOLS_REQ_AUTH': JSON.stringify('yes'),
@@ -125,16 +125,12 @@ const common = {
 		// file storage provider (alt: MPCDF, deprecated )
 		//'FILE_STORAGE'       : JSON.stringify('NEXTCLOUD'),
 
-		// the shell building the bundle must have these values defined
-		'SOFTWARE_STATUS'     : JSON.stringify(process.env.SOFTWARE_STATUS),
-		'SOFTWARE_BUILT'      : JSON.stringify(process.env.SOFTWARE_BUILT),
-
 		// the shell building the bundle must have $NUSER and $NPASS defined
 		'FILE_STORAGE_USER'     : JSON.stringify(process.env.FILE_STORAGE_USER),
 		'FILE_STORAGE_TOKEN'    : JSON.stringify(process.env.FILE_STORAGE_TOKEN),
 
 		// version as displayed on the main page
-		'VERSION'            : JSON.stringify('v1.4.9 (Mar 19, 2019)'),
+		'VERSION'            : JSON.stringify('v1.4.9 (Mar 21, 2019)'),
 
 		// contact as displayed of the main page
 		'CONTACT'            : JSON.stringify('switchboard@clarin.eu')

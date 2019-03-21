@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: Resource.jsx
-// Time-stamp: <2019-03-21 20:44:01 (zinn)>
+// Time-stamp: <2019-03-21 20:48:02 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -154,7 +154,6 @@ export default class Resource extends React.Component {
 			<b>File size:</b> {resource.file.size} bytes
 		      </div>
 		    </td>
-		    
 		    <td className="note">
     		      <MimetypeMenu defaultValue = { {label: resource.mimetype,
 		  				      value: resource.mimetype
