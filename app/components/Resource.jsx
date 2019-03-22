@@ -151,7 +151,7 @@ export default class Resource extends React.Component {
 			</span>
 		      </a>		    
 		      <div>
-			<b>File size:</b> {resource.file.size} bytes
+			<b>File size:</b> {parseFloat(resource.file.size / (1000 * 1000)).toFixed(3).replace(/\.?0+$/, '')} MB
 		      </div>
 		    </td>
 		    <td className="note">
