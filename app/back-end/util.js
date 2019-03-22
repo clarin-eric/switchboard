@@ -81,6 +81,9 @@ export function fileExtensionChooser (mimetype) {
     case "application/rtf":
 	extension = "rtf";
 	break;
+    case "application/zip":
+    extension = "zip";
+    break;
 	// https://github.com/clarin-eric/LRSwitchboard/issues/63
     default:
 	extension = "mp4";
