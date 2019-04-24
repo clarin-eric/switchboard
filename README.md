@@ -36,8 +36,18 @@ It runs here:
 
 By default, the switchboard front-end communicates with the productive versions of the back-end and the nextcloud container.
 
+
 # Status
 The software is currently being developed and actively maintained. A v1.0.0 release was published on Aug 11, 2017.
+
+# Documentation
+
+For more technical details, see the Switchboard specification in the Publications section. For a
+general overview with the latest published update, see the Computational Linguistics paper in the
+Publications section (last entry).
+
+There is also a <a href="https://github.com/clarin-eric/LRSwitchboard-doc">github repository</a> holding documentation.
+
 
 # Publications
 
