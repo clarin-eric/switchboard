@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: App.jsx
-// Time-stamp: <2019-01-18 10:06:43 (zinn)>
+// Time-stamp: <2019-04-29 11:32:38 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -230,7 +230,13 @@ export default class App extends React.Component {
 		    onResourcesChange={this.handleResourcesChange} caller="FCS"        {...props} /> } />	    
       <Route path="/b2drop/:fileURL"
 	    render={(props) => <DropArea onToolsChange={this.handleToolsChange}
-		    onResourcesChange={this.handleResourcesChange} caller="B2DROP"     {...props} /> } />
+		    onResourcesChange={this.handleResourcesChange} caller="B2DROP"    {...props} /> } />
+      <Route path="/b2share/:fileURL"
+	    render={(props) => <DropArea onToolsChange={this.handleToolsChange}
+		    onResourcesChange={this.handleResourcesChange} caller="B2SHARE"   {...props} /> } />
+      <Route path="/textgrid/:fileURL"
+	    render={(props) => <DropArea onToolsChange={this.handleToolsChange}
+		    onResourcesChange={this.handleResourcesChange} caller="TEXTGRID"   {...props} /> } />				
       <Route path="/d4science/:fileURL"
 	    render={(props) => <DropArea onToolsChange={this.handleToolsChange}
 		    onResourcesChange={this.handleResourcesChange} caller="D4SCIENCE"  {...props} /> } />

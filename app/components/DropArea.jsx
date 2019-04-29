@@ -3,7 +3,7 @@
 // 2016-18 Claus Zinn, University of Tuebingen
 // 
 // File: DropArea.jsx
-// Time-stamp: <2019-03-19 15:51:00 (zinn)>
+// Time-stamp: <2019-04-29 11:31:00 (zinn)>
 // -------------------------------------------
 
 import React from 'react';
@@ -104,8 +104,8 @@ export default class DropArea extends React.Component {
 
 	*/
 	
-	if ( (caller == "VCR")    || (caller == "FCS") || (caller == "VLO") || 
-	     (caller == "B2DROP") || (caller == "D4SCIENCE") ) {
+	if ( (caller == "VCR")      || (caller == "FCS") || (caller == "VLO") || (caller == "TEXTGRID") || 
+	     (caller == "B2SHARE")  ||  (caller == "B2DROP") || (caller == "D4SCIENCE") ) {
 	    // remove prior resources
 	    this.handleResourcesChange( undefined );		    
 
