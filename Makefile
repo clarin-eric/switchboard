@@ -1,18 +1,25 @@
-# Adapted from clarin-eric/docker-nginx-base
-# See https://github.com/clarin-eric/docker-nginx-base/blob/master/Makefile
+WEBUIAPP=src/main/resources/webui
+JSBUNDLE=$(WEBUIAPP)/bundle.js
 
-#STATUS="-dev"
-STATUS="-pro"
-VERSION="1.4.9${STATUS}"
-NAME="clauszinn/switchboard"
-REPOSITORY="hub.docker.com"
-#IMAGE_NAME="${REPOSITORY}/${NAME}:${VERSION}"
-IMAGE_NAME="${NAME}:${VERSION}"
+build-docker-image: build-webui-production
+	(cd backend && mvn -q clean package docker:build)
 
-all: buildImage
+build-webui-production:
+	(cd webui && node_modules/webpack/bin/webpack.js --mode production -p)
 
-buildImage:
-	docker build -t ${IMAGE_NAME} -f docker/Dockerfile . #--no-cache
+run-backend:
+	(cd backend && mvn -q package && JAVA_OPTS="-Xmx4g" target/appassembler/bin/switchboard server config.yaml)
 
-push:
-	docker push ${IMAGE_NAME}
+run-webui-dev-server:
+	(cd webui && node_modules/webpack-dev-server/bin/webpack-dev-server.js --mode development -d --hot --https)
+
+dependencies:
+	(cd webui && npm install)
+
+clean:
+	(cd backend && mvn -q clean)
+	rm webui/package-lock.json
+	rm -rf webui/node_modules
+	rm -f $(WEBUIAPP)/bundle.js*
+
+.PHONY: build-docker-image build-webui-production run-backend run-webui-dev-server dependencies clean

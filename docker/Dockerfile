@@ -19,7 +19,7 @@ RUN \
     apk add --no-cache --virtual .run-deps \
     ca-certificates openssl pcre zlib
 
-	
+
 RUN \
     # Install build and runtime packages
     apk add --no-cache --virtual .build-deps \
@@ -97,7 +97,7 @@ RUN apk update && \
     apk upgrade && \
     apk add openjdk8-jre-base && \
     apk add curl && \
-    apk add gnupg && \        
+    apk add gnupg && \
     rm -rf /var/cache/apk/* \
     && echo "installed java"
 
