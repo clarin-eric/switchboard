@@ -16,8 +16,8 @@ export default class AlertMissingInfo extends React.Component {
   }
 
     constructor(props) {
-	super(props);
-	this.propagateFun = this.props.onCloseProp;
+        super(props);
+        this.propagateFun = this.props.onCloseProp;
     }
     
   state = {
@@ -46,11 +46,11 @@ class AlertMissingInfoText extends React.Component {
   render() {
     return <ModalContainer onClose={this.props.onClose}>
         <ModalDialog onClose={this.props.onClose} className="systemAlertDialog"  width={400}>
-	    <h2>Missing Information</h2>
-	    <p>
-	  The switchboard was unable to identify the language and/or mimetype of the given resource.
-	  Please specify the information manually.
-	    </p>
+            <h2>Missing Information</h2>
+            <p>
+          The switchboard was unable to identify the language and/or mimetype of the given resource.
+          Please specify the information manually.
+            </p>
         </ModalDialog>
     </ModalContainer>;
   }

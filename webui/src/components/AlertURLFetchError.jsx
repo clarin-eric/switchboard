@@ -16,8 +16,8 @@ export default class AlertURLFetchError extends React.Component {
   }
 
   constructor(props) {
-	super(props);
-	this.propagateFun = this.props.onCloseProp;
+        super(props);
+        this.propagateFun = this.props.onCloseProp;
     }
     
   state = {
@@ -46,10 +46,10 @@ class AlertURLFetchErrorText extends React.Component {
   render() {
     return <ModalContainer onClose={this.props.onClose}>
         <ModalDialog onClose={this.props.onClose} className="systemAlertDialog"  width={400}>
-	    <h2>Resource Retrieval Error</h2>
-	    <p>
-	  The switchboard was unable to fetch the URL (404 or similar). Please attempt to fetch the resource yourself by pasting its link into a new browser tab. If successul, save the file to your computer, and then upload the resource via drag & drop into the switchboard's left-most drop area.
-	    </p>
+            <h2>Resource Retrieval Error</h2>
+            <p>
+          The switchboard was unable to fetch the URL (404 or similar). Please attempt to fetch the resource yourself by pasting its link into a new browser tab. If successul, save the file to your computer, and then upload the resource via drag & drop into the switchboard's left-most drop area.
+            </p>
         </ModalDialog>
     </ModalContainer>;
   }

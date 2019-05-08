@@ -15,10 +15,11 @@ if [ ! -z "${EXISTING_CONTAINER}" ]; then
 fi
 
 # Spin the image so we can use "docker cp"
-docker run --name alpinelrs-build clarin/switchboard
+echo "!!!! TODO! this script is incomplete!"
+# docker run --name alpinelrs-build clarin/switchboard
 
-docker cp alpinelrs-build:/tmp/lrs/build build/CLRSwitchboard/http
-cp -r app/python build/CLRSwitchboard/uwsgi
+# docker cp alpinelrs-build:/tmp/lrs/build build/CLRSwitchboard/http
+# cp -r app/python build/CLRSwitchboard/uwsgi
 
-cd build
-tar cvf CLRSwitchboard.tar.gz CLRSwitchboard
+# cd build
+# tar cvf CLRSwitchboard.tar.gz CLRSwitchboard

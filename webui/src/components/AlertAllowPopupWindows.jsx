@@ -16,8 +16,8 @@ export default class AlertAllowPopupWindows extends React.Component {
   }
 
     constructor(props) {
-	super(props);
-	this.propagateFun = this.props.onCloseProp;
+        super(props);
+        this.propagateFun = this.props.onCloseProp;
     }
     
   state = {
@@ -46,10 +46,10 @@ class AlertAllowPopupWindowsText extends React.Component {
   render() {
     return <ModalContainer onClose={this.props.onClose}>
         <ModalDialog onClose={this.props.onClose} className="systemAlertDialog"  width={400}>
-	    <h2>Unable to Open Tool in New Window</h2>
-	    <p>
-	  Please configure your browser to allow pop-up windows from this site. 
-	    </p>
+            <h2>Unable to Open Tool in New Window</h2>
+            <p>
+          Please configure your browser to allow pop-up windows from this site. 
+            </p>
         </ModalDialog>
     </ModalContainer>;
   }

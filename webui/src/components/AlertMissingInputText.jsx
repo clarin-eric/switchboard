@@ -16,8 +16,8 @@ export default class AlertMissingInfoText extends React.Component {
   }
 
     constructor(props) {
-	super(props);
-	this.propagateFun = this.props.onCloseProp;
+        super(props);
+        this.propagateFun = this.props.onCloseProp;
     }
     
   state = {
@@ -46,10 +46,10 @@ class AlertMissingInfoTextText extends React.Component {
   render() {
     return <ModalContainer onClose={this.props.onClose}>
         <ModalDialog onClose={this.props.onClose} className="systemAlertDialog"  width={400}>
-	    <h2>No Textual Input</h2>
-	    <p>
-	  Please enter some input text, before pressing "Submit Text".
-	    </p>
+            <h2>No Textual Input</h2>
+            <p>
+          Please enter some input text, before pressing "Submit Text".
+            </p>
         </ModalDialog>
     </ModalContainer>;
   }

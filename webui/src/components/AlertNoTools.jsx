@@ -16,8 +16,8 @@ export default class AlertNoTools extends React.Component {
   }
 
     constructor(props) {
-	super(props);
-	this.propagateFun = this.props.onCloseProp;
+        super(props);
+        this.propagateFun = this.props.onCloseProp;
     }
     
   state = {
@@ -46,10 +46,10 @@ class AlertNoToolsText extends React.Component {
   render() {
     return <ModalContainer onClose={this.props.onClose}>
         <ModalDialog onClose={this.props.onClose} className="systemAlertDialog"  width={400}>
-	    <h2>No Applicable Tools</h2>
-	  <p>
-	  The Switchboard has currently no applicable tool than can process the given resource (given its mediatype and language). Please try again with another resource.
-	    </p>
+            <h2>No Applicable Tools</h2>
+          <p>
+          The Switchboard has currently no applicable tool than can process the given resource (given its mediatype and language). Please try again with another resource.
+            </p>
         </ModalDialog>
     </ModalContainer>;
   }

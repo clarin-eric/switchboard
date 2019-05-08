@@ -16,8 +16,8 @@ export default class AlertURLIncorrectError extends React.Component {
   }
 
   constructor(props) {
-	super(props);
-	this.propagateFun = this.props.onCloseProp;
+        super(props);
+        this.propagateFun = this.props.onCloseProp;
     }
     
   state = {
@@ -46,10 +46,10 @@ class AlertURLIncorrectErrorText extends React.Component {
   render() {
     return <ModalContainer onClose={this.props.onClose}>
         <ModalDialog onClose={this.props.onClose} className="systemAlertDialog"  width={400}>
-	    <h2>Incorrect URL</h2>
-	    <p>
-	      It seems that you have entered an incorrect or partial URL. Please correct the URL and then try again.
-	    </p>
+            <h2>Incorrect URL</h2>
+            <p>
+              It seems that you have entered an incorrect or partial URL. Please correct the URL and then try again.
+            </p>
         </ModalDialog>
     </ModalContainer>;
   }

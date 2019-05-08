@@ -2,15 +2,14 @@ FROM registry.gitlab.com/clarin-eric/docker-alpine-clrs-build_env:1.0.3
 
 MAINTAINER andre@clarin.eu
 
-ENV FILE_STORAGE_USER=dummyu
-ENV FILE_STORAGE_TOKEN=dummyp
+COPY ./Makefile                 /tmp/lrs/
 
-COPY ./build.sh /tmp/lrs/build.sh
-COPY /package.json /tmp/lrs/package.json
-COPY /package-lock.json /tmp/lrs/package-lock.json
-COPY /webpack.config.js /tmp/lrs/webpack.config.js
-COPY /.babelrc /tmp/lrs/.babelrc
-COPY /app /tmp/lrs/app
+COPY ./webui/.babelrc           /tmp/lrs/webui/
+COPY ./webui/copy_files.sh      /tmp/lrs/webui/
+COPY ./webui/package.json       /tmp/lrs/webui/
+COPY ./webui/package-lock.json  /tmp/lrs/webui/
+COPY ./webui/webpack.config.js  /tmp/lrs/webui/
+COPY ./webui/src                /tmp/lrs/webui/
 
 WORKDIR /tmp/lrs/
-RUN sh /tmp/lrs/build.sh ci
+RUN make dependencies && make build-webui-production

@@ -65,121 +65,105 @@ require('./../images/dropResources.png');
 export default class App extends React.Component {
 
     constructor(props) {
-	super(props);
+        super(props);
 
-	this.refresh = this.refresh.bind(this);
-	this.showAllTools = this.showAllTools.bind(this);
+        this.refresh = this.refresh.bind(this);
+        this.showAllTools = this.showAllTools.bind(this);
         this.clearDropzone = this.clearDropzone.bind(this);
 
-	this.handleToolsChange     = this.handleToolsChange.bind(this);
-	this.handleResourcesChange = this.handleResourcesChange.bind(this);
+        this.handleToolsChange     = this.handleToolsChange.bind(this);
+        this.handleResourcesChange = this.handleResourcesChange.bind(this);
 
-	this.state = {
-	    tools     : [],
-	    resource  : undefined
-	};
+        this.state = {
+            tools     : [],
+            resource  : undefined
+        };
 
-	this.piwik = PiwikReactRouter({
-	    url	: 'https://stats.clarin.eu',
-	    siteId	: 21,
-	    enableLinkTracking: true
+        this.piwik = PiwikReactRouter({
+            url : 'https://stats.clarin.eu',
+            siteId      : 21,
+            enableLinkTracking: true
         });
 
     }
 
     handleToolsChange( tools ) {
-	this.setState( { tools : tools } );
+        this.setState( { tools : tools } );
     }
 
     handleResourcesChange( resource ) {
-	console.log('App/handleResourceChange', resource);
-	this.setState( { resource : resource } );
+        console.log('App/handleResourceChange', resource);
+        this.setState( { resource : resource } );
     }
 
     refresh() {
-	this.forceUpdate();
+        this.forceUpdate();
     }
 
     componentDidMount() {
 
-	this.piwik.push(["setDomains",
-			 ["*.weblicht.sfs.uni-tuebingen.de/clrs",
-			  "*.weblicht.sfs.uni-tuebingen.de/clrs-dev",
-			  "switchboard.clarin.eu"]]);
+        this.piwik.push(["setDomains",
+                         ["*.weblicht.sfs.uni-tuebingen.de/clrs",
+                          "*.weblicht.sfs.uni-tuebingen.de/clrs-dev",
+                          "switchboard.clarin.eu"]]);
 
-	this.piwik.push(['trackPageView']);
+        this.piwik.push(['trackPageView']);
 
-	// CZ: check whether following is nececessary for cache busting (localStorage)
-	localStorage.removeItem("app");
+        // CZ: check whether following is nececessary for cache busting (localStorage)
+        localStorage.removeItem("app");
 
-	const p = window.performance;
-	if (p) {
-	    if (p.navigation.type == 1) {
-		console.info( "This page is reloaded, clearing DropZone", p.navigation.type);
-		this.clearDropzone();
-	    } else {
-		console.info( "This page is not reloaded", p.navigation.type);
-	    }
-	}
+        const p = window.performance;
+        if (p) {
+            if (p.navigation.type == 1) {
+                console.info( "This page is reloaded, clearing DropZone", p.navigation.type);
+                this.clearDropzone();
+            } else {
+                console.info( "This page is not reloaded", p.navigation.type);
+            }
+        }
 
-	//	this.refresh();
+        //      this.refresh();
     }
 
     showAllTools() {
 
-	// clear history
-	history.pushState({}, "", "#");
+        // clear history
+        history.pushState({}, "", "#");
 
         // clear resource (so that tools don't show URL)
         this.clearDropzone();
-	const matcher = new MatcherRemote( true );
-	const toolsPromise = matcher.getAllTools();
-	const that = this;
+        const matcher = new MatcherRemote( true );
+        const toolsPromise = matcher.getAllTools();
+        const that = this;
 
-	_paq.push(["trackEvent", 'showAllTools', null, null]);
-	toolsPromise.then(
-	    function(resolve) {
-		that.setState( {tools: resolve} );
-	    },
-	    function(reject) {
-		console.log('App.jsx/showAllTools failed', reject);
-	    });
+        _paq.push(["trackEvent", 'showAllTools', null, null]);
+        toolsPromise.then(
+            function(resolve) {
+                that.setState( {tools: resolve} );
+            },
+            function(reject) {
+                console.log('App.jsx/showAllTools failed', reject);
+            });
     }
 
     clearDropzone() {
-	localStorage.removeItem("app"); // check whether necessary for cache busting
+        localStorage.removeItem("app"); // check whether necessary for cache busting
 
-	this.setState( { tools     : [],
-			 resource  : undefined} );
+        this.setState( { tools     : [],
+                         resource  : undefined} );
     }
 
     render() {
 
-	window.APP_CONTEXT_PATH = (function() {
 
-            const links = Array.prototype.slice.call(
-                document.getElementsByTagName('link'), 0);
-            const favicon = links.find(e => e.rel == "shortcut icon");
-            if (!favicon) return "";
-            let href = favicon.href;
-            if (href.startsWith(window.origin)) {
-                href = href.substr(window.origin.length);
-            }
-            const components = href.split("/");
-            if (components.length >= 3) {
-                return "/"+components[1];
-            }
-            return "";
-         })();
+        var style = {
+            display: 'none'
+        };
 
-	var style = {
-	    display: 'none'
-	};
+        let resource = this.state.resource;
+        console.log('App/render', window.APP_CONTEXT_PATH, this.state, resource);
 
-	let resource = this.state.resource;
-	console.log('App/render', window.APP_CONTEXT_PATH, this.state, resource);
-
-	return (
+        return (
 <div>
   <header id="header" role="banner">
     <link rel="shortcut icon" type="image/x-icon" href="./../images/favicon-cog.ico" />
@@ -194,17 +178,17 @@ export default class App extends React.Component {
         <div className="collapse navbar-collapse" role="navigation" id="id1">
           <ul className="nav navbar-nav" id="idcf">
             <li>
-	      <UserHelp className="header-link" />
-	    </li>
-	    <li>
-	      <button id="showAllToolsButton" className="allTools" onClick={this.showAllTools}>Tool Inventory</button>
-	    </li>
+              <UserHelp className="header-link" />
+            </li>
+            <li>
+              <button id="showAllToolsButton" className="allTools" onClick={this.showAllTools}>Tool Inventory</button>
+            </li>
           </ul>
-	  <div className="pull-right">
+          <div className="pull-right">
             <a href="http://www.clarin.eu/">
-	      <img src="clarin-logo-wide.png" width="119px" height="46px" />
-	    </a>
-	  </div>
+              <img src="clarin-logo-wide.png" width="119px" height="46px" />
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -214,32 +198,32 @@ export default class App extends React.Component {
   <Router history={history}>
     <Switch>
       <Route exact path="/"
-	    render={(props) => <DropArea onToolsChange={this.handleToolsChange}
-		    onResourcesChange={this.handleResourcesChange} caller="standalone" {...props} /> } />
+            render={(props) => <DropArea onToolsChange={this.handleToolsChange}
+                    onResourcesChange={this.handleResourcesChange} caller="standalone" {...props} /> } />
       <Route exact path="/vlo/:fileURL/:fileMimetype/:fileLanguage"
-	    render={(props) => <DropArea onToolsChange={this.handleToolsChange}
-		    onResourcesChange={this.handleResourcesChange} caller="VLO"        {...props} /> } />
+            render={(props) => <DropArea onToolsChange={this.handleToolsChange}
+                    onResourcesChange={this.handleResourcesChange} caller="VLO"        {...props} /> } />
       <Route exact path="/vlo/:fileURL/:fileMimetype"
-	    render={(props) => <DropArea onToolsChange={this.handleToolsChange}
-		    onResourcesChange={this.handleResourcesChange} caller="VLO"        {...props} /> } />
+            render={(props) => <DropArea onToolsChange={this.handleToolsChange}
+                    onResourcesChange={this.handleResourcesChange} caller="VLO"        {...props} /> } />
       <Route path="/vcr/:fileURL"
-	    render={(props) => <DropArea onToolsChange={this.handleToolsChange}
-		    onResourcesChange={this.handleResourcesChange} caller="VCR"        {...props} /> } />
+            render={(props) => <DropArea onToolsChange={this.handleToolsChange}
+                    onResourcesChange={this.handleResourcesChange} caller="VCR"        {...props} /> } />
       <Route path="/fcs/:fileURL"
-   	    render={(props) => <DropArea onToolsChange={this.handleToolsChange}
-		    onResourcesChange={this.handleResourcesChange} caller="FCS"        {...props} /> } />
+            render={(props) => <DropArea onToolsChange={this.handleToolsChange}
+                    onResourcesChange={this.handleResourcesChange} caller="FCS"        {...props} /> } />
       <Route path="/b2drop/:fileURL"
-	    render={(props) => <DropArea onToolsChange={this.handleToolsChange}
-		    onResourcesChange={this.handleResourcesChange} caller="B2DROP"    {...props} /> } />
+            render={(props) => <DropArea onToolsChange={this.handleToolsChange}
+                    onResourcesChange={this.handleResourcesChange} caller="B2DROP"    {...props} /> } />
       <Route path="/b2share/:fileURL"
-	    render={(props) => <DropArea onToolsChange={this.handleToolsChange}
-		    onResourcesChange={this.handleResourcesChange} caller="B2SHARE"   {...props} /> } />
+            render={(props) => <DropArea onToolsChange={this.handleToolsChange}
+                    onResourcesChange={this.handleResourcesChange} caller="B2SHARE"   {...props} /> } />
       <Route path="/textgrid/:fileURL"
-	    render={(props) => <DropArea onToolsChange={this.handleToolsChange}
-		    onResourcesChange={this.handleResourcesChange} caller="TEXTGRID"   {...props} /> } />
+            render={(props) => <DropArea onToolsChange={this.handleToolsChange}
+                    onResourcesChange={this.handleResourcesChange} caller="TEXTGRID"   {...props} /> } />
       <Route path="/d4science/:fileURL"
-	    render={(props) => <DropArea onToolsChange={this.handleToolsChange}
-		    onResourcesChange={this.handleResourcesChange} caller="D4SCIENCE"  {...props} /> } />
+            render={(props) => <DropArea onToolsChange={this.handleToolsChange}
+                    onResourcesChange={this.handleResourcesChange} caller="D4SCIENCE"  {...props} /> } />
       <Route path="*" component={AlertURLFetchError} />
     </Switch>
   </Router>
@@ -249,10 +233,10 @@ export default class App extends React.Component {
   <p />
 
   <Resource className         = "resource"
-	    onToolsChange     = { this.handleToolsChange    }
+            onToolsChange     = { this.handleToolsChange    }
             onResourcesChange = { this.handleResourcesChange }
-	    resource          = { this.state.resource || undefined }
-	/>
+            resource          = { this.state.resource || undefined }
+        />
 
   <p />
   <hr />
@@ -260,7 +244,7 @@ export default class App extends React.Component {
 
   <TaskOrientedView resource = { this.state.resource || undefined }
                       tools  = { this.state.tools    || [] }
-		/>
+                />
   <p />
   <hr />
   <p />
@@ -270,28 +254,28 @@ export default class App extends React.Component {
       <div className="row">
         <div className="col-sm-6 col-sm-push-3 col-xs-12">
           <div className="text-center">
-	    <div>
-  	      <DevHelp className="header-link" />
-	    </div>
+            <div>
+              <DevHelp className="header-link" />
+            </div>
             <span className="footer-fineprint">
               Service provided by <a href="https://www.clarin.eu">CLARIN</a>
             </span>
           </div>
         </div>
         <div className="col-sm-3 col-sm-pull-6 col-xs-12">
-    	  <AboutHelp className="header-link" />
+          <AboutHelp className="header-link" />
           <div className="version-info text-center-xs">
             {lrsVersion}
           </div>
         </div>
         <div className="col-sm-3 text-right">
-	  <div className="text-center">
-	    <a href={ emailContactCommand }>Contact & Support</a>
-	    <div>
-  	      <UserFAQ className="header-link" />
-	    </div>
-	  </div>
-	  </div>
+          <div className="text-center">
+            <a href={ emailContactCommand }>Contact & Support</a>
+            <div>
+              <UserFAQ className="header-link" />
+            </div>
+          </div>
+          </div>
       </div>
     </div>
   </footer>

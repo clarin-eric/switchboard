@@ -11,7 +11,7 @@ run-backend:
 	(cd backend && mvn -q package && JAVA_OPTS="-Xmx4g" target/appassembler/bin/switchboard server config.yaml)
 
 run-webui-dev-server:
-	(cd webui && node_modules/webpack-dev-server/bin/webpack-dev-server.js --mode development -d --hot --https)
+	(cd webui && node_modules/webpack-dev-server/bin/webpack-dev-server.js --mode development -d --hot)
 
 dependencies:
 	(cd webui && npm install)
