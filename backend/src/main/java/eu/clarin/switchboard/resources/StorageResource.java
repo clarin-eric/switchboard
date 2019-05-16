@@ -2,11 +2,14 @@ package eu.clarin.switchboard.resources;
 
 import com.google.common.collect.ImmutableSet;
 import eu.clarin.switchboard.core.Converter;
+import eu.clarin.switchboard.core.ConverterException;
 import eu.clarin.switchboard.core.Profiler;
 import eu.clarin.switchboard.core.Storage;
+import org.apache.tika.exception.TikaException;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.slf4j.LoggerFactory;
+import org.xml.sax.SAXException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
@@ -45,10 +48,10 @@ public class StorageResource {
     Profiler profiler;
     Converter converter;
 
-    public StorageResource() throws IOException {
+    public StorageResource(String tikaConfigPath) throws IOException, TikaException, SAXException {
         storage = new Storage();
         profiler = new Profiler();
-        converter = new Converter();
+        converter = new Converter(tikaConfigPath);
     }
 
     @PUT
@@ -68,7 +71,6 @@ public class StorageResource {
         String language = null;
         if (convertableMediatypes.contains(mediatype)) {
             String text = converter.parseToPlainText(file);
-            LOGGER.info("converted text: " + text);
             language = profiler.detectLanguage(text);
         } else if (nonTextMediatypes.contains(mediatype)) {
             // no language for this one

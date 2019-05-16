@@ -9,7 +9,9 @@ import io.dropwizard.configuration.SubstitutingSourceProvider;
 import io.dropwizard.server.DefaultServerFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import org.apache.tika.exception.TikaException;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
+import org.xml.sax.SAXException;
 
 import java.io.IOException;
 
@@ -29,7 +31,7 @@ public class SwitchboardApp extends Application<Config> {
     }
 
     @Override
-    public void run(Config configuration, Environment environment) throws IOException {
+    public void run(Config configuration, Environment environment) throws IOException, TikaException, SAXException {
         String appContextPath = ((DefaultServerFactory) configuration.getServerFactory()).getApplicationContextPath();
         assets.setAppContextPathSubstitutions("index.html", appContextPath);
 
@@ -38,7 +40,7 @@ public class SwitchboardApp extends Application<Config> {
         environment.getApplicationContext().setErrorHandler(new HttpErrorHandler());
         environment.jersey().register(MultiPartFeature.class);
         environment.jersey().register(miscResource);
-        environment.jersey().register(new StorageResource());
+        environment.jersey().register(new StorageResource(configuration.getTikaConfPath()));
         environment.jersey().setUrlPattern("/api/*");
 
         environment.healthChecks().register("switchboard", new AppHealthCheck());
