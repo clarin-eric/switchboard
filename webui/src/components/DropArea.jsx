@@ -75,6 +75,9 @@ export default class DropArea extends React.Component {
 
         this.processParameters      = this.processParameters.bind(this);
         this.clearDropzone          = this.clearDropzone.bind(this);
+
+        this.processStorageResponse = this.processStorageResponse.bind(this);
+        this.processStorageResponseError = this.processStorageResponseError.bind(this);
     }
 
     componentDidMount() {
@@ -121,7 +124,7 @@ export default class DropArea extends React.Component {
             this.setState({showAlertMissingInputText: true} );
         } else {
             var blob = new Blob([textContent], {type: "text/plain"});
-            blob.name = "text.txt";
+            blob.name = "Submitted Text.txt";
             this.uploadAndProcessFile(blob, 'blob');
 
             // clear task-oriented view
@@ -187,66 +190,78 @@ export default class DropArea extends React.Component {
      */
     downloadAndProcessSharedLink( link ) {
         this.setState( { isLoaded: false });
-        let downloader = new Downloader( link );
-        let promiseDownload = downloader.downloadBlob();
-        promiseDownload.then(
-            (resolve) => {
-                let file = new File([resolve.body], resolve.req.url, {type: resolve.type});
-                this.uploadAndProcessFile(file, 'file');
-                this.setState( { isLoaded: true });
-            },
-            (reject) => {
-                console.log('DropArea.jsx/downloadAndProcessSharedLink failed', reject);
-                this.setState({ showAlertURLFetchError: true, isLoaded: true });
-            });
+
+        const res = {
+            type      : 'link',
+            language  : processLanguage(),
+        };
+        this.handleResourcesChange(res);
+        Request
+            .post(window.APP_CONTEXT_PATH + "/api/storage/")
+            .field({link})
+            .accept('json')
+            .catch(err => {
+                console.error('Error in uploading resource to storage:', err);
+            })
+            .then(this.processStorageResponse.bind(this, res), this.processStorageResponseError);
     }
 
     /// type is 'file' or 'blob'
     uploadAndProcessFile(currentFile, type) {
         this.setState( { isLoaded: false });
 
-        const id = uuidv4();
         const res = {
-            id        : id,
             type      : type,
             file      : currentFile,
-            name      : currentFile.name,
+            filename  : currentFile.name,
             mediatype : currentFile.type,
-            language  : { language  : "Please identify language", threeLetterCode: "any"},
-            storage   : window.APP_CONTEXT_PATH + "/api/storage/" + id,
+            language  : processLanguage(),
         };
+        this.handleResourcesChange(res);
         Request
-            .put(res.storage)
+            .post(window.APP_CONTEXT_PATH + "/api/storage/")
             .attach('file', res.file, res.name)
             .accept('json')
             .catch(err => {
                 console.error('Error in uploading resource to storage:', err);
             })
-            .then((response) => {
-                console.log('DropArea uploadAndProcessFile resource: ', res);
-                console.log('DropArea uploadAndProcessFile response: ', response);
-                res.mimetype = response.body.mediatype;
-                res.language = processLanguage(response.body.language);
-                this.handleResourcesChange(res);
-                if ( (res.mimetype == "application/zip") ||
-                     (res.mimetype == "application/x-gzip") ) {
-                    // todo: acknowledge that a zip file has been received, but that a manual identification
-                    //        of its parts wrt. language should be made by the user.
-                    this.setState({isLoaded: true, showAlertMissingInfo: true});
-                } else if ( (res.mimetype == "audio/vnd.wave") ||
-                            (res.mimetype == "audio/x-wav")    ||
-                            (res.mimetype == "audio/wav")      ||
-                            (res.mimetype == "audio/mp3")      ||
-                            (res.mimetype == "audio/mp4")      ||
-                            (res.mimetype == "audio/x-mpeg")) {
-                    this.setState({showAlertMissingInfo: true});
-                } else {
-                    this.setState({isLoaded: true});
-                }
-            }, err => {
-                console.log('DropArea.jsx/profiling failed', err);
-                this.setState({showAlertURLUploadError: true, isLoaded: true});
-            });
+            .then(this.processStorageResponse.bind(this, res), this.processStorageResponseError);
+    }
+
+    processStorageResponse(res, response) {
+        console.log('DropArea uploadAndProcessFile resource: ', res);
+        console.log('DropArea uploadAndProcessFile response: ', response);
+
+        // assign id, url, mediatype, length, language
+        Object.assign(res, response.body);
+        res.language = processLanguage(response.body.language);
+
+        // todo: remove these entries from the rest of js code
+        res.name = res.filename;
+        res.mimetype = res.mediatype;
+        res.remoteFilename = res.filename;
+
+        this.handleResourcesChange(res);
+        if ( (res.mimetype == "application/zip") ||
+             (res.mimetype == "application/x-gzip") ) {
+            // todo: acknowledge that a zip file has been received, but that a manual identification
+            //        of its parts wrt. language should be made by the user.
+            this.setState({isLoaded: true, showAlertMissingInfo: true});
+        } else if ( (res.mimetype == "audio/vnd.wave") ||
+                    (res.mimetype == "audio/x-wav")    ||
+                    (res.mimetype == "audio/wav")      ||
+                    (res.mimetype == "audio/mp3")      ||
+                    (res.mimetype == "audio/mp4")      ||
+                    (res.mimetype == "audio/x-mpeg")) {
+            this.setState({showAlertMissingInfo: true});
+        } else {
+            this.setState({isLoaded: true});
+        }
+    }
+
+    processStorageResponseError(error) {
+        console.log('DropArea.jsx/profiling failed', error);
+        this.setState({showAlertURLUploadError: true, isLoaded: true});
     }
 
     getPermissableMimetypes() {

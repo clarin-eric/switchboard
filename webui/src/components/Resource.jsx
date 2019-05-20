@@ -1,7 +1,7 @@
 // -------------------------------------------
 // The CLARIN Language Resource Switchboard
 // 2016-18 Claus Zinn, University of Tuebingen
-// 
+//
 // File: Resource.jsx
 // Time-stamp: <2019-03-21 20:48:02 (zinn)>
 // -------------------------------------------
@@ -23,9 +23,8 @@ export default class Resource extends React.Component {
         this.resource = props.resource;
 
         this.handleResourcesChange = props.onResourcesChange;
-        this.handleToolsChange     = props.onToolsChange;       
-        
-        this.hideName      = this.hideName.bind(this); 
+        this.handleToolsChange     = props.onToolsChange;
+
         this.showTools     = this.showTools.bind(this);
         this.openResource  = this.openResource.bind(this);
         this.setLanguage   = this.setLanguage.bind(this);
@@ -41,27 +40,27 @@ export default class Resource extends React.Component {
     setLanguage( language ) {
         console.log('Resource/setLanguage', this.resource, language, _paq);
 
-        _paq.push(["trackEvent", 'setLanguage', language.label]);               
+        _paq.push(["trackEvent", 'setLanguage', language.label]);
         this.resource.language = { language : language.label,
                                    threeLetterCode: language.value };
-        this.handleResourcesChange(this.resource);      
+        this.handleResourcesChange(this.resource);
     }
 
     setMimetype( mimetype ) {
-        console.log('Resource/setMimetype', this.resource, mimetype, _paq);     
+        console.log('Resource/setMimetype', this.resource, mimetype, _paq);
 
-        _paq.push(["trackEvent", 'setMimetype', this.resource.mimetype]);           
+        _paq.push(["trackEvent", 'setMimetype', this.resource.mimetype]);
         this.resource.mimetype = mimetype.value;
-        this.handleResourcesChange(this.resource);              
+        this.handleResourcesChange(this.resource);
     }
 
     showTools() {
 
-        _paq.push(["trackEvent", 'showTools', this.resource.language.label, this.resource.mimetype]);       
+        _paq.push(["trackEvent", 'showTools', this.resource.language.label, this.resource.mimetype]);
         console.log('Resource/showTools', this.resource);
 
         if ( (this.resource.language == null) || (this.resource.mimetype == null)) {
-            this.setState({showAlertMissingInfo: true} );                           
+            this.setState({showAlertMissingInfo: true} );
             return;
         }
 
@@ -72,38 +71,26 @@ export default class Resource extends React.Component {
             function(resolve) {
                 console.log('Resource.jsx/showTools succeeded', resolve);
                 if (resolve.length == 0) {
-                    that.setState({showAlertNoTools: true} );                                       
+                    that.setState({showAlertNoTools: true} );
                 } else {
                     that.handleToolsChange( resolve );
                 }
             },
             function(reject) {
                 console.log('Resource.jsx/showTools failed', reject);
-            });     
+            });
     }
 
     openResource() {
         console.log('Resource/openResource', this.resource);
-        var win = window.open(this.resource.remoteFilename, '_blank');
-        win.focus();    
+        var win = window.open(this.resource.url, '_blank');
+        win.focus();
     }
 
-    hideName( fileName ) {
-        /* omit old URL prefixes
-           invoking the switchboard from https://weblicht.sfs.uni-tuebingen.de/clrs-dev/#/ or
-            https://weblicht.sfs.uni-tuebingen.de/clrs/#/
-        */
-        
-        var fileNameNoPrefix = fileName.replace('/clrs-dev', '');
-        fileNameNoPrefix = fileNameNoPrefix.replace('/clrs', '');
-        fileNameNoPrefix = fileNameNoPrefix.replace('/download?input=', '');
-        return fileNameNoPrefix.substring(0,40);
-    }
-    
     render() {
         const {resource, ...props} = this.props;
         this.resource = resource;
-        
+
         const thStyle = {textAlign:'center'};
         const colStyle = {width:'300px'};
         const tableStyle = {
@@ -147,27 +134,30 @@ export default class Resource extends React.Component {
                     <td className="note">
                       <a className="resource-name" href='#' onClick={this.openResource} >
                         <span>
-                          <b>File name:</b> {this.hideName( resource.name )}
+                          <b>File name:</b> {resource.filename}
                         </span>
-                      </a>                  
-                      <div>
-                        <b>File size:</b> {parseFloat(resource.file.size / (1000 * 1000)).toFixed(3).replace(/\.?0+$/, '')} MB
-                      </div>
+                      </a>
+                      {resource.length ?
+                        <div>
+                          <b>File size:</b> {parseFloat(resource.length / (1000 * 1000)).toFixed(3).replace(/\.?0+$/, '')} MB
+                        </div>
+                      : false
+                      }
                     </td>
                     <td className="note">
                       <MimetypeMenu defaultValue = { {label: resource.mimetype,
                                                       value: resource.mimetype
                                                      }
                                                    }
-                onMimetypeSelection={this.setMimetype} />       
+                onMimetypeSelection={this.setMimetype} />
                     </td>
                     <td className="note">
                       <LanguageMenu defaultValue = { { label: resource.language.language,
                                                        value: resource.language.threeLetterCode
                                                      }
                                                    }
-                onLanguageSelection={this.setLanguage} />       
-                    </td>                 
+                onLanguageSelection={this.setLanguage} />
+                    </td>
                   </tr>
                   <tr>
                     <td></td>
@@ -181,11 +171,11 @@ export default class Resource extends React.Component {
                 </tbody>
               </table>
               {this.state.showAlertMissingInfo ?
-                 <AlertMissingInfo onCloseProp={ () => this.setState( {showAlertMissingInfo: false} ) } /> 
+                 <AlertMissingInfo onCloseProp={ () => this.setState( {showAlertMissingInfo: false} ) } />
                : null }
               {this.state.showAlertNoTools ?
-                 <AlertNoTools onCloseProp={ () => this.setState( {showAlertNoTools: false} ) } /> 
-                 : null }                               
+                 <AlertNoTools onCloseProp={ () => this.setState( {showAlertNoTools: false} ) } />
+                 : null }
             </div>
             );
         }

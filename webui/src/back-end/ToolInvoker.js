@@ -22,10 +22,10 @@ export function gatherInvocationParameters( toolDescription, resourceDescription
     }
 
     // need to encode the remote file name in case it contains special characters
-    var remoteFilename   =  encodeURIComponent(resourceDescription.storage);
-    var language         =  resourceDescription.language.threeLetterCode;
-    var mimetype         =  resourceDescription.mimetype;
-    var langEncoding     =  toolDescription.langEncoding;
+    var remoteUrl    =  encodeURIComponent(resourceDescription.url);
+    var language     =  resourceDescription.language.threeLetterCode;
+    var mimetype     =  resourceDescription.mimetype;
+    var langEncoding =  toolDescription.langEncoding;
 
     // Some tools in the registry require an alternative naming of mediatypes, see e.g.,
     // the CLARIN-DK tools. The registry slot for 'type' is a function that is being evaluated here.
@@ -53,7 +53,7 @@ export function gatherInvocationParameters( toolDescription, resourceDescription
                     if (mapping.hasOwnProperty(parameter)) {
                         switch (parameter) {
                         case "input":
-                            parameterStringURL = parameterStringURL.concat( mapping[parameter]).concat("=").concat( remoteFilename );
+                            parameterStringURL = parameterStringURL.concat( mapping[parameter]).concat("=").concat( remoteUrl );
                             break;
                         case "lang":
                             parameterStringURL = parameterStringURL.concat( mapping[parameter]).concat("=").concat( language );
@@ -79,7 +79,7 @@ export function gatherInvocationParameters( toolDescription, resourceDescription
             if (parameters.hasOwnProperty(parameter)) {
                 switch (parameter) {
                 case "input":
-                    parameterStringURL = parameterStringURL.concat(parameter).concat("=").concat( remoteFilename );
+                    parameterStringURL = parameterStringURL.concat(parameter).concat("=").concat( remoteUrl );
                     break;
                 case "lang":
                     parameterStringURL = parameterStringURL.concat(parameter).concat("=").concat( language );
