@@ -44,6 +44,7 @@ public class Storage {
     }
 
     public Storage() throws IOException {
+        // TODO: make this directory configurable
         dir = Files.createTempDirectory("switchboard");
     }
 

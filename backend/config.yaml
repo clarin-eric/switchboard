@@ -11,3 +11,4 @@ server:
       port: 8089
 
 tikaConfigPath: ./src/main/resources/tikaConfig.xml
+toolRegistryPath: ../../switchboard-tool-registry

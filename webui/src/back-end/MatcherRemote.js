@@ -29,7 +29,7 @@ export default class MatcherRemote {
                 .set('Accept', 'application/json')
                 .end((err, res) => {
                 if (err) {
-                    console.log('MatcherRemote/getAllTools failed: ', err);
+                    console.error('MatcherRemote/getAllTools failed: ', err);
                     reject(err);
                 } else {
                     resolve(res.body);
@@ -45,7 +45,7 @@ export default class MatcherRemote {
                 .set('Accept', 'application/json')
                 .end((err, res) => {
                 if (err) {
-                    console.log('MatcherRemote/getSupportedMimetypes failed: ', err);
+                    console.error('MatcherRemote/getSupportedMimetypes failed: ', err);
                     reject(err);
                 } else {
                     resolve(res.body);
@@ -61,7 +61,7 @@ export default class MatcherRemote {
                 .set('Accept', 'application/json')
                 .end((err, res) => {
                 if (err) {
-                    console.log('MatcherRemote/getSupportedLanguages failed: ', err);
+                    console.error('MatcherRemote/getSupportedLanguages failed: ', err);
                     reject(err);
                 } else {
                     resolve(res.body);
@@ -84,7 +84,7 @@ export default class MatcherRemote {
                 .set('Accept', 'application/json')
                 .end((err, res) => {
                 if (err) {
-                    console.log('MatcherRemote/getApplicableTools failed: ', err);
+                    console.error('MatcherRemote/getApplicableTools failed: ', err);
                     reject(err);
                 } else {
                     resolve(res.body);

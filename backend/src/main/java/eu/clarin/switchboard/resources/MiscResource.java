@@ -1,5 +1,7 @@
 package eu.clarin.switchboard.resources;
 
+import eu.clarin.switchboard.core.Tool;
+import eu.clarin.switchboard.core.ToolRegistry;
 import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.GET;
@@ -7,18 +9,20 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 @Path("")
 public class MiscResource {
     private static final ch.qos.logback.classic.Logger LOGGER = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(MiscResource.class);
 
-    private final Map<String, String> gitProps;
+    Map<String, String> gitProps;
+    ToolRegistry toolRegistry;
 
-    public MiscResource(Map<String, String> gitProps) {
+    public MiscResource(ToolRegistry toolRegistry, Map<String, String> gitProps) {
+        this.toolRegistry = toolRegistry;
         this.gitProps = gitProps == null ? new HashMap<>() : gitProps;
     }
 
@@ -33,30 +37,23 @@ public class MiscResource {
         return Response.ok(map).build();
     }
 
-    //TODO: take the mimetypes from the list of tools
     @GET
     @Path("/mimetypes")
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public Response getMediatypes() {
-        List<String> mediatypes = new ArrayList<>();
-        mediatypes.add("text/plain");
-        mediatypes.add("application/pdf");
-        mediatypes.add("application/rtf");
-        mediatypes.add("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
-        mediatypes.add("application/zip");
-        mediatypes.add("application/x-gzip");
+        Set<String> mediatypes = new HashSet<>();
+        for (Tool tool: toolRegistry.getTools())
+            mediatypes.addAll(tool.getMimetypes());
         return Response.ok(mediatypes).build();
     }
 
-    //TODO: take the languages from the list of tools
     @GET
     @Path("/languages")
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public Response getLanguages() {
-        List<String> languages = new ArrayList<>();
-        languages.add("eng");
-        languages.add("deu");
-        languages.add("generic");
+        Set<String> languages = new HashSet<>();
+        for (Tool tool: toolRegistry.getTools())
+            languages.addAll(tool.getLanguages());
         return Response.ok(languages).build();
     }
 }

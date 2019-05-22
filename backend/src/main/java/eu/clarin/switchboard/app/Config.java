@@ -11,8 +11,17 @@ public class Config extends Configuration {
     @NotNull
     private String tikaConfPath;
 
+    @Valid
+    @NotNull
+    private String toolRegistryPath;
+
     @JsonProperty("tikaConfigPath")
     public String getTikaConfPath() {
         return tikaConfPath;
+    }
+
+    @JsonProperty("toolRegistryPath")
+    public String getToolRegistryPath() {
+        return toolRegistryPath;
     }
 }
