@@ -1,7 +1,7 @@
 package eu.clarin.switchboard.core;
 
-import gnu.trove.map.hash.TIntObjectHashMap;
 import gnu.trove.set.hash.TIntHashSet;
+import org.glassfish.jersey.media.multipart.ContentDisposition;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
@@ -12,7 +12,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -50,6 +50,7 @@ public class Storage {
 
     public Storage() throws IOException {
         // TODO: make this directory configurable
+        // TODO: enforce storage policy
         dir = Files.createTempDirectory("switchboard");
     }
 
@@ -63,11 +64,12 @@ public class Storage {
         }
 
         URLConnection connection = url.openConnection();
-        {
-            String disposition = connection.getHeaderField("Content-Disposition");
-            if (disposition != null && disposition.contains("=")) {
-                filename = disposition.split("=")[1].trim();
-            }
+        try {
+            String header = connection.getHeaderField("Content-Disposition");
+            ContentDisposition disposition = new ContentDisposition(header);
+            filename = disposition.getFileName();
+        } catch (ParseException xc) {
+            // ignore
         }
 
         try (InputStream stream = connection.getInputStream()) {
@@ -101,8 +103,9 @@ public class Storage {
 
     final static String illegalCharsString = "\"'*/:<>?\\|";
     final static TIntHashSet illegalChars = new TIntHashSet();
+
     static {
-       illegalCharsString.codePoints().forEachOrdered(illegalChars::add);
+        illegalCharsString.codePoints().forEachOrdered(illegalChars::add);
     }
 
     private static String sanitize(String filename) {
