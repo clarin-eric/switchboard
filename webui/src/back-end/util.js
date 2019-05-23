@@ -74,21 +74,6 @@ export function unfoldHandle( handle ) {
    the plugin takes care of the suffix.
 */
 
-export function rewriteURL( fileURL ) {
-    if ( (fileURL.indexOf("https://b2drop.eudat.eu") !== -1) &&
-         (fileURL.indexOf("/download") == -1)) {
-        fileURL = fileURL.concat('/download');
-    }
-
-    if ( (fileURL.indexOf("https://www.dropbox.com") !== -1) &&
-         (fileURL.indexOf("?dl=1") == -1)) {
-
-        fileURL = fileURL.replace('?dl=0', '?dl=1');
-    }
-
-    return window.APP_CONTEXT_PATH + '/download?input=' + encodeURI(fileURL);
-}
-
 const langEncodingMap = {
     "generic" : "generic",
 

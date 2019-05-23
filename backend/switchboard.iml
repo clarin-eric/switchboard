@@ -209,5 +209,6 @@
     <orderEntry type="library" name="Maven: com.optimaize.languagedetector:language-detector:0.6" level="project" />
     <orderEntry type="library" name="Maven: net.arnx:jsonic:1.2.11" level="project" />
     <orderEntry type="library" name="Maven: com.intellij:annotations:12.0" level="project" />
+    <orderEntry type="library" name="Maven: net.sf.trove4j:trove4j:3.0.3" level="project" />
   </component>
 </module>

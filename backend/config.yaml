@@ -9,6 +9,10 @@ server:
   adminConnectors:
     - type: http
       port: 8089
+logging:
+  level: INFO
+  loggers:
+    "eu.clarin": DEBUG
 
 tikaConfigPath: ./src/main/resources/tikaConfig.xml
 toolRegistryPath: ../../switchboard-tool-registry

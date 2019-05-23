@@ -9,6 +9,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -30,10 +32,18 @@ public class MiscResource {
     @Path("/info")
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public Response getApiInfo() {
-        Map map = new HashMap<String, Object>() {{
-            put("git", MiscResource.this.gitProps);
-            put("version", MiscResource.this.gitProps.get("git.build.version"));
-        }};
+        Map map = new HashMap<String, Object>();
+        map.put("git", MiscResource.this.gitProps);
+        map.put("version", MiscResource.this.gitProps.get("git.build.version"));
+        try {
+            InetAddress host = InetAddress.getLocalHost();
+            map.put("host", new HashMap<String, String>() {{
+                put("ip", host.getHostAddress());
+                put("name", host.getHostName());
+            }});
+        } catch (UnknownHostException e) {
+            // ignore
+        }
         return Response.ok(map).build();
     }
 
@@ -42,7 +52,7 @@ public class MiscResource {
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public Response getMediatypes() {
         Set<String> mediatypes = new HashSet<>();
-        for (Tool tool: toolRegistry.getTools())
+        for (Tool tool : toolRegistry.getTools())
             mediatypes.addAll(tool.getMimetypes());
         return Response.ok(mediatypes).build();
     }
@@ -52,7 +62,7 @@ public class MiscResource {
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public Response getLanguages() {
         Set<String> languages = new HashSet<>();
-        for (Tool tool: toolRegistry.getTools())
+        for (Tool tool : toolRegistry.getTools())
             languages.addAll(tool.getLanguages());
         return Response.ok(languages).build();
     }

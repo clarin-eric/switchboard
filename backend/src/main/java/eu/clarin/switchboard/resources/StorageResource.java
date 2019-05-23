@@ -13,17 +13,12 @@ import org.xml.sax.SAXException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriBuilder;
-import javax.xml.ws.spi.http.HttpContext;
+import javax.ws.rs.core.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
-import java.net.URL;
-import java.nio.file.Paths;
+import java.io.OutputStream;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -54,7 +49,8 @@ public class StorageResource {
     Profiler profiler;
     Converter converter;
 
-    @Context HttpServletRequest request;
+    @Context
+    HttpServletRequest request;
 
     public StorageResource(String tikaConfigPath) throws IOException, TikaException, SAXException {
         storage = new Storage();
@@ -62,20 +58,38 @@ public class StorageResource {
         converter = new Converter(tikaConfigPath);
     }
 
+    @GET
+    @Path("/{id}")
+    public Response getFile(@PathParam("id") String idString) throws IOException, ConverterException {
+        UUID id = UUID.fromString(idString);
+        Storage.FileInfo fi = storage.getFileInfo(id);
+        StreamingOutput fileStream = output -> {
+            byte[] data = Files.readAllBytes(fi.getPath());
+            output.write(data);
+            output.flush();
+        };
+        String mediatype = (String) profile(id).get("mediatype"); // TODO: cache the profile
+        return Response
+                .ok(fileStream, mediatype)
+                .header("content-disposition", "attachment; filename=" + fi.getName())
+                .build();
+    }
+
+
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public Response postFile(@FormDataParam("file") InputStream inputStream,
                              @FormDataParam("file") final FormDataContentDisposition contentDispositionHeader,
-                             @FormDataParam("link") String link) throws Exception {
+                             @FormDataParam("link") String link) throws IOException, ConverterException {
         UUID id = UUID.randomUUID();
         if (contentDispositionHeader != null) {
             String filename = contentDispositionHeader.getFileName();
             storage.save(id, filename, inputStream);
-            LOGGER.info("uploaded file: " + filename);
+            LOGGER.debug("uploaded file: " + filename);
         } else if (link != null) {
             storage.download(id, link);
-            LOGGER.info("downloaded link: " + link);
+            LOGGER.debug("downloaded link: " + link);
         } else {
             return Response.status(400).entity("Please provide either a file or a link to download in the form").build();
         }
@@ -90,7 +104,6 @@ public class StorageResource {
         }
         return Response.ok(ret).build();
     }
-
 
     private Map<String, Object> profile(UUID id) throws IOException, ConverterException {
         Storage.FileInfo fi = storage.getFileInfo(id);
@@ -109,7 +122,7 @@ public class StorageResource {
             language = profiler.detectLanguage(file);
         }
 
-        LOGGER.info("mediatype: " + mediatype + "; language: " + language);
+        LOGGER.debug("mediatype: " + mediatype + "; language: " + language);
 
         Map<String, Object> map = new HashMap<>();
         map.put("id", id);
