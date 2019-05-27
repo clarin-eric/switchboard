@@ -5,29 +5,60 @@ import com.google.gson.JsonSyntaxException;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class ToolRegistry {
     private static final ch.qos.logback.classic.Logger LOGGER = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(ToolRegistry.class);
 
     Path registryPath;
-    List<Tool> tools = new ArrayList<>();
 
-    // TODO: watch fs, hot reload the tools
+    AtomicReference<List<Tool>> tools = new AtomicReference<>();
+
     public ToolRegistry(String toolRegistryPath) throws IOException {
         registryPath = Paths.get(toolRegistryPath);
-        tools = read(registryPath);
+        LOGGER.info("reading tool definitions from: " + registryPath);
+        tools.set(read(registryPath));
+
+        LOGGER.info("starting tool monitoring service");
+        WatchService watchService = FileSystems.getDefault().newWatchService();
+        registryPath.register(watchService,
+                StandardWatchEventKinds.ENTRY_CREATE,
+                StandardWatchEventKinds.ENTRY_DELETE,
+                StandardWatchEventKinds.ENTRY_MODIFY);
+
+        new Thread(() -> {
+            try {
+                WatchKey key;
+                while ((key = watchService.take()) != null) {
+                    Thread.sleep(100); // give more time to fs to finish more complex operations
+
+                    for (WatchEvent<?> event : key.pollEvents()) {
+                        LOGGER.debug("tool monitoring event: " + event.kind() + "; " + event.context());
+                    }
+
+                    try {
+                        LOGGER.info("reading tool definitions from: " + registryPath);
+                        tools.set(read(registryPath));
+                    } catch (IOException e) {
+                        LOGGER.warn("tool watching thread: io exception: ", e);
+                        e.printStackTrace();
+                    }
+
+                    key.reset();
+                }
+            } catch (InterruptedException e) {
+                LOGGER.warn("tool watching thread was interrupted", e);
+            }
+        }).start();
     }
 
 
     static List<Tool> read(Path registryDir) throws IOException {
-        LOGGER.info("reading tool definitions from: " + registryDir);
-
         Objects.requireNonNull(registryDir);
         File[] files = registryDir.toFile().listFiles((dir, name) -> name.endsWith(".json"));
         if (files == null) {
@@ -43,10 +74,10 @@ public class ToolRegistry {
                 LOGGER.error("error reading tool: " + f + "\n" + xc.getMessage());
             }
         }
-        return tools;
+        return Collections.unmodifiableList(tools);
     }
 
     public List<Tool> getTools() {
-        return Collections.unmodifiableList(tools);
+        return tools.get();
     }
 }
