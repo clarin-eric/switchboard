@@ -22,7 +22,11 @@ export function gatherInvocationParameters( toolDescription, resourceDescription
     }
 
     // need to encode the remote file name in case it contains special characters
-    var remoteUrl    =  encodeURIComponent(resourceDescription.url);
+    var remoteUrl = encodeURIComponent(
+            resourceDescription.downloadLink ||
+            resourceDescription.originalLink ||
+            resourceDescription.localLink);
+
     var language     =  resourceDescription.language.threeLetterCode;
     var mimetype     =  resourceDescription.mimetype;
     var langEncoding =  toolDescription.langEncoding;

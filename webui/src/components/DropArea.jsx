@@ -238,6 +238,11 @@ export default class DropArea extends React.Component {
         res.mimetype = res.mediatype;
         res.remoteFilename = res.filename;
 
+        if (res.localLink && res.localLink.startsWith('/api')) {
+            res.localLink = window.origin + res.localLink;
+            console.log("res.localLink: ", res.localLink);
+        }
+
         this.handleResourcesChange(res);
         if ( (res.mimetype == "application/zip") ||
              (res.mimetype == "application/x-gzip") ) {

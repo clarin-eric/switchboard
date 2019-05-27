@@ -17,13 +17,13 @@ import java.util.Map;
 import java.util.Set;
 
 @Path("")
-public class MiscResource {
-    private static final ch.qos.logback.classic.Logger LOGGER = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(MiscResource.class);
+public class InfoResource {
+    private static final ch.qos.logback.classic.Logger LOGGER = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(InfoResource.class);
 
     Map<String, String> gitProps;
     ToolRegistry toolRegistry;
 
-    public MiscResource(ToolRegistry toolRegistry, Map<String, String> gitProps) {
+    public InfoResource(ToolRegistry toolRegistry, Map<String, String> gitProps) {
         this.toolRegistry = toolRegistry;
         this.gitProps = gitProps == null ? new HashMap<>() : gitProps;
     }
@@ -33,8 +33,8 @@ public class MiscResource {
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public Response getApiInfo() {
         Map map = new HashMap<String, Object>();
-        map.put("git", MiscResource.this.gitProps);
-        map.put("version", MiscResource.this.gitProps.get("git.build.version"));
+        map.put("git", InfoResource.this.gitProps);
+        map.put("version", InfoResource.this.gitProps.get("git.build.version"));
         try {
             InetAddress host = InetAddress.getLocalHost();
             map.put("host", new HashMap<String, String>() {{

@@ -1,9 +1,9 @@
 package eu.clarin.switchboard.app;
 
-import eu.clarin.switchboard.core.ToolRegistry;
+import eu.clarin.switchboard.core.*;
 import eu.clarin.switchboard.health.AppHealthCheck;
-import eu.clarin.switchboard.resources.MiscResource;
-import eu.clarin.switchboard.resources.StorageResource;
+import eu.clarin.switchboard.resources.DataResource;
+import eu.clarin.switchboard.resources.InfoResource;
 import eu.clarin.switchboard.resources.ToolsResource;
 import io.dropwizard.Application;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
@@ -16,6 +16,8 @@ import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.xml.sax.SAXException;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Map;
 
 public class SwitchboardApp extends Application<Config> {
@@ -38,19 +40,28 @@ public class SwitchboardApp extends Application<Config> {
         String appContextPath = ((DefaultServerFactory) configuration.getServerFactory()).getApplicationContextPath();
         assets.setAppContextPathSubstitutions("index.html", appContextPath);
 
-        ToolRegistry toolRegistry = new ToolRegistry(configuration.getToolRegistryPath());
-
         Map<String, String> gitProperties = GitProperties.load("switchboard");
 
-        MiscResource miscResource = new MiscResource(toolRegistry, gitProperties);
-        StorageResource storageResource = new StorageResource(configuration.getTikaConfPath());
+        Path dataStoreRoot = Files.createTempDirectory("switchboard");
+        DataStore dataStore = new DataStore(dataStoreRoot);
+
+        Profiler profiler = new Profiler();
+        Converter converter = new Converter(configuration.getTikaConfPath());
+        MediaLibrary mediaLibrary = new MediaLibrary(dataStore, profiler, converter);
+
+        ToolRegistry toolRegistry = new ToolRegistry(configuration.getToolRegistryPath());
+
+        InfoResource infoResource = new InfoResource(toolRegistry, gitProperties);
+        DataResource dataResource = new DataResource(mediaLibrary);
         ToolsResource toolsResource = new ToolsResource(toolRegistry);
 
         environment.getApplicationContext().setErrorHandler(new HttpErrorHandler());
+
         environment.jersey().register(MultiPartFeature.class);
-        environment.jersey().register(miscResource);
-        environment.jersey().register(storageResource);
+        environment.jersey().register(infoResource);
+        environment.jersey().register(dataResource);
         environment.jersey().register(toolsResource);
+
         environment.jersey().setUrlPattern("/api/*");
 
         environment.healthChecks().register("switchboard", new AppHealthCheck());

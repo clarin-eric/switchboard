@@ -18,7 +18,7 @@ public class ToolRegistry {
     Path registryPath;
     List<Tool> tools = new ArrayList<>();
 
-
+    // TODO: watch fs, hot reload the tools
     public ToolRegistry(String toolRegistryPath) throws IOException {
         registryPath = Paths.get(toolRegistryPath);
         tools = read(registryPath);
