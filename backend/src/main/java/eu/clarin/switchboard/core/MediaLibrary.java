@@ -8,6 +8,7 @@ import javax.ws.rs.core.UriBuilder;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
@@ -23,6 +24,7 @@ import java.util.UUID;
  * The records contain file paths, profiles, origin information.
  */
 public class MediaLibrary {
+    public static final int MAX_ALLOWED_REDIRECTS = 5;
     private static final ch.qos.logback.classic.Logger LOGGER = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(MediaLibrary.class);
 
 
@@ -60,6 +62,7 @@ public class MediaLibrary {
 
         String originalLink; // original link; can point to a landing page, not to the data
         String downloadLink; // link used for downloading from original location
+        int httpRedirects; // if getting the data requires redirects
 
         public FileInfo(UUID id, String filename, Path path) {
             this.id = id;
@@ -100,18 +103,21 @@ public class MediaLibrary {
             return downloadLink;
         }
 
+        public int getHttpRedirects() {
+            return httpRedirects;
+        }
+
         @Override
         public String toString() {
-            return "FileInfo { " +
-                    "id=" + id +
-                    ", filename='" + filename + '\'' +
-                    ", path=" + path +
-                    ", fileLength=" + fileLength +
-                    ", mediatype='" + mediatype + '\'' +
-                    ", language='" + language + '\'' +
-                    ", originLink='" + originalLink + '\'' +
-                    ", downloadLink='" + downloadLink + '\'' +
-                    " }";
+            return "FileInfo: " +
+                    "\nid=" + id +
+                    "\nfilename='" + filename + '\'' +
+                    "\npath=" + path +
+                    "\nfileLength=" + fileLength +
+                    "\nmediatype='" + mediatype + '\'' +
+                    "\nlanguage='" + language + '\'' +
+                    "\noriginalLink='" + originalLink + '\'' +
+                    "\nhttpRedirects=" + httpRedirects;
         }
     }
 
@@ -123,23 +129,49 @@ public class MediaLibrary {
 
     public FileInfo addMedia(String originalUrl) throws IOException {
         DownloadUtils.LinkData linkData = DownloadUtils.getLinkData(originalUrl);
-        URL url = new URL(linkData.downloadLink);
-        URLConnection connection = url.openConnection();
-        try {
+        HttpURLConnection connection = (HttpURLConnection) new URL(linkData.downloadLink).openConnection();
+
+        int redirects = 0;
+        for (int status = connection.getResponseCode();
+             redirects < MAX_ALLOWED_REDIRECTS &&
+                     (status == HttpURLConnection.HTTP_MOVED_TEMP
+                             || status == HttpURLConnection.HTTP_MOVED_PERM
+                             || status == HttpURLConnection.HTTP_SEE_OTHER);
+             redirects += 1
+                ) {
+            String newUrl = connection.getHeaderField("Location");
+            String cookies = connection.getHeaderField("Set-Cookie");
+
+            connection = (HttpURLConnection) new URL(newUrl).openConnection();
+            connection.setRequestProperty("Cookie", cookies);
+
+            status = connection.getResponseCode();
+        }
+
+        try
+
+        {
             String header = connection.getHeaderField("Content-Disposition");
             ContentDisposition disposition = new ContentDisposition(header);
             linkData.filename = disposition.getFileName();
-        } catch (ParseException xc) {
+        } catch (
+                ParseException xc)
+
+        {
             // ignore
         }
 
-        try (InputStream stream = connection.getInputStream()) {
+        try (
+                InputStream stream = connection.getInputStream())
+
+        {
             FileInfo fileInfo = addMedia(linkData.filename, stream);
             fileInfo.downloadLink = linkData.downloadLink;
             fileInfo.originalLink = originalUrl;
-            LOGGER.debug("additional fileInfo: " + fileInfo);
+            fileInfo.httpRedirects = redirects;
             return fileInfo;
         }
+
     }
 
     public FileInfo addMedia(String filename, InputStream inputStream) throws IOException {
@@ -164,7 +196,6 @@ public class MediaLibrary {
             fileInfo.language = profiler.detectLanguage(file);
         }
 
-        LOGGER.debug("fileInfo: " + fileInfo);
         return fileInfo;
     }
 

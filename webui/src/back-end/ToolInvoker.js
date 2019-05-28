@@ -21,11 +21,14 @@ export function gatherInvocationParameters( toolDescription, resourceDescription
         return false;
     }
 
+    var downloadUrl = resourceDescription.downloadLink || resourceDescription.originalLink;
+    if (!downloadUrl || resourceDescription.httpRedirects) {
+        // if we have no downloadLink or originalLink;
+        // of if http redirects are necessary, since some tools don't support them
+        downloadUrl = resourceDescription.localLink;
+    }
     // need to encode the remote file name in case it contains special characters
-    var remoteUrl = encodeURIComponent(
-            resourceDescription.downloadLink ||
-            resourceDescription.originalLink ||
-            resourceDescription.localLink);
+    const remoteUrl = encodeURIComponent(downloadUrl);
 
     var language     =  resourceDescription.language.threeLetterCode;
     var mimetype     =  resourceDescription.mimetype;

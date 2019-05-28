@@ -75,11 +75,13 @@ public class DataResource {
         ret.put("language", fileInfo.getLanguage());
         ret.put("originalLink", fileInfo.getOriginalLink());
         ret.put("downloadLink", fileInfo.getDownloadLink());
+        ret.put("httpRedirects", fileInfo.getHttpRedirects());
 
         URI localLink = UriBuilder.fromPath(request.getRequestURI())
                 .path(fileInfo.getId().toString()).build();
         ret.put("localLink", localLink);
-        LOGGER.debug("return fileInfo with localLink = " + localLink);
+
+        LOGGER.debug("postFile return: " + ret);
 
         return Response.ok(ret).build();
     }
