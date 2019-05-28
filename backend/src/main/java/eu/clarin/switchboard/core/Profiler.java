@@ -50,7 +50,7 @@ public class Profiler {
     }
 
     public String detectLanguage(File file) throws IOException {
-        // TODO: read only a part of the text for language detection
+        // TODO?: read only a part of the text for language detection
         String text = new String(Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8);
         return detectLanguage(text);
     }

@@ -3,6 +3,7 @@ package eu.clarin.switchboard.resources;
 import com.google.common.collect.ImmutableMap;
 import eu.clarin.switchboard.core.ConverterException;
 import eu.clarin.switchboard.core.MediaLibrary;
+import eu.clarin.switchboard.core.StoragePolicyException;
 import org.apache.tika.exception.TikaException;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
@@ -29,13 +30,13 @@ public class DataResource {
     @Context
     HttpServletRequest request;
 
-    public DataResource(MediaLibrary mediaLibrary) throws IOException, TikaException, SAXException {
+    public DataResource(MediaLibrary mediaLibrary)  {
         this.mediaLibrary = mediaLibrary;
     }
 
     @GET
     @Path("/{id}")
-    public Response getFile(@PathParam("id") String idString) throws IOException, ConverterException {
+    public Response getFile(@PathParam("id") String idString)  {
         UUID id = UUID.fromString(idString);
         MediaLibrary.FileInfo fi = mediaLibrary.getFileInfo(id);
         StreamingOutput fileStream = output -> {
@@ -55,7 +56,7 @@ public class DataResource {
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public Response postFile(@FormDataParam("file") InputStream inputStream,
                              @FormDataParam("file") final FormDataContentDisposition contentDispositionHeader,
-                             @FormDataParam("link") String link) throws IOException, ConverterException {
+                             @FormDataParam("link") String link) throws IOException, StoragePolicyException {
         MediaLibrary.FileInfo fileInfo;
 
         if (contentDispositionHeader != null) {

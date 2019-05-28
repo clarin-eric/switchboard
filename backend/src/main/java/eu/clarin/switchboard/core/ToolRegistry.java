@@ -6,10 +6,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.nio.file.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class ToolRegistry {
@@ -18,6 +15,30 @@ public class ToolRegistry {
     Path registryPath;
 
     AtomicReference<List<Tool>> tools = new AtomicReference<>();
+    Runnable callback;
+
+    public List<Tool> getTools() {
+        return tools.get();
+    }
+
+    public Set<String> getAllMediatypes() {
+        Set<String> mediatypes = new HashSet<>();
+        for (Tool tool : getTools())
+            mediatypes.addAll(tool.getMimetypes());
+        return mediatypes;
+    }
+
+    public Set<String> getAllLanguages() {
+        Set<String> languages = new HashSet<>();
+        for (Tool tool : getTools())
+            languages.addAll(tool.getLanguages());
+        return languages;
+    }
+
+
+    public void onUpdate(Runnable callback) {
+        this.callback = callback;
+    }
 
     public ToolRegistry(String toolRegistryPath) throws IOException {
         registryPath = Paths.get(toolRegistryPath);
@@ -49,6 +70,15 @@ public class ToolRegistry {
                         e.printStackTrace();
                     }
 
+                    try {
+                        if (callback != null) {
+                            callback.run();
+                        }
+                    } catch (Exception e) {
+                        LOGGER.warn("tool watching thread: exception in callback: ", e);
+                        e.printStackTrace();
+                    }
+
                     key.reset();
                 }
             } catch (InterruptedException e) {
@@ -77,7 +107,4 @@ public class ToolRegistry {
         return Collections.unmodifiableList(tools);
     }
 
-    public List<Tool> getTools() {
-        return tools.get();
-    }
 }

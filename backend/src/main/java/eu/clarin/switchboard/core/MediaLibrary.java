@@ -4,14 +4,11 @@ import com.google.common.collect.ImmutableSet;
 import org.glassfish.jersey.media.multipart.ContentDisposition;
 import org.slf4j.LoggerFactory;
 
-import javax.ws.rs.core.UriBuilder;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.URI;
 import java.net.URL;
-import java.net.URLConnection;
 import java.nio.file.Path;
 import java.text.ParseException;
 import java.util.HashMap;
@@ -25,12 +22,13 @@ import java.util.UUID;
  */
 public class MediaLibrary {
     public static final int MAX_ALLOWED_REDIRECTS = 5;
-    private static final ch.qos.logback.classic.Logger LOGGER = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(MediaLibrary.class);
 
+    private static final ch.qos.logback.classic.Logger LOGGER = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(MediaLibrary.class);
 
     DataStore dataStore;
     Profiler profiler;
     Converter converter;
+    StoragePolicy storagePolicy;
 
     Map<UUID, FileInfo> fileInfoMap = new HashMap<>();
 
@@ -121,13 +119,16 @@ public class MediaLibrary {
         }
     }
 
-    public MediaLibrary(DataStore dataStore, Profiler profiler, Converter converter) throws IOException {
+    public MediaLibrary(DataStore dataStore, Profiler profiler, Converter converter, StoragePolicy storagePolicy) throws IOException {
         this.dataStore = dataStore;
         this.profiler = profiler;
         this.converter = converter;
+        this.storagePolicy = storagePolicy;
+
+        // TODO: cleanup thread
     }
 
-    public FileInfo addMedia(String originalUrl) throws IOException {
+    public FileInfo addMedia(String originalUrl) throws IOException, StoragePolicyException {
         DownloadUtils.LinkData linkData = DownloadUtils.getLinkData(originalUrl);
         HttpURLConnection connection = (HttpURLConnection) new URL(linkData.downloadLink).openConnection();
 
@@ -148,33 +149,24 @@ public class MediaLibrary {
             status = connection.getResponseCode();
         }
 
-        try
-
-        {
+        try {
             String header = connection.getHeaderField("Content-Disposition");
             ContentDisposition disposition = new ContentDisposition(header);
             linkData.filename = disposition.getFileName();
-        } catch (
-                ParseException xc)
-
-        {
+        } catch (ParseException xc) {
             // ignore
         }
 
-        try (
-                InputStream stream = connection.getInputStream())
-
-        {
+        try (InputStream stream = connection.getInputStream()) {
             FileInfo fileInfo = addMedia(linkData.filename, stream);
             fileInfo.downloadLink = linkData.downloadLink;
             fileInfo.originalLink = originalUrl;
             fileInfo.httpRedirects = redirects;
             return fileInfo;
         }
-
     }
 
-    public FileInfo addMedia(String filename, InputStream inputStream) throws IOException {
+    public FileInfo addMedia(String filename, InputStream inputStream) throws IOException, StoragePolicyException {
         UUID id = UUID.randomUUID();
         Path path = dataStore.save(id, filename, inputStream);
 
@@ -191,10 +183,13 @@ public class MediaLibrary {
                 LOGGER.info("Cannot convert media to text for detecting the language: " + xc.getMessage());
             }
         } else if (nonTextMediatypes.contains(fileInfo.mediatype)) {
-            // no language for this one
+            // language cannot be detected in this case
         } else {
             fileInfo.language = profiler.detectLanguage(file);
         }
+
+        storagePolicy.checkProfile(fileInfo.mediatype, fileInfo.language);
+        // TODO: cleanup if policy throws error
 
         return fileInfo;
     }

@@ -1,5 +1,6 @@
 package eu.clarin.switchboard.core;
 
+import com.google.common.io.ByteStreams;
 import gnu.trove.set.hash.TIntHashSet;
 import org.slf4j.LoggerFactory;
 
@@ -17,20 +18,33 @@ public class DataStore {
     private static final ch.qos.logback.classic.Logger LOGGER = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(DataStore.class);
 
     Path dataStoreRoot;
+    StoragePolicy storagePolicy;
 
-    public DataStore(Path dataStoreRoot) throws IOException {
-        // TODO: enforce storage policy
+    public DataStore(Path dataStoreRoot, StoragePolicy storagePolicy) throws IOException {
         this.dataStoreRoot = dataStoreRoot;
+        this.storagePolicy = storagePolicy;
     }
 
-    public Path save(UUID id, String filename, InputStream inputStream) throws IOException {
+    public Path save(UUID id, String filename, InputStream inputStream) throws IOException, StoragePolicyException {
         Path idDir = dataStoreRoot.resolve(id.toString());
         Files.createDirectory(idDir);
 
         filename = sanitize(filename);
         Path path = idDir.resolve(filename);
 
-        Files.copy(inputStream, path);
+        long limit = storagePolicy.getMaxAllowedDataSize() + 1; // set limit just above the maximum
+        InputStream limitedInputStream = ByteStreams.limit(inputStream, limit);
+        Files.copy(limitedInputStream, path);
+
+        try {
+            storagePolicy.check(path.toFile());
+        } catch (StoragePolicyException e) {
+            path.toFile().delete();
+            idDir.toFile().delete();
+            LOGGER.info("storage policy check: reject store of: " + filename);
+            throw e;
+        }
+
         return path;
     }
 

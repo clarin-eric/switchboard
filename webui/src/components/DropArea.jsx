@@ -199,8 +199,10 @@ export default class DropArea extends React.Component {
             .accept('json')
             .catch(err => {
                 console.error('Error in uploading resource to storage:', err);
+                this.setState({showAlertURLUploadError: true, isLoaded: true});
+                this.clearDropzone();
             })
-            .then(this.processStorageResponse.bind(this, res), this.processStorageResponseError);
+            .and(this.processStorageResponse.bind(this, res), this.processStorageResponseError);
     }
 
     /// type is 'file' or 'blob'
@@ -221,8 +223,10 @@ export default class DropArea extends React.Component {
             .accept('json')
             .catch(err => {
                 console.error('Error in uploading resource to storage:', err);
+                this.setState({showAlertURLUploadError: true, isLoaded: true});
+                this.clearDropzone();
             })
-            .then(this.processStorageResponse.bind(this, res), this.processStorageResponseError);
+            .and(this.processStorageResponse.bind(this, res), this.processStorageResponseError);
     }
 
     processStorageResponse(res, response) {

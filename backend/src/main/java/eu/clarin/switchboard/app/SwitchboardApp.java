@@ -37,27 +37,36 @@ public class SwitchboardApp extends Application<Config> {
 
     @Override
     public void run(Config configuration, Environment environment) throws IOException, TikaException, SAXException {
+        Config.SwitchboardConfig switchboardConfig = configuration.getSwitchboard();
+        System.out.println("" + switchboardConfig);
+
         String appContextPath = ((DefaultServerFactory) configuration.getServerFactory()).getApplicationContextPath();
         assets.setAppContextPathSubstitutions("index.html", appContextPath);
 
-        Map<String, String> gitProperties = GitProperties.load("switchboard");
+        DefaultStoragePolicy storagePolicy = new DefaultStoragePolicy(switchboardConfig.getMaximumDataSize());
 
+        ToolRegistry toolRegistry = new ToolRegistry(switchboardConfig.getToolRegistryPath());
+        storagePolicy.setAllowedMediaTypes(toolRegistry.getAllMediatypes());
+        toolRegistry.onUpdate(() -> {
+            storagePolicy.setAllowedMediaTypes(toolRegistry.getAllMediatypes());
+        });
+
+        Map<String, String> gitProperties = GitProperties.load("switchboard");
         Path dataStoreRoot = Files.createTempDirectory("switchboard");
-        DataStore dataStore = new DataStore(dataStoreRoot);
+        DataStore dataStore = new DataStore(dataStoreRoot, storagePolicy);
 
         Profiler profiler = new Profiler();
-        Converter converter = new Converter(configuration.getTikaConfPath());
-        MediaLibrary mediaLibrary = new MediaLibrary(dataStore, profiler, converter);
+        Converter converter = new Converter(switchboardConfig.getTikaConfigPath());
+        MediaLibrary mediaLibrary = new MediaLibrary(dataStore, profiler, converter, storagePolicy);
 
-        ToolRegistry toolRegistry = new ToolRegistry(configuration.getToolRegistryPath());
-
-        InfoResource infoResource = new InfoResource(toolRegistry, gitProperties);
+        InfoResource infoResource = new InfoResource(toolRegistry, gitProperties, switchboardConfig.getMaximumDataSize());
         DataResource dataResource = new DataResource(mediaLibrary);
         ToolsResource toolsResource = new ToolsResource(toolRegistry);
 
         environment.getApplicationContext().setErrorHandler(new HttpErrorHandler());
 
         environment.jersey().register(MultiPartFeature.class);
+        environment.jersey().register(StoragePolicyExceptionMapper.class);
         environment.jersey().register(infoResource);
         environment.jersey().register(dataResource);
         environment.jersey().register(toolsResource);

@@ -1,4 +1,3 @@
-
 server:
   applicationContextPath: ${APP_CONTEXT_PATH:-/}
   applicationConnectors:
@@ -9,10 +8,13 @@ server:
   adminConnectors:
     - type: http
       port: 8089
+
 logging:
   level: INFO
   loggers:
     "eu.clarin": DEBUG
 
-tikaConfigPath: ./src/main/resources/tikaConfig.xml
-toolRegistryPath: ../../switchboard-tool-registry
+switchboard:
+  tikaConfigPath: ./src/main/resources/tikaConfig.xml
+  toolRegistryPath: ../../switchboard-tool-registry
+  maximumDataSize: 5M
