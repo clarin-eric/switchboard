@@ -197,12 +197,7 @@ export default class DropArea extends React.Component {
             .post(window.APP_CONTEXT_PATH + "/api/storage/")
             .field({link})
             .accept('json')
-            .catch(err => {
-                console.error('Error in uploading resource to storage:', err);
-                this.setState({showAlertURLUploadError: true, isLoaded: true});
-                this.clearDropzone();
-            })
-            .and(this.processStorageResponse.bind(this, res), this.processStorageResponseError);
+            .then(this.processStorageResponse.bind(this, res), this.processStorageResponseError);
     }
 
     /// type is 'file' or 'blob'
@@ -221,12 +216,7 @@ export default class DropArea extends React.Component {
             .post(window.APP_CONTEXT_PATH + "/api/storage/")
             .attach('file', res.file, res.name)
             .accept('json')
-            .catch(err => {
-                console.error('Error in uploading resource to storage:', err);
-                this.setState({showAlertURLUploadError: true, isLoaded: true});
-                this.clearDropzone();
-            })
-            .and(this.processStorageResponse.bind(this, res), this.processStorageResponseError);
+            .then(this.processStorageResponse.bind(this, res), this.processStorageResponseError);
     }
 
     processStorageResponse(res, response) {
@@ -266,8 +256,9 @@ export default class DropArea extends React.Component {
     }
 
     processStorageResponseError(error) {
-        console.log('DropArea.jsx/profiling failed', error);
+        console.error('Error getting resource in storage:', error);
         this.setState({showAlertURLUploadError: true, isLoaded: true});
+        this.clearDropzone();
     }
 
     getPermissableMimetypes() {

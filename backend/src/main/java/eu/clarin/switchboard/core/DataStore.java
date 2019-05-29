@@ -39,8 +39,7 @@ public class DataStore {
         try {
             storagePolicy.check(path.toFile());
         } catch (StoragePolicyException e) {
-            path.toFile().delete();
-            idDir.toFile().delete();
+            this.delete(id, path);
             LOGGER.info("storage policy check: reject store of: " + filename);
             throw e;
         }
@@ -62,5 +61,15 @@ public class DataStore {
             cleanName.appendCodePoint(replace ? '_' : c);
         });
         return cleanName.toString();
+    }
+
+    public void delete(UUID id, Path path) {
+        try {
+            Files.delete(path);
+            Path idDir = dataStoreRoot.resolve(id.toString());
+            Files.delete(idDir);
+        } catch (IOException xc) {
+            LOGGER.error("data store: cannot remove file/dir: " + path);
+        }
     }
 }

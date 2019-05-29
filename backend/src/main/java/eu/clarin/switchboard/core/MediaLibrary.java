@@ -188,8 +188,13 @@ public class MediaLibrary {
             fileInfo.language = profiler.detectLanguage(file);
         }
 
-        storagePolicy.checkProfile(fileInfo.mediatype, fileInfo.language);
-        // TODO: cleanup if policy throws error
+        try {
+            storagePolicy.checkProfile(fileInfo.mediatype, fileInfo.language);
+        } catch (StoragePolicyException xc) {
+            dataStore.delete(id, path);
+            fileInfoMap.remove(fileInfo);
+            throw xc;
+        }
 
         return fileInfo;
     }
