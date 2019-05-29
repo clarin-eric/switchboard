@@ -17,4 +17,11 @@ logging:
 switchboard:
   tikaConfigPath: ./src/main/resources/tikaConfig.xml
   toolRegistryPath: ../../switchboard-tool-registry
-  maximumDataSize: 5M
+  dataStore:
+    location: # defaults to temporary storage
+    eraseAllStorageOnStart: false
+    maxSize: 5M
+    maxLifetime: 2
+    maxLifetimeUnit: hours
+    cleanupPeriod: 13
+    cleanupPeriodUnit: minutes

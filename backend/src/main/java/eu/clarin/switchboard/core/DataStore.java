@@ -4,6 +4,7 @@ import com.google.common.io.ByteStreams;
 import gnu.trove.set.hash.TIntHashSet;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -25,6 +26,23 @@ public class DataStore {
         this.storagePolicy = storagePolicy;
     }
 
+    public void eraseAllStorage() {
+        LOGGER.warn("!!! erasing all storage, path: " + dataStoreRoot);
+        File[] dirList = dataStoreRoot.toFile().listFiles();
+        if (dirList == null) {
+            return;
+        }
+        for (File dir: dirList) {
+            File[] files = dir.listFiles();
+            if (files != null) {
+                for (File f: files) {
+                    tryDelete(f.toPath());
+                }
+            }
+            tryDelete(dir.toPath());
+        }
+    }
+
     public Path save(UUID id, String filename, InputStream inputStream) throws IOException, StoragePolicyException {
         Path idDir = dataStoreRoot.resolve(id.toString());
         Files.createDirectory(idDir);
@@ -37,7 +55,7 @@ public class DataStore {
         Files.copy(limitedInputStream, path);
 
         try {
-            storagePolicy.check(path.toFile());
+            storagePolicy.acceptFile(path.toFile());
         } catch (StoragePolicyException e) {
             this.delete(id, path);
             LOGGER.info("storage policy check: reject store of: " + filename);
@@ -64,12 +82,16 @@ public class DataStore {
     }
 
     public void delete(UUID id, Path path) {
+        tryDelete(path);
+        Path idDir = dataStoreRoot.resolve(id.toString());
+        tryDelete(idDir);
+    }
+
+    private static void tryDelete(Path path) {
         try {
             Files.delete(path);
-            Path idDir = dataStoreRoot.resolve(id.toString());
-            Files.delete(idDir);
         } catch (IOException xc) {
-            LOGGER.error("data store: cannot remove file/dir: " + path);
+            LOGGER.error("data store: cannot delete file/dir: " + path);
         }
     }
 }

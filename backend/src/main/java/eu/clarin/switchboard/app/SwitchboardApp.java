@@ -18,6 +18,7 @@ import org.xml.sax.SAXException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Map;
 
 public class SwitchboardApp extends Application<Config> {
@@ -43,7 +44,16 @@ public class SwitchboardApp extends Application<Config> {
         String appContextPath = ((DefaultServerFactory) configuration.getServerFactory()).getApplicationContextPath();
         assets.setAppContextPathSubstitutions("index.html", appContextPath);
 
-        DefaultStoragePolicy storagePolicy = new DefaultStoragePolicy(switchboardConfig.getMaximumDataSize());
+        Path dataStoreRoot = switchboardConfig.getDataStore().getLocation() == null ?
+                Files.createTempDirectory("switchboard") :
+                Paths.get(switchboardConfig.getDataStore().getLocation());
+
+        DefaultStoragePolicy storagePolicy = new DefaultStoragePolicy(switchboardConfig.getDataStore());
+
+        DataStore dataStore = new DataStore(dataStoreRoot, storagePolicy);
+        if (configuration.getSwitchboard().getDataStore().isEraseAllStorageOnStart()) {
+            dataStore.eraseAllStorage();
+        }
 
         ToolRegistry toolRegistry = new ToolRegistry(switchboardConfig.getToolRegistryPath());
         storagePolicy.setAllowedMediaTypes(toolRegistry.getAllMediatypes());
@@ -52,14 +62,13 @@ public class SwitchboardApp extends Application<Config> {
         });
 
         Map<String, String> gitProperties = GitProperties.load("switchboard");
-        Path dataStoreRoot = Files.createTempDirectory("switchboard");
-        DataStore dataStore = new DataStore(dataStoreRoot, storagePolicy);
 
         Profiler profiler = new Profiler();
         Converter converter = new Converter(switchboardConfig.getTikaConfigPath());
         MediaLibrary mediaLibrary = new MediaLibrary(dataStore, profiler, converter, storagePolicy);
 
-        InfoResource infoResource = new InfoResource(toolRegistry, gitProperties, switchboardConfig.getMaximumDataSize());
+        InfoResource infoResource = new InfoResource(toolRegistry, gitProperties,
+                switchboardConfig.getDataStore().getMaxSize());
         DataResource dataResource = new DataResource(mediaLibrary);
         ToolsResource toolsResource = new ToolsResource(toolRegistry);
 

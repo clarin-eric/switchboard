@@ -11,10 +11,13 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.file.Path;
 import java.text.ParseException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * MediaLibrary keeps records about datafiles, identified by uuids.
@@ -23,6 +26,7 @@ import java.util.UUID;
 public class MediaLibrary {
     public static final int MAX_ALLOWED_REDIRECTS = 5;
 
+
     private static final ch.qos.logback.classic.Logger LOGGER = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(MediaLibrary.class);
 
     DataStore dataStore;
@@ -30,7 +34,7 @@ public class MediaLibrary {
     Converter converter;
     StoragePolicy storagePolicy;
 
-    Map<UUID, FileInfo> fileInfoMap = new HashMap<>();
+    Map<UUID, FileInfo> fileInfoMap = Collections.synchronizedMap(new HashMap<>());
 
     public static final Set<String> convertableMediatypes = ImmutableSet.of(
             "application/pdf",
@@ -51,6 +55,8 @@ public class MediaLibrary {
 
     public static class FileInfo {
         UUID id;
+        Instant creation;
+
         String filename; // original filename, on disk we use a sanitized form
         Path path; // actual path on disk
         long fileLength;
@@ -66,11 +72,17 @@ public class MediaLibrary {
             this.id = id;
             this.filename = filename;
             this.path = path;
+
+            this.creation = new Date().toInstant();
             this.fileLength = path.toFile().length();
         }
 
         public UUID getId() {
             return id;
+        }
+
+        public Instant getCreation() {
+            return creation;
         }
 
         public String getFilename() {
@@ -109,6 +121,7 @@ public class MediaLibrary {
         public String toString() {
             return "FileInfo: " +
                     "\nid=" + id +
+                    "\ncreation=" + creation.toString() +
                     "\nfilename='" + filename + '\'' +
                     "\npath=" + path +
                     "\nfileLength=" + fileLength +
@@ -119,13 +132,19 @@ public class MediaLibrary {
         }
     }
 
-    public MediaLibrary(DataStore dataStore, Profiler profiler, Converter converter, StoragePolicy storagePolicy) throws IOException {
+    public MediaLibrary(DataStore dataStore, Profiler profiler, Converter converter, StoragePolicy storagePolicy) {
         this.dataStore = dataStore;
         this.profiler = profiler;
         this.converter = converter;
         this.storagePolicy = storagePolicy;
 
-        // TODO: cleanup thread
+        ExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+        Duration cleanup = storagePolicy.getCleanupPeriod();
+        ((ScheduledExecutorService) executor).scheduleAtFixedRate(
+                () -> periodicCleanup(),
+                cleanup.getSeconds(),
+                cleanup.getSeconds(),
+                TimeUnit.SECONDS);
     }
 
     public FileInfo addMedia(String originalUrl) throws IOException, StoragePolicyException {
@@ -189,7 +208,7 @@ public class MediaLibrary {
         }
 
         try {
-            storagePolicy.checkProfile(fileInfo.mediatype, fileInfo.language);
+            storagePolicy.acceptProfile(fileInfo.mediatype, fileInfo.language);
         } catch (StoragePolicyException xc) {
             dataStore.delete(id, path);
             fileInfoMap.remove(fileInfo);
@@ -201,5 +220,19 @@ public class MediaLibrary {
 
     public FileInfo getFileInfo(UUID id) {
         return fileInfoMap.get(id);
+    }
+
+    private void periodicCleanup() {
+        // this runs on another thread
+        LOGGER.info("start periodic cleanup now");
+        for (Iterator<FileInfo> iterator = fileInfoMap.values().iterator(); iterator.hasNext(); ) {
+            FileInfo fi = iterator.next();
+            Duration lifetime = Duration.between(fi.getCreation(), Instant.now());
+            if (lifetime.compareTo(storagePolicy.getMaxAllowedLifetime()) > 0) {
+                LOGGER.debug("removing entry: " + fi.getId());
+                dataStore.delete(fi.getId(), fi.getPath());
+                iterator.remove();
+            }
+        }
     }
 }
