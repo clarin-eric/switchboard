@@ -62,6 +62,58 @@ require('./../images/keyboard-solid.png');
 
 require('./../images/dropResources.png');
 
+class Navigation extends React.Component {
+    constructor(props) {
+        super(props);
+        this.close = this.close.bind(this);
+        this.toggle = this.toggle.bind(this);
+        this.state = {show: false};
+    }
+
+    close(e) {
+        this.setState({show: false});
+    }
+
+    toggle(e) {
+        this.setState(prev => ({show: !prev.show}));
+    }
+
+    render() {
+        const navCollapseClass = this.state.show ? "collapse navbar-collapse text-right show" : "collapse navbar-collapse";
+        return (
+            <nav className="navbar navbar-default navbar-expand-lg fixed-top navbar-light bg-light">
+                <a className="navbar-brand" href='/'>
+                  <span><i className="fa fa-cog fa-1x" aria-hidden="true"></i> Resource Switchboard</span>
+                </a>
+
+                <button className="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation"
+                        onClick={this.toggle}>
+                    <span className="navbar-toggler-icon"></span>
+                </button>
+
+                <div id="navbarSupportedContent" className={navCollapseClass}>
+                    <ul className="navbar-nav mr-auto">
+                        <li className="nav-item">
+                            <UserHelp className="btn header-link"/>
+                        </li>
+                        <li className="nav-item" onClick={this.close}>
+                            <button id="showAllToolsButton" className="allTools" onClick={this.props.showAllTools}>Tool Inventory</button>
+                        </li>
+                    </ul>
+                <div className="pull-right">
+                  <a href="http://www.clarin.eu/">
+                    <img src="clarin-logo-wide.png" width="119px" height="46px" />
+                  </a>
+                </div>
+                </div>
+            </nav>
+        );
+    }
+}
+
+
 export default class App extends React.Component {
 
     constructor(props) {
@@ -109,9 +161,6 @@ export default class App extends React.Component {
 
         this.piwik.push(['trackPageView']);
 
-        // CZ: check whether following is nececessary for cache busting (localStorage)
-        localStorage.removeItem("app");
-
         const p = window.performance;
         if (p) {
             if (p.navigation.type == 1) {
@@ -147,15 +196,11 @@ export default class App extends React.Component {
     }
 
     clearDropzone() {
-        localStorage.removeItem("app"); // check whether necessary for cache busting
-
         this.setState( { tools     : [],
                          resource  : undefined} );
     }
 
     render() {
-
-
         var style = {
             display: 'none'
         };
@@ -165,34 +210,7 @@ export default class App extends React.Component {
 
         return (
 <div>
-  <header id="header" role="banner">
-    <link rel="shortcut icon" type="image/x-icon" href="./../images/favicon-cog.ico" />
-    <div className="navbar-static-top  navbar-default navbar" role="navigation">
-      <div className="container">
-        <div className="navbar-header">
-          <a className="navbar-brand" href="./" id="idce">
-            <span><i className="fa fa-cog fa-1x" aria-hidden="true"></i> Language Resource Switchboard</span>
-          </a>
-        </div>
-
-        <div className="collapse navbar-collapse" role="navigation" id="id1">
-          <ul className="nav navbar-nav" id="idcf">
-            <li>
-              <UserHelp className="header-link" />
-            </li>
-            <li>
-              <button id="showAllToolsButton" className="allTools" onClick={this.showAllTools}>Tool Inventory</button>
-            </li>
-          </ul>
-          <div className="pull-right">
-            <a href="http://www.clarin.eu/">
-              <img src="clarin-logo-wide.png" width="119px" height="46px" />
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
+  <Navigation showAllTools={this.showAllTools}/>
 
   <div id='dragAndDropArea'></div>
   <Router history={history}>

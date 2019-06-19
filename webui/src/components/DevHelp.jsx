@@ -1,7 +1,7 @@
 // -------------------------------------------
 // The CLARIN Language Resource Switchboard
 // 2016-18 Claus Zinn, University of Tuebingen
-// 
+//
 // File: DevHelp.jsx
 // Time-stamp: <2018-09-21 09:49:01 (zinn)>
 // -------------------------------------------
@@ -46,11 +46,11 @@ class DevHelpText extends React.Component {
             that can process the resource:</p>
           <ul>
             <li>mimetype: automatically detected once the resource has been dragged & dropped into the drop area.</li>
-            <li>language: the language the resource is in. Apache Tika is used to identify the language of the resource.</li>           
+            <li>language: the language the resource is in. Apache Tika is used to identify the language of the resource.</li>
           </ul>
           <p>For each tool, the LRS switchboard requires a metadata description that gives the switchboard all relevant information for tool applicability and invocation. In particular, the metadata description has slots that describe all the mimetypes and all the languages that the tool can process. </p>
           <p>Example:</p>
-          <img className="alignCenter" src="metadataListing1.png" width="71%" height="71%" />     
+          <img src="metadataListing1.png" width="71%" height="71%" />
           <p>
             The metadata description specifies, among other things, that Weblicht can process
             German resources of type 'text/plain'.
@@ -71,12 +71,12 @@ class DevHelpText extends React.Component {
           <p>
             Note that the name of the parameters (input, lang, analysis) are specific for Weblicht -- and also recorded in the metadata description of Weblicht. If your tool has a different parameter set, you do not need to change them. Just record them in the metadata, make use of the slot <em>mapping</em>, e.g.,
           </p>
-          <img className="alignCenter" src="metadataListing2.png" width="33%" height="33%" />
+          <img src="metadataListing2.png" width="33%" height="33%" />
           <p>
             Here, the URL parameter <em>input</em> is replaced by the parameter <em>URL</em>,
             and <em>lang</em> is replaced by <em>language</em>
           </p>
-          
+
           <p>
             For any questions, please contact the <a href={ emailContactCommand }>Switchboard Team</a>.
           </p>

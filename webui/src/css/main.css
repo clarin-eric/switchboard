@@ -15,17 +15,17 @@ body {
   background: cornsilk;
 
   /* font-family: sans-serif; */
-  font-family: 'Source Sans Pro', sans-serif; 
+  font-family: 'Source Sans Pro', sans-serif;
 }
 
 h2 {
-    text-align: left;		 
+    text-align: left;
 }
 
 .page-header {
   color: #fff;
   text-align: center;
-  padding: 2rem 2rem; 
+  padding: 2rem 2rem;
   background-color: #159957;
   background-image: linear-gradient(120deg, #155799, #159957);
 }
@@ -37,7 +37,7 @@ h2 {
 }
 
 .project-tagline {
-  font-size: 1.2rem;    
+  font-size: 1.2rem;
   margin-bottom: 1.2rem;
   font-weight: normal;
   opacity: 0.7;
@@ -57,7 +57,7 @@ h2 {
 }
 
 .site-footer-owner {
-  font-size: 1rem;    
+  font-size: 1rem;
   display: block;
   font-weight: bold; }
 
@@ -98,7 +98,7 @@ h2 {
   right: 30px;
   background-color: #000;
   color: white;
-  border: 2px solid #fff;  
+  border: 2px solid #fff;
 }
 
 .dropAreaTable {
@@ -113,7 +113,7 @@ h2 {
     margin: 30;
     padding: 30;
     width: 200;
-    transition: 'all 0.5s'  
+    transition: 'all 0.5s'
 }
 
 .dropAreaText {
@@ -169,7 +169,7 @@ h2 {
 
   border: 3px solid #ccc;
   border-radius: 0.5em;
-  cursor: pointer;    
+  cursor: pointer;
 
   min-width: 7em;
   vertical-align: center;
@@ -204,7 +204,7 @@ h2 {
     padding-left: 1em;
     padding-top: 1em;
 }
-    
+
 .tool-header, .task-header {
   overflow: auto;
 
@@ -223,19 +223,19 @@ h2 {
     color: #fff;
     */
     display: block;
-    padding-right: 1em;    
+    padding-right: 1em;
 }
 
 .task-name {
     padding-left: 1em;
     padding-right: 2em;
-    min-width: 20em;    
+    min-width: 20em;
 }
 
 .resource-footer {
   float: right;
   margin-left: 0.5em;
-  margin-top: 0.5em;  
+  margin-top: 0.5em;
 }
 
 .add-resource, .resource-footer button {
@@ -280,7 +280,7 @@ h2 {
 .fa-trash {
     cursor: pointer;
 }
-    
+
 .header-link {
     cursor: pointer;
 }
@@ -312,7 +312,7 @@ h2 {
 
 .task-oriented-view-container h1 {
     color: #aaa;
-    font-size: 1.00rem;    
+    font-size: 1.00rem;
 }
 
 .tooltip {
@@ -326,4 +326,3 @@ h2 {
   position: absolute;
   transition: opacity .3s;
 }
-

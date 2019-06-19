@@ -144,9 +144,6 @@ export default class DropArea extends React.Component {
         // delete old resource(s)
         this.handleResourcesChange( undefined );
 
-        // check whether necessary for cache busting
-        localStorage.removeItem("app");
-
         // manipulate the history (todo: does not work)
         this.props.history.push("/");
     }
