@@ -106,5 +106,4 @@ public class ToolRegistry {
         }
         return Collections.unmodifiableList(tools);
     }
-
 }

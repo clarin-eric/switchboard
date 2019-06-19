@@ -22,7 +22,8 @@ public class Converter {
         Metadata metadata = new Metadata();
         try (InputStream stream = new BufferedInputStream(new FileInputStream(file))) {
             parser.parse(stream, handler, metadata);
-            return handler.toString();
+            String str = handler.toString();
+            return str.trim();
         } catch (TikaException | SAXException xc) {
             throw new ConverterException(xc);
         }

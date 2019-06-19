@@ -39,6 +39,7 @@ public class MediaLibrary {
     public static final Set<String> convertableMediatypes = ImmutableSet.of(
             "application/pdf",
             "application/rtf",
+            "application/msword",
             "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
     );
 
@@ -223,7 +224,7 @@ public class MediaLibrary {
     }
 
     private void periodicCleanup() {
-        // this runs on another thread
+        // this runs on its own thread
         LOGGER.info("start periodic cleanup now");
         for (Iterator<FileInfo> iterator = fileInfoMap.values().iterator(); iterator.hasNext(); ) {
             FileInfo fi = iterator.next();

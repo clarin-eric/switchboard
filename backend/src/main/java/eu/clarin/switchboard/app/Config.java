@@ -31,6 +31,19 @@ public class Config extends Configuration {
         private DataStoreConfig dataStore;
 
         public static class DataStoreConfig {
+            public DataStoreConfig() {
+            }
+
+            public DataStoreConfig(String location, Boolean eraseAllStorageOnStart, String maxSize, String maxLifetime, String maxLifetimeUnit, String cleanupPeriod, String cleanupPeriodUnit) {
+                this.location = location;
+                this.eraseAllStorageOnStart = eraseAllStorageOnStart;
+                this.maxSize = maxSize;
+                this.maxLifetime = maxLifetime;
+                this.maxLifetimeUnit = maxLifetimeUnit;
+                this.cleanupPeriod = cleanupPeriod;
+                this.cleanupPeriodUnit = cleanupPeriodUnit;
+            }
+
             @Valid
             private String location;
 

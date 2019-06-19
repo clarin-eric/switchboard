@@ -18,7 +18,7 @@ switchboard:
   tikaConfigPath: ./src/main/resources/tikaConfig.xml
   toolRegistryPath: ../../switchboard-tool-registry
   dataStore:
-    location: # defaults to temporary storage
+    location: # e.g. /my/data; defaults to temporary storage
     eraseAllStorageOnStart: false
     maxSize: 5M
     maxLifetime: 2

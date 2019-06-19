@@ -26,23 +26,6 @@ public class DataStore {
         this.storagePolicy = storagePolicy;
     }
 
-    public void eraseAllStorage() {
-        LOGGER.warn("!!! erasing all storage, path: " + dataStoreRoot);
-        File[] dirList = dataStoreRoot.toFile().listFiles();
-        if (dirList == null) {
-            return;
-        }
-        for (File dir: dirList) {
-            File[] files = dir.listFiles();
-            if (files != null) {
-                for (File f: files) {
-                    tryDelete(f.toPath());
-                }
-            }
-            tryDelete(dir.toPath());
-        }
-    }
-
     public Path save(UUID id, String filename, InputStream inputStream) throws IOException, StoragePolicyException {
         Path idDir = dataStoreRoot.resolve(id.toString());
         Files.createDirectory(idDir);
@@ -65,6 +48,29 @@ public class DataStore {
         return path;
     }
 
+    public void delete(UUID id, Path path) {
+        tryDelete(path);
+        Path idDir = dataStoreRoot.resolve(id.toString());
+        tryDelete(idDir);
+    }
+
+    public void eraseAllStorage() {
+        LOGGER.warn("!!! erasing all storage, path: " + dataStoreRoot);
+        File[] dirList = dataStoreRoot.toFile().listFiles();
+        if (dirList == null) {
+            return;
+        }
+        for (File dir: dirList) {
+            File[] files = dir.listFiles();
+            if (files != null) {
+                for (File f: files) {
+                    tryDelete(f.toPath());
+                }
+            }
+            tryDelete(dir.toPath());
+        }
+    }
+
     final static String illegalCharsString = "\"'*/:<>?\\|";
     final static TIntHashSet illegalChars = new TIntHashSet();
 
@@ -79,12 +85,6 @@ public class DataStore {
             cleanName.appendCodePoint(replace ? '_' : c);
         });
         return cleanName.toString();
-    }
-
-    public void delete(UUID id, Path path) {
-        tryDelete(path);
-        Path idDir = dataStoreRoot.resolve(id.toString());
-        tryDelete(idDir);
     }
 
     private static void tryDelete(Path path) {

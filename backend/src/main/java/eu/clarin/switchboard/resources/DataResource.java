@@ -1,14 +1,10 @@
 package eu.clarin.switchboard.resources;
 
-import com.google.common.collect.ImmutableMap;
-import eu.clarin.switchboard.core.ConverterException;
 import eu.clarin.switchboard.core.MediaLibrary;
 import eu.clarin.switchboard.core.StoragePolicyException;
-import org.apache.tika.exception.TikaException;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.slf4j.LoggerFactory;
-import org.xml.sax.SAXException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
