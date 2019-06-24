@@ -176,15 +176,21 @@
 
                 <configuration>
                     <imageName>clarin-eric/${project.artifactId}</imageName>
-                    <dockerDirectory>${project.basedir}/docker</dockerDirectory>
+                    <baseImage>anapsix/alpine-java</baseImage>
+                    <entryPoint>["sh", "/${project.artifactId}/bin/${project.artifactId}", "server","/${project.artifactId}/config.yaml"]</entryPoint>
                     <imageTags>
                         <imageTag>${project.version}</imageTag>
                     </imageTags>
                     <resources>
-                        <resource>
-                            <targetPath>/target</targetPath>
-                            <directory>${project.build.directory}</directory>
-                        </resource>
+                      <resource>
+                        <targetPath>/${project.artifactId}/</targetPath>
+                        <directory>${project.build.directory}/appassembler</directory>
+                      </resource>
+                      <resource>
+                        <targetPath>/${project.artifactId}/</targetPath>
+                        <directory>${project.basedir}/</directory>
+                        <include>config.yaml</include>
+                      </resource>
                     </resources>
                 </configuration>
             </plugin>

@@ -191,22 +191,28 @@ public class MediaLibrary {
         Path path = dataStore.save(id, filename, inputStream);
 
         FileInfo fileInfo = new FileInfo(id, filename, path);
-        fileInfoMap.put(id, fileInfo);
-
         File file = path.toFile();
-        fileInfo.mediatype = profiler.detectMediatype(file);
-        if (convertableMediatypes.contains(fileInfo.mediatype)) {
-            try {
-                String text = converter.parseToPlainText(file);
-                fileInfo.language = profiler.detectLanguage(text);
-            } catch (ConverterException xc) {
-                LOGGER.info("Cannot convert media to text for detecting the language: " + xc.getMessage());
+
+        try {
+            fileInfo.mediatype = profiler.detectMediatype(file);
+            if (convertableMediatypes.contains(fileInfo.mediatype)) {
+                try {
+                    String text = converter.parseToPlainText(file);
+                    fileInfo.language = profiler.detectLanguage(text);
+                } catch (ConverterException xc) {
+                    LOGGER.info("Cannot convert media to text for detecting the language: " + xc.getMessage());
+                }
+            } else if (nonTextMediatypes.contains(fileInfo.mediatype)) {
+                // language cannot be detected in this case
+            } else {
+                fileInfo.language = profiler.detectLanguage(file);
             }
-        } else if (nonTextMediatypes.contains(fileInfo.mediatype)) {
-            // language cannot be detected in this case
-        } else {
-            fileInfo.language = profiler.detectLanguage(file);
+        } catch (Exception xc) {
+            dataStore.delete(id, path);
+            throw xc;
         }
+
+        fileInfoMap.put(id, fileInfo);
 
         try {
             storagePolicy.acceptProfile(fileInfo.mediatype, fileInfo.language);
