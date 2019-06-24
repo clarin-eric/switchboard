@@ -17,7 +17,7 @@ public class ConverterTest {
 
     @Before
     public void setUp() throws Exception {
-        converter = new Converter("./src/main/resources/tikaConfig.xml");
+        converter = new Converter("./tikaConfig.xml");
     }
 
     @Test

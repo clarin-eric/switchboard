@@ -1,101 +1,43 @@
-# Switchboard -- Used Technologies
+# Dependencies
 
-The CLRS switchboard has been implemented with ReactJs (v.15.5.4) and related technologies such as
+The Switchboard depends on a registry of compatible tools, freely available online at
+[https://github.com/clarin-eric/switchboard-tool-registry](https://github.com/clarin-eric/switchboard-tool-registry).
+Cloning this repository is required. The default settings require it to have the same parent directory as the switchboard.
 
-- Webpack, a Javascript module bundler, see https://webpack.github.io (v3.4.1),
-- Nodejs version 8.1.4 (see https://nodejs.org/en/), together with
-- the javascript package manager npm (v5.3.0), see https://www.npmjs.com.
+# Build and run for production
 
-For the time being, the github contains all the source code for compiling. 
-The directories node_modules/ and build/ are not hosted on GitHub. They must be created with
-'npm install' and 'webpack', respectively.
+1. Download the sources from github:
 
-# Installation
+   ```git clone https://github.com/clarin-eric/switchboard.git```
+
+2. Build the application's docker image:
+
+   ```make build-docker-image```
+
+3. Run the Docker image (but replace /PATH/TO with a real path):
+
+   ```docker run --name switchboard -d -p 8080:8080 -v /PATH/TO/switchboard-tool-registry:/switchboard-tool-registry:ro switchboard/switchboard:2.0.0-beta1 ```
+
+   (this may depend on your local computing environment).
+
+4. Goto [http://localhost:8080](http://localhost:8080) in your browser to get access to the switchboard.
+
+# Build and run for development
 
 1. Download the sources from github, e.g.,
 
-   ```git clone https://github.com/clarin-eric/LRSwitchboard.git```
+   ```git clone https://github.com/clarin-eric/switchboard.git```
 
-2. Enter the directory LRSwitchboard, and perform
+2. Build the application's backend, and start it on port 8080:
 
-   ```npm install ```
+   ```make run-backend```
 
-and
+   Alternatively, the backend can be started from an IDE like Eclipse or IntelliJ IDEA.
 
-   ```webpack ```
-   
+3. Build the frontend with webpack in hot development mode:
 
-to build the build directory.
+   ```make run-webui-dev-server```
 
-   Opening build/index.html will open the LRS "locally".
-
-3. Copy the contents of the build directory to the html folder of your webserver, e.g. (with clrs
-now holding the contents of the build directory).
-
-   ```cp -p build/* /var/www/clrs/```
-   
-4. Direct your browser to, say,
-
-   ```http://weblicht.sfs.uni-tuebingen.de/clrs ```
-
-to have your web server serving the pages.
-
-
-# DOCKERization (after the build process)
-
-In the main directory, call
-
-   ```make ```
-
-This command will build a docker image that includes the entire content of the build directory (the
-CLRS webpage).  It runs nginx as web server and has access to Java for running the Tika Apache
-tools for language and mimetype identification. It uses supervisord to spawn/control the various processes.
-
-Note that the nginx has a number of reverse proxies, see docker/nginx.conf. In particular, it gives access to
-a file storage server (based on Nextcloud). All reverse-proxing aims at addressing CORS-related issues.
-
-You can run the Docker image with, say:
-
-   ```docker run --name switchboard -d -p 9001:9001 -p 9998:9998 -p 80:80 clauszinn/switchboard:1.4.0-dev ```
-
-(but this may depend on your local computing environment).
-
-Open
-
-   ```http://localhost ```
-
-in your browser to get access to the switchboard.
-
-The address
-
-   ```http://localhost:9001 ```
-
-gives access to the supervisor.
-
-Note that -- for the standalone version of the switchboard (local uploading of resources) -- the host
-running the docker container must be accessible from the outside so that tools connected to the
-switchboard can fetch the resources from there.
-
-# Current deployment of development server
-
-Currently, the development version of the switchboard (most recent version) is deployed at
-
-   ```http://weblicht.sfs.uni-tuebingen.de/clrs-dev ```
-
-This is reverse-proxied to
-
-   ```<server-name>:4711/clrs-dev ```
-
-On ```<server-name> ```, the command
-
-   ```docker run --name switchboard -d -p 9001:9001 -p 9998:9998 -p 80:80 clauszinn/switchboard:1.4.0-dev ```
-
-is run. This fetches the respective (public) Docker image from hub.docker.com and runs it.
-
-
-# Docker hub.
-
-Docker images of the switchboard can be found at
-
-   ```https://hub.docker.com/r/clauszinn/switchboard/tags/ ```
-       
+4. Goto [http://localhost:8081](http://localhost:8081) in your browser to get access to the switchboard.
+   Any change in the frontend code will trigger an automatic recompilation and browser refresh.
+   Changing the backend java code requires a restart of the backend.

@@ -2,7 +2,7 @@ server:
   applicationContextPath: ${APP_CONTEXT_PATH:-/}
   applicationConnectors:
     - type: http
-      port: 8088
+      port: 8080
       # time before the request expires
       idleTimeout: 180 seconds
   adminConnectors:
@@ -15,7 +15,7 @@ logging:
     "eu.clarin": DEBUG
 
 switchboard:
-  tikaConfigPath: ./src/main/resources/tikaConfig.xml
+  tikaConfigPath: ./tikaConfig.xml
   toolRegistryPath: ../../switchboard-tool-registry
   dataStore:
     location: # e.g. /my/data; defaults to temporary storage

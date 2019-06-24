@@ -1,8 +1,9 @@
+DOCKERTAG=switchboard/switchboard:2.0.0-beta1
 WEBUIAPP=src/main/resources/webui
 JSBUNDLE=$(WEBUIAPP)/bundle.js
 
-build-docker-image: build-webui-production
-	(cd backend && mvn -q clean package docker:build)
+build-docker-image:
+	docker build -t $(DOCKERTAG) .
 
 build-webui-production:
 	(cd webui && node_modules/webpack/bin/webpack.js --mode production -p)
