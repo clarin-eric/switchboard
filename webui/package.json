@@ -1,9 +1,9 @@
 {
-  "name": "LRSwitchboard-webui",
+  "name": "switchboard-webui",
   "private": true,
-  "version": "0.1.0",
-  "description": "LRSwitchboard web user interface",
-  "repository": "https://github.com/clarin-eric//LRSwitchboard",
+  "version": "2.0.0",
+  "description": "Switchboard web user interface",
+  "repository": "https://github.com/clarin-eric/switchboard",
   "devDependencies": {
     "@babel/core": "^7.4.4",
     "@babel/preset-env": "^7.4.4",
