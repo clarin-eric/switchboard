@@ -9,10 +9,6 @@
 export const inclToolsReqAuth = process.env.INCL_TOOLS_REQ_AUTH;
 export const fileStorage      = "optionNoLongerActive"; // process.env.FILE_STORAGE;
 
-// todo
-export const nextcloud_user   = process.env.FILE_STORAGE_USER;
-export const nextcloud_pass   = process.env.FILE_STORAGE_TOKEN;
-
 export const lrsVersion       = process.env.VERSION;
 export const emailContact     = process.env.CONTACT;
 export const appContextPath   = process.env.APP_CONTEXT_PATH;
@@ -403,4 +399,9 @@ export function fileExtensionChooser (mimetype) {
         case "application/zip":     return "zip";
         default:                    return "mp4";
     }
+}
+
+
+export function image(src) {
+    return window.APP_CONTEXT_PATH + '/image/' + src;
 }

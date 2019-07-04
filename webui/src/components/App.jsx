@@ -29,38 +29,38 @@ import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 // access to matcher
 import MatcherRemote from '../back-end/MatcherRemote';
 
-import { nextcloud_user, nextcloud_pass, lrsVersion, emailContactCommand } from './../back-end/util';
+import { lrsVersion, emailContactCommand, image } from './../back-end/util';
 
 // logo images for task-oriented view
-require('./../images/clarin-logo-wide.png');
-require('./../images/gateCloud.png');
-require('./../images/weblicht.jpg');
-require('./../images/voyant-tools.jpg');
-require('./../images/frog.jpg');
-require('./../images/colibriCore.jpg');
-require('./../images/valkuil.jpg');
-require('./../images/lindat.jpg');
-require('./../images/foliastats.jpg');
-require('./../images/mary.jpg');
-require('./../images/tscan.jpg');
-require('./../images/oersetter.jpg');
-require('./../images/alpino.jpg');
-require('./../images/fowlt.jpg');
-require('./../images/clarindk.jpg');
-require('./../images/zil.png');
-require('./../images/acdh.png');
-require('./../images/clarin-pl.png');
-require('./../images/d4science.png');
+// require('./../images/clarin-logo-wide.png');
+// require('./../images/gateCloud.png');
+// require('./../images/weblicht.jpg');
+// require('./../images/voyant-tools.jpg');
+// require('./../images/frog.jpg');
+// require('./../images/colibriCore.jpg');
+// require('./../images/valkuil.jpg');
+// require('./../images/lindat.jpg');
+// require('./../images/foliastats.jpg');
+// require('./../images/mary.jpg');
+// require('./../images/tscan.jpg');
+// require('./../images/oersetter.jpg');
+// require('./../images/alpino.jpg');
+// require('./../images/fowlt.jpg');
+// require('./../images/clarindk.jpg');
+// require('./../images/zil.png');
+// require('./../images/acdh.png');
+// require('./../images/clarin-pl.png');
+// require('./../images/d4science.png');
 
-require('./../images/YourLogoComesHere.png');
-require('./../images/metadataListing1.png');
-require('./../images/metadataListing2.png');
+// require('./../images/YourLogoComesHere.png');
+// require('./../images/metadataListing1.png');
+// require('./../images/metadataListing2.png');
 
-require('./../images/file-solid.png');
-require('./../images/location-arrow-solid.png');
-require('./../images/keyboard-solid.png');
+// require('./../images/file-solid.png');
+// require('./../images/location-arrow-solid.png');
+// require('./../images/keyboard-solid.png');
 
-require('./../images/dropResources.png');
+// require('./../images/dropResources.png');
 
 class Navigation extends React.Component {
     constructor(props) {
@@ -104,7 +104,7 @@ class Navigation extends React.Component {
                     </ul>
                 <div className="pull-right">
                   <a href="http://www.clarin.eu/">
-                    <img src="clarin-logo-wide.png" width="119px" height="46px" />
+                    <img src={image('clarin-logo-wide.png')} width="119px" height="46px" />
                   </a>
                 </div>
                 </div>
@@ -181,7 +181,7 @@ export default class App extends React.Component {
 
         // clear resource (so that tools don't show URL)
         this.clearDropzone();
-        const matcher = new MatcherRemote( true );
+        const matcher = new MatcherRemote();
         const toolsPromise = matcher.getAllTools();
         const that = this;
 

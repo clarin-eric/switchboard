@@ -64,7 +64,7 @@ export default class Resource extends React.Component {
             return;
         }
 
-        const matcher = new MatcherRemote( true );
+        const matcher = new MatcherRemote();
         const toolsPromise = matcher.getApplicableTools( this.resource.mimetype, this.resource.language.threeLetterCode );
         const that = this;
         toolsPromise.then(

@@ -32,8 +32,8 @@ public class InfoResource {
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public Response getApiInfo() {
         Map map = new HashMap<String, Object>();
-        map.put("git", InfoResource.this.gitProps);
-        map.put("version", InfoResource.this.gitProps.get("git.build.version"));
+        map.put("git", gitProps);
+        map.put("version", gitProps.get("git.build.version"));
         map.put("maxAllowedDataSize", maxAllowedDataSize);
         try {
             InetAddress host = InetAddress.getLocalHost();

@@ -25,10 +25,10 @@ import MatcherRemote from '../back-end/MatcherRemote';
 import {processLanguage, unfoldHandle} from '../back-end/util';
 
 // not used yet; might replace or add to drop boxes as background image
-import BackgroundFile from './../images/file-solid.png';
-import BackgroundLink from './../images/location-arrow-solid.png';
-import BackgroundText from './../images/keyboard-solid.png';
-import uuidv4 from 'uuid/v4';
+// import BackgroundFile from './../images/file-solid.png';
+// import BackgroundLink from './../images/location-arrow-solid.png';
+// import BackgroundText from './../images/keyboard-solid.png';
+// import uuidv4 from 'uuid/v4';
 
 export default class DropArea extends React.Component {
     constructor(props) {
@@ -259,7 +259,7 @@ export default class DropArea extends React.Component {
     }
 
     getPermissableMimetypes() {
-        const matcher = new MatcherRemote( true );
+        const matcher = new MatcherRemote();
         const mediatypePromise = matcher.getSupportedMimetypes();
         mediatypePromise.then(
             (resolve) => {
@@ -271,7 +271,7 @@ export default class DropArea extends React.Component {
     }
 
     getPermissableLanguages() {
-        const matcher = new MatcherRemote( true );
+        const matcher = new MatcherRemote();
         const languagePromise = matcher.getSupportedLanguages();
 
         languagePromise.then(

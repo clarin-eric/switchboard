@@ -8,29 +8,40 @@ import java.io.*;
 import java.nio.file.*;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class ToolRegistry {
     private static final ch.qos.logback.classic.Logger LOGGER = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(ToolRegistry.class);
 
     Path registryPath;
-
     AtomicReference<List<Tool>> tools = new AtomicReference<>();
     Runnable callback;
 
-    public List<Tool> getTools() {
+    public List<Tool> filterTools(String includeWS, String deployment, String language, String mimetype) {
+        Predicate<Tool> filter = tool -> tool.getDeployment().equals(deployment) &&
+                tool.getLanguages().contains(language) &&
+                tool.getMimetypes().contains(mimetype);
+        return tools.get()
+                .stream()
+                .filter(filter)
+                .collect(Collectors.toList());
+    }
+
+    public List<Tool> getAllTools() {
         return tools.get();
     }
 
     public Set<String> getAllMediatypes() {
         Set<String> mediatypes = new HashSet<>();
-        for (Tool tool : getTools())
+        for (Tool tool : getAllTools())
             mediatypes.addAll(tool.getMimetypes());
         return mediatypes;
     }
 
     public Set<String> getAllLanguages() {
         Set<String> languages = new HashSet<>();
-        for (Tool tool : getTools())
+        for (Tool tool : getAllTools())
             languages.addAll(tool.getLanguages());
         return languages;
     }

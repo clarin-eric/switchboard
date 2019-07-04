@@ -28,6 +28,11 @@ public class Tool extends HashMap<String, Object> {
         return (List<String>) get("mimetypes");
     }
 
+    public String getDeployment() {
+        return (String) get("deployment");
+    }
+
+
     public List<String> getOutput() {
         return (List<String>) get("output");
     }

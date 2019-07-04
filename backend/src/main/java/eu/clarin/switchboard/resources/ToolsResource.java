@@ -6,12 +6,9 @@ import org.slf4j.LoggerFactory;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Path("tools")
 public class ToolsResource {
@@ -26,7 +23,10 @@ public class ToolsResource {
     @GET
     @Path("")
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-    public Response getApiInfo() {
-        return Response.ok(toolRegistry.getTools()).build();
+    public Response getTools(@QueryParam("includeWS") String includeWS,
+                             @QueryParam("deployment") String deployment,
+                             @QueryParam("language") String language,
+                             @QueryParam("mimetype") String mimetype) {
+        return Response.ok(toolRegistry.filterTools(includeWS, deployment, language, mimetype)).build();
     }
 }

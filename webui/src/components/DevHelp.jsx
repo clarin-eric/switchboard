@@ -9,7 +9,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {ModalContainer, ModalDialog} from 'react-modal-dialog';
-import {emailContactCommand} from './../back-end/util';
+import {emailContactCommand, image} from './../back-end/util';
 
 export default class DevHelp extends React.Component {
   static propTypes = {
@@ -50,7 +50,7 @@ class DevHelpText extends React.Component {
           </ul>
           <p>For each tool, the LRS switchboard requires a metadata description that gives the switchboard all relevant information for tool applicability and invocation. In particular, the metadata description has slots that describe all the mimetypes and all the languages that the tool can process. </p>
           <p>Example:</p>
-          <img src="metadataListing1.png" width="71%" height="71%" />
+          <img src={image("metadataListing1.png")} width="71%" height="71%" />
           <p>
             The metadata description specifies, among other things, that Weblicht can process
             German resources of type 'text/plain'.
@@ -71,7 +71,7 @@ class DevHelpText extends React.Component {
           <p>
             Note that the name of the parameters (input, lang, analysis) are specific for Weblicht -- and also recorded in the metadata description of Weblicht. If your tool has a different parameter set, you do not need to change them. Just record them in the metadata, make use of the slot <em>mapping</em>, e.g.,
           </p>
-          <img src="metadataListing2.png" width="33%" height="33%" />
+          <img src={image("metadataListing2.png")} width="33%" height="33%" />
           <p>
             Here, the URL parameter <em>input</em> is replaced by the parameter <em>URL</em>,
             and <em>lang</em> is replaced by <em>language</em>

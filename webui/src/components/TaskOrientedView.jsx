@@ -1,7 +1,7 @@
 // -------------------------------------------
 // The CLARIN Language Resource Switchboard
 // 2016-18 Claus Zinn, University of Tuebingen
-// 
+//
 // File: TaskOrientedView.jsx
 // Time-stamp: <2019-02-28 16:31:37 (zinn)>
 // -------------------------------------------
@@ -35,9 +35,9 @@ const toolOrderSegments = [
         { name: 'Sort by Task' },
         { name: 'Order Alphabetically' }
  ];
-   
+
 export default class TaskOrientedView extends React.Component {
-   
+
     constructor(props) {
         super(props);
         this.handleToolAuthChange  = this.handleToolAuthChange.bind(this);
@@ -46,22 +46,18 @@ export default class TaskOrientedView extends React.Component {
         this.groupTools = this.groupTools.bind(this);
         this.wsSieve = this.wsSieve.bind(this);
         this.authSieve = this.authSieve.bind(this);
-        
+
         this.state = {
             toolAuth:  TOOL_AUTH_ALL_TOOLS,
             toolType:  TOOLTYPE_ALL_TOOLS,
             toolOrder: TOOLORDER_BY_TOOL_TASK,
-            showAlertAllowPopupWindows: false                       
-        };      
-    }
-
-    wsSieve(tool) {
-        return ( tool.softwareType == "webService" ? false : true );
+            showAlertAllowPopupWindows: false
+        };
     }
 
     authSieve(tool) {
         var result = true;
-        
+
         switch (this.state.toolAuth) {
         case TOOL_AUTH_REQUIRED:
             result = ( tool.authentication == "no" ? true : false )
@@ -72,20 +68,20 @@ export default class TaskOrientedView extends React.Component {
         }
         return result;
     }
-    
+
     handleToolAuthChange(index) {
         console.log(`TaskOrientedView/handleToolAuthChange: selected index for inclusion: ${index}`);
-        this.setState( {toolAuth: index} );                     
+        this.setState( {toolAuth: index} );
     }
-    
+
     handleToolTypeChange(index) {
         console.log(`TaskOrientedView/handleToolTypeChange: selected index for inclusion: ${index}`);
-        this.setState( {toolType: index} );                     
+        this.setState( {toolType: index} );
     }
 
     handleToolOrderChange(index) {
         console.log(`TaskOrientedView/handleToolOrderChange: selected index for ordering: ${index}`);
-        this.setState( {toolOrder: index} );                            
+        this.setState( {toolOrder: index} );
     }
 
     groupTools( tools ){
@@ -117,7 +113,7 @@ export default class TaskOrientedView extends React.Component {
             if (entry.task in toolGroups) {
                 toolGroups[ entry.task ] = toolGroups[ entry.task ].concat( toolInfo );
             } else {
-                toolGroups[ entry.task ] = [].concat( toolInfo );               
+                toolGroups[ entry.task ] = [].concat( toolInfo );
             }
         }
 
@@ -132,15 +128,15 @@ export default class TaskOrientedView extends React.Component {
         }
 
         keys.sort();
-        
+
         for (i in keys) {
             var key = keys[i];
             toolGroupsSorted[ key ] = toolGroups[key];
         }
-        
+
         return toolGroupsSorted;
     }
-    
+
     render() {
         const tools = this.props.tools;
 
@@ -148,33 +144,33 @@ export default class TaskOrientedView extends React.Component {
         const onlyTools = tools.filter( this.wsSieve );
         const toolsAfterFilter = onlyTools.filter( this.authSieve );
 
-        toolsAfterFilter.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0)); 
-        
+        toolsAfterFilter.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
+
         const toolsPerTask = this.groupTools(toolsAfterFilter);
         var toolsPerAlphabet = {}
         if ( toolsAfterFilter.length ) {
             toolsPerAlphabet["Alphabetical Order"] = toolsAfterFilter;
         }
-        
+
         const resource = this.props.resource;
-        
+
         console.log('TaskOrientedView/re-rendering', this.state, toolsAfterFilter);
         return (
                 <div className="task-oriented-view-container">
-                  { (toolsAfterFilter.length || tools.length ) ? 
+                  { (toolsAfterFilter.length || tools.length ) ?
                   <div>
                     <h3 id="toolHeading"> Tools </h3>
                     <table width="800px">
                       <tbody>
                         <tr>
-                    
+
                     { /*
                           <td>
                             <SegmentedControl
                               segments={toolTypeSegments}
-                              selected={this.state.toolType} 
+                              selected={this.state.toolType}
                               variant="dark"
-                              onChangeSegment={this.handleToolTypeChange}           
+                              onChangeSegment={this.handleToolTypeChange}
                               />
                           </td>
                       */
@@ -182,20 +178,20 @@ export default class TaskOrientedView extends React.Component {
                           <td>
                             <SegmentedControl
                               segments={toolOrderSegments}
-                              selected={this.state.toolOrder} 
+                              selected={this.state.toolOrder}
                               variant="dark"
-                              onChangeSegment={this.handleToolOrderChange}           
+                              onChangeSegment={this.handleToolOrderChange}
                               />
                           </td>
 
                           <td>
                             <SegmentedControl
                               segments={toolAuthSegments}
-                              selected={this.state.toolAuth} 
+                              selected={this.state.toolAuth}
                               variant="dark"
-                              onChangeSegment={this.handleToolAuthChange}           
+                              onChangeSegment={this.handleToolAuthChange}
                               />
-                          </td>                   
+                          </td>
                         </tr>
                       </tbody>
                     </table>
@@ -205,10 +201,10 @@ export default class TaskOrientedView extends React.Component {
             {this.state.showAlertAllowPopupWindows ?
              <AlertAllowPopupWindows onCloseProp={ () => this.setState( {showAlertAllowPopupWindows: false} ) } />
              : null }
-            
+
             { this.state.toolOrder == TOOLORDER_BY_TOOL_TASK ?
               <div>
-              { 
+              {
                   Object.keys(toolsPerTask).map((task, index) =>
                                                       <h3 className="taskHead" key={task}>{task}
                                                       <hr />
@@ -222,7 +218,7 @@ export default class TaskOrientedView extends React.Component {
               }
               </div> :
               <div>
-              { 
+              {
                   Object.keys(toolsPerAlphabet).map((task, index) =>
                                                       <h3 className="taskHead" key={task}>{task}
                                                       <hr />
@@ -233,11 +229,11 @@ export default class TaskOrientedView extends React.Component {
                                                             />
                                                       </h3>
                                                )
-              }       
+              }
 
               </div>
             }
-            </div>              
+            </div>
             )
     }
 }

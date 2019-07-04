@@ -1,7 +1,7 @@
 // -------------------------------------------
 // The CLARIN Language Resource Switchboard
 // 2016-18 Claus Zinn, University of Tuebingen
-// 
+//
 // File: Tool.jsx
 // Time-stamp: <2019-01-16 10:53:55 (zinn)>
 // -------------------------------------------
@@ -10,7 +10,7 @@ import React from 'react';
 import { Accordion, AccordionItem, AccordionItemTitle,
     AccordionItemBody } from 'react-accessible-accordion';
 
-import { map639_1_to_639_3, map639_3_to_639_1 } from '../back-end/util';
+import { map639_1_to_639_3, map639_3_to_639_1, image } from '../back-end/util';
 import {gatherInvocationParameters, invokeBrowserBasedTool} from '../back-end/ToolInvoker';
 import Request from 'superagent';
 
@@ -24,10 +24,10 @@ export default class Tool extends React.Component {
     }
 
     invokeTool( URL ) {
-        _paq.push(["trackEvent", 'ToolInvocation', URL]); 
+        _paq.push(["trackEvent", 'ToolInvocation', URL]);
         invokeBrowserBasedTool( URL );
     }
-    
+
     // de-activated as it may yield a CORS-related error.
     invokeToolInactive( URL ) {
         Request
@@ -38,10 +38,10 @@ export default class Tool extends React.Component {
                  } else {
                      console.log('Tool/invokeTool:', URL, res);
                      invokeBrowserBasedTool( URL );
-                     _paq.push(["trackEvent", 'ToolInvocation', URL, res.status]);          
+                     _paq.push(["trackEvent", 'ToolInvocation', URL, res.status]);
                  }});
     }
-    
+
     render() {
         const {items, resource, ...props} = this.props;
 
@@ -65,7 +65,7 @@ export default class Tool extends React.Component {
                 fontWeight: 500,
                 fontSize: '12px',
                 opacity: 0.8,
-                color: '#000',      
+                color: '#000',
                 textAlign: 'right'
             }
         };
@@ -89,20 +89,20 @@ export default class Tool extends React.Component {
             const outputFormats = (props.output === undefined) || ((props.output instanceof Array) && props.output.join(', ')) || props.output;
 
             if (fullURL)
-        
+
                 return(
                         <div style={{ position: 'relative', top: 0 }}>
                           <header style={styles.cardHeader} className='card-header-details'>
                             <ProfilePicture imgSrc={props.imgSrc} borderColor={props.imgBorderColor} />
                           </header>
-                          
+
                           <div style={{color: '#000'}}>
                             <DetailsRow
                                icon='icon ion-ios-paper-outline'
                                title="Description"
-                               summary={props.role}         
+                               summary={props.role}
                                />
-                            
+
                             <DetailsRow
                                icon='ion-ios-home-outline'
                                title="Home"
@@ -115,37 +115,37 @@ export default class Tool extends React.Component {
                                                       icon='ion-ios-unlocked-outline'
                                                       title="Authentication"
                                                       summary={props.authentication}
-                                                      />                
+                                                      />
                                                     ) : (
                                                     <DetailsRow
                                                       icon='ion-ios-locked-outline'
                                                       title="Authentication"
                                                       summary={props.authentication}
-                                                      />                                                                    
+                                                      />
                                                     )}
 
                             <DetailsRow
                                icon='ion-ios-barcode-outline'
                                title="Output Format"
                                summary={outputFormats}
-                               />               
+                               />
 
                             <DetailsRow
                                icon='ion-ios-paperplane-outline'
                                title="URL"
                                summary={fullURL}
                                />
-                            
+
                             <DetailsRow
                                icon='ion-ios-location-outline'
                                title="Location"
                                summary={props.location}
                                />
-                            
+
                             <DetailsRow
                                icon='ion-ios-email-outline'
                                title="e-mail"
-                               summary={props.email}        
+                               summary={props.email}
                                />
                           </div>
                         </div>
@@ -161,9 +161,9 @@ export default class Tool extends React.Component {
                  <DetailsRow
                     icon='icon ion-ios-paper-outline'
                     title="Description"
-                    summary={props.role}            
+                    summary={props.role}
                     />
-                 
+
                  <DetailsRow
                     icon='ion-ios-home-outline'
                     title="Home"
@@ -176,33 +176,33 @@ export default class Tool extends React.Component {
                                                       icon='ion-ios-unlocked-outline'
                                                       title="Authentication"
                                                       summary={props.authentication}
-                                                      />                
+                                                      />
                                                     ) : (
                                                     <DetailsRow
                                                       icon='ion-ios-locked-outline'
                                                       title="Authentication"
                                                       summary={props.authentication}
-                                                      />                                                                    
+                                                      />
                                                     )}
 
                             <DetailsRow
                                icon='ion-ios-barcode-outline'
                                title="Output Format"
                                summary={outputFormats}
-                               />               
-                
+                               />
+
                  <DetailsRow
                     icon='ion-ios-location-outline'
                     title="Location"
                     summary={props.location}
                     />
-                 
+
                  <DetailsRow
                     icon='ion-ios-email-outline'
                     title="e-mail"
-                    summary={props.email}           
+                    summary={props.email}
                     />
-                 
+
                </div>
              </div>
             )
@@ -232,20 +232,20 @@ export default class Tool extends React.Component {
                         fontStyle: 'italic'
                 }
             };
-            
+
             const renderSummary = () => {
                 if ((title == "URL") && ( summary )) return (
                     <p style={{ fontWeight: 100, fontSize: '16px', lineHeight: 1.5 }}>
-                    <button onClick={this.invokeTool.bind(this,summary)} > Click to start tool </button>                    
+                    <button onClick={this.invokeTool.bind(this,summary)} > Click to start tool </button>
                     </p>
                 );
 
                 if ((title == "Home") && (summary) ) return (
                     <p style={{ fontWeight: 100, fontSize: '16px', lineHeight: 1.5 }}>
-                        <a href={summary} target="_blank"> {summary }</a> 
+                        <a href={summary} target="_blank"> {summary }</a>
                     </p>
                 );
-                
+
                 if(summary) return (
                         <p style={{ fontWeight: 100, fontSize: '16px', lineHeight: 1.4 }} >
                                 {summary}
@@ -267,14 +267,14 @@ export default class Tool extends React.Component {
 
         return (
                 <Accordion accordion={false} >
-                  { items.map( (element, index) => 
+                  { items.map( (element, index) =>
                   <AccordionItem key={index} >
                     <AccordionItemTitle>
                       <h4>{element.name}</h4>
                     </AccordionItemTitle>
                     <AccordionItemBody>
                       <ToolCard key={index}
-                                imgSrc={element.logo}
+                                imgSrc={image(element.logo)}
                                 imgBorderColor='#6A067A'
                                 name={element.name}
                                 title={element.name}
@@ -287,13 +287,13 @@ export default class Tool extends React.Component {
                                 parameters={element.parameters}
                                 mapping={element.mapping}
                                 output={element.output}
-                                langEncoding={element.langEncoding}             
+                                langEncoding={element.langEncoding}
                                 email={element.email}
                                 role={element.description}
                                 />
                     </AccordionItemBody>
                   </AccordionItem>
                              )}
-            </Accordion>            
+            </Accordion>
         )}
 }

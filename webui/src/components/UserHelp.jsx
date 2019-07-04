@@ -1,7 +1,7 @@
 // -------------------------------------------
 // The CLARIN Language Resource Switchboard
 // 2016-18 Claus Zinn, University of Tuebingen
-// 
+//
 // File: UserHelp.jsx
 // Time-stamp: <2019-01-14 10:33:45 (zinn)>
 // -------------------------------------------
@@ -50,7 +50,7 @@ class UserHelpText extends React.Component {
                    width: '75%',
                    height: '75%'
                 }}
-                src="dropResources.png"
+                src={image("dropResources.png")}
                  />
             </center>
             <ul>
@@ -61,7 +61,7 @@ class UserHelpText extends React.Component {
               <li>Type any (plain) text into the right-most dotted area. For longer texts, please save it
                 to the file, and use the first upload method.</li>
             </ul>
-            
+
             Note. When the switchboard is invoked via the Virtual Language Observatory, or via
             B2DROP, or (in the future) via the Virtual Collection Registry, the "file drop" happens during the
             transferal.
@@ -76,10 +76,10 @@ class UserHelpText extends React.Component {
               <li>In the Tools View, click on a tool of interest to get additional information
               about the selected tool. Then use <b>Click to start tool</b> to open the selected
               tool in a new browser tab.
-              </li>           
+              </li>
             </ol>
           </p>
-          
+
           <h3>For transferals from the Virtual Language Observatory</h3>
             <p>
               When the LRS is called from the VLO, please beware. The resource of interest may not be
@@ -89,7 +89,7 @@ class UserHelpText extends React.Component {
                 <li>the resource link points to a viewer application that shows the resource, not to
                   the resource itself.</li>
               </ul>
-              In these cases, try downloading the resource from the resource provider, then use the 
+              In these cases, try downloading the resource from the resource provider, then use the
               file drop mechanism at <a href="https://switchboard.clarin.eu"> https://switchboard.clarin.eu</a>.
             </p>
             <hr />

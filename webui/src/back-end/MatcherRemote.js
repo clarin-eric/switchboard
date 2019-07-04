@@ -12,8 +12,8 @@ import {matcherURL, deploymentStatus} from './util';
 
 export default class MatcherRemote {
 
-    constructor( includeWebServices ) {
-        this.includeWebServices = includeWebServices;
+    constructor() {
+        this.includeWebServices = true;
     }
 
     getAllTools() {
