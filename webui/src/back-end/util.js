@@ -22,6 +22,7 @@ export const emailContactCommand = "mailto:"+emailContact;
    - used by MatcherRemote.js
 */
 export const deploymentStatus = process.env.NODE_ENV;
+console.log("deploymentStatus: ", deploymentStatus);
 
 
 // for creation of link

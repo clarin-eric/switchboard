@@ -14,17 +14,16 @@ export default class MatcherRemote {
 
     constructor() {
         this.includeWebServices = true;
+        // TODO: includeWebServices is currently unused
     }
 
     getAllTools() {
-        const includeWS = (this.includeWebServices ? "yes" : "no");
         const deployment = ((deploymentStatus == "production") ? "production" : "development");
         const that = this;
         return new Promise(function(resolve, reject) {
             Request
                 .get(window.APP_CONTEXT_PATH
-                     + '/api/tools?includeWS='+includeWS
-                     + '&deployment='+deployment
+                     + '/api/tools?deployment='+deployment
                      + '&sortBy=tools')
                 .set('Accept', 'application/json')
                 .end((err, res) => {

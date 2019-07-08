@@ -18,10 +18,12 @@ public class ToolRegistry {
     AtomicReference<List<Tool>> tools = new AtomicReference<>();
     Runnable callback;
 
-    public List<Tool> filterTools(String includeWS, String deployment, String language, String mimetype) {
-        Predicate<Tool> filter = tool -> tool.getDeployment().equals(deployment) &&
-                tool.getLanguages().contains(language) &&
-                tool.getMimetypes().contains(mimetype);
+    public List<Tool> filterTools(String deployment, String language, String mimetype) {
+        Predicate<Tool> filterDeployment = tool -> deployment.isEmpty()
+                || tool.getDeployment().equals("production") || tool.getDeployment().equals(deployment);
+        Predicate<Tool> filterLanguages = tool -> language.isEmpty() || tool.getLanguages().contains(language);
+        Predicate<Tool> filterMimetypes = tool -> mimetype.isEmpty() || tool.getMimetypes().contains(mimetype);
+        Predicate<Tool> filter = filterDeployment.and(filterLanguages).and(filterMimetypes);
         return tools.get()
                 .stream()
                 .filter(filter)
