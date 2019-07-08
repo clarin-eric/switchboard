@@ -403,5 +403,5 @@ export function fileExtensionChooser (mimetype) {
 
 
 export function image(src) {
-    return window.APP_CONTEXT_PATH + '/image/' + src;
+    return window.APP_CONTEXT_PATH + '/images/' + src;
 }

@@ -55,6 +55,10 @@ export default class TaskOrientedView extends React.Component {
         };
     }
 
+    wsSieve(tool) {
+        return ( tool.softwareType == "webService" ? false : true );
+    }
+
     authSieve(tool) {
         var result = true;
 
