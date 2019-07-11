@@ -18,7 +18,9 @@ COPY ./webui/src                ./webui/src
 RUN make dependencies && make build-webui-production
 
 # --- build java code with maven
-FROM maven:3.6.1-jdk-8-slim AS backend_builder
+FROM registry.gitlab.com/clarin-eric/docker-alpine-supervisor-java-base:openjdk11-1.2.2 AS backend_builder
+
+ARG MAVEN_VERSION=3.6.1-r0
 
 WORKDIR /build
 COPY ./.git                     ./.git
@@ -26,14 +28,15 @@ COPY ./backend                  ./backend
 COPY --from=webui_builder /build/backend/src/main/resources/webui/bundle.js* ./backend/src/main/resources/webui/
 
 WORKDIR /build/backend
+RUN apk add maven=$MAVEN_VERSION
 RUN mvn -q package
 
 ###############################################################################
 
 # now setup running environment
-FROM openjdk:8-jdk-slim
+FROM registry.gitlab.com/clarin-eric/docker-alpine-supervisor-java-base:openjdk11-1.2.2
 
-LABEL maintainer="emanuel.dima@uni-tuebingen.de, andre@clarin.eu"
+LABEL maintainer="switchboard@clarin.eu"
 
 COPY --from=backend_builder /build/backend/target/appassembler /switchboard/
 
