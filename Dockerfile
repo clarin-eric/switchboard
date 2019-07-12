@@ -44,4 +44,4 @@ WORKDIR /switchboard/config
 COPY ./backend/tikaConfig.xml  .
 COPY ./backend/config.yaml     .
 
-CMD /switchboard/bin/switchboard server config.yaml
+ENTRYPOINT /switchboard/bin/switchboard server config.yaml
