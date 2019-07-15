@@ -65,9 +65,8 @@ class DevHelpText extends React.Component {
             <li><em>potentially other information can be passed, of course, for instance, the mimetype of the resource.</em></li>
           </ul>
           <p>For Weblicht, a typical call looks like:</p>
-          <listing>
-              http://tuebingen.weblicht.sfs.uni-tuebingen.de:8888/weblicht/?input=http://ws1-clarind.esc.rzg.mpg.de/drop-off/storage/webRot.txt&lang=de&analysis=dep-parsing&
-          </listing>
+          <code>https://weblicht.sfs.uni-tuebingen.de/weblicht/?input=http://example.com/path&lang=de&analysis=dep-parsing</code>
+          <p/>
           <p>
             Note that the name of the parameters (input, lang, analysis) are specific for Weblicht -- and also recorded in the metadata description of Weblicht. If your tool has a different parameter set, you do not need to change them. Just record them in the metadata, make use of the slot <em>mapping</em>, e.g.,
           </p>

@@ -1,7 +1,7 @@
 // -------------------------------------------
 // The CLARIN Language Resource Switchboard
 // 2016-18 Claus Zinn, University of Tuebingen
-// 
+//
 // File: AboutHelp.jsx
 // Time-stamp: <2019-01-17 12:28:01 (zinn)>
 // -------------------------------------------
@@ -42,20 +42,20 @@ class AboutHelpText extends React.Component {
     return <ModalContainer onClose={this.props.onClose}>
           <ModalDialog onClose={this.props.onClose} className="aboutDialog" width={800} margin={50}>
           <div className="content" id="about">
-          
+
             <h2>About</h2>
             <p>
-              The Language Resource Switchboard (LRS) has been developed 
-              within the <a href="http://www.clarin.eu/">CLARIN-PLUS</a> project. It helps 
+              The Language Resource Switchboard (LRS) has been developed
+              within the <a href="http://www.clarin.eu/">CLARIN-PLUS</a> project. It helps
               users to find and start tools that can process their research data.
             </p>
-            
+
             <h3>Documentation</h3>
             <ul>
               <li>Users, please consult "Help" navigation bar. There is also a FAQ, see page footer.</li>
-              <li>Developers, please consult "For Developers" in the footer of the page.</li>         
+              <li>Developers, please consult "For Developers" in the footer of the page.</li>
             </ul>
-            
+
             <h3>Publications</h3>
             <ul>
               <li>Claus Zinn, The Language Resource Switchboard. Computational Linguistics 44(4), pages 631-639, December 2018.</li>
@@ -75,19 +75,20 @@ class AboutHelpText extends React.Component {
               Zinn. <a href="https://office.clarin.eu/v/CE-2016-0881-CLARINPLUS-D2_5.pdf">D2.5 LR
               Switchboard (software)</a> Deliverable in the CLARIN-PLUS project.</li>
             </ul>
-            
+
             <h3>Credits</h3>
             <p>
               The following people have contributed to the LRS:
             </p>
             <ul>
-              <li>Claus Zinn (main developer, responsible for LRS design, back-end and front-end)</li>
+              <li>Emanuel Dima (current developer and maintainer)</li>
+              <li>Claus Zinn (original developer, responsible for LRS design, back-end and front-end)</li>
               <li>Marie Hinrichs, Wei Qui (integration of WebLicht)</li>
               <li>Maarten van Gompel (integration of the CLAM Webservices)</li>
               <li>Bart Jongejan (integration of the CLARIN-DK Tool Box)</li>
-              <li>Wojtek Rauk (integration of MorphoDoTa, WebSty, Morfeusz, Liner2 etc.)</li>           
-              <li>Rafael Jaworski (integration of Concraft, Nerf, Spejd etc.)</li>              
-              <li>Josef Misutka and Pavel Stranak (UDPipe)</li>         
+              <li>Wojtek Rauk (integration of MorphoDoTa, WebSty, Morfeusz, Liner2 etc.)</li>
+              <li>Rafael Jaworski (integration of Concraft, Nerf, Spejd etc.)</li>
+              <li>Josef Misutka and Pavel Stranak (UDPipe)</li>
               <li>Twan Goosen (switchboard integration in the VLO, Use Cases) </li>
               <li>André Moreira (Use Cases, Dockerization)</li>
               <li>Dieter Van Uytvanck (feedback on specification and usability, Use Cases)</li>
@@ -97,50 +98,40 @@ class AboutHelpText extends React.Component {
               Icons by <a href="http://glyphicons.com/">Glyphicons</a>
               and <a href="https://fontawesome.com/license/free">Font Awesome</a>.
             </p>
-            
-    
+
+
             <h3 id="licence">Licence</h3>
             <div className="licenceText">
               <p>Copyright (C) 2017- CLARIN ERIC</p>
-              
+
               <p>
                 This program is free software: you can redistribute it and/or modify it under the
                 terms of the GNU General Public License as published by the Free Software Foundation,
                 either version 3 of the License, or (at your option) any later version.
               </p>
-              
+
               <p>
                 This program is distributed in the hope that it will be useful, but WITHOUT ANY
                 WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
                 PARTICULAR PURPOSE. See the GNU General Public License for more details.
               </p>
-              
+
               <p>
                 You should have received a copy of the GNU General Public License along with this
                 program. If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.
               </p>
-              
-            </div>
-            
-          <h3>Technology and Source Code</h3>
-            <ul>
-              <li><a href="https://facebook.github.io/react/">ReactJS</a> (version 15.6.2</li>
-              <li><a href="https://nodejs.org/en/">Nodejs</a> (version 8.11.3)</li>
-              <li><a href="https://www.npmjs.com">Javascript package manager npm</a> (version 5.6.0)</li>
-              <li><a href="https://webpack.github.io">Webpack Javascript module bundler</a>(version 4.12.0)</li>
-              <li><a href="http://www.json.org">JSON (JavaScript Object Notation)</a></li>
-              <li><a href="http://tika.apache.org/">Apache Tika (tika-server-1.16.jar)</a></li>
-              <li><a href="https://www.docker.com/">Docker</a> (for deployment)</li>
-          </ul>
 
+            </div>
+
+          <h3>Source Code</h3>
             <p>
-              The <a href="https://github.com/clarin-eric/LRSwitchboard">LRS GitHub repository</a> provides
-              the source code. It also hosts a <code>package.json</code> file that defines all Javascript dependencies.
+              The <a href="https://github.com/clarin-eric/switchboard">Switchboard GitHub repository</a> provides
+              the source code.
             </p>
           </div>
 
           <p>
-            We value your feedback! For any questions or suggestions, please contact the <a href={ emailContactCommand }>Switchboard Team</a>. 
+            We value your feedback! For any questions or suggestions, please contact the <a href={ emailContactCommand }>Switchboard Team</a>.
           </p>
         </ModalDialog>
 </ModalContainer>;

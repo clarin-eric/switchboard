@@ -83,7 +83,7 @@ class Navigation extends React.Component {
         return (
             <nav className="navbar navbar-default navbar-expand-lg fixed-top navbar-light bg-light">
                 <a className="navbar-brand" href='/'>
-                  <span><i className="fa fa-cog fa-1x" aria-hidden="true"></i> Resource Switchboard</span>
+                  <span>Language Resource Switchboard</span>
                 </a>
 
                 <button className="navbar-toggler" type="button" data-toggle="collapse"

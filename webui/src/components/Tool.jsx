@@ -209,57 +209,27 @@ export default class Tool extends React.Component {
         };
 
         const DetailsRow = ({ icon, title, summary }) => {
-            const styles = {
-                row: {
-                        width: '100%',
-                        padding: '20 20px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        margin: '-10px 0'
-                },
-                icon: {
-                        display: 'block',
-                        width: '30px',
-                        height: '30px',
-                        margin: '0px 20px 0 0',
-                        textAlign: 'center',
-                        fontSize: '24px'
-                },
-                title: {
-                        fontWeight: 500,
-                        fontSize: '12px',
-                        margin: 0,
-                        fontStyle: 'italic'
-                }
-            };
-
             const renderSummary = () => {
-                if ((title == "URL") && ( summary )) return (
-                    <p style={{ fontWeight: 100, fontSize: '16px', lineHeight: 1.5 }}>
-                    <button onClick={this.invokeTool.bind(this,summary)} > Click to start tool </button>
-                    </p>
-                );
-
-                if ((title == "Home") && (summary) ) return (
-                    <p style={{ fontWeight: 100, fontSize: '16px', lineHeight: 1.5 }}>
-                        <a href={summary} target="_blank"> {summary }</a>
-                    </p>
-                );
-
-                if(summary) return (
-                        <p style={{ fontWeight: 100, fontSize: '16px', lineHeight: 1.4 }} >
-                                {summary}
-                        </p>
-                );
+              if (!summary) {
                 return null;
+              }
+              const domSummary =
+                (title == "URL") ? <button onClick={this.invokeTool.bind(this,summary)} > Click to start tool </button> :
+                (title == "Home") ? <a href={summary} target="_blank"> {summary }</a> :
+                summary;
+
+              return (
+                  <dl className="dl-horizontal">
+                    <dt>{title}</dt>
+                    <dd>{domSummary}</dd>
+                  </dl>
+              );
             };
 
             return (
-                <div style={styles.row}>
-                <span className={`icon ${icon}`}
-                        style={Object.assign({}, styles.icon, {alignSelf: 'flex-start'})}></span>
+                <div style={{alignSelf: 'flex-start'}}>
                         <div style={{ width: '100%' }}>
-                                {renderSummary()}
+                            {renderSummary()}
                         </div>
                 </div>
             );

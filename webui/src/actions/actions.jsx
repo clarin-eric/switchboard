@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { push } from 'react-router-redux';
 import { apiPath, actionType } from '../constants';
-import { toPairs } from '../utils/utils';
 
 let JOBID = 1;
 

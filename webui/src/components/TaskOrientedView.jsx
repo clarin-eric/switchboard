@@ -210,28 +210,30 @@ export default class TaskOrientedView extends React.Component {
               <div>
               {
                   Object.keys(toolsPerTask).map((task, index) =>
-                                                      <h3 className="taskHead" key={task}>{task}
+                                                      <div className="taskHead" key={task}>
+                                                      <h3>{task}</h3>
                                                       <hr />
                                                       <Tool key={index}
                                                             resource={resource}
                                                             items={toolsPerTask[task]}
                                                             cb={ () => this.setState( {showAlertAllowPopupWindows: true} ) }
                                                             />
-                                                      </h3>
+                                                      </div>
                                                )
               }
               </div> :
               <div>
               {
                   Object.keys(toolsPerAlphabet).map((task, index) =>
-                                                      <h3 className="taskHead" key={task}>{task}
+                                                      <div className="taskHead" key={task}>
+                                                      <h3>{task}</h3>
                                                       <hr />
                                                       <Tool key={index}
                                                             resource={resource}
                                                             items={toolsPerAlphabet[task]}
                                                             cb={ () => this.setState( {showAlertAllowPopupWindows: true} ) }
                                                             />
-                                                      </h3>
+                                                      </div>
                                                )
               }
 

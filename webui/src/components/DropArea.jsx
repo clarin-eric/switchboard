@@ -378,7 +378,6 @@ export default class DropArea extends React.Component {
                                   multiple={false}
                                   onDrop={this.onDrop}
                                   maxSize={5000000}
-                                  accept = {permissableMimetypes}
                                   disabled={disabled}
                                   style={{...styleDropzone, ...styleState, ...textColor}}
                                   activeStyle={activeStyleDropzone} >
@@ -418,12 +417,7 @@ export default class DropArea extends React.Component {
                         </div>
                       </td>
                       <td>
-                        <div>
-                          <span onClick={ () => this.clearDropzone()} >
-                            <i className="fa fa-trash fa-3x" aria-hidden="true" >
-                            </i>
-                          </span>
-                        </div>
+                        <div className="btn btn-default btn-warning" onClick={() => this.clearDropzone()}>Clear</div>
                       </td>
                     </tr>
                   </tbody>

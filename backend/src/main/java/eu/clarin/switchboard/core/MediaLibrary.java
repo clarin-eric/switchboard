@@ -217,6 +217,7 @@ public class MediaLibrary {
         try {
             storagePolicy.acceptProfile(fileInfo.mediatype, fileInfo.language);
         } catch (StoragePolicyException xc) {
+            LOGGER.debug("profile not accepted: " + fileInfo);
             dataStore.delete(id, path);
             fileInfoMap.remove(fileInfo);
             throw xc;
