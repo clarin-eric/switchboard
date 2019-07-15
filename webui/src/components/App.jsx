@@ -31,37 +31,6 @@ import MatcherRemote from '../back-end/MatcherRemote';
 
 import { lrsVersion, emailContactCommand, image } from './../back-end/util';
 
-// logo images for task-oriented view
-// require('./../images/clarin-logo-wide.png');
-// require('./../images/gateCloud.png');
-// require('./../images/weblicht.jpg');
-// require('./../images/voyant-tools.jpg');
-// require('./../images/frog.jpg');
-// require('./../images/colibriCore.jpg');
-// require('./../images/valkuil.jpg');
-// require('./../images/lindat.jpg');
-// require('./../images/foliastats.jpg');
-// require('./../images/mary.jpg');
-// require('./../images/tscan.jpg');
-// require('./../images/oersetter.jpg');
-// require('./../images/alpino.jpg');
-// require('./../images/fowlt.jpg');
-// require('./../images/clarindk.jpg');
-// require('./../images/zil.png');
-// require('./../images/acdh.png');
-// require('./../images/clarin-pl.png');
-// require('./../images/d4science.png');
-
-// require('./../images/YourLogoComesHere.png');
-// require('./../images/metadataListing1.png');
-// require('./../images/metadataListing2.png');
-
-// require('./../images/file-solid.png');
-// require('./../images/location-arrow-solid.png');
-// require('./../images/keyboard-solid.png');
-
-// require('./../images/dropResources.png');
-
 class Navigation extends React.Component {
     constructor(props) {
         super(props);

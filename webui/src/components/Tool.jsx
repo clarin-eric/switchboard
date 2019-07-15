@@ -7,8 +7,7 @@
 // -------------------------------------------
 
 import React from 'react';
-import { Accordion, AccordionItem, AccordionItemTitle,
-    AccordionItemBody } from 'react-accessible-accordion';
+import { Accordion, AccordionItem, AccordionItemTitle, AccordionItemBody } from 'react-accessible-accordion';
 
 import { map639_1_to_639_3, map639_3_to_639_1, image } from '../back-end/util';
 import {gatherInvocationParameters, invokeBrowserBasedTool} from '../back-end/ToolInvoker';
@@ -28,20 +27,6 @@ export default class Tool extends React.Component {
         invokeBrowserBasedTool( URL );
     }
 
-    // de-activated as it may yield a CORS-related error.
-    invokeToolInactive( URL ) {
-        Request
-            .head(URL)
-            .end((err, res) => {
-                 if (err) {
-                     console.log('Tool/invokeTool:', URL, err);
-                 } else {
-                     console.log('Tool/invokeTool:', URL, res);
-                     invokeBrowserBasedTool( URL );
-                     _paq.push(["trackEvent", 'ToolInvocation', URL, res.status]);
-                 }});
-    }
-
     render() {
         const {items, resource, ...props} = this.props;
 
@@ -49,25 +34,10 @@ export default class Tool extends React.Component {
             cardHeader: {
                 display: 'flex',
                 height: '100px',
-                justifyContent: 'space-between',
                 alignItems: 'center',
                 padding: '10px 20px',
                 color: '#000',
             },
-            headerName: {
-                margin: 0,
-                fontWeight: 500,
-                fontSize: '12px',
-                textAlign: 'right'
-            },
-            headerTitle: {
-                margin: '2px 0 0',
-                fontWeight: 500,
-                fontSize: '12px',
-                opacity: 0.8,
-                color: '#000',
-                textAlign: 'right'
-            }
         };
 
         const ProfilePicture = ({ imgSrc, borderColor }) => (
@@ -85,120 +55,51 @@ export default class Tool extends React.Component {
         const ToolCard = (props) => {
             const fullURL = gatherInvocationParameters(props, resource);
             const authenticationNotRequired = (props.authentication == "no");
-//          console.log('Tool/ToolCard', props);
             const outputFormats = (props.output === undefined) || ((props.output instanceof Array) && props.output.join(', ')) || props.output;
 
-            if (fullURL)
-
-                return(
-                        <div style={{ position: 'relative', top: 0 }}>
-                          <header style={styles.cardHeader} className='card-header-details'>
-                            <ProfilePicture imgSrc={props.imgSrc} borderColor={props.imgBorderColor} />
-                          </header>
-
-                          <div style={{color: '#000'}}>
-                            <DetailsRow
-                               icon='icon ion-ios-paper-outline'
-                               title="Description"
-                               summary={props.role}
-                               />
-
-                            <DetailsRow
-                               icon='ion-ios-home-outline'
-                               title="Home"
-                               summary={props.homepage}
-                               />
-
-                            { authenticationNotRequired ? (
-
-                                                    <DetailsRow
-                                                      icon='ion-ios-unlocked-outline'
-                                                      title="Authentication"
-                                                      summary={props.authentication}
-                                                      />
-                                                    ) : (
-                                                    <DetailsRow
-                                                      icon='ion-ios-locked-outline'
-                                                      title="Authentication"
-                                                      summary={props.authentication}
-                                                      />
-                                                    )}
-
-                            <DetailsRow
-                               icon='ion-ios-barcode-outline'
-                               title="Output Format"
-                               summary={outputFormats}
-                               />
-
-                            <DetailsRow
-                               icon='ion-ios-paperplane-outline'
-                               title="URL"
-                               summary={fullURL}
-                               />
-
-                            <DetailsRow
-                               icon='ion-ios-location-outline'
-                               title="Location"
-                               summary={props.location}
-                               />
-
-                            <DetailsRow
-                               icon='ion-ios-email-outline'
-                               title="e-mail"
-                               summary={props.email}
-                               />
-                          </div>
-                        </div>
-            )
-
             return (
-             <div style={{ position: 'relative', top: 0 }}>
-               <header style={styles.cardHeader} className='card-header-details'>
-                 <ProfilePicture imgSrc={props.imgSrc} borderColor={props.imgBorderColor} />
-               </header>
+              <div style={{ position: 'relative', top: 0 }}>
+                <header style={styles.cardHeader} className='card-header-details'>
+                  <ProfilePicture imgSrc={props.imgSrc} borderColor={props.imgBorderColor} />
+                    {fullURL ?
+                      <button className="btn-info btn-lg" style={{marginLeft:16}}
+                        onClick={this.invokeTool.bind(this, fullURL)}>
+                        Click to start tool
+                      </button> : false
+                    }
+                </header>
 
-               <div style={{color: '#000'}}>
-                 <DetailsRow
-                    icon='icon ion-ios-paper-outline'
+                <div style={{color: '#000'}}>
+                  <DetailsRow
                     title="Description"
                     summary={props.role}
                     />
 
-                 <DetailsRow
-                    icon='ion-ios-home-outline'
+                  <DetailsRow
                     title="Home"
                     summary={props.homepage}
                     />
 
-                            { authenticationNotRequired ? (
+                  { authenticationNotRequired
+                    ? <DetailsRow
+                        title="Authentication"
+                        summary={props.authentication} />
+                    : <DetailsRow
+                        title="Authentication"
+                        summary={props.authentication} />
+                  }
 
-                                                    <DetailsRow
-                                                      icon='ion-ios-unlocked-outline'
-                                                      title="Authentication"
-                                                      summary={props.authentication}
-                                                      />
-                                                    ) : (
-                                                    <DetailsRow
-                                                      icon='ion-ios-locked-outline'
-                                                      title="Authentication"
-                                                      summary={props.authentication}
-                                                      />
-                                                    )}
-
-                            <DetailsRow
-                               icon='ion-ios-barcode-outline'
-                               title="Output Format"
-                               summary={outputFormats}
-                               />
+                  <DetailsRow
+                     title="Output Format"
+                     summary={outputFormats}
+                     />
 
                  <DetailsRow
-                    icon='ion-ios-location-outline'
                     title="Location"
                     summary={props.location}
                     />
 
                  <DetailsRow
-                    icon='ion-ios-email-outline'
                     title="e-mail"
                     summary={props.email}
                     />
@@ -208,29 +109,23 @@ export default class Tool extends React.Component {
             )
         };
 
-        const DetailsRow = ({ icon, title, summary }) => {
-            const renderSummary = () => {
-              if (!summary) {
-                return null;
-              }
-              const domSummary =
-                (title == "URL") ? <button onClick={this.invokeTool.bind(this,summary)} > Click to start tool </button> :
-                (title == "Home") ? <a href={summary} target="_blank"> {summary }</a> :
-                summary;
-
-              return (
-                  <dl className="dl-horizontal">
-                    <dt>{title}</dt>
-                    <dd>{domSummary}</dd>
-                  </dl>
-              );
-            };
+        const DetailsRow = ({ title, summary }) => {
+            if (!summary) {
+              return null;
+            }
 
             return (
                 <div style={{alignSelf: 'flex-start'}}>
-                        <div style={{ width: '100%' }}>
-                            {renderSummary()}
-                        </div>
+                  <div style={{ width: '100%' }}>
+                    <dl className="dl-horizontal">
+                      <dt>{title}</dt>
+                      <dd>{title == "Home"
+                            ? <a href={summary} target="_blank"> {summary }</a>
+                            : summary
+                          }
+                      </dd>
+                    </dl>
+                  </div>
                 </div>
             );
         };
@@ -238,32 +133,32 @@ export default class Tool extends React.Component {
         return (
                 <Accordion accordion={false} >
                   { items.map( (element, index) =>
-                  <AccordionItem key={index} >
-                    <AccordionItemTitle>
-                      <h4>{element.name}</h4>
-                    </AccordionItemTitle>
-                    <AccordionItemBody>
-                      <ToolCard key={index}
-                                imgSrc={image(element.logo)}
-                                imgBorderColor='#6A067A'
-                                name={element.name}
-                                title={element.name}
-                                softwareType={element.softwareType}
-                                requestType={element.requestType}
-                                location={element.location}
-                                authentication={element.authentication}
-                                homepage={element.homepage}
-                                url={element.url}
-                                parameters={element.parameters}
-                                mapping={element.mapping}
-                                output={element.output}
-                                langEncoding={element.langEncoding}
-                                email={element.email}
-                                role={element.description}
-                                />
-                    </AccordionItemBody>
-                  </AccordionItem>
-                             )}
+                    <AccordionItem key={index} >
+                      <AccordionItemTitle>
+                        <h4>{element.name}</h4>
+                      </AccordionItemTitle>
+                      <AccordionItemBody>
+                        <ToolCard key={index}
+                                  imgSrc={image(element.logo)}
+                                  imgBorderColor='#6A067A'
+                                  name={element.name}
+                                  title={element.name}
+                                  softwareType={element.softwareType}
+                                  requestType={element.requestType}
+                                  location={element.location}
+                                  authentication={element.authentication}
+                                  homepage={element.homepage}
+                                  url={element.url}
+                                  parameters={element.parameters}
+                                  mapping={element.mapping}
+                                  output={element.output}
+                                  langEncoding={element.langEncoding}
+                                  email={element.email}
+                                  role={element.description}
+                                  />
+                      </AccordionItemBody>
+                    </AccordionItem>
+                  )}
             </Accordion>
         )}
 }
