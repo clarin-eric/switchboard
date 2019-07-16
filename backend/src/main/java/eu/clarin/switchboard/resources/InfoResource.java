@@ -19,12 +19,14 @@ public class InfoResource {
 
     Map<String, String> gitProps;
     long maxAllowedDataSize;
+    String contactEmail;
     ToolRegistry toolRegistry;
 
-    public InfoResource(ToolRegistry toolRegistry, Map<String, String> gitProps, long maxAllowedDataSize) {
+    public InfoResource(ToolRegistry toolRegistry, Map<String, String> gitProps, long maxAllowedDataSize, String contactEmail) {
         this.toolRegistry = toolRegistry;
         this.gitProps = gitProps == null ? new HashMap<>() : gitProps;
         this.maxAllowedDataSize = maxAllowedDataSize;
+        this.contactEmail = contactEmail;
     }
 
     @GET
@@ -34,6 +36,7 @@ public class InfoResource {
         Map map = new HashMap<String, Object>();
         map.put("git", gitProps);
         map.put("version", gitProps.get("git.build.version"));
+        map.put("contactEmail", contactEmail);
         map.put("maxAllowedDataSize", maxAllowedDataSize);
         try {
             InetAddress host = InetAddress.getLocalHost();

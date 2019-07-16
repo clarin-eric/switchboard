@@ -9,7 +9,7 @@
 import React from 'react';
 import { Accordion, AccordionItem, AccordionItemTitle, AccordionItemBody } from 'react-accessible-accordion';
 
-import { map639_1_to_639_3, map639_3_to_639_1, image } from '../back-end/util';
+import { map639_3_to_639_1, image } from '../back-end/util';
 import {gatherInvocationParameters, invokeBrowserBasedTool} from '../back-end/ToolInvoker';
 import Request from 'superagent';
 

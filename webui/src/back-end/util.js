@@ -6,13 +6,8 @@
 // Time-stamp: <2019-02-28 16:40:24 (zinn)>
 // -------------------------------------------
 
-export const inclToolsReqAuth = process.env.INCL_TOOLS_REQ_AUTH;
-export const fileStorage      = "optionNoLongerActive"; // process.env.FILE_STORAGE;
-
 export const lrsVersion       = process.env.VERSION;
 export const emailContact     = process.env.CONTACT;
-export const appContextPath   = process.env.APP_CONTEXT_PATH;
-//export const emailContactCommand = "mailto:"+emailContact+"?subject=CLARIN-PLUS LRS";
 export const emailContactCommand = "mailto:"+emailContact;
 
 /* new environment variable:
@@ -143,12 +138,6 @@ const langEncodingMap = {
     "vi" : "vie",
     "zh" : "zho"
 }
-
-// not used
-export const map639_1_to_639_3 = function( key ) {
-    return langEncodingMap[key];
-}
-
 
 /* in the tool metadata, the languages slot contains ISO 639-3 codes.
    (but some tools may need to be invoked with corresponding ISO 639-1 code.
@@ -388,19 +377,6 @@ export function processLanguage( language ) {
            };
 }
 
-
-
-export function fileExtensionChooser (mimetype) {
-    switch (mimetype) {
-        case "application/pdf":     return "pdf";
-        case "text/plain":          return "txt";
-        case "text/html":           return "html";
-        case "application/msword":  return "doc";
-        case "application/rtf":     return "rtf";
-        case "application/zip":     return "zip";
-        default:                    return "mp4";
-    }
-}
 
 
 export function image(src) {

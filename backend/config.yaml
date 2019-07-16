@@ -17,6 +17,7 @@ logging:
 switchboard:
   tikaConfigPath: ./tikaConfig.xml
   toolRegistryPath: ../../switchboard-tool-registry
+  contactEmail: switchboard@clarin.eu
   dataStore:
     location: # e.g. /my/data; defaults to temporary storage
     eraseAllStorageOnStart: false

@@ -6,7 +6,7 @@
 // Time-stamp: <2019-01-17 14:54:45 (zinn)>
 // -------------------------------------------
 
-import { map639_1_to_639_3, map639_3_to_639_1 } from './util';
+import { map639_3_to_639_1 } from './util';
 
 export function invokeBrowserBasedTool( URL ) {
     var win = window.open(URL, '_blank');

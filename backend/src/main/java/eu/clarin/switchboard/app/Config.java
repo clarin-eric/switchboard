@@ -28,7 +28,15 @@ public class Config extends Configuration {
 
         @Valid
         @NotNull
+        private String contactEmail;
+
+        @Valid
+        @NotNull
         private DataStoreConfig dataStore;
+
+        public String getContactEmail() {
+            return contactEmail;
+        }
 
         public static class DataStoreConfig {
             public DataStoreConfig() {
@@ -147,6 +155,7 @@ public class Config extends Configuration {
             return MoreObjects.toStringHelper(this)
                     .add("\ttikaConfigPath", tikaConfigPath)
                     .add("\ttoolRegistryPath", toolRegistryPath)
+                    .add("\tcontactEmail", contactEmail)
                     .add("\tdataStore", dataStore)
                     .toString();
         }

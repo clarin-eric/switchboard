@@ -68,7 +68,7 @@ public class SwitchboardApp extends Application<Config> {
         MediaLibrary mediaLibrary = new MediaLibrary(dataStore, profiler, converter, storagePolicy);
 
         InfoResource infoResource = new InfoResource(toolRegistry, gitProperties,
-                switchboardConfig.getDataStore().getMaxSize());
+                switchboardConfig.getDataStore().getMaxSize(), switchboardConfig.getContactEmail());
         DataResource dataResource = new DataResource(mediaLibrary);
         ToolsResource toolsResource = new ToolsResource(toolRegistry);
 
