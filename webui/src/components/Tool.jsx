@@ -9,8 +9,8 @@
 import React from 'react';
 import { Accordion, AccordionItem, AccordionItemTitle, AccordionItemBody } from 'react-accessible-accordion';
 
-import { map639_3_to_639_1, image } from '../back-end/util';
-import {gatherInvocationParameters, invokeBrowserBasedTool} from '../back-end/ToolInvoker';
+import { map639_3_to_639_1, image } from './util';
+import {gatherInvocationParameters, invokeBrowserBasedTool} from './ToolInvoker';
 import Request from 'superagent';
 
 export default class Tool extends React.Component {

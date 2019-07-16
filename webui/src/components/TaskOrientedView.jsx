@@ -18,7 +18,7 @@ import { TOOLTYPE_QUANTITATIVE_TOOLS,
          TOOL_AUTH_ALL_TOOLS,
          TOOL_AUTH_REQUIRED,
          TOOLORDER_BY_TOOL_TASK, TOOLORDER_BY_TOOL_NAME
-       } from './../back-end/util';
+       } from './util';
 
 const toolTypeSegments = [
         { name: 'Quantitative Analysis Tools' },

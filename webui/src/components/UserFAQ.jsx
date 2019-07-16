@@ -1,7 +1,7 @@
 // -------------------------------------------
 // The CLARIN Language Resource Switchboard
 // 2016-18 Claus Zinn, University of Tuebingen
-// 
+//
 // File: UserFAQ.jsx
 // Time-stamp: <2019-03-19 16:37:25 (zinn)>
 // -------------------------------------------
@@ -9,7 +9,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {ModalContainer, ModalDialog} from 'react-modal-dialog';
-import {emailContactCommand} from './../back-end/util';
+import {emailContactCommand} from './util';
 
 export default class UserFAQ extends React.Component {
   static propTypes = {
@@ -73,7 +73,7 @@ class UserFAQText extends React.Component {
               <p> A: The Switchboard makes use of cookies and uses Matomo (Piwik)
                 to track user visits.
               </p>
-            </li>                     
+            </li>
             <li>
               <em>Q: Is there a way to perform a batch processing of files?</em>
               <p>
@@ -82,7 +82,7 @@ class UserFAQText extends React.Component {
                 a single tool connected to the Switchboard that can batch process documents:
                 "WebSty". To invoke WebSty, upload a zip archive of Polish plain text files and
                 follow the instructions.
-              </p>            
+              </p>
             </li>
             <li>
               <em>Q: Is there a way for the Switchboard to run tools in a pipeline?</em>
@@ -92,10 +92,10 @@ class UserFAQText extends React.Component {
                 multiple Switchboard entries each advertising a complex analysis such as
                 constituency parsing or named entity recognition. WebLicht then orchestrates the
                 execution of the pipeline that divides the complex analysis in simpler tasks.
-              </p>                    
+              </p>
             </li>
             <li>
-              <em>Q: Is there a way to give the Switchboard two or more resources at once?</em>     
+              <em>Q: Is there a way to give the Switchboard two or more resources at once?</em>
               <p>A: At the time of writing, only a single resource can be processed. But we are
                 well aware of tools that need two or more inputs (e.g., for aligning speech with
                 text).  Please drop us an email so we know that there is considerable interest to
@@ -110,14 +110,14 @@ class UserFAQText extends React.Component {
             </li>
             <li>
               <em>Q: I do not see many well-known tools in the Switchboard. Where, for instance, are the NLP tools from Stanford?</em>
-              <p>             
+              <p>
                 A: At the time of writing, the Stanford tools are not <em>directly</em> callable from the
                 Switchboard. Remember, to connect a tool to the Switchboard, the tool developers have to
                 perform some integration work (for details, see "For Developers"). However, well-known tools work
                 under the hood of WebLicht.  The WebLicht entry for Constituent Parsing, for example,  makes use
                 of the Stanford Tokenizer and the Charniak parser. Be assured, the Switchboard will
-                continue to integrate more tools <em>directly</em> into the Switchboard. 
-              </p>                    
+                continue to integrate more tools <em>directly</em> into the Switchboard.
+              </p>
             </li>
 
             <li>

@@ -21,8 +21,8 @@ import AlertMissingInfo from './AlertMissingInfo.jsx';
 import AlertMissingInputText from './AlertMissingInputText.jsx';
 import UserFAQ from './UserFAQ.jsx';                // component displaying user faq
 
-import MatcherRemote from '../back-end/MatcherRemote';
-import {processLanguage, unfoldHandle} from '../back-end/util';
+import MatcherRemote from './MatcherRemote';
+import {processLanguage, unfoldHandle} from './util';
 
 // not used yet; might replace or add to drop boxes as background image
 // import BackgroundFile from './../images/file-solid.png';

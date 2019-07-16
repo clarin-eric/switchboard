@@ -13,7 +13,7 @@ import AlertMissingInfo from './AlertMissingInfo.jsx';
 import AlertNoTools from './AlertNoTools.jsx';
 
 // access to matcher
-import MatcherRemote from '../back-end/MatcherRemote';
+import MatcherRemote from './MatcherRemote';
 
 
 export default class Resource extends React.Component {

@@ -9,7 +9,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {ModalContainer, ModalDialog} from 'react-modal-dialog';
-import {emailContactCommand} from './../back-end/util';
+import {emailContactCommand} from './util';
 
 export default class AboutHelp extends React.Component {
   static propTypes = {

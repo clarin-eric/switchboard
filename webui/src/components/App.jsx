@@ -27,9 +27,9 @@ import PiwikReactRouter from 'piwik-react-router';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 
 // access to matcher
-import MatcherRemote from '../back-end/MatcherRemote';
+import MatcherRemote from './MatcherRemote';
 
-import { lrsVersion, emailContactCommand, image } from './../back-end/util';
+import { lrsVersion, emailContactCommand, image } from './util';
 
 class Navigation extends React.Component {
     constructor(props) {
@@ -237,7 +237,7 @@ export default class App extends React.Component {
   <p />
 
   <footer id="footer">
-    <div className="container">
+    <div className="container-fluid">
       <div className="row">
         <div className="col-sm-6 col-sm-push-3 col-xs-12">
           <div className="text-center">
