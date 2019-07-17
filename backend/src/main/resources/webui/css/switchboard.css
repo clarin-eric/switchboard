@@ -1,0 +1,18 @@
+/* to set footer at page bottom */
+html, body, #reactapp { height: 100%; }
+#bodycontainer { height: auto; min-height: 100%; }
+#footer {
+    clear: both;
+    position: relative;
+    height: 80px;
+    margin-top: -80px;
+    padding-top: 20px;
+    border-top: 1px solid #d5d5d5;
+    background-color: #eee;
+    color: #777;
+}
+
+/* fix links without href (with onClick) */
+a {
+    cursor: pointer
+}

@@ -36,5 +36,6 @@ public class ToolsResource {
         mimetype = mimetype == null ? "" : mimetype;
         List<Tool> tools = toolRegistry.filterTools(deployment, language, mimetype);
         return Response.ok(tools).build();
+
     }
 }
