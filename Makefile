@@ -1,4 +1,4 @@
-DOCKERTAG=switchboard/switchboard:2.0.0-beta1
+DOCKERTAG=switchboard/switchboard:2.0.0
 WEBUIAPP=src/main/resources/webui
 JSBUNDLE=$(WEBUIAPP)/bundle.js
 
@@ -31,7 +31,6 @@ dependencies:
 
 clean:
 	(cd backend && mvn -q clean)
-	rm webui/package-lock.json
 	rm -rf webui/node_modules
 	rm -f $(WEBUIAPP)/bundle.js*
 
