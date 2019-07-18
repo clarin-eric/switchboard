@@ -49,6 +49,7 @@
     "xml2js": "^0.4.19",
     "bootstrap": "^4.3.1",
     "piwik-react-router": "^0.12.1",
-    "history": "^4"
+    "history": "^4",
+    "lodash": "^4.17.14"
   }
 }

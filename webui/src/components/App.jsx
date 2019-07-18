@@ -9,6 +9,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
+import Request from 'superagent';
 
 // components
 import Resource from './Resource.jsx';              // render the resource
@@ -29,7 +30,7 @@ import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 // access to matcher
 import MatcherRemote from './MatcherRemote';
 
-import { lrsVersion, emailContactCommand, image } from './util';
+import { image } from './util';
 
 class Navigation extends React.Component {
     constructor(props) {
@@ -64,11 +65,17 @@ class Navigation extends React.Component {
 
                 <div id="navbarSupportedContent" className={navCollapseClass}>
                     <ul className="navbar-nav mr-auto">
-                        <li className="nav-item">
-                            <UserHelp className="btn header-link"/>
-                        </li>
                         <li className="nav-item" onClick={this.close}>
                             <button id="showAllToolsButton" className="allTools" onClick={this.props.showAllTools}>Tool Inventory</button>
+                        </li>
+                        <li className="nav-item">
+                            <UserHelp className="btn header-link" contact={this.props.contact}/>
+                        </li>
+                        <li className="nav-item">
+                            <UserFAQ className="btn header-link" contact={this.props.contact}/>
+                        </li>
+                        <li className="nav-item">
+                            <DevHelp className="btn header-link" contact={this.props.contact}/>
                         </li>
                     </ul>
                 <div className="pull-right">
@@ -97,7 +104,9 @@ export default class App extends React.Component {
 
         this.state = {
             tools     : [],
-            resource  : undefined
+            resource  : undefined,
+            lrsVersion: undefined,
+            contact: "",
         };
 
         this.piwik = PiwikReactRouter({
@@ -105,7 +114,6 @@ export default class App extends React.Component {
             siteId      : 21,
             enableLinkTracking: true
         });
-
     }
 
     handleToolsChange( tools ) {
@@ -122,7 +130,6 @@ export default class App extends React.Component {
     }
 
     componentDidMount() {
-
         this.piwik.push(["setDomains",
                          ["*.weblicht.sfs.uni-tuebingen.de/clrs",
                           "*.weblicht.sfs.uni-tuebingen.de/clrs-dev",
@@ -140,7 +147,18 @@ export default class App extends React.Component {
             }
         }
 
-        //      this.refresh();
+        Request
+            .get(window.APP_CONTEXT_PATH + '/api/info')
+            .set('Accept', 'application/json')
+            .then((response) => {
+              console.log("apiinfo", response);
+              const info = response.body || {};
+              this.setState({
+                lrsVersion: info.version,
+                contact: "mailto:"+info.contactEmail,
+                maxAllowedDataSize: info.maxAllowedDataSize,
+              })
+            });
     }
 
     showAllTools() {
@@ -179,7 +197,7 @@ export default class App extends React.Component {
 
         return (
 <div>
-  <Navigation showAllTools={this.showAllTools}/>
+  <Navigation showAllTools={this.showAllTools} contact={this.state.contact}/>
 
   <div id='dragAndDropArea'></div>
   <Router history={history}>
@@ -237,30 +255,24 @@ export default class App extends React.Component {
   <p />
 
   <footer id="footer">
-    <div className="container-fluid">
+    <div className="container">
       <div className="row">
-        <div className="col-sm-6 col-sm-push-3 col-xs-12">
+        <div className="col-sm-2 col-xs-12  text-center">
+          <AboutHelp className="header-link" contact={this.state.contact}/>
+          <div className="version-info text-center-xs">
+            v{this.state.lrsVersion}
+          </div>
+        </div>
+        <div className="col-sm-8 col-xs-12">
           <div className="text-center">
-            <div>
-              <DevHelp className="header-link" />
-            </div>
             <span className="footer-fineprint">
               Service provided by <a href="https://www.clarin.eu">CLARIN</a>
             </span>
           </div>
         </div>
-        <div className="col-sm-3 col-sm-pull-6 col-xs-12">
-          <AboutHelp className="header-link" />
-          <div className="version-info text-center-xs">
-            {lrsVersion}
-          </div>
-        </div>
-        <div className="col-sm-3 text-right">
+        <div className="col-sm-2 col-xs-12" style={{maxWidth: '15%'}}>
           <div className="text-center">
-            <a href={ emailContactCommand }>Contact & Support</a>
-            <div>
-              <UserFAQ className="header-link" />
-            </div>
+            <a href={ this.state.contact }>Contact</a>
           </div>
           </div>
       </div>

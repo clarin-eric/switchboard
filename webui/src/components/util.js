@@ -6,10 +6,6 @@
 // Time-stamp: <2019-02-28 16:40:24 (zinn)>
 // -------------------------------------------
 
-export const lrsVersion       = process.env.VERSION;
-export const emailContact     = process.env.CONTACT;
-export const emailContactCommand = "mailto:"+emailContact;
-
 /* new environment variable:
    - used to communicate between CLRS and CLRS-REST
    - production version of the switchboard only calls tools deemed to have production status

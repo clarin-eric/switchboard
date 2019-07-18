@@ -9,7 +9,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {ModalContainer, ModalDialog} from 'react-modal-dialog';
-import {emailContactCommand, image} from './util';
+import {image} from './util';
 
 export default class DevHelp extends React.Component {
   static propTypes = {
@@ -28,7 +28,7 @@ export default class DevHelp extends React.Component {
     return <a className={this.props.className} onClick={this.openModal}>
       For Developers
       {this.state.showModal ?
-        <DevHelpText onClose={this.closeModal}/>
+        <DevHelpText onClose={this.closeModal} contact={this.props.contact}/>
       : null}
     </a>;
   }
@@ -77,7 +77,7 @@ class DevHelpText extends React.Component {
           </p>
 
           <p>
-            For any questions, please contact the <a href={ emailContactCommand }>Switchboard Team</a>.
+            For any questions, please contact the <a href={ this.props.contact }>Switchboard Team</a>.
           </p>
         </ModalDialog>
 </ModalContainer>;

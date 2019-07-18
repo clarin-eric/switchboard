@@ -9,7 +9,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {ModalContainer, ModalDialog} from 'react-modal-dialog';
-import {emailContactCommand} from './util';
 
 export default class AboutHelp extends React.Component {
   static propTypes = {
@@ -28,7 +27,7 @@ export default class AboutHelp extends React.Component {
     return <a className={this.props.className} onClick={this.openModal}>
       About
       {this.state.showModal ?
-        <AboutHelpText onClose={this.closeModal}/>
+        <AboutHelpText onClose={this.closeModal} contact={this.props.contact}/>
       : null}
     </a>;
   }
@@ -131,7 +130,7 @@ class AboutHelpText extends React.Component {
           </div>
 
           <p>
-            We value your feedback! For any questions or suggestions, please contact the <a href={ emailContactCommand }>Switchboard Team</a>.
+            We value your feedback! For any questions or suggestions, please contact the <a href={ this.props.contact }>Switchboard Team</a>.
           </p>
         </ModalDialog>
 </ModalContainer>;

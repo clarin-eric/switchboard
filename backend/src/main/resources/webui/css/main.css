@@ -283,6 +283,7 @@ h2 {
 
 .header-link {
     cursor: pointer;
+    color: #07426e !important;
 }
 
 .logoAlignLeft {
