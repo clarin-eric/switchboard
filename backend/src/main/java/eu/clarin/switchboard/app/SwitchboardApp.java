@@ -22,6 +22,8 @@ import java.nio.file.Paths;
 import java.util.Map;
 
 public class SwitchboardApp extends Application<Config> {
+    public static final String URL_PATTERN = "/api/*";
+
     public static void main(String[] args) throws Exception {
         new SwitchboardApp().run(args);
     }
@@ -72,15 +74,15 @@ public class SwitchboardApp extends Application<Config> {
         DataResource dataResource = new DataResource(mediaLibrary);
         ToolsResource toolsResource = new ToolsResource(toolRegistry);
 
-        environment.getApplicationContext().setErrorHandler(new HttpErrorHandler());
+        environment.jersey().setUrlPattern(URL_PATTERN);
+        HttpErrorHandler httpErrorHandler = new HttpErrorHandler(appContextPath, URL_PATTERN);
+        environment.getApplicationContext().setErrorHandler(httpErrorHandler);
 
         environment.jersey().register(MultiPartFeature.class);
         environment.jersey().register(StoragePolicyExceptionMapper.class);
         environment.jersey().register(infoResource);
         environment.jersey().register(dataResource);
         environment.jersey().register(toolsResource);
-
-        environment.jersey().setUrlPattern("/api/*");
 
         environment.healthChecks().register("switchboard", new AppHealthCheck());
     }

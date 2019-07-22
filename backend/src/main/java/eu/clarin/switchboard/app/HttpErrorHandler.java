@@ -19,16 +19,24 @@ import java.io.IOException;
  * the default index.html HTML code.
  */
 public class HttpErrorHandler extends org.eclipse.jetty.server.handler.ErrorHandler {
-
     private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(HttpErrorHandler.class);
 
     public static final String REDIRECT_ROUTE = "/index.html";
+    private String rootPath;
+
+    public HttpErrorHandler(String appContextPath, String urlPattern) {
+        String rootPattern = urlPattern.endsWith("/*") ? urlPattern.substring(0, urlPattern.length() - 1) : urlPattern;
+        String normalizedContextPath = !appContextPath.isEmpty() && !appContextPath.equals("/")
+                ? (appContextPath.startsWith("/") ? appContextPath : "/" + appContextPath) : "";
+        rootPath = normalizedContextPath + rootPattern;
+    }
 
 
     @Override
     public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException {
         // On 404 page we need to show index.html and let JS router do the work, otherwise show error page
-        if (response.getStatus() == HttpServletResponse.SC_NOT_FOUND) {
+        if (response.getStatus() == HttpServletResponse.SC_NOT_FOUND &&
+                !request.getRequestURI().startsWith(rootPath)) {
             forward(REDIRECT_ROUTE, baseRequest, response);
         } else {
             super.handle(target, baseRequest, request, response);

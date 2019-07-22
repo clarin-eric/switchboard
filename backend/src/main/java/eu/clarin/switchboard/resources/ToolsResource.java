@@ -12,7 +12,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-@Path("tools")
+@Path("")
 public class ToolsResource {
     private static final ch.qos.logback.classic.Logger LOGGER = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(ToolsResource.class);
 
@@ -23,7 +23,7 @@ public class ToolsResource {
     }
 
     @GET
-    @Path("")
+    @Path("tools")
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public Response getTools(@QueryParam("includeWS") String includeWS,
                              @QueryParam("deployment") String deployment,

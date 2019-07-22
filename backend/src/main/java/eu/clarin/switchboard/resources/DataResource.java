@@ -33,8 +33,17 @@ public class DataResource {
     @GET
     @Path("/{id}")
     public Response getFile(@PathParam("id") String idString)  {
-        UUID id = UUID.fromString(idString);
+        UUID id;
+        try {
+            id = UUID.fromString(idString);
+        } catch (IllegalArgumentException xc) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
         MediaLibrary.FileInfo fi = mediaLibrary.getFileInfo(id);
+        if (fi == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
         StreamingOutput fileStream = output -> {
             byte[] data = Files.readAllBytes(fi.getPath());
             output.write(data);
