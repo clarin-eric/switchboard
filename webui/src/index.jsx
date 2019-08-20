@@ -4,18 +4,17 @@ import { compose, applyMiddleware, createStore } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
-// todo: import PiwikReactRouter from 'piwik-react-router';
 
 import rootReducers from './actions/reducers';
-import { fetchApiInfo } from './actions/actions';
+import {fetchApiInfo, fetchAllTools} from './actions/actions';
 
-// todo: remove these
-// import { BrowseJobs } from './containers/BrowseJobs';
-// import { Job } from './containers/Job';
-// import { CreateJob } from  './containers/CreateJob';
 import { NavBar } from './components/NavBar';
 import { FooterContainer } from './containers/FooterContainer';
 import { HomeContainer } from './containers/HomeContainer';
+import { AboutContainer, HelpContainer, FAQContainer, ForDevelopersContainer } from './containers/HelpContainers';
+
+// todo: make sure we keep old urls
+// todo: enable piwik
 
 
 function middleware() {
@@ -25,32 +24,67 @@ function middleware() {
     const {logger} = require ('redux-logger');
     const rde = window.__REDUX_DEVTOOLS_EXTENSION__;
     const devTools = (rde && rde()) || (f => f);
-    return compose(applyMiddleware(thunk, logger), devTools);
+    return compose(applyMiddleware(thunk), devTools);
+    // return compose(applyMiddleware(thunk, logger), devTools);
 }
 const store = createStore(rootReducers, middleware());
 
 
-class App extends React.Component {
+const Frame = (props) => (
+    <div id="bodycontainer">
+        <NavBar/>
+        <div className="container-fluid">
+            <div className="row">
+                <div className="col-md-1" />
+                <div className="col-md-10">
+                    {props.children}
+                </div>
+            </div>
+        </div>
+    </div>
+);
+
+class Application extends React.Component {
     constructor(props) {
         super(props);
         store.dispatch(fetchApiInfo());
+        store.dispatch(fetchAllTools());
+
+        // this.piwik = PiwikReactRouter({
+        //     url : 'https://stats.clarin.eu',
+        //     siteId      : 21,
+        //     enableLinkTracking: true
+        // });
+    }
+
+    componentDidMount() {
+        // todo: enable piwik
+        // const domains = [
+        //     "*.weblicht.sfs.uni-tuebingen.de/switchboard-test",
+        //     "switchboard.clarin-dev.eu",
+        //     "beta-switchboard.clarin.eu",
+        //     "switchboard.clarin.eu"
+        // ];
+        // this.piwik.push(["setDomains", domains]);
+        // this.piwik.push(['trackPageView']);
     }
 
     render() {
         // todo: remove these
-        // <Route exact path='/jobs' component={BrowseJobs} />
-        // <Route exact path='/jobs/new' component={CreateJob} />
         // <Route exact path='/jobs/:id' component={Job} />
         return (
             <Provider store={store}>
                 <Router>
-                    <div id="bodycontainer">
-                        <NavBar/>
+                    <Frame>
                         <Switch>
-                            <Route exact path='/' component={HomeContainer} />
+                            <Route exact path={window.APP_CONTEXT_PATH+'/'} component={HomeContainer} />
+                            <Route exact path={window.APP_CONTEXT_PATH+'/help'} component={HelpContainer} />
+                            <Route exact path={window.APP_CONTEXT_PATH+'/help/about'} component={AboutContainer} />
+                            <Route exact path={window.APP_CONTEXT_PATH+'/help/faq'} component={FAQContainer} />
+                            <Route exact path={window.APP_CONTEXT_PATH+'/help/developers'} component={ForDevelopersContainer} />
                             <Route component={NotFound} />
                         </Switch>
-                    </div>
+                    </Frame>
                     <FooterContainer />
                 </Router>
             </Provider>
@@ -62,4 +96,4 @@ const NotFound = () => (
     <div>This page is not found!</div>
 );
 
-ReactDOM.render(<App />, document.getElementById('reactapp'));
+ReactDOM.render(<Application />, document.getElementById('reactapp'));

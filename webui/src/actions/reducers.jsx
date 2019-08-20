@@ -5,33 +5,43 @@ import { actionType } from '../constants';
 function apiinfo(state = SI({}), action) {
     switch (action.type) {
         case actionType.APIINFO_FETCH_SUCCESS:
-            return SI(action.info);
+            return SI(action.data);
         default:
             return state;
     }
 }
 
-function jobs(state = SI([]), action) {
+function mediatypes(state = SI([]), action) {
     switch (action.type) {
-        case actionType.JOB_SUBMITTED:
-        case actionType.JOB_DONE: {
-            let mutable = state.asMutable();
-            let index = mutable.findIndex(j => j.id == action.job.id);
-            if (index >= 0) {
-                mutable[index] = action.job;
-            } else {
-                mutable.push(action.job);
-            }
-            return SI(mutable);
-        }
-        case actionType.JOB_REMOVE: {
-            let mutable = state.asMutable();
-            let index = mutable.findIndex(j => j.id == action.job.id);
-            if (index >= 0) {
-                mutable.splice(index, 1);
-            }
-            return SI(mutable);
-        }
+        case actionType.MEDIATYPES_FETCH_SUCCESS:
+            return SI(action.data);
+        default:
+            return state;
+    }
+}
+
+function languages(state = SI([]), action) {
+    switch (action.type) {
+        case actionType.LANGUAGES_FETCH_SUCCESS:
+            return SI(action.data);
+        default:
+            return state;
+    }
+}
+
+function allTools(state = SI([]), action) {
+    switch (action.type) {
+        case actionType.ALL_TOOLS_FETCH_SUCCESS:
+            return SI(action.data);
+        default:
+            return state;
+    }
+}
+
+function matchingTools(state = SI([]), action) {
+    switch (action.type) {
+        case actionType.MATCHING_TOOLS_FETCH_SUCCESS:
+            return SI(action.data);
         default:
             return state;
     }
@@ -50,7 +60,10 @@ function alerts(state = SI([]), action) {
 
 const rootReducer = combineReducers({
     apiinfo,
-    jobs,
+    mediatypes,
+    languages,
+    allTools,
+    matchingTools,
     alerts
 });
 

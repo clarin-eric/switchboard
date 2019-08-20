@@ -51,9 +51,17 @@ public class InfoResource {
     }
 
     @GET
-    @Path("/mimetypes")
+    @Path("/mediatypes")
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public Response getMediatypes() {
+        return Response.ok(toolRegistry.getAllMediatypes()).build();
+    }
+
+    // same as /mediatypes
+    @GET
+    @Path("/mimetypes")
+    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+    public Response getMimetypes() {
         return Response.ok(toolRegistry.getAllMediatypes()).build();
     }
 

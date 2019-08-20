@@ -1,76 +1,93 @@
 import axios from 'axios';
 import { apiPath, actionType } from '../constants';
 
-function createAction(name) {
-    const f = function (data) {
-        return {
-            type: name,
-            data,
-        }
-    };
-    f.toString = function() {
-        return name;
-    };
-    return f;
-}
-
-const APIINFO_FETCH_SUCCESS = createAction('APIINFO_FETCH_SUCCESS');
+// todo: remove?
+// function createAction(name) {
+//     const f = function (data) {
+//         return {
+//             type: name,
+//             data,
+//         }
+//     };
+//     f.toString = function() {
+//         return name;
+//     };
+//     return f;
+// }
+// const APIINFO_FETCH_SUCCESS = createAction('APIINFO_FETCH_SUCCESS');
 
 export function fetchApiInfo() {
     return function (dispatch, getState) {
-        axios.get(apiPath.apiinfo).then(response => {
-            dispatch({
-                type: actionType.APIINFO_FETCH_SUCCESS,
-                info: response.data
-            });
-        }).catch(errHandler(dispatch, "Cannot fetch API info."));
+        axios.get(apiPath.apiinfo)
+            .then(response => {
+                dispatch({
+                    type: actionType.APIINFO_FETCH_SUCCESS,
+                    data: response.data
+                });
+            }).catch(errHandler(dispatch, "Cannot fetch API info."));
     }
 }
 
-// todo: remove commented code
-// let JOBID = 1;
+export function fetchMediatypes() {
+    return function (dispatch, getState) {
+        axios.get(apiPath.mediatypes)
+            .then(response => {
+                dispatch({
+                    type: actionType.MEDIATYPES_FETCH_SUCCESS,
+                    data: response.data
+                });
+            }).catch(errHandler(dispatch, "Cannot fetch mediatypes."));
+    }
+}
 
-// export function createJob(text) {
-//     return function (dispatch, getState)  {
-//         const fd = new FormData(); fd.append("text", text);
-//         const job = {
-//             id: JOBID++,
-//             originalText: text,
-//             tokenizedText: null,
-//             status: 'in progress',
-//         };
+export function fetchLanguages() {
+    return function (dispatch, getState) {
+        axios.get(apiPath.languages)
+            .then(response => {
+                dispatch({
+                    type: actionType.LANGUAGES_FETCH_SUCCESS,
+                    data: response.data
+                });
+            }).catch(errHandler(dispatch, "Cannot fetch languages."));
+    }
+}
 
-//         dispatch({
-//             type: actionType.JOB_SUBMITTED,
-//             job: job,
-//         });
+export function fetchAllTools(deploymentStatus) {
+    return function (dispatch, getState) {
+        const params = {
+            deployment: (deploymentStatus === "production") ? "production" : "development",
+            sortBy: 'tools',
+        }
 
-//         axios
-//         .post(apiPath.split, fd)
-//         .then(response => {
-//             job.tokenizedText = response.data;
-//             job.status = 'done';
-//             dispatch({
-//                 type: actionType.JOB_DONE,
-//                 job: job,
-//             });
-//         })
-//         .catch(errHandler(dispatch, "Cannot create job."));
-//     }
-// }
+        axios.get(apiPath.tools, {params})
+            .then(response => {
+                dispatch({
+                    type: actionType.ALL_TOOLS_FETCH_SUCCESS,
+                    data: response.data
+                });
+            }).catch(errHandler(dispatch, "Cannot fetch all tools data."));
+    }
+}
 
-// export function removeJobs(jobIDList) {
-//     return function (dispatch, getState)  {
-//         for (id in jobIDList) {
-//             dispatch({
-//                 type: actionType.JOB_REMOVE,
-//                 id: id,
-//             });
-//         }
-//     }
-// }
+export function fetchMatchingTools(mimetype, language, deploymentStatus, includeWS) {
+    return function (dispatch, getState) {
+        const params = {
+            mediatype: mediatype,
+            language: language,
+            deployment: (deploymentStatus === "production") ? "production" : "development",
+            includeWS: includeWebServices ? "yes" : "no",
+            sortBy: 'tools',
+        }
 
-
+        axios.get(apiPath.tools, {params})
+            .then(response => {
+                dispatch({
+                    type: actionType.MATCHING_TOOLS_FETCH_SUCCESS,
+                    data: response.data
+                });
+            }).catch(errHandler(dispatch, "Cannot fetch tools data."));
+    }
+}
 
 export function errHandler(dispatch, msg) {
     return function(err) {

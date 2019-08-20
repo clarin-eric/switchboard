@@ -8,10 +8,8 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import Modal from './Modal';
 
-
-export default class AboutHelp extends React.Component {
+export default class About extends React.Component {
     render() {
         return (
             <div className="content" id="about">
@@ -87,13 +85,12 @@ export default class AboutHelp extends React.Component {
 
                 <h3>Source Code</h3>
                 <p>
-                    The <a href="https://github.com/clarin-eric/switchboard">Switchboard GitHub repository</a> provides
-                    the source code.
+                    The <a href="https://github.com/clarin-eric/switchboard">Switchboard GitHub repository</a> provides the source code.
                 </p>
 
-                <p>
-                    We value your feedback! For any questions or suggestions, please contact the <a href={ this.props.contact }>Switchboard Team</a>.
-                </p>
+
+                <hr />
+                <p> We value your feedback! For any questions or suggestions, please <a href={ this.props.contact }>contact the Switchboard Team</a>. </p>
             </div>
         );
     }

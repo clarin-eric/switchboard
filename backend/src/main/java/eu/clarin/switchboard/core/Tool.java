@@ -24,7 +24,7 @@ public class Tool extends HashMap<String, Object> {
         return (String) get("langEncoding");
     }
 
-    public List<String> getMimetypes() {
+    public List<String> getMediatypes() {
         return (List<String>) get("mimetypes");
     }
 

@@ -18,12 +18,12 @@ public class ToolRegistry {
     AtomicReference<List<Tool>> tools = new AtomicReference<>();
     Runnable callback;
 
-    public List<Tool> filterTools(String deployment, String language, String mimetype) {
+    public List<Tool> filterTools(String deployment, String language, String mediatype) {
         Predicate<Tool> filterDeployment = tool -> deployment.isEmpty()
                 || tool.getDeployment().equals("production") || tool.getDeployment().equals(deployment);
         Predicate<Tool> filterLanguages = tool -> language.isEmpty() || tool.getLanguages().contains(language);
-        Predicate<Tool> filterMimetypes = tool -> mimetype.isEmpty() || tool.getMimetypes().contains(mimetype);
-        Predicate<Tool> filter = filterDeployment.and(filterLanguages).and(filterMimetypes);
+        Predicate<Tool> filterMediatypes = tool -> mediatype.isEmpty() || tool.getMediatypes().contains(mediatype);
+        Predicate<Tool> filter = filterDeployment.and(filterLanguages).and(filterMediatypes);
         return tools.get()
                 .stream()
                 .filter(filter)
@@ -37,7 +37,7 @@ public class ToolRegistry {
     public Set<String> getAllMediatypes() {
         Set<String> mediatypes = new HashSet<>();
         for (Tool tool : getAllTools())
-            mediatypes.addAll(tool.getMimetypes());
+            mediatypes.addAll(tool.getMediatypes());
         return mediatypes;
     }
 

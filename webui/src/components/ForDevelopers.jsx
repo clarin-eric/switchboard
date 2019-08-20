@@ -1,46 +1,11 @@
-// -------------------------------------------
-// The CLARIN Language Resource Switchboard
-// 2016-18 Claus Zinn, University of Tuebingen
-//
-// File: DevHelp.jsx
-// Time-stamp: <2018-09-21 09:49:01 (zinn)>
-// -------------------------------------------
-
 import React from 'react';
 import PropTypes from 'prop-types';
-import {ModalContainer, ModalDialog} from 'react-modal-dialog';
-import {image} from './util';
+import { image } from '../actions/utils'
 
-export default class DevHelp extends React.Component {
-  static propTypes = {
-    className: PropTypes.string,
-  }
-  state = {
-    showModal: false,
-  }
-  openModal = () => {
-    this.setState({showModal: true});
-  }
-  closeModal = () => {
-    this.setState({showModal: false});
-  }
+export default class ForDevelopers extends React.Component {
   render() {
-    return <a className={this.props.className} onClick={this.openModal}>
-      For Developers
-      {this.state.showModal ?
-        <DevHelpText onClose={this.closeModal} contact={this.props.contact}/>
-      : null}
-    </a>;
-  }
-}
-
-class DevHelpText extends React.Component {
-  static propTypes = {
-    onClose: PropTypes.func,
-  }
-  render() {
-    return <ModalContainer onClose={this.props.onClose}>
-        <ModalDialog onClose={this.props.onClose} className="devHelpDialog"  width={800} margin={50}>
+    return (
+        <React.Fragment>
             <h2>How to get your tool listed in the CLARIN LRS</h2>
           <p>For the time being, two pieces of information about a resource are used to identify whether there is any tool
             that can process the resource:</p>
@@ -76,12 +41,10 @@ class DevHelpText extends React.Component {
             and <em>lang</em> is replaced by <em>language</em>
           </p>
 
-          <p>
-            For any questions, please contact the <a href={ this.props.contact }>Switchboard Team</a>.
-          </p>
-        </ModalDialog>
-</ModalContainer>;
+          <hr/>
+          <p> For any questions, please <a href={ this.props.contact }>contact the Switchboard Team</a>. </p>
+        </React.Fragment>
+    );
   }
 }
-
 

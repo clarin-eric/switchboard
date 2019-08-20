@@ -36,19 +36,32 @@ export class NavBar extends React.Component {
                             <span className="icon-bar"></span>
                             <span className="icon-bar"></span>
                         </button>
-                        <a className="navbar-brand" href="#">
-                            <span>Language Resource Switchboard</span>
-                        </a>
+                        <Link className="navbar-brand nav-link" to='/' onClick={this.closeNav}>
+                            <span style={{fontSize:20}}>Language Resource Switchboard</span>
+                        </Link>
                     </div>
 
                     <div className={navCollapseClass}>
                         <ul className="nav navbar-nav">
                             <li className="nav-item" onClick={this.closeNav}>
-                                <a className="btn" className="allTools" onClick={this.props.showAllTools}>Tool Inventory</a>
+                                <Link className="nav-link all-tools" to='/tools' onClick={this.closeNav}>Tool Inventory</Link>
                             </li>
                         </ul>
                         <ul className="nav navbar-nav navbar-right">
-                            <a href="http://www.clarin.eu/"><img src={image('clarin-logo-wide.png')} width="119px" height="46px" /></a>
+                            <li className="nav-item" onClick={this.closeNav}>
+                                <Link className="nav-link" to='/help' onClick={this.closeNav}>Help</Link>
+                            </li>
+                            <li className="nav-item" onClick={this.closeNav}>
+                                <Link className="nav-link" to='/help/faq' onClick={this.closeNav}>FAQ</Link>
+                            </li>
+                            <li className="nav-item" onClick={this.closeNav}>
+                                <Link className="nav-link" to='/help/developers' onClick={this.closeNav}>For Developers</Link>
+                            </li>
+                            <li className="nav-item" onClick={this.closeNav}>
+                                <a href="http://www.clarin.eu/" style={{padding:0, marginLeft:20}}>
+                                    <img src={image('clarin-logo-wide.png')} width="119px" height="46px" />
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -56,4 +69,3 @@ export class NavBar extends React.Component {
         );
     }
 }
-

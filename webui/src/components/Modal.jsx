@@ -1,15 +1,11 @@
-// -------------------------------------------
-// The CLARIN Language Resource Switchboard
-// 2016-18 Claus Zinn, University of Tuebingen
-//
-// File: AboutHelp.jsx
-// Time-stamp: <2019-01-17 12:28:01 (zinn)>
-// -------------------------------------------
 
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as ReactModal from 'react-modal';
 
+
+// use as:
+// <Modal linkText="About"> <AboutHelp contact={contactEmail}/> </Modal>
 
 export default class Modal extends React.Component {
     constructor () {

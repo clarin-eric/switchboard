@@ -1,45 +1,10 @@
-// -------------------------------------------
-// The CLARIN Language Resource Switchboard
-// 2016-18 Claus Zinn, University of Tuebingen
-//
-// File: UserFAQ.jsx
-// Time-stamp: <2019-03-19 16:37:25 (zinn)>
-// -------------------------------------------
-
 import React from 'react';
 import PropTypes from 'prop-types';
-import {ModalContainer, ModalDialog} from 'react-modal-dialog';
 
-export default class UserFAQ extends React.Component {
-  static propTypes = {
-    className: PropTypes.string,
-  }
-  state = {
-    showModal: false,
-  }
-  openModal = () => {
-    this.setState({showModal: true});
-  }
-  closeModal = () => {
-    this.setState({showModal: false});
-  }
+export default class FAQ extends React.Component {
   render() {
-    return <a className={this.props.className} onClick={this.openModal}>
-      FAQ
-      {this.state.showModal ?
-        <UserFAQText onClose={this.closeModal} contact={this.props.contact}/>
-      : null}
-    </a>;
-  }
-}
-
-class UserFAQText extends React.Component {
-  static propTypes = {
-    onClose: PropTypes.func,
-  }
-  render() {
-    return <ModalContainer onClose={this.props.onClose}>
-        <ModalDialog onClose={this.props.onClose} className="userHelpDialog"  width={800} margin={50}>
+    return (
+        <React.Fragment>
             <h2>Frequently Asked Questions</h2>
             <ul>
             <li>
@@ -130,12 +95,11 @@ class UserFAQText extends React.Component {
               </p>
             </li>
           </ul>
+
           <hr />
-          <p>
-            More questions? Please contact the <a href={ this.props.contact }>Switchboard Team</a>.
-          </p>
-        </ModalDialog>
-    </ModalContainer>;
+          <p> More questions? Please <a href={ this.props.contact }>contact the Switchboard Team</a>. </p>
+        </React.Fragment>
+    );
   }
 }
 
