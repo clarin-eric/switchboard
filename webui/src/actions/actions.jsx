@@ -1,6 +1,16 @@
 import axios from 'axios';
 import { apiPath, actionType } from '../constants';
 
+
+
+export function uploadFiles(files) {
+    console.log("call uploadFiles", files);
+}
+
+export function uploadText(text) {
+    console.log("call uploadText", text);
+}
+
 // todo: remove?
 // function createAction(name) {
 //     const f = function (data) {

@@ -16,30 +16,46 @@ html, body, #reactapp { height: 100%; }
 * {font-size: 16px}
 #footer *, nav * {font-size: 14px}
 
-
 /* fix links without href (with onClick) */
-a {
-    cursor: pointer
-}
+a { cursor: pointer }
 
 /* highlight all tools button on navbar */
 .navbar-default .navbar-nav>li>a.all-tools {
     border-bottom: 3px solid #888;
 }
 
+
+
+/* file drop input textarea style */
+div.input button.dropzone {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 3px dashed #888;
+    border-radius: 16px;
+    box-shadow: 2px 2px 5px #ccc;
+}
+div.input button.dropzone:hover{
+    border: 3px dashed #006d91;
+    box-shadow: 0 0 8px #006d91;
+}
+div.input button.dropzone.active {
+    border: 3px dashed #0080aa;
+    box-shadow: 0 0 8px #0080aa;
+}
+
 /* text/url input textarea style */
-div.input .inputZone {
+div.input textarea.inputzone {
     padding: 10px;
     color: black;
     border: 1px solid #ccc;
 }
-div.input .btn {
+div.input form {
+    box-shadow: 2px 2px 5px #ccc;
+}
+div.input form .btn {
     background-color: #eee;
 }
-div.input .btn:hover {
+div.input form .btn:hover {
     border-color: #ccc;
-}
-div.input form {
-    margin-top: 20px;
-    box-shadow: 2px 2px 5px #ccc;
 }

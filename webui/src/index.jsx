@@ -11,6 +11,7 @@ import {fetchApiInfo, fetchAllTools} from './actions/actions';
 import { NavBar } from './components/NavBar';
 import { FooterContainer } from './containers/FooterContainer';
 import { HomeContainer } from './containers/HomeContainer';
+import { InputContainer } from './containers/InputContainer';
 import { ToolListContainer } from './containers/ToolListContainer';
 import { AboutContainer, HelpContainer, FAQContainer, ForDevelopersContainer } from './containers/HelpContainers';
 
@@ -79,6 +80,7 @@ class Application extends React.Component {
                     <Frame>
                         <Switch>
                             <Route exact path={window.APP_CONTEXT_PATH+'/'} component={HomeContainer} />
+                            <Route exact path={window.APP_CONTEXT_PATH+'/input'} component={InputContainer} />
                             <Route exact path={window.APP_CONTEXT_PATH+'/tools'} component={ToolListContainer} />
                             <Route exact path={window.APP_CONTEXT_PATH+'/help'} component={HelpContainer} />
                             <Route exact path={window.APP_CONTEXT_PATH+'/help/about'} component={AboutContainer} />
