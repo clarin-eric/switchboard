@@ -1,18 +1,10 @@
-// -------------------------------------------
-// The CLARIN Language Resource Switchboard
-// 2016-18 Claus Zinn, University of Tuebingen
-//
-// File: AboutHelp.jsx
-// Time-stamp: <2019-01-17 12:28:01 (zinn)>
-// -------------------------------------------
-
 import React from 'react';
 import PropTypes from 'prop-types';
 
 export default class About extends React.Component {
     render() {
         return (
-            <div className="content" id="about">
+            <React.Fragment>
                 <h2>About</h2>
                 <p>
                     The Language Resource Switchboard has been developed
@@ -91,7 +83,7 @@ export default class About extends React.Component {
 
                 <hr />
                 <p> We value your feedback! For any questions or suggestions, please <a href={ this.props.contact }>contact the Switchboard Team</a>. </p>
-            </div>
+            </React.Fragment>
         );
     }
 }

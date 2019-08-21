@@ -37,6 +37,7 @@ export class NavBar extends React.Component {
                             <span className="icon-bar"></span>
                         </button>
                         <Link className="navbar-brand nav-link" to='/' onClick={this.closeNav}>
+                            <span style={{fontSize:16, marginRight:2}} className="glyphicon glyphicon-cog" aria-hidden="true"/>
                             <span style={{fontSize:20}}>Language Resource Switchboard</span>
                         </Link>
                     </div>
