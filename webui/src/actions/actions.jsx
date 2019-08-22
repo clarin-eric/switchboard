@@ -1,14 +1,72 @@
 import axios from 'axios';
 import { apiPath, actionType } from '../constants';
+import { processLanguage } from './utils';
 
+export function uploadFile(file) {
+    return function (dispatch, getState) {
+        const resource = {
+            file      : file,
+            filename  : file.name,
+            mediatype : file.type,
+            language  : processLanguage(),
+        };
+        dispatch({
+            type: actionType.RESOURCE_INIT,
+            data: resource,
+        });
+        console.log("store resource", resource);
 
-
-export function uploadFiles(files) {
-    console.log("call uploadFiles", files);
+        var formData = new FormData();
+        formData.append("file", resource.file, resource.name);
+        const params = {
+            headers: {'Content-Type': 'multipart/form-data'}
+        };
+        axios
+            .post(apiPath.storage, formData, params)
+            .then((response) => onStorageResponse(dispatch, resource, response))
+            .catch(errHandler(dispatch));
+    }
 }
 
-export function uploadText(text) {
-    console.log("call uploadText", text);
+function onStorageResponse(dispatch, resource, response) {
+    console.log('onStorageResponse: ', response);
+
+    // assign id, url, mediatype, length, language
+    Object.assign(resource, response.data);
+    resource.language = processLanguage(response.data.language);
+
+    // todo: remove these entries from the rest of js code
+    resource.name = resource.filename;
+    resource.mimetype = resource.mediatype;
+    resource.remoteFilename = resource.filename;
+
+    if (resource.localLink && resource.localLink.startsWith(apiPath.api)) {
+        resource.localLink = window.origin + resource.localLink;
+    }
+
+    dispatch({
+        type: actionType.RESOURCE_UPDATE,
+        data: resource,
+    });
+
+    if ( (resource.mimetype == "application/zip") ||
+         (resource.mimetype == "application/x-gzip") ) {
+        // todo: acknowledge that a zip file has been received, but that a manual identification
+        //        of its parts wrt. language should be made by the user.
+        // todo: ?
+        // this.setState({isLoaded: true, showAlertMissingInfo: true});
+    } else if ( (resource.mimetype == "audio/vnd.wave") ||
+                (resource.mimetype == "audio/x-wav")    ||
+                (resource.mimetype == "audio/wav")      ||
+                (resource.mimetype == "audio/mp3")      ||
+                (resource.mimetype == "audio/mp4")      ||
+                (resource.mimetype == "audio/x-mpeg")) {
+        // todo: ?
+        // this.setState({showAlertMissingInfo: true});
+    } else {
+        // todo: ?
+        // this.setState({isLoaded: true});
+    }
 }
 
 // todo: remove?

@@ -38,6 +38,17 @@ function allTools(state = SI([]), action) {
     }
 }
 
+function resource(state = SI({}), action) {
+    switch (action.type) {
+        case actionType.RESOURCE_INIT:
+            return SI(action.data);
+        case actionType.RESOURCE_UPDATE:
+            return SI(action.data);
+        default:
+            return state;
+    }
+}
+
 function matchingTools(state = SI([]), action) {
     switch (action.type) {
         case actionType.MATCHING_TOOLS_FETCH_SUCCESS:
@@ -63,6 +74,7 @@ const rootReducer = combineReducers({
     mediatypes,
     languages,
     allTools,
+    resource,
     matchingTools,
     alerts
 });

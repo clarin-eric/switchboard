@@ -36,6 +36,5 @@ public class ToolsResource {
         mediatype = mediatype == null ? "" : mediatype;
         List<Tool> tools = toolRegistry.filterTools(deployment, language, mediatype);
         return Response.ok(tools).build();
-
     }
 }

@@ -15,15 +15,25 @@ export class Input extends React.Component {
     }
 
     handleFiles(files) {
-        this.props.history.push('/xfiles');
-        this.props.onFiles(files);
+        if (!files.length) {
+            alert('No files selected');
+            return;
+        }
+
+        this.props.onFile(files[0]);
+
+        this.props.history.push(window.APP_CONTEXT_PATH + "/");
     }
 
     handleTextSubmit(e) {
         e.preventDefault();
         e.stopPropagation();
-        this.props.onText(this.state.text);
-        this.props.history.push('/xtext');
+
+        var blob = new Blob([text], {type: "text/plain"});
+        blob.name = "submitted_text.txt";
+        this.props.onFile(blob);
+
+        this.props.history.push(window.APP_CONTEXT_PATH + "/");
     }
 
     handleTextChange(e) {
@@ -58,6 +68,6 @@ export class Input extends React.Component {
 }
 
 Input.propTypes = {
-    onFiles: PropTypes.func.isRequired,
-    onText: PropTypes.func.isRequired,
+    onFile: PropTypes.func.isRequired,
 };
+

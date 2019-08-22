@@ -5,7 +5,7 @@ import { map639_3_to_639_1, image } from '../actions/utils';
 const styles = {
     image: {
         height: 32,
-        margin: '4px 0',
+        margin: '4px 4px 4px 0',
         padding: 2,
         border: '1px solid #ddd',
         boxShadow: '2px 2px 2px #ccc',

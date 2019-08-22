@@ -1,6 +1,7 @@
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux';
-import {uploadFiles, uploadText} from '../actions/actions';
+import { withRouter } from 'react-router-dom'
+import {uploadFile} from '../actions/actions';
 import {Input} from '../components/Input';
 
 const mapStateToProps = (state) => ({});
@@ -8,7 +9,6 @@ const mapStateToProps = (state) => ({});
 //     ...bindActionCreators(actions, dispatch)
 // });
 const mapDispatchToProps = (dispatch) => ({
-    onFiles: (files) => uploadFiles(files),
-    onText: (text) => uploadText(text),
+    onFile: (file) => dispatch(uploadFile(file)),
 });
-export const InputContainer = connect(mapStateToProps, mapDispatchToProps)(Input);
+export const InputContainer = withRouter(connect(mapStateToProps, mapDispatchToProps)(Input));
