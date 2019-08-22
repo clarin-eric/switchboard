@@ -10,10 +10,10 @@ export default class ForDevelopers extends React.Component {
           <p>For the time being, two pieces of information about a resource are used to identify whether there is any tool
             that can process the resource:</p>
           <ul>
-            <li>mimetype: automatically detected once the resource has been dragged & dropped into the drop area.</li>
+            <li>mediatype: automatically detected once the resource has been dragged & dropped into the drop area.</li>
             <li>language: the language the resource is in. Apache Tika is used to identify the language of the resource.</li>
           </ul>
-          <p>For each tool, the LRS switchboard requires a metadata description that gives the switchboard all relevant information for tool applicability and invocation. In particular, the metadata description has slots that describe all the mimetypes and all the languages that the tool can process. </p>
+          <p>For each tool, the LRS switchboard requires a metadata description that gives the switchboard all relevant information for tool applicability and invocation. In particular, the metadata description has slots that describe all the mediatypes and all the languages that the tool can process. </p>
           <p>Example:</p>
           <img src={image("metadataListing1.png")} width="71%" height="71%" />
           <p>
@@ -27,7 +27,7 @@ export default class ForDevelopers extends React.Component {
             <li>a pointer to the URL where the resource in question can be downloaded from</li>
             <li>the language of the resource</li>
             <li>the task requested</li>
-            <li><em>potentially other information can be passed, of course, for instance, the mimetype of the resource.</em></li>
+            <li><em>potentially other information can be passed, of course, for instance, the mediatype of the resource.</em></li>
           </ul>
           <p>For Weblicht, a typical call looks like:</p>
           <code>https://weblicht.sfs.uni-tuebingen.de/weblicht/?input=http://example.com/path&lang=de&analysis=dep-parsing</code>

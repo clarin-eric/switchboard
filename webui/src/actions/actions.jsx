@@ -37,7 +37,6 @@ function onStorageResponse(dispatch, resource, response) {
 
     // todo: remove these entries from the rest of js code
     resource.name = resource.filename;
-    resource.mimetype = resource.mediatype;
     resource.remoteFilename = resource.filename;
 
     if (resource.localLink && resource.localLink.startsWith(apiPath.api)) {
@@ -49,18 +48,18 @@ function onStorageResponse(dispatch, resource, response) {
         data: resource,
     });
 
-    if ( (resource.mimetype == "application/zip") ||
-         (resource.mimetype == "application/x-gzip") ) {
+    if ( (resource.mediatype == "application/zip") ||
+         (resource.mediatype == "application/x-gzip") ) {
         // todo: acknowledge that a zip file has been received, but that a manual identification
         //        of its parts wrt. language should be made by the user.
         // todo: ?
         // this.setState({isLoaded: true, showAlertMissingInfo: true});
-    } else if ( (resource.mimetype == "audio/vnd.wave") ||
-                (resource.mimetype == "audio/x-wav")    ||
-                (resource.mimetype == "audio/wav")      ||
-                (resource.mimetype == "audio/mp3")      ||
-                (resource.mimetype == "audio/mp4")      ||
-                (resource.mimetype == "audio/x-mpeg")) {
+    } else if ( (resource.mediatype == "audio/vnd.wave") ||
+                (resource.mediatype == "audio/x-wav")    ||
+                (resource.mediatype == "audio/wav")      ||
+                (resource.mediatype == "audio/mp3")      ||
+                (resource.mediatype == "audio/mp4")      ||
+                (resource.mediatype == "audio/x-mpeg")) {
         // todo: ?
         // this.setState({showAlertMissingInfo: true});
     } else {
@@ -137,7 +136,7 @@ export function fetchAllTools(deploymentStatus) {
     }
 }
 
-export function fetchMatchingTools(mimetype, language, deploymentStatus, includeWS) {
+export function fetchMatchingTools(mediatype, language, deploymentStatus, includeWS) {
     return function (dispatch, getState) {
         const params = {
             mediatype: mediatype,
