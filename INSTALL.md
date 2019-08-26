@@ -16,7 +16,7 @@ Cloning this repository is required. The default settings require it to have the
 
 3. Run the Docker image (but replace /PATH/TO with a real path):
 
-   ```docker run --name switchboard -d -p 8080:8080 -v /PATH/TO/switchboard-tool-registry:/switchboard-tool-registry:ro switchboard/switchboard:2.0.0 ```
+   ```docker run --name switchboard -d -p 8080:8080 -v /PATH/TO/switchboard-tool-registry:/switchboard-tool-registry:ro switchboard/switchboard:2.0.1 ```
 
    (this may depend on your local computing environment).
 
