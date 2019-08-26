@@ -34,7 +34,7 @@ RUN mvn -q package
 ###############################################################################
 
 # now setup running environment
-FROM registry.gitlab.com/clarin-eric/docker-alpine-supervisor-java-base:openjdk11-1.2.2
+FROM registry.gitlab.com/clarin-eric/docker-alpine-supervisor-java-base:openjdk11-1.2.3
 
 LABEL maintainer="switchboard@clarin.eu"
 
