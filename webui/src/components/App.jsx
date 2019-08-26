@@ -106,6 +106,7 @@ export default class App extends React.Component {
             tools     : [],
             resource  : undefined,
             lrsVersion: undefined,
+            maxAllowedDataSize: 1024, // will be overwritten on fetchApiInfo
             contact: "",
         };
 
@@ -204,31 +205,40 @@ export default class App extends React.Component {
     <Switch>
       <Route exact path="/"
             render={(props) => <DropArea onToolsChange={this.handleToolsChange}
-                    onResourcesChange={this.handleResourcesChange} caller="standalone" {...props} /> } />
+                    onResourcesChange={this.handleResourcesChange}
+                    maxSize={this.state.maxAllowedDataSize} caller="standalone" {...props} /> } />
       <Route exact path="/vlo/:fileURL/:fileMimetype/:fileLanguage"
             render={(props) => <DropArea onToolsChange={this.handleToolsChange}
-                    onResourcesChange={this.handleResourcesChange} caller="VLO"        {...props} /> } />
+                    onResourcesChange={this.handleResourcesChange}
+                    maxSize={this.state.maxAllowedDataSize} caller="VLO"        {...props} /> } />
       <Route exact path="/vlo/:fileURL/:fileMimetype"
             render={(props) => <DropArea onToolsChange={this.handleToolsChange}
-                    onResourcesChange={this.handleResourcesChange} caller="VLO"        {...props} /> } />
+                    onResourcesChange={this.handleResourcesChange}
+                    maxSize={this.state.maxAllowedDataSize} caller="VLO"        {...props} /> } />
       <Route path="/vcr/:fileURL"
             render={(props) => <DropArea onToolsChange={this.handleToolsChange}
-                    onResourcesChange={this.handleResourcesChange} caller="VCR"        {...props} /> } />
+                    onResourcesChange={this.handleResourcesChange}
+                    maxSize={this.state.maxAllowedDataSize} caller="VCR"        {...props} /> } />
       <Route path="/fcs/:fileURL"
             render={(props) => <DropArea onToolsChange={this.handleToolsChange}
-                    onResourcesChange={this.handleResourcesChange} caller="FCS"        {...props} /> } />
+                    onResourcesChange={this.handleResourcesChange}
+                    maxSize={this.state.maxAllowedDataSize} caller="FCS"        {...props} /> } />
       <Route path="/b2drop/:fileURL"
             render={(props) => <DropArea onToolsChange={this.handleToolsChange}
-                    onResourcesChange={this.handleResourcesChange} caller="B2DROP"    {...props} /> } />
+                    onResourcesChange={this.handleResourcesChange}
+                    maxSize={this.state.maxAllowedDataSize} caller="B2DROP"    {...props} /> } />
       <Route path="/b2share/:fileURL"
             render={(props) => <DropArea onToolsChange={this.handleToolsChange}
-                    onResourcesChange={this.handleResourcesChange} caller="B2SHARE"   {...props} /> } />
+                    onResourcesChange={this.handleResourcesChange}
+                    maxSize={this.state.maxAllowedDataSize} caller="B2SHARE"   {...props} /> } />
       <Route path="/textgrid/:fileURL"
             render={(props) => <DropArea onToolsChange={this.handleToolsChange}
-                    onResourcesChange={this.handleResourcesChange} caller="TEXTGRID"   {...props} /> } />
+                    onResourcesChange={this.handleResourcesChange}
+                    maxSize={this.state.maxAllowedDataSize} caller="TEXTGRID"   {...props} /> } />
       <Route path="/d4science/:fileURL"
             render={(props) => <DropArea onToolsChange={this.handleToolsChange}
-                    onResourcesChange={this.handleResourcesChange} caller="D4SCIENCE"  {...props} /> } />
+                    onResourcesChange={this.handleResourcesChange}
+                    maxSize={this.state.maxAllowedDataSize} caller="D4SCIENCE"  {...props} /> } />
       <Route path="*" component={AlertURLFetchError} />
     </Switch>
   </Router>

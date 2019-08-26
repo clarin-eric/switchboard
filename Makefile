@@ -1,4 +1,4 @@
-DOCKERTAG=switchboard/switchboard:2.0.0
+DOCKERTAG=switchboard/switchboard:2.0.1
 WEBUIAPP=src/main/resources/webui
 JSBUNDLE=$(WEBUIAPP)/bundle.js
 

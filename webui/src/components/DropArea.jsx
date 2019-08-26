@@ -377,7 +377,7 @@ export default class DropArea extends React.Component {
                         <Dropzone className="inputZone"
                                   multiple={false}
                                   onDrop={this.onDrop}
-                                  maxSize={5000000}
+                                  maxSize={this.props.maxSize}
                                   disabled={disabled}
                                   style={{...styleDropzone, ...styleState, ...textColor}}
                                   activeStyle={activeStyleDropzone} >
@@ -438,7 +438,7 @@ export default class DropArea extends React.Component {
                  <AlertMissingInfo       onCloseProp={ () => this.setState( {showAlertMissingInfo: false} ) } />
                  : null }
                 {this.state.showAlertURLUploadError ?
-                 <AlertURLUploadError    onCloseProp={ () => this.setState( {showAlertURLUploadError: false} ) } />
+                 <AlertURLUploadError    onCloseProp={ () => this.setState( {showAlertURLUploadError: false} ) }  maxSize={this.props.maxSize}/>
                  : null }
                 </div>
         );
