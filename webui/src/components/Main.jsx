@@ -2,6 +2,7 @@ import React from 'react';
 import {Dropzone} from './Dropzone';
 import {Link} from 'react-router-dom';
 import {Resource} from './Resource';
+import {ToolList} from './ToolList';
 
 const Home = () => (
     <div className="jumbotron">
@@ -27,7 +28,13 @@ export class Main extends React.Component {
             <div className="main">
                 { !this.props.resource.name
                     ? <Home/>
-                    : <Resource resource={this.props.resource} />
+                    : <div>
+                        <h3>Input Analysis</h3>
+                        <Resource resource={this.props.resource} />
+
+                        <h3>Matching tools</h3>
+                        <ToolList tools={this.props.matchingTools}/>
+                    </div>
                 }
             </div>
         );

@@ -1,6 +1,7 @@
 import axios from 'axios';
-import { apiPath, actionType } from '../constants';
+import { apiPath, actionType, resourceMatchSettings } from '../constants';
 import { processLanguage } from './utils';
+
 
 export function uploadFile(file) {
     return function (dispatch, getState) {
@@ -17,19 +18,19 @@ export function uploadFile(file) {
         console.log("store resource", resource);
 
         var formData = new FormData();
-        formData.append("file", resource.file, resource.name);
+        formData.append("file", resource.file, resource.filename);
         const params = {
             headers: {'Content-Type': 'multipart/form-data'}
         };
         axios
             .post(apiPath.storage, formData, params)
-            .then((response) => onStorageResponse(dispatch, resource, response))
+            .then((response) => onSetResource(dispatch, resource, response))
             .catch(errHandler(dispatch));
     }
 }
 
-function onStorageResponse(dispatch, resource, response) {
-    console.log('onStorageResponse: ', response);
+function onSetResource(dispatch, resource, response) {
+    console.log('onSetResource: ', response);
 
     // assign id, url, mediatype, length, language
     Object.assign(resource, response.data);
@@ -65,6 +66,14 @@ function onStorageResponse(dispatch, resource, response) {
     } else {
         // todo: ?
         // this.setState({isLoaded: true});
+    }
+
+    if (resource.localLink) {
+        dispatch(fetchMatchingTools(
+            resource.mediatype,
+            resource.language.threeLetterCode,
+            resourceMatchSettings.deploymentStatus,
+            resourceMatchSettings.includeWS));
     }
 }
 
@@ -142,7 +151,7 @@ export function fetchMatchingTools(mediatype, language, deploymentStatus, includ
             mediatype: mediatype,
             language: language,
             deployment: (deploymentStatus === "production") ? "production" : "development",
-            includeWS: includeWebServices ? "yes" : "no",
+            includeWS: includeWS ? "yes" : "no",
             sortBy: 'tools',
         }
 

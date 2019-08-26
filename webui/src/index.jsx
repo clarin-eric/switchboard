@@ -12,7 +12,7 @@ import { NavBar } from './components/NavBar';
 import { FooterContainer } from './containers/FooterContainer';
 import { MainContainer } from './containers/MainContainer';
 import { InputContainer } from './containers/InputContainer';
-import { ToolListContainer } from './containers/ToolListContainer';
+import { AllToolsContainer } from './containers/ToolListContainer';
 import { AboutContainer, HelpContainer, FAQContainer, ForDevelopersContainer } from './containers/HelpContainers';
 
 // todo: make sure we keep old urls
@@ -81,7 +81,7 @@ class Application extends React.Component {
                         <Switch>
                             <Route exact path={window.APP_CONTEXT_PATH+'/'} component={MainContainer} />
                             <Route exact path={window.APP_CONTEXT_PATH+'/input'} component={InputContainer} />
-                            <Route exact path={window.APP_CONTEXT_PATH+'/tools'} component={ToolListContainer} />
+                            <Route exact path={window.APP_CONTEXT_PATH+'/tools'} component={AllToolsContainer} />
                             <Route exact path={window.APP_CONTEXT_PATH+'/help'} component={HelpContainer} />
                             <Route exact path={window.APP_CONTEXT_PATH+'/help/about'} component={AboutContainer} />
                             <Route exact path={window.APP_CONTEXT_PATH+'/help/faq'} component={FAQContainer} />

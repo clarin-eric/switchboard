@@ -29,7 +29,7 @@ export class Input extends React.Component {
         e.preventDefault();
         e.stopPropagation();
 
-        var blob = new Blob([text], {type: "text/plain"});
+        var blob = new Blob([this.state.text], {type: "text/plain"});
         blob.name = "submitted_text.txt";
         this.props.onFile(blob);
 

@@ -19,13 +19,12 @@ export class Resource extends React.Component {
             borderRadius: 8,
         };
         return <React.Fragment>
-            <h3>Input Analysis</h3>
-            <div className="resources" style={gridStyle}>
+            <div className="resource" style={gridStyle}>
                 <div>Resource</div>
                 <div>Mediatype</div>
                 <div>Language</div>
                 <div>
-                    <a className="resource-name" href={res.originalLink || res.localLink}> {res.filename} </a>
+                    <a href={res.originalLink || res.localLink}> {res.filename} </a>
                 </div>
                 <div>
                     <span>{res.mediatype}</span>

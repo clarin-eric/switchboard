@@ -51,6 +51,8 @@ function resource(state = SI({}), action) {
 
 function matchingTools(state = SI([]), action) {
     switch (action.type) {
+        case actionType.RESOURCE_INIT:
+            return SI([]);
         case actionType.MATCHING_TOOLS_FETCH_SUCCESS:
             return SI(action.data);
         default:
