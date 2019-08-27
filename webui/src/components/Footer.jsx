@@ -22,8 +22,3 @@ export const Footer = ({ version, contactEmail }) => (
         </div>
     </footer>
 );
-
-
-Footer.propTypes = {
-    version: PropTypes.string,
-};

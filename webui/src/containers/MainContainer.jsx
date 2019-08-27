@@ -1,5 +1,9 @@
 import {connect} from 'react-redux';
 import {Main} from '../components/Main';
+import {updateResource} from '../actions/actions';
 
 const mapStateToProps = (state) => (state);
-export const MainContainer = connect(mapStateToProps)(Main);
+const mapDispatchToProps = (dispatch) => ({
+    updateResource: (res) => dispatch(updateResource(res)),
+});
+export const MainContainer = connect(mapStateToProps, mapDispatchToProps)(Main);

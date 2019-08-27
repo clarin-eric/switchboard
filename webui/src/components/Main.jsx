@@ -1,5 +1,4 @@
 import React from 'react';
-import {Dropzone} from './Dropzone';
 import {Link} from 'react-router-dom';
 import {Resource} from './Resource';
 import {ToolList} from './ToolList';
@@ -26,11 +25,16 @@ export class Main extends React.Component {
     render() {
         return (
             <div className="main">
-                { !this.props.resource.name
+                { !this.props.resource.file
                     ? <Home/>
                     : <div>
                         <h3>Input Analysis</h3>
-                        <Resource resource={this.props.resource} />
+                        <Resource resource={this.props.resource}
+                            updateResource={this.props.updateResource}
+                            mediatypes={this.props.mediatypes}
+                            languages={this.props.languages} />
+
+                        <hr/>
 
                         <h3>Matching tools</h3>
                         <ToolList tools={this.props.matchingTools}/>

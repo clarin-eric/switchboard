@@ -35,6 +35,7 @@ public class ToolsResource {
         language = language == null ? "" : language;
         mediatype = mediatype == null ? "" : mediatype;
         List<Tool> tools = toolRegistry.filterTools(deployment, language, mediatype);
+        LOGGER.info("" + tools.size() + " tools for " + deployment + ":" + mediatype + ":" + language);
         return Response.ok(tools).build();
     }
 }

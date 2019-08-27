@@ -1,7 +1,43 @@
 import axios from 'axios';
 import { apiPath, actionType, resourceMatchSettings } from '../constants';
-import { processLanguage } from './utils';
+import { processLanguage, processMediatype } from './utils';
 
+
+export function updateResource(resource) {
+    return function (dispatch, getState) {
+        dispatch({
+            type: actionType.RESOURCE_UPDATE,
+            data: resource,
+        });
+
+        if ( (resource.mediatype == "application/zip") ||
+             (resource.mediatype == "application/x-gzip") ) {
+            // todo: acknowledge that a zip file has been received, but that a manual identification
+            //        of its parts wrt. language should be made by the user.
+            // todo: ?
+            // this.setState({isLoaded: true, showAlertMissingInfo: true});
+        } else if ( (resource.mediatype == "audio/vnd.wave") ||
+                    (resource.mediatype == "audio/x-wav")    ||
+                    (resource.mediatype == "audio/wav")      ||
+                    (resource.mediatype == "audio/mp3")      ||
+                    (resource.mediatype == "audio/mp4")      ||
+                    (resource.mediatype == "audio/x-mpeg")) {
+            // todo: ?
+            // this.setState({showAlertMissingInfo: true});
+        } else {
+            // todo: ?
+            // this.setState({isLoaded: true});
+        }
+
+        if (resource.localLink) {
+            dispatch(fetchMatchingTools(
+                resource.mediatype,
+                resource.language,
+                resourceMatchSettings.deploymentStatus,
+                resourceMatchSettings.includeWS));
+        }
+    }
+}
 
 export function uploadFile(file) {
     return function (dispatch, getState) {
@@ -9,13 +45,12 @@ export function uploadFile(file) {
             file      : file,
             filename  : file.name,
             mediatype : file.type,
-            language  : processLanguage(),
+            language  : null,
         };
         dispatch({
             type: actionType.RESOURCE_INIT,
             data: resource,
         });
-        console.log("store resource", resource);
 
         var formData = new FormData();
         formData.append("file", resource.file, resource.filename);
@@ -24,56 +59,20 @@ export function uploadFile(file) {
         };
         axios
             .post(apiPath.storage, formData, params)
-            .then((response) => onSetResource(dispatch, resource, response))
+            .then((response) => {
+                // assign id, url, mediatype, length, language
+                Object.assign(resource, response.data);
+
+                const lang = processLanguage(response.data.language)
+                resource.language = lang && lang.value;
+
+                if (resource.localLink && resource.localLink.startsWith(apiPath.api)) {
+                    resource.localLink = window.origin + resource.localLink;
+                }
+
+                dispatch(updateResource(resource));
+            })
             .catch(errHandler(dispatch));
-    }
-}
-
-function onSetResource(dispatch, resource, response) {
-    console.log('onSetResource: ', response);
-
-    // assign id, url, mediatype, length, language
-    Object.assign(resource, response.data);
-    resource.language = processLanguage(response.data.language);
-
-    // todo: remove these entries from the rest of js code
-    resource.name = resource.filename;
-    resource.remoteFilename = resource.filename;
-
-    if (resource.localLink && resource.localLink.startsWith(apiPath.api)) {
-        resource.localLink = window.origin + resource.localLink;
-    }
-
-    dispatch({
-        type: actionType.RESOURCE_UPDATE,
-        data: resource,
-    });
-
-    if ( (resource.mediatype == "application/zip") ||
-         (resource.mediatype == "application/x-gzip") ) {
-        // todo: acknowledge that a zip file has been received, but that a manual identification
-        //        of its parts wrt. language should be made by the user.
-        // todo: ?
-        // this.setState({isLoaded: true, showAlertMissingInfo: true});
-    } else if ( (resource.mediatype == "audio/vnd.wave") ||
-                (resource.mediatype == "audio/x-wav")    ||
-                (resource.mediatype == "audio/wav")      ||
-                (resource.mediatype == "audio/mp3")      ||
-                (resource.mediatype == "audio/mp4")      ||
-                (resource.mediatype == "audio/x-mpeg")) {
-        // todo: ?
-        // this.setState({showAlertMissingInfo: true});
-    } else {
-        // todo: ?
-        // this.setState({isLoaded: true});
-    }
-
-    if (resource.localLink) {
-        dispatch(fetchMatchingTools(
-            resource.mediatype,
-            resource.language.threeLetterCode,
-            resourceMatchSettings.deploymentStatus,
-            resourceMatchSettings.includeWS));
     }
 }
 
@@ -110,7 +109,7 @@ export function fetchMediatypes() {
             .then(response => {
                 dispatch({
                     type: actionType.MEDIATYPES_FETCH_SUCCESS,
-                    data: response.data
+                    data: response.data.map(processMediatype).filter(x => x),
                 });
             }).catch(errHandler(dispatch, "Cannot fetch mediatypes."));
     }
@@ -122,7 +121,7 @@ export function fetchLanguages() {
             .then(response => {
                 dispatch({
                     type: actionType.LANGUAGES_FETCH_SUCCESS,
-                    data: response.data
+                    data: response.data.map(processLanguage).filter(x => x),
                 });
             }).catch(errHandler(dispatch, "Cannot fetch languages."));
     }

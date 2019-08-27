@@ -49,7 +49,7 @@ public class ToolRegistry {
     }
 
 
-    public void onUpdate(Runnable callback) {
+    public void setOnUpdate(Runnable callback) {
         this.callback = callback;
     }
 

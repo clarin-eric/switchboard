@@ -16,6 +16,12 @@ html, body, #reactapp { height: 100%; }
 * {font-size: 16px}
 #footer *, nav * {font-size: 14px}
 
+/* headers should not have the same color as links */
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  color: black;
+}
+
 /* fix links without href (with onClick) */
 a { cursor: pointer }
 
@@ -57,4 +63,17 @@ div.input form .btn {
 }
 div.input form .btn:hover {
     border-color: #ccc;
+}
+
+/* resource table style */
+div.resource-header {
+    font-weight: bold;
+    padding-left: 2px;
+}
+div.resource {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-content: center;
+    padding: 1em 0;
+    gap: 1em;
 }

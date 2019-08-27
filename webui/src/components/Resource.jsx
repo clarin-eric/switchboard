@@ -1,36 +1,54 @@
 import React from 'react';
-import {Dropzone} from './Dropzone';
-import {Link} from 'react-router-dom';
+import Select from 'react-select';
+
+const SelectLanguage = (props) => {
+    const value = props.languages.find(x => x.value == props.res.language);
+    return <Select
+        value={value}
+        options={props.languages.asMutable()}
+        onChange={props.onLanguage}
+        placeholder="Select the language of the resource"
+    />;
+}
+
+const SelectMediatype = (props) => {
+    const value = props.mediatypes.find(x => x.value == props.res.mediatype);
+    return <Select
+        value={value}
+        options={props.mediatypes.asMutable()}
+        onChange={props.onMediatype}
+        placeholder="Select the mediatype of the resource"
+    />;
+}
 
 export class Resource extends React.Component {
     constructor(props) {
         super(props);
     }
 
-    // "border-width: 2px; border-color: black; border-style: solid; border-radius: 4px; margin: 10px 10px 10px 20px; padding: 10px; width: 785px; height: 160px; resize: none; transition: all 0.5s ease 0s; display: inline-block;"
+    onChange(type, sel) {
+        const res = this.props.resource;
+        const newres = res.set(type, sel.value);
+        this.props.updateResource(newres);
+    }
+
     render() {
         const res = this.props.resource;
-        const gridStyle = {
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr 1fr',
-            justifyContent: 'center',
-            padding: 10,
-            border: '1px solid #ddd',
-            borderRadius: 8,
-        };
         return <React.Fragment>
-            <div className="resource" style={gridStyle}>
-                <div>Resource</div>
-                <div>Mediatype</div>
-                <div>Language</div>
+            <div className="resource">
+                <div className="resource-header">Resource</div>
+                <div className="resource-header">Mediatype</div>
+                <div className="resource-header">Language</div>
                 <div>
                     <a href={res.originalLink || res.localLink}> {res.filename} </a>
                 </div>
                 <div>
-                    <span>{res.mediatype}</span>
+                    <SelectMediatype res={res} mediatypes={this.props.mediatypes}
+                        onMediatype={v => this.onChange('mediatype', v)}/>
                 </div>
                 <div>
-                    <span>{res.language && res.language.language}</span>
+                    <SelectLanguage res={res} languages={this.props.languages}
+                        onLanguage={v => this.onChange('language', v)}/>
                 </div>
             </div>
         </React.Fragment>;

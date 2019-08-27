@@ -5,8 +5,9 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 
+import {clientPath} from './constants';
 import rootReducers from './actions/reducers';
-import {fetchApiInfo, fetchAllTools} from './actions/actions';
+import {fetchApiInfo, fetchAllTools, fetchMediatypes, fetchLanguages} from './actions/actions';
 
 import { NavBar } from './components/NavBar';
 import { FooterContainer } from './containers/FooterContainer';
@@ -51,6 +52,15 @@ class Application extends React.Component {
         super(props);
         store.dispatch(fetchApiInfo());
         store.dispatch(fetchAllTools());
+        store.dispatch(fetchMediatypes());
+        store.dispatch(fetchLanguages());
+
+
+        // todo: remove this
+        // var blob = new Blob(["this is a text"], {type: "text/plain"});
+        // blob.name = "submitted_text.txt";
+        // const {uploadFile} =  require('./actions/actions');
+        // store.dispatch(uploadFile(blob));
 
         // this.piwik = PiwikReactRouter({
         //     url : 'https://stats.clarin.eu',
@@ -79,13 +89,13 @@ class Application extends React.Component {
                 <Router>
                     <Frame>
                         <Switch>
-                            <Route exact path={window.APP_CONTEXT_PATH+'/'} component={MainContainer} />
-                            <Route exact path={window.APP_CONTEXT_PATH+'/input'} component={InputContainer} />
-                            <Route exact path={window.APP_CONTEXT_PATH+'/tools'} component={AllToolsContainer} />
-                            <Route exact path={window.APP_CONTEXT_PATH+'/help'} component={HelpContainer} />
-                            <Route exact path={window.APP_CONTEXT_PATH+'/help/about'} component={AboutContainer} />
-                            <Route exact path={window.APP_CONTEXT_PATH+'/help/faq'} component={FAQContainer} />
-                            <Route exact path={window.APP_CONTEXT_PATH+'/help/developers'} component={ForDevelopersContainer} />
+                            <Route exact path={clientPath.root} component={MainContainer} />
+                            <Route exact path={clientPath.input} component={InputContainer} />
+                            <Route exact path={clientPath.tools} component={AllToolsContainer} />
+                            <Route exact path={clientPath.help} component={HelpContainer} />
+                            <Route exact path={clientPath.about} component={AboutContainer} />
+                            <Route exact path={clientPath.faq} component={FAQContainer} />
+                            <Route exact path={clientPath.developers} component={ForDevelopersContainer} />
                             <Route component={NotFound} />
                         </Switch>
                     </Frame>

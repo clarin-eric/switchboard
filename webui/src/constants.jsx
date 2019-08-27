@@ -9,6 +9,16 @@ export const apiPath = {
     storage:    `${urlRoot}/api/storage`,
 };
 
+export const clientPath = {
+    root:       `${urlRoot}/`,
+    input:      `${urlRoot}/input`,
+    tools:      `${urlRoot}/tools`,
+    help:       `${urlRoot}/help`,
+    about:      `${urlRoot}/help/about`,
+    faq:        `${urlRoot}/help/faq`,
+    developers: `${urlRoot}/help/developers`,
+}
+
 export const actionType = [
     'APIINFO_FETCH_SUCCESS',
     'MEDIATYPES_FETCH_SUCCESS',

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {Dropzone} from './Dropzone';
+import {clientPath} from '../constants';
 
 export class Input extends React.Component {
     constructor(props) {
@@ -22,7 +23,7 @@ export class Input extends React.Component {
 
         this.props.onFile(files[0]);
 
-        this.props.history.push(window.APP_CONTEXT_PATH + "/");
+        this.props.history.push(clientPath.root);
     }
 
     handleTextSubmit(e) {
@@ -33,7 +34,7 @@ export class Input extends React.Component {
         blob.name = "submitted_text.txt";
         this.props.onFile(blob);
 
-        this.props.history.push(window.APP_CONTEXT_PATH + "/");
+        this.props.history.push(clientPath.root);
     }
 
     handleTextChange(e) {

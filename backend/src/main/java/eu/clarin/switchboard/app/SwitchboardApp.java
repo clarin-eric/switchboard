@@ -59,7 +59,7 @@ public class SwitchboardApp extends Application<Config> {
 
         ToolRegistry toolRegistry = new ToolRegistry(switchboardConfig.getToolRegistryPath());
         storagePolicy.setAllowedMediaTypes(toolRegistry.getAllMediatypes());
-        toolRegistry.onUpdate(() -> {
+        toolRegistry.setOnUpdate(() -> {
             storagePolicy.setAllowedMediaTypes(toolRegistry.getAllMediatypes());
         });
 
