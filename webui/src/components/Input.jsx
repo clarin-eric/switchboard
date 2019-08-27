@@ -17,7 +17,7 @@ export class Input extends React.Component {
 
     handleFiles(files) {
         if (!files.length) {
-            alert('No files selected');
+            alert('No file selected');
             return;
         }
 
@@ -50,6 +50,7 @@ export class Input extends React.Component {
 
                 <form className="input-group" onSubmit={this.handleTextSubmit}>
                     <textarea className="form-control inputzone"
+                        style={{resize: 'vertical'}}
                         onChange={this.handleTextChange}
                         rows="5"
                         placeholder="Or enter text or a web link here."
@@ -61,7 +62,7 @@ export class Input extends React.Component {
 
                 <p style={{marginTop:20}}>
                     Please be advised that the data will be shared with the tools via public links.
-                    For more details, see the <Link to="/help/faq">FAQ</Link>.
+                    For more details, see the <Link to={clientPath.faq}>FAQ</Link>.
                 </p>
             </div>
         );

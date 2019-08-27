@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { image } from '../actions/utils'
+import {clientPath} from '../constants';
 
 export class NavBar extends React.Component {
     constructor(props) {
@@ -36,7 +37,7 @@ export class NavBar extends React.Component {
                             <span className="icon-bar"></span>
                             <span className="icon-bar"></span>
                         </button>
-                        <a className="navbar-brand nav-link" href={window.APP_CONTEXT_PATH+"/"} onClick={this.closeNav}>
+                        <a className="navbar-brand nav-link" href={clientPath.root} onClick={this.closeNav}>
                             <span style={{fontSize:16, marginRight:2}} className="glyphicon glyphicon-cog" aria-hidden="true"/>
                             <span style={{fontSize:20}}>Language Resource Switchboard</span>
                         </a>
@@ -45,18 +46,18 @@ export class NavBar extends React.Component {
                     <div className={navCollapseClass}>
                         <ul className="nav navbar-nav">
                             <li className="nav-item" onClick={this.closeNav}>
-                                <Link className="nav-link all-tools" to='/tools' onClick={this.closeNav}>Tool Inventory</Link>
+                                <Link className="nav-link all-tools" to={clientPath.tools} onClick={this.closeNav}>Tool Inventory</Link>
                             </li>
                         </ul>
                         <ul className="nav navbar-nav navbar-right">
                             <li className="nav-item" onClick={this.closeNav}>
-                                <Link className="nav-link" to='/help' onClick={this.closeNav}>Help</Link>
+                                <Link className="nav-link" to={clientPath.help} onClick={this.closeNav}>Help</Link>
                             </li>
                             <li className="nav-item" onClick={this.closeNav}>
-                                <Link className="nav-link" to='/help/faq' onClick={this.closeNav}>FAQ</Link>
+                                <Link className="nav-link" to={clientPath.faq} onClick={this.closeNav}>FAQ</Link>
                             </li>
                             <li className="nav-item" onClick={this.closeNav}>
-                                <Link className="nav-link" to='/help/developers' onClick={this.closeNav}>For Developers</Link>
+                                <Link className="nav-link" to={clientPath.developers} onClick={this.closeNav}>For Developers</Link>
                             </li>
                             <li className="nav-item" onClick={this.closeNav}>
                                 <a href="http://www.clarin.eu/" style={{padding:0, marginLeft:20}}>

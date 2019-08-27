@@ -43,7 +43,7 @@ export class Dropzone extends React.Component {
             <button className={'col-md-12 dropzone' + (this.state.hovering ? ' active' : '')}
                     onClick={() => {if (this.fileinput) this.fileinput.click()}}
                     onDragEnter={this.onDragEnter} onDragOver={this.onDragOver} onDragLeave={this.onDragLeave} onDrop={this.onDrop}>
-                <h4 style={{color:'gray', margin:'2em'}}>Drop files here, or click to select files</h4>
+                <h4 style={{color:'gray', margin:'2em'}}>Drop files here, or click to select file</h4>
                 {input}
             </button>
         );

@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {Resource} from './Resource';
 import {ToolList} from './ToolList';
+import {clientPath} from '../constants';
 
 const Home = () => (
     <div className="jumbotron">
@@ -13,7 +14,7 @@ const Home = () => (
             The data will be shared with the tools via public links. For more details, see the FAQ.
         </p>
 
-        <Link className="btn btn-lg btn-primary" to="/input">Upload files or text</Link>
+        <Link className="btn btn-lg btn-primary" to={clientPath.input}>Upload files or text</Link>
     </div>
 );
 
