@@ -8,16 +8,14 @@ build-docker-image:
 	if [ ! -z "$${TRAVIS_TAG}" ]; then\
 		VERSION=$${TRAVIS_TAG} ;\
 	else\
+		VERSION=0.0.0 ;\
 		if [ ! -z $${GIT_TAG} ]; then\
 			VERSION=$${GIT_TAG} ;\
-		else\
-			VERSION=0.0.0 ;\
 		fi ;\
 		if [ ! -z "$${GIT_COMMIT}" ]; then\
-			VERSION=$${VERSION}-$${GIT_COMMIT}-SNAPSHOT ;\
-		else\
-			VERSION=$${VERSION}-SNAPSHOT ;\
+			VERSION=$${VERSION}-$${GIT_COMMIT} ;\
 		fi ;\
+		VERSION=$${VERSION}-SNAPSHOT ;\
 	fi ;\
 	docker build --build-arg version=$${VERSION} -t $(DOCKERTAG) . ;
 
