@@ -1,7 +1,7 @@
 ARG version
 
 # --- build web ui (js bundles)
-FROM registry.gitlab.com/clarin-eric/docker-alpine-clrs-build_env:1.0.0-switchboard2-alpha0 AS webui_builder
+FROM registry.gitlab.com/clarin-eric/docker-alpine-clrs-build_env:2.0.0 AS webui_builder
 
 # create final location for bundle files
 WORKDIR /build/backend/src/main/resources/webui
