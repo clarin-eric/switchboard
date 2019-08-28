@@ -5,8 +5,6 @@ JSBUNDLE=$(WEBUIAPP)/bundle.js
 build-docker-image:
 	GIT_COMMIT=$(shell git log -1 --pretty=format:"%H"|cut -c1-7) ;\
 	GIT_TAG=$(shell git describe --tags --abbrev=0) ;\
-	echo $${GIT_TAG} ;\
-	echo $${GIT_COMMIT} ;\
 	if [ ! -z "$${TRAVIS_TAG}" ]; then\
 		VERSION=$${TRAVIS_TAG} ;\
 	else\
