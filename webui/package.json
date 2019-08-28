@@ -1,7 +1,6 @@
 {
   "name": "switchboard-webui",
   "private": true,
-  "version": "2.0.1",
   "description": "Switchboard web user interface",
   "repository": "https://github.com/clarin-eric/switchboard",
   "devDependencies": {

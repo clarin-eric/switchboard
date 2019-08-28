@@ -1,3 +1,5 @@
+ARG version
+
 # --- build web ui (js bundles)
 FROM registry.gitlab.com/clarin-eric/docker-alpine-clrs-build_env:1.0.0-switchboard2-alpha0 AS webui_builder
 
@@ -20,7 +22,9 @@ RUN make dependencies && make build-webui-production
 # --- build java code with maven
 FROM registry.gitlab.com/clarin-eric/docker-alpine-supervisor-java-base:openjdk11-1.2.2 AS backend_builder
 
+ARG version
 ARG MAVEN_VERSION=3.6.1-r0
+ENV SWITCHBOARD_VERSION=$version
 
 WORKDIR /build
 COPY ./.git                     ./.git
@@ -29,6 +33,8 @@ COPY --from=webui_builder /build/backend/src/main/resources/webui/bundle.js* ./b
 
 WORKDIR /build/backend
 RUN apk add maven=$MAVEN_VERSION
+RUN mvn versions:set -DnewVersion=${SWITCHBOARD_VERSION}
+RUN mvn versions:commit
 RUN mvn -q package
 
 ###############################################################################
