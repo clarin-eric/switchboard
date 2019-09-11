@@ -21,7 +21,7 @@ The development version of the switchboard is currently being served at:
 
 
 # Status
-The software is currently being developed and actively maintained. A v1.0.0 release was published on Aug 11, 2017.
+The software is currently being developed and actively maintained.
 
 # Documentation
 
@@ -31,6 +31,9 @@ Publications section (last entry).
 
 There is also a <a href="https://github.com/clarin-eric/LRSwitchboard-doc">github repository</a> holding documentation.
 
+# Tool registry
+
+The information about the tools that are connected to the Switchboard is maintained in a <a href="https://github.com/clarin-eric/switchboard-tool-registry">separate github repository</a>
 
 # Publications
 
@@ -44,3 +47,7 @@ See https://www.clarin.eu/sites/default/files/zinn-CLARIN2016_paper_26.pdf
 - Claus Zinn. <a href="http://www.ep.liu.se/ecp/147/004/ecp17147004.pdf"> A Bridge from EUDAT's B2DROP cloud service to CLARIN's Language Resource Switchboard.</a> Selected papers from the CLARIN Annual Conference 2017, Budapest, 18-20 September 2017, Linköping University Electronic Press, vol. 147, pages 36-45, 2018.
 
 - Claus Zinn, <a href="https://www.mitpressjournals.org/doi/pdf/10.1162/coli_a_00329"> The Language Resource Switchboard. </a> Computational Linguistics 44(4), pages 631-639, December 2018.
+
+# Contact
+
+For questions and remarks, please contact switchboard@clarin.eu
