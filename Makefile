@@ -3,7 +3,7 @@ WEBUIAPP=src/main/resources/webui
 JSBUNDLE=$(WEBUIAPP)/bundle.js
 
 build-docker-image:
-	GIT_COMMIT=$(shell git log -1 --pretty=format:"%H"|cut -c1-7) ;\
+	@GIT_COMMIT=$(shell git log -1 --pretty=format:"%H"|cut -c1-7) ;\
 	GIT_TAG=$(shell git describe --tags --abbrev=0) ;\
 	if [ ! -z "$${TRAVIS_TAG}" ]; then\
 		VERSION=$${TRAVIS_TAG} ;\
@@ -17,6 +17,7 @@ build-docker-image:
 		fi ;\
 		VERSION=$${VERSION}-SNAPSHOT ;\
 	fi ;\
+	echo VERSION=$${VERSION}; \
 	docker build --build-arg version=$${VERSION} -t $(DOCKERTAG) . ;
 
 package: build-docker-image
