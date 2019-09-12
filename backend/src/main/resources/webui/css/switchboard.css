@@ -68,3 +68,12 @@ div.resource {
     padding: 1em 0;
     gap: 1em;
 }
+
+/* transitions for matching tools */
+.smooth-update {
+    animation: fadein .1s;
+}
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}

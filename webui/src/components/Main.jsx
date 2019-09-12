@@ -20,6 +20,20 @@ const Home = () => (
     </div>
 );
 
+
+const MatchingTools = (props) => {
+    const tools = props.matchingTools.tools;
+    if (tools === undefined)
+        return "";
+    if (tools === null)
+        return <div key="0" className="smooth-update">Searching...</div>;
+    if (!tools.length)
+        return <div key="1" className="smooth-update">No matching tools found.</div>;
+
+    return <div key="2" className="smooth-update"> <ToolList tools={tools}/> </div>;
+};
+
+
 export class Main extends React.Component {
     constructor(props) {
         super(props);
@@ -40,7 +54,7 @@ export class Main extends React.Component {
                         <hr/>
 
                         <h3>Matching tools</h3>
-                        <ToolList tools={this.props.matchingTools}/>
+                        <MatchingTools matchingTools={this.props.matchingTools} />
                     </div>
                 }
             </div>

@@ -64,7 +64,6 @@ export class ToolList extends React.Component {
     render() {
         const tools = this.props.tools;
         const sorted = tools.asMutable().sort((t1, t2) => t1.name < t2.name ? -1 : t1.name == t2.name ? 0 : 1);
-        // tools1.forEach(t => console.log("tool", t.name, t.languages.asMutable()));
         return (
             <React.Fragment>
                 { sorted.map(tool => <ToolCard key={tool.name} imgSrc={image(tool.logo)} {...tool}/>) }

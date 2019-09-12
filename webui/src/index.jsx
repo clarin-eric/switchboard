@@ -16,10 +16,6 @@ import { InputContainer } from './containers/InputContainer';
 import { AllToolsContainer } from './containers/ToolListContainer';
 import { AboutContainer, HelpContainer } from './containers/HelpContainers';
 
-// todo: highlight navbar buttons when on their page
-// todo: "tool inventory" button must be highlighted on /tools, no underline
-// todo: matching tools: no tools message, loading message
-
 // todo: tools: input must be shown, searching
 // todo: make separate area for urls, handle, doi
 // todo: show alerts on errors

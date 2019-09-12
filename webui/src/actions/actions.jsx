@@ -154,6 +154,10 @@ export function fetchMatchingTools(mediatype, language, deploymentStatus, includ
             sortBy: 'tools',
         }
 
+        dispatch({
+            type: actionType.MATCHING_TOOLS_FETCH_START,
+        })
+
         axios.get(apiPath.tools, {params})
             .then(response => {
                 dispatch({

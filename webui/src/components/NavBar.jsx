@@ -27,6 +27,10 @@ export class NavBar extends React.Component {
 
     render() {
         const navCollapseClass = this.state.showCollapsedNavbar ? "collapse navbar-collapse text-right show" : "collapse navbar-collapse";
+        const navItemClass = (url) => {
+            return "nav-item" + (window.location.href.endsWith(url) ? " active" : "");
+        }
+
         return (
             <nav className="navbar navbar-static-top navbar-default">
                 <div className="container">
@@ -45,10 +49,10 @@ export class NavBar extends React.Component {
 
                     <div className={navCollapseClass}>
                         <ul className="nav navbar-nav">
-                            <li className="nav-item" onClick={this.closeNav}>
+                            <li className={navItemClass(clientPath.tools)} onClick={this.closeNav}>
                                 <Link className="nav-link all-tools" to={clientPath.tools} onClick={this.closeNav}>Tool Inventory</Link>
                             </li>
-                            <li className="nav-item" onClick={this.closeNav}>
+                            <li className={navItemClass(clientPath.help)} onClick={this.closeNav}>
                                 <Link className="nav-link" to={clientPath.help} onClick={this.closeNav}>Help</Link>
                             </li>
                         </ul>
