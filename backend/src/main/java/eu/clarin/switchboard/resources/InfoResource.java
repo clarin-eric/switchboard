@@ -10,7 +10,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Path("")
@@ -54,7 +56,9 @@ public class InfoResource {
     @Path("/mediatypes")
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public Response getMediatypes() {
-        return Response.ok(toolRegistry.getAllMediatypes()).build();
+        List<String> list = new ArrayList(toolRegistry.getAllMediatypes());
+        list.sort(String::compareTo);
+        return Response.ok(list).build();
     }
 
     // same as /mediatypes
@@ -62,13 +66,15 @@ public class InfoResource {
     @Path("/mimetypes")
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public Response getMimetypes() {
-        return Response.ok(toolRegistry.getAllMediatypes()).build();
+        return getMediatypes();
     }
 
     @GET
     @Path("/languages")
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public Response getLanguages() {
-        return Response.ok(toolRegistry.getAllLanguages()).build();
+        List<String> list = new ArrayList(toolRegistry.getAllLanguages());
+        list.sort(String::compareTo);
+        return Response.ok(list).build();
     }
 }

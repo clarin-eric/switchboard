@@ -14,9 +14,9 @@ export const clientPath = {
     input:      `${urlRoot}/input`,
     tools:      `${urlRoot}/tools`,
     help:       `${urlRoot}/help`,
-    about:      `${urlRoot}/help/about`,
-    faq:        `${urlRoot}/help/faq`,
-    developers: `${urlRoot}/help/developers`,
+    faq:        `${urlRoot}/help#faq`,
+    developers: `${urlRoot}/help#developers`,
+    about:      `${urlRoot}/about`,
 }
 
 export const actionType = [

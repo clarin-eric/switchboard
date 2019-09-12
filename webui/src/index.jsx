@@ -14,7 +14,16 @@ import { FooterContainer } from './containers/FooterContainer';
 import { MainContainer } from './containers/MainContainer';
 import { InputContainer } from './containers/InputContainer';
 import { AllToolsContainer } from './containers/ToolListContainer';
-import { AboutContainer, HelpContainer, FAQContainer, ForDevelopersContainer } from './containers/HelpContainers';
+import { AboutContainer, HelpContainer } from './containers/HelpContainers';
+
+// todo: highlight navbar buttons when on their page
+// todo: "tool inventory" button must be highlighted on /tools, no underline
+// todo: matching tools: no tools message, loading message
+
+// todo: tools: input must be shown, searching
+// todo: make separate area for urls, handle, doi
+// todo: show alerts on errors
+// todo: history with text states, resources
 
 // todo: make sure we keep old urls
 // todo: enable piwik
@@ -36,10 +45,9 @@ const store = createStore(rootReducers, middleware());
 const Frame = (props) => (
     <div id="bodycontainer">
         <NavBar/>
-        <div className="container-fluid">
+        <div className="container">
             <div className="row">
-                <div className="col-md-1" />
-                <div className="col-md-10">
+                <div className="col-md-12">
                     {props.children}
                 </div>
             </div>
@@ -94,8 +102,6 @@ class Application extends React.Component {
                             <Route exact path={clientPath.tools} component={AllToolsContainer} />
                             <Route exact path={clientPath.help} component={HelpContainer} />
                             <Route exact path={clientPath.about} component={AboutContainer} />
-                            <Route exact path={clientPath.faq} component={FAQContainer} />
-                            <Route exact path={clientPath.developers} component={ForDevelopersContainer} />
                             <Route component={NotFound} />
                         </Switch>
                     </Frame>

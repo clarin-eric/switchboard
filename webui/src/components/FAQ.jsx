@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { HashLink as Link } from 'react-router-hash-link';
+import {clientPath} from '../constants';
 
 export default class FAQ extends React.Component {
   render() {
     return (
         <React.Fragment>
-            <h2>Frequently Asked Questions</h2>
+            <h2 id="faq">Frequently Asked Questions</h2>
             <ul>
             <li>
               <em>Q: What happens to the research data that is transfered to the Switchboard?</em>
@@ -77,9 +79,9 @@ export default class FAQ extends React.Component {
               <p>
                 A: At the time of writing, the Stanford tools are not <em>directly</em> callable from the
                 Switchboard. Remember, to connect a tool to the Switchboard, the tool developers have to
-                perform some integration work (for details, see "For Developers"). However, well-known tools work
-                under the hood of WebLicht.  The WebLicht entry for Constituent Parsing, for example,  makes use
-                of the Stanford Tokenizer and the Charniak parser. Be assured, the Switchboard will
+                perform some integration work (for details, see <Link to={clientPath.developers}>For Developers</Link>).
+                However, well-known tools work under the hood of WebLicht. The WebLicht entry for Constituent Parsing,
+                for example, makes use of the Stanford Tokenizer and the Charniak parser. Be assured, the Switchboard will
                 continue to integrate more tools <em>directly</em> into the Switchboard.
               </p>
             </li>
@@ -95,9 +97,6 @@ export default class FAQ extends React.Component {
               </p>
             </li>
           </ul>
-
-          <hr />
-          <p> More questions? Please <a href={ this.props.contact }>contact the Switchboard Team</a>. </p>
         </React.Fragment>
     );
   }

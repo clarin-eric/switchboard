@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Link} from 'react-router-dom';
+import { HashLink as Link } from 'react-router-hash-link';
 import {Dropzone} from './Dropzone';
 import {clientPath} from '../constants';
 
@@ -54,9 +54,11 @@ export class Input extends React.Component {
                         onChange={this.handleTextChange}
                         rows="5"
                         placeholder="Or enter text or a web link here."
-                        value={this.state.value} />
+                        value={this.state.text} />
                     <span className="input-group-addon">
-                        <button type="submit" className="btn">Submit</button>
+                        <button type="submit" className="btn btn-primary" disabled={!this.state.text.trim()}>
+                        Submit
+                        </button>
                     </span>
                 </form>
 

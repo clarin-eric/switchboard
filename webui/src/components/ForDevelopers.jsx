@@ -6,7 +6,7 @@ export default class ForDevelopers extends React.Component {
   render() {
     return (
         <React.Fragment>
-            <h2>How to get your tool listed in the CLARIN LRS</h2>
+          <h2 id="developers">How to get your tool listed in the CLARIN LRS</h2>
           <p>For the time being, two pieces of information about a resource are used to identify whether there is any tool
             that can process the resource:</p>
           <ul>
@@ -40,9 +40,6 @@ export default class ForDevelopers extends React.Component {
             Here, the URL parameter <em>input</em> is replaced by the parameter <em>URL</em>,
             and <em>lang</em> is replaced by <em>language</em>
           </p>
-
-          <hr/>
-          <p> For any questions, please <a href={ this.props.contact }>contact the Switchboard Team</a>. </p>
         </React.Fragment>
     );
   }

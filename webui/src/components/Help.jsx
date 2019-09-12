@@ -1,12 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import FAQ from './FAQ';
+import ForDevelopers from './ForDevelopers';
 import { image } from '../actions/utils'
 
 export default class Help extends React.Component {
   render() {
     return (
         <React.Fragment>
-          <h2>How to use the Language Resource Switchboard</h2>
+          <UserHelp/>
+          <FAQ/>
+          <ForDevelopers/>
+
+          <hr/>
+          <p> For any questions please <a href={'mailto:'+this.props.contact}>contact the Switchboard team</a>. </p>
+        </React.Fragment>
+    );
+  }
+}
+
+class UserHelp extends React.Component {
+  render() {
+    return (
+        <React.Fragment>
+          <h2 id="help">How to use the Language Resource Switchboard</h2>
           <p>The switchboard helps you to find and start tools that can process your research data.
             You have three options to enter your resource:
           </p>
@@ -55,9 +72,6 @@ export default class Help extends React.Component {
               In these cases, try downloading the resource from the resource provider, then use the
               file drop mechanism at <a href="https://switchboard.clarin.eu"> https://switchboard.clarin.eu</a>.
             </p>
-
-            <hr />
-            <p> Questions? Please <a href={ this.props.contact }>contact the Switchboard Team</a>. </p>
         </React.Fragment>
     );
   }

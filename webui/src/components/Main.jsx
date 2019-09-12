@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { HashLink as Link } from 'react-router-hash-link';
 import {Resource} from './Resource';
 import {ToolList} from './ToolList';
 import {clientPath} from '../constants';
@@ -11,10 +11,12 @@ const Home = () => (
             Switchboard helps you find tools that can process your resources.
         </p>
         <p>
-            The data will be shared with the tools via public links. For more details, see the FAQ.
+            The data will be shared with the tools via public links. For more details, see the <Link to={clientPath.faq}>FAQ</Link>.
         </p>
 
         <Link className="btn btn-lg btn-primary" to={clientPath.input}>Upload files or text</Link>
+        <span style={{margin:4}}/>
+        <Link className="btn btn-lg btn-default" to={clientPath.tools}>Tools inventory</Link>
     </div>
 );
 

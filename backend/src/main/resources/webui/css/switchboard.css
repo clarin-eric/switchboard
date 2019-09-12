@@ -13,7 +13,7 @@ html, body, #reactapp { height: 100%; }
 }
 
 /* large text on body */
-* {font-size: 16px}
+body {font-size: 16px}
 #footer *, nav * {font-size: 14px}
 
 /* headers should not have the same color as links */
@@ -24,11 +24,6 @@ h1, h2, h3, h4, h5, h6,
 
 /* fix links without href (with onClick) */
 a { cursor: pointer }
-
-/* highlight all tools button on navbar */
-.navbar-default .navbar-nav>li>a.all-tools {
-    border-bottom: 3px solid #888;
-}
 
 
 /* file drop input textarea style */
@@ -49,6 +44,7 @@ div.input button.dropzone.active {
     box-shadow: 0 0 8px #0080aa;
 }
 
+
 /* text/url input textarea style */
 div.input textarea.inputzone {
     padding: 10px;
@@ -58,12 +54,7 @@ div.input textarea.inputzone {
 div.input form {
     box-shadow: 2px 2px 5px #ccc;
 }
-div.input form .btn {
-    background-color: #eee;
-}
-div.input form .btn:hover {
-    border-color: #ccc;
-}
+
 
 /* resource table style */
 div.resource-header {
