@@ -16,7 +16,9 @@ import { InputContainer } from './containers/InputContainer';
 import { AllToolsContainer } from './containers/ToolListContainer';
 import { AboutContainer, HelpContainer } from './containers/HelpContainers';
 
-// todo: tools: input must be shown, searching
+// todo: sort tools by task
+// todo: searching in tools (by name, language etc.)
+
 // todo: make separate area for urls, handle, doi
 // todo: show alerts on errors
 // todo: history with text states, resources
