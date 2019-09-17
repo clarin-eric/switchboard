@@ -10,25 +10,34 @@ export class ToolList extends React.Component {
         return (
             <React.Fragment>
                 { sorted.map(tool =>
-                    <ToolCard key={tool.name} imgSrc={image(tool.logo)} tool={tool} resource={this.props.resource}/>
+                    <ToolCard key={tool.name}
+                        imgSrc={image(tool.logo)}
+                        showDetails={this.props.showDetails}
+                        tool={tool}
+                        resource={this.props.resource}/>
                 )}
             </React.Fragment>
         );
     }
 }
 
-const ToolCard = ({imgSrc, tool, resource}) => {
-    const fullURL = getInvocationURL(tool, resource);
-    const startButton = fullURL
-        ? <a className="btn btn-lg btn-success" style={{marginRight:16}} href={fullURL} target="_blank"> Start Tool </a>
-        : false;
+class ToolCard extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            showDetails: false
+        };
+    }
 
-    return (
-        <div className="tool" style={{ position: 'relative', top: 0, marginTop: 10 }}>
-            <dl className="dl-horizontal" style={{marginBottom:10, marginTop:32}}>
+    renderHeader(imgSrc, tool, invocationURL) {
+        return (
+            <dl className="dl-horizontal">
                 <dt><img src={imgSrc}/></dt>
                 <dd>
-                    { startButton }
+                    { invocationURL
+                        ? <a className="btn btn-success" style={{marginRight:16}} href={invocationURL} target="_blank"> Start Tool </a>
+                        : false
+                    }
                     <a style={{fontSize: 24}} href={tool.homepage} target="_blank">{tool.name}</a>
                     <div style={{fontSize:14}}>
                         { tool.deployment && tool.deployment !== 'production'
@@ -38,6 +47,11 @@ const ToolCard = ({imgSrc, tool, resource}) => {
                     </div>
                 </dd>
             </dl>
+        );
+    }
+
+    renderDetails(tool) {
+        return (
             <div>
                 <DetailsRow title="Description" summary={tool.description} />
                 { tool.authentication == "no" ? null :
@@ -55,17 +69,27 @@ const ToolCard = ({imgSrc, tool, resource}) => {
                     }
                     <Indicator title="map-marker">{tool.location}</Indicator>
                 </IndicatorRow>
+                <hr/>
             </div>
-            <hr/>
-        </div>
-    )
+        );
+    }
+
+    render() {
+        const invocationURL = getInvocationURL(this.props.tool, this.props.resource);
+        return (
+            <div className="tool" onClick={e => this.setState({showDetails:!this.state.showDetails})}>
+                { this.renderHeader(this.props.imgSrc, this.props.tool, invocationURL) }
+                { this.state.showDetails ? this.renderDetails(this.props.tool) : false }
+            </div>
+        );
+    }
 };
 
 const DetailsRow = ({ title, summary }) => {
     return !summary ? null : (
         <div style={{alignSelf: 'flex-start'}}>
             <div style={{ width: '100%'}}>
-                <dl className="dl-horizontal" style={{marginBottom:10}}>
+                <dl className="dl-horizontal">
                     <dt>{title}</dt>
                     <dd>{title == "Home"
                         ? <a href={summary} target="_blank"> {summary }</a>
@@ -81,7 +105,7 @@ const IndicatorRow = (props) => {
     return (
         <div style={{alignSelf: 'flex-start'}}>
             <div style={{ width: '100%'}}>
-                <dl className="dl-horizontal" style={{marginBottom:10}}>
+                <dl className="dl-horizontal">
                     <dt></dt>
                     <dd>{props.children}</dd>
                 </dl>

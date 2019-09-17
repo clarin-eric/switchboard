@@ -78,10 +78,28 @@ div.resource {
     to   { opacity: 1; }
 }
 
-.tool dt img {
+
+div.tool .dl-horizontal {
+    margin-bottom: 8px;
+}
+
+div.tool {
+    padding: 10px 0;
+}
+
+div.tool:hover {
+    background-color: #f6f6f6;
+}
+
+div.tool dt img {
     height: 32px;
     margin: 4px 4px 4px 0;
     padding: 2px;
     border: 1px solid #ddd;
     box-shadow: 2px 2px 2px #ccc;
 }
+div.tool hr{
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+

@@ -1,8 +1,6 @@
 import { processLanguage, processMediatype, iso_639_3_to_639_1, image } from './utils';
 
 export function getInvocationURL(tool, resource) {
-    console.log("tool=", tool);
-    console.log("resource=", resource);
     if (!resource) {
         return false;
     }
@@ -18,18 +16,18 @@ export function getInvocationURL(tool, resource) {
         } else if (param === 'lang') {
             if (tool.langEncoding == "639-1") {
                 // some tools expect an ISO 639-1 language parameter
-                value = iso_639_3_to_639_1(resource.language.value);
+                value = iso_639_3_to_639_1(resource.language);
             } else {
-                value = resource.language.value;
+                value = resource.language;
             }
         } else if (param === 'type') {
-            value = resource.mediatype.value;
+            value = resource.mediatype;
         }
 
         parameters[key] = value;
     }
+    // console.log("parameters=", parameters);
 
-    console.log("parameters=", parameters);
     const queryString = Object.entries(parameters)
         .map(kv => kv.map(encodeURIComponent).join('='))
         .join('&');
@@ -41,6 +39,5 @@ export function getInvocationURL(tool, resource) {
     } else {
         url = tool.url + "?" + queryString;
     }
-    console.log("url=", url);
     return url;
 }
