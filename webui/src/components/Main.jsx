@@ -1,7 +1,7 @@
 import React from 'react';
 import { HashLink as Link } from 'react-router-hash-link';
 import {Resource} from './Resource';
-import {ToolList} from './ToolList';
+import {ToolListWithControls} from './ToolList';
 import {clientPath} from '../constants';
 
 const Home = () => (
@@ -26,12 +26,12 @@ const MatchingTools = (props) => {
     if (tools === undefined)
         return "";
     if (tools === null)
-        return <div key="0" className="smooth-update">Searching...</div>;
+        return <h3 className="smooth-update">Searching...</h3>;
     if (!tools.length)
-        return <div key="1" className="smooth-update">No matching tools found.</div>;
+        return <h3 className="smooth-update">No matching tools found.</h3>;
 
-    return <div key="2" className="smooth-update">
-        <ToolList tools={tools} resource={props.resource}/>
+    return <div className="smooth-update">
+        <ToolListWithControls title="Matching Tools" tools={tools} resource={props.resource}/>
     </div>;
 };
 
@@ -55,7 +55,6 @@ export class Main extends React.Component {
 
                         <hr/>
 
-                        <h2>Matching tools</h2>
                         <MatchingTools matchingTools={this.props.matchingTools} resource={this.props.resource} />
                     </div>
                 }

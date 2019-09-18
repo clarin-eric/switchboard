@@ -136,9 +136,10 @@ export function fetchAllTools(deploymentStatus) {
 
         axios.get(apiPath.tools, {params})
             .then(response => {
+                response.data.forEach(addSearchString);
                 dispatch({
                     type: actionType.ALL_TOOLS_FETCH_SUCCESS,
-                    data: response.data
+                    data: response.data,
                 });
             }).catch(errHandler(dispatch, "Cannot fetch all tools data."));
     }
@@ -160,12 +161,21 @@ export function fetchMatchingTools(mediatype, language, deploymentStatus, includ
 
         axios.get(apiPath.tools, {params})
             .then(response => {
+                response.data.forEach(addSearchString);
                 dispatch({
                     type: actionType.MATCHING_TOOLS_FETCH_SUCCESS,
-                    data: response.data
+                    data: response.data,
                 });
             }).catch(errHandler(dispatch, "Cannot fetch tools data."));
     }
+}
+
+function addSearchString(tool) {
+    let searchString = "";
+    for (const key of ['task', 'name', 'description']) {
+        searchString += tool[key].toLowerCase();
+    }
+    tool.searchString = searchString;
 }
 
 export function errHandler(dispatch, msg) {

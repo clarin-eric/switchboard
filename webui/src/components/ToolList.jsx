@@ -3,20 +3,99 @@ import PropTypes from 'prop-types';
 import { processLanguage, image } from '../actions/utils';
 import { getInvocationURL } from '../actions/toolcall';
 
-export class ToolList extends React.Component {
+
+export class ToolListWithControls extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            groupByTask: true
+            groupByTask: true,
+            searchString: "",
         };
     }
     static propTypes = {
-        tools: PropTypes.array
+        title: PropTypes.string,
+        tools: PropTypes.array,
+        resource: PropTypes.object,
     };
 
-    renderToolSections() {
-        if (!this.state.groupByTask) {
-            return <ToolSubList tools={this.props.tools.asMutable()} showTask={true} resource={this.props.resource}/>;
+    filterTools(tools, searchString) {
+        if (searchString.length < 2) {
+            return {tools, hiddenTools:[]};
+        }
+        const terms = searchString.trim().split(/\s/);
+        const ret = {tools: [], hiddenTools: []};
+        tools.forEach(tool => {
+            if (terms.every(term => tool.searchString.includes(term))) {
+                ret.tools.push(tool);
+            } else {
+                ret.hiddenTools.push(tool);
+            }
+        });
+        return ret;
+    }
+
+    renderGroupByTask() {
+        return (
+            <div style={{display:'inline-block', marginRight:20}}>
+                <form className="input-group">
+                    <input type="checkbox" id="groupByTask" name="groupByTask"
+                        onChange={toggle.bind(this, 'groupByTask')} checked={this.state.groupByTask} />
+                    <label className="form-check-label" htmlFor="groupByTask" style={{marginLeft:4, fontWeight:500}}>Group by task</label>
+                </form>
+            </div>
+        );
+    }
+
+    renderSearch() {
+        return (
+            <div style={{display:'inline-block', marginRight:20}}>
+                <form className="search" className="input-group">
+                    <input className="form-control" type="text" placeholder="Search for ..."
+                        onChange={e => this.setState({searchString: event.target.value})}
+                        value={this.state.searchString} />
+                    <span className="input-group-addon" style={{width:'1em'}}>
+                        <span className="glyphicon glyphicon-search" style={{fontSize:'90%'}} aria-hidden="true"/>
+                    </span>
+                </form>
+            </div>
+        );
+    }
+
+    render() {
+        const {tools, hiddenTools} = this.filterTools(this.props.tools, this.state.searchString);
+        return (
+            <div>
+                <h2 style={{float:'left'}}>{this.props.title}</h2>
+
+                <div className="tool-control" style={{float:'right', marginTop: 20}}>
+                    {this.renderGroupByTask()}
+                    {this.renderSearch()}
+                </div>
+
+                <div style={{clear:'both'}} />
+
+                <ToolList tools={tools} resource={this.props.resource} {...this.state}/>
+
+                { hiddenTools.length
+                    ? <p className="alert alert-info">There are {hiddenTools.length} tools not matching the search term.</p>
+                    : false
+                }
+            </div>
+        );
+    }
+}
+
+
+class ToolList extends React.Component {
+    static propTypes = {
+        tools: PropTypes.array,
+        resource: PropTypes.object,
+        groupByTask: PropTypes.bool,
+    };
+
+    render() {
+        if (!this.props.groupByTask) {
+            return <ToolSubList tools={this.props.tools} showTask={true} resource={this.props.resource}/>;
         }
 
         const reduceFn = (buckets, tool) => {
@@ -25,26 +104,14 @@ export class ToolList extends React.Component {
             buckets[tool.task] = list;
             return buckets;
         }
-        const buckets = this.props.tools.asMutable().reduce(reduceFn, {});
+        const buckets = this.props.tools.reduce(reduceFn, {});
         const tasks = Object.keys(buckets).sort();
         return tasks.map(task => <ToolSubList key={task} task={task} tools={buckets[task]} showTask={false} resource={this.props.resource} />);
     }
-
-    render() {
-        return (
-            <div>
-                <form className="input-group" style={{float:'right'}}>
-                    <input type="checkbox" name="groupByTask" onChange={toggle.bind(this, 'groupByTask')} checked={this.state.groupByTask} />
-                    <label className="form-check-label" htmlFor="groupByTask" style={{marginLeft:4}}>Group by task</label>
-                    {/*<input className="form-control" type="text" placeholder="Search for ..."/>*/}
-                </form>
-                {this.renderToolSections()}
-            </div>
-        );
-    }
 }
 
-export class ToolSubList extends React.Component {
+
+class ToolSubList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -58,13 +125,16 @@ export class ToolSubList extends React.Component {
         resource: PropTypes.object,
     };
 
-    render(tools) {
+    render() {
         const sortFn = (t1, t2) => t1.name < t2.name ? -1 : t1.name == t2.name ? 0 : 1;
-        const sorted = this.props.tools.sort(sortFn);
+        const tools = [...this.props.tools].sort(sortFn);
         return (
             <div className="tool-sublist" onClick={toggle.bind(this, 'show')}>
-                { this.props.task ? <h3>{this.props.task}</h3> : false}
-                { !this.state.show ? false : sorted.map(tool =>
+                { this.props.task
+                    ? <h3> {this.props.task} {this.state.show ? false : " ..."} </h3>
+                    : false
+                }
+                { !this.state.show ? false : tools.map(tool =>
                     <ToolCard key={tool.name}
                         imgSrc={image(tool.logo)}
                         showTask={this.props.showTask}
@@ -75,6 +145,7 @@ export class ToolSubList extends React.Component {
         );
     }
 }
+
 
 class ToolCard extends React.Component {
     constructor(props) {
@@ -144,6 +215,7 @@ class ToolCard extends React.Component {
         );
     }
 };
+
 
 const DetailsRow = ({ title, summary }) => {
     return !summary ? null : (

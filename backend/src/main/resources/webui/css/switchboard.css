@@ -25,6 +25,11 @@ h1, h2, h3, h4, h5, h6,
 /* fix links without href (with onClick) */
 a { cursor: pointer }
 
+/* visual bug fix */
+.input-group input.form-control {
+    z-index: 0;
+}
+
 
 /* file drop input textarea style */
 div.input button.dropzone {
@@ -109,7 +114,7 @@ div.tool .header dt img {
     border: 1px solid #ddd;
     box-shadow: 2px 2px 2px #ccc;
 }
-div.tool hr{
+div.tool hr {
     margin-top: 10px;
     margin-bottom: 0;
 }
