@@ -71,13 +71,21 @@ div.resource {
 
 /* transitions for matching tools */
 .smooth-update {
-    animation: fadein .1s;
+    animation: fadein .2s;
 }
 @keyframes fadein {
     from { opacity: 0; }
     to   { opacity: 1; }
 }
 
+
+div.tool-sublist h3 {
+    margin: 0;
+    padding: 20px 0 10px 10px;
+}
+div.tool-sublist h3:hover {
+    background-color: #eee;
+}
 
 div.tool .dl-horizontal {
     margin-bottom: 8px;
@@ -91,7 +99,10 @@ div.tool:hover {
     background-color: #f6f6f6;
 }
 
-div.tool dt img {
+div.tool .header dd {
+    line-height:38px;
+}
+div.tool .header dt img {
     height: 32px;
     margin: 4px 4px 4px 0;
     padding: 2px;

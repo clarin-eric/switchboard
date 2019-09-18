@@ -10,10 +10,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Path("")
 public class InfoResource {
@@ -57,7 +54,12 @@ public class InfoResource {
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public Response getMediatypes() {
         List<String> list = new ArrayList(toolRegistry.getAllMediatypes());
-        list.sort(String::compareTo);
+        list.sort(new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return Long.compare(o1.length(), o2.length());
+            }
+        });
         return Response.ok(list).build();
     }
 

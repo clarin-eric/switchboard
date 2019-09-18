@@ -30,7 +30,9 @@ const MatchingTools = (props) => {
     if (!tools.length)
         return <div key="1" className="smooth-update">No matching tools found.</div>;
 
-    return <div key="2" className="smooth-update"> <ToolList tools={tools} resource={props.resource}/> </div>;
+    return <div key="2" className="smooth-update">
+        <ToolList tools={tools} resource={props.resource}/>
+    </div>;
 };
 
 
@@ -45,7 +47,7 @@ export class Main extends React.Component {
                 { !this.props.resource.file
                     ? <Home/>
                     : <div>
-                        <h3>Input Analysis</h3>
+                        <h2>Input Analysis</h2>
                         <Resource resource={this.props.resource}
                             updateResource={this.props.updateResource}
                             mediatypes={this.props.mediatypes}
@@ -53,7 +55,7 @@ export class Main extends React.Component {
 
                         <hr/>
 
-                        <h3>Matching tools</h3>
+                        <h2>Matching tools</h2>
                         <MatchingTools matchingTools={this.props.matchingTools} resource={this.props.resource} />
                     </div>
                 }
