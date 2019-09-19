@@ -39,29 +39,31 @@ export function updateResource(resource) {
     }
 }
 
+export function uploadLink(link, origin) {
+    var formData = new FormData();
+    formData.append("link", link);
+    formData.append("origin", origin);
+    return uploadData(formData);
+}
+
 export function uploadFile(file) {
+    var formData = new FormData();
+    formData.append("file", file, file.name);
+    return uploadData(formData);
+}
+
+function uploadData(formData) {
     return function (dispatch, getState) {
-        const resource = {
-            file      : file,
-            filename  : file.name,
-            mediatype : file.type,
-            language  : null,
-        };
         dispatch({
             type: actionType.RESOURCE_INIT,
-            data: resource,
+            data: {state: 'uploading'},
         });
-
-        var formData = new FormData();
-        formData.append("file", resource.file, resource.filename);
-        const params = {
-            headers: {'Content-Type': 'multipart/form-data'}
-        };
         axios
-            .post(apiPath.storage, formData, params)
+            .post(apiPath.storage, formData, {
+                headers: {'Content-Type': 'multipart/form-data'}
+            })
             .then((response) => {
-                // assign id, url, mediatype, length, language
-                Object.assign(resource, response.data);
+                const resource = response.data;
 
                 const lang = processLanguage(response.data.language)
                 resource.language = lang && lang.value;
@@ -69,27 +71,13 @@ export function uploadFile(file) {
                 if (resource.localLink && resource.localLink.startsWith(apiPath.api)) {
                     resource.localLink = window.origin + resource.localLink;
                 }
+                resource.state = 'stored';
 
                 dispatch(updateResource(resource));
             })
             .catch(errHandler(dispatch));
     }
 }
-
-// todo: remove?
-// function createAction(name) {
-//     const f = function (data) {
-//         return {
-//             type: name,
-//             data,
-//         }
-//     };
-//     f.toString = function() {
-//         return name;
-//     };
-//     return f;
-// }
-// const APIINFO_FETCH_SUCCESS = createAction('APIINFO_FETCH_SUCCESS');
 
 export function fetchApiInfo() {
     return function (dispatch, getState) {

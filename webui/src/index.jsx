@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 
-import {clientPath} from './constants';
+import {clientPath, clientHash} from './constants';
 import rootReducers from './actions/reducers';
 import {fetchApiInfo, fetchAllTools, fetchMediatypes, fetchLanguages} from './actions/actions';
 
@@ -13,16 +13,49 @@ import { NavBar } from './components/NavBar';
 import { FooterContainer } from './containers/FooterContainer';
 import { MainContainer } from './containers/MainContainer';
 import { InputContainer } from './containers/InputContainer';
-import { AllToolsContainer } from './containers/ToolListContainer';
+import { AllToolsContainer } from './containers/AllToolsContainer';
 import { AboutContainer, HelpContainer } from './containers/HelpContainers';
 
-// todo: sort tools by task
-// todo: searching in tools (by name, language etc.)
 
-// todo: make separate area for urls, handle, doi
+
+// todo: use these
+const errorMessages = {
+    cannotUpload: `The switchboard was unable to upload your resource to a file
+                    storage location (so that the resource becomes accessible
+                    for the tools connected to the switchboard). Likely the
+                    resource is too large or its MIME type is not allowed.
+                    Please select a different resource with file size smaller
+                    than {maxSize}. If failure persists, please contact
+                    "switchboard@clarin.eu".`,
+    badURL: `It seems that you have entered an incorrect or partial URL. Please
+                    correct the URL and then try again.`,
+    authenticationRequired: `The resource seems to be behind a Shibboleth
+                    authentication wall. Please fetch the resource with your
+                    authentication credentials by clicking on "Link to
+                    Resource". Then use the standalone version of the LRS to
+                    upload the resource.`,
+    cannotGetResource: `The switchboard was unable to fetch the URL (404 or
+                    similar). Please attempt to fetch the resource yourself by
+                    pasting its link into a new browser tab. If successul, save
+                    the file to your computer, and then upload the resource via
+                    drag & drop into the switchboard's left-most drop area.`,
+    analysisFailed: `The Switchboard was unable to identify the language and/or
+                    mimetype of the given resource. Please specify the
+                    information manually.`,
+    noMatchingTools: `The Switchboard has currently no applicable tool than can
+                    process the given resource (given its mediatype and
+                    language). Please try again with another resource.`,
+}
+
+
 // todo: show alerts on errors
+// todo: test with:
+//      -  bad data url
+//      -  big file url
+//      -  unsupported mimetype url
+//      -  fake java exception
+// todo: make separate area for urls, handle, doi
 // todo: history with text states, resources
-
 // todo: make sure we keep old urls
 // todo: enable piwik
 
@@ -34,8 +67,6 @@ function middleware() {
     const rde = window.__REDUX_DEVTOOLS_EXTENSION__;
     const devTools = (rde && rde()) || (f => f);
     return compose(applyMiddleware(thunk), devTools);
-    // const {logger} = require ('redux-logger');
-    // return compose(applyMiddleware(thunk, logger), devTools);
 }
 const store = createStore(rootReducers, middleware());
 
@@ -60,7 +91,6 @@ class Application extends React.Component {
         store.dispatch(fetchAllTools());
         store.dispatch(fetchMediatypes());
         store.dispatch(fetchLanguages());
-
 
         // todo: remove this
         // var blob = new Blob(["this is a text"], {type: "text/plain"});

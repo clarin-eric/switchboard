@@ -19,6 +19,10 @@ export const clientPath = {
     about:      `${urlRoot}/about`,
 }
 
+export const clientHash = {
+    legacy:     `#/vlo`,
+}
+
 export const actionType = [
     'APIINFO_FETCH_SUCCESS',
     'MEDIATYPES_FETCH_SUCCESS',

@@ -4,6 +4,41 @@ import {Resource} from './Resource';
 import {ToolListWithControls} from './ToolList';
 import {clientPath} from '../constants';
 
+
+export class Main extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    componentDidMount() {
+        const hash = location.hash;
+        if (hash.startsWith("#/") && hash.length > 2) {
+            const [origin, url, mimetype, language] = hash.substring(2).split("/");
+            if (origin && url) {
+                this.props.uploadLink(
+                    decodeURIComponent(url),
+                    decodeURIComponent(origin));
+            } else {
+                // todo: error???
+            }
+        }
+    }
+
+    render() {
+        return (
+            <div className="main">
+                { this.props.resource.state === 'uploading'
+                    ? <Uploading/>
+                    : this.props.resource.state === 'stored'
+                        ? <Analysis {...this.props}/>
+                        : <Home/>
+                }
+            </div>
+        );
+    }
+}
+
+
 const Home = () => (
     <div className="jumbotron">
         <h2>Switchboard</h2>
@@ -20,6 +55,22 @@ const Home = () => (
     </div>
 );
 
+const Uploading = () => (
+    <div>
+        <h2>Input Analysis</h2>
+        <p className="alert alert-info">Uploading data ...</p>
+    </div>
+);
+
+const Analysis = (props) => (
+    <div>
+        <h2>Input Analysis</h2>
+        <Resource {...props} />
+        <hr/>
+
+        <MatchingTools matchingTools={props.matchingTools} resource={props.resource} />
+    </div>
+);
 
 const MatchingTools = (props) => {
     const tools = props.matchingTools.tools;
@@ -34,31 +85,3 @@ const MatchingTools = (props) => {
         <ToolListWithControls title="Matching Tools" tools={tools} resource={props.resource}/>
     </div>;
 };
-
-
-export class Main extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return (
-            <div className="main">
-                { !this.props.resource.file
-                    ? <Home/>
-                    : <div>
-                        <h2>Input Analysis</h2>
-                        <Resource resource={this.props.resource}
-                            updateResource={this.props.updateResource}
-                            mediatypes={this.props.mediatypes}
-                            languages={this.props.languages} />
-
-                        <hr/>
-
-                        <MatchingTools matchingTools={this.props.matchingTools} resource={this.props.resource} />
-                    </div>
-                }
-            </div>
-        );
-    }
-}
