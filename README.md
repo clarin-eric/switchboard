@@ -33,7 +33,7 @@ There is also a <a href="https://github.com/clarin-eric/LRSwitchboard-doc">githu
 
 # Tool registry
 
-The information about the tools that are connected to the Switchboard is maintained in a <a href="https://github.com/clarin-eric/switchboard-tool-registry">separate github repository</a>
+The information about the tools that are connected to the Switchboard is maintained in a <a href="https://github.com/clarin-eric/switchboard-tool-registry">separate github repository</a>. Suggestions about new tools or about improved descriptions can be filed as a <a href="https://github.com/clarin-eric/switchboard-tool-registry/issues">tool registry issue</a>.
 
 # Publications
 
