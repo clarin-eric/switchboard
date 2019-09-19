@@ -49,16 +49,15 @@ const Home = () => (
             The data will be shared with the tools via public links. For more details, see the <Link to={clientPath.faq}>FAQ</Link>.
         </p>
 
-        <Link className="btn btn-lg btn-primary" to={clientPath.input}>Upload files or text</Link>
-        <span style={{margin:4}}/>
-        <Link className="btn btn-lg btn-default" to={clientPath.tools}>Tools inventory</Link>
+        <Link className="btn btn-lg btn-primary" to={clientPath.input} style={{margin:4}}>Upload files or text</Link>
+        <Link className="btn btn-lg btn-default" to={clientPath.tools} style={{margin:4}}>Tools inventory</Link>
     </div>
 );
 
 const Uploading = () => (
     <div>
         <h2>Input Analysis</h2>
-        <p className="alert alert-info">Uploading data ...</p>
+        <p style={{fontSize:20}}>Uploading data ...</p>
     </div>
 );
 

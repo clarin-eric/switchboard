@@ -9,10 +9,13 @@ export class Input extends React.Component {
         super(props);
         this.state = {
             text: "",
+            link: "",
         };
         this.handleFiles = this.handleFiles.bind(this);
         this.handleTextChange = this.handleTextChange.bind(this);
         this.handleTextSubmit = this.handleTextSubmit.bind(this);
+        this.handleLinkChange = this.handleLinkChange.bind(this);
+        this.handleLinkSubmit = this.handleLinkSubmit.bind(this);
     }
 
     handleFiles(files) {
@@ -22,8 +25,23 @@ export class Input extends React.Component {
         }
 
         this.props.onFile(files[0]);
-
         this.props.history.push(clientPath.root);
+    }
+
+    handleLinkChange(e) {
+        this.setState({link: event.target.value});
+    }
+
+    handleLinkSubmit(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        this.props.onLink(this.state.link);
+        this.props.history.push(clientPath.root);
+    }
+
+    handleTextChange(e) {
+        this.setState({text: event.target.value});
     }
 
     handleTextSubmit(e) {
@@ -33,12 +51,7 @@ export class Input extends React.Component {
         var blob = new Blob([this.state.text], {type: "text/plain"});
         blob.name = "submitted_text.txt";
         this.props.onFile(blob);
-
         this.props.history.push(clientPath.root);
-    }
-
-    handleTextChange(e) {
-        this.setState({text: event.target.value});
     }
 
     render() {
@@ -48,16 +61,30 @@ export class Input extends React.Component {
 
                 <Dropzone onFiles={this.handleFiles}/>
 
-                <form className="input-group" onSubmit={this.handleTextSubmit}>
+                <form className="input-group linkinput" onSubmit={this.handleLinkSubmit}>
+                    <textarea className="form-control inputzone"
+                        style={{resize: 'vertical'}}
+                        onChange={this.handleLinkChange}
+                        rows="2"
+                        placeholder="Or enter an URL or DOI or handle here."
+                        value={this.state.link} />
+                    <span className="input-group-addon">
+                        <button type="submit" className="btn btn-primary" disabled={!this.state.link.trim()}>
+                        Send link
+                        </button>
+                    </span>
+                </form>
+
+                <form className="input-group textinput" onSubmit={this.handleTextSubmit}>
                     <textarea className="form-control inputzone"
                         style={{resize: 'vertical'}}
                         onChange={this.handleTextChange}
                         rows="5"
-                        placeholder="Or enter text or a web link here."
+                        placeholder="Or enter text here."
                         value={this.state.text} />
                     <span className="input-group-addon">
                         <button type="submit" className="btn btn-primary" disabled={!this.state.text.trim()}>
-                        Submit
+                        Submit text
                         </button>
                     </span>
                 </form>

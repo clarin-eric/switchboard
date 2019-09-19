@@ -51,6 +51,10 @@ div.input button.dropzone.active {
 
 
 /* text/url input textarea style */
+div.input form.linkinput {
+    margin-bottom:20px;
+}
+
 div.input textarea.inputzone {
     padding: 10px;
     color: black;

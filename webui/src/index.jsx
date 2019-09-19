@@ -18,6 +18,7 @@ import { AboutContainer, HelpContainer } from './containers/HelpContainers';
 
 
 
+// todo: show alerts on errors
 // todo: use these
 const errorMessages = {
     cannotUpload: `The switchboard was unable to upload your resource to a file
@@ -48,15 +49,15 @@ const errorMessages = {
 }
 
 
-// todo: show alerts on errors
+// todo: resolve DOIs and handles
 // todo: test with:
 //      -  bad data url
 //      -  big file url
 //      -  unsupported mimetype url
 //      -  fake java exception
-// todo: make separate area for urls, handle, doi
-// todo: history with text states, resources
 // todo: make sure we keep old urls
+// todo: update help
+// todo: history with text states, resources
 // todo: enable piwik
 
 
