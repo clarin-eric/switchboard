@@ -32,7 +32,7 @@ public class InfoResource {
     @Path("/info")
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public Response getApiInfo() {
-        Map map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
         map.put("git", gitProps);
         map.put("version", gitProps.get("git.build.version"));
         map.put("contactEmail", contactEmail);
@@ -53,7 +53,7 @@ public class InfoResource {
     @Path("/mediatypes")
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public Response getMediatypes() {
-        List<String> list = new ArrayList(toolRegistry.getAllMediatypes());
+        List<String> list = new ArrayList<>(toolRegistry.getAllMediatypes());
         list.sort(new Comparator<String>() {
             @Override
             public int compare(String o1, String o2) {
@@ -75,7 +75,7 @@ public class InfoResource {
     @Path("/languages")
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public Response getLanguages() {
-        List<String> list = new ArrayList(toolRegistry.getAllLanguages());
+        List<String> list = new ArrayList<>(toolRegistry.getAllLanguages());
         list.sort(String::compareTo);
         return Response.ok(list).build();
     }

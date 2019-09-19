@@ -54,15 +54,12 @@ export function uploadFile(file) {
 
 function uploadData(formData) {
     return function (dispatch, getState) {
-        dispatch({
-            type: actionType.RESOURCE_INIT,
-            data: {state: 'uploading'},
-        });
+        dispatch(updateResource({state: 'uploading'}));
         axios
             .post(apiPath.storage, formData, {
                 headers: {'Content-Type': 'multipart/form-data'}
             })
-            .then((response) => {
+            .then(response => {
                 const resource = response.data;
 
                 const lang = processLanguage(response.data.language)
@@ -72,10 +69,12 @@ function uploadData(formData) {
                     resource.localLink = window.origin + resource.localLink;
                 }
                 resource.state = 'stored';
-
                 dispatch(updateResource(resource));
             })
-            .catch(errHandler(dispatch));
+            .catch(error => {
+                dispatch(updateResource({state: 'error'}));
+                errHandler(dispatch)(error);
+            });
     }
 }
 
@@ -87,7 +86,7 @@ export function fetchApiInfo() {
                     type: actionType.APIINFO_FETCH_SUCCESS,
                     data: response.data
                 });
-            }).catch(errHandler(dispatch, "Cannot fetch API info."));
+            }).catch(errHandler(dispatch, "Cannot fetch API info"));
     }
 }
 
@@ -99,7 +98,7 @@ export function fetchMediatypes() {
                     type: actionType.MEDIATYPES_FETCH_SUCCESS,
                     data: response.data.map(processMediatype).filter(x => x),
                 });
-            }).catch(errHandler(dispatch, "Cannot fetch mediatypes."));
+            }).catch(errHandler(dispatch, "Cannot fetch mediatypes"));
     }
 }
 
@@ -111,7 +110,7 @@ export function fetchLanguages() {
                     type: actionType.LANGUAGES_FETCH_SUCCESS,
                     data: response.data.map(processLanguage).filter(x => x),
                 });
-            }).catch(errHandler(dispatch, "Cannot fetch languages."));
+            }).catch(errHandler(dispatch, "Cannot fetch languages"));
     }
 }
 
@@ -129,7 +128,7 @@ export function fetchAllTools(deploymentStatus) {
                     type: actionType.ALL_TOOLS_FETCH_SUCCESS,
                     data: response.data,
                 });
-            }).catch(errHandler(dispatch, "Cannot fetch all tools data."));
+            }).catch(errHandler(dispatch, "Cannot fetch all tools data"));
     }
 }
 
@@ -154,7 +153,7 @@ export function fetchMatchingTools(mediatype, language, deploymentStatus, includ
                     type: actionType.MATCHING_TOOLS_FETCH_SUCCESS,
                     data: response.data,
                 });
-            }).catch(errHandler(dispatch, "Cannot fetch tools data."));
+            }).catch(errHandler(dispatch, "Cannot fetch tools data"));
     }
 }
 
@@ -168,30 +167,32 @@ function normalizeTool(tool) {
 
 export function errHandler(dispatch, msg) {
     return function(err) {
-        const alert = (message) => {
-            console.warn(message);
+        console.log({msg, err, response: err.response});
+        msg = msg ? (msg + ": ") : "";
+
+        if (!err.response) {
             dispatch({
                 type: actionType.ERROR,
-                message: message,
+                message: msg + "Connection error",
             });
-        };
-        const response = err.response || {};
-        if (response.status == 401) {
-            alert("Please login");
-        } else if (response.status == 403) {
-            alert("Access denied. "+(response.data || ""));
-        } else {
-            if (!msg && err.response) {
-                msg ="An error occurred while contacting the server.";
-            }
-            if (response.data && response.data.message) {
-                msg += " " + response.data.message;
-            }
-            if (msg) {
-                alert(msg);
-            } else {
-                console.error(err);
-            }
+            return;
         }
+
+        const data = err.response.data || {};
+        const errorText = data.message ? data.message : err.response.statusText;
+
+        dispatch({
+            type: actionType.ERROR,
+            message: msg + errorText,
+            url: data.url,
+        });
+    }
+}
+
+export function clearAlerts() {
+    return function (dispatch, getState) {
+        dispatch({
+            type: actionType.CLEAR_ERRORS,
+        });
     }
 }

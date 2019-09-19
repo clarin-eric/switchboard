@@ -29,6 +29,8 @@ export class Main extends React.Component {
             <div className="main">
                 { this.props.resource.state === 'uploading'
                     ? <Uploading/>
+                    : this.props.resource.state === 'error'
+                    ? <Home/>
                     : this.props.resource.state === 'stored'
                         ? <Analysis {...this.props}/>
                         : <Home/>
@@ -56,14 +58,12 @@ const Home = () => (
 
 const Uploading = () => (
     <div>
-        <h2>Input Analysis</h2>
         <p style={{fontSize:20}}>Uploading data ...</p>
     </div>
 );
 
 const Analysis = (props) => (
     <div>
-        <h2>Input Analysis</h2>
         <Resource {...props} />
         <hr/>
 

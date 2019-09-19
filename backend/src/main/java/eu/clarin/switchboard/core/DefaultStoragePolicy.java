@@ -1,6 +1,7 @@
 package eu.clarin.switchboard.core;
 
 import eu.clarin.switchboard.app.Config;
+import eu.clarin.switchboard.core.xc.StoragePolicyException;
 
 import java.io.File;
 import java.time.Duration;
@@ -37,8 +38,8 @@ public class DefaultStoragePolicy implements StoragePolicy {
     @Override
     public void acceptFile(File file) throws StoragePolicyException {
         if (file.length() > dataStoreConfig.getMaxSize()) {
-            throw new StoragePolicyException("input data too big, maximum allowed size: " +
-                    dataStoreConfig.getMaxSize() + " bytes",
+            throw new StoragePolicyException(
+                    "The resource is too large. The maximum allowed data size is " + human(dataStoreConfig.getMaxSize()) + ".",
                     StoragePolicyException.Kind.TOO_BIG);
         }
     }
@@ -48,8 +49,8 @@ public class DefaultStoragePolicy implements StoragePolicy {
         if (!allowedMediaTypes.contains(mediatype)) {
             // allow xml as a special case, see https://github.com/clarin-eric/switchboard/issues/14
             if (!isXmlMediatype(mediatype)) {
-                throw new StoragePolicyException("mediatype not allowed: " + mediatype,
-                    StoragePolicyException.Kind.MEDIA_NOT_ALLOWED);
+                throw new StoragePolicyException("This resource type (" + mediatype + ") is currently not supported.",
+                        StoragePolicyException.Kind.MEDIA_NOT_ALLOWED);
             }
         }
     }
@@ -59,7 +60,7 @@ public class DefaultStoragePolicy implements StoragePolicy {
         // 1. remove parameter suffix
         int formatStartIndex = mediatype.indexOf(';');
         if (formatStartIndex > 0) {
-            mediatype =  mediatype.substring(0, formatStartIndex);
+            mediatype = mediatype.substring(0, formatStartIndex);
         }
         // 2. split in type and subtypes
         String[] typeSubtypes = mediatype.split("/");
@@ -70,5 +71,18 @@ public class DefaultStoragePolicy implements StoragePolicy {
             return Arrays.asList(subtypes).contains("xml");
         }
         return false;
+    }
+
+    private String human(long maxSize) {
+        final double K = 1024;
+        if (maxSize < K) {
+            return String.format("%d bytes", maxSize);
+        } else if (maxSize < K * K) {
+            return String.format("%.2f KiB", maxSize / K);
+        } else if (maxSize < K * K * K) {
+            return String.format("%.2f MiB", maxSize / K / K);
+        } else {
+            return String.format("%.2f GB", maxSize / K / K / K);
+        }
     }
 }

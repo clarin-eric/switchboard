@@ -36,19 +36,27 @@ export class Resource extends React.Component {
         const res = this.props.resource;
         return <React.Fragment>
             <div className="resource">
-                <div className="resource-header">Resource</div>
-                <div className="resource-header">Mediatype</div>
-                <div className="resource-header">Language</div>
-                <div>
-                    <a href={res.originalLink || res.localLink}> {res.filename} </a>
-                </div>
-                <div>
-                    <SelectMediatype res={res} mediatypes={this.props.mediatypes}
-                        onMediatype={v => this.onChange('mediatype', v)}/>
-                </div>
-                <div>
-                    <SelectLanguage res={res} languages={this.props.languages}
-                        onLanguage={v => this.onChange('language', v)}/>
+                <div className="row">
+                    <div className="col-md-4">
+                        <div className="resource-header">Resource</div>
+                        <div>
+                            <a href={res.originalLink || res.localLink}> {res.filename} </a>
+                        </div>
+                    </div>
+                    <div className="col-md-4">
+                        <div className="resource-header">Mediatype</div>
+                        <div>
+                            <SelectMediatype res={res} mediatypes={this.props.mediatypes}
+                                onMediatype={v => this.onChange('mediatype', v)}/>
+                        </div>
+                    </div>
+                    <div className="col-md-4">
+                        <div className="resource-header">Language</div>
+                        <div>
+                            <SelectLanguage res={res} languages={this.props.languages}
+                                onLanguage={v => this.onChange('language', v)}/>
+                        </div>
+                    </div>
                 </div>
             </div>
         </React.Fragment>;

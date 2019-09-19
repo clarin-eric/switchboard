@@ -68,14 +68,11 @@ div.input form {
 /* resource table style */
 div.resource-header {
     font-weight: bold;
-    padding-left: 2px;
+    font-size: 18px;
+    margin: 20px 0 6px 2px;
 }
 div.resource {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    justify-content: center;
     padding: 1em 0;
-    gap: 1em;
 }
 
 /* transitions for matching tools */

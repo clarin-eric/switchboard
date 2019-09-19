@@ -1,6 +1,7 @@
 package eu.clarin.switchboard.core;
 
 import eu.clarin.switchboard.app.Config;
+import eu.clarin.switchboard.core.xc.StoragePolicyException;
 import org.junit.Before;
 import org.junit.Test;
 

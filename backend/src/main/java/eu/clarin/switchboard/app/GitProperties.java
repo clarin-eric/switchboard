@@ -53,7 +53,10 @@ public class GitProperties {
         for (Iterator<String> it = json.fieldNames(); it.hasNext(); ) {
             String key = it.next();
             String value = json.get(key).asText();
-            out.append("\n" + key + " = " + value);
+            out.append("\n");
+            out.append(key);
+            out.append(" = ");
+            out.append(value);
             ret.put(key, value);
         }
         LOGGER.info(out.toString());

@@ -38,7 +38,7 @@ class EndpointRegistry implements ApplicationEventListener {
     public void onEvent(ApplicationEvent event) {
         if (event.getType() == ApplicationEvent.Type.INITIALIZATION_APP_FINISHED) {
             final ResourceModel resourceModel = event.getResourceModel();
-            resourceModel.getResources().stream().forEach((resource) -> {
+            resourceModel.getResources().forEach((resource) -> {
                 populate(rootPath, false, resource);
             });
         }

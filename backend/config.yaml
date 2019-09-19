@@ -26,3 +26,7 @@ switchboard:
     maxLifetimeUnit: hours
     cleanupPeriod: 13
     cleanupPeriodUnit: minutes
+  urlResolver:
+    connectTimeout: 3
+    readTimeout: 3
+    unit: seconds

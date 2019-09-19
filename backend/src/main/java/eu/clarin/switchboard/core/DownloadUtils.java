@@ -8,6 +8,8 @@ import java.net.URL;
 public class DownloadUtils {
     private static final ch.qos.logback.classic.Logger LOGGER = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(DownloadUtils.class);
 
+    public static final String DEFAULT_NAME = "resource";
+
     public static class LinkData {
         String filename;
         String downloadLink;
@@ -37,14 +39,22 @@ public class DownloadUtils {
         if (lastSlash >= 0) {
             linkData.filename = path.substring(lastSlash + 1, path.length());
         }
+        if (linkData.filename.isEmpty()) {
+            linkData.filename = DEFAULT_NAME;
+        }
 
-        if (host.equals("b2drop.eudat.eu")) {
+        // b2drop file: https://b2drop.eudat.eu/s/ekDJNz7fWw69w5Y
+        if (host.equals("b2drop.eudat.eu") && path.startsWith("/s/")) {
             linkData.filename = "b2drop_file";
             if (!path.endsWith("/download")) {
                 path += "/download";
                 linkData.downloadLink = new URL(url.getProtocol(), url.getHost(), path).toString();
             }
-        } else if (url.getHost().equals("www.dropbox.com") || url.getHost().equals("dropbox.com")) {
+        }
+
+        // dropbox file: https://www.dropbox.com/s/9flyntc1353ve07/id_rsa.pub?dl=0
+        if ((url.getHost().equals("www.dropbox.com") || url.getHost().equals("dropbox.com"))
+                && path.startsWith("/s/")) {
             if (!link.contains("?dl=1")) {
                 linkData.downloadLink = link.replaceFirst("\\?dl=0", "?dl=1");
             }

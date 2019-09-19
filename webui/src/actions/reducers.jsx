@@ -40,8 +40,6 @@ function allTools(state = SI([]), action) {
 
 function resource(state = SI({}), action) {
     switch (action.type) {
-        case actionType.RESOURCE_INIT:
-            return SI(action.data);
         case actionType.RESOURCE_UPDATE:
             return SI(action.data);
         default:
@@ -65,9 +63,20 @@ function matchingTools(state = SI({}), action) {
 function alerts(state = SI([]), action) {
     switch (action.type) {
         case actionType.ERROR:
+            let alert = {
+                message: action.message,
+                url: action.url,
+                resourceStatus: action.resourceStatus,
+            };
             let mutable = state.asMutable();
-            mutable.push(action.message);
+            let idx = mutable.findIndex(x => x.message === action.message);
+            if (idx >= 0) {
+                mutable.splice(idx, 1);
+            }
+            mutable.push(alert);
             return SI(mutable);
+        case actionType.CLEAR_ERRORS:
+            return SI([]);
         default:
             return state;
     }

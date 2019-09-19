@@ -1,4 +1,3 @@
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as ReactModal from 'react-modal';
@@ -11,7 +10,7 @@ export default class Modal extends React.Component {
     constructor () {
         super();
         this.state = {
-            showModal: false
+            showModal: true
         };
 
         this.handleOpenModal = this.handleOpenModal.bind(this);

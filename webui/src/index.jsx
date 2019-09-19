@@ -4,8 +4,9 @@ import { compose, applyMiddleware, createStore } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
+import Modal from 'react-modal';
 
-import {clientPath, clientHash} from './constants';
+import {clientPath} from './constants';
 import rootReducers from './actions/reducers';
 import {fetchApiInfo, fetchAllTools, fetchMediatypes, fetchLanguages} from './actions/actions';
 
@@ -14,53 +15,18 @@ import { FooterContainer } from './containers/FooterContainer';
 import { MainContainer } from './containers/MainContainer';
 import { InputContainer } from './containers/InputContainer';
 import { AllToolsContainer } from './containers/AllToolsContainer';
+import { AlertsContainer } from './containers/AlertsContainer';
 import { AboutContainer, HelpContainer } from './containers/HelpContainers';
 
 
-
-// todo: show alerts on errors
-// todo: use these
-const errorMessages = {
-    cannotUpload: `The switchboard was unable to upload your resource to a file
-                    storage location (so that the resource becomes accessible
-                    for the tools connected to the switchboard). Likely the
-                    resource is too large or its MIME type is not allowed.
-                    Please select a different resource with file size smaller
-                    than {maxSize}. If failure persists, please contact
-                    "switchboard@clarin.eu".`,
-    badURL: `It seems that you have entered an incorrect or partial URL. Please
-                    correct the URL and then try again.`,
-    authenticationRequired: `The resource seems to be behind a Shibboleth
-                    authentication wall. Please fetch the resource with your
-                    authentication credentials by clicking on "Link to
-                    Resource". Then use the standalone version of the LRS to
-                    upload the resource.`,
-    cannotGetResource: `The switchboard was unable to fetch the URL (404 or
-                    similar). Please attempt to fetch the resource yourself by
-                    pasting its link into a new browser tab. If successul, save
-                    the file to your computer, and then upload the resource via
-                    drag & drop into the switchboard's left-most drop area.`,
-    analysisFailed: `The Switchboard was unable to identify the language and/or
-                    mimetype of the given resource. Please specify the
-                    information manually.`,
-    noMatchingTools: `The Switchboard has currently no applicable tool than can
-                    process the given resource (given its mediatype and
-                    language). Please try again with another resource.`,
-}
-
-
-// todo: add link to the input page: Submit File
 // todo: highlight search in tools
 // todo: resolve DOIs and handles
 // todo: Upload form: make them tabs, add icons
-// - todo: hardcoded accept of xml files (issue 5)
-//     - accept any format that ends in '+xml'
-// todo: test with:
-//      -  bad data url
-//      -  big file url
-//      -  unsupported mimetype url
-//      -  fake java exception
-// todo: make sure we keep old urls
+// todo: keep old urls:
+//      - call from other repos
+//      - mediatypes, languages
+//      - call from other repos
+
 // todo: update help
 // todo: history with text states, resources
 // todo: enable piwik
@@ -76,10 +42,11 @@ function middleware() {
 }
 const store = createStore(rootReducers, middleware());
 
+Modal.setAppElement("#reactapp");
 
 const Frame = (props) => (
     <div id="bodycontainer">
-        <NavBar/>
+        <NavBar location_href={window.location.href}/>
         <div className="container">
             <div className="row">
                 <div className="col-md-12">
@@ -87,6 +54,7 @@ const Frame = (props) => (
                 </div>
             </div>
         </div>
+        <AlertsContainer/>
     </div>
 );
 
@@ -97,6 +65,9 @@ class Application extends React.Component {
         store.dispatch(fetchAllTools());
         store.dispatch(fetchMediatypes());
         store.dispatch(fetchLanguages());
+
+        // todo remove this
+        // store.dispatch(require('./actions/actions').uploadLink('asdf'));
 
         // this.piwik = PiwikReactRouter({
         //     url : 'https://stats.clarin.eu',

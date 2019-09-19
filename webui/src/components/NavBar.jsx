@@ -28,7 +28,9 @@ export class NavBar extends React.Component {
     render() {
         const navCollapseClass = this.state.showCollapsedNavbar ? "collapse navbar-collapse text-right show" : "collapse navbar-collapse";
         const navItemClass = (url) => {
-            return "nav-item" + (window.location.href.endsWith(url) ? " active" : "");
+            const currentUrl = this.props.location_href;
+            console.log(currentUrl, url);
+            return "nav-item" + (currentUrl.endsWith(url) ? " active" : "");
         }
 
         return (
@@ -49,6 +51,9 @@ export class NavBar extends React.Component {
 
                     <div className={navCollapseClass}>
                         <ul className="nav navbar-nav">
+                            <li className={navItemClass(clientPath.input)} onClick={this.closeNav}>
+                                <Link className="nav-link input" to={clientPath.input} onClick={this.closeNav}>Upload</Link>
+                            </li>
                             <li className={navItemClass(clientPath.tools)} onClick={this.closeNav}>
                                 <Link className="nav-link all-tools" to={clientPath.tools} onClick={this.closeNav}>Tool Inventory</Link>
                             </li>

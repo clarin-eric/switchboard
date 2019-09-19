@@ -19,10 +19,6 @@ export const clientPath = {
     about:      `${urlRoot}/about`,
 }
 
-export const clientHash = {
-    legacy:     `#/vlo`,
-}
-
 export const actionType = [
     'APIINFO_FETCH_SUCCESS',
     'MEDIATYPES_FETCH_SUCCESS',
@@ -30,9 +26,9 @@ export const actionType = [
     'ALL_TOOLS_FETCH_SUCCESS',
     'MATCHING_TOOLS_FETCH_START',
     'MATCHING_TOOLS_FETCH_SUCCESS',
-    'RESOURCE_INIT',
     'RESOURCE_UPDATE',
     'ERROR',
+    'CLEAR_ERRORS',
 ].reduce((actions, value) => {
     actions[value] = value;
     return actions;

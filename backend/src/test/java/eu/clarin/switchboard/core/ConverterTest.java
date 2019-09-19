@@ -1,5 +1,6 @@
 package eu.clarin.switchboard.core;
 
+import eu.clarin.switchboard.core.xc.ConverterException;
 import org.junit.Before;
 import org.junit.Test;
 
