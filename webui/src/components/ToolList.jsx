@@ -186,9 +186,8 @@ class ToolCard extends React.Component {
                 }
                 <DetailsRow title="Input Format" summary={tool.mimetypes.join(", ")} />
                 <DetailsRow title="Language(s)" summary={tool.languages.map(l => (processLanguage(l) || {label:l}).label).join(", ")} />
-                <DetailsRow title="Output Format"summary={tool.output.join(', ')} />
 
-                <DetailsRow title="Licence" summary={tool.licence} />
+                {  tool.license && <DetailsRow title="License" summary={tool.license} /> }
 
                 <IndicatorRow>
                     { tool.version && tool.version !== 'x.y.z'

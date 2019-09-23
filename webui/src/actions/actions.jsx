@@ -124,7 +124,7 @@ export function fetchAllTools(deploymentStatus) {
 
         axios.get(apiPath.tools, {params})
             .then(response => {
-                response.data.forEach(addSearchString);
+                response.data.forEach(normalizeTool);
                 dispatch({
                     type: actionType.ALL_TOOLS_FETCH_SUCCESS,
                     data: response.data,
@@ -149,7 +149,7 @@ export function fetchMatchingTools(mediatype, language, deploymentStatus, includ
 
         axios.get(apiPath.tools, {params})
             .then(response => {
-                response.data.forEach(addSearchString);
+                response.data.forEach(normalizeTool);
                 dispatch({
                     type: actionType.MATCHING_TOOLS_FETCH_SUCCESS,
                     data: response.data,
@@ -158,12 +158,20 @@ export function fetchMatchingTools(mediatype, language, deploymentStatus, includ
     }
 }
 
-function addSearchString(tool) {
+function normalizeTool(tool) {
     let searchString = "";
     for (const key of ['task', 'name', 'description']) {
         searchString += tool[key].toLowerCase();
     }
     tool.searchString = searchString;
+
+    if (!tool.license) {
+        tool.license = tool.licence;
+        tool.licence = undefined;
+    }
+    if (tool.license === "public") {
+        tool.license = null;
+    }
 }
 
 export function errHandler(dispatch, msg) {

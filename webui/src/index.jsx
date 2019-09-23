@@ -49,7 +49,17 @@ const errorMessages = {
 }
 
 
+// - todo: hardcoded accept of xml files (issue 5)
+//     - accept any format that ends in '+xml'
+// - todo: test voyant with tei files
+// - todo: make list of tools
+// - todo: migrate issues
+// - todo: highlight search in tools
+
+// todo: add link to the beta version?
+// todo: add link to the input page: Submit File
 // todo: resolve DOIs and handles
+// todo: Upload form: make them tabs, add icons
 // todo: test with:
 //      -  bad data url
 //      -  big file url
@@ -92,12 +102,6 @@ class Application extends React.Component {
         store.dispatch(fetchAllTools());
         store.dispatch(fetchMediatypes());
         store.dispatch(fetchLanguages());
-
-        // todo: remove this
-        // var blob = new Blob(["this is a text"], {type: "text/plain"});
-        // blob.name = "submitted_text.txt";
-        // const {uploadFile} =  require('./actions/actions');
-        // store.dispatch(uploadFile(blob));
 
         // this.piwik = PiwikReactRouter({
         //     url : 'https://stats.clarin.eu',

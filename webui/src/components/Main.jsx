@@ -50,7 +50,7 @@ const Home = () => (
         </p>
 
         <Link className="btn btn-lg btn-primary" to={clientPath.input} style={{margin:4}}>Upload files or text</Link>
-        <Link className="btn btn-lg btn-default" to={clientPath.tools} style={{margin:4}}>Tools inventory</Link>
+        <Link className="btn btn-lg btn-default" to={clientPath.tools} style={{margin:4}}>Tool inventory</Link>
     </div>
 );
 
