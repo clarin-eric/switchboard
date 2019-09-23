@@ -49,17 +49,12 @@ const errorMessages = {
 }
 
 
-// - todo: hardcoded accept of xml files (issue 5)
-//     - accept any format that ends in '+xml'
-// - todo: test voyant with tei files
-// - todo: make list of tools
-// - todo: migrate issues
-// - todo: highlight search in tools
-
-// todo: add link to the beta version?
 // todo: add link to the input page: Submit File
+// todo: highlight search in tools
 // todo: resolve DOIs and handles
 // todo: Upload form: make them tabs, add icons
+// - todo: hardcoded accept of xml files (issue 5)
+//     - accept any format that ends in '+xml'
 // todo: test with:
 //      -  bad data url
 //      -  big file url

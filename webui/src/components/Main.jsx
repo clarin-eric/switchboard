@@ -43,7 +43,7 @@ const Home = () => (
     <div className="jumbotron">
         <h2>Switchboard</h2>
         <p>
-            Switchboard helps you find tools that can process your resources.
+            Switchboard helps you find tools that can process your data.
         </p>
         <p>
             The data will be shared with the tools via public links. For more details, see the <Link to={clientPath.faq}>FAQ</Link>.
