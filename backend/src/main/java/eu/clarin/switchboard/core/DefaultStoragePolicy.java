@@ -4,6 +4,7 @@ import eu.clarin.switchboard.app.Config;
 
 import java.io.File;
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.Set;
 
 public class DefaultStoragePolicy implements StoragePolicy {
@@ -45,8 +46,29 @@ public class DefaultStoragePolicy implements StoragePolicy {
     @Override
     public void acceptProfile(String mediatype, String language) throws StoragePolicyException {
         if (!allowedMediaTypes.contains(mediatype)) {
-            throw new StoragePolicyException("mediatype not allowed: " + mediatype,
+            // allow xml as a special case, see https://github.com/clarin-eric/switchboard/issues/14
+            if (!isXmlMediatype(mediatype)) {
+                throw new StoragePolicyException("mediatype not allowed: " + mediatype,
                     StoragePolicyException.Kind.MEDIA_NOT_ALLOWED);
+            }
         }
+    }
+
+    public static boolean isXmlMediatype(String mediatype) {
+        // mediatype format is: type "/" subtype ["+" suffix]* [";" parameter]
+        // 1. remove parameter suffix
+        int formatStartIndex = mediatype.indexOf(';');
+        if (formatStartIndex > 0) {
+            mediatype =  mediatype.substring(0, formatStartIndex);
+        }
+        // 2. split in type and subtypes
+        String[] typeSubtypes = mediatype.split("/");
+        if (typeSubtypes.length == 2) {
+            // 3. find subtypes
+            String[] subtypes = typeSubtypes[1].split("\\+");
+            // it's xml if any subtype is "xml"
+            return Arrays.asList(subtypes).contains("xml");
+        }
+        return false;
     }
 }

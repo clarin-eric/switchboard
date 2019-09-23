@@ -364,6 +364,7 @@ export default class DropArea extends React.Component {
               <div>
                 <h3 id="dropAreaHeading">Input</h3>
                 <div className="dropAreaTable">
+                  <p>Check our beta version: <a href="https://beta-switchboard.clarin.eu">beta-switchboard.clarin.eu</a>.</p>
                   <p>The Switchboard helps you find tools that can process your resources. Use one of the three boxes below to upload your data.
                     <br />Your data will be shared with the tools via public links. For more details, see the {' '}
                     <UserFAQ className="header-link" />.

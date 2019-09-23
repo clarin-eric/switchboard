@@ -1,7 +1,7 @@
 // -------------------------------------------
 // The CLARIN Language Resource Switchboard
 // 2016-18 Claus Zinn, University of Tuebingen
-// 
+//
 // File: MimetypeMenu.jsx
 // Time-stamp: <2018-06-29 20:23:42 (zinn)>
 // -------------------------------------------
@@ -26,7 +26,13 @@ export default class MimetypeMenu extends React.Component {
                        "application/octet-stream",
                        "application/ogg",
                        "application/pdf",
-                       "application/rtf",                      
+                       "application/rtf",
+
+                       "application/tei+xml;format-variant=tei-iso-spoken",
+                       "application/tei+xml;format-variant=tei-dta",
+
+                       "application/tcf+xml",
+
                        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
                        "application/vnd.sun.wadl+xml",
                        "application/vnd.ms-powerpoint",
@@ -51,21 +57,12 @@ export default class MimetypeMenu extends React.Component {
                        "audio/x-wav",
                        "image/jpeg",
                        "image/jpg",
-                       "image/png",                    
+                       "image/png",
                        "image/tiff",
                        "image/pdf",
-                       
-                       "text/tei+xml;format-variant=tei-iso-spoken",
-                       "text/tei+xml;format-variant=tei-dta",
-
-                       // see https://tools.ietf.org/html/rfc6129
-
-                       "application/tei+xml",
-                       
-                       "application/tcf+xml",                  
 
                        "text/folia+xml",
-                       
+
                        "text/cmdi+xml",
                        "text/dc+xml",
                        "text/marc21+xml",
@@ -77,8 +74,8 @@ export default class MimetypeMenu extends React.Component {
                        "application/mets+xml",
                        "application/marcxml+xml",
                        "application/sru+xml",
-                       
-                       
+
+
                        "text/csv",
                        "text/exb+xml",
                        "text/exs+xml",
@@ -103,7 +100,7 @@ export default class MimetypeMenu extends React.Component {
                        "text/x-toolbox-text",
                        "text/x-trs",
                        "text/xml",
-                       
+
                        "text/xml;format-variant=exmaralda-exb",
                        "text/xml;format-variant=folker-fln",
                        "text/xml;format-variant=transcriber-trs",
@@ -116,27 +113,27 @@ export default class MimetypeMenu extends React.Component {
                        "video/quicktime",
                        "video/x-mpeg1",
                        "video/x-mpeg2"].map(function(mimetype){
- 
+
                return {label: mimetype, value: mimetype}
         });
 
         return <SimpleSelect options = {options}
         defaultValue  = {defaultValue}
-                             value  = {defaultValue}    
+                             value  = {defaultValue}
                              placeholder = "Select mimetype"
                              renderValue = {function(item){
                                  // check if the mimetype is available (optional)
                                  var exists = options.map(function(option){
                                      return option.value
                                  }).indexOf(item.value) != -1
-                                 
-                                 return <div 
+
+                                 return <div
                                  className="simple-value"
                                  style={{
                                      color: exists ? "black" : "red"
                                  }}
                                      >{item.label}</div>
-                                     
+
                              }}
                              onValueChange = {this.props.onMimetypeSelection}
             >
