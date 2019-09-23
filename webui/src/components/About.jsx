@@ -52,8 +52,8 @@ export default class About extends React.Component {
                 </ul>
 
 
-                <h3 id="license">License</h3>
-                <div className="licenseText">
+                <h3 id="licence">Licence</h3>
+                <div className="licenceText">
                     <p>Copyright (C) 2017-2019 CLARIN ERIC</p>
 
                     <p>

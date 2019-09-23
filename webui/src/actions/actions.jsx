@@ -164,14 +164,6 @@ function normalizeTool(tool) {
         searchString += tool[key].toLowerCase();
     }
     tool.searchString = searchString;
-
-    if (!tool.license) {
-        tool.license = tool.licence;
-        tool.licence = undefined;
-    }
-    if (tool.license === "public") {
-        tool.license = null;
-    }
 }
 
 export function errHandler(dispatch, msg) {
