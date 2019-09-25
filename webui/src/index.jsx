@@ -19,14 +19,7 @@ import { AlertsContainer } from './containers/AlertsContainer';
 import { AboutContainer, HelpContainer } from './containers/HelpContainers';
 
 
-// todo: highlight search in tools
 // todo: resolve DOIs and handles
-// todo: Upload form: make them tabs, add icons
-// todo: keep old urls:
-//      - call from other repos
-//      - mediatypes, languages
-//      - call from other repos
-
 // todo: update help
 // todo: history with text states, resources
 // todo: enable piwik

@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 import { Link } from 'react-router-dom';
 import {clientPath} from '../constants';
-
-const URL_REGEX = new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gi);
+import {isUrl} from '../actions/utils';
 
 export class Alerts extends React.Component {
     constructor(props) {
@@ -16,7 +15,7 @@ export class Alerts extends React.Component {
         if (!url) return false;
         return (
             <React.Fragment>
-                <p>{ url.match(URL_REGEX) ? <a href={url}>{url}</a> : <span style={{color:'#000'}}>{url}</span> } </p>
+                <p>{ isUrl(url) ? <a href={url}>{url}</a> : <span style={{color:'#000'}}>{url}</span> } </p>
                 <p>Please try downloading the resource manually and then uploading it into the Switchboard.</p>
             </React.Fragment>
         );

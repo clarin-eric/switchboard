@@ -18,8 +18,8 @@ export class ToolListWithControls extends React.Component {
         this.setSearch = this.setSearch.bind(this);
     }
     static propTypes = {
-        title: PropTypes.string,
-        tools: PropTypes.array,
+        title: PropTypes.string.isRequired,
+        tools: PropTypes.array.isRequired,
         resource: PropTypes.object,
     };
 
@@ -99,10 +99,10 @@ export class ToolListWithControls extends React.Component {
 
 class ToolList extends React.Component {
     static propTypes = {
-        tools: PropTypes.array,
+        tools: PropTypes.array.isRequired,
         resource: PropTypes.object,
-        groupByTask: PropTypes.bool,
-        highlighter: PropTypes.func,
+        groupByTask: PropTypes.bool.isRequired,
+        highlighter: PropTypes.func.isRequired,
     };
 
     render() {
@@ -133,11 +133,11 @@ class ToolSubList extends React.Component {
         };
     }
     static propTypes = {
-        tools: PropTypes.array,
+        tools: PropTypes.array.isRequired,
         task: PropTypes.string,
-        showTask: PropTypes.bool,
+        showTask: PropTypes.bool.isRequired,
         resource: PropTypes.object,
-        highlighter: PropTypes.func,
+        highlighter: PropTypes.func.isRequired,
     };
 
     render() {
@@ -174,11 +174,11 @@ class ToolCard extends React.Component {
         };
     }
     static propTypes = {
-        tool: PropTypes.object,
-        showTask: PropTypes.bool,
+        tool: PropTypes.object.isRequired,
+        showTask: PropTypes.bool.isRequired,
         resource: PropTypes.object,
-        imgSrc: PropTypes.string,
-        highlighter: PropTypes.func,
+        imgSrc: PropTypes.string.isRequired,
+        highlighter: PropTypes.func.isRequired,
     };
 
     renderHeader(imgSrc, tool, invocationURL) {

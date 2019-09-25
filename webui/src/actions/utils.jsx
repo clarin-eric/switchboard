@@ -1,5 +1,37 @@
+const URL_REGEX = new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gi);
+
+export function isUrl(x) {
+    return x.match(URL_REGEX);
+}
+
 export function image(src) {
     return window.APP_CONTEXT_PATH + '/images/' + src;
+}
+
+export function processLanguage(language) {
+    const array = LANG_MAP[language];
+    if (array && array.length) {
+        return {
+            label: array[0],
+            value: array[1],
+        }
+    }
+    return null;
+}
+
+export function processMediatype(mediatype) {
+    if (mediatype) {
+        return {
+            label: mediatype,
+            value: mediatype,
+        }
+    }
+    return null;
+}
+
+
+export const iso_639_3_to_639_1 = function(lang3) {
+    return ISO_639_3_TO_639_1_MAP[lang3];
 }
 
 const LANG_MAP = {
@@ -136,33 +168,6 @@ const LANG_MAP = {
     "cym": ["Welsh", "cym"],
     "zh": ["Chinese", "zho"],
     "zho": ["Chinese", "zho"],
-}
-
-export function processLanguage(language) {
-    const array = LANG_MAP[language];
-    if (array && array.length) {
-        return {
-            label: array[0],
-            value: array[1],
-        }
-    }
-    return null;
-}
-
-export function processMediatype(mediatype) {
-    if (mediatype) {
-        return {
-            label: mediatype,
-            value: mediatype,
-        }
-    }
-    return null;
-}
-
-
-
-export const iso_639_3_to_639_1 = function(lang3) {
-    return ISO_639_3_TO_639_1_MAP[lang3];
 }
 
 // no ISO 639-1 code for Ancient Greek (grc), Coptic (cop), Gothic (got)
