@@ -193,7 +193,6 @@ public class MediaLibrary {
             }
 
             int status = getResponseCode(connection);
-            System.out.println(status);
             if (status == HttpURLConnection.HTTP_MOVED_TEMP
                     || status == HttpURLConnection.HTTP_MOVED_PERM
                     || status == HttpURLConnection.HTTP_SEE_OTHER) {
