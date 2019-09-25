@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import { processLanguage, image } from '../actions/utils';
 import { getInvocationURL } from '../actions/toolcall';
 
+const SPACE_REGEX = /\s/;
+const RE_ESCAPE_REGEX = /[-\/\\^$*+?.()|[\]{}]/g;
+
 
 export class ToolListWithControls extends React.Component {
     constructor(props) {
@@ -10,7 +13,9 @@ export class ToolListWithControls extends React.Component {
         this.state = {
             groupByTask: true,
             searchString: "",
+            searchTerms: [],
         };
+        this.setSearch = this.setSearch.bind(this);
     }
     static propTypes = {
         title: PropTypes.string,
@@ -18,14 +23,19 @@ export class ToolListWithControls extends React.Component {
         resource: PropTypes.object,
     };
 
-    filterTools(tools, searchString) {
+    setSearch(event) {
+        const searchString = event.target.value;
+        const searchTerms = (searchString.length < 2) ? [] : searchString.trim().split(SPACE_REGEX);
+        this.setState({searchString, searchTerms });
+    }
+
+    filterTools(tools, searchString, searchTerms) {
         if (searchString.length < 2) {
             return {tools, hiddenTools:[]};
         }
-        const terms = searchString.trim().split(/\s/);
         const ret = {tools: [], hiddenTools: []};
         tools.forEach(tool => {
-            if (terms.every(term => tool.searchString.includes(term))) {
+            if (searchTerms.every(term => tool.searchString.includes(term))) {
                 ret.tools.push(tool);
             } else {
                 ret.hiddenTools.push(tool);
@@ -51,8 +61,7 @@ export class ToolListWithControls extends React.Component {
             <div style={{display:'inline-block', marginRight:20}}>
                 <form className="search" className="input-group">
                     <input className="form-control" type="text" placeholder="Search for ..."
-                        onChange={e => this.setState({searchString: event.target.value})}
-                        value={this.state.searchString} />
+                        onChange={this.setSearch} value={this.state.searchString} />
                     <span className="input-group-addon" style={{width:'1em'}}>
                         <span className="glyphicon glyphicon-search" style={{fontSize:'90%'}} aria-hidden="true"/>
                     </span>
@@ -62,7 +71,7 @@ export class ToolListWithControls extends React.Component {
     }
 
     render() {
-        const {tools, hiddenTools} = this.filterTools(this.props.tools, this.state.searchString);
+        const {tools, hiddenTools} = this.filterTools(this.props.tools, this.state.searchString, this.state.searchTerms);
         return (
             <div>
                 <h2 style={{float:'left'}}>{this.props.title}</h2>
@@ -74,7 +83,9 @@ export class ToolListWithControls extends React.Component {
 
                 <div style={{clear:'both'}} />
 
-                <ToolList tools={tools} resource={this.props.resource} {...this.state}/>
+                <ToolList tools={tools} resource={this.props.resource}
+                    groupByTask={this.state.groupByTask}
+                    highlighter={highlighter(this.state.searchTerms)}/>
 
                 { hiddenTools.length
                     ? <p className="alert alert-info">There are {hiddenTools.length} tools not matching the search term.</p>
@@ -91,11 +102,13 @@ class ToolList extends React.Component {
         tools: PropTypes.array,
         resource: PropTypes.object,
         groupByTask: PropTypes.bool,
+        highlighter: PropTypes.func,
     };
 
     render() {
         if (!this.props.groupByTask) {
-            return <ToolSubList tools={this.props.tools} showTask={true} resource={this.props.resource}/>;
+            return <ToolSubList tools={this.props.tools} showTask={true}
+                                resource={this.props.resource} highlighter={this.props.highlighter}/>;
         }
 
         const reduceFn = (buckets, tool) => {
@@ -106,7 +119,8 @@ class ToolList extends React.Component {
         }
         const buckets = this.props.tools.reduce(reduceFn, {});
         const tasks = Object.keys(buckets).sort();
-        return tasks.map(task => <ToolSubList key={task} task={task} tools={buckets[task]} showTask={false} resource={this.props.resource} />);
+        return tasks.map(task => <ToolSubList key={task} task={task} tools={buckets[task]} showTask={false}
+                                              resource={this.props.resource} highlighter={this.props.highlighter}/>);
     }
 }
 
@@ -123,23 +137,28 @@ class ToolSubList extends React.Component {
         task: PropTypes.string,
         showTask: PropTypes.bool,
         resource: PropTypes.object,
+        highlighter: PropTypes.func,
     };
 
     render() {
         const sortFn = (t1, t2) => t1.name < t2.name ? -1 : t1.name == t2.name ? 0 : 1;
         const tools = [...this.props.tools].sort(sortFn);
+        const Highlighter = this.props.highlighter;
         return (
             <div className="tool-sublist" onClick={toggle.bind(this, 'show')}>
-                { this.props.task
-                    ? <h3> {this.props.task} {this.state.show ? false : " ..."} </h3>
-                    : false
+                { !this.props.task ? false :
+                    <h3>
+                        <Highlighter text={this.props.task}/>
+                        {this.state.show ? false : " ..."}
+                    </h3>
                 }
                 { !this.state.show ? false : tools.map(tool =>
                     <ToolCard key={tool.name}
                         imgSrc={image(tool.logo)}
                         showTask={this.props.showTask}
                         tool={tool}
-                        resource={this.props.resource}/>
+                        resource={this.props.resource}
+                        highlighter={this.props.highlighter}/>
                 )}
             </div>
         );
@@ -158,10 +177,12 @@ class ToolCard extends React.Component {
         tool: PropTypes.object,
         showTask: PropTypes.bool,
         resource: PropTypes.object,
-        imgSrc: PropTypes.string
+        imgSrc: PropTypes.string,
+        highlighter: PropTypes.func,
     };
 
     renderHeader(imgSrc, tool, invocationURL) {
+        const Highlighter = this.props.highlighter;
         return (
             <dl className="dl-horizontal header">
                 <dt><img src={imgSrc}/></dt>
@@ -170,17 +191,20 @@ class ToolCard extends React.Component {
                         ? <a className="btn btn-success" style={{marginRight:16}} href={invocationURL} target="_blank"> Start Tool </a>
                         : false
                     }
-                    <a style={{fontSize: 20}} href={tool.homepage} target="_blank">{tool.name}</a>
+                    <a style={{fontSize: 20}} href={tool.homepage} target="_blank">
+                        <Highlighter text={tool.name}/>
+                    </a>
                 </dd>
             </dl>
         );
     }
 
     renderDetails(tool, showTask) {
+        const Highlighter = this.props.highlighter;
         return (
             <div>
-                { showTask ? <DetailsRow title="Task" summary={tool.task} /> : false }
-                <DetailsRow title="Description" summary={tool.description} />
+                { showTask ? <DetailsRow title="Task" summary={<Highlighter text={tool.task}/>} /> : false }
+                <DetailsRow title="Description" summary={<Highlighter text={tool.description}/>} />
                 { tool.authentication == "no" ? null :
                     <DetailsRow title="Authentication" summary={tool.authentication} />
                 }
@@ -223,7 +247,7 @@ const DetailsRow = ({ title, summary }) => {
                 <dl className="dl-horizontal">
                     <dt>{title}</dt>
                     <dd>{title == "Home"
-                        ? <a href={summary} target="_blank"> {summary }</a>
+                        ? <a href={summary} target="_blank"> {summary}</a>
                         : summary }
                     </dd>
                 </dl>
@@ -260,3 +284,32 @@ function toggle(name, event) {
     event.stopPropagation();
     this.setState({[name]: !this.state[name]});
 }
+
+
+function escapeRegExp(string) {
+    // $& means the whole matched string
+    return string.replace(RE_ESCAPE_REGEX, '\\$&');
+}
+
+function highlighter(terms) {
+    let re_string = "("+terms.map(escapeRegExp).join("|")+")";
+    let splitter = new RegExp(re_string, 'gi');
+    return function({text}) {
+        // Split on higlight term and include term into parts, ignore case
+        let parts = text.split(splitter);
+        let spans = parts.map((part, i) => ({
+            key: i,
+            text: part,
+            highlight: terms.some(term => term.toLowerCase() === part.toLowerCase()),
+        }));
+        return (
+            <span>
+                { spans.map(({key, text, highlight}) =>
+                    <span key={key} className={highlight ? "highlight" : ""}>
+                        { text }
+                    </span>
+                )}
+            </span>
+        );
+    };
+};
