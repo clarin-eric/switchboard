@@ -1,5 +1,5 @@
-# LRSwitchboard
-Code Repository for the Language Resources Switchboard of CLARIN.
+# switchboard
+Code Repository for the Language Resource Switchboard.
 
 The implementation is based upon reactjs and related packages. It contains a standalone upload site,
 where users can drag&drop their language resource(s). Each resource can be associated with a
@@ -11,13 +11,9 @@ resource, language code, mimetype etc.) is encoded in the URL used to invoke the
 
 # Website
 
-The production version of the switchboard, its official site, is served at:
-
-```https://switchboard.clarin.eu ```
-
-The development version of the switchboard is currently being served at:
-
-```https://weblicht.sfs.uni-tuebingen.de/clrs-dev/#/ ```
+ * production version: https://switchboard.clarin.eu
+ * beta version: https://beta-switchboard.clarin.eu/
+ * alpha/development version: https://weblicht.sfs.uni-tuebingen.de/clrs-dev/#/
 
 
 # Status
@@ -29,7 +25,7 @@ For more technical details, see the Switchboard specification in the Publication
 general overview with the latest published update, see the Computational Linguistics paper in the
 Publications section (last entry).
 
-There is also a <a href="https://github.com/clarin-eric/LRSwitchboard-doc">github repository</a> holding documentation.
+There is also a <a href="https://github.com/clarin-eric/switchboard-doc">github repository</a> holding documentation.
 
 # Tool registry
 
