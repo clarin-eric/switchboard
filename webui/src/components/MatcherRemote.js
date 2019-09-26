@@ -77,8 +77,8 @@ export default class MatcherRemote {
                 .get(window.APP_CONTEXT_PATH
                      + '/api/tools?includeWS='+includeWS
                      + '&deployment='+deployment
-                     + '&language=' + language
-                     + '&mimetype=' + mimetype
+                     + (!language || language === "any" ?  "" : ('&language=' + language))
+                     + '&mimetype=' + encodeURIComponent(mimetype)
                      + '&sortBy=tools')
                 .set('Accept', 'application/json')
                 .end((err, res) => {

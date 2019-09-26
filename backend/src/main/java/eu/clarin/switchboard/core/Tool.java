@@ -5,19 +5,15 @@ import java.util.List;
 
 
 public class Tool extends HashMap<String, Object> {
-    private class Parameters {
-        String input;
-        String lang;
-        String analysis;
-        boolean batch;
-    }
-
     public String getName() {
         return (String) get("name");
     }
 
     public List<String> getLanguages() {
-        return (List<String>) get("languages");
+        List<String> languages =(List<String>) get("languages");
+        // may contain null at the end if there's a trailing comma in json
+        languages.remove(null);
+        return languages;
     }
 
     public String getLangEncoding() {
@@ -25,23 +21,17 @@ public class Tool extends HashMap<String, Object> {
     }
 
     public List<String> getMimetypes() {
-        return (List<String>) get("mimetypes");
+        List<String> mediatypes = (List<String>) get("mimetypes");
+        // may contain null at the end if there's a trailing comma in json
+        mediatypes.remove(null);
+        return mediatypes;
     }
 
     public String getDeployment() {
         return (String) get("deployment");
     }
 
-
-    public List<String> getOutput() {
-        return (List<String>) get("output");
-    }
-
     public String getUrl() {
         return (String) get("url");
-    }
-
-    public Parameters getParameters() {
-        return (Parameters) get("parameters");
     }
 }
