@@ -60,7 +60,7 @@ export class ToolListWithControls extends React.Component {
         return (
             <div style={{display:'inline-block', marginRight:20}}>
                 <form className="search" className="input-group">
-                    <input className="form-control" type="text" placeholder="Search for ..."
+                    <input className="form-control" type="text" placeholder="Search for tool or task"
                         onChange={this.setSearch} value={this.state.searchString} />
                     <span className="input-group-addon" style={{width:'1em'}}>
                         <span className="glyphicon glyphicon-search" style={{fontSize:'90%'}} aria-hidden="true"/>
@@ -148,8 +148,8 @@ class ToolSubList extends React.Component {
             <div className="tool-sublist" onClick={toggle.bind(this, 'show')}>
                 { !this.props.task ? false :
                     <h3>
+                        <Indicator title={"chevron-" + (this.state.show ? "down":"right")} style={{fontSize:"75%", marginRight:4}}/>
                         <Highlighter text={this.props.task}/>
-                        {this.state.show ? false : " ..."}
                     </h3>
                 }
                 { !this.state.show ? false : tools.map(tool =>
@@ -271,7 +271,7 @@ const IndicatorRow = (props) => {
 
 const Indicator = (props) => {
     return (
-        <span style={{marginRight:'1em'}}>
+        <span style={Object.assign({marginRight:'1em'}, props.style)}>
             <span className={"glyphicon glyphicon-"+props.title} style={{fontSize:'90%'}} aria-hidden="true"/>
             {" "}
             {props.children}

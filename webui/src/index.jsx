@@ -19,10 +19,12 @@ import { AlertsContainer } from './containers/AlertsContainer';
 import { AboutContainer, HelpContainer } from './containers/HelpContainers';
 
 
-// todo: resolve DOIs and handles
+// todo: move controls into a left column (and tools on the right)
+// todo: input text/URL: make it a 3 tab input system
 // todo: update help
 // todo: history with text states, resources
 // todo: enable piwik
+// todo: tools should support processing a novel and support UTF8
 
 
 function middleware() {
