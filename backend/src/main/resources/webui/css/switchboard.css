@@ -30,6 +30,10 @@ a { cursor: pointer }
     z-index: 0;
 }
 
+/* margins for tab children */
+div.input .tab-child {
+    margin-top: 1em;
+}
 
 /* file drop input textarea style */
 div.input button.dropzone {
@@ -124,4 +128,14 @@ div.tool hr {
 /* highlight search matches e.g. in tools */
 .highlight {
     background-color: yellow;
+}
+
+.tool-list-with-controls .row .controls {
+    margin-top: 12px;
+}
+
+@media (min-width: 992px) {
+    .tool-list-with-controls .controls {
+        border-right: 1px solid #ccc;
+    }
 }

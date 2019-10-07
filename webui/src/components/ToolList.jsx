@@ -44,27 +44,25 @@ export class ToolListWithControls extends React.Component {
         return ret;
     }
 
-    renderGroupByTask() {
+    renderSearch() {
         return (
-            <div style={{display:'inline-block', marginRight:20}}>
-                <form className="input-group">
-                    <input type="checkbox" id="groupByTask" name="groupByTask"
-                        onChange={toggle.bind(this, 'groupByTask')} checked={this.state.groupByTask} />
-                    <label className="form-check-label" htmlFor="groupByTask" style={{marginLeft:4, fontWeight:500}}>Group by task</label>
+            <div style={{margin:"5px 0"}}>
+                <form className="search" className="input-group">
+                    <input className="form-control" type="text" placeholder="Search for tool"
+                        onChange={this.setSearch} value={this.state.searchString} />
                 </form>
             </div>
         );
     }
 
-    renderSearch() {
+    renderGroupByTask() {
         return (
-            <div style={{display:'inline-block', marginRight:20}}>
-                <form className="search" className="input-group">
-                    <input className="form-control" type="text" placeholder="Search for tool or task"
-                        onChange={this.setSearch} value={this.state.searchString} />
-                    <span className="input-group-addon" style={{width:'1em'}}>
-                        <span className="glyphicon glyphicon-search" style={{fontSize:'90%'}} aria-hidden="true"/>
-                    </span>
+            <div style={{margin:"5px 0"}}>
+                <form className="input-group">
+                    <label className="input-group-addon form-check-label" htmlFor="groupByTask"
+                        style={{backgroundColor:"white", border:"none"}}>Group by task</label>
+                        <input type="checkbox" id="groupByTask" name="groupByTask"
+                            onChange={toggle.bind(this, 'groupByTask')} checked={this.state.groupByTask} />
                 </form>
             </div>
         );
@@ -73,24 +71,30 @@ export class ToolListWithControls extends React.Component {
     render() {
         const {tools, hiddenTools} = this.filterTools(this.props.tools, this.state.searchString, this.state.searchTerms);
         return (
-            <div>
-                <h2 style={{float:'left'}}>{this.props.title}</h2>
-
-                <div className="tool-control" style={{float:'right', marginTop: 20}}>
-                    {this.renderGroupByTask()}
-                    {this.renderSearch()}
+            <div className="tool-list-with-controls">
+                <div className="row">
+                    <div className="col-md-offset-1 col-md-10">
+                        <h2>{this.props.title}</h2>
+                    </div>
                 </div>
 
-                <div style={{clear:'both'}} />
+                <div className="row">
+                    <div className="col-md-2 controls">
+                        {this.renderSearch()}
+                        {this.renderGroupByTask()}
+                    </div>
 
-                <ToolList tools={tools} resource={this.props.resource}
-                    groupByTask={this.state.groupByTask}
-                    highlighter={highlighter(this.state.searchTerms)}/>
+                    <div className="col-md-10">
+                        <ToolList tools={tools} resource={this.props.resource}
+                            groupByTask={this.state.groupByTask}
+                            highlighter={highlighter(this.state.searchTerms)}/>
 
-                { hiddenTools.length
-                    ? <p className="alert alert-info">There are {hiddenTools.length} tools not matching the search term.</p>
-                    : false
-                }
+                        { hiddenTools.length
+                            ? <p className="alert alert-info">There are {hiddenTools.length} tools not matching the search term.</p>
+                            : false
+                        }
+                    </div>
+                </div>
             </div>
         );
     }

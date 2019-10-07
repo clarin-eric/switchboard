@@ -10,12 +10,14 @@ export class Input extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            link: "",
             text: "",
-            type: 'text',
         };
         this.handleFiles = this.handleFiles.bind(this);
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChangeLink = this.handleChangeLink.bind(this);
+        this.handleSubmitLink = this.handleSubmitLink.bind(this);
+        this.handleChangeText = this.handleChangeText.bind(this);
+        this.handleSubmitText = this.handleSubmitText.bind(this);
     }
     static propTypes = {
         onFile: PropTypes.func.isRequired,
@@ -33,63 +35,123 @@ export class Input extends React.Component {
         this.props.history.push(clientPath.root);
     }
 
-    handleChange(e) {
-        const text = event.target.value;
-        const type = isUrl(text) ? "url" : "text";
-        this.setState({text, type});
+    handleChangeLink(e) {
+        this.setState({link: event.target.value});
     }
 
-    handleSubmit(e, option) {
+    handleSubmitLink(e) {
         e.preventDefault();
         e.stopPropagation();
 
-        if (option.value === 'text') {
-            var blob = new Blob([this.state.text], {type: "text/plain"});
-            blob.name = "submitted_text.txt";
-            this.props.onFile(blob);
-        } else {
-            this.props.onLink(this.state.text);
-        }
+        this.props.onLink(this.state.link);
+
+        this.props.history.push(clientPath.root);
+    }
+
+    handleChangeText(e) {
+        this.setState({text: event.target.value});
+    }
+
+    handleSubmitText(e, option) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const blob = new Blob([this.state.text], {type: "text/plain"});
+        blob.name = "submitted_text.txt";
+        this.props.onFile(blob);
 
         this.props.history.push(clientPath.root);
     }
 
     render() {
-        let options = [
-            {value: "text", label: "Submit Text", style: {}},
-            {value: "url", label: "Submit URL", style: {backgroundColor:'#eef'}},
-        ];
-        const current = options.find(x => x.value === this.state.type);
-        options = options.filter(x => x.value !== this.state.type);
-        options.unshift(current);
-
-        // todo: reorder options based on current type
-
         return (
             <div className="input">
                 <h3>Add your data</h3>
 
-                <Dropzone onFiles={this.handleFiles}/>
+                <Tabs titles={['Upload File', 'Submit URL', 'Submit Text']}>
 
-                <form className="input-group textinput" onSubmit={this.handleSubmit}>
-                    <textarea className="form-control inputzone"
-                        style={{resize: 'vertical'}}
-                        onChange={this.handleChange}
-                        rows="5"
-                        placeholder="Or enter an URL/DOI/handle or text here."
-                        value={this.state.text} />
-                    <div className="input-group-addon" style={current.style}>
-                    <Dropdown type="submit" className="btn-primary"
-                        disabled={!this.state.text.trim()}
-                        onClick={this.handleSubmit}
-                        options={options}/>
-                    </div>
-                </form>
+                    <Dropzone onFiles={this.handleFiles}/>
+
+                    <form className="input-group link" onSubmit={this.handleSubmitLink}>
+                        <textarea className="form-control inputzone"
+                            style={{resize: 'vertical'}}
+                            onChange={this.handleChangeLink}
+                            rows="2"
+                            placeholder="Enter an URL or a DOI or a handle"
+                            value={this.state.link} />
+                        <div className="input-group-addon" style={{minWidth:'1em'}}>
+                            <button type="submit" className="btn-primary btn"
+                                disabled={!this.state.link.trim()}
+                                onClick={this.handleSubmitLink}>
+                                Submit URL
+                            </button>
+                        </div>
+                    </form>
+
+                    <form className="input-group textinput" onSubmit={this.handleSubmitText}>
+                        <textarea className="form-control inputzone"
+                            style={{resize: 'vertical'}}
+                            onChange={this.handleChangeText}
+                            rows="5"
+                            placeholder="Enter text here"
+                            value={this.state.text} />
+                        <div className="input-group-addon">
+                            <button type="submit" className="btn-primary btn"
+                                disabled={!this.state.text.trim()}
+                                onClick={this.handleSubmitText}>
+                                Submit Text
+                            </button>
+                        </div>
+                    </form>
+
+                </Tabs>
 
                 <p style={{marginTop:20}}>
                     Please be advised that the data will be shared with the tools via public links.
                     For more details, see the <Link to={clientPath.faq}>FAQ</Link>.
                 </p>
+            </div>
+        );
+    }
+}
+
+class Tabs extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            active: 1,
+        };
+        this.renderTitle = this.renderTitle.bind(this);
+    }
+    static propTypes = {
+        titles: PropTypes.array.isRequired,
+        children: PropTypes.array.isRequired,
+    };
+
+    renderTitle(title, index) {
+        if (index == this.state.active) {
+            return (
+                <li role="presentation" className="active" key={index}>
+                    <a>{title}</a>
+                </li>
+            );
+        }
+        return (
+            <li role="presentation" key={index}>
+                <a href="" onClick={e => this.setState({active:index})}>{title}</a>
+            </li>
+        );
+    }
+
+    render() {
+        return (
+            <div>
+                <ul className="nav nav-tabs">
+                    {this.props.titles.map(this.renderTitle)}
+                </ul>
+                <div className="tab-child">
+                    {this.props.children[this.state.active]}
+                </div>
             </div>
         );
     }
