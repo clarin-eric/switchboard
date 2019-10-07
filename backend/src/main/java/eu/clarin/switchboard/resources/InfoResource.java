@@ -10,8 +10,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Path("")
 public class InfoResource {
@@ -33,7 +32,7 @@ public class InfoResource {
     @Path("/info")
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public Response getApiInfo() {
-        Map map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
         map.put("git", gitProps);
         map.put("version", gitProps.get("git.build.version"));
         map.put("contactEmail", contactEmail);
@@ -51,16 +50,33 @@ public class InfoResource {
     }
 
     @GET
-    @Path("/mimetypes")
+    @Path("/mediatypes")
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public Response getMediatypes() {
-        return Response.ok(toolRegistry.getAllMediatypes()).build();
+        List<String> list = new ArrayList<>(toolRegistry.getAllMediatypes());
+        list.sort(new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return Long.compare(o1.length(), o2.length());
+            }
+        });
+        return Response.ok(list).build();
+    }
+
+    // same as /mediatypes
+    @GET
+    @Path("/mimetypes")
+    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+    public Response getMimetypes() {
+        return getMediatypes();
     }
 
     @GET
     @Path("/languages")
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public Response getLanguages() {
-        return Response.ok(toolRegistry.getAllLanguages()).build();
+        List<String> list = new ArrayList<>(toolRegistry.getAllLanguages());
+        list.sort(String::compareTo);
+        return Response.ok(list).build();
     }
 }

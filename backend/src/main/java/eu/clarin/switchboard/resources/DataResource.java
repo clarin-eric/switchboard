@@ -1,7 +1,7 @@
 package eu.clarin.switchboard.resources;
 
 import eu.clarin.switchboard.core.MediaLibrary;
-import eu.clarin.switchboard.core.StoragePolicyException;
+import eu.clarin.switchboard.core.xc.CommonException;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.slf4j.LoggerFactory;
@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.nio.file.Files;
@@ -61,7 +60,7 @@ public class DataResource {
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public Response postFile(@FormDataParam("file") InputStream inputStream,
                              @FormDataParam("file") final FormDataContentDisposition contentDispositionHeader,
-                             @FormDataParam("link") String link) throws IOException, StoragePolicyException {
+                             @FormDataParam("link") String link) throws CommonException {
         MediaLibrary.FileInfo fileInfo;
 
         if (contentDispositionHeader != null) {

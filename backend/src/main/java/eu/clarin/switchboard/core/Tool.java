@@ -20,7 +20,7 @@ public class Tool extends HashMap<String, Object> {
         return (String) get("langEncoding");
     }
 
-    public List<String> getMimetypes() {
+    public List<String> getMediatypes() {
         List<String> mediatypes = (List<String>) get("mimetypes");
         // may contain null at the end if there's a trailing comma in json
         mediatypes.remove(null);

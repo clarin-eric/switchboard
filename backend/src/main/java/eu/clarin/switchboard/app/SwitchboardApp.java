@@ -1,6 +1,7 @@
 package eu.clarin.switchboard.app;
 
 import eu.clarin.switchboard.core.*;
+import eu.clarin.switchboard.core.xc.SwitchboardExceptionMapper;
 import eu.clarin.switchboard.health.AppHealthCheck;
 import eu.clarin.switchboard.resources.DataResource;
 import eu.clarin.switchboard.resources.InfoResource;
@@ -59,7 +60,7 @@ public class SwitchboardApp extends Application<Config> {
 
         ToolRegistry toolRegistry = new ToolRegistry(switchboardConfig.getToolRegistryPath());
         storagePolicy.setAllowedMediaTypes(toolRegistry.getAllMediatypes());
-        toolRegistry.onUpdate(() -> {
+        toolRegistry.setOnUpdate(() -> {
             storagePolicy.setAllowedMediaTypes(toolRegistry.getAllMediatypes());
         });
 
@@ -67,7 +68,8 @@ public class SwitchboardApp extends Application<Config> {
 
         Profiler profiler = new Profiler();
         Converter converter = new Converter(switchboardConfig.getTikaConfigPath());
-        MediaLibrary mediaLibrary = new MediaLibrary(dataStore, profiler, converter, storagePolicy);
+        MediaLibrary mediaLibrary = new MediaLibrary(dataStore, profiler, converter, storagePolicy,
+                switchboardConfig.getUrlResolver());
 
         InfoResource infoResource = new InfoResource(toolRegistry, gitProperties,
                 switchboardConfig.getDataStore().getMaxSize(), switchboardConfig.getContactEmail());
@@ -78,8 +80,8 @@ public class SwitchboardApp extends Application<Config> {
         HttpErrorHandler httpErrorHandler = new HttpErrorHandler(appContextPath, URL_PATTERN);
         environment.getApplicationContext().setErrorHandler(httpErrorHandler);
 
+        environment.jersey().register(SwitchboardExceptionMapper.class);
         environment.jersey().register(MultiPartFeature.class);
-        environment.jersey().register(StoragePolicyExceptionMapper.class);
         environment.jersey().register(infoResource);
         environment.jersey().register(dataResource);
         environment.jersey().register(toolsResource);

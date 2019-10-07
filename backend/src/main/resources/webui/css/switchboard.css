@@ -1,0 +1,127 @@
+/* to set footer at page bottom */
+html, body, #reactapp { height: 100%; }
+#bodycontainer { height: auto; min-height: 100%;}
+#footer {
+    clear: both;
+    position: relative;
+    height: 80px;
+    margin-top: -80px;
+    padding-top: 20px;
+    border-top: 1px solid #d5d5d5;
+    background-color: #eee;
+    color: #777;
+}
+
+/* large text on body */
+body {font-size: 16px}
+#footer *, nav * {font-size: 14px}
+
+/* headers should not have the same color as links */
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  color: black;
+}
+
+/* fix links without href (with onClick) */
+a { cursor: pointer }
+
+/* visual bug fix */
+.input-group input.form-control {
+    z-index: 0;
+}
+
+
+/* file drop input textarea style */
+div.input button.dropzone {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 3px dashed #888;
+    border-radius: 16px;
+    box-shadow: 2px 2px 5px #ccc;
+}
+div.input button.dropzone:hover{
+    border: 3px dashed #006d91;
+    box-shadow: 0 0 8px #006d91;
+}
+div.input button.dropzone.active {
+    border: 3px dashed #0080aa;
+    box-shadow: 0 0 8px #0080aa;
+}
+
+
+/* text/url input textarea style */
+div.input form.linkinput {
+    margin-bottom:20px;
+}
+
+div.input textarea.inputzone {
+    padding: 10px;
+    color: black;
+    border: 1px solid #ccc;
+}
+div.input form {
+    box-shadow: 2px 2px 5px #ccc;
+}
+
+
+/* resource table style */
+div.resource-header {
+    font-weight: bold;
+    font-size: 18px;
+    margin: 20px 0 6px 2px;
+}
+div.resource {
+    padding: 1em 0;
+}
+
+/* transitions for matching tools */
+.smooth-update {
+    animation: fadein .2s;
+}
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* tools styles */
+div.tool-sublist h3 {
+    margin: 0;
+    padding: 20px 0 10px 10px;
+}
+div.tool-sublist h3:hover {
+    background-color: #eee;
+}
+
+div.tool .dl-horizontal {
+    margin-bottom: 8px;
+}
+
+div.tool {
+    padding: 10px 0;
+}
+
+div.tool:hover {
+    background-color: #f6f6f6;
+}
+
+div.tool .header dd {
+    line-height:38px;
+}
+div.tool .header dt img {
+    height: 32px;
+    margin: 4px 4px 4px 0;
+    padding: 2px;
+    border: 1px solid #ddd;
+    box-shadow: 2px 2px 2px #ccc;
+}
+div.tool hr {
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+
+
+/* highlight search matches e.g. in tools */
+.highlight {
+    background-color: yellow;
+}

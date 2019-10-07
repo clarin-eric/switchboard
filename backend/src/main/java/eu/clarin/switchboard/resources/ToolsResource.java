@@ -28,13 +28,14 @@ public class ToolsResource {
     public Response getTools(@QueryParam("includeWS") String includeWS,
                              @QueryParam("deployment") String deployment,
                              @QueryParam("language") String language,
-                             @QueryParam("mimetype") String mimetype) {
+                             @QueryParam("mediatype") String mediatype) {
         includeWS = includeWS == null ? "" : includeWS;
         // TODO: includeWS is currently unused
         deployment = deployment == null ? "" : deployment;
         language = language == null ? "" : language;
-        mimetype = mimetype == null ? "" : mimetype;
-        List<Tool> tools = toolRegistry.filterTools(deployment, language, mimetype);
+        mediatype = mediatype == null ? "" : mediatype;
+        List<Tool> tools = toolRegistry.filterTools(deployment, language, mediatype);
+        tools.sort((t1, t2) -> t1.getName().compareToIgnoreCase(t2.getName()));
         return Response.ok(tools).build();
     }
 }

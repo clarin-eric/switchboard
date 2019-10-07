@@ -1,5 +1,6 @@
 package eu.clarin.switchboard.core;
 
+import eu.clarin.switchboard.core.xc.ConverterException;
 import org.apache.tika.config.TikaConfig;
 import org.apache.tika.exception.TikaException;
 import org.apache.tika.metadata.Metadata;

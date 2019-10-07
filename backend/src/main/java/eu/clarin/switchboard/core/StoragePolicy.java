@@ -1,5 +1,7 @@
 package eu.clarin.switchboard.core;
 
+import eu.clarin.switchboard.core.xc.StoragePolicyException;
+
 import java.io.File;
 import java.time.Duration;
 

@@ -1,5 +1,6 @@
 package eu.clarin.switchboard.app;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import io.dropwizard.Configuration;
 
@@ -33,6 +34,10 @@ public class Config extends Configuration {
         @Valid
         @NotNull
         private DataStoreConfig dataStore;
+
+        @Valid
+        @NotNull
+        private UrlResolverConfig urlResolver;
 
         public String getContactEmail() {
             return contactEmail;
@@ -138,6 +143,48 @@ public class Config extends Configuration {
             }
         }
 
+        public static class UrlResolverConfig {
+            @NotNull
+            private int connectTimeout;
+
+            @NotNull
+            private int readTimeout;
+
+            @Valid
+            @NotNull
+            @JsonProperty
+            private String unit;
+
+            public UrlResolverConfig() {
+            }
+
+            public UrlResolverConfig(int connectTimeout, int readTimeout, String unit) {
+                this.connectTimeout = connectTimeout;
+                this.readTimeout = readTimeout;
+                this.unit = unit;
+            }
+
+            public int getConnectTimeout() {
+                ChronoUnit u = ChronoUnit.valueOf(unit.trim().toUpperCase());
+                return (int) Duration.of(connectTimeout, u).getNano() / 1000 / 1000;
+            }
+
+            public int getReadTimeout() {
+                ChronoUnit u = ChronoUnit.valueOf(unit.trim().toUpperCase());
+                return (int) Duration.of(readTimeout, u).getNano() / 1000 / 1000;
+            }
+
+
+            @Override
+            public String toString() {
+                return MoreObjects.toStringHelper(this)
+                        .add("\nconnectTimeout", connectTimeout)
+                        .add("\nreadTimeout", readTimeout)
+                        .add("\nunit", unit)
+                        .toString();
+            }
+        }
+
         public String getTikaConfigPath() {
             return tikaConfigPath;
         }
@@ -150,6 +197,10 @@ public class Config extends Configuration {
             return dataStore;
         }
 
+        public UrlResolverConfig getUrlResolver() {
+            return urlResolver;
+        }
+
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
@@ -157,6 +208,7 @@ public class Config extends Configuration {
                     .add("\ttoolRegistryPath", toolRegistryPath)
                     .add("\tcontactEmail", contactEmail)
                     .add("\tdataStore", dataStore)
+                    .add("\turlResolver", urlResolver)
                     .toString();
         }
     }

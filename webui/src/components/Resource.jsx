@@ -1,183 +1,64 @@
-// -------------------------------------------
-// The CLARIN Language Resource Switchboard
-// 2016-18 Claus Zinn, University of Tuebingen
-//
-// File: Resource.jsx
-// Time-stamp: <2019-03-21 20:48:02 (zinn)>
-// -------------------------------------------
-
 import React from 'react';
-import LanguageMenu from './LanguageMenu.jsx';
-import MimetypeMenu from './MimetypeMenu.jsx';
-import AlertMissingInfo from './AlertMissingInfo.jsx';
-import AlertNoTools from './AlertNoTools.jsx';
+import Select from 'react-select';
 
-// access to matcher
-import MatcherRemote from './MatcherRemote';
+const SelectLanguage = (props) => {
+    const value = props.languages.find(x => x.value == props.res.language);
+    return <Select
+        value={value}
+        options={props.languages.asMutable()}
+        onChange={props.onLanguage}
+        placeholder="Select the language of the resource"
+    />;
+}
 
+const SelectMediatype = (props) => {
+    const value = props.mediatypes.find(x => x.value == props.res.mediatype);
+    return <Select
+        value={value}
+        options={props.mediatypes.asMutable()}
+        onChange={props.onMediatype}
+        placeholder="Select the mediatype of the resource"
+    />;
+}
 
-export default class Resource extends React.Component {
+export class Resource extends React.Component {
     constructor(props) {
         super(props);
-
-        this.resource = props.resource;
-
-        this.handleResourcesChange = props.onResourcesChange;
-        this.handleToolsChange     = props.onToolsChange;
-
-        this.showTools     = this.showTools.bind(this);
-        this.openResource  = this.openResource.bind(this);
-        this.setLanguage   = this.setLanguage.bind(this);
-        this.setMimetype   = this.setMimetype.bind(this);
-
-        this.state = { showAlertMissingInfo: false,
-                       showAlertNoTools: false,
-                     };
-
-        console.log('Resource/constructor', this.resource);
     }
 
-    setLanguage( language ) {
-        console.log('Resource/setLanguage', this.resource, language, _paq);
-
-        _paq.push(["trackEvent", 'setLanguage', language.label]);
-        this.resource.language = { language : language.label,
-                                   threeLetterCode: language.value };
-        this.handleResourcesChange(this.resource);
-    }
-
-    setMimetype( mimetype ) {
-        console.log('Resource/setMimetype', this.resource, mimetype, _paq);
-
-        _paq.push(["trackEvent", 'setMimetype', this.resource.mimetype]);
-        this.resource.mimetype = mimetype.value;
-        this.handleResourcesChange(this.resource);
-    }
-
-    showTools() {
-
-        _paq.push(["trackEvent", 'showTools', this.resource.language.label, this.resource.mimetype]);
-        console.log('Resource/showTools', this.resource);
-
-        if ( (this.resource.language == null) || (this.resource.mimetype == null)) {
-            this.setState({showAlertMissingInfo: true} );
-            return;
-        }
-
-        const matcher = new MatcherRemote();
-        const toolsPromise = matcher.getApplicableTools( this.resource.mimetype, this.resource.language.threeLetterCode );
-        const that = this;
-        toolsPromise.then(
-            function(resolve) {
-                console.log('Resource.jsx/showTools succeeded', resolve);
-                if (resolve.length == 0) {
-                    that.setState({showAlertNoTools: true} );
-                } else {
-                    that.handleToolsChange( resolve );
-                }
-            },
-            function(reject) {
-                console.log('Resource.jsx/showTools failed', reject);
-            });
-    }
-
-    openResource() {
-        console.log('Resource/openResource', this.resource);
-        var win = window.open(this.resource.url, '_blank');
-        win.focus();
+    onChange(type, sel) {
+        const res = this.props.resource;
+        const newres = res.set(type, sel.value);
+        this.props.updateResource(newres);
     }
 
     render() {
-        const {resource, ...props} = this.props;
-        this.resource = resource;
-
-        const thStyle = {textAlign:'center'};
-        const colStyle = {width:'300px'};
-        const tableStyle = {
-            borderWidth: 2,
-            borderColor: 'black',
-            borderStyle: 'solid',
-            borderRadius: 4,
-            margin: 10,
-            padding: 10,
-            marginLeft: 20,
-            width: 785,
-            height:160,
-            resize: 'none',
-            transition: 'all 0.5s',
-            display:'inline-block'
-        };
-
-        console.log('Resource/render', resource);
-
-        if (resource === undefined)  {
-            return null;
-        } else {
-            return (
-             <div className="resources">
-                <h3 id="resourceHeading">Input Analysis</h3>
-                <table style={tableStyle} >
-                <colgroup>
-                  <col style={colStyle}/>
-                  <col style={colStyle}/>
-                  <col style={colStyle}/>
-                </colgroup>
-                <thead>
-                  <tr>
-                    <th style={thStyle}>Resource</th>
-                    <th style={thStyle}>MIME type</th>
-                    <th style={thStyle}>Language</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="notes">
-                    <td className="note">
-                      <a className="resource-name" href='#' onClick={this.openResource} >
-                        <span>
-                          <b>File name:</b> {resource.filename}
-                        </span>
-                      </a>
-                      {resource.length ?
+        const res = this.props.resource;
+        return <React.Fragment>
+            <div className="resource">
+                <div className="row">
+                    <div className="col-md-4">
+                        <div className="resource-header">Resource</div>
                         <div>
-                          <b>File size:</b> {parseFloat(resource.length / (1000 * 1000)).toFixed(3).replace(/\.?0+$/, '')} MB
+                            <a href={res.originalLink || res.localLink}> {res.filename} </a>
                         </div>
-                      : false
-                      }
-                    </td>
-                    <td className="note">
-                      <MimetypeMenu defaultValue = { {label: resource.mimetype,
-                                                      value: resource.mimetype
-                                                     }
-                                                   }
-                onMimetypeSelection={this.setMimetype} />
-                    </td>
-                    <td className="note">
-                      <LanguageMenu defaultValue = { { label: resource.language.language,
-                                                       value: resource.language.threeLetterCode
-                                                     }
-                                                   }
-                onLanguageSelection={this.setLanguage} />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td>
-                      <div className="resource-footer">
-                    <button id="showToolsButton" onClick={this.showTools}>Show Tools</button>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              {this.state.showAlertMissingInfo ?
-                 <AlertMissingInfo onCloseProp={ () => this.setState( {showAlertMissingInfo: false} ) } />
-               : null }
-              {this.state.showAlertNoTools ?
-                 <AlertNoTools onCloseProp={ () => this.setState( {showAlertNoTools: false} ) } />
-                 : null }
+                    </div>
+                    <div className="col-md-4">
+                        <div className="resource-header">Mediatype</div>
+                        <div>
+                            <SelectMediatype res={res} mediatypes={this.props.mediatypes}
+                                onMediatype={v => this.onChange('mediatype', v)}/>
+                        </div>
+                    </div>
+                    <div className="col-md-4">
+                        <div className="resource-header">Language</div>
+                        <div>
+                            <SelectLanguage res={res} languages={this.props.languages}
+                                onLanguage={v => this.onChange('language', v)}/>
+                        </div>
+                    </div>
+                </div>
             </div>
-            );
-        }
+        </React.Fragment>;
     }
 }

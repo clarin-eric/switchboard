@@ -1,6 +1,7 @@
 package eu.clarin.switchboard.core;
 
 import com.google.common.io.ByteStreams;
+import eu.clarin.switchboard.core.xc.StoragePolicyException;
 import gnu.trove.set.hash.TIntHashSet;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +22,7 @@ public class DataStore {
     Path dataStoreRoot;
     StoragePolicy storagePolicy;
 
-    public DataStore(Path dataStoreRoot, StoragePolicy storagePolicy) throws IOException {
+    public DataStore(Path dataStoreRoot, StoragePolicy storagePolicy) {
         this.dataStoreRoot = dataStoreRoot;
         this.storagePolicy = storagePolicy;
     }
@@ -78,7 +79,7 @@ public class DataStore {
         illegalCharsString.codePoints().forEachOrdered(illegalChars::add);
     }
 
-    private static String sanitize(String filename) {
+    public static String sanitize(String filename) {
         StringBuilder cleanName = new StringBuilder();
         filename.codePoints().forEachOrdered(c -> {
             boolean replace = c < 32 || illegalChars.contains(c);
