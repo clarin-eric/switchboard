@@ -86,22 +86,4 @@ public class DefaultStoragePolicy implements StoragePolicy {
             return String.format("%.2f GB", maxSize / K / K / K);
         }
     }
-
-    public static boolean isXmlMediatype(String mediatype) {
-        // mediatype format is: type "/" subtype ["+" suffix]* [";" parameter]
-        // 1. remove parameter suffix
-        int formatStartIndex = mediatype.indexOf(';');
-        if (formatStartIndex > 0) {
-            mediatype =  mediatype.substring(0, formatStartIndex);
-        }
-        // 2. split in type and subtypes
-        String[] typeSubtypes = mediatype.split("/");
-        if (typeSubtypes.length == 2) {
-            // 3. find subtypes
-            String[] subtypes = typeSubtypes[1].split("\\+");
-            // it's xml if any subtype is "xml"
-            return Arrays.asList(subtypes).contains("xml");
-        }
-        return false;
-    }
 }
