@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { HashLink as Link } from 'react-router-hash-link';
+import {HashLink as Link} from 'react-router-hash-link';
 import {Dropzone} from './Dropzone';
 import {Dropdown} from './Dropdown';
 import {clientPath} from '../constants';

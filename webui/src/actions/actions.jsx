@@ -10,25 +10,6 @@ export function updateResource(resource) {
             data: resource,
         });
 
-        if ( (resource.mediatype == "application/zip") ||
-             (resource.mediatype == "application/x-gzip") ) {
-            // todo: acknowledge that a zip file has been received, but that a manual identification
-            //        of its parts wrt. language should be made by the user.
-            // todo: ?
-            // this.setState({isLoaded: true, showAlertMissingInfo: true});
-        } else if ( (resource.mediatype == "audio/vnd.wave") ||
-                    (resource.mediatype == "audio/x-wav")    ||
-                    (resource.mediatype == "audio/wav")      ||
-                    (resource.mediatype == "audio/mp3")      ||
-                    (resource.mediatype == "audio/mp4")      ||
-                    (resource.mediatype == "audio/x-mpeg")) {
-            // todo: ?
-            // this.setState({showAlertMissingInfo: true});
-        } else {
-            // todo: ?
-            // this.setState({isLoaded: true});
-        }
-
         if (resource.localLink) {
             dispatch(fetchMatchingTools(
                 resource.mediatype,
