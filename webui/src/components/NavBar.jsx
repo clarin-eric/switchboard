@@ -28,8 +28,7 @@ export class NavBar extends React.Component {
     render() {
         const navCollapseClass = this.state.showCollapsedNavbar ? "collapse navbar-collapse text-right show" : "collapse navbar-collapse";
         const navItemClass = (url) => {
-            const currentUrl = this.props.location_href;
-            console.log(currentUrl, url);
+            const currentUrl = window.location.href;
             return "nav-item" + (currentUrl.endsWith(url) ? " active" : "");
         }
 

@@ -52,7 +52,7 @@ export class Alerts extends React.Component {
                     <h3 className="alert-danger" style={{marginTop:0}}>Error</h3>
                     {this.props.alerts.map(this.renderAlert)}
                     <div style={{textAlign: 'center', marginTop:'1em'}}>
-                        <button className="btn btn-block" onClick={this.props.clearAlerts}>Ok</button>
+                        <button className="btn btn-block" onClick={this.props.clearAlerts}>Close</button>
                     </div>
                 </div>
             </Modal>

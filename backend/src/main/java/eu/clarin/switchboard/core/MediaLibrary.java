@@ -167,16 +167,16 @@ public class MediaLibrary {
         }
     }
 
-    public FileInfo addMedia(String originalUrl) throws CommonException {
-        DownloadUtils.LinkData linkData;
+    public FileInfo addMedia(String originalUrlOrDoiOrHandle) throws CommonException {
+        LinkMetadata.LinkInfo linkInfo;
         try {
-            linkData = DownloadUtils.getLinkData(originalUrl);
+            linkInfo = LinkMetadata.getLinkData(originalUrlOrDoiOrHandle);
         } catch (MalformedURLException xc) {
-            throw new LinkException(LinkException.Kind.BAD_URL, originalUrl, xc);
+            throw new LinkException(LinkException.Kind.BAD_URL, originalUrlOrDoiOrHandle, xc);
         }
 
         HttpURLConnection connection;
-        String downloadLink = linkData.downloadLink;
+        String downloadLink = linkInfo.downloadLink;
         String cookies = null;
 
         int redirects = 0;
@@ -215,16 +215,16 @@ public class MediaLibrary {
             ContentDisposition disposition = new ContentDisposition(header);
             String name = disposition.getFileName();
             if (!DataStore.sanitize(name).isEmpty()) {
-                linkData.filename = name;
+                linkInfo.filename = name;
             }
         } catch (ParseException xc) {
             // ignore
         }
 
         try (InputStream stream = connection.getInputStream()) {
-            FileInfo fileInfo = addMedia(linkData.filename, stream);
-            fileInfo.downloadLink = linkData.downloadLink;
-            fileInfo.originalLink = originalUrl;
+            FileInfo fileInfo = addMedia(linkInfo.filename, stream);
+            fileInfo.downloadLink = linkInfo.downloadLink;
+            fileInfo.originalLink = originalUrlOrDoiOrHandle;
             fileInfo.httpRedirects = redirects;
             return fileInfo;
         } catch (IOException xc) {
