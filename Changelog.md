@@ -1,5 +1,13 @@
 # Changelog
-	All notable changes to this project will be documented in this file.
+
+## [2.1.0] - 2019-06-26
+	- fully rewritten and redesigned UI as single page app (React+Redux & react-router)
+	- updated Switchboard API to allow it being called from any repository (any origin)
+
+## [2.0.0] - 2019-06-26
+	- rewritten backend with support for temporary storing user data: simplified installation procedure, removed dependence on nextcloud and other external containers
+	- externalized tool definitions to github.com/clarin-eric/switchboard-tool-registry
+	- minor UI updates
 
 ## [1.4.3] - 2018-01-14
 	- updated to latest version of babel
