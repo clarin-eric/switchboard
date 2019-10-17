@@ -24,9 +24,11 @@ export class ToolListWithControls extends React.Component {
     };
 
     setSearch(event) {
-        let searchString = event.target.value;
-        searchString = searchString.toLowerCase();
-        const searchTerms = (searchString.length < 2) ? [] : searchString.trim().split(SPACE_REGEX);
+        const searchString = event.target.value;
+        let searchTerms = [];
+        if (searchString.length >= 2) {
+            searchTerms = searchString.trim().toLowerCase().split(SPACE_REGEX);
+        }
         this.setState({searchString, searchTerms });
     }
 

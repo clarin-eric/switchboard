@@ -1,32 +1,34 @@
 server:
-  applicationContextPath: ${APP_CONTEXT_PATH:-/}
-  applicationConnectors:
-    - type: http
-      port: 8080
-      # time before the request expires
-      idleTimeout: 180 seconds
-  adminConnectors:
-    - type: http
-      port: 8089
+    applicationContextPath: ${APP_CONTEXT_PATH:-/}
+    applicationConnectors:
+        - type: http
+          port: 8080
+          # time before the request expires
+          idleTimeout: 180 seconds
+    adminConnectors:
+        - type: http
+          port: 8089
 
 logging:
-  level: INFO
-  loggers:
-    "eu.clarin": DEBUG
+    level: INFO
+    loggers:
+        "eu.clarin": DEBUG
 
 switchboard:
-  tikaConfigPath: ./tikaConfig.xml
-  toolRegistryPath: ../../switchboard-tool-registry
-  contactEmail: switchboard@clarin.eu
-  dataStore:
-    location: # e.g. /my/data; defaults to temporary storage
-    eraseAllStorageOnStart: false
-    maxSize: 5M
-    maxLifetime: 2
-    maxLifetimeUnit: hours
-    cleanupPeriod: 13
-    cleanupPeriodUnit: minutes
-  urlResolver:
-    connectTimeout: 3
-    readTimeout: 3
-    unit: seconds
+    tikaConfigPath: ./tikaConfig.xml
+    contactEmail: switchboard@clarin.eu
+    tools:
+        toolRegistryPath: ../../switchboard-tool-registry
+        showOnlyProductionTools: false
+    dataStore:
+        location: # e.g. /my/data; defaults to temporary storage
+        eraseAllStorageOnStart: false
+        maxSize: 5M
+        maxLifetime: 2
+        maxLifetimeUnit: hours
+        cleanupPeriod: 13
+        cleanupPeriodUnit: minutes
+    urlResolver:
+        connectTimeout: 3
+        readTimeout: 3
+        unit: seconds

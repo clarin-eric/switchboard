@@ -1,6 +1,6 @@
 package eu.clarin.switchboard.core;
 
-import eu.clarin.switchboard.app.Config;
+import eu.clarin.switchboard.app.config.DataStoreConfig;
 import eu.clarin.switchboard.core.xc.StoragePolicyException;
 
 import java.io.File;
@@ -10,10 +10,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class DefaultStoragePolicy implements StoragePolicy {
-    Config.SwitchboardConfig.DataStoreConfig dataStoreConfig;
+    DataStoreConfig dataStoreConfig;
     Set<String> allowedMediaTypes = new HashSet<>();
 
-    public DefaultStoragePolicy(Config.SwitchboardConfig.DataStoreConfig dataStoreConfig) {
+    public DefaultStoragePolicy(DataStoreConfig dataStoreConfig) {
         this.dataStoreConfig = dataStoreConfig;
     }
 

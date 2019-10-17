@@ -1,5 +1,7 @@
 package eu.clarin.switchboard.app;
 
+import eu.clarin.switchboard.app.config.RootConfig;
+import eu.clarin.switchboard.app.config.SwitchboardConfig;
 import eu.clarin.switchboard.core.*;
 import eu.clarin.switchboard.core.xc.SwitchboardExceptionMapper;
 import eu.clarin.switchboard.health.AppHealthCheck;
@@ -22,7 +24,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
 
-public class SwitchboardApp extends Application<Config> {
+public class SwitchboardApp extends Application<RootConfig> {
     public static final String URL_PATTERN = "/api/*";
 
     public static void main(String[] args) throws Exception {
@@ -32,7 +34,7 @@ public class SwitchboardApp extends Application<Config> {
     TemplatedAssetsBundle assets;
 
     @Override
-    public void initialize(Bootstrap<Config> bootstrap) {
+    public void initialize(Bootstrap<RootConfig> bootstrap) {
         assets = new TemplatedAssetsBundle("/webui/", "/", "index.html", "static");
         bootstrap.addBundle(assets);
         bootstrap.setConfigurationSourceProvider(new SubstitutingSourceProvider(
@@ -40,8 +42,8 @@ public class SwitchboardApp extends Application<Config> {
     }
 
     @Override
-    public void run(Config configuration, Environment environment) throws IOException, TikaException, SAXException {
-        Config.SwitchboardConfig switchboardConfig = configuration.getSwitchboard();
+    public void run(RootConfig configuration, Environment environment) throws IOException, TikaException, SAXException {
+        SwitchboardConfig switchboardConfig = configuration.getSwitchboard();
         System.out.println("" + switchboardConfig);
 
         String appContextPath = ((DefaultServerFactory) configuration.getServerFactory()).getApplicationContextPath();
@@ -58,7 +60,7 @@ public class SwitchboardApp extends Application<Config> {
             dataStore.eraseAllStorage();
         }
 
-        ToolRegistry toolRegistry = new ToolRegistry(switchboardConfig.getToolRegistryPath());
+        ToolRegistry toolRegistry = new ToolRegistry(switchboardConfig.getTools().getToolRegistryPath());
         storagePolicy.setAllowedMediaTypes(toolRegistry.getAllMediatypes());
         toolRegistry.setOnUpdate(() -> {
             storagePolicy.setAllowedMediaTypes(toolRegistry.getAllMediatypes());
@@ -74,7 +76,7 @@ public class SwitchboardApp extends Application<Config> {
         InfoResource infoResource = new InfoResource(toolRegistry, gitProperties,
                 switchboardConfig.getDataStore().getMaxSize(), switchboardConfig.getContactEmail());
         DataResource dataResource = new DataResource(mediaLibrary);
-        ToolsResource toolsResource = new ToolsResource(toolRegistry);
+        ToolsResource toolsResource = new ToolsResource(toolRegistry, switchboardConfig.getTools());
 
         environment.jersey().setUrlPattern(URL_PATTERN);
         HttpErrorHandler httpErrorHandler = new HttpErrorHandler(appContextPath, URL_PATTERN);

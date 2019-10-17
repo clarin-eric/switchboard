@@ -1,6 +1,5 @@
 package eu.clarin.switchboard.core.xc;
 
-import eu.clarin.switchboard.app.Config;
 import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.core.Response;

@@ -1,7 +1,7 @@
 package eu.clarin.switchboard.core;
 
 import com.google.common.collect.ImmutableSet;
-import eu.clarin.switchboard.app.Config;
+import eu.clarin.switchboard.app.config.UrlResolverConfig;
 import eu.clarin.switchboard.core.xc.*;
 import org.glassfish.jersey.media.multipart.ContentDisposition;
 import org.slf4j.LoggerFactory;
@@ -36,7 +36,7 @@ public class MediaLibrary {
     Profiler profiler;
     Converter converter;
     StoragePolicy storagePolicy;
-    Config.SwitchboardConfig.UrlResolverConfig urlResolverConfig;
+    UrlResolverConfig urlResolverConfig;
 
     Map<UUID, FileInfo> fileInfoMap = Collections.synchronizedMap(new HashMap<>());
 
@@ -137,7 +137,7 @@ public class MediaLibrary {
         }
     }
 
-    public MediaLibrary(DataStore dataStore, Profiler profiler, Converter converter, StoragePolicy storagePolicy, Config.SwitchboardConfig.UrlResolverConfig urlResolverConfig) {
+    public MediaLibrary(DataStore dataStore, Profiler profiler, Converter converter, StoragePolicy storagePolicy, UrlResolverConfig urlResolverConfig) {
         this.dataStore = dataStore;
         this.profiler = profiler;
         this.converter = converter;

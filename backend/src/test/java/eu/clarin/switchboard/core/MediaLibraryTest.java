@@ -1,6 +1,7 @@
 package eu.clarin.switchboard.core;
 
-import eu.clarin.switchboard.app.Config;
+import eu.clarin.switchboard.app.config.DataStoreConfig;
+import eu.clarin.switchboard.app.config.UrlResolverConfig;
 import eu.clarin.switchboard.core.xc.CommonException;
 import eu.clarin.switchboard.core.xc.StoragePolicyException;
 import org.junit.Before;
@@ -20,7 +21,7 @@ public class MediaLibraryTest {
         String maxLifetimeUnit = "seconds";
         String cleanupPeriod = "1";
         String cleanupPeriodUnit = "seconds";
-        Config.SwitchboardConfig.DataStoreConfig dataStoreConfig = new Config.SwitchboardConfig.DataStoreConfig(
+        DataStoreConfig dataStoreConfig = new DataStoreConfig(
                 dataStoreRoot.toString(), false, maxSize, maxLifetime, maxLifetimeUnit, cleanupPeriod, cleanupPeriodUnit);
         StoragePolicy storagePolicy = new DefaultStoragePolicy(dataStoreConfig);
         DataStore dataStore = new DataStore(dataStoreRoot, storagePolicy);
@@ -30,7 +31,7 @@ public class MediaLibraryTest {
 
         Converter converter = new Converter("./tikaConfig.xml");
 
-        Config.SwitchboardConfig.UrlResolverConfig urlResolver = new Config.SwitchboardConfig.UrlResolverConfig(3, 3, "seconds");
+        UrlResolverConfig urlResolver = new UrlResolverConfig(3, 3, "seconds");
 
         mediaLibrary = new MediaLibrary(dataStore, profiler, converter, storagePolicy,
                 urlResolver);

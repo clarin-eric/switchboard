@@ -57,7 +57,8 @@ public class InfoResource {
         list.sort(new Comparator<String>() {
             @Override
             public int compare(String o1, String o2) {
-                return Long.compare(o1.length(), o2.length());
+                int diff = Long.compare(o1.length(), o2.length());
+                return diff == 0 ? o1.compareToIgnoreCase(o2) : diff;
             }
         });
         return Response.ok(list).build();

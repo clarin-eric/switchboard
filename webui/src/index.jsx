@@ -19,10 +19,6 @@ import {AlertsContainer} from './containers/AlertsContainer';
 import {AboutContainer, HelpContainer} from './containers/HelpContainers';
 
 
-// todo: update help
-// todo: history with text states, resources
-
-
 function middleware() {
     if (process.env.NODE_ENV === 'production') {
         return applyMiddleware(thunk);

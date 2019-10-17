@@ -13,16 +13,16 @@ import java.util.stream.Collectors;
 
 public class ToolRegistry {
     private static final ch.qos.logback.classic.Logger LOGGER = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(ToolRegistry.class);
+    private static final String PRODUCTION_DEPLOYMENT = "production";
 
     Path registryPath;
     AtomicReference<List<Tool>> tools = new AtomicReference<>();
     Runnable callback;
 
-    public List<Tool> filterTools(String deployment, String language, String mediatype) {
-        Predicate<Tool> filterDeployment = tool -> deployment.isEmpty()
-                || tool.getDeployment().equals("production") || tool.getDeployment().equals(deployment);
-        Predicate<Tool> filterLanguages = tool -> language.isEmpty() || tool.getLanguages().contains(language);
-        Predicate<Tool> filterMediatypes = tool -> mediatype.isEmpty() || tool.getMediatypes().contains(mediatype);
+    public List<Tool> filterTools(String mediatype, String language, boolean onlyProductionTools) {
+        Predicate<Tool> filterMediatypes = tool -> mediatype == null || mediatype.isEmpty() || tool.getMediatypes().contains(mediatype);
+        Predicate<Tool> filterLanguages = tool -> language == null || language.isEmpty() || tool.getLanguages().contains(language);
+        Predicate<Tool> filterDeployment = tool -> !onlyProductionTools || tool.getDeployment().equalsIgnoreCase(PRODUCTION_DEPLOYMENT);
         Predicate<Tool> filter = filterDeployment.and(filterLanguages).and(filterMediatypes);
         return tools.get()
                 .stream()
