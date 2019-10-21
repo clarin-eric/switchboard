@@ -189,13 +189,14 @@ class ToolCard extends React.Component {
     };
 
     renderHeader(imgSrc, tool, invocationURL) {
+        const trackCall = () => _paq.push(['trackEvent', 'Tools', 'StartTool', tool.name]);
         const Highlighter = this.props.highlighter;
         return (
             <dl className="dl-horizontal header">
                 <dt><img src={imgSrc}/></dt>
                 <dd>
                     { invocationURL
-                        ? <a className="btn btn-success" style={{marginRight:16}} href={invocationURL} target="_blank"> Start Tool </a>
+                        ? <a className="btn btn-success" style={{marginRight:16}} onClick={trackCall} href={invocationURL} target="_blank"> Start Tool </a>
                         : false
                     }
                     <a style={{fontSize: 20}} href={tool.homepage} target="_blank">

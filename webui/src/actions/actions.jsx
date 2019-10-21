@@ -123,6 +123,7 @@ export function fetchMatchingTools(mediatype, language) {
                     data: response.data,
                 });
             }).catch(errHandler(dispatch, "Cannot fetch tools data"));
+        _paq.push(['trackEvent', 'Tools', 'MatchTools', mediatype, language]);
     }
 }
 
