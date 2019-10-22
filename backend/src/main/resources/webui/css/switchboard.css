@@ -1,6 +1,10 @@
 /* to set footer at page bottom */
 html, body, #reactapp { height: 100%; }
-#bodycontainer { height: auto; min-height: 100%;}
+#bodycontainer {
+    height: auto;
+    min-height: 100%;
+    padding-bottom: 80px;
+}
 #footer {
     clear: both;
     position: relative;
@@ -10,6 +14,7 @@ html, body, #reactapp { height: 100%; }
     border-top: 1px solid #d5d5d5;
     background-color: #eee;
     color: #777;
+    padding-bottom: 80px;
 }
 
 /* large text on body */
