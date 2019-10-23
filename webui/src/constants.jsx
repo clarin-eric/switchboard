@@ -33,8 +33,3 @@ export const actionType = [
     actions[value] = value;
     return actions;
 }, {});
-
-export const resourceMatchSettings = {
-    deploymentStatus: 'production',
-    includeWS: false,
-}

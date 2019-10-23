@@ -6,40 +6,9 @@ export default class ForDevelopers extends React.Component {
   render() {
     return (
         <React.Fragment>
-          <h2 id="developers">How to get your tool listed in the CLARIN LRS</h2>
-          <p>For the time being, two pieces of information about a resource are used to identify whether there is any tool
-            that can process the resource:</p>
-          <ul>
-            <li>mediatype: automatically detected once the resource has been dragged & dropped into the drop area.</li>
-            <li>language: the language the resource is in. Apache Tika is used to identify the language of the resource.</li>
-          </ul>
-          <p>For each tool, the LRS switchboard requires a metadata description that gives the switchboard all relevant information for tool applicability and invocation. In particular, the metadata description has slots that describe all the mediatypes and all the languages that the tool can process. </p>
-          <p>Example:</p>
-          <img src={image("metadataListing1.png")} width="71%" height="71%" />
-          <p>
-            The metadata description specifies, among other things, that Weblicht can process
-            German resources of type 'text/plain'.
-          </p>
-          <p>
-            All applicable tools are identified once the user presses the 'Show Tools' button. Tools are aggregated under a task systematics. Selecting a tool opens the info pane about the tool. If the user clicks on 'Click to start tool' link, the respective tool is invoked by passing a number of parameters on, in particular:
-          </p>
-          <ul>
-            <li>a pointer to the URL where the resource in question can be downloaded from</li>
-            <li>the language of the resource</li>
-            <li>the task requested</li>
-            <li><em>potentially other information can be passed, of course, for instance, the mediatype of the resource.</em></li>
-          </ul>
-          <p>For Weblicht, a typical call looks like:</p>
-          <code>https://weblicht.sfs.uni-tuebingen.de/weblicht/?input=http://example.com/path&lang=de&analysis=dep-parsing</code>
-          <p/>
-          <p>
-            Note that the name of the parameters (input, lang, analysis) are specific for Weblicht -- and also recorded in the metadata description of Weblicht. If your tool has a different parameter set, you do not need to change them. Just record them in the metadata, make use of the slot <em>mapping</em>, e.g.,
-          </p>
-          <img src={image("metadataListing2.png")} width="33%" height="33%" />
-          <p>
-            Here, the URL parameter <em>input</em> is replaced by the parameter <em>URL</em>,
-            and <em>lang</em> is replaced by <em>language</em>
-          </p>
+          <h2 id="developers">How to get your tool listed in the Switchboard</h2>
+          Please check the <a href="https://github.com/clarin-eric/switchboard-doc/blob/master/documentation/ToolDescriptionSpec.md"> Tool Description Spec </a>
+          and other related documents in our <a href="https://github.com/clarin-eric/switchboard-doc"> technical documentation repository </a>.
         </React.Fragment>
     );
   }

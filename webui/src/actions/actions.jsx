@@ -11,11 +11,7 @@ export function updateResource(resource) {
         });
 
         if (resource.localLink) {
-            dispatch(fetchMatchingTools(
-                resource.mediatype,
-                resource.language,
-                resourceMatchSettings.deploymentStatus,
-                resourceMatchSettings.includeWS));
+            dispatch(fetchMatchingTools(resource.mediatype, resource.language));
         }
     }
 }
@@ -95,14 +91,9 @@ export function fetchLanguages() {
     }
 }
 
-export function fetchAllTools(deploymentStatus) {
+export function fetchAllTools() {
     return function (dispatch, getState) {
-        const params = {
-            deployment: (deploymentStatus === "production") ? "production" : "development",
-            sortBy: 'tools',
-        }
-
-        axios.get(apiPath.tools, {params})
+        axios.get(apiPath.tools)
             .then(response => {
                 response.data.forEach(normalizeTool);
                 dispatch({
@@ -113,14 +104,11 @@ export function fetchAllTools(deploymentStatus) {
     }
 }
 
-export function fetchMatchingTools(mediatype, language, deploymentStatus, includeWS) {
+export function fetchMatchingTools(mediatype, language) {
     return function (dispatch, getState) {
         const params = {
             mediatype: mediatype,
             language: language,
-            deployment: (deploymentStatus === "production") ? "production" : "development",
-            includeWS: includeWS ? "yes" : "no",
-            sortBy: 'tools',
         }
 
         dispatch({
@@ -135,6 +123,7 @@ export function fetchMatchingTools(mediatype, language, deploymentStatus, includ
                     data: response.data,
                 });
             }).catch(errHandler(dispatch, "Cannot fetch tools data"));
+        _paq.push(['trackEvent', 'Tools', 'MatchTools', mediatype, language]);
     }
 }
 

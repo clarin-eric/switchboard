@@ -1,0 +1,38 @@
+{
+    "task": "Lemmatization",
+    "deployment": "development",
+    "softwareType": "qualitative",
+    "name": "Second",
+    "logo": "weblicht.jpg",
+    "homepage": "https://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+    "location": "Tuebingen, Germany",
+    "creators": "CLARIN-D Centre at the University of Tuebingen, Germany",
+    "contact": {
+        "person": "CLARIN WebLicht Support",
+        "email": "wlsupport@sfs.uni-tuebingen.de"
+    },
+    "version": "v1.0",
+    "authentication": "Requires a CLARIN Service Provider Federation account, provided by many universities and institutions.",
+    "licence": null,
+    "description": "WebLicht Easy Chain for Lemmatization (English). The pipeline makes use of WebLicht's TCF converter, the Stanford tokenizer, the Jitar POS Tagger, and the lemmatizer service from MorphAdorner. WebLicht's Tundra can be used to visualize the result.",
+    "languages": [
+        "eng"
+    ],
+    "langEncoding": "639-1",
+    "mimetypes": [
+        "text/plain",
+        "text/rtf",
+        "application/pdf",
+        "application/msword",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    ],
+    "output": [
+        "application/tcf+xml"
+    ],
+    "url": "https://weblicht.sfs.uni-tuebingen.de/weblicht/",
+    "parameters": {
+        "input": "self.linkToResource",
+        "lang": "en",
+        "analysis": "lemma"
+    }
+}

@@ -1,20 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 import FAQ from './FAQ';
 import ForDevelopers from './ForDevelopers';
-import { image } from '../actions/utils'
+import {image} from '../actions/utils'
+import {clientPath} from '../constants';
 
 export default class Help extends React.Component {
   render() {
     return (
-        <React.Fragment>
+        <div className="container">
+        <div className="row">
+        <div className="col-md-10 col-md-offset-1">
           <UserHelp/>
           <FAQ/>
           <ForDevelopers/>
 
           <hr/>
           <p> For any questions please <a href={'mailto:'+this.props.contact}>contact the Switchboard team</a>. </p>
-        </React.Fragment>
+        </div>
+        </div>
+        </div>
     );
   }
 }
@@ -24,53 +30,46 @@ class UserHelp extends React.Component {
     return (
         <React.Fragment>
           <h2 id="help">How to use the Language Resource Switchboard</h2>
-          <p>The switchboard helps you to find and start tools that can process your research data.
-            You have three options to enter your resource:
+          <p>The Switchboard helps you to find and start tools that can process your research data.
+            You have three options to enter your resource (in the <Link to={clientPath.input}>Upload</Link> page):
           </p>
-            <center>
-              <img style={{width: '75%', height: '75%'}} src={image("dropResources.png")} />
-            </center>
             <ul>
-              <li>Drag your data from your file manager to the left-most area. Alternatively, click
-                on the area to select a file to be uploaded. </li>
-              <li>Paste any URL that refers to your resource into the middle box, say, a shared link from
-                your B2DROP account. </li>
-              <li>Type any (plain) text into the right-most dotted area. For longer texts, please save it
-                to the file, and use the first upload method.</li>
+              <li>Drag your data from your file manager to drop area in the Upload File tab.
+                  Or you can click on the drop area to select a file to be uploaded. </li>
+              <li>Paste any URL that refers to your resource into the input box in the Submit URL tab.
+                  For example, you can input a shared link from your B2DROP account. </li>
+              <li>Type any (plain) text into the input area in the Submit Text tab.
+                  For longer texts, please save it to the file, and use the first upload method.</li>
             </ul>
 
           <p>
-            Note. When the switchboard is invoked via the Virtual Language Observatory, or via
-            B2DROP, or (in the future) via the Virtual Collection Registry, the "file drop" happens during the
-            transferal.
+              <b>Note:</b> When the Switchboard is invoked from an external repository (e.g. the Virtual Language Observatory
+              or B2DROP), the "file drop" happens automatically.
           </p>
 
           <p>
-            Once your research data has been uploaded, ...
+            Once your research data has been uploaded, an information pane appears with basic information about the file.
+            Please verify the <em>mediatype</em> and <em>language</em>, and correct it when necessary.
+            The list of tools is automatically displayed.
           </p>
-          <ol>
-            <li>an information pane appears with basic information about the file. Please verify
-              the mediatype and language, and correct it when necessary.  Then, click on <b>Show Tools</b>.
-            </li>
-            <li>In the Tools View, click on a tool of interest to get additional information
-            about the selected tool. Then use <b>Click to start tool</b> to open the selected
-            tool in a new browser tab.
-            </li>
-          </ol>
 
-          <h3>For transferals from the Virtual Language Observatory</h3>
+          <p>
+            You can now click on any tool to get additional information about it.
+            If you have found a tool you would like to try, use the <em>Start Tool</em> button to open the selected tool in a new browser tab.
+          </p>
+
+          <h3>Troubleshooting</h3>
             <p>
-              When the LRS is called from the VLO, please beware. The resource of interest may not be
-              accessible to the switchboard because:
+              When the Switchboard is called from external repositories (e.g. the Virtual Language Observatory
+              or B2DROP) please note that the resource may not be accessible to the Switchboard. This can happen for various reasons:
             </p>
             <ul>
-              <li>it is behind an authentication wall, or</li>
-              <li>the resource link points to a viewer application that shows the resource, not to
-                the resource itself.</li>
+              <li>either the resource is behind an authentication wall, </li>
+              <li>or the resource link points to another web page, and not to the resource itself.</li>
             </ul>
             <p>
               In these cases, try downloading the resource from the resource provider, then use the
-              file drop mechanism at <a href="https://switchboard.clarin.eu"> https://switchboard.clarin.eu</a>.
+              file drop mechanism from the <Link to={clientPath.input}>Upload</Link> page.
             </p>
         </React.Fragment>
     );
