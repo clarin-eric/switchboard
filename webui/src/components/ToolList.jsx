@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { processLanguage, image } from '../actions/utils';
 import { getInvocationURL } from '../actions/toolcall';
+import { apiPath } from '../constants';
 
 const SPACE_REGEX = /\s/;
 const RE_ESCAPE_REGEX = /[-\/\\^$*+?.()|[\]{}]/g;
@@ -161,7 +162,7 @@ class ToolSubList extends React.Component {
                 }
                 { !this.state.show ? false : tools.map(tool =>
                     <ToolCard key={tool.name}
-                        imgSrc={image(tool.logo)}
+                        imgSrc={apiPath.logo(tool.logo)}
                         showTask={this.props.showTask}
                         tool={tool}
                         resource={this.props.resource}

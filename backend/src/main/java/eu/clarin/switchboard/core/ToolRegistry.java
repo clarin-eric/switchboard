@@ -1,7 +1,7 @@
 package eu.clarin.switchboard.core;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
+import com.google.gson.JsonParseException;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
@@ -55,8 +55,10 @@ public class ToolRegistry {
 
     public ToolRegistry(String toolRegistryPath) throws IOException {
         registryPath = Paths.get(toolRegistryPath);
+
         LOGGER.info("reading tool definitions from: " + registryPath);
         tools.set(read(registryPath));
+        LOGGER.info("finished reading " + tools.get().size() + " tools");
 
         LOGGER.info("starting tool monitoring service");
         WatchService watchService = FileSystems.getDefault().newWatchService();
@@ -69,7 +71,7 @@ public class ToolRegistry {
             try {
                 WatchKey key;
                 while ((key = watchService.take()) != null) {
-                    Thread.sleep(100); // give more time to fs to finish more complex operations
+                    Thread.sleep(100); // give time to fs to finish more complex operations
 
                     for (WatchEvent<?> event : key.pollEvents()) {
                         LOGGER.debug("tool monitoring event: " + event.kind() + "; " + event.context());
@@ -78,6 +80,7 @@ public class ToolRegistry {
                     try {
                         LOGGER.info("reading tool definitions from: " + registryPath);
                         tools.set(read(registryPath));
+                        LOGGER.info("finished reading " + tools.get().size() + " tools");
                     } catch (IOException e) {
                         LOGGER.warn("tool watching thread: io exception: ", e);
                         e.printStackTrace();
@@ -100,10 +103,10 @@ public class ToolRegistry {
         }).start();
     }
 
-
     static List<Tool> read(Path registryDir) throws IOException {
         Objects.requireNonNull(registryDir);
-        File[] files = registryDir.toFile().listFiles((dir, name) -> name.endsWith(".json"));
+        FilenameFilter filter = (dir, name) -> name.endsWith(".json");
+        File[] files = registryDir.toFile().listFiles(filter);
         if (files == null) {
             throw new IOException("cannot read tool registry folder: " + registryDir);
         }
@@ -112,11 +115,17 @@ public class ToolRegistry {
         List<Tool> tools = new ArrayList<>();
         for (File f : files) {
             try (Reader r = new BufferedReader(new FileReader(f))) {
-                tools.add(gson.fromJson(r, Tool.class));
-            } catch (JsonSyntaxException | IOException xc) {
+                Tool tool = gson.fromJson(r, Tool.class);
+                if (tool.getName() == null || tool.getUrl() == null) {
+                    LOGGER.warn("json file " + f.getPath() + " does not seem to be a tool (no name and url) and will be ignored");
+                } else {
+                    tools.add(tool);
+                }
+            } catch (JsonParseException | IOException xc) {
                 LOGGER.error("error reading tool: " + f + "\n" + xc.getMessage());
             }
         }
+
         return Collections.unmodifiableList(tools);
     }
 }
