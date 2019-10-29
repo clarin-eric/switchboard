@@ -21,8 +21,13 @@ public class ToolRegistry {
 
     public List<Tool> filterTools(String mediatype, String language, boolean onlyProductionTools) {
         Predicate<Tool> filterMediatypes = tool -> mediatype == null || mediatype.isEmpty() || tool.getMediatypes().contains(mediatype);
-        Predicate<Tool> filterLanguages = tool -> language == null || language.isEmpty() || tool.getLanguages().contains(language);
+
+        // accept tools with matching languages, or tools with 'generic' language input
+        Predicate<Tool> filterLanguages = tool -> language == null || language.isEmpty()
+                || tool.getLanguages().contains(language) || tool.getLanguages().contains("generic");
+
         Predicate<Tool> filterDeployment = tool -> !onlyProductionTools || tool.getDeployment().equalsIgnoreCase(PRODUCTION_DEPLOYMENT);
+
         Predicate<Tool> filter = filterDeployment.and(filterLanguages).and(filterMediatypes);
         return tools.get()
                 .stream()
