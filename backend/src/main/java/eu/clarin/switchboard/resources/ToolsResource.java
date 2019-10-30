@@ -1,5 +1,6 @@
 package eu.clarin.switchboard.resources;
 
+import com.google.common.io.ByteStreams;
 import eu.clarin.switchboard.app.config.ToolConfig;
 import eu.clarin.switchboard.core.Tool;
 import eu.clarin.switchboard.core.ToolRegistry;
@@ -9,6 +10,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLConnection;
@@ -58,7 +60,7 @@ public class ToolsResource {
             data = Files.readAllBytes(logo);
         } else {
             LOGGER.debug("logo not found, trying to find it in resources: " + logoName);
-            data = this.readSmallResource(logoName);
+            data = readResource(logoName);
         }
 
         if (data == null) {
@@ -74,18 +76,14 @@ public class ToolsResource {
                 .build();
     }
 
-    private byte[] readSmallResource(String name) throws IOException {
-        InputStream is = this.getClass().getResourceAsStream("/webui/images/" + name);
-        if (is == null) {
-            return null;
-        }
-        byte[] buf = new byte[1024 * 1024];
-        int count = is.read(buf);
-        is.close();
-        if (count > 0) {
-            return Arrays.copyOfRange(buf, 0, count);
-        } else {
-            return new byte[0];
+    private byte[] readResource(String name) throws IOException {
+        try (InputStream is = this.getClass().getResourceAsStream("/webui/images/" + name)) {
+            if (is == null) {
+                return null;
+            }
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ByteStreams.copy(is, baos);
+            return baos.toByteArray();
         }
     }
 }
