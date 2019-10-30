@@ -1,6 +1,12 @@
 # Changelog
 
-## [2.1.0] - 2019-06-26
+## [2.1.1] -
+	- fix footer hiding content in Safari
+	- track tool match calls and tool invocation calls in Matomo
+	- update documentation
+	- add configuration option for hiding development tools
+
+## [2.1.0] - 2019-10-07
 	- fully rewritten and redesigned UI as single page app (React+Redux & react-router)
 	- updated Switchboard API to allow it being called from any repository (any origin)
 

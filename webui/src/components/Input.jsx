@@ -77,7 +77,7 @@ export class Input extends React.Component {
                             style={{resize: 'vertical'}}
                             onChange={this.handleChangeLink}
                             rows="2"
-                            placeholder="Enter an URL or a handle"
+                            placeholder="Enter a URL or a handle"
                             value={this.state.link} />
                         <div className="input-group-addon" style={{minWidth:'1em'}}>
                             <button type="submit" className="btn-primary btn"
