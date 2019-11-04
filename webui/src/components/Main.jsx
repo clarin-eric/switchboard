@@ -1,3 +1,7 @@
+// polyfills for IE 11
+import "core-js/stable";
+import "regenerator-runtime/runtime";
+
 import React from 'react';
 import { HashLink as Link } from 'react-router-hash-link';
 import {Resource} from './Resource';
