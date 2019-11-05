@@ -154,7 +154,7 @@ class ToolSubList extends React.Component {
         return (
             <div className="tool-sublist" onClick={toggle.bind(this, 'show')}>
                 { !this.props.task ? false :
-                    <h3>
+                    <h3 style={{color:'#444'}}>
                         <Indicator title={"chevron-" + (this.state.show ? "down":"right")} style={{fontSize:"75%", marginRight:4}}/>
                         <Highlighter text={this.props.task}/>
                     </h3>
@@ -189,18 +189,30 @@ class ToolCard extends React.Component {
     };
 
     renderHeader(imgSrc, tool, invocationURL) {
-        const trackCall = () => _paq.push(['trackEvent', 'Tools', 'StartTool', tool.name]);
+        const stopBubbling = (e) => {
+            e.stopPropagation();
+        }
+        const trackCall = (e) => {
+            stopBubbling(e);
+            _paq.push(['trackEvent', 'Tools', 'StartTool', tool.name]);
+        }
         const Highlighter = this.props.highlighter;
         return (
             <dl className="dl-horizontal header">
-                <dt><img src={imgSrc}/></dt>
+                <dt>
+                    <Indicator title={"chevron-" + (this.state.showDetails ? "down":"right")}
+                                style={{fontSize:"75%", marginRight:0, color:'#444'}}>
+                        <img src={imgSrc}/>
+                    </Indicator>
+                </dt>
                 <dd>
                     { invocationURL
                         ? <a className="btn btn-success" style={{marginRight:16}} onClick={trackCall} href={invocationURL} target="_blank"> Start Tool </a>
                         : false
                     }
-                    <a style={{fontSize: 20}} href={tool.homepage} target="_blank">
-                        <Highlighter text={tool.name}/>
+                    <Highlighter text={tool.name} style={{fontSize:"120%"}}/>
+                    <a style={{fontSize: 20}} onClick={stopBubbling} href={tool.homepage} target="_blank">
+                        <Indicator title={"link"} style={{marginLeft:4, fontSize:"75%"}}></Indicator>
                     </a>
                 </dd>
             </dl>
@@ -302,7 +314,7 @@ function escapeRegExp(string) {
 function highlighter(terms) {
     let re_string = "("+terms.map(escapeRegExp).join("|")+")";
     let splitter = new RegExp(re_string, 'gi');
-    return function({text}) {
+    return function({text, style}) {
         // Split on higlight term and include term into parts, ignore case
         let parts = text.split(splitter);
         let spans = parts.map((part, i) => ({
@@ -311,7 +323,7 @@ function highlighter(terms) {
             highlight: terms.some(term => term.toLowerCase() === part.toLowerCase()),
         }));
         return (
-            <span>
+            <span style={style}>
                 { spans.map(({key, text, highlight}) =>
                     <span key={key} className={highlight ? "highlight" : ""}>
                         { text }

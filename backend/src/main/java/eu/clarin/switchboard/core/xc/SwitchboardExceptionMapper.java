@@ -95,11 +95,11 @@ public class SwitchboardExceptionMapper implements javax.ws.rs.ext.ExceptionMapp
             } else if (exception.getHttpCode() == HttpURLConnection.HTTP_FORBIDDEN) {
                 json.message = "Forbidden access to resource.";
             } else if (exception.getHttpCode() / 100 == 4) {
-                json.message = "Unexpected http client error from resource.";
+                json.message = "Unexpected HTTP client error from resource.";
             } else if (exception.getHttpCode() / 100 == 5) {
-                json.message = "Unexpected http server error from resource.";
+                json.message = "Unexpected HTTP server error from resource.";
             } else {
-                json.message = "Unexpected http status code from resource.";
+                json.message = "Unexpected HTTP status code from resource.";
             }
         } else {
             LOGGER.error("unknown LinkException", exception);
