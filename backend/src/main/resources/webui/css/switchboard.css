@@ -108,6 +108,7 @@ div.tool .dl-horizontal {
 
 div.tool {
     padding: 10px 0;
+    cursor: default;
 }
 
 div.tool:hover {
