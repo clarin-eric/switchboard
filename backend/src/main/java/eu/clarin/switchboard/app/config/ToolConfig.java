@@ -12,39 +12,39 @@ public class ToolConfig {
 
     @Valid
     @NotNull
-    private boolean showOnlyProductionTools;
+    private String logoRegistryPath;
 
     @Valid
     @NotNull
-    private boolean includeWebServices;
+    private boolean showOnlyProductionTools;
 
     public ToolConfig() {
     }
 
-    public ToolConfig(String toolRegistryPath, boolean showOnlyProductionTools, boolean includeWebServices) {
+    public ToolConfig(String toolRegistryPath, String logoRegistryPath, boolean showOnlyProductionTools) {
         this.toolRegistryPath = toolRegistryPath;
+        this.logoRegistryPath = logoRegistryPath;
         this.showOnlyProductionTools = showOnlyProductionTools;
-        this.includeWebServices = includeWebServices;
     }
 
     public String getToolRegistryPath() {
         return toolRegistryPath;
     }
 
-    public boolean getShowOnlyProductionTools() {
-        return showOnlyProductionTools;
+    public String getLogoRegistryPath() {
+        return logoRegistryPath;
     }
 
-    public boolean getIncludeWebServices() {
-        return includeWebServices;
+    public boolean getShowOnlyProductionTools() {
+        return showOnlyProductionTools;
     }
 
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("\ntoolRegistryPath", toolRegistryPath)
+                .add("\nlogoRegistryPath", logoRegistryPath)
                 .add("\nshowOnlyProductionTools", showOnlyProductionTools)
-                .add("\nincludeWebServices", includeWebServices)
                 .toString();
     }
 }

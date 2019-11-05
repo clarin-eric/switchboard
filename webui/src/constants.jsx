@@ -7,6 +7,7 @@ export const apiPath = {
     languages:  `${urlRoot}/api/languages`,
     tools:      `${urlRoot}/api/tools`,
     storage:    `${urlRoot}/api/storage`,
+    logo:       name => `${urlRoot}/api/logos/${name}`,
 };
 
 export const clientPath = {

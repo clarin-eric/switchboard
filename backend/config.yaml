@@ -18,7 +18,8 @@ switchboard:
     tikaConfigPath: ./tikaConfig.xml
     contactEmail: switchboard@clarin.eu
     tools:
-        toolRegistryPath: ../../switchboard-tool-registry
+        toolRegistryPath: ../../switchboard-tool-registry/tools
+        logoRegistryPath: ../../switchboard-tool-registry/logos
         showOnlyProductionTools: false
     dataStore:
         location: # e.g. /my/data; defaults to temporary storage
