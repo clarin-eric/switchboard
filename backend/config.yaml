@@ -1,5 +1,5 @@
 server:
-    applicationContextPath: ${APP_CONTEXT_PATH:-/}
+    applicationContextPath: ${LRS_CONTEXT_PATH:-/}
     applicationConnectors:
         - type: http
           port: 8080
@@ -12,24 +12,24 @@ server:
 logging:
     level: INFO
     loggers:
-        "eu.clarin": DEBUG
+        "eu.clarin": ${LRS_LOG_LEVEL:-DEBUG}
 
 switchboard:
     tikaConfigPath: ./tikaConfig.xml
-    contactEmail: switchboard@clarin.eu
+    contactEmail: ${LRS_CONTACT_EMAIL:-switchboard@clarin.eu}
     tools:
-        toolRegistryPath: ../../switchboard-tool-registry/tools
-        logoRegistryPath: ../../switchboard-tool-registry/logos
-        showOnlyProductionTools: false
+        toolRegistryPath: ${LRS_TOOL_REGISTRY_PATH:-../../switchboard-tool-registry/tools}
+        logoRegistryPath: ${LRS_LOGO_REGISTRY_PATH:-../../switchboard-tool-registry/logos}
+        showOnlyProductionTools: ${LRS_PRODUCTION_TOOLS_ONLY:-false}
     dataStore:
         location: # e.g. /my/data; defaults to temporary storage
-        eraseAllStorageOnStart: false
-        maxSize: 5M
-        maxLifetime: 2
-        maxLifetimeUnit: hours
-        cleanupPeriod: 13
-        cleanupPeriodUnit: minutes
+        eraseAllStorageOnStart: ${LRS_DATASTORE_ERASEATSTART:-false}
+        maxSize: ${LRS_DATASTORE_MAXSIZE:-5M}
+        maxLifetime: ${LRS_DATASTORE_MAXLIFETIME:-2}
+        maxLifetimeUnit: ${LRS_DATASTORE_MAXLIFETIME_UNIT:-hours}
+        cleanupPeriod: ${LRS_DATASTORE_CLEANUPPERIOD:-13}
+        cleanupPeriodUnit: ${LRS_DATASTORE_CLEANUPPERIOD_UNIT:-minutes}
     urlResolver:
-        connectTimeout: 3
-        readTimeout: 3
-        unit: seconds
+        connectTimeout: ${LRS_URLRESOLVER_CONNECTTIMEOUT:-3}
+        readTimeout: ${LRS_URLRESOLVER_READTIMEOUT:-3}
+        unit: ${LRS_URLRESOLVER_TIMEOUTUNIT:-seconds}
