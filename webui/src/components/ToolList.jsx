@@ -149,14 +149,25 @@ class ToolSubList extends React.Component {
     };
 
     render() {
+        const styles = {
+            task: {
+                color:'#444',
+                cursor: "default"
+            },
+            taskChevron: {
+                fontSize: "75%",
+                marginRight: 4
+            },
+        };
+
         const sortFn = (t1, t2) => t1.name < t2.name ? -1 : t1.name == t2.name ? 0 : 1;
         const tools = [...this.props.tools].sort(sortFn);
         const Highlighter = this.props.highlighter;
         return (
             <div className="tool-sublist" onClick={toggle.bind(this, 'show')}>
                 { !this.props.task ? false :
-                    <h3 style={{color:'#444'}}>
-                        <Indicator title={"chevron-" + (this.state.show ? "down":"right")} style={{fontSize:"75%", marginRight:4}}/>
+                    <h3 style={styles.task}>
+                        <Indicator title={"chevron-" + (this.state.show ? "down":"right")} style={styles.taskChevron}/>
                         <Highlighter text={this.props.task}/>
                     </h3>
                 }
@@ -190,6 +201,22 @@ class ToolCard extends React.Component {
     };
 
     renderHeader(imgSrc, tool, invocationURL) {
+        const styles = {
+            toolChevron: {
+                fontSize: "75%",
+                marginRight: 0,
+                color: '#444'
+            },
+            toolStartIndicator: {
+                marginRight: 0,
+                marginLeft: 2,
+                fontSize: "90%"
+            },
+            toolHomeIndicator: {
+                marginLeft: 4,
+                fontSize: "75%"
+            }
+        };
         const stopBubbling = (e) => {
             e.stopPropagation();
         }
@@ -201,19 +228,19 @@ class ToolCard extends React.Component {
         return (
             <dl className="dl-horizontal header">
                 <dt>
-                    <Indicator title={"chevron-" + (this.state.showDetails ? "down":"right")}
-                                style={{fontSize:"75%", marginRight:0, color:'#444'}}>
+                    <Indicator title={"chevron-" + (this.state.showDetails ? "down":"right")} style={styles.toolChevron}>
                         <img src={imgSrc}/>
                     </Indicator>
                 </dt>
                 <dd>
                     { invocationURL
-                        ? <a className="btn btn-success" style={{marginRight:16}} onClick={trackCall} href={invocationURL} target="_blank"> Start Tool </a>
+                        ? <a className="btn btn-success" style={{marginRight:16}} onClick={trackCall} href={invocationURL} target="_blank"
+                            >Start Tool <Indicator title={"new-window"} style={styles.toolStartIndicator}/></a>
                         : false
                     }
                     <Highlighter text={tool.name} style={{fontSize:"120%"}}/>
                     <a style={{fontSize: 20}} onClick={stopBubbling} href={tool.homepage} target="_blank">
-                        <Indicator title={"link"} style={{marginLeft:4, fontSize:"75%"}}></Indicator>
+                        <Indicator title={"new-window"} style={styles.toolHomeIndicator}/>
                     </a>
                 </dd>
             </dl>
@@ -313,11 +340,14 @@ function escapeRegExp(string) {
 }
 
 function highlighter(terms) {
-    let re_string = "("+terms.map(escapeRegExp).join("|")+")";
-    let splitter = new RegExp(re_string, 'gi');
+    let splitter = null;
+    if (terms.length > 0) {
+        const re_string = "("+terms.map(escapeRegExp).join("|")+")";
+        splitter = new RegExp(re_string, 'gi');
+    }
     return function({text, style}) {
         // Split on higlight term and include term into parts, ignore case
-        let parts = text.split(splitter);
+        let parts = splitter == null ? [text] : text.split(splitter);
         let spans = parts.map((part, i) => ({
             key: i,
             text: part,
