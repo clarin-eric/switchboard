@@ -19,6 +19,12 @@ import {AlertsContainer} from './containers/AlertsContainer';
 import {AboutContainer, HelpContainer} from './containers/HelpContainers';
 
 
+// polyfill for IE11
+if (!window.origin) {
+    const loc = window.location;
+    window.origin = loc.protocol + "//" + loc.hostname + (loc.port ? ':' + loc.port: '');
+}
+
 function middleware() {
     if (process.env.NODE_ENV === 'production') {
         return applyMiddleware(thunk);
