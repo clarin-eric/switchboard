@@ -8,6 +8,7 @@
 	- track tool match calls and tool invocation calls in Matomo
 	- update documentation
 	- add configuration option for hiding development tools
+	- multiple security fixes
 
 ## [2.1.0] - 2019-10-07
 	- fully rewritten and redesigned UI as single page app (React+Redux & react-router)
