@@ -2,12 +2,12 @@
 
 ## [2.1.1] - 2019-11-13
     - fixed compatibility with IE 11
-    - allow configuration in `config.yaml` to be set via system environment variables
     - rewrote UI help section to conform to version 2.x.x 
 	- fix footer hiding content in Safari
 	- track tool match calls and tool invocation calls in Matomo
 	- update documentation
 	- add configuration option for hiding development tools
+    - allow configuration in `config.yaml` to be set via system environment variables
 	- multiple security fixes
 
 ## [2.1.0] - 2019-10-07
