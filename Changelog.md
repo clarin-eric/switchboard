@@ -1,6 +1,6 @@
 # Changelog
 
-## [2.1.1] -
+## [2.1.1] - 2019-11-13
     - fixed compatibility with IE 11
     - allow configuration in `config.yaml` to be set via system environment variables
     - rewrote UI help section to conform to version 2.x.x 
