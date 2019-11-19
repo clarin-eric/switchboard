@@ -44,6 +44,20 @@ See https://www.clarin.eu/sites/default/files/zinn-CLARIN2016_paper_26.pdf
 
 - Claus Zinn, <a href="https://www.mitpressjournals.org/doi/pdf/10.1162/coli_a_00329"> The Language Resource Switchboard. </a> Computational Linguistics 44(4), pages 631-639, December 2018.
 
+# Continuous Integration
+
+Automated cross-browser testing is executed by the continious integration system on every commit.
+Current test results per browser:
+[![Build Status](https://app.saucelabs.com/browser-matrix/switchboard.svg)](https://app.saucelabs.com/builds/23501527ddff45d7b17bad60476d4bed)
+
+### Big Thanks
+
+Cross-browser Testing Platform and Open Source ❤️ provided by [Sauce Labs][homepage]
+
+[homepage]: https://saucelabs.com
+
+[logo]: PoweredbySauceLabs.svg "Powered by SauceLabs"
+
 # Contact
 
 For questions and remarks, please contact switchboard@clarin.eu
