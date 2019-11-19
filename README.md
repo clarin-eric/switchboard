@@ -1,4 +1,5 @@
 [![Travis Status](https://travis-ci.org/clarin-eric/switchboard.svg?branch=master)](https://travis-ci.org/clarin-eric/switchboard)
+[![Sauce Test Status](https://saucelabs.com/buildstatus/switchboard)](https://app.saucelabs.com/u/switchboard)
 # switchboard
 Code Repository for the Language Resource Switchboard.
 
@@ -47,7 +48,7 @@ See https://www.clarin.eu/sites/default/files/zinn-CLARIN2016_paper_26.pdf
 
 # Continuous Integration
 
-Automated cross-browser testing is executed by the continious integration system on every commit.
+Automated cross-browser testing is executed by the continuous integration system on every commit.
 Current test results per browser:
 
 [![Build Status](https://app.saucelabs.com/browser-matrix/switchboard.svg)](https://saucelabs.com/u/switchboard)
