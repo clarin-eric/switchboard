@@ -1,3 +1,4 @@
+[![Travis Status](https://travis-ci.org/clarin-eric/switchboard.svg?branch=master)](https://travis-ci.org/clarin-eric/switchboard)
 # switchboard
 Code Repository for the Language Resource Switchboard.
 
