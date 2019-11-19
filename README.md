@@ -49,17 +49,18 @@ See https://www.clarin.eu/sites/default/files/zinn-CLARIN2016_paper_26.pdf
 # Continuous Integration
 
 Automated cross-browser testing is executed by the continuous integration system on every commit.
+
 Current test results per browser:
 
 [![Build Status](https://app.saucelabs.com/browser-matrix/switchboard.svg)](https://saucelabs.com/u/switchboard)
 
-### Big Thanks
+#### Big Thanks
 
 Cross-browser Testing Platform and Open Source ❤️ provided by [Sauce Labs][homepage]
 
 [homepage]: https://saucelabs.com
 
-<img src="PoweredbySauceLabs.svg" width="250" alt="Powered by SauceLabs">
+<img src="PoweredbySauceLabs.svg" width="180" alt="Powered by SauceLabs">
 
 # Contact
 
