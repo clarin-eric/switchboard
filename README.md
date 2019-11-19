@@ -57,9 +57,7 @@ Cross-browser Testing Platform and Open Source ❤️ provided by [Sauce Labs][h
 
 [homepage]: https://saucelabs.com
 
-![alt text][logo]
-
-[logo]: PoweredbySauceLabs.svg "Powered by SauceLabs"
+<img src="PoweredbySauceLabs.svg" width="250" alt="Powered by SauceLabs">
 
 # Contact
 
