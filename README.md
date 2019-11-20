@@ -56,7 +56,7 @@ Current test results per browser:
 
 #### Big Thanks
 
-Cross-browser Testing Platform and Open Source ❤️ provided by [Sauce Labs][homepage]
+Cross-browser testing platform and open source ❤️ provided by [Sauce Labs][homepage]
 
 [homepage]: https://saucelabs.com
 
