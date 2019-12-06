@@ -15,7 +15,7 @@ resource, language code, mimetype etc.) is encoded in the URL used to invoke the
 
  * production version: https://switchboard.clarin.eu
  * beta version: https://beta-switchboard.clarin.eu/
- * alpha/development version: https://weblicht.sfs.uni-tuebingen.de/clrs-dev/#/
+ * alpha/development version: https://switchboard.clarin-dev.eu/switchboard-test/
 
 
 # Status
