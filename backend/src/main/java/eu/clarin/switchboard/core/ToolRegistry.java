@@ -76,7 +76,7 @@ public class ToolRegistry {
             try {
                 WatchKey key;
                 while ((key = watchService.take()) != null) {
-                    Thread.sleep(100); // give time to fs to finish more complex operations
+                    Thread.sleep(2000); // give time to fs to finish more complex operations
 
                     for (WatchEvent<?> event : key.pollEvents()) {
                         LOGGER.debug("tool monitoring event: " + event.kind() + "; " + event.context());
