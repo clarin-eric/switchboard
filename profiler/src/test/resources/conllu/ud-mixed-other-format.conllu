@@ -1,0 +1,13 @@
+# newdoc id = T990507.2
+# sent_id = s1
+# text = Veruntreute die AWO Spendengeld?
+1	Veruntreute	veruntreuen	VERB	VVFIN	Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin	0	root	_	Morph=3sit|TopoField=LK
+2	die	die	DET	ART	Case=Nom|Definite=Def|Gender=Neut|Number=Sing|PronType=Art	3	det	_	Morph=nsf|TopoField=MF
+3	AWO	AWO	NOUN	NN	Case=Nom|Gender=Neut|Number=Sing	1	nsubj	_	NE=ORG_2|Morph=nsf|TopoField=MF
+4	Spendengeld	Spendengeld	NOUN	NN	Case=Acc|Gender=Fem|Number=Sing	1	obj	_	SpaceAfter=No|Morph=asn|TopoField=MF
+5	?	?	PUNCT	$.	_	1	punct	_	_
+
+n2005-5350	Schartau sagte dem "Tagesspiegel" vom Freitag , Fischer sei "in einer Weise aufgetreten, die alles andere als überzeugend war".
+n2005-8691	Firmengründer Wolf Peter Bree arbeitete Anfang der siebziger Jahre als Möbelvertreter, als er einen fliegenden Händler aus dem Libanon traf.
+
+'mahlen' [pos='ART'] [pos='ADJD']? @[pos='NN']

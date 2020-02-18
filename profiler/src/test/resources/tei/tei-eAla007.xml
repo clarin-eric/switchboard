@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE TEI.2 SYSTEM "tei-epidoc.dtd" >
+<TEI.2 lang="eng" id="eAla007">
+    <teiHeader status="new" type="text">
+        <fileDesc>
+            <titleStmt>
+                <title type="main" level="m">7. Honours for T. Oppius Aelianus Asclepiodotus</title>
+                <editor role="editor">Charlotte M. Roueché</editor>
+            </titleStmt>
+            <publicationStmt>
+                <date>2004</date>
+            </publicationStmt>
+            <sourceDesc default="NO">
+                <p> <!-- to be added --> </p>
+            </sourceDesc>
+        </fileDesc>
+        <profileDesc>
+            <langUsage default="NO">
+                <language id="eng">English</language>
+                <language id="fre">French</language>
+                <language id="grc">Ancient Greek</language>
+                <language id="lat">Latin</language>
+            </langUsage>
+        </profileDesc>
+        <revisionDesc>
+            <change>
+                <date>2004-06-08</date>
+                <respStmt>
+                    <name>Gabriel Bodard</name>
+                </respStmt>
+                <item>Checked and fixed all image divs and refs</item>
+            </change>
+            <change>
+                <date>2004-03-16</date>
+                <respStmt>
+                    <name>Gabriel Bodard</name>
+                </respStmt>
+                <item>Completed lemmatisation, checked figure ids, tagged keywords</item>
+            </change>
+            <change>
+                <date>2003-11-04</date>
+                <respStmt>
+                    <name>Gabriel Bodard</name>
+                </respStmt>
+                <item>Corrected errors in Greek</item>
+            </change>
+            <change>
+                <date>2003-11-04</date>
+                <respStmt>
+                    <name>John Lavagnino</name>
+                </respStmt>
+                <item>Converted beta code to Unicode</item>
+            </change>
+            <change>
+                <date>2003-05-27</date>
+                <respStmt>
+                    <name>Gabriel Bodard</name>
+                </respStmt>
+                <item>tidied and corrected</item>
+            </change>
+            <change>
+                <date>2003-04-30</date>
+                <respStmt>
+                    <name>Juan Garcés</name>
+                </respStmt>
+                <item>tidied and corrected</item>
+            </change>
+            <change>
+                <date>2003-06-21</date>
+                <respStmt>
+                    <name>CMR</name>
+                </respStmt>
+                <item>tagged, tidied and corrected</item>
+            </change>
+            <change>
+                <date>2003-07-14</date>
+                <respStmt>
+                    <name>JLG</name>
+                </respStmt>
+                <item>Lemmatised</item>
+            </change>
+            <change>
+                <date>2003-08-20</date>
+                <respStmt>
+                    <name>CMR</name>
+                </respStmt>
+                <item>name tags reduced</item>
+            </change>
+            <change>
+                <date>2004-01-16</date>
+                <respStmt>
+                    <name>CMR</name>
+                </respStmt>
+                <item>tidied; image refs.</item>
+            </change>
+            <change>
+                <date>2003-05-27</date>
+                <respStmt>
+                    <name>Gabriel Bodard</name>
+                </respStmt>
+                <item>Typed and marked-up Greek</item>
+            </change>
+        </revisionDesc>
+    </teiHeader>
+    <text>
+        <body>
+
+            <div type="description" n="monument" part="N" sample="complete" org="uniform">
+                <head>Description of Monument</head>
+                <p>White marble statue base capital and shaft (<measure type="length" dim="height">0.84</measure> × <measure
+                        type="length" dim="width">1.10
+                </measure> × <measure type="length" dim="depth">0.84</measure>) with moulding on three sides.
+                </p>
+            </div>
+
+            <div type="description" n="text" part="N" sample="complete" org="uniform">
+                <head>Description of Text</head>
+                <p>Inscribed on the moulding of the capital (ll. 1, 2) and within the front panel (ll. 3-12).</p>
+            </div>
+
+            <div type="description" n="letters" part="N" sample="complete" org="uniform">
+                <head>Description of Letters</head>
+                <p><measure type="length" dim="height">0.02</measure>; apex
+                    for abbreviation mark; ligatures: <foreign lang="grc">ΝΗ</foreign>, l.6; <foreign lang="grc">
+                        ΝΚ</foreign>, l.8; <foreign lang="grc">ΤΗΝ</foreign>, l.9; <foreign lang="grc">ΗΝ</foreign>, l.
+                    10.
+                </p>
+            </div>
+
+            <div type="description" n="date" part="N" sample="complete" org="uniform">
+                <head>Date</head>
+                <p>
+                    <date notAfter="0301" exact="both" cert="uncertain" notBefore="0284">AD 284-301</date>
+                    (prosopography).
+                </p>
+            </div>
+
+            <div n="text" lang="grc" type="edition" part="N" sample="complete" org="uniform">
+                <head lang="eng">Edition</head>
+                <ab part="N">
+                    <lb n="1"/>
+                    <space dim="horizontal" extent="unknown" unit="character"/>
+                    <w lemma="ὁ" part="N">ἡ</w>
+                    <w lemma="πατρίς" part="N">πατρὶς</w>
+                    <space dim="horizontal" extent="unknown" unit="character"/>
+                    <lb n="2"/>
+                    <space dim="horizontal" extent="unknown" unit="character"/>
+                    <persName reg="Ἀγαθὴ Τύχη" key="agty" full="yes" type="divine">
+                        <w lemma="ἀγαθός" part="N">Ἀγαθῇ</w>
+                        <w lemma="τύχη" part="N">Τύχῃ</w>
+                    </persName>
+                    <space dim="horizontal" extent="unknown" unit="character"/>
+                    <lb n="3"/>
+                    <persName key="OppAsclepiodotus" type="aphrodisian" reg="Τίτος Ὄππιος Ἀσκληπίοδοτος" full="yes">
+                        <abbr>Τ
+                            <expan rend="none">ίτον</expan>
+                        </abbr>
+                        <abbr>Ὄππ
+                            <expan rend="none">ιον</expan>
+                        </abbr>
+                        Αἰλιανὸν
+                        <lb n="4"/>
+                        <space dim="horizontal" extent="1" unit="character"/>
+                        Ἀσκληπίοδοτον
+                    </persName>
+                    <lb n="5"/>
+                    <w lemma="ὁ" part="N">τὸν</w>
+                    <rs type="dignity" key="clarissimus">
+                        <w lemma="λαμπρός" part="N">λαμπρότατον</w>
+                    </rs>
+                    <lb n="6"/>
+                    <rs key="conspraes" type="official-secul">
+                        <w lemma="ὑπατικός" part="N">ὑπατικὸν</w>
+                        <w lemma="ἡγεμών" part="N">ἡγεμόνα</w>
+                    </rs>
+                    <lb n="7"/>
+                    <placeName type="admin" key="cariaphrygia" full="yes">
+                        <placeName type="admin" key="Caria" full="yes">Καρίας</placeName>
+                        καὶ
+                        <placeName type="admin" key="Phrygia" full="yes">Φρυγίας</placeName>
+                    </placeName>
+                    <lb n="8"/>
+                    <rs type="official-secul" key="proconsul">
+                        <w lemma="ἀνθύπατος" part="N">ἀνθύπατον</w>
+                    </rs>
+                    <w lemma="καί" part="N">καὶ</w>
+                    <rs type="official-secul" key="corrector">
+                        <w lemma="ἐπανορθωτής" part="N">ἐπα<lb n="9" type="worddiv"/>νορθωτήν
+                        </w>
+                    </rs>
+                    <placeName type="admin" key="Asia" full="yes">Ἀσίας</placeName>
+                    <w lemma="κτίστης" part="N">κτί<lb n="10" type="worddiv"/>στην
+                    </w>
+                    <w lemma="καί" part="N">καὶ</w>
+                    <w lemma="σωτήρ" part="N">σωτῆρα</w>
+                    <w lemma="καί" part="N">καὶ</w>
+                    <lb n="11"/>
+                    <w lemma="ὁ" part="N">τῆς</w>
+                    <w lemma="ἑαυτοῦ" part="N">ἑαυτοῦ</w>
+                    <w lemma="πατρίς" part="N">πατρίδος</w>
+                    <lb n="12"/>
+                    <persName reg="Τιβέριος Κλαύδιος Μαρκιανός" key="marcianus" type="aphrodisian" full="yes">
+                        <abbr>Τιβ
+                            <expan rend="none">έριος</expan>
+                        </abbr>
+                        <abbr>Κλ
+                            <expan rend="none">αύδιος</expan>
+                        </abbr>
+                        Μαρκιανὸς
+                    </persName>
+                    <w lemma="ὁ" part="N">ὁ</w>
+                    <lb n="13"/>
+                    <rs type="official-secul" key="archon">
+                        <w lemma="πρῶτος" part="N">πρῶτος</w>
+                        <w lemma="ἄρχων" part="N">ἄρχων</w>
+                    </rs>
+                    .
+                    <lb n="14"/>
+                    <space dim="vertical" extent="unknown" unit="line"/>
+                </ab>
+            </div>
+
+            <div type="translation" part="N" sample="complete" org="uniform">
+                <head>Translation</head>
+                <ab part="N">The Homeland, With Good Fortune, <supplied reason="subaudible">set up the
+                    statue of
+                </supplied> T<expan>itus</expan> Opp<expan>ius</expan> Aelianus Asclepiodotus, the most splendid
+                    consular, governor of Caria and Phrygia, proconsul and corrector of
+                    Asia, founder and saviour also of his own homeland; Tib
+                    <expan>erius</expan>
+                    Cl<expan>audius</expan> Marcianus the first archon <supplied reason="subaudible">set this up/was in
+                        charge</supplied>.
+                </ab>
+            </div>
+
+            <div type="commentary" part="N" sample="complete" org="uniform">
+                <head>Commentary</head>
+                <p>See discussion at <xref type="eAla-text" n="II.4" evaluate="all" targOrder="Y" to="DITTO"
+                                           from="ROOT">II.4</xref>.
+                </p>
+                <p>For T<expan>itus</expan> Opp<expan>ius</expan> Aelianus Asclepiodotus see fasti, Governors, <xref
+                        type="governors" n="OppiusAsclepiodotus" evaluate="all" targOrder="Y" to="DITTO" from="ROOT">
+                    Oppius Asclepiodotus</xref>.
+                </p>
+                <p>For Marcianus see fasti: Local Officials, <xref type="local-officials" n="Marcianus" evaluate="all"
+                                                                   targOrder="Y" to="DITTO" from="ROOT">Marcianus</xref>.
+                </p>
+            </div>
+
+            <div type="history" n="found" part="N" sample="complete" org="uniform">
+                <head>Found</head>
+                <p><rs type="monument" key="SouthAgora">South Agora</rs>: Agora Gate: <seg cert="uncertain" part="N">
+                    re-used in the collecting pool</seg>. <xref type="plan" n="02" evaluate="all" targOrder="Y"
+                                                                to="DITTO" from="ROOT">See plan 2</xref>.
+                </p>
+            </div>
+
+            <div type="history" n="original-location" part="N" sample="complete" org="uniform">
+                <head>Original Location</head>
+                <p>Unknown.</p>
+            </div>
+
+            <div type="history" n="last-recorded-location" part="N" sample="complete" org="uniform">
+                <head>Last Recorded Location</head>
+                <p>Findspot.</p>
+            </div>
+
+            <div type="history" n="record" part="N" sample="complete" org="uniform">
+                <head>History of Recording</head>
+                <p>Excavated by the NYU expedition in <date value="1977" precision="exact">1977</date> (77.135).
+                </p>
+            </div>
+
+            <div type="bibliography" part="N" sample="complete" org="uniform">
+                <head>Bibliography</head>
+                <p>Published by
+                    <bibl type="hbi" rend="primary" n="cmr1981" default="NO"><author>Roueché</author>, (<date>
+                        1981</date>), no. 6
+                    </bibl>
+                    ,
+                    whence
+                    <bibl n="seg" default="NO">
+                        <title level="j" type="main">SEG</title>
+                        <biblScope>1981.910</biblScope>
+                    </bibl>
+                    ,
+                    <bibl n="be" default="NO">
+                        <title level="j" type="main">BE</title>
+                        <biblScope>1982.357</biblScope>
+                    </bibl>
+                    ,
+                    <bibl default="NO" n="anep">
+                        <title level="j" type="main">An.Ép.</title>
+                        <biblScope>1981.770</biblScope>
+                    </bibl>
+                    ,
+                    <bibl default="NO" n="anep">
+                        <title level="j" type="main">An.Ép.</title>
+                        <biblScope>1982, 893</biblScope>
+                    </bibl>
+                    ; by
+                    <bibl type="hbi" rend="primary" n="ALA" default="NO"><author>Roueché</author>, <title level="m"
+                                                                                                          type="main">
+                        Aphrodisias in Late Antiquity
+                    </title> no. 7
+                    </bibl>
+                    whence
+                    <bibl type="hbi" n="PHI" default="NO">
+                        <title level="j" type="main">PHI</title>
+                        <biblScope>311</biblScope>
+                    </bibl>
+                    .
+                </p>
+            </div>
+
+            <div type="edition" n="text-constituted-from" part="N" sample="complete" org="uniform">
+                <head>Text Constituted From</head>
+                <p>Transcriptions (Reynolds, Roueché).</p>
+            </div>
+
+            <div n="photographs" type="metadata" part="N" sample="complete" org="uniform">
+                <head>Photographs</head>
+                <figure n="80_E_18A">
+                    <p>View in situ (1980)</p>
+                </figure>
+                <figure n="83_E_30">
+                    <p>Front face (1983)</p>
+                </figure>
+                <figure n="NY_pr_080">
+                    <p>Front view (1980)</p>
+                </figure>
+            </div>
+
+            <div type="metadata" n="category-text" part="N" sample="complete" org="uniform">
+                <head>Category of Text</head>
+                <p><rs type="catText">honours</rs>; <rs type="catText">governor</rs>.
+                </p>
+            </div>
+
+            <div type="metadata" n="category-monument" part="N" sample="complete" org="uniform">
+                <head>Category of Monument</head>
+                <p>
+                    <rs type="catMonument">
+                        <rs type="catMonument">statue base</rs>
+                        capital
+                    </rs>
+                    , <rs type="catMonument">base capital</rs> and <rs type="catMonument">statue base shaft</rs>.
+                </p>
+            </div>
+
+        </body>
+    </text>
+</TEI.2>

@@ -1,0 +1,680 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="sonar-foliaviewer.xsl"?>
+<FoLiA xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://ilk.uvt.nl/folia" xml:id="WR-P-E-J-0000000000" generator="libfolia-v0.10" version="0.8.0">
+  <metadata src="WR-P-E-J-0000000000.cmdi" type="imdi">
+    <annotations>
+      <token-annotation annotator="ilktok" annotatortype="auto"/>
+      <pos-annotation annotator="frog" annotatortype="auto" set="hdl:1839/00-SCHM-0000-0000-000B-9"/>
+      <pos-annotation annotator="frog-mbpos-1.0" annotatortype="auto" datetime="2013-02-15T20:00:15" set="http://ilk.uvt.nl/folia/sets/frog-mbpos-cgn"/>
+      <lemma-annotation annotator="frog" annotatortype="auto" set="hdl:1839/00-SCHM-0000-0000-000E-3"/>
+      <lemma-annotation annotator="frog-mblem-1.1" annotatortype="auto" datetime="2013-02-15T20:00:15" set="http://ilk.uvt.nl/folia/sets/frog-mblem-nl"/>
+      <entity-annotation annotator="NERD" annotatortype="auto" set="hdl:1839/00-SCHM-0000-0000-000D-5"/>
+      <morphological-annotation annotator="frog-mbma-1.0" annotatortype="auto" datetime="2013-02-15T20:00:15" set="http://ilk.uvt.nl/folia/sets/frog-mbma-nl"/>
+    </annotations>
+  </metadata>
+  <text xml:id="WR-P-E-J-0000000000.text">
+    <div xml:id="WR-P-E-J-0000000000.div0.1">
+      <head xml:id="WR-P-E-J-0000000000.head.1">
+        <s xml:id="WR-P-E-J-0000000000.head.1.s.1">
+          <w xml:id="WR-P-E-J-0000000000.head.1.s.1.w.1">
+            <t>Constant</t>
+            <lemma class="Constant" set="hdl:1839/00-SCHM-0000-0000-000E-3"/>
+            <pos class="ADJ(vrij,basis,zonder)" set="hdl:1839/00-SCHM-0000-0000-000B-9">
+              <feat class="ADJ" subset="head"/>
+              <feat class="vrij" subset="positie"/>
+              <feat class="basis" subset="graad"/>
+              <feat class="zonder" subset="buiging"/>
+            </pos>
+            <pos class="SPEC(deeleigen)" confidence="1" head="SPEC" set="http://ilk.uvt.nl/folia/sets/frog-mbpos-cgn">
+              <feat class="deeleigen" subset="spectype"/>
+            </pos>
+            <lemma class="Constant" set="http://ilk.uvt.nl/folia/sets/frog-mblem-nl"/>
+            <morphology>
+              <morpheme>
+                <t offset="0">Constant</t>
+              </morpheme>
+            </morphology>
+          </w>
+          <w xml:id="WR-P-E-J-0000000000.head.1.s.1.w.2">
+            <t>Van</t>
+            <lemma class="_" set="hdl:1839/00-SCHM-0000-0000-000E-3"/>
+            <pos class="SPEC(deeleigen)" set="hdl:1839/00-SCHM-0000-0000-000B-9">
+              <feat class="SPEC" subset="head"/>
+              <feat class="deeleigen" subset="spectype"/>
+            </pos>
+            <pos class="SPEC(deeleigen)" confidence="1" head="SPEC" set="http://ilk.uvt.nl/folia/sets/frog-mbpos-cgn">
+              <feat class="deeleigen" subset="spectype"/>
+            </pos>
+            <lemma class="Van" set="http://ilk.uvt.nl/folia/sets/frog-mblem-nl"/>
+            <morphology>
+              <morpheme>
+                <t offset="0">Van</t>
+              </morpheme>
+            </morphology>
+          </w>
+          <w xml:id="WR-P-E-J-0000000000.head.1.s.1.w.3">
+            <t>Crombrugghe</t>
+            <lemma class="_" set="hdl:1839/00-SCHM-0000-0000-000E-3"/>
+            <pos class="SPEC(deeleigen)" set="hdl:1839/00-SCHM-0000-0000-000B-9">
+              <feat class="SPEC" subset="head"/>
+              <feat class="deeleigen" subset="spectype"/>
+            </pos>
+            <pos class="SPEC(deeleigen)" confidence="1" head="SPEC" set="http://ilk.uvt.nl/folia/sets/frog-mbpos-cgn">
+              <feat class="deeleigen" subset="spectype"/>
+            </pos>
+            <morphology>
+              <morpheme>
+                <t offset="0">Crombrugghe</t>
+              </morpheme>
+            </morphology>
+            <lemma class="Crombrugghe" set="http://ilk.uvt.nl/folia/sets/frog-mblem-nl"/>
+          </w>
+          <entities>
+            <entity xml:id="WR-P-E-J-0000000000.head.1.s.1.entity.1" class="per">
+              <wref id="WR-P-E-J-0000000000.head.1.s.1.w.1" t="Constant"/>
+              <wref id="WR-P-E-J-0000000000.head.1.s.1.w.2" t="Van"/>
+              <wref id="WR-P-E-J-0000000000.head.1.s.1.w.3" t="Crombrugghe"/>
+            </entity>
+          </entities>
+        </s>
+      </head>
+      <p xml:id="WR-P-E-J-0000000000.p.1">
+        <s xml:id="WR-P-E-J-0000000000.p.1.s.1">
+          <w xml:id="WR-P-E-J-0000000000.p.1.s.1.w.1">
+            <t>Constant</t>
+            <lemma class="Constant" set="hdl:1839/00-SCHM-0000-0000-000E-3"/>
+            <pos class="ADJ(vrij,basis,zonder)" set="hdl:1839/00-SCHM-0000-0000-000B-9">
+              <feat class="ADJ" subset="head"/>
+              <feat class="vrij" subset="positie"/>
+              <feat class="basis" subset="graad"/>
+              <feat class="zonder" subset="buiging"/>
+            </pos>
+            <pos class="SPEC(deeleigen)" confidence="1" head="SPEC" set="http://ilk.uvt.nl/folia/sets/frog-mbpos-cgn">
+              <feat class="deeleigen" subset="spectype"/>
+            </pos>
+            <lemma class="Constant" set="http://ilk.uvt.nl/folia/sets/frog-mblem-nl"/>
+            <morphology>
+              <morpheme>
+                <t offset="0">Constant</t>
+              </morpheme>
+            </morphology>
+          </w>
+          <w xml:id="WR-P-E-J-0000000000.p.1.s.1.w.2">
+            <t>Van</t>
+            <lemma class="_" set="hdl:1839/00-SCHM-0000-0000-000E-3"/>
+            <pos class="SPEC(deeleigen)" set="hdl:1839/00-SCHM-0000-0000-000B-9">
+              <feat class="SPEC" subset="head"/>
+              <feat class="deeleigen" subset="spectype"/>
+            </pos>
+            <pos class="SPEC(deeleigen)" confidence="1" head="SPEC" set="http://ilk.uvt.nl/folia/sets/frog-mbpos-cgn">
+              <feat class="deeleigen" subset="spectype"/>
+            </pos>
+            <lemma class="Van" set="http://ilk.uvt.nl/folia/sets/frog-mblem-nl"/>
+            <morphology>
+              <morpheme>
+                <t offset="0">Van</t>
+              </morpheme>
+            </morphology>
+          </w>
+          <w xml:id="WR-P-E-J-0000000000.p.1.s.1.w.3">
+            <t>Crombrugghe</t>
+            <lemma class="_" set="hdl:1839/00-SCHM-0000-0000-000E-3"/>
+            <pos class="SPEC(deeleigen)" set="hdl:1839/00-SCHM-0000-0000-000B-9">
+              <feat class="SPEC" subset="head"/>
+              <feat class="deeleigen" subset="spectype"/>
+            </pos>
+            <pos class="SPEC(deeleigen)" confidence="1" head="SPEC" set="http://ilk.uvt.nl/folia/sets/frog-mbpos-cgn">
+              <feat class="deeleigen" subset="spectype"/>
+            </pos>
+            <morphology>
+              <morpheme>
+                <t offset="0">Crombrugghe</t>
+              </morpheme>
+            </morphology>
+            <lemma class="Crombrugghe" set="http://ilk.uvt.nl/folia/sets/frog-mblem-nl"/>
+          </w>
+          <w xml:id="WR-P-E-J-0000000000.p.1.s.1.w.4">
+            <t>is</t>
+            <lemma class="zijn" set="hdl:1839/00-SCHM-0000-0000-000E-3"/>
+            <pos class="WW(pv,tgw,ev)" set="hdl:1839/00-SCHM-0000-0000-000B-9">
+              <feat class="WW" subset="head"/>
+              <feat class="pv" subset="wvorm"/>
+              <feat class="tgw" subset="pvtijd"/>
+              <feat class="ev" subset="pvagr"/>
+            </pos>
+            <pos class="WW(pv,tgw,ev)" confidence="0.997908" head="WW" set="http://ilk.uvt.nl/folia/sets/frog-mbpos-cgn">
+              <feat class="pv" subset="wvorm"/>
+              <feat class="tgw" subset="pvtijd"/>
+              <feat class="ev" subset="pvagr"/>
+            </pos>
+            <lemma class="zijn" set="http://ilk.uvt.nl/folia/sets/frog-mblem-nl"/>
+            <morphology>
+              <morpheme>
+                <t offset="0">zijn</t>
+              </morpheme>
+            </morphology>
+          </w>
+          <w xml:id="WR-P-E-J-0000000000.p.1.s.1.w.5">
+            <t>de</t>
+            <lemma class="de" set="hdl:1839/00-SCHM-0000-0000-000E-3"/>
+            <pos class="LID(bep,stan,rest)" set="hdl:1839/00-SCHM-0000-0000-000B-9">
+              <feat class="LID" subset="head"/>
+              <feat class="bep" subset="lwtype"/>
+              <feat class="stan" subset="naamval"/>
+              <feat class="rest" subset="npagr"/>
+            </pos>
+            <pos class="LID(bep,stan,rest)" confidence="0.999378" head="LID" set="http://ilk.uvt.nl/folia/sets/frog-mbpos-cgn">
+              <feat class="bep" subset="lwtype"/>
+              <feat class="stan" subset="naamval"/>
+              <feat class="rest" subset="npagr"/>
+            </pos>
+            <morphology>
+              <morpheme>
+                <t offset="0">de</t>
+              </morpheme>
+            </morphology>
+            <lemma class="de" set="http://ilk.uvt.nl/folia/sets/frog-mblem-nl"/>
+          </w>
+          <w xml:id="WR-P-E-J-0000000000.p.1.s.1.w.6">
+            <t>stichter</t>
+            <lemma class="stichter" set="hdl:1839/00-SCHM-0000-0000-000E-3"/>
+            <pos class="N(soort,ev,basis,zijd,stan)" set="hdl:1839/00-SCHM-0000-0000-000B-9">
+              <feat class="N" subset="head"/>
+              <feat class="soort" subset="ntype"/>
+              <feat class="ev" subset="getal"/>
+              <feat class="basis" subset="graad"/>
+              <feat class="zijd" subset="genus"/>
+              <feat class="stan" subset="naamval"/>
+            </pos>
+            <pos class="N(soort,ev,basis,zijd,stan)" confidence="0.999662" head="N" set="http://ilk.uvt.nl/folia/sets/frog-mbpos-cgn">
+              <feat class="soort" subset="ntype"/>
+              <feat class="ev" subset="getal"/>
+              <feat class="basis" subset="graad"/>
+              <feat class="zijd" subset="genus"/>
+              <feat class="stan" subset="naamval"/>
+            </pos>
+            <lemma class="stichter" set="http://ilk.uvt.nl/folia/sets/frog-mblem-nl"/>
+            <morphology>
+              <morpheme>
+                <t offset="0">sticht</t>
+              </morpheme>
+              <morpheme>
+                <t offset="6">er</t>
+              </morpheme>
+            </morphology>
+          </w>
+          <w xml:id="WR-P-E-J-0000000000.p.1.s.1.w.7">
+            <t>van</t>
+            <lemma class="van" set="hdl:1839/00-SCHM-0000-0000-000E-3"/>
+            <pos class="VZ(init)" set="hdl:1839/00-SCHM-0000-0000-000B-9">
+              <feat class="VZ" subset="head"/>
+              <feat class="init" subset="vztype"/>
+            </pos>
+            <pos class="VZ(init)" confidence="0.999941" head="VZ" set="http://ilk.uvt.nl/folia/sets/frog-mbpos-cgn">
+              <feat class="init" subset="vztype"/>
+            </pos>
+            <lemma class="van" set="http://ilk.uvt.nl/folia/sets/frog-mblem-nl"/>
+            <morphology>
+              <morpheme>
+                <t offset="0">van</t>
+              </morpheme>
+            </morphology>
+          </w>
+          <w xml:id="WR-P-E-J-0000000000.p.1.s.1.w.8">
+            <t>de</t>
+            <lemma class="de" set="hdl:1839/00-SCHM-0000-0000-000E-3"/>
+            <pos class="LID(bep,stan,rest)" set="hdl:1839/00-SCHM-0000-0000-000B-9">
+              <feat class="LID" subset="head"/>
+              <feat class="bep" subset="lwtype"/>
+              <feat class="stan" subset="naamval"/>
+              <feat class="rest" subset="npagr"/>
+            </pos>
+            <pos class="LID(bep,stan,rest)" confidence="0.994718" head="LID" set="http://ilk.uvt.nl/folia/sets/frog-mbpos-cgn">
+              <feat class="bep" subset="lwtype"/>
+              <feat class="stan" subset="naamval"/>
+              <feat class="rest" subset="npagr"/>
+            </pos>
+            <lemma class="de" set="http://ilk.uvt.nl/folia/sets/frog-mblem-nl"/>
+            <morphology>
+              <morpheme>
+                <t offset="0">de</t>
+              </morpheme>
+            </morphology>
+          </w>
+          <w xml:id="WR-P-E-J-0000000000.p.1.s.1.w.9">
+            <t>Paters</t>
+            <lemma class="pater" set="hdl:1839/00-SCHM-0000-0000-000E-3"/>
+            <pos class="N(soort,mv,basis)" set="hdl:1839/00-SCHM-0000-0000-000B-9">
+              <feat class="N" subset="head"/>
+              <feat class="soort" subset="ntype"/>
+              <feat class="mv" subset="npagr"/>
+              <feat class="basis" subset="graad"/>
+            </pos>
+            <pos class="SPEC(deeleigen)" confidence="1" head="SPEC" set="http://ilk.uvt.nl/folia/sets/frog-mbpos-cgn">
+              <feat class="deeleigen" subset="spectype"/>
+            </pos>
+            <morphology>
+              <morpheme>
+                <t offset="0">Paters</t>
+              </morpheme>
+            </morphology>
+            <lemma class="Paters" set="http://ilk.uvt.nl/folia/sets/frog-mblem-nl"/>
+          </w>
+          <w xml:id="WR-P-E-J-0000000000.p.1.s.1.w.10">
+            <t>Jozefieten</t>
+            <lemma class="Jozefiet" set="hdl:1839/00-SCHM-0000-0000-000E-3"/>
+            <pos class="N(eigen,mv,basis)" set="hdl:1839/00-SCHM-0000-0000-000B-9">
+              <feat class="N" subset="head"/>
+              <feat class="eigen" subset="ntype"/>
+              <feat class="mv" subset="npagr"/>
+              <feat class="basis" subset="graad"/>
+            </pos>
+            <pos class="SPEC(deeleigen)" confidence="1" head="SPEC" set="http://ilk.uvt.nl/folia/sets/frog-mbpos-cgn">
+              <feat class="deeleigen" subset="spectype"/>
+            </pos>
+            <morphology>
+              <morpheme>
+                <t offset="0">Jozefieten</t>
+              </morpheme>
+            </morphology>
+            <lemma class="Jozefieten" set="http://ilk.uvt.nl/folia/sets/frog-mblem-nl"/>
+          </w>
+          <w xml:id="WR-P-E-J-0000000000.p.1.s.1.w.11">
+            <t>en</t>
+            <lemma class="en" set="hdl:1839/00-SCHM-0000-0000-000E-3"/>
+            <pos class="VG(neven)" set="hdl:1839/00-SCHM-0000-0000-000B-9">
+              <feat class="VG" subset="head"/>
+              <feat class="neven" subset="conjtype"/>
+            </pos>
+            <pos class="VG(neven)" confidence="0.999194" head="VG" set="http://ilk.uvt.nl/folia/sets/frog-mbpos-cgn">
+              <feat class="neven" subset="conjtype"/>
+            </pos>
+            <lemma class="en" set="http://ilk.uvt.nl/folia/sets/frog-mblem-nl"/>
+            <morphology>
+              <morpheme>
+                <t offset="0">en</t>
+              </morpheme>
+            </morphology>
+          </w>
+          <w xml:id="WR-P-E-J-0000000000.p.1.s.1.w.12">
+            <t>verscheiden</t>
+            <lemma class="verscheiden" set="hdl:1839/00-SCHM-0000-0000-000E-3"/>
+            <pos class="ADJ(vrij,basis,zonder)" set="hdl:1839/00-SCHM-0000-0000-000B-9">
+              <feat class="ADJ" subset="head"/>
+              <feat class="vrij" subset="positie"/>
+              <feat class="basis" subset="graad"/>
+              <feat class="zonder" subset="buiging"/>
+            </pos>
+            <pos class="ADJ(vrij,basis,zonder)" confidence="0.714286" head="ADJ" set="http://ilk.uvt.nl/folia/sets/frog-mbpos-cgn">
+              <feat class="vrij" subset="positie"/>
+              <feat class="basis" subset="graad"/>
+              <feat class="zonder" subset="buiging"/>
+            </pos>
+            <lemma class="verscheiden" set="http://ilk.uvt.nl/folia/sets/frog-mblem-nl"/>
+            <morphology>
+              <morpheme>
+                <t offset="0">verscheiden</t>
+              </morpheme>
+            </morphology>
+          </w>
+          <w xml:id="WR-P-E-J-0000000000.p.1.s.1.w.13">
+            <t>onderwijscolleges</t>
+            <lemma class="onderwijscollege" set="hdl:1839/00-SCHM-0000-0000-000E-3"/>
+            <pos class="N(soort,mv,basis)" set="hdl:1839/00-SCHM-0000-0000-000B-9">
+              <feat class="N" subset="head"/>
+              <feat class="soort" subset="ntype"/>
+              <feat class="mv" subset="npagr"/>
+              <feat class="basis" subset="graad"/>
+            </pos>
+            <pos class="N(soort,mv,basis)" confidence="0.618717" head="N" set="http://ilk.uvt.nl/folia/sets/frog-mbpos-cgn">
+              <feat class="soort" subset="ntype"/>
+              <feat class="mv" subset="getal"/>
+              <feat class="basis" subset="graad"/>
+            </pos>
+            <lemma class="onderwijscollege" set="http://ilk.uvt.nl/folia/sets/frog-mblem-nl"/>
+            <morphology>
+              <morpheme>
+                <t offset="0">onderwijs</t>
+              </morpheme>
+              <morpheme>
+                <t offset="9">college</t>
+              </morpheme>
+              <morpheme>
+                <t offset="16">s</t>
+              </morpheme>
+            </morphology>
+          </w>
+          <w xml:id="WR-P-E-J-0000000000.p.1.s.1.w.14">
+            <t>.</t>
+            <lemma class="." set="hdl:1839/00-SCHM-0000-0000-000E-3"/>
+            <pos class="LET()" set="hdl:1839/00-SCHM-0000-0000-000B-9">
+              <feat class="LET" subset="head"/>
+            </pos>
+            <pos class="LET()" confidence="0.999956" head="LET" set="http://ilk.uvt.nl/folia/sets/frog-mbpos-cgn"/>
+            <morphology>
+              <morpheme>
+                <t offset="0">.</t>
+              </morpheme>
+            </morphology>
+            <lemma class="." set="http://ilk.uvt.nl/folia/sets/frog-mblem-nl"/>
+          </w>
+          <entities>
+            <entity xml:id="WR-P-E-J-0000000000.p.1.s.1.entity.1" class="per">
+              <wref id="WR-P-E-J-0000000000.p.1.s.1.w.2" t="Van"/>
+              <wref id="WR-P-E-J-0000000000.p.1.s.1.w.3" t="Crombrugghe"/>
+            </entity>
+            <entity xml:id="WR-P-E-J-0000000000.p.1.s.1.entity.2" class="org">
+              <wref id="WR-P-E-J-0000000000.p.1.s.1.w.9" t="Paters"/>
+              <wref id="WR-P-E-J-0000000000.p.1.s.1.w.10" t="Jozefieten"/>
+            </entity>
+          </entities>
+        </s>
+      </p>
+      <div xml:id="WR-P-E-J-0000000000.div1.1">
+        <p xml:id="WR-P-E-J-0000000000.p.2">
+          <s xml:id="WR-P-E-J-0000000000.p.2.s.1">
+            <w xml:id="WR-P-E-J-0000000000.p.2.s.1.w.1">
+              <t>Lid</t>
+              <lemma class="lid" set="hdl:1839/00-SCHM-0000-0000-000E-3"/>
+              <pos class="N(soort,ev,basis,onz,stan)" set="hdl:1839/00-SCHM-0000-0000-000B-9">
+                <feat class="N" subset="head"/>
+                <feat class="soort" subset="ntype"/>
+                <feat class="ev" subset="getal"/>
+                <feat class="basis" subset="graad"/>
+                <feat class="onz" subset="genus"/>
+                <feat class="stan" subset="naamval"/>
+              </pos>
+              <pos class="N(soort,ev,basis,onz,stan)" confidence="0.993827" head="N" set="http://ilk.uvt.nl/folia/sets/frog-mbpos-cgn">
+                <feat class="soort" subset="ntype"/>
+                <feat class="ev" subset="getal"/>
+                <feat class="basis" subset="graad"/>
+                <feat class="onz" subset="genus"/>
+                <feat class="stan" subset="naamval"/>
+              </pos>
+              <lemma class="lid" set="http://ilk.uvt.nl/folia/sets/frog-mblem-nl"/>
+              <morphology>
+                <morpheme>
+                  <t offset="0">lid</t>
+                </morpheme>
+              </morphology>
+            </w>
+            <w xml:id="WR-P-E-J-0000000000.p.2.s.1.w.2">
+              <t>van</t>
+              <lemma class="van" set="hdl:1839/00-SCHM-0000-0000-000E-3"/>
+              <pos class="VZ(init)" set="hdl:1839/00-SCHM-0000-0000-000B-9">
+                <feat class="VZ" subset="head"/>
+                <feat class="init" subset="vztype"/>
+              </pos>
+              <pos class="VZ(init)" confidence="0.999849" head="VZ" set="http://ilk.uvt.nl/folia/sets/frog-mbpos-cgn">
+                <feat class="init" subset="vztype"/>
+              </pos>
+              <lemma class="van" set="http://ilk.uvt.nl/folia/sets/frog-mblem-nl"/>
+              <morphology>
+                <morpheme>
+                  <t offset="0">van</t>
+                </morpheme>
+              </morphology>
+            </w>
+            <w xml:id="WR-P-E-J-0000000000.p.2.s.1.w.3">
+              <t>het</t>
+              <lemma class="het" set="hdl:1839/00-SCHM-0000-0000-000E-3"/>
+              <pos class="LID(bep,stan,evon)" set="hdl:1839/00-SCHM-0000-0000-000B-9">
+                <feat class="LID" subset="head"/>
+                <feat class="bep" subset="lwtype"/>
+                <feat class="stan" subset="naamval"/>
+                <feat class="evon" subset="npagr"/>
+              </pos>
+              <pos class="LID(bep,stan,evon)" confidence="0.996937" head="LID" set="http://ilk.uvt.nl/folia/sets/frog-mbpos-cgn">
+                <feat class="bep" subset="lwtype"/>
+                <feat class="stan" subset="naamval"/>
+                <feat class="evon" subset="npagr"/>
+              </pos>
+              <morphology>
+                <morpheme>
+                  <t offset="0">het</t>
+                </morpheme>
+              </morphology>
+              <lemma class="het" set="http://ilk.uvt.nl/folia/sets/frog-mblem-nl"/>
+            </w>
+            <w xml:id="WR-P-E-J-0000000000.p.2.s.1.w.4">
+              <t>Nationaal</t>
+              <lemma class="Nationaal" set="hdl:1839/00-SCHM-0000-0000-000E-3"/>
+              <pos class="ADJ(prenom,basis,zonder)" set="hdl:1839/00-SCHM-0000-0000-000B-9">
+                <feat class="ADJ" subset="head"/>
+                <feat class="prenom" subset="positie"/>
+                <feat class="basis" subset="graad"/>
+                <feat class="zonder" subset="buiging"/>
+              </pos>
+              <pos class="SPEC(deeleigen)" confidence="1" head="SPEC" set="http://ilk.uvt.nl/folia/sets/frog-mbpos-cgn">
+                <feat class="deeleigen" subset="spectype"/>
+              </pos>
+              <morphology>
+                <morpheme>
+                  <t offset="0">Nationaal</t>
+                </morpheme>
+              </morphology>
+              <lemma class="Nationaal" set="http://ilk.uvt.nl/folia/sets/frog-mblem-nl"/>
+            </w>
+            <w xml:id="WR-P-E-J-0000000000.p.2.s.1.w.5">
+              <t>Congres</t>
+              <lemma class="congres" set="hdl:1839/00-SCHM-0000-0000-000E-3"/>
+              <pos class="N(soort,ev,basis,onz,stan)" set="hdl:1839/00-SCHM-0000-0000-000B-9">
+                <feat class="N" subset="head"/>
+                <feat class="soort" subset="ntype"/>
+                <feat class="ev" subset="getal"/>
+                <feat class="basis" subset="graad"/>
+                <feat class="onz" subset="genus"/>
+                <feat class="stan" subset="naamval"/>
+              </pos>
+              <pos class="SPEC(deeleigen)" confidence="1" head="SPEC" set="http://ilk.uvt.nl/folia/sets/frog-mbpos-cgn">
+                <feat class="deeleigen" subset="spectype"/>
+              </pos>
+              <morphology>
+                <morpheme>
+                  <t offset="0">Congres</t>
+                </morpheme>
+              </morphology>
+              <lemma class="Congres" set="http://ilk.uvt.nl/folia/sets/frog-mblem-nl"/>
+            </w>
+            <w xml:id="WR-P-E-J-0000000000.p.2.s.1.w.6">
+              <t>dat</t>
+              <lemma class="dat" set="hdl:1839/00-SCHM-0000-0000-000E-3"/>
+              <pos class="VNW(betr,pron,stan,vol,3,ev)" set="hdl:1839/00-SCHM-0000-0000-000B-9">
+                <feat class="VNW" subset="head"/>
+                <feat class="betr" subset="vwtype"/>
+                <feat class="pron" subset="pdtype"/>
+                <feat class="stan" subset="naamval"/>
+                <feat class="vol" subset="status"/>
+                <feat class="3" subset="persoon"/>
+                <feat class="ev" subset="getal"/>
+              </pos>
+              <pos class="VNW(aanw,det,stan,prenom,zonder,evon)" confidence="0.871795" head="VNW" set="http://ilk.uvt.nl/folia/sets/frog-mbpos-cgn">
+                <feat class="aanw" subset="vwtype"/>
+                <feat class="det" subset="pdtype"/>
+                <feat class="stan" subset="naamval"/>
+                <feat class="prenom" subset="positie"/>
+                <feat class="zonder" subset="buiging"/>
+                <feat class="evon" subset="npagr"/>
+              </pos>
+              <morphology>
+                <morpheme>
+                  <t offset="0">dat</t>
+                </morpheme>
+              </morphology>
+              <lemma class="dat" set="http://ilk.uvt.nl/folia/sets/frog-mblem-nl"/>
+            </w>
+            <w xml:id="WR-P-E-J-0000000000.p.2.s.1.w.7">
+              <t>eind</t>
+              <lemma class="eind" set="hdl:1839/00-SCHM-0000-0000-000E-3"/>
+              <pos class="N(soort,ev,basis,onz,stan)" set="hdl:1839/00-SCHM-0000-0000-000B-9">
+                <feat class="N" subset="head"/>
+                <feat class="soort" subset="ntype"/>
+                <feat class="ev" subset="getal"/>
+                <feat class="basis" subset="graad"/>
+                <feat class="onz" subset="genus"/>
+                <feat class="stan" subset="naamval"/>
+              </pos>
+              <pos class="N(soort,ev,basis,onz,stan)" confidence="0.996804" head="N" set="http://ilk.uvt.nl/folia/sets/frog-mbpos-cgn">
+                <feat class="soort" subset="ntype"/>
+                <feat class="ev" subset="getal"/>
+                <feat class="basis" subset="graad"/>
+                <feat class="onz" subset="genus"/>
+                <feat class="stan" subset="naamval"/>
+              </pos>
+              <lemma class="eind" set="http://ilk.uvt.nl/folia/sets/frog-mblem-nl"/>
+              <morphology>
+                <morpheme>
+                  <t offset="0">eind</t>
+                </morpheme>
+              </morphology>
+            </w>
+            <w xml:id="WR-P-E-J-0000000000.p.2.s.1.w.8">
+              <t>1830</t>
+              <lemma class="1830" set="hdl:1839/00-SCHM-0000-0000-000E-3"/>
+              <pos class="TW(hoofd,vrij)" set="hdl:1839/00-SCHM-0000-0000-000B-9">
+                <feat class="TW" subset="head"/>
+                <feat class="hoofd" subset="numtype"/>
+                <feat class="vrij" subset="positie"/>
+              </pos>
+              <pos class="SPEC(symb)" confidence="1" head="SPEC" set="http://ilk.uvt.nl/folia/sets/frog-mbpos-cgn">
+                <feat class="symb" subset="spectype"/>
+              </pos>
+              <lemma class="1830" set="http://ilk.uvt.nl/folia/sets/frog-mblem-nl"/>
+              <morphology>
+                <morpheme>
+                  <t offset="0">1830</t>
+                </morpheme>
+              </morphology>
+            </w>
+            <w xml:id="WR-P-E-J-0000000000.p.2.s.1.w.9">
+              <t>de</t>
+              <lemma class="de" set="hdl:1839/00-SCHM-0000-0000-000E-3"/>
+              <pos class="LID(bep,stan,rest)" set="hdl:1839/00-SCHM-0000-0000-000B-9">
+                <feat class="LID" subset="head"/>
+                <feat class="bep" subset="lwtype"/>
+                <feat class="stan" subset="naamval"/>
+                <feat class="rest" subset="npagr"/>
+              </pos>
+              <pos class="LID(bep,stan,rest)" confidence="0.999811" head="LID" set="http://ilk.uvt.nl/folia/sets/frog-mbpos-cgn">
+                <feat class="bep" subset="lwtype"/>
+                <feat class="stan" subset="naamval"/>
+                <feat class="rest" subset="npagr"/>
+              </pos>
+              <lemma class="de" set="http://ilk.uvt.nl/folia/sets/frog-mblem-nl"/>
+              <morphology>
+                <morpheme>
+                  <t offset="0">de</t>
+                </morpheme>
+              </morphology>
+            </w>
+            <w xml:id="WR-P-E-J-0000000000.p.2.s.1.w.10">
+              <t>Belgische</t>
+              <lemma class="Belgisch" set="hdl:1839/00-SCHM-0000-0000-000E-3"/>
+              <pos class="ADJ(prenom,basis,met-e,stan)" set="hdl:1839/00-SCHM-0000-0000-000B-9">
+                <feat class="ADJ" subset="head"/>
+                <feat class="prenom" subset="positie"/>
+                <feat class="basis" subset="graad"/>
+                <feat class="met-e" subset="buiging"/>
+                <feat class="stan" subset="naamval"/>
+              </pos>
+              <pos class="ADJ(prenom,basis,met-e,stan)" confidence="0.981205" head="ADJ" set="http://ilk.uvt.nl/folia/sets/frog-mbpos-cgn">
+                <feat class="prenom" subset="positie"/>
+                <feat class="basis" subset="graad"/>
+                <feat class="met-e" subset="buiging"/>
+                <feat class="stan" subset="naamval"/>
+              </pos>
+              <lemma class="belgisch" set="http://ilk.uvt.nl/folia/sets/frog-mblem-nl"/>
+              <morphology>
+                <morpheme>
+                  <t offset="0">belgisch</t>
+                </morpheme>
+                <morpheme>
+                  <t offset="8">e</t>
+                </morpheme>
+              </morphology>
+            </w>
+            <w xml:id="WR-P-E-J-0000000000.p.2.s.1.w.11">
+              <t>Grondwet</t>
+              <lemma class="grondwet" set="hdl:1839/00-SCHM-0000-0000-000E-3"/>
+              <pos class="N(soort,ev,basis,zijd,stan)" set="hdl:1839/00-SCHM-0000-0000-000B-9">
+                <feat class="N" subset="head"/>
+                <feat class="soort" subset="ntype"/>
+                <feat class="ev" subset="getal"/>
+                <feat class="basis" subset="graad"/>
+                <feat class="zijd" subset="genus"/>
+                <feat class="stan" subset="naamval"/>
+              </pos>
+              <pos class="N(soort,ev,basis,zijd,stan)" confidence="0.996117" head="N" set="http://ilk.uvt.nl/folia/sets/frog-mbpos-cgn">
+                <feat class="soort" subset="ntype"/>
+                <feat class="ev" subset="getal"/>
+                <feat class="basis" subset="graad"/>
+                <feat class="zijd" subset="genus"/>
+                <feat class="stan" subset="naamval"/>
+              </pos>
+              <morphology>
+                <morpheme>
+                  <t offset="0">grond</t>
+                </morpheme>
+                <morpheme>
+                  <t offset="5">wet</t>
+                </morpheme>
+              </morphology>
+              <lemma class="grondwet" set="http://ilk.uvt.nl/folia/sets/frog-mblem-nl"/>
+            </w>
+            <w xml:id="WR-P-E-J-0000000000.p.2.s.1.w.12">
+              <t>vastlegde</t>
+              <lemma class="vastleggen" set="hdl:1839/00-SCHM-0000-0000-000E-3"/>
+              <pos class="WW(pv,verl,ev)" set="hdl:1839/00-SCHM-0000-0000-000B-9">
+                <feat class="WW" subset="head"/>
+                <feat class="pv" subset="wvorm"/>
+                <feat class="verl" subset="pvtijd"/>
+                <feat class="ev" subset="pvagr"/>
+              </pos>
+              <pos class="WW(pv,verl,ev)" confidence="0.997744" head="WW" set="http://ilk.uvt.nl/folia/sets/frog-mbpos-cgn">
+                <feat class="pv" subset="wvorm"/>
+                <feat class="verl" subset="pvtijd"/>
+                <feat class="ev" subset="pvagr"/>
+              </pos>
+              <lemma class="vastleggen" set="http://ilk.uvt.nl/folia/sets/frog-mblem-nl"/>
+              <morphology>
+                <morpheme>
+                  <t offset="0">vast</t>
+                </morpheme>
+                <morpheme>
+                  <t offset="4">leg</t>
+                </morpheme>
+                <morpheme>
+                  <t offset="7">de</t>
+                </morpheme>
+              </morphology>
+            </w>
+            <w xml:id="WR-P-E-J-0000000000.p.2.s.1.w.13">
+              <t>.</t>
+              <lemma class="." set="hdl:1839/00-SCHM-0000-0000-000E-3"/>
+              <pos class="LET()" set="hdl:1839/00-SCHM-0000-0000-000B-9">
+                <feat class="LET" subset="head"/>
+              </pos>
+              <pos class="LET()" confidence="0.999956" head="LET" set="http://ilk.uvt.nl/folia/sets/frog-mbpos-cgn"/>
+              <lemma class="." set="http://ilk.uvt.nl/folia/sets/frog-mblem-nl"/>
+              <morphology>
+                <morpheme>
+                  <t offset="0">.</t>
+                </morpheme>
+              </morphology>
+            </w>
+            <entities>
+              <entity xml:id="WR-P-E-J-0000000000.p.2.s.1.entity.1" class="org">
+                <wref id="WR-P-E-J-0000000000.p.2.s.1.w.4" t="Nationaal"/>
+                <wref id="WR-P-E-J-0000000000.p.2.s.1.w.5" t="Congres"/>
+              </entity>
+              <entity xml:id="WR-P-E-J-0000000000.p.2.s.1.entity.2" class="loc">
+                <wref id="WR-P-E-J-0000000000.p.2.s.1.w.10" t="Belgische"/>
+              </entity>
+            </entities>
+          </s>
+        </p>
+      </div>
+    </div>
+  </text>
+</FoLiA>
+

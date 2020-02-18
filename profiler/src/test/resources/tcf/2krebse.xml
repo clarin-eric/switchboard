@@ -1,0 +1,733 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<D-Spin xmlns="http://www.dspin.de/data" version="0.3">
+  <tns:MetaData xmlns:tns="http://www.dspin.de/data/metadata">
+    <tns:source>GutenbergDVD_11</tns:source>
+    <tns:title>Zwei Krebse</tns:title>
+    <tns:meta content="fable" name="type"></tns:meta>
+    <tns:meta content="Tiermärchen aus aller Welt" name="booktitle"></tns:meta>
+    <tns:meta content="Zwei Krebse" name="title"></tns:meta>
+    <tns:meta content="Aesop" name="author"></tns:meta>
+    <tns:meta content="3-570-08739-5" name="isbn"></tns:meta>
+    <tns:meta content="36" name="page"></tns:meta>
+    <tns:meta content="hille@abc.de" name="sender"></tns:meta>
+    <tns:link rel="stylesheet" type="text/css" href="../../css/prosa.css"></tns:link>
+  </tns:MetaData>
+  <tns:TextCorpus xmlns:tns="http://www.dspin.de/data/textcorpus" lang="de">
+    <tns:text> »Geh doch gerade und vorwärts!« rief einem jungen Krebs seine Mutter zu. »Von Herzen gerne, liebe Mutter«, antwortete dieser, »nur möchte ich es dich ebenso machen sehen.« Jedoch vergeblich war der Mutter Anstrengung und sichtbar ihre Klügelei und Tadelsucht. Gib keine Befehle, die man nicht vollbringen kann, und tadle an andern keine Fehler, die du selbst begehst!</tns:text>
+    <tns:tokens>
+      <tns:token ID="t_0">"</tns:token>
+      <tns:token ID="t_1">Geh</tns:token>
+      <tns:token ID="t_2">doch</tns:token>
+      <tns:token ID="t_3">gerade</tns:token>
+      <tns:token ID="t_4">und</tns:token>
+      <tns:token ID="t_5">vorwärts</tns:token>
+      <tns:token ID="t_6">!</tns:token>
+      <tns:token ID="t_7">"</tns:token>
+      <tns:token ID="t_8">rief</tns:token>
+      <tns:token ID="t_9">einem</tns:token>
+      <tns:token ID="t_10">jungen</tns:token>
+      <tns:token ID="t_11">Krebs</tns:token>
+      <tns:token ID="t_12">seine</tns:token>
+      <tns:token ID="t_13">Mutter</tns:token>
+      <tns:token ID="t_14">zu</tns:token>
+      <tns:token ID="t_15">.</tns:token>
+      <tns:token ID="t_16">"</tns:token>
+      <tns:token ID="t_17">Von</tns:token>
+      <tns:token ID="t_18">Herzen</tns:token>
+      <tns:token ID="t_19">gerne</tns:token>
+      <tns:token ID="t_20">,</tns:token>
+      <tns:token ID="t_21">liebe</tns:token>
+      <tns:token ID="t_22">Mutter</tns:token>
+      <tns:token ID="t_23">"</tns:token>
+      <tns:token ID="t_24">,</tns:token>
+      <tns:token ID="t_25">antwortete</tns:token>
+      <tns:token ID="t_26">dieser</tns:token>
+      <tns:token ID="t_27">,</tns:token>
+      <tns:token ID="t_28">"</tns:token>
+      <tns:token ID="t_29">nur</tns:token>
+      <tns:token ID="t_30">möchte</tns:token>
+      <tns:token ID="t_31">ich</tns:token>
+      <tns:token ID="t_32">es</tns:token>
+      <tns:token ID="t_33">dich</tns:token>
+      <tns:token ID="t_34">ebenso</tns:token>
+      <tns:token ID="t_35">machen</tns:token>
+      <tns:token ID="t_36">sehen</tns:token>
+      <tns:token ID="t_37">.</tns:token>
+      <tns:token ID="t_38">"</tns:token>
+      <tns:token ID="t_39">Jedoch</tns:token>
+      <tns:token ID="t_40">vergeblich</tns:token>
+      <tns:token ID="t_41">war</tns:token>
+      <tns:token ID="t_42">der</tns:token>
+      <tns:token ID="t_43">Mutter</tns:token>
+      <tns:token ID="t_44">Anstrengung</tns:token>
+      <tns:token ID="t_45">und</tns:token>
+      <tns:token ID="t_46">sichtbar</tns:token>
+      <tns:token ID="t_47">ihre</tns:token>
+      <tns:token ID="t_48">Klügelei</tns:token>
+      <tns:token ID="t_49">und</tns:token>
+      <tns:token ID="t_50">Tadelsucht</tns:token>
+      <tns:token ID="t_51">.</tns:token>
+      <tns:token ID="t_52">Gib</tns:token>
+      <tns:token ID="t_53">keine</tns:token>
+      <tns:token ID="t_54">Befehle</tns:token>
+      <tns:token ID="t_55">,</tns:token>
+      <tns:token ID="t_56">die</tns:token>
+      <tns:token ID="t_57">man</tns:token>
+      <tns:token ID="t_58">nicht</tns:token>
+      <tns:token ID="t_59">vollbringen</tns:token>
+      <tns:token ID="t_60">kann</tns:token>
+      <tns:token ID="t_61">,</tns:token>
+      <tns:token ID="t_62">und</tns:token>
+      <tns:token ID="t_63">tadle</tns:token>
+      <tns:token ID="t_64">an</tns:token>
+      <tns:token ID="t_65">andern</tns:token>
+      <tns:token ID="t_66">keine</tns:token>
+      <tns:token ID="t_67">Fehler</tns:token>
+      <tns:token ID="t_68">,</tns:token>
+      <tns:token ID="t_69">die</tns:token>
+      <tns:token ID="t_70">du</tns:token>
+      <tns:token ID="t_71">selbst</tns:token>
+      <tns:token ID="t_72">begehst</tns:token>
+      <tns:token ID="t_73">!</tns:token>
+    </tns:tokens>
+    <tns:sentences tokRef="true">
+      <tns:sentence ID="s_0">
+        <tns:tokenRef tokID="t_0"></tns:tokenRef>
+        <tns:tokenRef tokID="t_1"></tns:tokenRef>
+        <tns:tokenRef tokID="t_2"></tns:tokenRef>
+        <tns:tokenRef tokID="t_3"></tns:tokenRef>
+        <tns:tokenRef tokID="t_4"></tns:tokenRef>
+        <tns:tokenRef tokID="t_5"></tns:tokenRef>
+        <tns:tokenRef tokID="t_6"></tns:tokenRef>
+        <tns:tokenRef tokID="t_7"></tns:tokenRef>
+        <tns:tokenRef tokID="t_8"></tns:tokenRef>
+        <tns:tokenRef tokID="t_9"></tns:tokenRef>
+        <tns:tokenRef tokID="t_10"></tns:tokenRef>
+        <tns:tokenRef tokID="t_11"></tns:tokenRef>
+        <tns:tokenRef tokID="t_12"></tns:tokenRef>
+        <tns:tokenRef tokID="t_13"></tns:tokenRef>
+        <tns:tokenRef tokID="t_14"></tns:tokenRef>
+        <tns:tokenRef tokID="t_15"></tns:tokenRef>
+      </tns:sentence>
+      <tns:sentence ID="s_1">
+        <tns:tokenRef tokID="t_16"></tns:tokenRef>
+        <tns:tokenRef tokID="t_17"></tns:tokenRef>
+        <tns:tokenRef tokID="t_18"></tns:tokenRef>
+        <tns:tokenRef tokID="t_19"></tns:tokenRef>
+        <tns:tokenRef tokID="t_20"></tns:tokenRef>
+        <tns:tokenRef tokID="t_21"></tns:tokenRef>
+        <tns:tokenRef tokID="t_22"></tns:tokenRef>
+        <tns:tokenRef tokID="t_23"></tns:tokenRef>
+        <tns:tokenRef tokID="t_24"></tns:tokenRef>
+        <tns:tokenRef tokID="t_25"></tns:tokenRef>
+        <tns:tokenRef tokID="t_26"></tns:tokenRef>
+        <tns:tokenRef tokID="t_27"></tns:tokenRef>
+        <tns:tokenRef tokID="t_28"></tns:tokenRef>
+        <tns:tokenRef tokID="t_29"></tns:tokenRef>
+        <tns:tokenRef tokID="t_30"></tns:tokenRef>
+        <tns:tokenRef tokID="t_31"></tns:tokenRef>
+        <tns:tokenRef tokID="t_32"></tns:tokenRef>
+        <tns:tokenRef tokID="t_33"></tns:tokenRef>
+        <tns:tokenRef tokID="t_34"></tns:tokenRef>
+        <tns:tokenRef tokID="t_35"></tns:tokenRef>
+        <tns:tokenRef tokID="t_36"></tns:tokenRef>
+        <tns:tokenRef tokID="t_37"></tns:tokenRef>
+        <tns:tokenRef tokID="t_38"></tns:tokenRef>
+      </tns:sentence>
+      <tns:sentence ID="s_2">
+        <tns:tokenRef tokID="t_39"></tns:tokenRef>
+        <tns:tokenRef tokID="t_40"></tns:tokenRef>
+        <tns:tokenRef tokID="t_41"></tns:tokenRef>
+        <tns:tokenRef tokID="t_42"></tns:tokenRef>
+        <tns:tokenRef tokID="t_43"></tns:tokenRef>
+        <tns:tokenRef tokID="t_44"></tns:tokenRef>
+        <tns:tokenRef tokID="t_45"></tns:tokenRef>
+        <tns:tokenRef tokID="t_46"></tns:tokenRef>
+        <tns:tokenRef tokID="t_47"></tns:tokenRef>
+        <tns:tokenRef tokID="t_48"></tns:tokenRef>
+        <tns:tokenRef tokID="t_49"></tns:tokenRef>
+        <tns:tokenRef tokID="t_50"></tns:tokenRef>
+        <tns:tokenRef tokID="t_51"></tns:tokenRef>
+        <tns:tokenRef tokID="t_52"></tns:tokenRef>
+        <tns:tokenRef tokID="t_53"></tns:tokenRef>
+        <tns:tokenRef tokID="t_54"></tns:tokenRef>
+        <tns:tokenRef tokID="t_55"></tns:tokenRef>
+        <tns:tokenRef tokID="t_56"></tns:tokenRef>
+        <tns:tokenRef tokID="t_57"></tns:tokenRef>
+        <tns:tokenRef tokID="t_58"></tns:tokenRef>
+        <tns:tokenRef tokID="t_59"></tns:tokenRef>
+        <tns:tokenRef tokID="t_60"></tns:tokenRef>
+        <tns:tokenRef tokID="t_61"></tns:tokenRef>
+        <tns:tokenRef tokID="t_62"></tns:tokenRef>
+        <tns:tokenRef tokID="t_63"></tns:tokenRef>
+        <tns:tokenRef tokID="t_64"></tns:tokenRef>
+        <tns:tokenRef tokID="t_65"></tns:tokenRef>
+        <tns:tokenRef tokID="t_66"></tns:tokenRef>
+        <tns:tokenRef tokID="t_67"></tns:tokenRef>
+        <tns:tokenRef tokID="t_68"></tns:tokenRef>
+        <tns:tokenRef tokID="t_69"></tns:tokenRef>
+        <tns:tokenRef tokID="t_70"></tns:tokenRef>
+        <tns:tokenRef tokID="t_71"></tns:tokenRef>
+        <tns:tokenRef tokID="t_72"></tns:tokenRef>
+        <tns:tokenRef tokID="t_73"></tns:tokenRef>
+      </tns:sentence>
+    </tns:sentences>
+    <tns:parsing tagset="tigertb">
+      <tns:parse>
+        <tns:constituent cat="Start" ID="c_32">
+          <tns:constituent cat="$" ID="c_0">
+            <tns:tokenRef tokID="t_0"></tns:tokenRef>
+          </tns:constituent>
+          <tns:constituent cat="SIMPX" ID="c_13">
+            <tns:constituent cat="LK" ID="c_3">
+              <tns:constituent cat="VXFIN" ID="c_2">
+                <tns:constituent cat="VVIMP" ID="c_1">
+                  <tns:tokenRef tokID="t_1"></tns:tokenRef>
+                </tns:constituent>
+              </tns:constituent>
+            </tns:constituent>
+            <tns:constituent cat="MF" ID="c_12">
+              <tns:constituent cat="ADVX" ID="c_5">
+                <tns:constituent cat="ADV" ID="c_4">
+                  <tns:tokenRef tokID="t_2"></tns:tokenRef>
+                </tns:constituent>
+              </tns:constituent>
+              <tns:constituent cat="ADVX" ID="c_11">
+                <tns:constituent cat="ADVX" ID="c_7">
+                  <tns:constituent cat="ADV" ID="c_6">
+                    <tns:tokenRef tokID="t_3"></tns:tokenRef>
+                  </tns:constituent>
+                </tns:constituent>
+                <tns:constituent cat="KON" ID="c_8">
+                  <tns:tokenRef tokID="t_4"></tns:tokenRef>
+                </tns:constituent>
+                <tns:constituent cat="ADVX" ID="c_10">
+                  <tns:constituent cat="ADV" ID="c_9">
+                    <tns:tokenRef tokID="t_5"></tns:tokenRef>
+                  </tns:constituent>
+                </tns:constituent>
+              </tns:constituent>
+            </tns:constituent>
+          </tns:constituent>
+          <tns:constituent cat="$." ID="c_14">
+            <tns:tokenRef tokID="t_6"></tns:tokenRef>
+          </tns:constituent>
+          <tns:constituent cat="$" ID="c_15">
+            <tns:tokenRef tokID="t_7"></tns:tokenRef>
+          </tns:constituent>
+          <tns:constituent cat="SIMPX" ID="c_30">
+            <tns:constituent cat="LK" ID="c_18">
+              <tns:constituent cat="VXFIN" ID="c_17">
+                <tns:constituent cat="VVFIN" ID="c_16">
+                  <tns:tokenRef tokID="t_8"></tns:tokenRef>
+                </tns:constituent>
+              </tns:constituent>
+            </tns:constituent>
+            <tns:constituent cat="MF" ID="c_27">
+              <tns:constituent cat="NX" ID="c_23">
+                <tns:constituent cat="ART" ID="c_19">
+                  <tns:tokenRef tokID="t_9"></tns:tokenRef>
+                </tns:constituent>
+                <tns:constituent cat="ADJX" ID="c_21">
+                  <tns:constituent cat="ADJA" ID="c_20">
+                    <tns:tokenRef tokID="t_10"></tns:tokenRef>
+                  </tns:constituent>
+                </tns:constituent>
+                <tns:constituent cat="NN" ID="c_22">
+                  <tns:tokenRef tokID="t_11"></tns:tokenRef>
+                </tns:constituent>
+              </tns:constituent>
+              <tns:constituent cat="NX" ID="c_26">
+                <tns:constituent cat="PPOSAT" ID="c_24">
+                  <tns:tokenRef tokID="t_12"></tns:tokenRef>
+                </tns:constituent>
+                <tns:constituent cat="NN" ID="c_25">
+                  <tns:tokenRef tokID="t_13"></tns:tokenRef>
+                </tns:constituent>
+              </tns:constituent>
+            </tns:constituent>
+            <tns:constituent cat="VC" ID="c_29">
+              <tns:constituent cat="PTKVZ" ID="c_28">
+                <tns:tokenRef tokID="t_14"></tns:tokenRef>
+              </tns:constituent>
+            </tns:constituent>
+          </tns:constituent>
+          <tns:constituent cat="$." ID="c_31">
+            <tns:tokenRef tokID="t_15"></tns:tokenRef>
+          </tns:constituent>
+        </tns:constituent>
+      </tns:parse>
+      <tns:parse>
+        <tns:constituent cat="Start" ID="c_79">
+          <tns:constituent cat="$" ID="c_33">
+            <tns:tokenRef tokID="t_16"></tns:tokenRef>
+          </tns:constituent>
+          <tns:constituent cat="ADJX" ID="c_39">
+            <tns:constituent cat="PX" ID="c_37">
+              <tns:constituent cat="APPR" ID="c_34">
+                <tns:tokenRef tokID="t_17"></tns:tokenRef>
+              </tns:constituent>
+              <tns:constituent cat="NX" ID="c_36">
+                <tns:constituent cat="NN" ID="c_35">
+                  <tns:tokenRef tokID="t_18"></tns:tokenRef>
+                </tns:constituent>
+              </tns:constituent>
+            </tns:constituent>
+            <tns:constituent cat="ADJD" ID="c_38">
+              <tns:tokenRef tokID="t_19"></tns:tokenRef>
+            </tns:constituent>
+          </tns:constituent>
+          <tns:constituent cat="$," ID="c_40">
+            <tns:tokenRef tokID="t_20"></tns:tokenRef>
+          </tns:constituent>
+          <tns:constituent cat="NX" ID="c_44">
+            <tns:constituent cat="ADJX" ID="c_42">
+              <tns:constituent cat="ADJA" ID="c_41">
+                <tns:tokenRef tokID="t_21"></tns:tokenRef>
+              </tns:constituent>
+            </tns:constituent>
+            <tns:constituent cat="NN" ID="c_43">
+              <tns:tokenRef tokID="t_22"></tns:tokenRef>
+            </tns:constituent>
+          </tns:constituent>
+          <tns:constituent cat="$" ID="c_45">
+            <tns:tokenRef tokID="t_23"></tns:tokenRef>
+          </tns:constituent>
+          <tns:constituent cat="$," ID="c_46">
+            <tns:tokenRef tokID="t_24"></tns:tokenRef>
+          </tns:constituent>
+          <tns:constituent cat="SIMPX" ID="c_53">
+            <tns:constituent cat="LK" ID="c_49">
+              <tns:constituent cat="VXFIN" ID="c_48">
+                <tns:constituent cat="VVFIN" ID="c_47">
+                  <tns:tokenRef tokID="t_25"></tns:tokenRef>
+                </tns:constituent>
+              </tns:constituent>
+            </tns:constituent>
+            <tns:constituent cat="MF" ID="c_52">
+              <tns:constituent cat="NX" ID="c_51">
+                <tns:constituent cat="PDS" ID="c_50">
+                  <tns:tokenRef tokID="t_26"></tns:tokenRef>
+                </tns:constituent>
+              </tns:constituent>
+            </tns:constituent>
+          </tns:constituent>
+          <tns:constituent cat="$," ID="c_54">
+            <tns:tokenRef tokID="t_27"></tns:tokenRef>
+          </tns:constituent>
+          <tns:constituent cat="$" ID="c_55">
+            <tns:tokenRef tokID="t_28"></tns:tokenRef>
+          </tns:constituent>
+          <tns:constituent cat="SIMPX" ID="c_76">
+            <tns:constituent cat="VF" ID="c_58">
+              <tns:constituent cat="ADVX" ID="c_57">
+                <tns:constituent cat="ADV" ID="c_56">
+                  <tns:tokenRef tokID="t_29"></tns:tokenRef>
+                </tns:constituent>
+              </tns:constituent>
+            </tns:constituent>
+            <tns:constituent cat="LK" ID="c_61">
+              <tns:constituent cat="VXFIN" ID="c_60">
+                <tns:constituent cat="VVFIN" ID="c_59">
+                  <tns:tokenRef tokID="t_30"></tns:tokenRef>
+                </tns:constituent>
+              </tns:constituent>
+            </tns:constituent>
+            <tns:constituent cat="MF" ID="c_70">
+              <tns:constituent cat="NX" ID="c_63">
+                <tns:constituent cat="PPER" ID="c_62">
+                  <tns:tokenRef tokID="t_31"></tns:tokenRef>
+                </tns:constituent>
+              </tns:constituent>
+              <tns:constituent cat="NX" ID="c_65">
+                <tns:constituent cat="PPER" ID="c_64">
+                  <tns:tokenRef tokID="t_32"></tns:tokenRef>
+                </tns:constituent>
+              </tns:constituent>
+              <tns:constituent cat="NX" ID="c_67">
+                <tns:constituent cat="PRF" ID="c_66">
+                  <tns:tokenRef tokID="t_33"></tns:tokenRef>
+                </tns:constituent>
+              </tns:constituent>
+              <tns:constituent cat="ADVX" ID="c_69">
+                <tns:constituent cat="ADV" ID="c_68">
+                  <tns:tokenRef tokID="t_34"></tns:tokenRef>
+                </tns:constituent>
+              </tns:constituent>
+            </tns:constituent>
+            <tns:constituent cat="VC" ID="c_75">
+              <tns:constituent cat="VXINF" ID="c_72">
+                <tns:constituent cat="VVINF" ID="c_71">
+                  <tns:tokenRef tokID="t_35"></tns:tokenRef>
+                </tns:constituent>
+              </tns:constituent>
+              <tns:constituent cat="VXINF" ID="c_74">
+                <tns:constituent cat="VVINF" ID="c_73">
+                  <tns:tokenRef tokID="t_36"></tns:tokenRef>
+                </tns:constituent>
+              </tns:constituent>
+            </tns:constituent>
+          </tns:constituent>
+          <tns:constituent cat="$." ID="c_77">
+            <tns:tokenRef tokID="t_37"></tns:tokenRef>
+          </tns:constituent>
+          <tns:constituent cat="$" ID="c_78">
+            <tns:tokenRef tokID="t_38"></tns:tokenRef>
+          </tns:constituent>
+        </tns:constituent>
+      </tns:parse>
+      <tns:parse>
+        <tns:constituent cat="Start" ID="c_160">
+          <tns:constituent cat="SIMPX" ID="c_106">
+            <tns:constituent cat="VF" ID="c_84">
+              <tns:constituent cat="ADJX" ID="c_83">
+                <tns:constituent cat="ADVX" ID="c_81">
+                  <tns:constituent cat="ADV" ID="c_80">
+                    <tns:tokenRef tokID="t_39"></tns:tokenRef>
+                  </tns:constituent>
+                </tns:constituent>
+                <tns:constituent cat="ADJD" ID="c_82">
+                  <tns:tokenRef tokID="t_40"></tns:tokenRef>
+                </tns:constituent>
+              </tns:constituent>
+            </tns:constituent>
+            <tns:constituent cat="LK" ID="c_87">
+              <tns:constituent cat="VXFIN" ID="c_86">
+                <tns:constituent cat="VAFIN" ID="c_85">
+                  <tns:tokenRef tokID="t_41"></tns:tokenRef>
+                </tns:constituent>
+              </tns:constituent>
+            </tns:constituent>
+            <tns:constituent cat="MF" ID="c_105">
+              <tns:constituent cat="NX" ID="c_90">
+                <tns:constituent cat="ART" ID="c_88">
+                  <tns:tokenRef tokID="t_42"></tns:tokenRef>
+                </tns:constituent>
+                <tns:constituent cat="NN" ID="c_89">
+                  <tns:tokenRef tokID="t_43"></tns:tokenRef>
+                </tns:constituent>
+              </tns:constituent>
+              <tns:constituent cat="ADJX" ID="c_96">
+                <tns:constituent cat="ADJX" ID="c_92">
+                  <tns:constituent cat="ADJD" ID="c_91">
+                    <tns:tokenRef tokID="t_44"></tns:tokenRef>
+                  </tns:constituent>
+                </tns:constituent>
+                <tns:constituent cat="KON" ID="c_93">
+                  <tns:tokenRef tokID="t_45"></tns:tokenRef>
+                </tns:constituent>
+                <tns:constituent cat="ADJX" ID="c_95">
+                  <tns:constituent cat="ADJD" ID="c_94">
+                    <tns:tokenRef tokID="t_46"></tns:tokenRef>
+                  </tns:constituent>
+                </tns:constituent>
+              </tns:constituent>
+              <tns:constituent cat="NX" ID="c_104">
+                <tns:constituent cat="PPOSAT" ID="c_97">
+                  <tns:tokenRef tokID="t_47"></tns:tokenRef>
+                </tns:constituent>
+                <tns:constituent cat="NX" ID="c_103">
+                  <tns:constituent cat="NX" ID="c_99">
+                    <tns:constituent cat="NN" ID="c_98">
+                      <tns:tokenRef tokID="t_48"></tns:tokenRef>
+                    </tns:constituent>
+                  </tns:constituent>
+                  <tns:constituent cat="KON" ID="c_100">
+                    <tns:tokenRef tokID="t_49"></tns:tokenRef>
+                  </tns:constituent>
+                  <tns:constituent cat="NX" ID="c_102">
+                    <tns:constituent cat="NN" ID="c_101">
+                      <tns:tokenRef tokID="t_50"></tns:tokenRef>
+                    </tns:constituent>
+                  </tns:constituent>
+                </tns:constituent>
+              </tns:constituent>
+            </tns:constituent>
+          </tns:constituent>
+          <tns:constituent cat="$." ID="c_107">
+            <tns:tokenRef tokID="t_51"></tns:tokenRef>
+          </tns:constituent>
+          <tns:constituent cat="SIMPX" ID="c_115">
+            <tns:constituent cat="LK" ID="c_110">
+              <tns:constituent cat="VXFIN" ID="c_109">
+                <tns:constituent cat="VVIMP" ID="c_108">
+                  <tns:tokenRef tokID="t_52"></tns:tokenRef>
+                </tns:constituent>
+              </tns:constituent>
+            </tns:constituent>
+            <tns:constituent cat="MF" ID="c_114">
+              <tns:constituent cat="NX" ID="c_113">
+                <tns:constituent cat="PIAT" ID="c_111">
+                  <tns:tokenRef tokID="t_53"></tns:tokenRef>
+                </tns:constituent>
+                <tns:constituent cat="NN" ID="c_112">
+                  <tns:tokenRef tokID="t_54"></tns:tokenRef>
+                </tns:constituent>
+              </tns:constituent>
+            </tns:constituent>
+          </tns:constituent>
+          <tns:constituent cat="$," ID="c_116">
+            <tns:tokenRef tokID="t_55"></tns:tokenRef>
+          </tns:constituent>
+          <tns:constituent cat="SIMPX" ID="c_130">
+            <tns:constituent cat="C" ID="c_119">
+              <tns:constituent cat="NX" ID="c_118">
+                <tns:constituent cat="PRELS" ID="c_117">
+                  <tns:tokenRef tokID="t_56"></tns:tokenRef>
+                </tns:constituent>
+              </tns:constituent>
+            </tns:constituent>
+            <tns:constituent cat="MF" ID="c_124">
+              <tns:constituent cat="NX" ID="c_121">
+                <tns:constituent cat="PIS" ID="c_120">
+                  <tns:tokenRef tokID="t_57"></tns:tokenRef>
+                </tns:constituent>
+              </tns:constituent>
+              <tns:constituent cat="ADVX" ID="c_123">
+                <tns:constituent cat="PTKNEG" ID="c_122">
+                  <tns:tokenRef tokID="t_58"></tns:tokenRef>
+                </tns:constituent>
+              </tns:constituent>
+            </tns:constituent>
+            <tns:constituent cat="VC" ID="c_129">
+              <tns:constituent cat="VXINF" ID="c_126">
+                <tns:constituent cat="VVINF" ID="c_125">
+                  <tns:tokenRef tokID="t_59"></tns:tokenRef>
+                </tns:constituent>
+              </tns:constituent>
+              <tns:constituent cat="VXFIN" ID="c_128">
+                <tns:constituent cat="VMFIN" ID="c_127">
+                  <tns:tokenRef tokID="t_60"></tns:tokenRef>
+                </tns:constituent>
+              </tns:constituent>
+            </tns:constituent>
+          </tns:constituent>
+          <tns:constituent cat="$," ID="c_131">
+            <tns:tokenRef tokID="t_61"></tns:tokenRef>
+          </tns:constituent>
+          <tns:constituent cat="SIMPX" ID="c_145">
+            <tns:constituent cat="KOORD" ID="c_133">
+              <tns:constituent cat="KON" ID="c_132">
+                <tns:tokenRef tokID="t_62"></tns:tokenRef>
+              </tns:constituent>
+            </tns:constituent>
+            <tns:constituent cat="LK" ID="c_136">
+              <tns:constituent cat="VXFIN" ID="c_135">
+                <tns:constituent cat="VVFIN" ID="c_134">
+                  <tns:tokenRef tokID="t_63"></tns:tokenRef>
+                </tns:constituent>
+              </tns:constituent>
+            </tns:constituent>
+            <tns:constituent cat="MF" ID="c_144">
+              <tns:constituent cat="PX" ID="c_140">
+                <tns:constituent cat="APPR" ID="c_137">
+                  <tns:tokenRef tokID="t_64"></tns:tokenRef>
+                </tns:constituent>
+                <tns:constituent cat="NX" ID="c_139">
+                  <tns:constituent cat="PIS" ID="c_138">
+                    <tns:tokenRef tokID="t_65"></tns:tokenRef>
+                  </tns:constituent>
+                </tns:constituent>
+              </tns:constituent>
+              <tns:constituent cat="NX" ID="c_143">
+                <tns:constituent cat="PIAT" ID="c_141">
+                  <tns:tokenRef tokID="t_66"></tns:tokenRef>
+                </tns:constituent>
+                <tns:constituent cat="NN" ID="c_142">
+                  <tns:tokenRef tokID="t_67"></tns:tokenRef>
+                </tns:constituent>
+              </tns:constituent>
+            </tns:constituent>
+          </tns:constituent>
+          <tns:constituent cat="$," ID="c_146">
+            <tns:tokenRef tokID="t_68"></tns:tokenRef>
+          </tns:constituent>
+          <tns:constituent cat="SIMPX" ID="c_158">
+            <tns:constituent cat="C" ID="c_149">
+              <tns:constituent cat="NX" ID="c_148">
+                <tns:constituent cat="PRELS" ID="c_147">
+                  <tns:tokenRef tokID="t_69"></tns:tokenRef>
+                </tns:constituent>
+              </tns:constituent>
+            </tns:constituent>
+            <tns:constituent cat="MF" ID="c_154">
+              <tns:constituent cat="NX" ID="c_151">
+                <tns:constituent cat="PPER" ID="c_150">
+                  <tns:tokenRef tokID="t_70"></tns:tokenRef>
+                </tns:constituent>
+              </tns:constituent>
+              <tns:constituent cat="ADVX" ID="c_153">
+                <tns:constituent cat="ADV" ID="c_152">
+                  <tns:tokenRef tokID="t_71"></tns:tokenRef>
+                </tns:constituent>
+              </tns:constituent>
+            </tns:constituent>
+            <tns:constituent cat="VC" ID="c_157">
+              <tns:constituent cat="VXFIN" ID="c_156">
+                <tns:constituent cat="VVFIN" ID="c_155">
+                  <tns:tokenRef tokID="t_72"></tns:tokenRef>
+                </tns:constituent>
+              </tns:constituent>
+            </tns:constituent>
+          </tns:constituent>
+          <tns:constituent cat="$." ID="c_159">
+            <tns:tokenRef tokID="t_73"></tns:tokenRef>
+          </tns:constituent>
+        </tns:constituent>
+      </tns:parse>
+    </tns:parsing>
+    <tns:POStags tagset="stts">
+      <tns:tag tokID="t_0" ID="pt_0">$(</tns:tag>
+      <tns:tag tokID="t_1" ID="pt_1">VVIMP</tns:tag>
+      <tns:tag tokID="t_2" ID="pt_2">ADV</tns:tag>
+      <tns:tag tokID="t_3" ID="pt_3">ADV</tns:tag>
+      <tns:tag tokID="t_4" ID="pt_4">KON</tns:tag>
+      <tns:tag tokID="t_5" ID="pt_5">ADV</tns:tag>
+      <tns:tag tokID="t_6" ID="pt_6">$.</tns:tag>
+      <tns:tag tokID="t_7" ID="pt_7">$(</tns:tag>
+      <tns:tag tokID="t_8" ID="pt_8">VVFIN</tns:tag>
+      <tns:tag tokID="t_9" ID="pt_9">ART</tns:tag>
+      <tns:tag tokID="t_10" ID="pt_10">ADJA</tns:tag>
+      <tns:tag tokID="t_11" ID="pt_11">NN</tns:tag>
+      <tns:tag tokID="t_12" ID="pt_12">PPOSAT</tns:tag>
+      <tns:tag tokID="t_13" ID="pt_13">NN</tns:tag>
+      <tns:tag tokID="t_14" ID="pt_14">PTKVZ</tns:tag>
+      <tns:tag tokID="t_15" ID="pt_15">$.</tns:tag>
+      <tns:tag tokID="t_16" ID="pt_16">$(</tns:tag>
+      <tns:tag tokID="t_17" ID="pt_17">APPR</tns:tag>
+      <tns:tag tokID="t_18" ID="pt_18">NN</tns:tag>
+      <tns:tag tokID="t_19" ID="pt_19">ADV</tns:tag>
+      <tns:tag tokID="t_20" ID="pt_20">$,</tns:tag>
+      <tns:tag tokID="t_21" ID="pt_21">ADJA</tns:tag>
+      <tns:tag tokID="t_22" ID="pt_22">NN</tns:tag>
+      <tns:tag tokID="t_23" ID="pt_23">$(</tns:tag>
+      <tns:tag tokID="t_24" ID="pt_24">$,</tns:tag>
+      <tns:tag tokID="t_25" ID="pt_25">VVFIN</tns:tag>
+      <tns:tag tokID="t_26" ID="pt_26">PDS</tns:tag>
+      <tns:tag tokID="t_27" ID="pt_27">$,</tns:tag>
+      <tns:tag tokID="t_28" ID="pt_28">$(</tns:tag>
+      <tns:tag tokID="t_29" ID="pt_29">ADV</tns:tag>
+      <tns:tag tokID="t_30" ID="pt_30">VMFIN</tns:tag>
+      <tns:tag tokID="t_31" ID="pt_31">PPER</tns:tag>
+      <tns:tag tokID="t_32" ID="pt_32">PPER</tns:tag>
+      <tns:tag tokID="t_33" ID="pt_33">PPER</tns:tag>
+      <tns:tag tokID="t_34" ID="pt_34">ADV</tns:tag>
+      <tns:tag tokID="t_35" ID="pt_35">VVINF</tns:tag>
+      <tns:tag tokID="t_36" ID="pt_36">VVINF</tns:tag>
+      <tns:tag tokID="t_37" ID="pt_37">$.</tns:tag>
+      <tns:tag tokID="t_38" ID="pt_38">$(</tns:tag>
+      <tns:tag tokID="t_39" ID="pt_39">ADV</tns:tag>
+      <tns:tag tokID="t_40" ID="pt_40">ADJD</tns:tag>
+      <tns:tag tokID="t_41" ID="pt_41">VAFIN</tns:tag>
+      <tns:tag tokID="t_42" ID="pt_42">ART</tns:tag>
+      <tns:tag tokID="t_43" ID="pt_43">NN</tns:tag>
+      <tns:tag tokID="t_44" ID="pt_44">NN</tns:tag>
+      <tns:tag tokID="t_45" ID="pt_45">KON</tns:tag>
+      <tns:tag tokID="t_46" ID="pt_46">ADJD</tns:tag>
+      <tns:tag tokID="t_47" ID="pt_47">PPOSAT</tns:tag>
+      <tns:tag tokID="t_48" ID="pt_48">NN</tns:tag>
+      <tns:tag tokID="t_49" ID="pt_49">KON</tns:tag>
+      <tns:tag tokID="t_50" ID="pt_50">NN</tns:tag>
+      <tns:tag tokID="t_51" ID="pt_51">$.</tns:tag>
+      <tns:tag tokID="t_52" ID="pt_52">VVIMP</tns:tag>
+      <tns:tag tokID="t_53" ID="pt_53">PIAT</tns:tag>
+      <tns:tag tokID="t_54" ID="pt_54">NN</tns:tag>
+      <tns:tag tokID="t_55" ID="pt_55">$,</tns:tag>
+      <tns:tag tokID="t_56" ID="pt_56">PRELS</tns:tag>
+      <tns:tag tokID="t_57" ID="pt_57">PIS</tns:tag>
+      <tns:tag tokID="t_58" ID="pt_58">PTKNEG</tns:tag>
+      <tns:tag tokID="t_59" ID="pt_59">VVINF</tns:tag>
+      <tns:tag tokID="t_60" ID="pt_60">VMFIN</tns:tag>
+      <tns:tag tokID="t_61" ID="pt_61">$,</tns:tag>
+      <tns:tag tokID="t_62" ID="pt_62">KON</tns:tag>
+      <tns:tag tokID="t_63" ID="pt_63">VVFIN</tns:tag>
+      <tns:tag tokID="t_64" ID="pt_64">APPR</tns:tag>
+      <tns:tag tokID="t_65" ID="pt_65">ADJA</tns:tag>
+      <tns:tag tokID="t_66" ID="pt_66">PIAT</tns:tag>
+      <tns:tag tokID="t_67" ID="pt_67">NN</tns:tag>
+      <tns:tag tokID="t_68" ID="pt_68">$,</tns:tag>
+      <tns:tag tokID="t_69" ID="pt_69">PRELS</tns:tag>
+      <tns:tag tokID="t_70" ID="pt_70">PPER</tns:tag>
+      <tns:tag tokID="t_71" ID="pt_71">ADV</tns:tag>
+      <tns:tag tokID="t_72" ID="pt_72">VVFIN</tns:tag>
+      <tns:tag tokID="t_73" ID="pt_73">$.</tns:tag>
+    </tns:POStags>
+    <tns:lemmas>
+      <tns:lemma tokID="t_0">"</tns:lemma>
+      <tns:lemma tokID="t_1">gehen</tns:lemma>
+      <tns:lemma tokID="t_2">doch</tns:lemma>
+      <tns:lemma tokID="t_3">gerade</tns:lemma>
+      <tns:lemma tokID="t_4">und</tns:lemma>
+      <tns:lemma tokID="t_5">vorwärts</tns:lemma>
+      <tns:lemma tokID="t_6">!</tns:lemma>
+      <tns:lemma tokID="t_7">"</tns:lemma>
+      <tns:lemma tokID="t_8">rufen</tns:lemma>
+      <tns:lemma tokID="t_9">eine</tns:lemma>
+      <tns:lemma tokID="t_10">jung</tns:lemma>
+      <tns:lemma tokID="t_11">Krebs</tns:lemma>
+      <tns:lemma tokID="t_12">sein</tns:lemma>
+      <tns:lemma tokID="t_13">Mutter</tns:lemma>
+      <tns:lemma tokID="t_14">zu</tns:lemma>
+      <tns:lemma tokID="t_15">.</tns:lemma>
+      <tns:lemma tokID="t_16">"</tns:lemma>
+      <tns:lemma tokID="t_17">von</tns:lemma>
+      <tns:lemma tokID="t_18">Herz</tns:lemma>
+      <tns:lemma tokID="t_19">gerne</tns:lemma>
+      <tns:lemma tokID="t_20">,</tns:lemma>
+      <tns:lemma tokID="t_21">lieb</tns:lemma>
+      <tns:lemma tokID="t_22">Mutter</tns:lemma>
+      <tns:lemma tokID="t_23">"</tns:lemma>
+      <tns:lemma tokID="t_24">,</tns:lemma>
+      <tns:lemma tokID="t_25">antworten</tns:lemma>
+      <tns:lemma tokID="t_26">diese</tns:lemma>
+      <tns:lemma tokID="t_27">,</tns:lemma>
+      <tns:lemma tokID="t_28">"</tns:lemma>
+      <tns:lemma tokID="t_29">nur</tns:lemma>
+      <tns:lemma tokID="t_30">mögen</tns:lemma>
+      <tns:lemma tokID="t_31">ich</tns:lemma>
+      <tns:lemma tokID="t_32">es</tns:lemma>
+      <tns:lemma tokID="t_33">du</tns:lemma>
+      <tns:lemma tokID="t_34">ebenso</tns:lemma>
+      <tns:lemma tokID="t_35">machen</tns:lemma>
+      <tns:lemma tokID="t_36">sehen</tns:lemma>
+      <tns:lemma tokID="t_37">.</tns:lemma>
+      <tns:lemma tokID="t_38">"</tns:lemma>
+      <tns:lemma tokID="t_39">jedoch</tns:lemma>
+      <tns:lemma tokID="t_40">vergeblich</tns:lemma>
+      <tns:lemma tokID="t_41">sein</tns:lemma>
+      <tns:lemma tokID="t_42">die</tns:lemma>
+      <tns:lemma tokID="t_43">Mutter</tns:lemma>
+      <tns:lemma tokID="t_44">Anstrengung</tns:lemma>
+      <tns:lemma tokID="t_45">und</tns:lemma>
+      <tns:lemma tokID="t_46">sichtbar</tns:lemma>
+      <tns:lemma tokID="t_47">ihr</tns:lemma>
+      <tns:lemma tokID="t_48">Klügelei</tns:lemma>
+      <tns:lemma tokID="t_49">und</tns:lemma>
+      <tns:lemma tokID="t_50">Tadelsucht</tns:lemma>
+      <tns:lemma tokID="t_51">.</tns:lemma>
+      <tns:lemma tokID="t_52">geben</tns:lemma>
+      <tns:lemma tokID="t_53">keine</tns:lemma>
+      <tns:lemma tokID="t_54">Befehl</tns:lemma>
+      <tns:lemma tokID="t_55">,</tns:lemma>
+      <tns:lemma tokID="t_56">die</tns:lemma>
+      <tns:lemma tokID="t_57">man</tns:lemma>
+      <tns:lemma tokID="t_58">nicht</tns:lemma>
+      <tns:lemma tokID="t_59">vollbringen</tns:lemma>
+      <tns:lemma tokID="t_60">können</tns:lemma>
+      <tns:lemma tokID="t_61">,</tns:lemma>
+      <tns:lemma tokID="t_62">und</tns:lemma>
+      <tns:lemma tokID="t_63">tadeln</tns:lemma>
+      <tns:lemma tokID="t_64">an</tns:lemma>
+      <tns:lemma tokID="t_65">ander</tns:lemma>
+      <tns:lemma tokID="t_66">keine</tns:lemma>
+      <tns:lemma tokID="t_67">Fehler</tns:lemma>
+      <tns:lemma tokID="t_68">,</tns:lemma>
+      <tns:lemma tokID="t_69">die</tns:lemma>
+      <tns:lemma tokID="t_70">du</tns:lemma>
+      <tns:lemma tokID="t_71">selbst</tns:lemma>
+      <tns:lemma tokID="t_72">begehen</tns:lemma>
+      <tns:lemma tokID="t_73">!</tns:lemma>
+    </tns:lemmas>
+    <tns:namedEntities></tns:namedEntities>
+  </tns:TextCorpus>
+</D-Spin>

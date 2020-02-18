@@ -1,0 +1,28 @@
+# newdoc id = T990507.2
+# sent_id = s1
+# text = Veruntreute die AWO Spendengeld?
+1	Veruntreute	veruntreuen	VERB	VVFIN	Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin	0	root	_	Morph=3sit|TopoField=LK
+2	die	die	DET	ART	Case=Nom|Definite=Def|Gender=Neut|Number=Sing|PronType=Art	3	det	_	Morph=nsf|TopoField=MF
+3	AWO	AWO	NOUN	NN	Case=Nom|Gender=Neut|Number=Sing	1	nsubj	_	NE=ORG_2|Morph=nsf|TopoField=MF
+4	Spendengeld	Spendengeld	NOUN	NN	Case=Acc|Gender=Fem|Number=Sing	1	obj	_	SpaceAfter=No|Morph=asn|TopoField=MF
+5	?	?	PUNCT	$.	_	1	punct	_	_
+
+# sent_id = s2
+# text = Staatsanwaltschaft muß AWO-Konten prüfen/Flossen 165.000 Mark Sammelgelder für Flutopfer in ein Altenheim in Danzig?
+1	Staatsanwaltschaft	Staatsanwaltschaft	NOUN	NN	Case=Nom|Gender=Neut|Number=Sing	4	nsubj	_	Morph=nsf|TopoField=VF
+2	muß	müssen	AUX	VMFIN	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	4	aux	_	Morph=3sis|TopoField=LK
+3	AWO-Konten	AWO-Konto	NOUN	NN	Case=Acc|Gender=Fem|Number=Plur	4	obj	_	Morph=apn|TopoField=MF
+4	prüfen	prüfen	VERB	VVINF	_	0	root	_	SpaceAfter=No|TopoField=VC
+5	/	/	PUNCT	$(	_	4	punct	_	SpaceAfter=No
+6	Flossen	fließen	VERB	VVFIN	Mood=Ind|Number=Plur|Person=3|Tense=Past|VerbForm=Fin	4	parataxis	_	Morph=3pit|TopoField=LK
+7	165.000	165.000	NUM	CARD	NumType=Card	8	nummod	_	TopoField=MF
+8	Mark	Mark	NOUN	NN	Case=Nom|Gender=Neut|Number=Plur	6	nsubj	_	Morph=npf|TopoField=MF
+9	Sammelgelder	Sammelgeld	NOUN	NN	Case=Nom|Gender=Fem|Number=Plur	8	appos	_	Morph=npn|TopoField=MF
+10	für	für	ADP	APPR	Case=Acc	11	case	_	Morph=a|TopoField=MF
+11	Flutopfer	Flutopfer	NOUN	NN	Case=Acc|Gender=Fem|Number=Plur	8	nmod	_	Morph=apn|TopoField=MF
+12	in	in	ADP	APPR	Case=Acc	14	case	_	Morph=a|TopoField=MF
+13	ein	ein	DET	ART	Case=Acc|Definite=Ind|Gender=Fem|Number=Sing|PronType=Art	14	det	_	Morph=asn|TopoField=MF
+14	Altenheim	Altenheim	NOUN	NN	Case=Acc|Gender=Fem|Number=Sing	6	obl	_	Morph=asn|TopoField=MF
+15	in	in	ADP	APPR	Case=Dat	16	case	_	Morph=d|TopoField=MF
+16	Danzig	Danzig	PROPN	NE	Case=Dat|Gender=Fem|Number=Sing	6	obl	_	SpaceAfter=No|NE=GPE_20|Morph=dsn|TopoField=MF
+17	?	?	PUNCT	$.	_	6	punct	_	_

@@ -1,0 +1,805 @@
+{
+  "discriminator": "http://vocab.lappsgrid.org/ns/media/jsonld#lif",
+  "payload": {
+    "@context": "http://vocab.lappsgrid.org/context-1.0.0.jsonld",
+    "metadata": {},
+    "text": {
+      "@value": "Karen flew to New York. She went to see her cousin. \n",
+      "@language": "en"
+    },
+    "views": [
+      {
+        "id": "v1",
+        "metadata": {
+          "contains": {
+            "http://vocab.lappsgrid.org/Sentence": {
+              "producer": "hand-written-sample",
+              "type": "sentences"
+            },
+            "http://vocab.lappsgrid.org/Token#pos": {
+              "producer": "hand-written-sample",
+              "type": "tokens-pos",
+              "posTagSet": "penntb"
+            },
+            "http://vocab.lappsgrid.org/NamedEntity": {
+              "producer": "hand-written-sample",
+              "type": "namedentities",
+              "namedEntityCategorySet": "conll"
+            },
+            "http://vocab.lappsgrid.org/PhraseStructure": {
+              "producer": "hand-written-sample",
+              "type": "phrasestructures",
+              "categorySet": "penntb"
+            },
+            "http://vocab.lappsgrid.org/Constituent": {
+              "producer": "hand-written-sample",
+              "type": "constituents"
+            },
+            "http://vocab.lappsgrid.org/DependencyStructure": {
+              "producer": "hand-written-sample",
+              "type": "dependencystructures",
+              "dependencySet": "stanford"
+            },
+            "http://vocab.lappsgrid.org/Dependency": {
+              "producer": "hand-written-sample",
+              "type": "dependencies"
+            },
+            "http://vocab.lappsgrid.org/Coreference": {
+              "producer": "hand-written-sample",
+              "type": "coreferencechains"
+            },
+            "http://vocab.lappsgrid.org/Markable": {
+              "producer": "hand-written-sample",
+              "type": "markables"
+            }
+          }
+        },
+        "annotations": [
+          {
+            "id": "s_0",
+            "start": 0,
+            "end": 23,
+            "@type": "http://vocab.lappsgrid.org/Sentence",
+            "features": {
+              "sentence": "Karen flew to New York."
+            }
+          },
+          {
+            "id": "s_1",
+            "start": 24,
+            "end": 51,
+            "@type": "http://vocab.lappsgrid.org/Sentence",
+            "features": {
+              "sentence": "She went to see her cousin."
+            }
+          },
+          {
+            "id": "tk_0_0",
+            "start": 0,
+            "end": 5,
+            "@type": "http://vocab.lappsgrid.org/Token",
+            "features": {
+              "word": "Karen",
+              "lemma": "Karen",
+              "pos": "NNP"
+            }
+          },
+          {
+            "id": "tk_0_1",
+            "start": 6,
+            "end": 10,
+            "@type": "http://vocab.lappsgrid.org/Token",
+            "features": {
+              "word": "flew",
+              "lemma": "flew",
+              "pos": "VBD"
+            }
+          },
+          {
+            "id": "tk_0_2",
+            "start": 11,
+            "end": 13,
+            "@type": "http://vocab.lappsgrid.org/Token",
+            "features": {
+              "word": "to",
+              "lemma": "to",              
+              "pos": "TO"
+            }
+          },
+          {
+            "id": "tk_0_3",
+            "start": 14,
+            "end": 17,
+            "@type": "http://vocab.lappsgrid.org/Token",
+            "features": {
+              "word": "New",
+              "lemma": "New",
+              "pos": "NNP"
+            }
+          },
+          {
+            "id": "tk_0_4",
+            "start": 18,
+            "end": 22,
+            "@type": "http://vocab.lappsgrid.org/Token",
+            "features": {
+              "word": "York",
+              "lemma": "York",
+              "pos": "NNP"
+            }
+          },
+          {
+            "id": "tk_0_5",
+            "start": 22,
+            "end": 23,
+            "@type": "http://vocab.lappsgrid.org/Token",
+            "features": {
+              "word": ".",
+              "lemma": ".",
+              "pos": "."
+            }
+          },
+          {
+            "id": "tk_1_0",
+            "start": 24,
+            "end": 27,
+            "@type": "http://vocab.lappsgrid.org/Token",
+            "features": {
+              "word": "She",
+              "lemma": "She",
+              "pos": "PRP"
+            }
+          },
+          {
+            "id": "tk_1_1",
+            "start": 28,
+            "end": 32,
+            "@type": "http://vocab.lappsgrid.org/Token",
+            "features": {
+              "word": "went",
+              "lemma": "went",
+              "pos": "VBD"
+            }
+          },
+          {
+            "id": "tk_1_2",
+            "start": 33,
+            "end": 35,
+            "@type": "http://vocab.lappsgrid.org/Token",
+            "features": {
+              "word": "to",
+              "lemma": "to",
+              "pos": "TO"
+            }
+          },
+          {
+            "id": "tk_1_3",
+            "start": 36,
+            "end": 39,
+            "@type": "http://vocab.lappsgrid.org/Token",
+            "features": {
+              "word": "see",
+              "lemma": "see",
+              "pos": "VB"
+            }
+          },
+          {
+            "id": "tk_1_4",
+            "start": 40,
+            "end": 43,
+            "@type": "http://vocab.lappsgrid.org/Token",
+            "features": {
+              "word": "her",
+              "lemma": "her",
+              "pos": "PRP$"
+            }
+          },
+          {
+            "id": "tk_1_5",
+            "start": 44,
+            "end": 50,
+            "@type": "http://vocab.lappsgrid.org/Token",
+            "features": {
+              "word": "cousin",
+              "lemma": "cousin",
+              "pos": "NN"
+            }
+          },
+          {
+            "id": "tk_1_6",
+            "start": 50,
+            "end": 51,
+            "@type": "http://vocab.lappsgrid.org/Token",
+            "features": {
+              "word": ".",
+              "lemma": ".",
+              "pos": "."
+            }
+          },
+          {
+            "id": "ne_0",
+            "start": 0,
+            "end": 5,
+            "@type": "http://vocab.lappsgrid.org/NamedEntity",
+            "features": {
+              "category": "PERSON",
+              "word": "Karen"
+            }
+          },
+          {
+            "id": "ne_1",
+            "start": 14,
+            "end": 22,
+            "@type": "http://vocab.lappsgrid.org/NamedEntity",
+            "features": {
+              "category": "LOCATION",
+              "word": "New York"
+            }
+          },
+          {
+            "id": "ps_0",
+            "start": 0,
+            "end": 23,
+            "@type": "http://vocab.lappsgrid.org/PhraseStructure",
+            "features": {
+              "sentence": "Karen flew to New York.",
+              "penntree": "(ROOT [40.118]\n  (S [39.965]\n    (NP [12.050] (NNP Karen))\n    (VP [26.780] (VBD flew)\n      (PP [14.690] (TO to)\n        (NP [12.219] (NNP New) (NNP York))))\n    (. .)))\n",
+              "constituents": [
+                "c_0_0",
+                "c_0_1",
+                "c_0_2",
+                "c_0_3",
+                "c_0_4",
+                "c_0_5",
+                "c_0_6",
+                "c_0_7",
+                "c_0_8",
+                "c_0_9",
+                "c_0_10",
+                "c_0_11"
+              ]
+            }
+          },
+          {
+            "id": "c_0_0",
+            "@type": "http://vocab.lappsgrid.org/Constituent",
+            "features": {
+              "label": "ROOT",
+              "children": [
+                "c_0_1"
+              ],
+              "parent": null
+            }
+          },
+          {
+            "id": "c_0_1",
+            "@type": "http://vocab.lappsgrid.org/Constituent",
+            "features": {
+              "label": "S",
+              "children": [
+                "c_0_2",
+                "c_0_3",
+                "c_0_4"
+              ],
+              "parent": "c_0_0"
+            }
+          },
+          {
+            "id": "c_0_2",
+            "@type": "http://vocab.lappsgrid.org/Constituent",
+            "features": {
+              "label": "NP",
+              "children": [
+                "c_0_5"
+              ],
+              "parent": "c_0_1"
+            }
+          },
+          {
+            "id": "c_0_3",
+            "@type": "http://vocab.lappsgrid.org/Constituent",
+            "features": {
+              "label": "VP",
+              "children": [
+                "c_0_6",
+                "c_0_7"
+              ],
+              "parent": "c_0_1"
+            }
+          },
+          {
+            "id": "c_0_4",
+            "@type": "http://vocab.lappsgrid.org/Constituent",
+            "features": {
+              "label": ".",
+              "children": [
+                "tk_0_5"
+              ],
+              "parent": "c_0_1"
+            }
+          },
+          {
+            "id": "c_0_5",
+            "@type": "http://vocab.lappsgrid.org/Constituent",
+            "features": {
+              "label": "NNP",
+              "children": [
+                "tk_0_0"
+              ],
+              "parent": "c_0_2"
+            }
+          },
+          {
+            "id": "c_0_6",
+            "@type": "http://vocab.lappsgrid.org/Constituent",
+            "features": {
+              "label": "VBD",
+              "children": [
+                "tk_0_1"
+              ],
+              "parent": "c_0_3"
+            }
+          },
+          {
+            "id": "c_0_7",
+            "@type": "http://vocab.lappsgrid.org/Constituent",
+            "features": {
+              "label": "PP",
+              "children": [
+                "c_0_8",
+                "c_0_9"
+              ],
+              "parent": "c_0_3"
+            }
+          },
+          {
+            "id": "c_0_8",
+            "@type": "http://vocab.lappsgrid.org/Constituent",
+            "features": {
+              "label": "TO",
+              "children": [
+                "tk_0_2"
+              ],
+              "parent": "c_0_7"
+            }
+          },
+          {
+            "id": "c_0_9",
+            "@type": "http://vocab.lappsgrid.org/Constituent",
+            "features": {
+              "label": "NP",
+              "children": [
+                "c_0_10",
+                "c_0_11"
+              ],
+              "parent": "c_0_7"
+            }
+          },
+          {
+            "id": "c_0_10",
+            "@type": "http://vocab.lappsgrid.org/Constituent",
+            "features": {
+              "label": "NNP",
+              "children": [
+                "tk_0_3"
+              ],
+              "parent": "c_0_9"
+            }
+          },
+          {
+            "id": "c_0_11",
+            "@type": "http://vocab.lappsgrid.org/Constituent",
+            "features": {
+              "label": "NNP",
+              "children": [
+                "tk_0_4"
+              ],
+              "parent": "c_0_9"
+            }
+          },
+          {
+            "id": "ps_1",
+            "start": 24,
+            "end": 51,
+            "@type": "http://vocab.lappsgrid.org/PhraseStructure",
+            "features": {
+              "sentence": "She went to see her cousin.",
+              "penntree": "(ROOT [41.530]\n  (S [41.378]\n    (NP [6.482] (PRP She))\n    (VP [33.760] (VBD went)\n      (S [24.257]\n        (VP [23.993] (TO to)\n          (VP [23.963] (VB see)\n            (NP [17.243] (PRP$ her) (NN cousin))))))\n    (. .)))\n",
+              "constituents": [
+                "c_1_0",
+                "c_1_1",
+                "c_1_2",
+                "c_1_3",
+                "c_1_4",
+                "c_1_5",
+                "c_1_6",
+                "c_1_7",
+                "c_1_8",
+                "c_1_9",
+                "c_1_10",
+                "c_1_11",
+                "c_1_12",
+                "c_1_13",
+                "c_1_14"
+              ]
+            }
+          },
+          {
+            "id": "c_1_0",
+            "@type": "http://vocab.lappsgrid.org/Constituent",
+            "features": {
+              "label": "ROOT",
+              "children": [
+                "c_1_1"
+              ],
+              "parent": null
+            }
+          },
+          {
+            "id": "c_1_1",
+            "@type": "http://vocab.lappsgrid.org/Constituent",
+            "features": {
+              "label": "S",
+              "children": [
+                "c_1_2",
+                "c_1_3",
+                "c_1_4"
+              ],
+              "parent": "c_1_0"
+            }
+          },
+          {
+            "id": "c_1_2",
+            "@type": "http://vocab.lappsgrid.org/Constituent",
+            "features": {
+              "label": "NP",
+              "children": [
+                "c_1_5"
+              ],
+              "parent": "c_1_1"
+            }
+          },
+          {
+            "id": "c_1_3",
+            "@type": "http://vocab.lappsgrid.org/Constituent",
+            "features": {
+              "label": "VP",
+              "children": [
+                "c_1_6",
+                "c_1_7"
+              ],
+              "parent": "c_1_1"
+            }
+          },
+          {
+            "id": "c_1_4",
+            "@type": "http://vocab.lappsgrid.org/Constituent",
+            "features": {
+              "label": ".",
+              "children": [
+                "tk_1_6"
+              ],
+              "parent": "c_1_1"
+            }
+          },
+          {
+            "id": "c_1_5",
+            "@type": "http://vocab.lappsgrid.org/Constituent",
+            "features": {
+              "label": "PRP",
+              "children": [
+                "tk_1_0"
+              ],
+              "parent": "c_1_2"
+            }
+          },
+          {
+            "id": "c_1_6",
+            "@type": "http://vocab.lappsgrid.org/Constituent",
+            "features": {
+              "label": "VBD",
+              "children": [
+                "tk_1_1"
+              ],
+              "parent": "c_1_3"
+            }
+          },
+          {
+            "id": "c_1_7",
+            "@type": "http://vocab.lappsgrid.org/Constituent",
+            "features": {
+              "label": "S",
+              "children": [
+                "c_1_8"
+              ],
+              "parent": "c_1_3"
+            }
+          },
+          {
+            "id": "c_1_8",
+            "@type": "http://vocab.lappsgrid.org/Constituent",
+            "features": {
+              "label": "VP",
+              "children": [
+                "c_1_9",
+                "c_1_10"
+              ],
+              "parent": "c_1_7"
+            }
+          },
+          {
+            "id": "c_1_9",
+            "@type": "http://vocab.lappsgrid.org/Constituent",
+            "features": {
+              "label": "TO",
+              "children": [
+                "tk_1_2"
+              ],
+              "parent": "c_1_8"
+            }
+          },
+          {
+            "id": "c_1_10",
+            "@type": "http://vocab.lappsgrid.org/Constituent",
+            "features": {
+              "label": "VP",
+              "children": [
+                "c_1_11",
+                "c_1_12"
+              ],
+              "parent": "c_1_8"
+            }
+          },
+          {
+            "id": "c_1_11",
+            "@type": "http://vocab.lappsgrid.org/Constituent",
+            "features": {
+              "label": "VB",
+              "children": [
+                "tk_1_3"
+              ],
+              "parent": "c_1_10"
+            }
+          },
+          {
+            "id": "c_1_12",
+            "@type": "http://vocab.lappsgrid.org/Constituent",
+            "features": {
+              "label": "NP",
+              "children": [
+                "c_1_13",
+                "c_1_14"
+              ],
+              "parent": "c_1_10"
+            }
+          },
+          {
+            "id": "c_1_13",
+            "@type": "http://vocab.lappsgrid.org/Constituent",
+            "features": {
+              "label": "PRP$",
+              "children": [
+                "tk_1_4"
+              ],
+              "parent": "c_1_12"
+            }
+          },
+          {
+            "id": "c_1_14",
+            "@type": "http://vocab.lappsgrid.org/Constituent",
+            "features": {
+              "label": "NN",
+              "children": [
+                "tk_1_5"
+              ],
+              "parent": "c_1_12"
+            }
+          },
+          {
+            "id": "ds_0",
+            "start": 0,
+            "end": 23,
+            "@type": "http://vocab.lappsgrid.org/DependencyStructure",
+            "features": {
+              "sentence": "Karen flew to New York.",
+              "dependencies": [
+                "dep_0_0",
+                "dep_0_1",
+                "dep_0_2",
+                "dep_0_3",
+                "dep_0_4"
+              ]
+            }
+          },
+          {
+            "id": "dep_0_0",
+            "@type": "http://vocab.lappsgrid.org/Dependency",
+            "features": {
+              "label": "ROOT",
+              "governor": "null",
+              "dependent": "tk_0_1",
+              "dependent_word": "flew"
+            }
+          },
+          {
+            "id": "dep_0_1",
+            "@type": "http://vocab.lappsgrid.org/Dependency",
+            "features": {
+              "label": "nn",
+              "governor": "tk_0_4",
+              "governor_word": "York",
+              "dependent": "tk_0_3",
+              "dependent_word": "New"
+            }
+          },
+          {
+            "id": "dep_0_2",
+            "@type": "http://vocab.lappsgrid.org/Dependency",
+            "features": {
+              "label": "pobj",
+              "governor": "tk_0_2",
+              "governor_word": "to",
+              "dependent": "tk_0_4",
+              "dependent_word": "York"
+            }
+          },
+          {
+            "id": "dep_0_3",
+            "@type": "http://vocab.lappsgrid.org/Dependency",
+            "features": {
+              "label": "nsubj",
+              "governor": "tk_0_1",
+              "governor_word": "flew",
+              "dependent": "tk_0_0",
+              "dependent_word": "Karen"
+            }
+          },
+          {
+            "id": "dep_0_4",
+            "@type": "http://vocab.lappsgrid.org/Dependency",
+            "features": {
+              "label": "prep",
+              "governor": "tk_0_1",
+              "governor_word": "flew",
+              "dependent": "tk_0_2",
+              "dependent_word": "to"
+            }
+          },
+          {
+            "id": "ds_1",
+            "start": 24,
+            "end": 51,
+            "@type": "http://vocab.lappsgrid.org/DependencyStructure",
+            "features": {
+              "sentence": "She went to see her cousin.",
+              "dependencies": [
+                "dep_1_0",
+                "dep_1_1",
+                "dep_1_2",
+                "dep_1_3",
+                "dep_1_4",
+                "dep_1_5"
+              ]
+            }
+          },
+          {
+            "id": "dep_1_0",
+            "@type": "http://vocab.lappsgrid.org/Dependency",
+            "features": {
+              "label": "ROOT",
+              "governor": "null",
+              "dependent": "tk_1_1",
+              "dependent_word": "went"
+            }
+          },
+          {
+            "id": "dep_1_1",
+            "@type": "http://vocab.lappsgrid.org/Dependency",
+            "features": {
+              "label": "dobj",
+              "governor": "tk_1_3",
+              "governor_word": "see",
+              "dependent": "tk_1_5",
+              "dependent_word": "cousin"
+            }
+          },
+          {
+            "id": "dep_1_2",
+            "@type": "http://vocab.lappsgrid.org/Dependency",
+            "features": {
+              "label": "aux",
+              "governor": "tk_1_3",
+              "governor_word": "see",
+              "dependent": "tk_1_2",
+              "dependent_word": "to"
+            }
+          },
+          {
+            "id": "dep_1_3",
+            "@type": "http://vocab.lappsgrid.org/Dependency",
+            "features": {
+              "label": "poss",
+              "governor": "tk_1_5",
+              "governor_word": "cousin",
+              "dependent": "tk_1_4",
+              "dependent_word": "her"
+            }
+          },
+          {
+            "id": "dep_1_4",
+            "@type": "http://vocab.lappsgrid.org/Dependency",
+            "features": {
+              "label": "xcomp",
+              "governor": "tk_1_1",
+              "governor_word": "went",
+              "dependent": "tk_1_3",
+              "dependent_word": "see"
+            }
+          },
+          {
+            "id": "dep_1_5",
+            "@type": "http://vocab.lappsgrid.org/Dependency",
+            "features": {
+              "label": "nsubj",
+              "governor": "tk_1_1",
+              "governor_word": "went",
+              "dependent": "tk_1_0",
+              "dependent_word": "She"
+            }
+          },
+          {
+            "id": "m_0",
+            "start": 0,
+            "end": 5,
+            "@type": "http://vocab.lappsgrid.org/Markable",
+            "features": {
+              "words": "Karen",
+              "sentenceIndex": "0",
+              "targets": [
+                "tk_0_0"
+              ]
+            }
+          },
+          {
+            "id": "m_1",
+            "start": 24,
+            "end": 27,
+            "@type": "http://vocab.lappsgrid.org/Markable",
+            "features": {
+              "words": "She",
+              "sentenceIndex": "1",
+              "targets": [
+                "tk_1_0"
+              ]
+            }
+          },
+          {
+            "id": "m_2",
+            "start": 40,
+            "end": 43,
+            "@type": "http://vocab.lappsgrid.org/Markable",
+            "features": {
+              "words": "her",
+              "sentenceIndex": "1",
+              "targets": [
+                "tk_1_4"
+              ]
+            }
+          },
+          {
+            "id": "coref_0",
+            "@type": "http://vocab.lappsgrid.org/Coreference",
+            "features": {
+              "representative": "m_1",
+              "mentions": [
+                "m_0",
+                "m_1",
+                "m_2"
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

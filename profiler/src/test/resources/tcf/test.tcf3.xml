@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<D-Spin xmlns="http://www.dspin.de/data" version="0.3">
+<tns:MetaData xmlns:tns="http://www.dspin.de/data/metadata">
+<tns:source></tns:source>
+</tns:MetaData>
+<tns:TextCorpus xmlns:tns="http://www.dspin.de/data/textcorpus" lang="de">
+<tns:text>Karin fliegt nach New York. Sie will dort Urlaub machen.</tns:text>
+</tns:TextCorpus>
+</D-Spin>

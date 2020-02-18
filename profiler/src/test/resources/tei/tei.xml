@@ -1,0 +1,2658 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Created by EXB2TEI.xsl - 2013-01-29T17:33:54.707+01:00-->
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+    <teiHeader>
+        <fileDesc>
+            <titleStmt>
+                <title>SW-BAL01-G-F</title>
+            </titleStmt>
+            <publicationStmt>
+                <p/>
+            </publicationStmt>
+            <sourceDesc>
+                <recordingStmt>
+                    <recording type="audio"
+                               url="file:/G:/SiN/EXMARaLDA/Inhaltsannotation/Annotationen/abgeschlossen/BI-Südwestfalen-Balve/SW-BAL01/SW-BAL01-F-G.wav"/>
+                </recordingStmt>
+            </sourceDesc>
+        </fileDesc>
+        <profileDesc>
+            <particDesc>
+                <person xml:id="SPK0" sex="2">
+                    <persName>
+                        <abbr>SW-BAL01-G</abbr>
+                    </persName>
+                </person>
+                <person xml:id="SPK1" sex="0">
+                    <persName>
+                        <abbr>SPK1</abbr>
+                    </persName>
+                </person>
+            </particDesc>
+        </profileDesc>
+        <revisionDesc>
+            <change when="2013-01-29T17:33:54.707+01:00">Created by EXB2TEI.xsl - XSL transformation on the basis of an
+                EXMARaLDA basic transcription
+            </change>
+        </revisionDesc>
+    </teiHeader>
+    <text>
+        <timeline unit="s" origin="#T0">
+            <when xml:id="T0" absolute="00:00:00"/>
+            <when xml:id="T1" absolute="00:00:05.906661747896213"/>
+            <when xml:id="T2" absolute="00:00:07.673326943373072"/>
+            <when xml:id="T3" absolute="00:01:22.72659777612202"/>
+            <when xml:id="T4" absolute="00:01:23.86659682678821"/>
+            <when xml:id="T5" absolute="00:03:02"/>
+            <when xml:id="T6" absolute="00:03:04.266513218793847"/>
+            <when xml:id="T7" absolute="00:03:22.693164540673195"/>
+            <when xml:id="T8" absolute="00:03:23.893163541374463"/>
+            <when xml:id="T9" absolute="00:04:28.55310969582746"/>
+            <when xml:id="T10" absolute="00:04:30.313108230189357"/>
+            <when xml:id="T11" absolute="00:04:45.47309560571529"/>
+            <when xml:id="T12" absolute="00:04:47.26642744565214"/>
+            <when xml:id="T13" absolute="00:04:51.1597575368163"/>
+            <when xml:id="T14" absolute="00:04:51.6464237982118"/>
+            <when xml:id="T15" absolute="00:06:05.419695696879387"/>
+            <when xml:id="T16" absolute="00:06:06.586361392005642"/>
+            <when xml:id="T17" absolute="00:06:08.393026554172536"/>
+            <when xml:id="T18" absolute="00:06:11.42635736150072"/>
+            <when xml:id="T19" absolute="00:06:13.886355312938292"/>
+            <when xml:id="T20" absolute="00:06:16.27301999211079"/>
+            <when xml:id="T21" absolute="00:06:40.0263335448808"/>
+            <when xml:id="T22" absolute="00:06:43.1463309467041"/>
+            <when xml:id="T23" absolute="00:06:47.49966065480368"/>
+            <when xml:id="T24" absolute="00:06:48.31965997194948"/>
+            <when xml:id="T25" absolute="00:07:33.2462892259818"/>
+            <when xml:id="T26" absolute="00:07:33.65962221511222"/>
+            <when xml:id="T27" absolute="00:07:37.899618684256666"/>
+            <when xml:id="T28" absolute="00:07:38.45295155680225"/>
+            <when xml:id="T29" absolute="00:07:41.26628254733521"/>
+            <when xml:id="T30" absolute="00:07:41.8529487254558"/>
+            <when xml:id="T31" absolute="00:07:45.1262793329243"/>
+            <when xml:id="T32" absolute="00:07:52.69293969845728"/>
+            <when xml:id="T33" absolute="00:08:54.099555228786926"/>
+            <when xml:id="T34" absolute="00:08:57.852885436535644"/>
+            <when xml:id="T35" absolute="00:09:02.2995484002454987"/>
+            <when xml:id="T36" absolute="00:09:07.459544103260896"/>
+            <when xml:id="T37" absolute="00:09:12.166206850455865"/>
+            <when xml:id="T38" absolute="00:09:17.452869114656437"/>
+            <when xml:id="T39" absolute="00:09:21.252865950210435"/>
+            <when xml:id="T40" absolute="00:09:22.059531945126196"/>
+            <when xml:id="T41" absolute="00:09:34.69285475806453"/>
+            <when xml:id="T42" absolute="00:09:36.21285349228617"/>
+            <when xml:id="T43" absolute="00:09:43.926180402349246"/>
+            <when xml:id="T44" absolute="00:09:49.15284271651478"/>
+            <when xml:id="T45" absolute="00:09:55.78617052594666"/>
+            <when xml:id="T46" absolute="00:10:00.2528334730014876"/>
+            <when xml:id="T47" absolute="00:10:07.859493805224474"/>
+            <when xml:id="T48" absolute="00:10:08.612826511220192"/>
+            <when xml:id="T49" absolute="00:10:16.506153271388484"/>
+            <when xml:id="T50" absolute="00:10:21.299482613078567"/>
+            <when xml:id="T51" absolute="00:10:23.746147242286156"/>
+            <when xml:id="T52" absolute="00:10:27.779477216865416"/>
+            <when xml:id="T53" absolute="00:10:33.07947280329597"/>
+            <when xml:id="T54" absolute="00:10:35.2928042934783"/>
+            <when xml:id="T55" absolute="00:10:38.79280137885701"/>
+            <when xml:id="T56" absolute="00:10:39.699467290497864"/>
+            <when xml:id="T57" absolute="00:10:43.8461305040322"/>
+            <when xml:id="T58" absolute="00:10:47.01279453366055"/>
+            <when xml:id="T59" absolute="00:11:05.026112866409562"/>
+            <when xml:id="T60" absolute="00:11:06.539444939516102"/>
+            <when xml:id="T61" absolute="00:11:15.372770916900322"/>
+            <when xml:id="T62" absolute="00:11:18.606101557678812"/>
+            <when xml:id="T63" absolute="00:11:33.66643750000003"/>
+            <when xml:id="T64" absolute="00:11:35.57275409537169"/>
+            <when xml:id="T65" absolute="00:11:37.066086185133145"/>
+            <when xml:id="T66" absolute="00:11:38.05941869126923"/>
+            <when xml:id="T67" absolute="00:11:38.90608465287505"/>
+            <when xml:id="T68" absolute="00:11:39.35941760869571"/>
+            <when xml:id="T69" absolute="00:11:40.95941627629736"/>
+            <when xml:id="T70" absolute="00:11:43.686080672335265"/>
+            <when xml:id="T71" absolute="00:11:46.4660783572931"/>
+            <when xml:id="T72" absolute="00:11:47.88607717478965"/>
+            <when xml:id="T73" absolute="00:11:49.152742786641056"/>
+            <when xml:id="T74" absolute="00:11:49.812742237026555"/>
+            <when xml:id="T75" absolute="00:11:51.19274108783304"/>
+            <when xml:id="T76" absolute="00:11:52.25274020511927"/>
+            <when xml:id="T77" absolute="00:11:58.019402069600346"/>
+            <when xml:id="T78" absolute="00:11:59.88606718180222"/>
+            <when xml:id="T79" absolute="00:12:01.999398755259449"/>
+            <when xml:id="T80" absolute="00:12:04.312730162166986"/>
+            <when xml:id="T81" absolute="00:12:08.659393209151403"/>
+            <when xml:id="T82" absolute="00:12:13.152722800666197"/>
+            <when xml:id="T83" absolute="00:12:18.499385014901804"/>
+            <when xml:id="T84" absolute="00:12:22.899381350806493"/>
+            <when xml:id="T85" absolute="00:12:32.63270657871681"/>
+            <when xml:id="T86" absolute="00:12:51.65935740094676"/>
+            <when xml:id="T87" absolute="00:13:08.699343210904658"/>
+            <when xml:id="T88" absolute="00:13:09.692675717040629"/>
+            <when xml:id="T89" absolute="00:13:13.252672752454373"/>
+            <when xml:id="T90" absolute="00:13:14.092672052945318"/>
+            <when xml:id="T91" absolute="00:13:50.44597511307859"/>
+            <when xml:id="T92" absolute="00:13:51.719307386044875"/>
+            <when xml:id="T93" absolute="00:13:54.119305387447525"/>
+            <when xml:id="T94" absolute="00:13:57.539302539446"/>
+            <when xml:id="T95" absolute="00:14:03.445115329702844"/>
+            <when xml:id="T96" absolute="00:14:07.612627484221548"/>
+            <when xml:id="T97" absolute="00:14:11.68595742549087"/>
+            <when xml:id="T98" absolute="00:14:14.165955360273529"/>
+            <when xml:id="T99" absolute="00:14:15.825953977910217"/>
+            <when xml:id="T100" absolute="00:14:23.892613927068737"/>
+            <when xml:id="T101" absolute="00:14:25.072612944424918"/>
+            <when xml:id="T102" absolute="00:15:03.3059144389901576"/>
+            <when xml:id="T103" absolute="00:15:04.565913389726575"/>
+            <when xml:id="T104" absolute="00:15:12.412573522089701"/>
+            <when xml:id="T105" absolute="00:15:15.039238001402623"/>
+            <when xml:id="T106" absolute="00:15:46.72587828103087"/>
+            <when xml:id="T107" absolute="00:15:47.2658778313463"/>
+            <when xml:id="T108" absolute="00:16:04.425863541374497"/>
+            <when xml:id="T109" absolute="00:16:15.245854531030886"/>
+            <when xml:id="T110" absolute="00:16:22.772514929873864"/>
+            <when xml:id="T111" absolute="00:16:24.985846420056077"/>
+            <when xml:id="T112" absolute="00:16:25.505845987026646"/>
+            <when xml:id="T113" absolute="00:16:30.9258414735275"/>
+            <when xml:id="T114" absolute="00:16:35.71917081521735"/>
+            <when xml:id="T115" absolute="00:16:37.17916959940396"/>
+            <when xml:id="T116" absolute="00:16:39.59916758415147"/>
+            <when xml:id="T117" absolute="00:16:47.96478171143599"/>
+            <when xml:id="T118" absolute="00:16:48.37249361150066"/>
+            <when xml:id="T119" absolute="00:17:03.5858142759467455"/>
+            <when xml:id="T120" absolute="00:17:11.459141052770065"/>
+            <when xml:id="T121" absolute="00:19:00.18571717741951943"/>
+            <when xml:id="T122" absolute="00:19:06.839044970196255"/>
+            <when xml:id="T123" absolute="00:19:25.825695825736602"/>
+            <when xml:id="T124" absolute="00:19:26.65236180399711"/>
+            <when xml:id="T125" absolute="00:20:02.552331908309725"/>
+            <when xml:id="T126" absolute="00:20:04.318997103786842"/>
+            <when xml:id="T127" absolute="00:20:11.705657619214662"/>
+            <when xml:id="T128" absolute="00:20:17.965652406206118"/>
+            <when xml:id="T129" absolute="00:21:22.712265155154228"/>
+            <when xml:id="T130" absolute="00:21:27.998927419354686"/>
+            <when xml:id="T131" absolute="00:21:31.285591349053448"/>
+            <when xml:id="T132" absolute="00:21:31.75892428821885"/>
+            <when xml:id="T133" absolute="00:21:38.492252014375936"/>
+            <when xml:id="T134" absolute="00:21:40.67225019898319"/>
+            <when xml:id="T135" absolute="00:21:42.88558168916552"/>
+            <when xml:id="T136" absolute="00:21:45.285579690568056"/>
+            <when xml:id="T137" absolute="00:22:02.2055656004556567"/>
+            <when xml:id="T138" absolute="00:22:03.5388978234570914"/>
+            <when xml:id="T139" absolute="00:22:42.018865779277576"/>
+            <when xml:id="T140" absolute="00:22:43.15219816882882"/>
+            <when xml:id="T141" absolute="00:22:48.01886078278403"/>
+            <when xml:id="T142" absolute="00:22:51.72552436272804"/>
+            <when xml:id="T143" absolute="00:23:00.318850539972118"/>
+            <when xml:id="T144" absolute="00:23:04.698846892531492"/>
+            <when xml:id="T145" absolute="00:23:05.719724595367552"/>
+            <when xml:id="T146" absolute="00:23:11.98550749123433"/>
+            <when xml:id="T147" absolute="00:23:14.105505725806552"/>
+            <when xml:id="T148" absolute="00:23:16.89883673299437"/>
+            <when xml:id="T149" absolute="00:23:23.05046702686718"/>
+            <when xml:id="T150" absolute="00:23:24.138830703892154"/>
+            <when xml:id="T151" absolute="00:23:26.43882878856948"/>
+            <when xml:id="T152" absolute="00:23:30.898825074508977"/>
+            <when xml:id="T153" absolute="00:23:32.25882394197038"/>
+            <when xml:id="T154" absolute="00:23:35.092154915848596"/>
+            <when xml:id="T155" absolute="00:23:36.90548673913054"/>
+            <when xml:id="T156" absolute="00:23:44.472147104663236"/>
+            <when xml:id="T157" absolute="00:23:51.01214165848546"/>
+            <when xml:id="T158" absolute="00:23:53.69880608783319"/>
+            <when xml:id="T159" absolute="00:23:55.17213819424978"/>
+            <when xml:id="T160" absolute="00:23:56.41880382275576"/>
+            <when xml:id="T161" absolute="00:23:57.42546965112206"/>
+            <when xml:id="T162" absolute="00:24:10.152125719670266"/>
+            <when xml:id="T163" absolute="00:24:12.798790182328048"/>
+            <when xml:id="T164" absolute="00:24:19.26545146388503"/>
+            <when xml:id="T165" absolute="00:24:21.898782604312828"/>
+            <when xml:id="T166" absolute="00:24:44.57876371756652"/>
+            <when xml:id="T167" absolute="00:24:46.95876173562419"/>
+            <when xml:id="T168" absolute="00:24:49.232093175841555"/>
+            <when xml:id="T169" absolute="00:24:56.67875364130441"/>
+            <when xml:id="T170" absolute="00:24:58.81875185922172"/>
+            <when xml:id="T171" absolute="00:25:01.632082849754397"/>
+            <when xml:id="T172" absolute="00:25:05.4920796353435435"/>
+            <when xml:id="T173" absolute="00:25:23.65873117373758"/>
+            <when xml:id="T174" absolute="00:25:38.46538551016829"/>
+            <when xml:id="T175" absolute="00:25:41.645382862026736"/>
+            <when xml:id="T176" absolute="00:25:43.01204839060301"/>
+            <when xml:id="T177" absolute="00:26:02.625365390953675"/>
+            <when xml:id="T178" absolute="00:26:03.63869788043462"/>
+            <when xml:id="T179" absolute="00:26:20.988652182240457"/>
+            <when xml:id="T180" absolute="00:26:37.425336411290345"/>
+            <when xml:id="T181" absolute="00:26:46.50532884992981"/>
+            <when xml:id="T182" absolute="00:26:47.63866123948105"/>
+            <when xml:id="T183" absolute="00:26:58.638652079242775"/>
+            <when xml:id="T184" absolute="00:27:00.2253174246141043"/>
+            <when xml:id="T185" absolute="00:27:04.89864686623423"/>
+            <when xml:id="T186" absolute="00:27:06.111979189165595"/>
+            <when xml:id="T187" absolute="00:27:14.6653053997195"/>
+            <when xml:id="T188" absolute="00:27:19.718634524894924"/>
+            <when xml:id="T189" absolute="00:27:23.891964382889228"/>
+            <when xml:id="T190" absolute="00:27:25.89196271739138"/>
+            <when xml:id="T191" absolute="00:27:36.225287445652384"/>
+            <when xml:id="T192" absolute="00:27:38.2118274579243"/>
+            <when xml:id="T193" absolute="00:27:50.07860924263673"/>
+            <when xml:id="T194" absolute="00:27:54.951938517706594"/>
+            <when xml:id="T195" absolute="00:28:10.218592471072952"/>
+            <when xml:id="T196" absolute="00:28:12.34525736676028"/>
+            <when xml:id="T197" absolute="00:28:14.051922612202134"/>
+            <when xml:id="T198" absolute="00:28:22.3319157170406"/>
+            <when xml:id="T199" absolute="00:28:42.245232467566666"/>
+            <when xml:id="T200" absolute="00:28:52.6318904847476"/>
+            <when xml:id="T201" absolute="00:28:53.765222874298615"/>
+            <when xml:id="T202" absolute="00:28:58.39855234922857"/>
+            <when xml:id="T203" absolute="00:29:08.425210666199291"/>
+            <when xml:id="T204" absolute="00:29:09.625209666900446"/>
+            <when xml:id="T205" absolute="00:29:55.73183793828889"/>
+            <when xml:id="T206" absolute="00:29:56.29183747194975"/>
+            <when xml:id="T207" absolute="00:30:00.14516759642356192"/>
+            <when xml:id="T208" absolute="00:30:02.3918323921809588"/>
+            <when xml:id="T209" absolute="00:30:36.418470723176824"/>
+            <when xml:id="T210" absolute="00:30:39.038468541374414"/>
+            <when xml:id="T211" absolute="00:30:41.35179994828195"/>
+            <when xml:id="T212" absolute="00:30:42.651798865708315"/>
+            <when xml:id="T213" absolute="00:30:44.73179713359059"/>
+            <when xml:id="T214" absolute="00:30:45.16513010606582"/>
+            <when xml:id="T215" absolute="00:30:47.918461146563686"/>
+            <when xml:id="T216" absolute="00:30:48.64512720809944"/>
+            <when xml:id="T217" absolute="00:30:54.458455700385684"/>
+            <when xml:id="T218" absolute="00:30:56.89178700736329"/>
+            <when xml:id="T219" absolute="00:31:04.778447106416479"/>
+            <when xml:id="T220" absolute="00:31:05.671779695827581"/>
+            <when xml:id="T221" absolute="00:31:09.671776364831658"/>
+            <when xml:id="T222" absolute="00:31:12.171774282959632"/>
+            <when xml:id="T223" absolute="00:31:36.97842029190042"/>
+            <when xml:id="T224" absolute="00:31:38.40508577051196"/>
+            <when xml:id="T225" absolute="00:31:44.17841429610803"/>
+            <when xml:id="T226" absolute="00:31:44.98508029102368"/>
+            <when xml:id="T227" absolute="00:32:10.518392361500673"/>
+            <when xml:id="T228" absolute="00:32:10.938392011745918"/>
+            <when xml:id="T229" absolute="00:32:41.2850334072582"/>
+            <when xml:id="T230" absolute="00:32:42.95169868600988"/>
+            <when xml:id="T231" absolute="00:32:52.39169082486001"/>
+            <when xml:id="T232" absolute="00:32:53.651689775596196"/>
+            <when xml:id="T233" absolute="00:33:48.891643774544036"/>
+            <when xml:id="T234" absolute="00:33:49.2116435080643"/>
+            <when xml:id="T235" absolute="00:34:25.731613096073033"/>
+            <when xml:id="T236" absolute="00:34:27.684944802770133"/>
+            <when xml:id="T237" absolute="00:34:46.33826260255955"/>
+            <when xml:id="T238" absolute="00:34:49.44492668215298"/>
+            <when xml:id="T239" absolute="00:35:05.7049131416547425"/>
+            <when xml:id="T240" absolute="00:35:06.551579103260792"/>
+            <when xml:id="T241" absolute="00:35:36.61822073194253"/>
+            <when xml:id="T242" absolute="00:35:37.5347303852559"/>
+            <when xml:id="T243" absolute="00:36:03.2715318697405564"/>
+            <when xml:id="T244" absolute="00:36:05.551529971072796"/>
+            <when xml:id="T245" absolute="00:36:07.95152797247556"/>
+            <when xml:id="T246" absolute="00:36:51.59149163131133"/>
+            <when xml:id="T247" absolute="00:36:54.33815601069455"/>
+            <when xml:id="T248" absolute="00:37:13.324806866234212"/>
+            <when xml:id="T249" absolute="00:37:14.838138939341206"/>
+            <when xml:id="T250" absolute="00:37:17.764803168829076"/>
+            <when xml:id="T251" absolute="00:37:20.19146781469135"/>
+            <when xml:id="T252" absolute="00:37:38.444785947580385"/>
+            <when xml:id="T253" absolute="00:37:39.46478509817689"/>
+            <when xml:id="T254" absolute="00:37:43.298115239305844"/>
+            <when xml:id="T255" absolute="00:37:43.86478143408158"/>
+            <when xml:id="T256" absolute="00:37:46.5381125411991"/>
+            <when xml:id="T257" absolute="00:37:47.71811155855494"/>
+            <when xml:id="T258" absolute="00:37:49.15811035939669"/>
+            <when xml:id="T259" absolute="00:37:50.35144269898319"/>
+            <when xml:id="T260" absolute="00:38:44.31806442496509"/>
+            <when xml:id="T261" absolute="00:38:46.43806265953708"/>
+            <when xml:id="T262" absolute="00:38:52.818057346598835"/>
+            <when xml:id="T263" absolute="00:38:53.678056630435094"/>
+            <when xml:id="T264" absolute="00:39:01.3247169293476873"/>
+            <when xml:id="T265" absolute="00:39:03.7447149140957663"/>
+            <when xml:id="T266" absolute="00:39:18.364702739305812"/>
+            <when xml:id="T267" absolute="00:39:22.17803289708945"/>
+            <when xml:id="T268" absolute="00:39:24.324697776121866"/>
+            <when xml:id="T269" absolute="00:39:27.85136150596054"/>
+            <when xml:id="T270" absolute="00:39:42.95801559256688"/>
+            <when xml:id="T271" absolute="00:39:44.99801389375898"/>
+            <when xml:id="T272" absolute="00:40:44.31129783397637"/>
+            <when xml:id="T273" absolute="00:40:45.49129685133221"/>
+            <when xml:id="T274" absolute="00:41:19.59793511570797"/>
+            <when xml:id="T275" absolute="00:41:25.004597279978952"/>
+            <when xml:id="T276" absolute="00:41:31.25792540585553"/>
+            <when xml:id="T277" absolute="00:41:32.524591017706825"/>
+            <when xml:id="T278" absolute="00:41:35.60458845284029"/>
+            <when xml:id="T279" absolute="00:41:41.97791647878648"/>
+            <when xml:id="T280" absolute="00:41:45.45791358082033"/>
+            <when xml:id="T281" absolute="00:41:46.684579225981906"/>
+            <when xml:id="T282" absolute="00:41:50.224576278050336"/>
+            <when xml:id="T283" absolute="00:42:00.0579014226855179"/>
+            <when xml:id="T284" absolute="00:42:03.5778984914095417"/>
+            <when xml:id="T285" absolute="00:42:05.417896959151221"/>
+            <when xml:id="T286" absolute="00:42:19.377885333976337"/>
+            <when xml:id="T287" absolute="00:42:23.85121494214627"/>
+            <when xml:id="T288" absolute="00:42:58.67118594582735"/>
+            <when xml:id="T289" absolute="00:43:02.2245163201259857"/>
+            <when xml:id="T290" absolute="00:43:11.544508558906273"/>
+            <when xml:id="T291" absolute="00:43:15.824504994740892"/>
+            <when xml:id="T292" absolute="00:43:18.71783591865369"/>
+            <when xml:id="T293" absolute="00:43:22.78449919880768"/>
+            <when xml:id="T294" absolute="00:43:24.031164827314115"/>
+            <when xml:id="T295" absolute="00:43:36.72448759028748"/>
+            <when xml:id="T296" absolute="00:43:43.64448182766455"/>
+            <when xml:id="T297" absolute="00:43:52.09780812149347"/>
+            <when xml:id="T298" absolute="00:43:53.83780667251085"/>
+            <when xml:id="T299" absolute="00:44:01.871133316094074"/>
+            <when xml:id="T300" absolute="00:44:09.124460609221387"/>
+            <when xml:id="T301" absolute="00:44:20.78445089936895"/>
+            <when xml:id="T302" absolute="00:44:23.211115545231223"/>
+            <when xml:id="T303" absolute="00:44:31.22444220547004"/>
+            <when xml:id="T304" absolute="00:44:36.484437825210534"/>
+            <when xml:id="T305" absolute="00:44:40.21110138849917"/>
+            <when xml:id="T306" absolute="00:44:40.97776741672533"/>
+            <when xml:id="T307" absolute="00:44:51.55775860624135"/>
+            <when xml:id="T308" absolute="00:45:03.217748896388457"/>
+            <when xml:id="T309" absolute="00:45:08.564411110624405"/>
+            <when xml:id="T310" absolute="00:45:12.06440819600266"/>
+            <when xml:id="T311" absolute="00:45:23.212638495573174"/>
+            <when xml:id="T312" absolute="00:45:29.13106065042075"/>
+            <when xml:id="T313" absolute="00:45:30.21772641216694"/>
+            <when xml:id="T314" absolute="00:45:33.677723530855474"/>
+            <when xml:id="T315" absolute="00:45:54.93103916549808"/>
+            <when xml:id="T316" absolute="00:45:56.34437132187941"/>
+            <when xml:id="T317" absolute="00:46:00.9177008467745509"/>
+            <when xml:id="T318" absolute="00:46:02.8243659256659157"/>
+            <when xml:id="T319" absolute="00:46:18.911019196177676"/>
+            <when xml:id="T320" absolute="00:46:24.07768156030852"/>
+            <when xml:id="T321" absolute="00:46:29.804343458099083"/>
+            <when xml:id="T322" absolute="00:47:22.077633260869334"/>
+            <when xml:id="T323" absolute="00:47:25.224297307152938"/>
+            <when xml:id="T324" absolute="00:47:26.010963318723498"/>
+            <when xml:id="T325" absolute="00:47:27.184295674965142"/>
+            <when xml:id="T326" absolute="00:47:28.377628014551192"/>
+            <when xml:id="T327" absolute="00:47:29.31096057065224"/>
+            <when xml:id="T328" absolute="00:47:31.037625799438956"/>
+            <when xml:id="T329" absolute="00:47:35.39762216865347"/>
+            <when xml:id="T330" absolute="00:47:41.53761705557508"/>
+            <when xml:id="T331" absolute="00:47:51.81760849491593"/>
+            <when xml:id="T332" absolute="00:47:53.664273623772715"/>
+            <when xml:id="T333" absolute="00:48:00.23093482205467808"/>
+            <when xml:id="T334" absolute="00:48:07.750928559782551"/>
+            <when xml:id="T335" absolute="00:48:11.95759172335238"/>
+            <when xml:id="T336" absolute="00:48:18.304253104839063"/>
+            <when xml:id="T337" absolute="00:48:21.581654672379045"/>
+            <when xml:id="T338" absolute="00:48:27.73757858257386"/>
+            <when xml:id="T339" absolute="00:48:29.36424389463582"/>
+            <when xml:id="T340" absolute="00:48:32.43090800753862"/>
+            <when xml:id="T341" absolute="00:48:42.284233135519116"/>
+            <when xml:id="T342" absolute="00:48:56.42422136044888"/>
+            <when xml:id="T343" absolute="00:49:04.044215014901965"/>
+            <when xml:id="T344" absolute="00:49:06.970879244389835"/>
+            <when xml:id="T345" absolute="00:49:09.230877362377669"/>
+            <when xml:id="T346" absolute="00:49:11.130875780154383"/>
+            <when xml:id="T347" absolute="00:49:20.097534979838656"/>
+            <when xml:id="T348" absolute="00:49:24.610864554698765"/>
+            <when xml:id="T349" absolute="00:49:31.097525819599923"/>
+            <when xml:id="T350" absolute="00:49:32.17085825911636"/>
+            <when xml:id="T351" absolute="00:50:09.177494108520023"/>
+            <when xml:id="T352" absolute="00:50:09.617493742110582"/>
+            <when xml:id="T353" absolute="00:50:29.964143465112556"/>
+            <when xml:id="T354" absolute="00:50:32.4241414165499"/>
+            <when xml:id="T355" absolute="00:51:03.1641158178472324"/>
+            <when xml:id="T356" absolute="00:51:03.4974488735970226"/>
+            <when xml:id="T357" absolute="00:51:59.45073561185154"/>
+            <when xml:id="T358" absolute="00:52:01.6174004742283614"/>
+            <when xml:id="T359" absolute="00:52:22.584049680925546"/>
+            <when xml:id="T360" absolute="00:52:24.43071480978233"/>
+            <when xml:id="T361" absolute="00:53:10.984009375876667"/>
+            <when xml:id="T362" absolute="00:53:11.517342265077332"/>
+            <when xml:id="T363" absolute="00:53:20.06400181451636"/>
+            <when xml:id="T364" absolute="00:53:21.23733417075755"/>
+            <when xml:id="T365" absolute="00:53:27.683995468968988"/>
+            <when xml:id="T366" absolute="00:53:32.49732479400427"/>
+            <when xml:id="T367" absolute="00:53:34.35732324509081"/>
+            <when xml:id="T368" absolute="00:53:35.30398912342207"/>
+            <when xml:id="T369" absolute="00:53:36.69732129645854"/>
+            <when xml:id="T370" absolute="00:53:37.310654119039555"/>
+            <when xml:id="T371" absolute="00:53:45.02398102910274"/>
+            <when xml:id="T372" absolute="00:53:48.00397854751054"/>
+            <when xml:id="T373" absolute="00:53:49.76397708187187"/>
+            <when xml:id="T374" absolute="00:53:50.677309654628516"/>
+            <when xml:id="T375" absolute="00:54:02.490633150420763"/>
+            <when xml:id="T376" absolute="00:54:07.6172955478609765"/>
+            <when xml:id="T377" absolute="00:55:29.55722731241258"/>
+            <when xml:id="T378" absolute="00:55:31.16389264112877"/>
+            <when xml:id="T379" absolute="00:55:46.48387988341574"/>
+            <when xml:id="T380" absolute="00:55:47.77054547861144"/>
+            <when xml:id="T381" absolute="00:55:55.970538650070466"/>
+            <when xml:id="T382" absolute="00:55:57.13053768408099"/>
+            <when xml:id="T383" absolute="00:56:02.8638662429871147"/>
+            <when xml:id="T384" absolute="00:56:08.050528590462818"/>
+            <when xml:id="T385" absolute="00:56:23.410515799439054"/>
+            <when xml:id="T386" absolute="00:56:25.483847406206223"/>
+            <when xml:id="T387" absolute="00:56:47.53716237464914"/>
+            <when xml:id="T388" absolute="00:56:49.10382773667607"/>
+            <when xml:id="T389" absolute="00:56:58.590486503330794"/>
+            <when xml:id="T390" absolute="00:57:06.557146535764332"/>
+            <when xml:id="T391" absolute="00:57:12.69714142268549"/>
+            <when xml:id="T392" absolute="00:57:19.26380262096791"/>
+            <when xml:id="T393" absolute="00:57:29.337127565742776"/>
+            <when xml:id="T394" absolute="00:57:29.850460471599035"/>
+            <when xml:id="T395" absolute="00:57:42.25045014551188"/>
+            <when xml:id="T396" absolute="00:57:42.64378315129716"/>
+            <when xml:id="T397" absolute="00:58:01.5104341067672067"/>
+            <when xml:id="T398" absolute="00:58:01.9037671125524867"/>
+            <when xml:id="T399" absolute="00:58:06.1370969205818255"/>
+            <when xml:id="T400" absolute="00:58:08.697094788744835"/>
+            <when xml:id="T401" absolute="00:58:16.023755354137847"/>
+            <when xml:id="T402" absolute="00:58:16.697088126752988"/>
+            <when xml:id="T403" absolute="00:58:30.823743029453"/>
+            <when xml:id="T404" absolute="00:58:34.6637398316966"/>
+            <when xml:id="T405" absolute="00:58:39.75495434196364"/>
+            <when xml:id="T406" absolute="00:58:40.763734751928496"/>
+            <when xml:id="T407" absolute="00:58:58.157053600981726"/>
+            <when xml:id="T408" absolute="00:59:01.723717297510575"/>
+            <when xml:id="T409" absolute="00:59:16.537038295055936"/>
+            <when xml:id="T410" absolute="00:59:19.530369135693945"/>
+            <when xml:id="T411" absolute="00:59:43.36368262184442"/>
+            <when xml:id="T412" absolute="00:59:44.63034823369571"/>
+            <when xml:id="T413" absolute="01:00:07.8436622361505215"/>
+            <when xml:id="T414" absolute="01:00:15.3836559572228"/>
+            <when xml:id="T415" absolute="01:00:35.39030596335897"/>
+            <when xml:id="T416" absolute="01:00:48.116962031907406"/>
+            <when xml:id="T417" absolute="01:00:51.123626194775625"/>
+            <when xml:id="T418" absolute="01:00:56.29695522002066"/>
+            <when xml:id="T419" absolute="01:01:09.916943877979975"/>
+            <when xml:id="T420" absolute="01:01:12.711879050446441"/>
+            <when xml:id="T421" absolute="01:01:17.036937948807918"/>
+            <when xml:id="T422" absolute="01:01:18.790269822054597"/>
+            <when xml:id="T423" absolute="01:01:30.243593617636634"/>
+            <when xml:id="T424" absolute="01:01:48.296911917075704"/>
+            <when xml:id="T425" absolute="01:01:51.79690900245441"/>
+            <when xml:id="T426" absolute="01:01:56.03023881048375"/>
+            <when xml:id="T427" absolute="01:02:04.7302315655679195"/>
+            <when xml:id="T428" absolute="01:02:05.996897177419669"/>
+            <when xml:id="T429" absolute="01:02:07.903562256311034"/>
+            <when xml:id="T430" absolute="01:02:09.076894612552678"/>
+            <when xml:id="T431" absolute="01:02:10.503560091164218"/>
+            <when xml:id="T432" absolute="01:02:16.05688879996478"/>
+            <when xml:id="T433" absolute="01:02:17.456887634116356"/>
+            <when xml:id="T434" absolute="01:02:28.030212162517273"/>
+            <when xml:id="T435" absolute="01:02:29.556877557854023"/>
+            <when xml:id="T436" absolute="01:03:22.66300000000001"/>
+        </timeline>
+        <body>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T1"/>das (schaffe) [1] {2} &lt;3&gt; ich aber nicht.
+                    <anchor synch="#T2"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T1" to="#T2">HD</span>
+                </spanGrp>
+                <spanGrp type="ia_1">
+                    <span from="#T1" to="#T2">ANNO1</span>
+                </spanGrp>
+            </div>
+            <incident type="Kommentar" start="#T1" end="#T2" who="#SPK0">
+                <desc>DESC1</desc>
+            </incident>
+            <div>
+                <u who="#SPK1">
+                    <anchor synch="#T1"/>$%?!"!+*.
+                    <anchor synch="#T2"/>
+                </u>
+            </div>
+            <div>
+                <u>
+                    <anchor synch="#T1"/>Blabla
+                    <anchor synch="#T2"/>
+                </u>
+                <spanGrp type="annoTier">
+                    <span from="#T1" to="#T2">anno</span>
+                </spanGrp>
+            </div>
+            <incident type="descTier" start="#T1" end="#T2">
+                <desc>kommentar</desc>
+            </incident>
+            <incident type="linkTier" start="#T1" end="#T2">
+                <desc>link</desc>
+            </incident>
+            <incident type="userTier" start="#T1" end="#T2">
+                <desc>user</desc>
+            </incident>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T3"/>ja ich komme.
+                    <anchor synch="#T4"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T3" to="#T4">HD</span>
+                </spanGrp>
+            </div>
+            <incident type="ia_v" start="#T4" end="#T5">
+                <desc>"es wird gefragt, was beim Interview gemacht wurde. Schwester
+                    der GP antwortet: Wegen unserem Dialekt. ((anoym)) spricht ja ein ganz anderes
+                    Deutsch wie wir. ((anonym)) erzählt, dass Interviewer gefragt hat, wo sie herkommt.
+                    Sie erzählt von ihrem Dialekt und den typischen Merkmalen und bemerkt, dass sie
+                    überall auffällt.(bis ca 2:30)"
+                </desc>
+            </incident>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T5"/>und bist du jetzt auch wieder am Stricken.
+                    <anchor synch="#T6"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T5" to="#T6">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T7"/>genau wie bei ((anonym)) auch.
+                    <anchor synch="#T8"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T7" to="#T8">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T9"/>ich hätte die aber nochmal angerufen du.
+                    <anchor synch="#T10"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T9" to="#T10">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T11"/>und wie hat er es denn jetzt gemacht.
+                    <anchor synch="#T12"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T11" to="#T12">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T13"/>ja.
+                    <anchor synch="#T14"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T13" to="#T14">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T15"/>ja klar.
+                    <anchor synch="#T16"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T15" to="#T16">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T17"/>hm ja das wäre richtig viel Arbeit geworden.
+                    <anchor synch="#T18"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T17" to="#T18">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T19"/>ja das hört sich ja dann doch ein bisschen anders an du.
+                    <anchor synch="#T20"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T19" to="#T20">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T21"/>der qualmt ja auch immer bleibt ja gar nicht aus.
+                    <anchor synch="#T22"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T21" to="#T22">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T23"/>machen wir.
+                    <anchor synch="#T24"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T23" to="#T24">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T25"/>hell.
+                    <anchor synch="#T26"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T25" to="#T26">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T27"/>ach so.
+                    <anchor synch="#T28"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T27" to="#T28">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T29"/>ja.
+                    <anchor synch="#T30"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T29" to="#T30">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T31"/>ja ock… ocker gelb kennst du doch ocker … ocker das ist so
+                    ein ror… sonst von Seidenmalen kenne ich es ocker.
+                    <anchor synch="#T32"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T31" to="#T32">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T33"/>ein Pullunder in lila.
+                    <anchor synch="#T34"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T33" to="#T34">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T35"/>ja ((anonym)) hat mir die Farbe mitgebracht die … die Wolle
+                    mitgebracht.
+                    <anchor synch="#T36"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T35" to="#T36">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T37"/>wenn es mir nicht gefällt ziehe ich es auf und dann musst
+                    du mir Socken stricken in lila.
+                    <anchor synch="#T38"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T37" to="#T38">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T39"/>ist Sockenwolle.
+                    <anchor synch="#T40"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T39" to="#T40">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T41"/>die habe ich auch immer genommen.
+                    <anchor synch="#T42"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T41" to="#T42">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T43"/>((anonym)) nimm … holst du mir das mal steht … liegt auf
+                    der … auf dem Wohnzimmerschrank.
+                    <anchor synch="#T44"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T43" to="#T44">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T45"/>eine ganze Stunde da hast du auch recht.
+                    <anchor synch="#T46"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T45" to="#T46">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T47"/>guck.
+                    <anchor synch="#T48"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T47" to="#T48">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T49"/>die unten habe ich erst eins rechts eins links gemacht und
+                    oben eine Reihe rechts eine Reihe links.
+                    <anchor synch="#T50"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T49" to="#T50">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T51"/>ich habe nicht zugenommen nix aber das ge… weitet sich ja
+                    schon … sowieso schon.
+                    <anchor synch="#T52"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T51" to="#T52">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T53"/>ewig nichts dran getan.
+                    <anchor synch="#T54"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T53" to="#T54">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T55"/>ja.
+                    <anchor synch="#T56"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T55" to="#T56">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T57"/>iss wer weiß ob du morgen noch was kriegst.
+                    <anchor synch="#T58"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T57" to="#T58">HD</span>
+                </spanGrp>
+            </div>
+            <incident type="Kommentar" start="#T57" end="#T58" who="#SPK0">
+                <desc>falsche Bildung des Imperativ: ess</desc>
+            </incident>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T59"/>aus dem Lidl.
+                    <anchor synch="#T60"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T59" to="#T60">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T61"/>genau irgendwo müssen wir es ja einsparen.
+                    <anchor synch="#T62"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T61" to="#T62">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T63"/>hast du schon im Internet gesehen.
+                    <anchor synch="#T64"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T63" to="#T64">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T65"/>alles nicht.
+                    <anchor synch="#T66"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T65" to="#T66">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T67"/>nein.
+                    <anchor synch="#T68"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T67" to="#T68">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T69"/>die Wiese nicht und auch der Schweinestall nicht.
+                    <anchor synch="#T70"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T69" to="#T70">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T71"/>das war der Hühnerstall.
+                    <anchor synch="#T72"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T71" to="#T72">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T73"/>der Schw…
+                    <anchor synch="#T74"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T73" to="#T74">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T74"/>nein nein.
+                    <anchor synch="#T75"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T74" to="#T75">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T76"/>steht doch im Internet steht doch im Internet das sind
+                    dreihundert … dreitausendfünfhundert Quadratmeter.
+                    <anchor synch="#T77"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T76" to="#T77">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T78"/>das das …
+                    <anchor synch="#T79"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T78" to="#T79">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T80"/>der … das … ach ((anonym)) ganz ruhig.
+                    <anchor synch="#T81"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T80" to="#T81">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T82"/>aber der Schweinestall der da drauf ist das war aber nicht
+                    auf dem Bild drauf.
+                    <anchor synch="#T83"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T82" to="#T83">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T84"/>wenn du jetzt von unten guckst also von der Straße links
+                    rechts ist das Haus dann kommt der … dann kommt der Mittelweg und dann kommt
+                    ((unverständlich)).
+                    <anchor synch="#T85"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T84" to="#T85">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T85"/>da ist … du … dann die großen … das große Haus und auch
+                    hinten ist ja auch so was Verklinkertes dran von unten von der Straße aus und ganz
+                    links ist der Schweinestall und da ist auch ein großes … eine große Wiese bei die …
+                    die geht ja bis … bis zum Feuerwehrhaus hin.
+                    <anchor synch="#T86"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T85" to="#T86">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T87"/>das hat …
+                    <anchor synch="#T88"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T87" to="#T88">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T89"/>ja genau.
+                    <anchor synch="#T90"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T89" to="#T90">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T91"/>ach ist doch klar.
+                    <anchor synch="#T92"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T91" to="#T92">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T93"/>((anonym)) oder ist ((anonym)) weg nein.
+                    <anchor synch="#T94"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T93" to="#T94">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T94"/>ja das sind drei … drei Wohnungen mit hundertzwanzig
+                    Quadratmeter.
+                    <anchor synch="#T95"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T94" to="#T95">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T96"/>ja wo … wo … ja wo ((anonym)) … wo ((anonym)) drin war.
+                    <anchor synch="#T97"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T96" to="#T97">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T98"/>ja ausgebaut aber …
+                    <anchor synch="#T99"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T98" to="#T99">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T100"/>ja klar.
+                    <anchor synch="#T101"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T100" to="#T101">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T102"/>das wäre ja was anderes.
+                    <anchor synch="#T103"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T102" to="#T103">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T104"/>jetzt im Moment kriegst du doch überhaupt nichts los.
+                    <anchor synch="#T105"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T104" to="#T105">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T106"/>ja.
+                    <anchor synch="#T107"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T106" to="#T107">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T108"/>oder so ja wer ist denn da noch ((anonym)) hat bei …
+                    wohnt bei ((anonym)) ja ((anonym)) hat selber was ((anonym)) hat da unten selber
+                    gebaut.
+                    <anchor synch="#T109"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T108" to="#T109">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T109"/>ja wer ist denn da noch ((anonym)) ((anonym)) wohnt in
+                    Menden oder Schwitten oder weiß der Kuckuck wo.
+                    <anchor synch="#T110"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T109" to="#T110">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T111"/>nein.
+                    <anchor synch="#T112"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T111" to="#T112">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T113"/>tja ja und ((anonym)) oder ist da noch jemand.
+                    <anchor synch="#T114"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T113" to="#T114">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T115"/>ja ((anonym)) hat immer einen Wald.
+                    <anchor synch="#T116"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T115" to="#T116">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T117"/>ja.
+                    <anchor synch="#T118"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T117" to="#T118">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T119"/>wird die schon … wird die schon achtzehn meine Güte soll
+                    man nicht für möglich halten.
+                    <anchor synch="#T120"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T119" to="#T120">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T121"/>aber da Papa hier nicht mehr in der Höfeordnung war ne …
+                    oder war der nicht … der war nicht mehr drin ne.
+                    <anchor synch="#T122"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T121" to="#T122">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T123"/>ja klar.
+                    <anchor synch="#T124"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T123" to="#T124">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T125"/>ein Schwank aus meiner Jugend ja.
+                    <anchor synch="#T126"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T125" to="#T126">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T127"/>und das war … und das war glatt wir sind Kellermanns
+                    Scheune gelaufen.
+                    <anchor synch="#T128"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T127" to="#T128">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T129"/>nein also am Montag sind wir schon recht früh gegangen
+                    aber …
+                    <anchor synch="#T130"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T129" to="#T130">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T131"/>ja.
+                    <anchor synch="#T132"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T131" to="#T132">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T133"/>((anonym)) muss ich noch zwei an die Seite tun.
+                    <anchor synch="#T134"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T133" to="#T134">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T135"/>was denn ja gut.
+                    <anchor synch="#T136"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T135" to="#T136">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T137"/>das muss auch nicht sein.
+                    <anchor synch="#T138"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T137" to="#T138">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T139"/>gut danke.
+                    <anchor synch="#T140"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T139" to="#T140">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T141"/>also kriegst du noch zwei eine für dich noch und eine für
+                    ((anonym)).
+                    <anchor synch="#T142"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T141" to="#T142">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T143"/>((anonym)) rief gestern Abend an ((anonym)) ich habe
+                    gehört ihr habt geschlachtet.
+                    <anchor synch="#T144"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T143" to="#T144">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T144"/>ich sage ja.
+                    <anchor synch="#T145"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T144" to="#T145">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T145"/>unsere wollen mal gerne gebratene Blutwurst haben kann
+                    ich mir was holen.
+                    <anchor synch="#T146"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T145" to="#T146">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T146"/>ja ich sage bis jetzt haben wir noch was.
+                    <anchor synch="#T147"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T146" to="#T147">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T148"/>die ist fett ich glaube wir hätten besser noch Mehl rein
+                    getan Leute ist die fett.
+                    <anchor synch="#T149"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T148" to="#T149">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T150"/>alle Leber und Blutwurst auch.
+                    <anchor synch="#T151"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T150" to="#T151">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T152"/>darf ich aufstehen.
+                    <anchor synch="#T153"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T152" to="#T153">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T154"/>einundneunzig Kilo.
+                    <anchor synch="#T155"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T154" to="#T155">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T156"/>nein jetzt ist es… ist hier schon der erste … ist nicht
+                    mehr so schön hatten ((anonym)) abgeschnitten.
+                    <anchor synch="#T157"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T156" to="#T157">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T158"/>riechen tut sie gut ne.
+                    <anchor synch="#T159"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T158" to="#T159">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T160"/>das ist Leberwurst.
+                    <anchor synch="#T161"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T160" to="#T161">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T162"/>so lange mich da auf der Futt setzten.
+                    <anchor synch="#T163"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T162" to="#T163">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T164"/>((anonym)) und ich wir sind am Freitag schon angefangen.
+                    <anchor synch="#T165"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T164" to="#T165">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T166"/>nein wir drehen das immer selber durch.
+                    <anchor synch="#T167"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T166" to="#T167">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T167"/>wir drehen immer selber durch.
+                    <anchor synch="#T168"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T167" to="#T168">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T169"/>zwei Schinken hatten sie ja wieder.
+                    <anchor synch="#T170"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T169" to="#T170">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T171"/>die Schinken die sind … die sind noch am Salzen.
+                    <anchor synch="#T172"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T171" to="#T172">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T173"/>nein das … nein deswegen … wenn der dann soweit ist … der
+                    kommt dann nach Onkel ((anonym)) oben auf dem Loh da weht der Wind hier unten wird
+                    der nur schimmelig.
+                    <anchor synch="#T174"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T173" to="#T174">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T175"/>und deswegen.
+                    <anchor synch="#T176"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T175" to="#T176">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T177"/>ja ja.
+                    <anchor synch="#T178"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T177" to="#T178">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T179"/>ja es ist … ist bei uns auch ich … sowas … sofort … ist …
+                    wir brauchen auch nicht bei uns oben am Balken zu hängen geht auch nicht hmhm es ist
+                    Tal hier und es ist einfach zu feucht.
+                    <anchor synch="#T180"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T179" to="#T180">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T181"/>der Dunst.
+                    <anchor synch="#T182"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T181" to="#T182">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T183"/>nein kalte Füße hatte ich nicht.
+                    <anchor synch="#T184"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T183" to="#T184">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T185"/>ja wir waren …
+                    <anchor synch="#T186"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T185" to="#T186">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T187"/>ja gut das sie … gut das wir das jetzt im Keller haben
+                    also das war hier …
+                    <anchor synch="#T188"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T187" to="#T188">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T189"/>ja sonst hatten wir ja hier oben alles.
+                    <anchor synch="#T190"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T189" to="#T190">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T191"/>und überall wo du anpacktest …
+                    <anchor synch="#T192"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T191" to="#T192">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T193"/>aber … ich war aber abends froh dass ich nirgendwo mehr
+                    hin brauchte.
+                    <anchor synch="#T194"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T193" to="#T194">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T195"/>nein vor dem Fernseher geht nicht aber …
+                    <anchor synch="#T196"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T195" to="#T196">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T197"/>((anonym)) sagte auch … sagte er du warst ger… du warst
+                    gerade im Bett warst du aber auch schon weg sagt er das habe ich nun so schnell …
+                    <anchor synch="#T198"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T197" to="#T198">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T199"/>ja was hat … was hat das denn eigentlich gekostet da
+                    wollte ich dich schon immer mal gefragt haben hier das … das … das Streichen von dem
+                    ((anonym)) ((anonym)).
+                    <anchor synch="#T200"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T199" to="#T200">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T201"/>ja ja der hat das bei euch wahrscheinlich noch
+                    Freundschaftspreis gemacht ne.
+                    <anchor synch="#T202"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T201" to="#T202">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T203"/>ja ja klar.
+                    <anchor synch="#T204"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T203" to="#T204">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T205"/>ja.
+                    <anchor synch="#T206"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T205" to="#T206">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T207"/>also konntest du noch nichts sauber machen.
+                    <anchor synch="#T208"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T207" to="#T208">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T209"/>kannst du nicht meckern nein.
+                    <anchor synch="#T210"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T209" to="#T210">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T211"/>nein.
+                    <anchor synch="#T212"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T211" to="#T212">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T213"/>ja.
+                    <anchor synch="#T214"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T213" to="#T214">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T215"/>ja.
+                    <anchor synch="#T216"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T215" to="#T216">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T217"/>ja ja alles … hm hm.
+                    <anchor synch="#T218"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T217" to="#T218">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T219"/>nein.
+                    <anchor synch="#T220"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T219" to="#T220">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T221"/>was machen dein … was macht deine Schulter.
+                    <anchor synch="#T222"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T221" to="#T222">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T223"/>ja hm hm.
+                    <anchor synch="#T224"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T223" to="#T224">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T225"/>Treppe.
+                    <anchor synch="#T226"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T225" to="#T226">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T227"/>hm.
+                    <anchor synch="#T228"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T227" to="#T228">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T229"/>nachgebessert ach.
+                    <anchor synch="#T230"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T229" to="#T230">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T231"/>ja das hätte ich aber auch getan.
+                    <anchor synch="#T232"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T231" to="#T232">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T233"/>ja.
+                    <anchor synch="#T234"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T233" to="#T234">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T235"/>das wäre schitte.
+                    <anchor synch="#T236"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T235" to="#T236">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T237"/>die Hellen so ja von dem Bogen hm.
+                    <anchor synch="#T238"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T237" to="#T238">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T239"/>so müsste.
+                    <anchor synch="#T240"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T239" to="#T240">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T241"/>nein.
+                    <anchor synch="#T242"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T241" to="#T242">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T243"/>wie so ein Passepartout hm.
+                    <anchor synch="#T244"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T243" to="#T244">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T244"/>ich nehme mir noch mal einen Cappuccino.
+                    <anchor synch="#T245"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T244" to="#T245">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T246"/>stauben tut das trotzdem kann er mir erzählen was er
+                    will.
+                    <anchor synch="#T247"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T246" to="#T247">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T248"/>ja klar.
+                    <anchor synch="#T249"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T248" to="#T249">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T250"/>ja das hätte sofort …
+                    <anchor synch="#T251"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T250" to="#T251">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T252"/>hm.
+                    <anchor synch="#T253"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T252" to="#T253">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T254"/>ja.
+                    <anchor synch="#T255"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T254" to="#T255">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T256"/>in den Schrank rein.
+                    <anchor synch="#T257"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T256" to="#T257">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T258"/>überall Gleiten.
+                    <anchor synch="#T259"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T258" to="#T259">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T260"/>hm so war das ja.
+                    <anchor synch="#T261"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T260" to="#T261">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T262"/>gerissen.
+                    <anchor synch="#T263"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T262" to="#T263">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T264"/>wer … wer macht das eigentlich bei denen weiter.
+                    <anchor synch="#T265"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T264" to="#T265">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T266"/>ja aber der geht auch auf die Sechzig zu ((anonym)).
+                    <anchor synch="#T267"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T266" to="#T267">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T268"/>((anonym)) Kreativschreinerei.
+                    <anchor synch="#T269"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T268" to="#T269">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T270"/>der ist auch toll aber …
+                    <anchor synch="#T271"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T270" to="#T271">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T272"/>das muss nicht sein.
+                    <anchor synch="#T273"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T272" to="#T273">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T274"/>nein das ist mal ein Wort sechstausend Euro du.
+                    <anchor synch="#T275"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T274" to="#T275">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T276"/>das glaube ich.
+                    <anchor synch="#T277"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T276" to="#T277">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T278"/>((anonym)) du musst mir mal unbedingt noch mal kürzlich
+                    welche stricken ich musste jetzt welche wegschmeißen.
+                    <anchor synch="#T279"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T278" to="#T279">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T280"/>von mir welche.
+                    <anchor synch="#T281"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T280" to="#T281">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T282"/>da war der … da war die So… die Sohle die kam immer unter
+                    de… unter dem Fuß also hinten die Ferse die kam immer da …
+                    <anchor synch="#T283"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T282" to="#T283">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T284"/>nein die hat Tante ((anonym)) gestrickt.
+                    <anchor synch="#T285"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T284" to="#T285">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T286"/>das ist mir lieber als wenn du sie unter die Fu… unterm
+                    Fuß sitzen hast.
+                    <anchor synch="#T287"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T286" to="#T287">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T288"/>was hast du denn jetzt ((unverständlich)) und was machst
+                    du jetzt hier mit.
+                    <anchor synch="#T289"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T288" to="#T289">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T290"/>hast du die denn jetzt alle abgenommen oder nein.
+                    <anchor synch="#T291"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T290" to="#T291">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T291"/>ach du bist da angefangen und bist dann so …
+                    <anchor synch="#T292"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T291" to="#T292">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T293"/>raffiniert.
+                    <anchor synch="#T294"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T293" to="#T294">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T295"/>nein muss ich dir mal Wolle besorgen wenn du das machen
+                    würdest tätest das wäre schön.
+                    <anchor synch="#T296"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T295" to="#T296">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T297"/>ja ja genau.
+                    <anchor synch="#T298"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T297" to="#T298">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T299"/>ist das teuer und … wieviel sind das hundert Gramm oder
+                    sechs Euro.
+                    <anchor synch="#T300"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T299" to="#T300">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T301"/>nein aber diese lässt sich sehr gut stricken.
+                    <anchor synch="#T302"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T301" to="#T302">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T303"/>aber man merkt sofort ich strick einfach unheimlich dünn
+                    also ((unverständlich)).
+                    <anchor synch="#T304"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T303" to="#T304">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T305"/>drei.
+                    <anchor synch="#T306"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T305" to="#T306">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T307"/>nein ich habe jetzt … hier unten habe ich hundertzwanzig
+                    aufgeschlagen ich habe … habe gemessen ungefähr so dass das nicht so …
+                    <anchor synch="#T308"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T307" to="#T308">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T309"/>ich habe das nicht so gerne wenn das so ganz eng ansitzt.
+                    <anchor synch="#T310"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T309" to="#T310">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T311"/>weißt du wie lange ((anonym)) und ((anonym)) noch da
+                    waren bei ((anonym)) hm hm bis halb zwei.
+                    <anchor synch="#T312"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T311" to="#T312">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T313"/>nein ich war auch froh dass ich zu Hause war.
+                    <anchor synch="#T314"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T313" to="#T314">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T315"/>((anonym)) zu eng.
+                    <anchor synch="#T316"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T315" to="#T316">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T317"/>sind sie wieder in der Wäsche eingelaufen.
+                    <anchor synch="#T318"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T317" to="#T318">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T319"/>ja sowas ist immer gut Sweatys hat er im… zieht er immer
+                    gerne an.
+                    <anchor synch="#T320"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T319" to="#T320">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T320"/>das mit V Ausschnitt nicht V Ausschnitt nicht.
+                    <anchor synch="#T321"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T320" to="#T321">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T322"/>den … das Sweaty das zieht er auf jeden Fall an.
+                    <anchor synch="#T323"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T322" to="#T323">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T324"/>das Sweaty.
+                    <anchor synch="#T325"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T324" to="#T325">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T326"/>das Sweatshirt.
+                    <anchor synch="#T327"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T326" to="#T327">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T327"/>ach ((anonym)) ist das.
+                    <anchor synch="#T328"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T327" to="#T328">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T329"/>das hier hm hm ja muss er mal … muss er mal gucken muss
+                    er sich selber …
+                    <anchor synch="#T330"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T329" to="#T330">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T331"/>ja für den Stall auf jeden Fall.
+                    <anchor synch="#T332"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T331" to="#T332">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T333"/>ja der hat immer so viel so Schweißlöcher.
+                    <anchor synch="#T334"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T333" to="#T334">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T335"/>ja und jetzt hat er einen der ist hier oben schon ganz
+                    durchgerubbelt.
+                    <anchor synch="#T336"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T335" to="#T336">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T336"/>den kann er erstmal wieder weg hier.
+                    <anchor synch="#T337"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T336" to="#T337">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T338"/>ja kommst ja mal wieder.
+                    <anchor synch="#T339"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T338" to="#T339">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T340"/>das ist ri… wir haben immer … nein keinen
+                    Entkoffeinierten sondern Schonkaffe haben wir immer sonst musst du dir noch Wasser
+                    dabei tun Wasser kocht.
+                    <anchor synch="#T341"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T340" to="#T341">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T342"/>oh doch ich habe jetzt … eine Nacht habe ich doch glatt
+                    das Buch zu Ende gelesen.
+                    <anchor synch="#T343"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T342" to="#T343">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T343"/>ging nicht.
+                    <anchor synch="#T344"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T343" to="#T344">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T344"/>ich hab das Licht ausgemacht.
+                    <anchor synch="#T345"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T344" to="#T345">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T345"/>ich lag wieder im Bett.
+                    <anchor synch="#T346"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T345" to="#T346">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T346"/>habe ich mir das Licht wieder angemacht habe das Buch
+                    genommen und dann habe ich es … habe ich das ganze Buch geb… eben fertig gelesen.
+                    <anchor synch="#T347"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T346" to="#T347">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T347"/>geht nicht konnte nicht pennen war nicht mehr drin.
+                    <anchor synch="#T348"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T347" to="#T348">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T349"/>ja und.
+                    <anchor synch="#T350"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T349" to="#T350">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T351"/>hm hm.
+                    <anchor synch="#T352"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T351" to="#T352">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T353"/>Löslichen so wie meiner.
+                    <anchor synch="#T354"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T353" to="#T354">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T355"/>ja.
+                    <anchor synch="#T356"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T355" to="#T356">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T357"/>so dass das aufgeschäumt wird.
+                    <anchor synch="#T358"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T357" to="#T358">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T359"/>ja klar ist ja ein bisschen mehr Fett.
+                    <anchor synch="#T360"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T359" to="#T360">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T361"/>echt.
+                    <anchor synch="#T362"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T361" to="#T362">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T363"/>Kännchen Dingsda.
+                    <anchor synch="#T364"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T363" to="#T364">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T365"/>Hilfe nein.
+                    <anchor synch="#T366"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T365" to="#T366">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T367"/>Cappuccino.
+                    <anchor synch="#T368"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T367" to="#T368">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T369"/>Kaffee.
+                    <anchor synch="#T370"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T369" to="#T370">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T371"/>was nimmst du jetzt Entkoffeinierten oder Milden.
+                    <anchor synch="#T372"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T371" to="#T372">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T373"/>ach so.
+                    <anchor synch="#T374"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T373" to="#T374">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T375"/>ja ja deswegen so ein Espresso den kann ich nach dem
+                    Essen besser vertragen als einen Kaffee.
+                    <anchor synch="#T376"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T375" to="#T376">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T377"/>soll man nicht für möglich halten.
+                    <anchor synch="#T378"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T377" to="#T378">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T379"/>Kaffee leer.
+                    <anchor synch="#T380"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T379" to="#T380">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T381"/>ja ja hm.
+                    <anchor synch="#T382"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T381" to="#T382">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T383"/>und woll… wo kaufst du dir jetzt diesen Es… Espresso
+                    kannst du dir denn … im Lidl gibt es den.
+                    <anchor synch="#T384"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T383" to="#T384">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T385"/>wie normaler Kaffee auch hm.
+                    <anchor synch="#T386"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T385" to="#T386">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T387"/>und das passt dann genau.
+                    <anchor synch="#T388"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T387" to="#T388">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T389"/>ach so raffiniert und sonst tust du richtig Bohnen oben
+                    rein und das mahlt er sich dann selber.
+                    <anchor synch="#T390"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T389" to="#T390">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T391"/>ach so ja hier ((anonym)) ((anonym)) die hat … die hat
+                    auch so ein Teil … so eine Maschine.
+                    <anchor synch="#T392"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T391" to="#T392">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T393"/>hm.
+                    <anchor synch="#T394"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T393" to="#T394">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T395"/>hm.
+                    <anchor synch="#T396"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T395" to="#T396">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T397"/>ja.
+                    <anchor synch="#T398"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T397" to="#T398">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T399"/>so kal… so kalkhaltiges Wasser.
+                    <anchor synch="#T400"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T399" to="#T400">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T401"/>ja.
+                    <anchor synch="#T402"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T401" to="#T402">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T403"/>die ((unverständlich)) die habe ich noch kein einziges
+                    Mal entkalkt diese ((unverständlich)).
+                    <anchor synch="#T404"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T403" to="#T404">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T405"/>nein.
+                    <anchor synch="#T406"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T405" to="#T406">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T407"/>ja die Stunde müsste ja eigentlich … müsste jetzt rum
+                    sein ne.
+                    <anchor synch="#T408"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T407" to="#T408">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T409"/>sie hat gesagt wir sollten uns … was denn.
+                    <anchor synch="#T410"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T409" to="#T410">HD</span>
+                </spanGrp>
+                <spanGrp type="ia_1">
+                    <span from="#T409" to="#T410">FksFrd;EstWis;</span>
+                </spanGrp>
+                <spanGrp type="ia_3">
+                    <span from="#T409" to="#T410">ThmEhs;</span>
+                </spanGrp>
+            </div>
+            <incident type="ia_v" start="#T410" end="#T412">
+                <desc>"ich finde wir haben gar keinen Dialekt wir reden doch
+                    normal. was sagt ((anonym)) immer wir gehen uns einen Trinken. Ist mir auch noch
+                    nicht aufgefallen."
+                </desc>
+            </incident>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T411"/>((anonym)) sagt das immer.
+                    <anchor synch="#T412"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T411" to="#T412">HD</span>
+                </spanGrp>
+                <spanGrp type="ia_1">
+                    <span from="#T411" to="#T412">FksFrd;EstNwi;</span>
+                </spanGrp>
+                <spanGrp type="ia_2">
+                    <span from="#T411" to="#T412">ThbSgb;</span>
+                </spanGrp>
+                <spanGrp type="ia_3">
+                    <span from="#T411" to="#T412">ThmSpnStd;</span>
+                </spanGrp>
+            </div>
+            <incident type="ia_v" start="#T412" end="#T413">
+                <desc>"((anonym)) sagt, wir Sauerländer sagen immer, komm wir
+                    gehen uns einen Trinken." "ja stimmt ja auch." "das ist aber falsch. wir gehen einen
+                    Trinken heißt es eigentlich. man kann sich keinen Trinken."
+                </desc>
+            </incident>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T413"/>((unverständlich)) dürfen wir jetzt nur noch sagen komm
+                    wir gehen nach ((anonym)) oder wir gehen nach ((anonym)).
+                    <anchor synch="#T414"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T413" to="#T414">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T415"/>ja selbstverständlich auch oben … auch oben so ein
+                    bisschen wo ((anonym)) da … ist sie gekommen ich meine weil die Schiss hat wegen den
+                    … wegen den Hunden.
+                    <anchor synch="#T416"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T415" to="#T416">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T417"/>das ist … wenn sie eine große Klappe hat du.
+                    <anchor synch="#T418"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T417" to="#T418">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T419"/>glaube ich auch nicht aber …
+                    <anchor synch="#T420"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T419" to="#T420">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T420"/>was willst du da hin tun.
+                    <anchor synch="#T421"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T420" to="#T421">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T422"/>neulich … neulich meinte er … oder irgendwann hat er
+                    jetzt noch gemeint das wäre doch schön für Pferde ich sage mit den Pferden … du
+                    musst über jede Straße drüber ich sage nein.
+                    <anchor synch="#T423"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T422" to="#T423">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T424"/>die und die Aus… Ein und Ausfahrten.
+                    <anchor synch="#T425"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T424" to="#T425">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T426"/>nein nach … auch nach … bei … wie heißt es bei ((anonym))
+                    raus dass du direkt in der Kurve rausfahren kannst.
+                    <anchor synch="#T427"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T426" to="#T427">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T428"/>gegen… ja gegenüber von der Kirche.
+                    <anchor synch="#T429"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T428" to="#T429">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T430"/>das … beiden Seiten.
+                    <anchor synch="#T431"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T430" to="#T431">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T432"/>nein wieso.
+                    <anchor synch="#T433"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T432" to="#T433">HD</span>
+                </spanGrp>
+            </div>
+            <div>
+                <u who="#SPK0">
+                    <anchor synch="#T434"/>((anonym)) sei ruhig.
+                    <anchor synch="#T435"/>
+                </u>
+                <spanGrp type="Sprachlage">
+                    <span from="#T434" to="#T435">HD</span>
+                </spanGrp>
+            </div>
+        </body>
+    </text>
+</TEI>

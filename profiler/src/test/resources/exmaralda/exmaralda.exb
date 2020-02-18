@@ -1,0 +1,1307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- (c) http://www.rrz.uni-hamburg.de/exmaralda -->
+<basic-transcription>
+    <head>
+        <meta-information>
+            <project-name></project-name>
+            <transcription-name>SW-BAL01-G-F</transcription-name>
+            <referenced-file
+                url="file:/G:/SiN/EXMARaLDA/Inhaltsannotation/Annotationen/abgeschlossen/BI-Südwestfalen-Balve/SW-BAL01/SW-BAL01-F-G.wav"/>
+            <ud-meta-information>
+                <ud-information attribute-name="Transkriptor">B-GLA</ud-information>
+                <ud-information attribute-name="Korrektor">B-HAR</ud-information>
+            </ud-meta-information>
+            <comment/>
+            <transcription-convention>HIAT</transcription-convention>
+        </meta-information>
+        <speakertable>
+            <speaker id="SPK0">
+                <abbreviation>SW-BAL01-G</abbreviation>
+                <sex value="f"/>
+                <languages-used>
+                    <language lang="deu"/>
+                </languages-used>
+                <l1>
+                    <language lang="deu"/>
+                </l1>
+                <l2/>
+                <ud-speaker-information> </ud-speaker-information>
+                <comment/>
+            </speaker>
+            <speaker id="SPK1">
+                <abbreviation>SPK1</abbreviation>
+                <sex value="u"/>
+                <languages-used/>
+                <l1/>
+                <l2/>
+                <ud-speaker-information> </ud-speaker-information>
+                <comment/>
+            </speaker>
+        </speakertable>
+    </head>
+    <basic-body>
+        <common-timeline>
+            <tli id="T0" time="0.0"/>
+            <tli id="T1" time="5.906661747896213"/>
+            <tli id="T2" time="7.673326943373072"/>
+            <tli id="T3" time="82.72659777612202"/>
+            <tli id="T4" time="83.86659682678821"/>
+            <tli id="T5" time="182.0"/>
+            <tli id="T6" time="184.26651321879385"/>
+            <tli id="T7" time="202.6931645406732"/>
+            <tli id="T8" time="203.89316354137446"/>
+            <tli id="T9" time="268.55310969582746"/>
+            <tli id="T10" time="270.31310823018936"/>
+            <tli id="T11" time="285.4730956057153"/>
+            <tli id="T12" time="287.26642744565214"/>
+            <tli id="T13" time="291.1597575368163"/>
+            <tli id="T14" time="291.6464237982118"/>
+            <tli id="T15" time="365.4196956968794"/>
+            <tli id="T16" time="366.58636139200564"/>
+            <tli id="T17" time="368.39302655417254"/>
+            <tli id="T18" time="371.4263573615007"/>
+            <tli id="T19" time="373.8863553129383"/>
+            <tli id="T20" time="376.2730199921108"/>
+            <tli id="T21" time="400.0263335448808"/>
+            <tli id="T22" time="403.1463309467041"/>
+            <tli id="T23" time="407.4996606548037"/>
+            <tli id="T24" time="408.3196599719495"/>
+            <tli id="T25" time="453.2462892259818"/>
+            <tli id="T26" time="453.6596222151122"/>
+            <tli id="T27" time="457.89961868425667"/>
+            <tli id="T28" time="458.45295155680225"/>
+            <tli id="T29" time="461.2662825473352"/>
+            <tli id="T30" time="461.8529487254558"/>
+            <tli id="T31" time="465.1262793329243"/>
+            <tli id="T32" time="472.6929396984573"/>
+            <tli id="T33" time="534.0995552287869"/>
+            <tli id="T34" time="537.8528854365356"/>
+            <tli id="T35" time="542.2995484002455"/>
+            <tli id="T36" time="547.4595441032609"/>
+            <tli id="T37" time="552.1662068504559"/>
+            <tli id="T38" time="557.4528691146564"/>
+            <tli id="T39" time="561.2528659502104"/>
+            <tli id="T40" time="562.0595319451262"/>
+            <tli id="T41" time="574.6928547580645"/>
+            <tli id="T42" time="576.2128534922862"/>
+            <tli id="T43" time="583.9261804023492"/>
+            <tli id="T44" time="589.1528427165148"/>
+            <tli id="T45" time="595.7861705259467"/>
+            <tli id="T46" time="600.2528334730015"/>
+            <tli id="T47" time="607.8594938052245"/>
+            <tli id="T48" time="608.6128265112202"/>
+            <tli id="T49" time="616.5061532713885"/>
+            <tli id="T50" time="621.2994826130786"/>
+            <tli id="T51" time="623.7461472422862"/>
+            <tli id="T52" time="627.7794772168654"/>
+            <tli id="T53" time="633.079472803296"/>
+            <tli id="T54" time="635.2928042934783"/>
+            <tli id="T55" time="638.792801378857"/>
+            <tli id="T56" time="639.6994672904979"/>
+            <tli id="T57" time="643.8461305040322"/>
+            <tli id="T58" time="647.0127945336606"/>
+            <tli id="T59" time="665.0261128664096"/>
+            <tli id="T60" time="666.5394449395161"/>
+            <tli id="T61" time="675.3727709169003"/>
+            <tli id="T62" time="678.6061015576788"/>
+            <tli id="T63" time="693.6664375" type="intp"/>
+            <tli id="T64" time="695.5727540953717"/>
+            <tli id="T65" time="697.0660861851331"/>
+            <tli id="T66" time="698.0594186912692"/>
+            <tli id="T67" time="698.906084652875"/>
+            <tli id="T68" time="699.3594176086957"/>
+            <tli id="T69" time="700.9594162762974"/>
+            <tli id="T70" time="703.6860806723353"/>
+            <tli id="T71" time="706.4660783572931"/>
+            <tli id="T72" time="707.8860771747896"/>
+            <tli id="T73" time="709.152742786641"/>
+            <tli id="T74" time="709.8127422370266"/>
+            <tli id="T75" time="711.192741087833"/>
+            <tli id="T76" time="712.2527402051193"/>
+            <tli id="T77" time="718.0194020696003"/>
+            <tli id="T78" time="719.8860671818022"/>
+            <tli id="T79" time="721.9993987552594"/>
+            <tli id="T80" time="724.312730162167"/>
+            <tli id="T81" time="728.6593932091514"/>
+            <tli id="T82" time="733.1527228006662"/>
+            <tli id="T83" time="738.4993850149018"/>
+            <tli id="T84" time="742.8993813508065"/>
+            <tli id="T85" time="752.6327065787168"/>
+            <tli id="T86" time="771.6593574009468"/>
+            <tli id="T87" time="788.6993432109047"/>
+            <tli id="T88" time="789.6926757170406"/>
+            <tli id="T89" time="793.2526727524544"/>
+            <tli id="T90" time="794.0926720529453"/>
+            <tli id="T91" time="830.4459751130786"/>
+            <tli id="T92" time="831.7193073860449"/>
+            <tli id="T93" time="834.1193053874475"/>
+            <tli id="T94" time="837.539302539446"/>
+            <tli id="T95" time="843.4451153297028" type="intp"/>
+            <tli id="T96" time="847.6126274842215"/>
+            <tli id="T97" time="851.6859574254909"/>
+            <tli id="T98" time="854.1659553602735"/>
+            <tli id="T99" time="855.8259539779102"/>
+            <tli id="T100" time="863.8926139270687"/>
+            <tli id="T101" time="865.0726129444249"/>
+            <tli id="T102" time="903.3059144389902"/>
+            <tli id="T103" time="904.5659133897266"/>
+            <tli id="T104" time="912.4125735220897"/>
+            <tli id="T105" time="915.0392380014026"/>
+            <tli id="T106" time="946.7258782810309"/>
+            <tli id="T107" time="947.2658778313463"/>
+            <tli id="T108" time="964.4258635413745"/>
+            <tli id="T109" time="975.2458545310309"/>
+            <tli id="T110" time="982.7725149298739"/>
+            <tli id="T111" time="984.9858464200561"/>
+            <tli id="T112" time="985.5058459870266"/>
+            <tli id="T113" time="990.9258414735275"/>
+            <tli id="T114" time="995.7191708152174"/>
+            <tli id="T115" time="997.179169599404"/>
+            <tli id="T116" time="999.5991675841515"/>
+            <tli id="T117" time="1007.964781711436" type="intp"/>
+            <tli id="T118" time="1008.3724936115007"/>
+            <tli id="T119" time="1023.5858142759467"/>
+            <tli id="T120" time="1031.45914105277"/>
+            <tli id="T121" time="1140.1857171774195"/>
+            <tli id="T122" time="1146.8390449701963"/>
+            <tli id="T123" time="1165.8256958257366"/>
+            <tli id="T124" time="1166.652361803997"/>
+            <tli id="T125" time="1202.5523319083097"/>
+            <tli id="T126" time="1204.3189971037868"/>
+            <tli id="T127" time="1211.7056576192147"/>
+            <tli id="T128" time="1217.9656524062061"/>
+            <tli id="T129" time="1282.7122651551542"/>
+            <tli id="T130" time="1287.9989274193547"/>
+            <tli id="T131" time="1291.2855913490534"/>
+            <tli id="T132" time="1291.7589242882189"/>
+            <tli id="T133" time="1298.492252014376"/>
+            <tli id="T134" time="1300.6722501989832"/>
+            <tli id="T135" time="1302.8855816891655"/>
+            <tli id="T136" time="1305.285579690568"/>
+            <tli id="T137" time="1322.2055656004557"/>
+            <tli id="T138" time="1323.538897823457"/>
+            <tli id="T139" time="1362.0188657792776"/>
+            <tli id="T140" time="1363.1521981688288"/>
+            <tli id="T141" time="1368.018860782784"/>
+            <tli id="T142" time="1371.725524362728"/>
+            <tli id="T143" time="1380.3188505399721"/>
+            <tli id="T144" time="1384.6988468925315"/>
+            <tli id="T145" time="1385.7197245953676" type="intp"/>
+            <tli id="T146" time="1391.9855074912343"/>
+            <tli id="T147" time="1394.1055057258066"/>
+            <tli id="T148" time="1396.8988367329944"/>
+            <tli id="T149" time="1403.0504670268672" type="intp"/>
+            <tli id="T150" time="1404.1388307038922"/>
+            <tli id="T151" time="1406.4388287885695"/>
+            <tli id="T152" time="1410.898825074509"/>
+            <tli id="T153" time="1412.2588239419704"/>
+            <tli id="T154" time="1415.0921549158486"/>
+            <tli id="T155" time="1416.9054867391305"/>
+            <tli id="T156" time="1424.4721471046632"/>
+            <tli id="T157" time="1431.0121416584855"/>
+            <tli id="T158" time="1433.6988060878332"/>
+            <tli id="T159" time="1435.1721381942498"/>
+            <tli id="T160" time="1436.4188038227558"/>
+            <tli id="T161" time="1437.425469651122"/>
+            <tli id="T162" time="1450.1521257196703"/>
+            <tli id="T163" time="1452.798790182328"/>
+            <tli id="T164" time="1459.265451463885"/>
+            <tli id="T165" time="1461.8987826043128"/>
+            <tli id="T166" time="1484.5787637175665"/>
+            <tli id="T167" time="1486.9587617356242"/>
+            <tli id="T168" time="1489.2320931758416"/>
+            <tli id="T169" time="1496.6787536413044"/>
+            <tli id="T170" time="1498.8187518592217"/>
+            <tli id="T171" time="1501.6320828497544"/>
+            <tli id="T172" time="1505.4920796353435"/>
+            <tli id="T173" time="1523.6587311737376"/>
+            <tli id="T174" time="1538.4653855101683"/>
+            <tli id="T175" time="1541.6453828620267"/>
+            <tli id="T176" time="1543.012048390603"/>
+            <tli id="T177" time="1562.6253653909537"/>
+            <tli id="T178" time="1563.6386978804346"/>
+            <tli id="T179" time="1580.9886521822405" type="intp"/>
+            <tli id="T180" time="1597.4253364112903"/>
+            <tli id="T181" time="1606.5053288499298"/>
+            <tli id="T182" time="1607.638661239481"/>
+            <tli id="T183" time="1618.6386520792428"/>
+            <tli id="T184" time="1620.225317424614"/>
+            <tli id="T185" time="1624.8986468662342"/>
+            <tli id="T186" time="1626.1119791891656"/>
+            <tli id="T187" time="1634.6653053997195"/>
+            <tli id="T188" time="1639.718634524895"/>
+            <tli id="T189" time="1643.8919643828892"/>
+            <tli id="T190" time="1645.8919627173914"/>
+            <tli id="T191" time="1656.2252874456524"/>
+            <tli id="T192" time="1658.2118274579243" type="intp"/>
+            <tli id="T193" time="1670.0786092426367"/>
+            <tli id="T194" time="1674.9519385177066"/>
+            <tli id="T195" time="1690.218592471073"/>
+            <tli id="T196" time="1692.3452573667603"/>
+            <tli id="T197" time="1694.0519226122021"/>
+            <tli id="T198" time="1702.3319157170406"/>
+            <tli id="T199" time="1722.2452324675667"/>
+            <tli id="T200" time="1732.6318904847476"/>
+            <tli id="T201" time="1733.7652228742986"/>
+            <tli id="T202" time="1738.3985523492286"/>
+            <tli id="T203" time="1748.4252106661993"/>
+            <tli id="T204" time="1749.6252096669004"/>
+            <tli id="T205" time="1795.731837938289"/>
+            <tli id="T206" time="1796.2918374719497"/>
+            <tli id="T207" time="1800.1451675964236"/>
+            <tli id="T208" time="1802.391832392181"/>
+            <tli id="T209" time="1836.4184707231768"/>
+            <tli id="T210" time="1839.0384685413744"/>
+            <tli id="T211" time="1841.351799948282"/>
+            <tli id="T212" time="1842.6517988657083"/>
+            <tli id="T213" time="1844.7317971335906"/>
+            <tli id="T214" time="1845.1651301060658"/>
+            <tli id="T215" time="1847.9184611465637"/>
+            <tli id="T216" time="1848.6451272080994"/>
+            <tli id="T217" time="1854.4584557003857"/>
+            <tli id="T218" time="1856.8917870073633"/>
+            <tli id="T219" time="1864.7784471064165"/>
+            <tli id="T220" time="1865.6717796958276"/>
+            <tli id="T221" time="1869.6717763648317"/>
+            <tli id="T222" time="1872.1717742829596"/>
+            <tli id="T223" time="1896.9784202919004"/>
+            <tli id="T224" time="1898.405085770512"/>
+            <tli id="T225" time="1904.178414296108"/>
+            <tli id="T226" time="1904.9850802910237"/>
+            <tli id="T227" time="1930.5183923615007"/>
+            <tli id="T228" time="1930.938392011746"/>
+            <tli id="T229" time="1961.2850334072582"/>
+            <tli id="T230" time="1962.9516986860099"/>
+            <tli id="T231" time="1972.39169082486"/>
+            <tli id="T232" time="1973.6516897755962"/>
+            <tli id="T233" time="2028.891643774544"/>
+            <tli id="T234" time="2029.2116435080643"/>
+            <tli id="T235" time="2065.731613096073"/>
+            <tli id="T236" time="2067.68494480277"/>
+            <tli id="T237" time="2086.3382626025596"/>
+            <tli id="T238" time="2089.444926682153"/>
+            <tli id="T239" time="2105.7049131416547"/>
+            <tli id="T240" time="2106.551579103261"/>
+            <tli id="T241" time="2136.6182207319425"/>
+            <tli id="T242" time="2137.534730385256" type="intp"/>
+            <tli id="T243" time="2163.2715318697406"/>
+            <tli id="T244" time="2165.551529971073"/>
+            <tli id="T245" time="2167.9515279724756"/>
+            <tli id="T246" time="2211.5914916313113"/>
+            <tli id="T247" time="2214.3381560106945"/>
+            <tli id="T248" time="2233.324806866234"/>
+            <tli id="T249" time="2234.838138939341"/>
+            <tli id="T250" time="2237.764803168829"/>
+            <tli id="T251" time="2240.1914678146914"/>
+            <tli id="T252" time="2258.4447859475804"/>
+            <tli id="T253" time="2259.464785098177"/>
+            <tli id="T254" time="2263.298115239306"/>
+            <tli id="T255" time="2263.8647814340816"/>
+            <tli id="T256" time="2266.538112541199"/>
+            <tli id="T257" time="2267.718111558555"/>
+            <tli id="T258" time="2269.1581103593967"/>
+            <tli id="T259" time="2270.351442698983"/>
+            <tli id="T260" time="2324.318064424965"/>
+            <tli id="T261" time="2326.438062659537"/>
+            <tli id="T262" time="2332.818057346599"/>
+            <tli id="T263" time="2333.678056630435"/>
+            <tli id="T264" time="2341.3247169293477"/>
+            <tli id="T265" time="2343.7447149140958"/>
+            <tli id="T266" time="2358.364702739306"/>
+            <tli id="T267" time="2362.1780328970895"/>
+            <tli id="T268" time="2364.324697776122"/>
+            <tli id="T269" time="2367.8513615059605"/>
+            <tli id="T270" time="2382.958015592567"/>
+            <tli id="T271" time="2384.998013893759"/>
+            <tli id="T272" time="2444.3112978339764"/>
+            <tli id="T273" time="2445.491296851332"/>
+            <tli id="T274" time="2479.597935115708"/>
+            <tli id="T275" time="2485.004597279979"/>
+            <tli id="T276" time="2491.2579254058555"/>
+            <tli id="T277" time="2492.524591017707"/>
+            <tli id="T278" time="2495.6045884528403"/>
+            <tli id="T279" time="2501.9779164787865"/>
+            <tli id="T280" time="2505.4579135808203"/>
+            <tli id="T281" time="2506.684579225982"/>
+            <tli id="T282" time="2510.2245762780503"/>
+            <tli id="T283" time="2520.0579014226855"/>
+            <tli id="T284" time="2523.5778984914095"/>
+            <tli id="T285" time="2525.417896959151"/>
+            <tli id="T286" time="2539.3778853339763"/>
+            <tli id="T287" time="2543.8512149421463"/>
+            <tli id="T288" time="2578.6711859458273"/>
+            <tli id="T289" time="2582.224516320126"/>
+            <tli id="T290" time="2591.5445085589063"/>
+            <tli id="T291" time="2595.824504994741"/>
+            <tli id="T292" time="2598.7178359186537"/>
+            <tli id="T293" time="2602.7844991988077"/>
+            <tli id="T294" time="2604.031164827314"/>
+            <tli id="T295" time="2616.7244875902875"/>
+            <tli id="T296" time="2623.6444818276645"/>
+            <tli id="T297" time="2632.0978081214935"/>
+            <tli id="T298" time="2633.837806672511"/>
+            <tli id="T299" time="2641.871133316094"/>
+            <tli id="T300" time="2649.1244606092214"/>
+            <tli id="T301" time="2660.784450899369"/>
+            <tli id="T302" time="2663.211115545231"/>
+            <tli id="T303" time="2671.22444220547"/>
+            <tli id="T304" time="2676.4844378252105"/>
+            <tli id="T305" time="2680.211101388499"/>
+            <tli id="T306" time="2680.9777674167253"/>
+            <tli id="T307" time="2691.5577586062414"/>
+            <tli id="T308" time="2703.2177488963885"/>
+            <tli id="T309" time="2708.5644111106244"/>
+            <tli id="T310" time="2712.0644081960027"/>
+            <tli id="T311" time="2723.212638495573" type="intp"/>
+            <tli id="T312" time="2729.1310606504207"/>
+            <tli id="T313" time="2730.217726412167"/>
+            <tli id="T314" time="2733.6777235308555"/>
+            <tli id="T315" time="2754.931039165498"/>
+            <tli id="T316" time="2756.3443713218794"/>
+            <tli id="T317" time="2760.9177008467746"/>
+            <tli id="T318" time="2762.824365925666"/>
+            <tli id="T319" time="2778.9110191961777"/>
+            <tli id="T320" time="2784.0776815603085"/>
+            <tli id="T321" time="2789.804343458099"/>
+            <tli id="T322" time="2842.0776332608693"/>
+            <tli id="T323" time="2845.224297307153"/>
+            <tli id="T324" time="2846.0109633187235"/>
+            <tli id="T325" time="2847.184295674965"/>
+            <tli id="T326" time="2848.377628014551"/>
+            <tli id="T327" time="2849.3109605706522"/>
+            <tli id="T328" time="2851.037625799439"/>
+            <tli id="T329" time="2855.3976221686535"/>
+            <tli id="T330" time="2861.537617055575"/>
+            <tli id="T331" time="2871.817608494916"/>
+            <tli id="T332" time="2873.6642736237727"/>
+            <tli id="T333" time="2880.2309348220547"/>
+            <tli id="T334" time="2887.7509285597826"/>
+            <tli id="T335" time="2891.9575917233524"/>
+            <tli id="T336" time="2898.304253104839"/>
+            <tli id="T337" time="2901.581654672379" type="intp"/>
+            <tli id="T338" time="2907.737578582574"/>
+            <tli id="T339" time="2909.364243894636"/>
+            <tli id="T340" time="2912.4309080075386"/>
+            <tli id="T341" time="2922.284233135519"/>
+            <tli id="T342" time="2936.424221360449"/>
+            <tli id="T343" time="2944.044215014902"/>
+            <tli id="T344" time="2946.97087924439"/>
+            <tli id="T345" time="2949.2308773623777"/>
+            <tli id="T346" time="2951.1308757801544"/>
+            <tli id="T347" time="2960.0975349798387"/>
+            <tli id="T348" time="2964.6108645546988"/>
+            <tli id="T349" time="2971.0975258196"/>
+            <tli id="T350" time="2972.1708582591164"/>
+            <tli id="T351" time="3009.17749410852"/>
+            <tli id="T352" time="3009.6174937421106"/>
+            <tli id="T353" time="3029.9641434651126"/>
+            <tli id="T354" time="3032.42414141655"/>
+            <tli id="T355" time="3063.1641158178472"/>
+            <tli id="T356" time="3063.497448873597"/>
+            <tli id="T357" time="3119.4507356118515"/>
+            <tli id="T358" time="3121.6174004742284"/>
+            <tli id="T359" time="3142.5840496809255"/>
+            <tli id="T360" time="3144.4307148097823"/>
+            <tli id="T361" time="3190.9840093758767"/>
+            <tli id="T362" time="3191.5173422650773"/>
+            <tli id="T363" time="3200.0640018145164"/>
+            <tli id="T364" time="3201.2373341707575"/>
+            <tli id="T365" time="3207.683995468969"/>
+            <tli id="T366" time="3212.4973247940043"/>
+            <tli id="T367" time="3214.357323245091"/>
+            <tli id="T368" time="3215.303989123422"/>
+            <tli id="T369" time="3216.6973212964585"/>
+            <tli id="T370" time="3217.3106541190396"/>
+            <tli id="T371" time="3225.0239810291027"/>
+            <tli id="T372" time="3228.0039785475105"/>
+            <tli id="T373" time="3229.763977081872"/>
+            <tli id="T374" time="3230.6773096546285"/>
+            <tli id="T375" time="3242.4906331504208"/>
+            <tli id="T376" time="3247.617295547861"/>
+            <tli id="T377" time="3329.5572273124126"/>
+            <tli id="T378" time="3331.1638926411288"/>
+            <tli id="T379" time="3346.4838798834157"/>
+            <tli id="T380" time="3347.7705454786114"/>
+            <tli id="T381" time="3355.9705386500705"/>
+            <tli id="T382" time="3357.130537684081"/>
+            <tli id="T383" time="3362.863866242987"/>
+            <tli id="T384" time="3368.050528590463"/>
+            <tli id="T385" time="3383.410515799439"/>
+            <tli id="T386" time="3385.483847406206"/>
+            <tli id="T387" time="3407.537162374649"/>
+            <tli id="T388" time="3409.103827736676"/>
+            <tli id="T389" time="3418.590486503331"/>
+            <tli id="T390" time="3426.5571465357643"/>
+            <tli id="T391" time="3432.6971414226855"/>
+            <tli id="T392" time="3439.263802620968"/>
+            <tli id="T393" time="3449.337127565743"/>
+            <tli id="T394" time="3449.850460471599"/>
+            <tli id="T395" time="3462.250450145512"/>
+            <tli id="T396" time="3462.643783151297"/>
+            <tli id="T397" time="3481.510434106767"/>
+            <tli id="T398" time="3481.9037671125525"/>
+            <tli id="T399" time="3486.137096920582"/>
+            <tli id="T400" time="3488.697094788745"/>
+            <tli id="T401" time="3496.023755354138"/>
+            <tli id="T402" time="3496.697088126753"/>
+            <tli id="T403" time="3510.823743029453"/>
+            <tli id="T404" time="3514.6637398316966"/>
+            <tli id="T405" time="3519.7549543419636" type="intp"/>
+            <tli id="T406" time="3520.7637347519285"/>
+            <tli id="T407" time="3538.1570536009817"/>
+            <tli id="T408" time="3541.7237172975106"/>
+            <tli id="T409" time="3556.537038295056"/>
+            <tli id="T410" time="3559.530369135694"/>
+            <tli id="T411" time="3583.3636826218444"/>
+            <tli id="T412" time="3584.6303482336957"/>
+            <tli id="T413" time="3607.8436622361505"/>
+            <tli id="T414" time="3615.383655957223"/>
+            <tli id="T415" time="3635.390305963359"/>
+            <tli id="T416" time="3648.1169620319074"/>
+            <tli id="T417" time="3651.1236261947756"/>
+            <tli id="T418" time="3656.2969552200207"/>
+            <tli id="T419" time="3669.91694387798"/>
+            <tli id="T420" time="3672.7118790504464" type="intp"/>
+            <tli id="T421" time="3677.036937948808"/>
+            <tli id="T422" time="3678.7902698220546"/>
+            <tli id="T423" time="3690.2435936176366"/>
+            <tli id="T424" time="3708.2969119170757"/>
+            <tli id="T425" time="3711.7969090024544"/>
+            <tli id="T426" time="3716.0302388104838"/>
+            <tli id="T427" time="3724.730231565568"/>
+            <tli id="T428" time="3725.9968971774197"/>
+            <tli id="T429" time="3727.903562256311"/>
+            <tli id="T430" time="3729.0768946125527"/>
+            <tli id="T431" time="3730.503560091164"/>
+            <tli id="T432" time="3736.056888799965"/>
+            <tli id="T433" time="3737.4568876341164"/>
+            <tli id="T434" time="3748.0302121625173"/>
+            <tli id="T435" time="3749.556877557854"/>
+            <tli id="T436" time="3802.663"/>
+        </common-timeline>
+        <tier id="TIE0" speaker="SPK0" category="v" type="t" display-name="SW-BAL01-G [v]">
+            <event start="T1" end="T2">das (schaffe) [1] {2} &lt;3&gt; ich aber nicht. </event>
+            <event start="T3" end="T4">ja ich komme. </event>
+            <event start="T5" end="T6">und bist du jetzt auch wieder am Stricken. </event>
+            <event start="T7" end="T8">genau wie bei ((anonym)) auch. </event>
+            <event start="T9" end="T10">ich hätte die aber nochmal angerufen du. </event>
+            <event start="T11" end="T12">und wie hat er es denn jetzt gemacht. </event>
+            <event start="T13" end="T14">ja. </event>
+            <event start="T15" end="T16">ja klar. </event>
+            <event start="T17" end="T18">hm ja das wäre richtig viel Arbeit geworden. </event>
+            <event start="T19" end="T20">ja das hört sich ja dann doch ein bisschen anders an du. </event>
+            <event start="T21" end="T22">der qualmt ja auch immer bleibt ja gar nicht aus. </event>
+            <event start="T23" end="T24">machen wir. </event>
+            <event start="T25" end="T26">hell. </event>
+            <event start="T27" end="T28">ach so. </event>
+            <event start="T29" end="T30">ja. </event>
+            <event start="T31" end="T32">ja ock… ocker gelb kennst du doch ocker … ocker das ist so
+                ein ror… sonst von Seidenmalen kenne ich es ocker. </event>
+            <event start="T33" end="T34">ein Pullunder in lila. </event>
+            <event start="T35" end="T36">ja ((anonym)) hat mir die Farbe mitgebracht die … die Wolle
+                mitgebracht. </event>
+            <event start="T37" end="T38">wenn es mir nicht gefällt ziehe ich es auf und dann musst
+                du mir Socken stricken in lila. </event>
+            <event start="T39" end="T40">ist Sockenwolle. </event>
+            <event start="T41" end="T42">die habe ich auch immer genommen. </event>
+            <event start="T43" end="T44">((anonym)) nimm … holst du mir das mal steht … liegt auf
+                der … auf dem Wohnzimmerschrank. </event>
+            <event start="T45" end="T46">eine ganze Stunde da hast du auch recht. </event>
+            <event start="T47" end="T48">guck. </event>
+            <event start="T49" end="T50">die unten habe ich erst eins rechts eins links gemacht und
+                oben eine Reihe rechts eine Reihe links. </event>
+            <event start="T51" end="T52">ich habe nicht zugenommen nix aber das ge… weitet sich ja
+                schon … sowieso schon. </event>
+            <event start="T53" end="T54">ewig nichts dran getan. </event>
+            <event start="T55" end="T56">ja. </event>
+            <event start="T57" end="T58">iss wer weiß ob du morgen noch was kriegst. </event>
+            <event start="T59" end="T60">aus dem Lidl. </event>
+            <event start="T61" end="T62">genau irgendwo müssen wir es ja einsparen. </event>
+            <event start="T63" end="T64">hast du schon im Internet gesehen. </event>
+            <event start="T65" end="T66">alles nicht. </event>
+            <event start="T67" end="T68">nein. </event>
+            <event start="T69" end="T70">die Wiese nicht und auch der Schweinestall nicht. </event>
+            <event start="T71" end="T72">das war der Hühnerstall. </event>
+            <event start="T73" end="T74">der Schw… </event>
+            <event start="T74" end="T75">nein nein. </event>
+            <event start="T76" end="T77">steht doch im Internet steht doch im Internet das sind
+                dreihundert … dreitausendfünfhundert Quadratmeter. </event>
+            <event start="T78" end="T79">das das … </event>
+            <event start="T80" end="T81">der … das … ach ((anonym)) ganz ruhig. </event>
+            <event start="T82" end="T83">aber der Schweinestall der da drauf ist das war aber nicht
+                auf dem Bild drauf. </event>
+            <event start="T84" end="T85">wenn du jetzt von unten guckst also von der Straße links
+                rechts ist das Haus dann kommt der … dann kommt der Mittelweg und dann kommt
+                ((unverständlich)). </event>
+            <event start="T85" end="T86">da ist … du … dann die großen … das große Haus und auch
+                hinten ist ja auch so was Verklinkertes dran von unten von der Straße aus und ganz
+                links ist der Schweinestall und da ist auch ein großes … eine große Wiese bei die …
+                die geht ja bis … bis zum Feuerwehrhaus hin. </event>
+            <event start="T87" end="T88">das hat … </event>
+            <event start="T89" end="T90">ja genau. </event>
+            <event start="T91" end="T92">ach ist doch klar. </event>
+            <event start="T93" end="T94">((anonym)) oder ist ((anonym)) weg nein. </event>
+            <event start="T94" end="T95">ja das sind drei … drei Wohnungen mit hundertzwanzig
+                Quadratmeter. </event>
+            <event start="T96" end="T97">ja wo … wo … ja wo ((anonym)) … wo ((anonym)) drin war. </event>
+            <event start="T98" end="T99">ja ausgebaut aber … </event>
+            <event start="T100" end="T101">ja klar. </event>
+            <event start="T102" end="T103">das wäre ja was anderes. </event>
+            <event start="T104" end="T105">jetzt im Moment kriegst du doch überhaupt nichts los. </event>
+            <event start="T106" end="T107">ja. </event>
+            <event start="T108" end="T109">oder so ja wer ist denn da noch ((anonym)) hat bei …
+                wohnt bei ((anonym)) ja ((anonym)) hat selber was ((anonym)) hat da unten selber
+                gebaut. </event>
+            <event start="T109" end="T110">ja wer ist denn da noch ((anonym)) ((anonym)) wohnt in
+                Menden oder Schwitten oder weiß der Kuckuck wo. </event>
+            <event start="T111" end="T112">nein. </event>
+            <event start="T113" end="T114">tja ja und ((anonym)) oder ist da noch jemand. </event>
+            <event start="T115" end="T116">ja ((anonym)) hat immer einen Wald. </event>
+            <event start="T117" end="T118">ja. </event>
+            <event start="T119" end="T120">wird die schon … wird die schon achtzehn meine Güte soll
+                man nicht für möglich halten. </event>
+            <event start="T121" end="T122">aber da Papa hier nicht mehr in der Höfeordnung war ne …
+                oder war der nicht … der war nicht mehr drin ne. </event>
+            <event start="T123" end="T124">ja klar. </event>
+            <event start="T125" end="T126">ein Schwank aus meiner Jugend ja. </event>
+            <event start="T127" end="T128">und das war … und das war glatt wir sind Kellermanns
+                Scheune gelaufen. </event>
+            <event start="T129" end="T130">nein also am Montag sind wir schon recht früh gegangen
+                aber … </event>
+            <event start="T131" end="T132">ja. </event>
+            <event start="T133" end="T134">((anonym)) muss ich noch zwei an die Seite tun. </event>
+            <event start="T135" end="T136">was denn ja gut. </event>
+            <event start="T137" end="T138">das muss auch nicht sein. </event>
+            <event start="T139" end="T140">gut danke. </event>
+            <event start="T141" end="T142">also kriegst du noch zwei eine für dich noch und eine für
+                ((anonym)). </event>
+            <event start="T143" end="T144">((anonym)) rief gestern Abend an ((anonym)) ich habe
+                gehört ihr habt geschlachtet. </event>
+            <event start="T144" end="T145">ich sage ja. </event>
+            <event start="T145" end="T146">unsere wollen mal gerne gebratene Blutwurst haben kann
+                ich mir was holen. </event>
+            <event start="T146" end="T147">ja ich sage bis jetzt haben wir noch was. </event>
+            <event start="T148" end="T149">die ist fett ich glaube wir hätten besser noch Mehl rein
+                getan Leute ist die fett. </event>
+            <event start="T150" end="T151">alle Leber und Blutwurst auch. </event>
+            <event start="T152" end="T153">darf ich aufstehen. </event>
+            <event start="T154" end="T155">einundneunzig Kilo. </event>
+            <event start="T156" end="T157">nein jetzt ist es… ist hier schon der erste … ist nicht
+                mehr so schön hatten ((anonym)) abgeschnitten. </event>
+            <event start="T158" end="T159">riechen tut sie gut ne. </event>
+            <event start="T160" end="T161">das ist Leberwurst. </event>
+            <event start="T162" end="T163">so lange mich da auf der Futt setzten. </event>
+            <event start="T164" end="T165">((anonym)) und ich wir sind am Freitag schon angefangen. </event>
+            <event start="T166" end="T167">nein wir drehen das immer selber durch. </event>
+            <event start="T167" end="T168">wir drehen immer selber durch. </event>
+            <event start="T169" end="T170">zwei Schinken hatten sie ja wieder. </event>
+            <event start="T171" end="T172">die Schinken die sind … die sind noch am Salzen. </event>
+            <event start="T173" end="T174">nein das … nein deswegen … wenn der dann soweit ist … der
+                kommt dann nach Onkel ((anonym)) oben auf dem Loh da weht der Wind hier unten wird
+                der nur schimmelig. </event>
+            <event start="T175" end="T176">und deswegen. </event>
+            <event start="T177" end="T178">ja ja. </event>
+            <event start="T179" end="T180">ja es ist … ist bei uns auch ich … sowas … sofort … ist …
+                wir brauchen auch nicht bei uns oben am Balken zu hängen geht auch nicht hmhm es ist
+                Tal hier und es ist einfach zu feucht. </event>
+            <event start="T181" end="T182">der Dunst. </event>
+            <event start="T183" end="T184">nein kalte Füße hatte ich nicht. </event>
+            <event start="T185" end="T186">ja wir waren … </event>
+            <event start="T187" end="T188">ja gut das sie … gut das wir das jetzt im Keller haben
+                also das war hier … </event>
+            <event start="T189" end="T190">ja sonst hatten wir ja hier oben alles. </event>
+            <event start="T191" end="T192">und überall wo du anpacktest … </event>
+            <event start="T193" end="T194">aber … ich war aber abends froh dass ich nirgendwo mehr
+                hin brauchte. </event>
+            <event start="T195" end="T196">nein vor dem Fernseher geht nicht aber … </event>
+            <event start="T197" end="T198">((anonym)) sagte auch … sagte er du warst ger… du warst
+                gerade im Bett warst du aber auch schon weg sagt er das habe ich nun so schnell … </event>
+            <event start="T199" end="T200">ja was hat … was hat das denn eigentlich gekostet da
+                wollte ich dich schon immer mal gefragt haben hier das … das … das Streichen von dem
+                ((anonym)) ((anonym)). </event>
+            <event start="T201" end="T202">ja ja der hat das bei euch wahrscheinlich noch
+                Freundschaftspreis gemacht ne. </event>
+            <event start="T203" end="T204">ja ja klar. </event>
+            <event start="T205" end="T206">ja. </event>
+            <event start="T207" end="T208">also konntest du noch nichts sauber machen. </event>
+            <event start="T209" end="T210">kannst du nicht meckern nein. </event>
+            <event start="T211" end="T212">nein. </event>
+            <event start="T213" end="T214">ja. </event>
+            <event start="T215" end="T216">ja. </event>
+            <event start="T217" end="T218">ja ja alles … hm hm. </event>
+            <event start="T219" end="T220">nein. </event>
+            <event start="T221" end="T222">was machen dein … was macht deine Schulter. </event>
+            <event start="T223" end="T224">ja hm hm. </event>
+            <event start="T225" end="T226">Treppe. </event>
+            <event start="T227" end="T228">hm. </event>
+            <event start="T229" end="T230">nachgebessert ach. </event>
+            <event start="T231" end="T232">ja das hätte ich aber auch getan. </event>
+            <event start="T233" end="T234">ja. </event>
+            <event start="T235" end="T236">das wäre schitte. </event>
+            <event start="T237" end="T238">die Hellen so ja von dem Bogen hm. </event>
+            <event start="T239" end="T240">so müsste. </event>
+            <event start="T241" end="T242">nein. </event>
+            <event start="T243" end="T244">wie so ein Passepartout hm. </event>
+            <event start="T244" end="T245">ich nehme mir noch mal einen Cappuccino. </event>
+            <event start="T246" end="T247">stauben tut das trotzdem kann er mir erzählen was er
+                will. </event>
+            <event start="T248" end="T249">ja klar. </event>
+            <event start="T250" end="T251">ja das hätte sofort … </event>
+            <event start="T252" end="T253">hm. </event>
+            <event start="T254" end="T255">ja. </event>
+            <event start="T256" end="T257">in den Schrank rein. </event>
+            <event start="T258" end="T259">überall Gleiten. </event>
+            <event start="T260" end="T261">hm so war das ja. </event>
+            <event start="T262" end="T263">gerissen. </event>
+            <event start="T264" end="T265">wer … wer macht das eigentlich bei denen weiter. </event>
+            <event start="T266" end="T267">ja aber der geht auch auf die Sechzig zu ((anonym)). </event>
+            <event start="T268" end="T269">((anonym)) Kreativschreinerei. </event>
+            <event start="T270" end="T271">der ist auch toll aber … </event>
+            <event start="T272" end="T273">das muss nicht sein. </event>
+            <event start="T274" end="T275">nein das ist mal ein Wort sechstausend Euro du. </event>
+            <event start="T276" end="T277">das glaube ich. </event>
+            <event start="T278" end="T279">((anonym)) du musst mir mal unbedingt noch mal kürzlich
+                welche stricken ich musste jetzt welche wegschmeißen. </event>
+            <event start="T280" end="T281">von mir welche. </event>
+            <event start="T282" end="T283">da war der … da war die So… die Sohle die kam immer unter
+                de… unter dem Fuß also hinten die Ferse die kam immer da … </event>
+            <event start="T284" end="T285">nein die hat Tante ((anonym)) gestrickt. </event>
+            <event start="T286" end="T287">das ist mir lieber als wenn du sie unter die Fu… unterm
+                Fuß sitzen hast. </event>
+            <event start="T288" end="T289">was hast du denn jetzt ((unverständlich)) und was machst
+                du jetzt hier mit. </event>
+            <event start="T290" end="T291">hast du die denn jetzt alle abgenommen oder nein. </event>
+            <event start="T291" end="T292">ach du bist da angefangen und bist dann so … </event>
+            <event start="T293" end="T294">raffiniert. </event>
+            <event start="T295" end="T296">nein muss ich dir mal Wolle besorgen wenn du das machen
+                würdest tätest das wäre schön. </event>
+            <event start="T297" end="T298">ja ja genau. </event>
+            <event start="T299" end="T300">ist das teuer und … wieviel sind das hundert Gramm oder
+                sechs Euro. </event>
+            <event start="T301" end="T302">nein aber diese lässt sich sehr gut stricken. </event>
+            <event start="T303" end="T304">aber man merkt sofort ich strick einfach unheimlich dünn
+                also ((unverständlich)). </event>
+            <event start="T305" end="T306">drei. </event>
+            <event start="T307" end="T308">nein ich habe jetzt … hier unten habe ich hundertzwanzig
+                aufgeschlagen ich habe … habe gemessen ungefähr so dass das nicht so … </event>
+            <event start="T309" end="T310">ich habe das nicht so gerne wenn das so ganz eng ansitzt. </event>
+            <event start="T311" end="T312">weißt du wie lange ((anonym)) und ((anonym)) noch da
+                waren bei ((anonym)) hm hm bis halb zwei. </event>
+            <event start="T313" end="T314">nein ich war auch froh dass ich zu Hause war. </event>
+            <event start="T315" end="T316">((anonym)) zu eng. </event>
+            <event start="T317" end="T318">sind sie wieder in der Wäsche eingelaufen. </event>
+            <event start="T319" end="T320">ja sowas ist immer gut Sweatys hat er im… zieht er immer
+                gerne an. </event>
+            <event start="T320" end="T321">das mit V Ausschnitt nicht V Ausschnitt nicht. </event>
+            <event start="T322" end="T323">den … das Sweaty das zieht er auf jeden Fall an. </event>
+            <event start="T324" end="T325">das Sweaty. </event>
+            <event start="T326" end="T327">das Sweatshirt. </event>
+            <event start="T327" end="T328">ach ((anonym)) ist das. </event>
+            <event start="T329" end="T330">das hier hm hm ja muss er mal … muss er mal gucken muss
+                er sich selber … </event>
+            <event start="T331" end="T332">ja für den Stall auf jeden Fall. </event>
+            <event start="T333" end="T334">ja der hat immer so viel so Schweißlöcher. </event>
+            <event start="T335" end="T336">ja und jetzt hat er einen der ist hier oben schon ganz
+                durchgerubbelt. </event>
+            <event start="T336" end="T337">den kann er erstmal wieder weg hier. </event>
+            <event start="T338" end="T339">ja kommst ja mal wieder. </event>
+            <event start="T340" end="T341">das ist ri… wir haben immer … nein keinen
+                Entkoffeinierten sondern Schonkaffe haben wir immer sonst musst du dir noch Wasser
+                dabei tun Wasser kocht. </event>
+            <event start="T342" end="T343">oh doch ich habe jetzt … eine Nacht habe ich doch glatt
+                das Buch zu Ende gelesen. </event>
+            <event start="T343" end="T344">ging nicht. </event>
+            <event start="T344" end="T345">ich hab das Licht ausgemacht. </event>
+            <event start="T345" end="T346">ich lag wieder im Bett. </event>
+            <event start="T346" end="T347">habe ich mir das Licht wieder angemacht habe das Buch
+                genommen und dann habe ich es … habe ich das ganze Buch geb… eben fertig gelesen. </event>
+            <event start="T347" end="T348">geht nicht konnte nicht pennen war nicht mehr drin. </event>
+            <event start="T349" end="T350">ja und. </event>
+            <event start="T351" end="T352">hm hm. </event>
+            <event start="T353" end="T354">Löslichen so wie meiner. </event>
+            <event start="T355" end="T356">ja. </event>
+            <event start="T357" end="T358">so dass das aufgeschäumt wird. </event>
+            <event start="T359" end="T360">ja klar ist ja ein bisschen mehr Fett. </event>
+            <event start="T361" end="T362">echt. </event>
+            <event start="T363" end="T364">Kännchen Dingsda. </event>
+            <event start="T365" end="T366">Hilfe nein. </event>
+            <event start="T367" end="T368">Cappuccino. </event>
+            <event start="T369" end="T370">Kaffee. </event>
+            <event start="T371" end="T372">was nimmst du jetzt Entkoffeinierten oder Milden. </event>
+            <event start="T373" end="T374">ach so. </event>
+            <event start="T375" end="T376">ja ja deswegen so ein Espresso den kann ich nach dem
+                Essen besser vertragen als einen Kaffee. </event>
+            <event start="T377" end="T378">soll man nicht für möglich halten. </event>
+            <event start="T379" end="T380">Kaffee leer. </event>
+            <event start="T381" end="T382">ja ja hm. </event>
+            <event start="T383" end="T384">und woll… wo kaufst du dir jetzt diesen Es… Espresso
+                kannst du dir denn … im Lidl gibt es den. </event>
+            <event start="T385" end="T386">wie normaler Kaffee auch hm. </event>
+            <event start="T387" end="T388">und das passt dann genau. </event>
+            <event start="T389" end="T390">ach so raffiniert und sonst tust du richtig Bohnen oben
+                rein und das mahlt er sich dann selber. </event>
+            <event start="T391" end="T392">ach so ja hier ((anonym)) ((anonym)) die hat … die hat
+                auch so ein Teil … so eine Maschine. </event>
+            <event start="T393" end="T394">hm. </event>
+            <event start="T395" end="T396">hm. </event>
+            <event start="T397" end="T398">ja. </event>
+            <event start="T399" end="T400">so kal… so kalkhaltiges Wasser. </event>
+            <event start="T401" end="T402">ja. </event>
+            <event start="T403" end="T404">die ((unverständlich)) die habe ich noch kein einziges
+                Mal entkalkt diese ((unverständlich)). </event>
+            <event start="T405" end="T406">nein. </event>
+            <event start="T407" end="T408">ja die Stunde müsste ja eigentlich … müsste jetzt rum
+                sein ne. </event>
+            <event start="T409" end="T410">sie hat gesagt wir sollten uns … was denn. </event>
+            <event start="T411" end="T412">((anonym)) sagt das immer. </event>
+            <event start="T413" end="T414">((unverständlich)) dürfen wir jetzt nur noch sagen komm
+                wir gehen nach ((anonym)) oder wir gehen nach ((anonym)). </event>
+            <event start="T415" end="T416">ja selbstverständlich auch oben … auch oben so ein
+                bisschen wo ((anonym)) da … ist sie gekommen ich meine weil die Schiss hat wegen den
+                … wegen den Hunden. </event>
+            <event start="T417" end="T418">das ist … wenn sie eine große Klappe hat du. </event>
+            <event start="T419" end="T420">glaube ich auch nicht aber … </event>
+            <event start="T420" end="T421">was willst du da hin tun. </event>
+            <event start="T422" end="T423">neulich … neulich meinte er … oder irgendwann hat er
+                jetzt noch gemeint das wäre doch schön für Pferde ich sage mit den Pferden … du
+                musst über jede Straße drüber ich sage nein. </event>
+            <event start="T424" end="T425">die und die Aus… Ein und Ausfahrten. </event>
+            <event start="T426" end="T427">nein nach … auch nach … bei … wie heißt es bei ((anonym))
+                raus dass du direkt in der Kurve rausfahren kannst. </event>
+            <event start="T428" end="T429">gegen… ja gegenüber von der Kirche. </event>
+            <event start="T430" end="T431">das … beiden Seiten. </event>
+            <event start="T432" end="T433">nein wieso. </event>
+            <event start="T434" end="T435">((anonym)) sei ruhig. </event>
+        </tier>
+        <tier id="TIE1" speaker="SPK0" category="Sprachlage" type="a"
+            display-name="SW-BAL01-G [Sprachlage]">
+            <event start="T1" end="T2">HD</event>
+            <event start="T3" end="T4">HD</event>
+            <event start="T5" end="T6">HD</event>
+            <event start="T7" end="T8">HD</event>
+            <event start="T9" end="T10">HD</event>
+            <event start="T11" end="T12">HD</event>
+            <event start="T13" end="T14">HD</event>
+            <event start="T15" end="T16">HD</event>
+            <event start="T17" end="T18">HD</event>
+            <event start="T19" end="T20">HD</event>
+            <event start="T21" end="T22">HD</event>
+            <event start="T23" end="T24">HD</event>
+            <event start="T25" end="T26">HD</event>
+            <event start="T27" end="T28">HD</event>
+            <event start="T29" end="T30">HD</event>
+            <event start="T31" end="T32">HD</event>
+            <event start="T33" end="T34">HD</event>
+            <event start="T35" end="T36">HD</event>
+            <event start="T37" end="T38">HD</event>
+            <event start="T39" end="T40">HD</event>
+            <event start="T41" end="T42">HD</event>
+            <event start="T43" end="T44">HD</event>
+            <event start="T45" end="T46">HD</event>
+            <event start="T47" end="T48">HD</event>
+            <event start="T49" end="T50">HD</event>
+            <event start="T51" end="T52">HD</event>
+            <event start="T53" end="T54">HD</event>
+            <event start="T55" end="T56">HD</event>
+            <event start="T57" end="T58">HD</event>
+            <event start="T59" end="T60">HD</event>
+            <event start="T61" end="T62">HD</event>
+            <event start="T63" end="T64">HD</event>
+            <event start="T65" end="T66">HD</event>
+            <event start="T67" end="T68">HD</event>
+            <event start="T69" end="T70">HD</event>
+            <event start="T71" end="T72">HD</event>
+            <event start="T73" end="T74">HD</event>
+            <event start="T74" end="T75">HD</event>
+            <event start="T76" end="T77">HD</event>
+            <event start="T78" end="T79">HD</event>
+            <event start="T80" end="T81">HD</event>
+            <event start="T82" end="T83">HD</event>
+            <event start="T84" end="T85">HD</event>
+            <event start="T85" end="T86">HD</event>
+            <event start="T87" end="T88">HD</event>
+            <event start="T89" end="T90">HD</event>
+            <event start="T91" end="T92">HD</event>
+            <event start="T93" end="T94">HD</event>
+            <event start="T94" end="T95">HD</event>
+            <event start="T96" end="T97">HD</event>
+            <event start="T98" end="T99">HD</event>
+            <event start="T100" end="T101">HD</event>
+            <event start="T102" end="T103">HD</event>
+            <event start="T104" end="T105">HD</event>
+            <event start="T106" end="T107">HD</event>
+            <event start="T108" end="T109">HD</event>
+            <event start="T109" end="T110">HD</event>
+            <event start="T111" end="T112">HD</event>
+            <event start="T113" end="T114">HD</event>
+            <event start="T115" end="T116">HD</event>
+            <event start="T117" end="T118">HD</event>
+            <event start="T119" end="T120">HD</event>
+            <event start="T121" end="T122">HD</event>
+            <event start="T123" end="T124">HD</event>
+            <event start="T125" end="T126">HD</event>
+            <event start="T127" end="T128">HD</event>
+            <event start="T129" end="T130">HD</event>
+            <event start="T131" end="T132">HD</event>
+            <event start="T133" end="T134">HD</event>
+            <event start="T135" end="T136">HD</event>
+            <event start="T137" end="T138">HD</event>
+            <event start="T139" end="T140">HD</event>
+            <event start="T141" end="T142">HD</event>
+            <event start="T143" end="T144">HD</event>
+            <event start="T144" end="T145">HD</event>
+            <event start="T145" end="T146">HD</event>
+            <event start="T146" end="T147">HD</event>
+            <event start="T148" end="T149">HD</event>
+            <event start="T150" end="T151">HD</event>
+            <event start="T152" end="T153">HD</event>
+            <event start="T154" end="T155">HD</event>
+            <event start="T156" end="T157">HD</event>
+            <event start="T158" end="T159">HD</event>
+            <event start="T160" end="T161">HD</event>
+            <event start="T162" end="T163">HD</event>
+            <event start="T164" end="T165">HD</event>
+            <event start="T166" end="T167">HD</event>
+            <event start="T167" end="T168">HD</event>
+            <event start="T169" end="T170">HD</event>
+            <event start="T171" end="T172">HD</event>
+            <event start="T173" end="T174">HD</event>
+            <event start="T175" end="T176">HD</event>
+            <event start="T177" end="T178">HD</event>
+            <event start="T179" end="T180">HD</event>
+            <event start="T181" end="T182">HD</event>
+            <event start="T183" end="T184">HD</event>
+            <event start="T185" end="T186">HD</event>
+            <event start="T187" end="T188">HD</event>
+            <event start="T189" end="T190">HD</event>
+            <event start="T191" end="T192">HD</event>
+            <event start="T193" end="T194">HD</event>
+            <event start="T195" end="T196">HD</event>
+            <event start="T197" end="T198">HD</event>
+            <event start="T199" end="T200">HD</event>
+            <event start="T201" end="T202">HD</event>
+            <event start="T203" end="T204">HD</event>
+            <event start="T205" end="T206">HD</event>
+            <event start="T207" end="T208">HD</event>
+            <event start="T209" end="T210">HD</event>
+            <event start="T211" end="T212">HD</event>
+            <event start="T213" end="T214">HD</event>
+            <event start="T215" end="T216">HD</event>
+            <event start="T217" end="T218">HD</event>
+            <event start="T219" end="T220">HD</event>
+            <event start="T221" end="T222">HD</event>
+            <event start="T223" end="T224">HD</event>
+            <event start="T225" end="T226">HD</event>
+            <event start="T227" end="T228">HD</event>
+            <event start="T229" end="T230">HD</event>
+            <event start="T231" end="T232">HD</event>
+            <event start="T233" end="T234">HD</event>
+            <event start="T235" end="T236">HD</event>
+            <event start="T237" end="T238">HD</event>
+            <event start="T239" end="T240">HD</event>
+            <event start="T241" end="T242">HD</event>
+            <event start="T243" end="T244">HD</event>
+            <event start="T244" end="T245">HD</event>
+            <event start="T246" end="T247">HD</event>
+            <event start="T248" end="T249">HD</event>
+            <event start="T250" end="T251">HD</event>
+            <event start="T252" end="T253">HD</event>
+            <event start="T254" end="T255">HD</event>
+            <event start="T256" end="T257">HD</event>
+            <event start="T258" end="T259">HD</event>
+            <event start="T260" end="T261">HD</event>
+            <event start="T262" end="T263">HD</event>
+            <event start="T264" end="T265">HD</event>
+            <event start="T266" end="T267">HD</event>
+            <event start="T268" end="T269">HD</event>
+            <event start="T270" end="T271">HD</event>
+            <event start="T272" end="T273">HD</event>
+            <event start="T274" end="T275">HD</event>
+            <event start="T276" end="T277">HD</event>
+            <event start="T278" end="T279">HD</event>
+            <event start="T280" end="T281">HD</event>
+            <event start="T282" end="T283">HD</event>
+            <event start="T284" end="T285">HD</event>
+            <event start="T286" end="T287">HD</event>
+            <event start="T288" end="T289">HD</event>
+            <event start="T290" end="T291">HD</event>
+            <event start="T291" end="T292">HD</event>
+            <event start="T293" end="T294">HD</event>
+            <event start="T295" end="T296">HD</event>
+            <event start="T297" end="T298">HD</event>
+            <event start="T299" end="T300">HD</event>
+            <event start="T301" end="T302">HD</event>
+            <event start="T303" end="T304">HD</event>
+            <event start="T305" end="T306">HD</event>
+            <event start="T307" end="T308">HD</event>
+            <event start="T309" end="T310">HD</event>
+            <event start="T311" end="T312">HD</event>
+            <event start="T313" end="T314">HD</event>
+            <event start="T315" end="T316">HD</event>
+            <event start="T317" end="T318">HD</event>
+            <event start="T319" end="T320">HD</event>
+            <event start="T320" end="T321">HD</event>
+            <event start="T322" end="T323">HD</event>
+            <event start="T324" end="T325">HD</event>
+            <event start="T326" end="T327">HD</event>
+            <event start="T327" end="T328">HD</event>
+            <event start="T329" end="T330">HD</event>
+            <event start="T331" end="T332">HD</event>
+            <event start="T333" end="T334">HD</event>
+            <event start="T335" end="T336">HD</event>
+            <event start="T336" end="T337">HD</event>
+            <event start="T338" end="T339">HD</event>
+            <event start="T340" end="T341">HD</event>
+            <event start="T342" end="T343">HD</event>
+            <event start="T343" end="T344">HD</event>
+            <event start="T344" end="T345">HD</event>
+            <event start="T345" end="T346">HD</event>
+            <event start="T346" end="T347">HD</event>
+            <event start="T347" end="T348">HD</event>
+            <event start="T349" end="T350">HD</event>
+            <event start="T351" end="T352">HD</event>
+            <event start="T353" end="T354">HD</event>
+            <event start="T355" end="T356">HD</event>
+            <event start="T357" end="T358">HD</event>
+            <event start="T359" end="T360">HD</event>
+            <event start="T361" end="T362">HD</event>
+            <event start="T363" end="T364">HD</event>
+            <event start="T365" end="T366">HD</event>
+            <event start="T367" end="T368">HD</event>
+            <event start="T369" end="T370">HD</event>
+            <event start="T371" end="T372">HD</event>
+            <event start="T373" end="T374">HD</event>
+            <event start="T375" end="T376">HD</event>
+            <event start="T377" end="T378">HD</event>
+            <event start="T379" end="T380">HD</event>
+            <event start="T381" end="T382">HD</event>
+            <event start="T383" end="T384">HD</event>
+            <event start="T385" end="T386">HD</event>
+            <event start="T387" end="T388">HD</event>
+            <event start="T389" end="T390">HD</event>
+            <event start="T391" end="T392">HD</event>
+            <event start="T393" end="T394">HD</event>
+            <event start="T395" end="T396">HD</event>
+            <event start="T397" end="T398">HD</event>
+            <event start="T399" end="T400">HD</event>
+            <event start="T401" end="T402">HD</event>
+            <event start="T403" end="T404">HD</event>
+            <event start="T405" end="T406">HD</event>
+            <event start="T407" end="T408">HD</event>
+            <event start="T409" end="T410">HD</event>
+            <event start="T411" end="T412">HD</event>
+            <event start="T413" end="T414">HD</event>
+            <event start="T415" end="T416">HD</event>
+            <event start="T417" end="T418">HD</event>
+            <event start="T419" end="T420">HD</event>
+            <event start="T420" end="T421">HD</event>
+            <event start="T422" end="T423">HD</event>
+            <event start="T424" end="T425">HD</event>
+            <event start="T426" end="T427">HD</event>
+            <event start="T428" end="T429">HD</event>
+            <event start="T430" end="T431">HD</event>
+            <event start="T432" end="T433">HD</event>
+            <event start="T434" end="T435">HD</event>
+        </tier>
+        <tier id="TIE2" speaker="SPK0" category="Kommentar" type="d"
+            display-name="SW-BAL01-G [Kommentar]">
+            <event start="T1" end="T2">DESC1</event>
+            <event start="T57" end="T58">falsche Bildung des Imperativ: ess</event>
+        </tier>
+        <tier id="TIE4" speaker="SPK0" category="ia_1" type="a" display-name="SW-BAL01-G [ia_1]">
+            <event start="T1" end="T2">ANNO1</event>
+            <event start="T409" end="T410">FksFrd;EstWis;</event>
+            <event start="T411" end="T412">FksFrd;EstNwi;</event>
+        </tier>
+        <tier id="TIE5" speaker="SPK0" category="ia_2" type="a" display-name="SW-BAL01-G [ia_2]">
+            <event start="T411" end="T412">ThbSgb;</event>
+        </tier>
+        <tier id="TIE6" speaker="SPK0" category="ia_3" type="a" display-name="SW-BAL01-G [ia_3]">
+            <event start="T409" end="T410">ThmEhs;</event>
+            <event start="T411" end="T412">ThmSpnStd;</event>
+        </tier>
+        <tier id="TIE8" category="ia_v" type="d" display-name="SW-BAL01-X [ia_v]">
+            <event start="T4" end="T5">"es wird gefragt, was beim Interview gemacht wurde. Schwester
+                der GP antwortet: Wegen unserem Dialekt. ((anoym)) spricht ja ein ganz anderes
+                Deutsch wie wir. ((anonym)) erzählt, dass Interviewer gefragt hat, wo sie herkommt.
+                Sie erzählt von ihrem Dialekt und den typischen Merkmalen und bemerkt, dass sie
+                überall auffällt.(bis ca 2:30)"</event>
+            <event start="T410" end="T412">"ich finde wir haben gar keinen Dialekt wir reden doch
+                normal. was sagt ((anonym)) immer wir gehen uns einen Trinken. Ist mir auch noch
+                nicht aufgefallen." </event>
+            <event start="T412" end="T413">"((anonym)) sagt, wir Sauerländer sagen immer, komm wir
+                gehen uns einen Trinken." "ja stimmt ja auch." "das ist aber falsch. wir gehen einen
+                Trinken heißt es eigentlich. man kann sich keinen Trinken."</event>
+        </tier>
+        <tier id="TIE3" speaker="SPK1" category="v" type="t" display-name="SPK1 [v]">
+            <event start="T1" end="T2">$%?!"!+*. </event>
+        </tier>
+        <tier id="TIE7" speaker="SPK1" category="descTier" type="d" display-name="SPK1 [descTier]"/>
+        <tier id="TIE9" category="descTier" type="d" display-name="[descTier]">
+            <event start="T1" end="T2">kommentar</event>
+        </tier>
+        <tier id="TIE10" category="v" type="t" display-name="[v]">
+            <event start="T1" end="T2">Blabla</event>
+        </tier>
+        <tier id="TIE11" category="annoTier" type="a" display-name="[annoTier]">
+            <event start="T1" end="T2">anno</event>
+        </tier>
+        <tier id="TIE12" category="linkTier" type="l" display-name="[linkTier]">
+            <event start="T1" end="T2">link</event>
+        </tier>
+        <tier id="TIE13" category="userTier" type="ud" display-name="[userTier]">
+            <event start="T1" end="T2">user</event>
+        </tier>
+    </basic-body>
+    <tierformat-table>
+        <timeline-item-format show-every-nth-numbering="1" show-every-nth-absolute="1"
+            absolute-time-format="time" miliseconds-digits="1"/>
+        <tier-format tierref="TIE9">
+            <property name="row-height-calculation">Generous</property>
+            <property name="fixed-row-height">10</property>
+            <property name="font-face">Italic</property>
+            <property name="font-color">black</property>
+            <property name="chunk-border-style">solid</property>
+            <property name="bg-color">white</property>
+            <property name="text-alignment">Left</property>
+            <property name="chunk-border-color">#R00G00B00</property>
+            <property name="chunk-border"/>
+            <property name="font-size">8</property>
+            <property name="font-name">Times New Roman</property>
+        </tier-format>
+        <tier-format tierref="TIE8">
+            <property name="row-height-calculation">Generous</property>
+            <property name="fixed-row-height">10</property>
+            <property name="font-face">Italic</property>
+            <property name="font-color">black</property>
+            <property name="chunk-border-style">solid</property>
+            <property name="bg-color">white</property>
+            <property name="text-alignment">Left</property>
+            <property name="chunk-border-color">#R00G00B00</property>
+            <property name="chunk-border"/>
+            <property name="font-size">8</property>
+            <property name="font-name">Times New Roman</property>
+        </tier-format>
+        <tier-format tierref="TIE7">
+            <property name="row-height-calculation">Generous</property>
+            <property name="fixed-row-height">10</property>
+            <property name="font-face">Italic</property>
+            <property name="font-color">black</property>
+            <property name="chunk-border-style">solid</property>
+            <property name="bg-color">white</property>
+            <property name="text-alignment">Left</property>
+            <property name="chunk-border-color">#R00G00B00</property>
+            <property name="chunk-border"/>
+            <property name="font-size">8</property>
+            <property name="font-name">Times New Roman</property>
+        </tier-format>
+        <tier-format tierref="TIE6">
+            <property name="row-height-calculation">Generous</property>
+            <property name="fixed-row-height">10</property>
+            <property name="font-face">Plain</property>
+            <property name="font-color">black</property>
+            <property name="chunk-border-style">solid</property>
+            <property name="bg-color">white</property>
+            <property name="text-alignment">Left</property>
+            <property name="chunk-border-color">#R00G00B00</property>
+            <property name="chunk-border"/>
+            <property name="font-size">9</property>
+            <property name="font-name">Times New Roman</property>
+        </tier-format>
+        <tier-format tierref="COLUMN-LABEL">
+            <property name="row-height-calculation">Generous</property>
+            <property name="fixed-row-height">10</property>
+            <property name="font-face">Plain</property>
+            <property name="font-color">black</property>
+            <property name="chunk-border-style">solid</property>
+            <property name="bg-color">lightGray</property>
+            <property name="text-alignment">Left</property>
+            <property name="chunk-border-color">#R00G00B00</property>
+            <property name="chunk-border"/>
+            <property name="font-size">7</property>
+            <property name="font-name">Times New Roman</property>
+        </tier-format>
+        <tier-format tierref="TIE5">
+            <property name="row-height-calculation">Generous</property>
+            <property name="fixed-row-height">10</property>
+            <property name="font-face">Plain</property>
+            <property name="font-color">black</property>
+            <property name="chunk-border-style">solid</property>
+            <property name="bg-color">white</property>
+            <property name="text-alignment">Left</property>
+            <property name="chunk-border-color">#R00G00B00</property>
+            <property name="chunk-border"/>
+            <property name="font-size">9</property>
+            <property name="font-name">Times New Roman</property>
+        </tier-format>
+        <tier-format tierref="TIE4">
+            <property name="row-height-calculation">Generous</property>
+            <property name="fixed-row-height">10</property>
+            <property name="font-face">Plain</property>
+            <property name="font-color">black</property>
+            <property name="chunk-border-style">solid</property>
+            <property name="bg-color">white</property>
+            <property name="text-alignment">Left</property>
+            <property name="chunk-border-color">#R00G00B00</property>
+            <property name="chunk-border"/>
+            <property name="font-size">9</property>
+            <property name="font-name">Times New Roman</property>
+        </tier-format>
+        <tier-format tierref="TIE3">
+            <property name="row-height-calculation">Generous</property>
+            <property name="fixed-row-height">10</property>
+            <property name="font-face">Plain</property>
+            <property name="font-color">black</property>
+            <property name="chunk-border-style">solid</property>
+            <property name="bg-color">white</property>
+            <property name="text-alignment">Left</property>
+            <property name="chunk-border-color">#R00G00B00</property>
+            <property name="chunk-border"/>
+            <property name="font-size">12</property>
+            <property name="font-name">Times New Roman</property>
+        </tier-format>
+        <tier-format tierref="TIE2">
+            <property name="row-height-calculation">Generous</property>
+            <property name="fixed-row-height">10</property>
+            <property name="font-face">Italic</property>
+            <property name="font-color">black</property>
+            <property name="chunk-border-style">solid</property>
+            <property name="bg-color">white</property>
+            <property name="text-alignment">Left</property>
+            <property name="chunk-border-color">#R00G00B00</property>
+            <property name="chunk-border"/>
+            <property name="font-size">8</property>
+            <property name="font-name">Times New Roman</property>
+        </tier-format>
+        <tier-format tierref="TIE1">
+            <property name="row-height-calculation">Generous</property>
+            <property name="fixed-row-height">10</property>
+            <property name="font-face">Plain</property>
+            <property name="font-color">black</property>
+            <property name="chunk-border-style">solid</property>
+            <property name="bg-color">white</property>
+            <property name="text-alignment">Left</property>
+            <property name="chunk-border-color">#R00G00B00</property>
+            <property name="chunk-border"/>
+            <property name="font-size">9</property>
+            <property name="font-name">Times New Roman</property>
+        </tier-format>
+        <tier-format tierref="TIE0">
+            <property name="row-height-calculation">Generous</property>
+            <property name="fixed-row-height">10</property>
+            <property name="font-face">Plain</property>
+            <property name="font-color">black</property>
+            <property name="chunk-border-style">solid</property>
+            <property name="bg-color">white</property>
+            <property name="text-alignment">Left</property>
+            <property name="chunk-border-color">#R00G00B00</property>
+            <property name="chunk-border"/>
+            <property name="font-size">12</property>
+            <property name="font-name">Times New Roman</property>
+        </tier-format>
+        <tier-format tierref="TIE13">
+            <property name="row-height-calculation">Generous</property>
+            <property name="fixed-row-height">10</property>
+            <property name="font-face">Plain</property>
+            <property name="font-color">black</property>
+            <property name="chunk-border-style">solid</property>
+            <property name="bg-color">white</property>
+            <property name="text-alignment">Left</property>
+            <property name="chunk-border-color">#R00G00B00</property>
+            <property name="chunk-border"/>
+            <property name="font-size">12</property>
+            <property name="font-name">Times New Roman</property>
+        </tier-format>
+        <tier-format tierref="TIE12">
+            <property name="row-height-calculation">Generous</property>
+            <property name="fixed-row-height">10</property>
+            <property name="font-face">Bold</property>
+            <property name="font-color">black</property>
+            <property name="chunk-border-style">solid</property>
+            <property name="bg-color">white</property>
+            <property name="text-alignment">Left</property>
+            <property name="chunk-border-color">#R00G00B00</property>
+            <property name="chunk-border"/>
+            <property name="font-size">8</property>
+            <property name="font-name">Times New Roman</property>
+        </tier-format>
+        <tier-format tierref="TIE11">
+            <property name="row-height-calculation">Generous</property>
+            <property name="fixed-row-height">10</property>
+            <property name="font-face">Plain</property>
+            <property name="font-color">black</property>
+            <property name="chunk-border-style">solid</property>
+            <property name="bg-color">white</property>
+            <property name="text-alignment">Left</property>
+            <property name="chunk-border-color">#R00G00B00</property>
+            <property name="chunk-border"/>
+            <property name="font-size">9</property>
+            <property name="font-name">Times New Roman</property>
+        </tier-format>
+        <tier-format tierref="TIE10">
+            <property name="row-height-calculation">Generous</property>
+            <property name="fixed-row-height">10</property>
+            <property name="font-face">Plain</property>
+            <property name="font-color">black</property>
+            <property name="chunk-border-style">solid</property>
+            <property name="bg-color">white</property>
+            <property name="text-alignment">Left</property>
+            <property name="chunk-border-color">#R00G00B00</property>
+            <property name="chunk-border"/>
+            <property name="font-size">12</property>
+            <property name="font-name">Times New Roman</property>
+        </tier-format>
+        <tier-format tierref="SUB-ROW-LABEL">
+            <property name="row-height-calculation">Generous</property>
+            <property name="fixed-row-height">10</property>
+            <property name="font-face">Plain</property>
+            <property name="font-color">black</property>
+            <property name="chunk-border-style">solid</property>
+            <property name="bg-color">white</property>
+            <property name="text-alignment">Right</property>
+            <property name="chunk-border-color">#R00G00B00</property>
+            <property name="chunk-border"/>
+            <property name="font-size">8</property>
+            <property name="font-name">Times New Roman</property>
+        </tier-format>
+        <tier-format tierref="ROW-LABEL">
+            <property name="row-height-calculation">Generous</property>
+            <property name="fixed-row-height">10</property>
+            <property name="font-face">Bold</property>
+            <property name="font-color">black</property>
+            <property name="chunk-border-style">solid</property>
+            <property name="bg-color">lightGray</property>
+            <property name="text-alignment">Left</property>
+            <property name="chunk-border-color">#R00G00B00</property>
+            <property name="chunk-border"/>
+            <property name="font-size">10</property>
+            <property name="font-name">Times New Roman</property>
+        </tier-format>
+        <tier-format tierref="EMPTY-EDITOR">
+            <property name="row-height-calculation">Generous</property>
+            <property name="fixed-row-height">10</property>
+            <property name="font-face">Plain</property>
+            <property name="font-color">white</property>
+            <property name="chunk-border-style">solid</property>
+            <property name="bg-color">lightGray</property>
+            <property name="text-alignment">Left</property>
+            <property name="chunk-border-color">#R00G00B00</property>
+            <property name="chunk-border"/>
+            <property name="font-size">2</property>
+            <property name="font-name">Times New Roman</property>
+        </tier-format>
+        <tier-format tierref="EMPTY">
+            <property name="row-height-calculation">Generous</property>
+            <property name="fixed-row-height">10</property>
+            <property name="font-face">Plain</property>
+            <property name="font-color">white</property>
+            <property name="chunk-border-style">solid</property>
+            <property name="bg-color">white</property>
+            <property name="text-alignment">Left</property>
+            <property name="chunk-border-color">#R00G00B00</property>
+            <property name="chunk-border"/>
+            <property name="font-size">2</property>
+            <property name="font-name">Times New Roman</property>
+        </tier-format>
+    </tierformat-table>
+</basic-transcription>

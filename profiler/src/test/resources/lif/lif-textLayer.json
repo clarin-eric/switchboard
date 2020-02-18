@@ -1,0 +1,13 @@
+{
+    "discriminator": "http://vocab.lappsgrid.org/ns/media/jsonld#lif",
+    "payload": {
+        "@context": "http://vocab.lappsgrid.org/context-1.0.0.jsonld",
+        "metadata": {},
+        "text": {
+            "@value": "Karen flew to New York.",
+            "@language": "en"
+        },
+        "views": []
+    },
+    "parameters": {}
+}

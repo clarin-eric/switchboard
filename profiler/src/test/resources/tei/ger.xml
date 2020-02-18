@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model schematypens="http://relaxng.org/ns/structure/1.0" href="http://worldviews.gei.de/resources/tei/schema/tei_textbooks_wv.gei_schema_v10.rng"?><?xml-model schematypens="http://purl.oclc.org/dsdl/schematron" href="http://worldviews.gei.de/resources/tei/schema/tei_textbooks_wv.gei_schematron_v10.sch"?><TEI xmlns="http://www.tei-c.org/ns/1.0" xml:id="GEI-textbooks" version="5.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title level="a" xml:lang="ger">"Deutsche Bienen in Australien"</title>
+        <author>
+          <persName ref="http://d-nb.info/gnd/110627086X" source="http://middleware.gei.de/wv.experts/Expert_115">
+            <surname>Rotermund</surname>
+            <forename>Wilhelm</forename>
+          </persName>
+        </author>
+      </titleStmt>
+      <editionStmt>
+        <edition n="1">Version 1</edition>
+      </editionStmt>
+      <extent>
+        <measure unit="pages" quantity="3">93–95</measure>
+      </extent>
+      <publicationStmt>
+        <authority>
+          <orgName role="hostingInstitution">Georg-Eckert-Institut</orgName>
+          <orgName role="project">WorldViews</orgName>
+        </authority>
+        <date when="2017" type="publication">2017</date>
+        <idno type="PURL_TEI">http://worldviews.gei.de/rest/content/tei/BR_1914_Rotermund_LesebuchFuerSchuleUndHaus_93-95/ger/</idno>
+        <idno type="PURL_HTML">http://worldviews.gei.de/open/BR_1914_Rotermund_LesebuchFuerSchuleUndHaus_93-95/ger/</idno>
+        <idno type="WV_ID">BR_1914_Rotermund_LesebuchFuerSchuleUndHaus_93-95_ger</idno>
+        <availability>
+          <licence target="https://creativecommons.org/licenses/by-nc-sa/3.0/de/">CC BY-NC-SA 3.0 DE</licence>
+        </availability>
+      </publicationStmt>
+      <sourceDesc>
+        <biblFull>
+          <titleStmt>
+            <title level="m" type="main" xml:lang="ger">Dr. Wilh. Rotermunds Lesebuch für Schule und Haus</title>
+            <title level="m" type="sub" xml:lang="ger">Amtliches Lesebuch des Deutschen Evang. Lehrervereins von Rio Grande do Sul</title>
+            <author>
+              <persName ref="http://d-nb.info/gnd/110627086X" source="http://middleware.gei.de/wv.experts/Expert_115">
+                <surname>Rotermund</surname>
+                <forename>Wilhelm</forename>
+              </persName>
+            </author>
+          </titleStmt>
+          <extent>
+            <measure unit="pages" quantity="379">379</measure>
+          </extent>
+          <publicationStmt>
+            <publisher>
+              <orgName source="http://middleware.gei.de/wv.experts/CorporateBody_117">W. Rotermunds Buchhandlung</orgName>
+            </publisher>
+            <pubPlace ref="http://sws.geonames.org/6324125">Cruz Alta</pubPlace>
+            <date when="1914">1914</date>
+          </publicationStmt>
+        </biblFull>
+        <msDesc>
+          <msIdentifier>
+            <repository>Georg-Eckert-Institut. Leibniz-Institut für internationale Schulbuchforschung, Braunschweig (DE)</repository>
+            <idno>
+              <idno type="shelfmark">BR D-4(3,14)</idno>
+            </idno>
+          </msIdentifier>
+          <msContents>
+            <textLang mainLang="ger" />
+          </msContents>
+        </msDesc>
+      </sourceDesc>
+    </fileDesc>
+    <encodingDesc>
+      <projectDesc xml:lang="ger">
+        <p>WorldViews ist eine multilinguale‚ digitale Quellenedition mit Schulbuchauszügen aus aller Welt zu Themen von interregionaler transnationaler und globaler Relevanz. Die ausgewählten Quellen aus Schulbüchern zeigen‚ wie sich das jeweilige Land in der Welt verortet und wie andere Länder und deren Geschichte dargestellt werden. Wissenschaftliche Beiträge dienen weiterhin der vertieften Interpretation der Quellen und bieten Informationen zu nationalen Bildungs- und Schulbuchsystemen sowie bildungshistorischen Hintergründen.</p>
+      </projectDesc>
+      <samplingDecl xml:lang="ger">
+        <p>Quellenauszüge sind im Hinblick auf Repräsentation‚ Deutungsmuster und/oder Perspektive der Darstellung möglichst markant. Es sind Darstellungen‚ die in besonders weit verbreiteten Schulbüchern vermittelt werden oder als Sonderpositionierungen gekennzeichnet werden können. Sie werden von KooperationspartnerInnen und/oder der Redaktion erhoben‚ wissenschaftlich kontextualisiert und nah am Ausgangstext ins Deutsche und Englische übersetzt.</p>
+      </samplingDecl>
+    </encodingDesc>
+    <profileDesc>
+      <langUsage>
+        <language ident="ger">ger</language>
+      </langUsage>
+      <abstract xml:lang="ger" xml:id="ProfileDescAbstractSchoolbook">
+        <p>
+          Wie der Titelzusatz verrät, handelte es sich um ein
+          <hi rend="italic">[a]mtliches Lesebuch des Deutschen Evang. Lehrervereins von Rio Grande do Sul</hi>
+          . Das und die herausstechende Prominenz seines Autors in deutsch-evangelischen Kreisen deuten darauf hin, dass das Buch an evangelischen deutschen Schulen im Bundesstaat Rio Grande do Sul bevorzugt zum Einsatz kam. Im Jahr 1900 gab es bereits, bei stark steigender Tendenz, 155 solcher Schulen.
+          <note>
+            <p>Vgl. Aiva, César: Die deutschsprachigen Schulen in Rio Grande do Sul und die Nationalisierungspolitik. Dissertation zur Erlangung der Würde des Doktors der Philosophie der Universität Hamburg, Hamburg: 1984, 45, zitiert nach Arendt, Isabel Cristina: A escola comunitária evangélico-luterana no Rio Grande do Sul e a defesa de uma identidade (1865-1918), 2003, 3, http://anpuh.org/anais/wp-content/uploads/mp/pdf/ANPUH.S22.307.pdf (070.7.2016).</p>
+          </note>
+          Vom Evangelischen Lehrerverein wurde erst die dritte, wohl beträchtlich veränderte Auflage mitherausgegeben, wie aus dem Vorwort hervorgeht. Zugleich eignete sich das Buch nicht für alle Lernenden und alle Schulen. Es richtete sich an solche Klassen, die schon über die Lesefibel hinaus waren, wobei „eine gute Anzahl von Schulen nicht über die Fibel hinausgelangen“, wie die Überarbeiter im Vorwort feststellten. Das schränkte den Verbreitungsgrad des vorliegenden Lesebuches wohl ein. Bis 1938 erschienen weitere sieben Auflagen.
+          <note>
+            <p>Vgl. Tambara, Elomar; Arriada, Eduardo: Editoras e tipografias no Rio Grande do Sul. Publicação e circulação de livros didáticos, VI Congresso Brasileiro da História da Educação, 2011, 5, http://www.sbhe.org.br/novo/congressos/cbhe6/anais_vi_cbhe/-individuais.htm (12.01.2016).</p>
+          </note>
+        </p>
+      </abstract>
+      <abstract xml:lang="ger" xml:id="ProfileDescAbstractShort">
+        <p>In der Fabel von Peter Rosegger wandert ein deutscher Bienenschwarm nach Australien aus, wo er angesichts des immerwährenden Sommers in Versuchung gerät, seine Arbeit einzustellen, und schließlich zugrunde geht.</p>
+      </abstract>
+      <abstract xml:lang="ger" xml:id="ProfileDescAbstractLong">
+        <p>
+          In der Fabel von Peter Rosegger wandert ein deutscher Bienenschwarm nach Australien aus. Das Land scheint fruchtbar, doch die fleißigen deutschen Bienen stoßen auf viele Gefahren. Sie kämpfen mit einem Heuschreckenschwarm und werden beraubt. Schließlich findet ein
+          <hi rend="italic">Bienenarbeiter</hi>
+          heraus, dass es in Australien keinen Winter gibt. Er überzeugt die Bienen, ihre Arbeit einzustellen, da sie keinen Wintervorrat mehr anlegen bräuchten und nur für Fremde produzierten. Vergeblich versucht ein Gesandter der Bienenkönigin, die Bienen von dieser Idee abzubringen. Fortan leben sie in den Tag hinein und genießen jede für sich den Reichtum der Natur. Dabei verlieren sie jedes Zusammengehörigkeitsgefühl. Ihre Gemeinschaft zerfällt, sie lassen ihre Königin im Stich und verlieren sich in der Weite des so üppigen wie gefährlichen Landes.
+        </p>
+      </abstract>
+      <textClass>
+        <keywords scheme="WV.topics" xml:lang="ger">
+          <term>
+            <rs type="topic" key="t_vision">Gesellschaftsentwürfe und Zukunftsvisionen</rs>
+            -
+            <rs type="keyword" key="k_economy">Wirtschaft</rs>
+          </term>
+          <term>
+            <rs type="topic" key="t_power">Machtstrukturen</rs>
+            -
+            <rs type="keyword" key="k_labour_movement">Arbeiterbewegung</rs>
+          </term>
+          <term>
+            <rs type="topic" key="t_power">Machtstrukturen</rs>
+            -
+            <rs type="keyword" key="k_colonialism">Kolonialismus</rs>
+          </term>
+          <term>
+            <rs type="topic" key="t_power">Machtstrukturen</rs>
+            -
+            <rs type="keyword" key="k_nationalism">Nationalismus</rs>
+          </term>
+          <term>
+            <rs type="topic" key="t_power">Machtstrukturen</rs>
+            -
+            <rs type="keyword" key="k_economy">Wirtschaft</rs>
+          </term>
+          <term>
+            <rs type="topic" key="t_heterogeneity">Heterogenität der Gesellschaft</rs>
+            -
+            <rs type="keyword" key="k_migration">Migration</rs>
+          </term>
+          <term>
+            <rs type="topic" key="t_constructions">Konstrukte von Raum und Zugehörigkeit</rs>
+            -
+            <rs type="keyword" key="k_nationalism">Nationalismus</rs>
+          </term>
+          <term>
+            <rs type="topic" key="t_relations">Trans- und internationale Beziehungen und Organisationen</rs>
+            -
+            <rs type="keyword" key="k_labour_movement">Arbeiterbewegung</rs>
+          </term>
+          <term>
+            <rs type="topic" key="t_country">Länder</rs>
+            -
+            <rs type="keyword" key="k_brasil">Brasilien</rs>
+          </term>
+          <term>
+            <rs type="topic" key="t_country">Länder</rs>
+            -
+            <rs type="keyword" key="k_germany">Deutschland</rs>
+          </term>
+          <term>
+            <rs type="topic" key="t_time">Zeitangaben</rs>
+            -
+            <rs type="keyword" key="k_20th_century">20. Jahrhundert</rs>
+          </term>
+        </keywords>
+        <classCode scheme="WV.textType" xml:lang="ger">Schulbuchquelle</classCode>
+        <classCode scheme="WV.sourceType" xml:lang="ger">Schriftquelle</classCode>
+        <classCode scheme="WV.sourceType" xml:lang="ger">Schriftquelle - Literatur</classCode>
+        <classCode scheme="WV.educationalLevel" xml:lang="ger">nicht zuzuordnen</classCode>
+        <classCode scheme="WV.educationalSubject" xml:lang="ger">Geschichte</classCode>
+        <classCode scheme="WV.placeOfUse" xml:lang="ger">
+          <rs type="place" ref="http://sws.geonames.org/3469034">Brasilien</rs>
+        </classCode>
+        <classCode scheme="WV.placeOfUse">
+          <rs type="place" ref="http://sws.geonames.org/3451133">Rio Grande do Sul</rs>
+        </classCode>
+      </textClass>
+    </profileDesc>
+  </teiHeader>
+  <text xml:lang="ger">
+    <body>
+      <div>
+        <pb n="93" />
+        <p>[...]</p>
+        <div>
+          <head>
+            <hi rend="bold">112. Deutsche Bienen in Australien</hi>
+          </head>
+          <p>1. Es geschah im deutschen Norden in der Nähe eines Hafens, daß sich im Bienenkorbe eines Landwirtes das Volk verdoppelte. Ein Schwarm wanderte aus. Wegen einer neuen Heimat ist seine Sorge; jeder Nachbar hält einen leeren, feingebauten Korb bereit, um den neuen Stamm in Empfang zu nehmen. Aber auch Tiere haben mitunter seltsame Schicksale. Der Bienenschwarm flog aus dem Mutterkorbe über die Büsche hin, über die blumige Wiese hin, über das Kiefernwäldchen hin, dem Strande, dem Hafen zu, wohin der Lärm und das Geklirre der Matrosen ihn lockte, wo der Mastenwald der Schiffe ragte, – auf dessen höchstem Stamme er sich niederließ. Wie eine stattliche Traube hing er im obersten Tafelwerk und ergötzte sich an dem Schrillen und Glitzern da unten, dergleichen er bisher noch nicht gehört und gesehen. War das aber erst ein Spaß, als das ganze Ding anhob, sich zu bewegen und zu schaukeln, und als der hohe Baum, auf dem der Schwarm saß, sich allmählich hinauswand zwischen dem wunderlichen Gestämme, bis er endlich mit dem großen Schiffe auf dem Spiegel des Gewässers dahinglitt! So fuhren die guten Bienlein stundenlang mit. Nun aber, da sie ringsum keinen Baum und keinen Boden mehr sahen, wollte es ihnen unheimlich werden. Rasch entschlossen, flogen sie ab und irrten eine Weile auf dem Meere umher, und da sie nirgends einen Ruhepunkt fanden, mussten sie wieder zurückkehren auf das Schiff, das ihnen nun doch so trostlos war, weil darauf kein Blatt und keine Blüte wuchs. Da drängten sie sich um ihre junge Königin und hielten Rat.</p>
+          <p>2. Schon früher hatte ein Schiffsjunge auf dem Maste den</p>
+          <pb n="94" />
+          <p>Bienenschwarm bemerkt. Als nun der Kapitän darauf aufmerksam wurde, klatschte er in die Hände, wie das sonst Kapitäne selten zu tun pflegen, und sagte: „Ein Bienenschwarm! Das ist trefflich. Ich ging schon lange mit dem Gedanken um, in Australien die europäische Biene einzubürgern; nun kommen die Tierchen selbst mit uns; so werden wir auf unserer Ansiedlung in Australien auch an Honig keinen Mangel leiden. Der Schwarm soll sofort verwahrt und verpflegt werden!“ Das geschah und die armen Tierchen waren nun Gefangene auf dem Dampfer. Heute unter herben Stürmen, morgen unter sengender Sonnenglut zog das Schiff dahin. Nichts als Meer und Meer, wochenlang. Da und dort einmal eine heiße, gelbe, kahle steinige Küste, dann wieder Landstriche anzuschauen wie das Eden, wo Milch und Honig fließt. Die Bienen mußten an allem vorüber. Die Arbeiter waren in solch schrecklicher Tatlosigkeit schier krank geworden, bis endlich das Schiff in Australien landete. Sogleich wurde den Bienen in der Nähe eines Akazienwäldchens ein Korb angewiesen. Das Völklein war glücklich, als es hinaussummte durch die milde, süße Luft durch das tropische Gelände. Die Arbeiter machen sich sogleich ans Sammeln, damit die Speicher des neuen Hauses sich füllten mit Vorräten für den Winter. Aber mit gar manchem Gewächse, das hier so prunkhaft und vielversprechend aufwucherte, war nichts anzufangen. Mit den lederhäutigen Gummibäumen rangen sich die Bienlein vergebens ab, um Wachs und Honig zu gewinnen. Manche fleißige Arbeiterin flog aus und kehrte nicht mehr zurück; manche schwirrte zerzaust und verwundet ihren Genossen zu ; einen Kampf mit Stechfliegen hatte es gegeben. Wieder andere waren in ihrem Sammelfleiße sogar von Heuschreckenschwärmen belästigt worden. Es schien ein so fruchtbares Land; aber es war ein gefährliches, und die Bienen sehnten sich nach kurzen Tagen und Winterruhe. Der Korb war längst voll des feinsten Wachses, des köstlichen Honigs, die Wohnung mit allem versehen, was zur Winterbehaglichkeit wünschenswert ist ; aber – der Winter wollte nicht kommen. Die Tage wollten nicht abnehmen, die Sonne blieb heiß, neben den Früchten der Bäume setzten sich neue Blüten an; neben dem abfallenden Laube wucherte junges hervor.</p>
+          <p>3. Eines Tages war den Bienen der Korb ausgeraubt. Aber nicht etwa der Überfluß war weggenommen, wie man es fern in der kühlen Heimat wohl erlebte und verwand, sondern aller Vorrat an Honig und Wachs war fort und der Korb harrte auf neue Frucht. „Es ist doch gut, daß die schöne Jahreszeit noch anhält,“ dachten die Bienen und machten sich mit neuem Mut und Fleiß wieder an das Sammeln. Wieder füllte sich allmählich die Vorratskammer, während sich die Tierchen das Nötige fast von ihrem eigenen Munde absparten, und immer noch wollte der Winter nicht er-</p>
+          <pb n="95" />
+          <p>scheinen. Da trat eines Abends ein Bienenarbeiter auf, rief alles Volk aus den Zellen hervor und begann folgendes zu sprechen: „Mich dünkt, Kameraden, hier zu Land geht’s nach einem andern Takte. Seit vielen Wochen habe ich geforscht und berechnet und bin zu einer Überzeugung gekommen, die ich nicht länger verschweigen kann. Zuvörderst frage ich euch, meine Brüder, wofür arbeiten, sammeln und sparen wir eigentlich?“ – „Für den Winter,“ antwortet ihr. Ich aber sage euch: „In diesem Lande gibt es keinen Winter!“ Große Aufregung in der Versammlung . „Wozu also sammeln wir?“ fuhr der Redner fort; damit Fremde unsere Vorratskammer leeren können? Nimmermehr!“ Ein unheimliches Surren ging durch die Menge. Ein Abgesandter der Königin erschien. Sie erklärten sich bereit, für die Bedürfnisse der Königin auch in Zukunft zu sorgen. „Nicht mehr arbeiten?“ rief der Abgesandte, „ihr Bienen nicht mehr arbeiten! Wollt ihr denn die Weltordnung stürzen?“ Da sagte einer aus dem Volke: „Herr, unsere Königin sei gepriesen! Wir leben nicht um zu arbeiten; im Gegenteil, wir arbeiten, um zu leben. Wir und unsere Urahnen waren gezwungen und gewohnt, im Sommer für den Winter zu sorgen. Nachdem nun aber ein gütiges Geschick den Winter von uns genommen hat und die Früchte unserer Arbeit voll und ganz dem Geschlechte der Menschen zufallen würden, so sehe ich nichts Schädliches in dem Bestreben, die Arbeit einzustellen. Sorglos fliegen wir aus; denn der Tag gibt, was wir den Tag bedürfen. Hier sind die Himmelsstriche, unter welchen der Gott, der die Vögel des Himmels ernährt und die Blumen des Feldes bekleidet, auch der Bienen nicht vergißt.“ Nun wußte der königliche Gesandte kein Wort der Entgegnung mehr. Von nun an schwärmten die Bienen sorglos durch die ewigen Blumengärten des wiedergefundenen herrlichen Paradieses. Es wollte sich aber auch nichts mehr vermehren, und immer weniger und immer seltener kehrten die Bienen zum Korbe zurück. Durch die Einstellung der gemeinsamen Arbeit verlor der einzelne die Lust an der Arbeit selber ; auf eigene Faust schwirrte er in den Weiten umher, genoß die Frucht, wo sie wuchs, nahm das Nachtlager, wo er es fand. Der Sinn für Zusammengehörigkeit und für das Gemeinsame war dahin. Aufrufe über Aufrufe schickte die Königin ins Land ; aber nur die wenigsten der Bienen wurden noch gefunden ; sie hatten sich zerstreut, verloren oder waren teils in der Üppigkeit, teils im Kampfe mit unbekannten Feinden zugrunde gegangen. So elend war der brave deutsche Schwarm verkommen.</p>
+          <p>Peter Rosegger</p>
+        </div>
+      </div>
+    </body>
+  </text>
+</TEI>
