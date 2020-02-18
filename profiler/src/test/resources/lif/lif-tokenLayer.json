@@ -1,0 +1,86 @@
+{
+    "discriminator": "http://vocab.lappsgrid.org/ns/media/jsonld#lif",
+    "payload": {
+        "@context": "http://vocab.lappsgrid.org/context-1.0.0.jsonld",
+        "metadata": {
+            
+        },
+        "text": {
+            "@value": "Karen flew to New York.\n"
+        },
+        "views": [
+            {
+                "metadata": {
+                    "contains": {
+                        "http://vocab.lappsgrid.org/Token": {
+                            "producer": "org.anc.lapps.stanford.Tokenizer:2.0.0",
+                            "type": "stanford"
+                        }
+                    }
+                },
+                "annotations": [
+                    {
+                        "id": "tok0",
+                        "start": 0,
+                        "end": 5,
+                        "@type": "http://vocab.lappsgrid.org/Token",
+                        "label": "Token",
+                        "features": {
+                            "word": "Karen"
+                        }
+                    },
+                    {
+                        "id": "tok1",
+                        "start": 6,
+                        "end": 10,
+                        "@type": "http://vocab.lappsgrid.org/Token",
+                        "label": "Token",
+                        "features": {
+                            "word": "flew"
+                        }
+                    },
+                    {
+                        "id": "tok2",
+                        "start": 11,
+                        "end": 13,
+                        "@type": "http://vocab.lappsgrid.org/Token",
+                        "label": "Token",
+                        "features": {
+                            "word": "to"
+                        }
+                    },
+                    {
+                        "id": "tok3",
+                        "start": 14,
+                        "end": 17,
+                        "@type": "http://vocab.lappsgrid.org/Token",
+                        "label": "Token",
+                        "features": {
+                            "word": "New"
+                        }
+                    },
+                    {
+                        "id": "tok4",
+                        "start": 18,
+                        "end": 22,
+                        "@type": "http://vocab.lappsgrid.org/Token",
+                        "label": "Token",
+                        "features": {
+                            "word": "York"
+                        }
+                    },
+                    {
+                        "id": "tok5",
+                        "start": 22,
+                        "end": 23,
+                        "@type": "http://vocab.lappsgrid.org/Token",
+                        "label": "Token",
+                        "features": {
+                            "word": "."
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+}

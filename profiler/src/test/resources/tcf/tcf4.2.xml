@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<D-Spin xmlns="http://www.dspin.de/data" version="0.4">
+  <MetaData xmlns="http://www.dspin.de/data/metadata">
+    <source></source>
+  </MetaData>
+  <TextCorpus xmlns="http://www.dspin.de/data/textcorpus" lang="en">
+    <text>What has happened in recent years has brought to our attention the tremendous problems facing not only to the producers of food but also the consumers. We must strike a balance between them. We must resolve this issue, because it is important that consumers should regain confidence in the food they eat.</text>
+  </TextCorpus>
+</D-Spin>

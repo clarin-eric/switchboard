@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <maf lang="en">
+   <tagset>
+     <fvLib n="PennTB"> 
+       <symbol id="dt" value="determiner"/> 
+       <symbol id="vbz" value="Verb3SgPresent"/> 
+       <symbol id="jj" value="AdjPos"/> 
+       <symbol id="sent" value="Sent.Ind"/> 
+     </fvLib>
+     <fLib> 
+       <f id="DT" name="pos" fVal="dt"/> 
+       <f id="VBZ" name="pos" fVal="vbz"/> 
+       <f id="JJ" name="pos" fVal="jj"/> 
+       <f id="SENT" name="pos" fVal="sent"/> 
+     </fLib>
+   </tagset>
+
+   <token id="t1">That</token>
+   <token id="t2" form="is" join="left">'s</token>
+   <token id="t3">en</token>
+   <token id="t4">vogue</token>
+   <token id="t5" join="left">.</token>
+   
+   <wordForm lemma="that" tag="DT" tokens="t1"/>
+   <wordForm lemma="be" tokens="t2">
+     <fs>
+       <f name="pos"><symbol value="verb"/></f>
+       <f name="number"><symbol value="singular"/></f>
+       <f name="person"><symbol value="third"/></f>
+       <f name="tense"><symbol value="present"/></f>
+       <f name="voice"><symbol value="active"/></f>
+       <f name="mood"><symbol value="indicative"/></f>
+     </fs>
+   </wordForm>
+   <wordForm lemma="en vogue" tag="JJ" tokens="t3 t4"/>
+   <wordForm lemma="." tag="SENT" tokens="t5"/>
+ </maf>
+ 

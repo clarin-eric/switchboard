@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?><D-Spin xmlns="http://www.dspin.de/data" version="0.4">
+  <MetaData xmlns="http://www.dspin.de/data/metadata">
+    <source></source>
+    <Services>
+      <cmd:CMD xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cmd="http://www.clarin.eu/cmd/" CMDVersion="1.1" xsi:schemaLocation="http://www.clarin.eu/cmd/ http://catalog.clarin.eu/ds/ComponentRegistry/rest/registry/profiles/clarin.eu:cr1:p_1320657629623/xsd">
+        <cmd:Resources>
+          <cmd:ResourceProxyList></cmd:ResourceProxyList>
+          <cmd:JournalFileProxyList></cmd:JournalFileProxyList>
+          <cmd:ResourceRelationList></cmd:ResourceRelationList>
+        </cmd:Resources>
+        <cmd:Components>
+          <cmd:WebServiceToolChain>
+            <cmd:GeneralInfo>
+              <cmd:Descriptions>
+                <cmd:Description></cmd:Description>
+              </cmd:Descriptions>
+              <cmd:ResourceName>Custom chain</cmd:ResourceName>
+              <cmd:ResourceClass>Toolchain</cmd:ResourceClass>
+            </cmd:GeneralInfo>
+            <cmd:Toolchain>
+              <cmd:ToolInChain>
+                <cmd:PID>11858/00-1778-0000-0004-BA56-7</cmd:PID>
+                <cmd:Parameter name="lang" value="de"></cmd:Parameter>
+                <cmd:Parameter name="type" value="text/plain"></cmd:Parameter>
+              </cmd:ToolInChain>
+            <cmd:ToolInChain><cmd:PID>11858/00-1778-0000-0004-BA7B-4</cmd:PID><cmd:Parameter value="de" name="lang"></cmd:Parameter><cmd:Parameter value="false" name="newlinebounds"></cmd:Parameter></cmd:ToolInChain></cmd:Toolchain>
+          </cmd:WebServiceToolChain>
+        </cmd:Components>
+      </cmd:CMD>
+    </Services>
+  </MetaData>
+  <TextCorpus xmlns="http://www.dspin.de/data/textcorpus" lang="de">
+    <text>Karin fliegt nach New York. Sie will dort Urlaub machen.</text>
+    <tokens charOffsets="true"><token start="0" ID="t_0" end="5">Karin</token><token start="6" ID="t_1" end="12">fliegt</token><token start="13" ID="t_2" end="17">nach</token><token start="18" ID="t_3" end="21">New</token><token start="22" ID="t_4" end="26">York</token><token start="26" ID="t_5" end="27">.</token><token start="28" ID="t_6" end="31">Sie</token><token start="32" ID="t_7" end="36">will</token><token start="37" ID="t_8" end="41">dort</token><token start="42" ID="t_9" end="48">Urlaub</token><token start="49" ID="t_10" end="55">machen</token><token start="55" ID="t_11" end="56">.</token></tokens>
+    <sentences><sentence tokenIDs="t_0 t_1 t_2 t_3 t_4 t_5"></sentence><sentence tokenIDs="t_6 t_7 t_8 t_9 t_10 t_11"></sentence></sentences>
+  </TextCorpus>
+</D-Spin>

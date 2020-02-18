@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<D-Spin xmlns="http://www.dspin.de/data" version="0.4">
+  <MetaData xmlns="http://www.dspin.de/data/metadata"/>
+  <TextCorpus xmlns="http://www.dspin.de/data/textcorpus" lang="en">
+    <textSource type="application/tei+xml; format-variant=tei-dta; tokenized=0">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;TEI&gt;
+    &lt;teiHeader type="aacr2"&gt;
+        &lt;fileDesc&gt;
+
+            &lt;titleStmt&gt;
+
+                &lt;title&gt; The work's title [a machine-readable transcription]&lt;/title&gt;
+                &lt;author&gt;The work's author, last name first&lt;/author&gt;
+                &lt;respStmt&gt;
+
+                    &lt;resp&gt;Creator: &lt;/resp&gt;
+                    &lt;name&gt;University of Virginia Library Electronic Text Center.&lt;/name&gt;
+
+                &lt;/respStmt&gt;
+
+            &lt;/titleStmt&gt;
+            &lt;extent&gt;ca. XXX kilobytes &lt;/extent&gt;
+            &lt;publicationStmt&gt;
+
+                &lt;publisher&gt;University of Virginia Library.&lt;/publisher&gt;
+                &lt;pubPlace&gt;Charlottesville, Va.&lt;/pubPlace&gt;
+                &lt;idno type="ETC"&gt;collection and ID, e.g. Modern English, AusEmma&lt;/idno&gt;
+                &lt;availability&gt;
+
+                    &lt;p&gt;Place where text can be found, e.g. Available from: Oxford Text Archive&lt;/p&gt;
+                    &lt;p&gt;URL: http://etext.lib.virginia.edu/modeng.browse.html&lt;/p&gt;
+                    &lt;p&gt;Available commercially from:&lt;/p&gt;
+
+                &lt;/availability&gt;
+                &lt;date&gt;Current year&lt;/date&gt;
+
+            &lt;/publicationStmt&gt;
+            &lt;seriesStmt&gt;
+
+                &lt;p&gt;Name of electronic series, if any&lt;/p&gt;
+
+            &lt;/seriesStmt&gt;
+            &lt;notesStmt&gt;
+
+                &lt;note&gt;Illustrations have been included from the print version. Note about image, if needed; note, for instance, if source differs from print source.&lt;/note&gt;
+                &lt;note&gt;any other notes&lt;/note&gt;
+
+            &lt;/notesStmt&gt;
+            &lt;sourceDesc&gt;
+
+                &lt;biblFull&gt;
+
+                    &lt;titleStmt&gt;
+
+                        &lt;title&gt;The work's title&lt;/title&gt;
+                        &lt;title level="a"&gt;The title of the physical volume, if different&lt;/title&gt;
+                        &lt;author&gt;The author's name, first name first&lt;/author&gt;
+                        &lt;respStmt&gt;
+                            &lt;resp&gt;e.g. Editor / Translator / Annotator&lt;/resp&gt;
+                            &lt;name&gt;&lt;/name&gt;
+                        &lt;/respStmt&gt;
+
+                    &lt;/titleStmt&gt;
+                    &lt;editionStmt&gt;
+
+                        &lt;p&gt;Edition information, e.g. 1st Edition.&lt;/p&gt;
+
+                    &lt;/editionStmt&gt;
+                    &lt;extent&gt;&lt;/extent&gt;
+                    &lt;publicationStmt&gt;
+
+                        &lt;publisher&gt;&lt;/publisher&gt;
+                        &lt;pubPlace&gt;place of publication&lt;/pubPlace&gt;
+                        &lt;date&gt;date of publication&lt;/date&gt;
+
+                    &lt;/publicationStmt&gt;
+                    &lt;seriesStmt&gt;
+
+                        &lt;p&gt;Name of print series.&lt;/p&gt;
+
+                    &lt;/seriesStmt&gt;
+                    &lt;notesStmt&gt;
+
+                        &lt;note&gt;&lt;/note&gt;
+
+                    &lt;/notesStmt&gt;
+
+                &lt;/biblFull&gt;
+
+            &lt;/sourceDesc&gt;
+
+        &lt;/fileDesc&gt;
+        &lt;encodingDesc&gt;
+
+            &lt;projectDesc&gt;
+
+                &lt;p&gt;Prepared for the University of Virginia Library Electronic Text Center.&lt;/p&gt;
+
+            &lt;/projectDesc&gt;
+            &lt;editorialDecl&gt;
+
+                &lt;p&gt;All quotation marks retained as data.&lt;/p&gt;
+                &lt;p&gt;Spell-check and verification made against printed text using WordPerfect spell checker.&lt;/p&gt;
+                &lt;p&gt;All unambiguous end-of-line hyphens have been removed, and the trailing part of a word has been joined to the preceding line.&lt;/p&gt;
+                &lt;p&gt;The images exist as archived TIFF images, one or more JPEG versions for general use, and thumbnail GIFs.&lt;/p&gt;
+                &lt;p&gt;Keywords in the header are a local Electronic Text Center scheme to aid in establishing analytical groupings.&lt;/p&gt;
+
+            &lt;/editorialDecl&gt;
+            &lt;refsDecl&gt;
+
+                &lt;p&gt;ID elements are given for each page element and are composed of the text's unique cryptogram and the given page number, as in AusEmma1 for page one of Jane Austen's Emma.&lt;/p&gt;
+
+            &lt;/refsDecl&gt;
+            &lt;classDecl&gt;
+
+                &lt;taxonomy&gt;
+
+                    &lt;bibl&gt;
+
+                        &lt;title&gt;Library of Congress Subject Headings&lt;/title&gt;
+
+                    &lt;/bibl&gt;
+
+                &lt;/taxonomy&gt;
+
+            &lt;/classDecl&gt;
+
+        &lt;/encodingDesc&gt;
+        &lt;profileDesc&gt;
+
+            &lt;creation&gt;
+
+                &lt;date&gt;First published date&lt;/date&gt;
+
+            &lt;/creation&gt;
+            &lt;langUsage&gt;
+
+                &lt;language ident="en"&gt;languages used in the text; use one "language pair of tags for each language, and for the id= value, use an ISO639 code&lt;/language&gt;
+
+            &lt;/langUsage&gt;
+            &lt;textClass&gt;
+
+                &lt;keywords scheme="http://classificationweb.net"&gt;
+
+                    &lt;term&gt;fiction or non-fiction; poetry, prose, or drama&lt;/term&gt;
+
+                &lt;/keywords&gt;
+                &lt;keywords scheme="LCSH"&gt;
+
+                    &lt;term&gt;LCSH&lt;/term&gt;
+
+                &lt;/keywords&gt;
+
+            &lt;/textClass&gt;
+            &lt;textClass&gt;
+
+                &lt;keywords scheme="http://classificationweb.net"&gt;
+
+                    &lt;term type="artist"&gt;name of illustrator, painter, etc. &lt;/term&gt;
+                    &lt;term type="visualwork"&gt;engraving/painting/illustration, &lt;/term&gt;
+
+                &lt;/keywords&gt;
+                &lt;keywords scheme="http://classificationweb.net"&gt;
+
+                    &lt;term&gt;24-bit color; 600 dpi [or variant]&lt;/term&gt;
+
+                &lt;/keywords&gt;
+
+            &lt;/textClass&gt;
+
+        &lt;/profileDesc&gt;
+        &lt;revisionDesc&gt;
+
+            &lt;change&gt;
+
+                &lt;date&gt;date of changes&lt;/date&gt;
+
+            &lt;/change&gt;
+
+        &lt;/revisionDesc&gt;
+    &lt;/teiHeader&gt;
+
+    &lt;text&gt;
+
+
+        &lt;body&gt;
+
+
+            &lt;div type="chapter" n="1"&gt;
+                &lt;head&gt;Chapter 1&lt;/head&gt;
+            &lt;/div&gt;
+
+            &lt;p&gt;contents of chapter 1&lt;/p&gt;
+
+            &lt;div type="chapter" n="2"&gt;
+                &lt;head&gt;Chapter 2&lt;/head&gt;
+            &lt;/div&gt;
+
+            &lt;p&gt;contents of chapter 2&lt;/p&gt;
+
+            &lt;div type="chapter" n="3"&gt;
+                &lt;head&gt;Chapter 3&lt;/head&gt;
+            &lt;/div&gt;
+
+            &lt;p&gt;contents of chapter 3&lt;/p&gt;
+
+            &lt;div type="chapter" n="4"&gt;
+                &lt;head&gt;Chapter 4&lt;/head&gt;
+            &lt;/div&gt;
+
+            &lt;p&gt;contents of chapter 4&lt;/p&gt;
+
+        &lt;/body&gt;
+
+    &lt;/text&gt;
+&lt;/TEI&gt; 
+</textSource>
+    <text>
+
+   
+
+
+
+
+
+  
+
+   
+
+contents of chapter 1
+
+   
+
+    
+
+   
+
+contents of chapter 2
+
+   
+
+    
+
+   
+
+contents of chapter 3
+
+   
+
+    
+
+   
+
+contents of chapter 4
+
+   
+
+
+
+Chapter 1
+
+
+
+Chapter 2
+
+
+
+Chapter 3
+
+
+
+Chapter 4
+
+</text>
+  </TextCorpus>
+</D-Spin>

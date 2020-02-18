@@ -1,0 +1,216 @@
+%% imported from tcf
+#FORMAT 3
+#BOT ORIGIN
+#EOT ORIGIN
+#BOT EDITOR
+-1	__-1	<automatic>
+0	__0	<not assigned>
+#EOT EDITOR
+#BOT WORDTAG
+-1	UNKNOWN	N	Unknown tag
+0	--	N	Not assigned
+1	APPR	Y	<no description>
+2	ADJD	Y	<no description>
+3	PROAV	Y	<no description>
+4	$,	N	<no description>
+5	PDAT	Y	<no description>
+6	APPRART	Y	<no description>
+7	$.	N	<no description>
+8	ADV	Y	<no description>
+9	NN	Y	<no description>
+10	ADJA	Y	<no description>
+11	VVFIN	Y	<no description>
+12	ART	Y	<no description>
+13	VAFIN	Y	<no description>
+14	PPER	Y	<no description>
+15	PPOSAT	Y	<no description>
+16	NE	Y	<no description>
+#EOT WORDTAG
+#BOT MORPHTAG
+-1	UNKNOWN	Unknown tag
+0	--	Not assigned
+#EOT MORPHTAG
+#BOT NODETAG
+-1	UNKNOWN	Unknown tag
+0	--	Not assigned
+1	VXINF	<no description>
+2	Start	<no description>
+3	NX	<no description>
+4	C	<no description>
+5	ADJD	<no description>
+6	KON	<no description>
+7	VF	<no description>
+8	NN	<no description>
+9	ADJA	<no description>
+10	VVFIN	<no description>
+11	VC	<no description>
+12	MF	<no description>
+13	VAFIN	<no description>
+14	SIMPX	<no description>
+15	ART	<no description>
+16	PIS	<no description>
+17	R	<no description>
+18	PPER	<no description>
+19	ADVX	<no description>
+20	VXFIN	<no description>
+21	APPR	<no description>
+22	PRELS	<no description>
+23	ADJX	<no description>
+24	PDS	<no description>
+25	APPRART	<no description>
+26	ADV	<no description>
+27	VVPP	<no description>
+28	LK	<no description>
+29	PPOSAT	<no description>
+30	PX	<no description>
+#EOT NODETAG
+#BOT EDGETAG
+-1	UNKNOWN	Unknown tag
+0	--	Not assigned
+#EOT EDGETAG
+#BOT SECEDGETAG
+-1	UNKNOWN	Unknown tag
+0	--	Not assigned
+#EOT SECEDGETAG
+%%token	postag	morph	edge	parent
+#BOS 1 0 1281518919 0 %% tcf sentence s_0
+Eine	ART	--	--	500	
+F?ºchsin,	NN	--	--	501	
+die	ART	--	--	502	
+auf	APPR	--	--	503	
+ihre	PPOSAT	--	--	504	
+Fruchtbarkeit	NN	--	--	505	
+stolz	ADJD	--	--	506	
+war,	VAFIN	--	--	507	
+schalt	VVFIN	--	--	508	
+eine	ART	--	--	509	
+L??win,	NN	--	--	510	
+da?ü	$,	--	--	511	
+sie	PPER	--	--	512	
+nur	ADV	--	--	513	
+ein	ART	--	--	514	
+einziges	ADJA	--	--	515	
+Junges	NN	--	--	516	
+zur	APPRART	--	--	517	
+Welt	NN	--	--	518	
+br?§chte.	$.	--	--	519	
+#500	ART	--	--	520	
+#501	NN	--	--	520	
+#502	PRELS	--	--	521	
+#503	APPR	--	--	522	
+#504	PPOSAT	--	--	523	
+#505	NN	--	--	523	
+#506	ADJD	--	--	524	
+#507	VVFIN	--	--	525	
+#508	VVFIN	--	--	526	
+#509	ART	--	--	527	
+#510	NN	--	--	527	
+#511	VVFIN	--	--	528	
+#512	PPER	--	--	529	
+#513	ADV	--	--	530	
+#514	ART	--	--	531	
+#515	ADJA	--	--	532	
+#516	NN	--	--	531	
+#517	APPRART	--	--	533	
+#518	NN	--	--	534	
+#519	VVPP	--	--	535	
+#520	NX	--	--	536	
+#521	NX	--	--	537	
+#522	PX	--	--	538	
+#523	NX	--	--	522	
+#524	ADJX	--	--	538	
+#525	VXFIN	--	--	539	
+#526	VXFIN	--	--	540	
+#527	NX	--	--	541	
+#528	VXFIN	--	--	542	
+#529	NX	--	--	543	
+#530	ADVX	--	--	543	
+#531	NX	--	--	543	
+#532	ADJX	--	--	531	
+#533	PX	--	--	543	
+#534	NX	--	--	533	
+#535	VXINF	--	--	544	
+#536	NX	--	--	545	
+#537	C	--	--	546	
+#538	MF	--	--	546	
+#539	VC	--	--	546	
+#540	LK	--	--	547	
+#541	MF	--	--	547	
+#542	LK	--	--	548	
+#543	MF	--	--	548	
+#544	VC	--	--	548	
+#545	VF	--	--	547	
+#546	R	--	--	536	
+#547	SIMPX	--	--	549	
+#548	SIMPX	--	--	550	
+#549	VF	--	--	548	
+#550	Start	--	--	0	
+#EOS 1
+#BOS 2 0 1281518919 0 %% tcf sentence s_1
+Die	ART	--	--	500	
+L??win	NE	--	--	501	
+antwortete	VVFIN	--	--	502	
+ihr	PPER	--	--	503	
+darauf:	PROAV	--	--	504	
+¬ªF?ºrwahr,	$,	--	--	505	
+ich	PPER	--	--	506	
+bringe	VVFIN	--	--	507	
+nur	ADV	--	--	508	
+eines	ART	--	--	509	
+zur	APPRART	--	--	510	
+Welt,	NN	--	--	511	
+aber	ADV	--	--	512	
+dieses	PDAT	--	--	513	
+einzige	ADJA	--	--	514	
+ist	VAFIN	--	--	515	
+ein	ART	--	--	516	
+L??we.¬´	NN	--	--	517	
+#500	ART	--	--	518	
+#501	NN	--	--	518	
+#502	VVFIN	--	--	519	
+#503	PPOSAT	--	--	520	
+#504	ADJA	--	--	521	
+#505	NN	--	--	520	
+#506	PPER	--	--	522	
+#507	VVFIN	--	--	523	
+#508	ADV	--	--	524	
+#509	PIS	--	--	525	
+#510	APPRART	--	--	526	
+#511	NN	--	--	527	
+#512	KON	--	--	528	
+#513	PDS	--	--	529	
+#514	PIS	--	--	530	
+#515	VAFIN	--	--	531	
+#516	ART	--	--	532	
+#517	NN	--	--	532	
+#518	NX	--	--	533	
+#519	VXFIN	--	--	534	
+#520	NX	--	--	535	
+#521	ADJX	--	--	520	
+#522	NX	--	--	536	
+#523	VXFIN	--	--	537	
+#524	ADVX	--	--	538	
+#525	NX	--	--	539	
+#526	PX	--	--	539	
+#527	NX	--	--	526	
+#528	SIMPX	--	--	540	
+#529	NX	--	--	541	
+#530	NX	--	--	541	
+#531	VXFIN	--	--	542	
+#532	NX	--	--	543	
+#533	VF	--	--	544	
+#534	LK	--	--	544	
+#535	MF	--	--	544	
+#536	VF	--	--	545	
+#537	LK	--	--	545	
+#538	MF	--	--	545	
+#539	NX	--	--	538	
+#540	Start	--	--	0	
+#541	NX	--	--	546	
+#542	LK	--	--	547	
+#543	MF	--	--	547	
+#544	SIMPX	--	--	528	
+#545	SIMPX	--	--	528	
+#546	VF	--	--	547	
+#547	SIMPX	--	--	528	
+#EOS 2

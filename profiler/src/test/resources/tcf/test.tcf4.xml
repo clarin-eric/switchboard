@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<D-Spin xmlns="http://www.dspin.de/data" version="0.4">
+  <MetaData xmlns="http://www.dspin.de/data/metadata">
+    <source/>
+  </MetaData>
+  <TextCorpus xmlns="http://www.dspin.de/data/textcorpus" lang="de">
+    <text>Es war einmal ein kleines Mädchen, ein herziges Ding, das alle Welt liebhatte.
+Am liebsten hatte es die Großmutter, die kaufte ihm ein Mäntelchen mit einer
+roten Kapuze daran, und danach hieß es Rotkäppchen. Eines Tages, da die Mutter
+Kuchen gebacken, sagte sie zu Rotkäppchen: »Rotkäppchen, die Großmama ist krank,
+ geh hin und erkundige dich, wie es ihr geht, und bringe ihr hier von den
+schönen Kuchen, solange sie noch frisch sind, und etwas Wein und Butter dazu
+und allerlei gute Sachen, die ich in das Körbchen packe.«
+Rotkäppchen ging immer gerne zur Großmutter, obwohl es ein langer Weg war,
+denn man weiß es ja, wie die Großmütter die Enkelchen lieben, und das Enkelchen
+möcht ich sehen, das nicht auch die Großmutter liebhätte.</text>
+    <tokens>
+      <token ID="t1">Es</token>
+      <token ID="t2">war</token>
+      <token ID="t3">einmal</token>
+      <token ID="t4">ein</token>
+      <token ID="t5">kleines</token>
+      <token ID="t6">Mädchen</token>
+      <token ID="t7">,</token>
+      <token ID="t8">ein</token>
+      <token ID="t9">herziges</token>
+      <token ID="t10">Ding</token>
+      <token ID="t11">,</token>
+      <token ID="t12">das</token>
+      <token ID="t13">alle</token>
+      <token ID="t14">Welt</token>
+      <token ID="t15">liebhatte</token>
+      <token ID="t16">.</token>
+      <token ID="t17">Am</token>
+      <token ID="t18">liebsten</token>
+      <token ID="t19">hatte</token>
+      <token ID="t20">es</token>
+      <token ID="t21">die</token>
+      <token ID="t22">Großmutter</token>
+      <token ID="t23">,</token>
+      <token ID="t24">die</token>
+      <token ID="t25">kaufte</token>
+      <token ID="t26">ihm</token>
+      <token ID="t27">ein</token>
+      <token ID="t28">Mäntelchen</token>
+      <token ID="t29">mit</token>
+      <token ID="t30">einer</token>
+      <token ID="t31">roten</token>
+      <token ID="t32">Kapuze</token>
+      <token ID="t33">daran</token>
+      <token ID="t34">,</token>
+      <token ID="t35">und</token>
+      <token ID="t36">danach</token>
+      <token ID="t37">hieß</token>
+      <token ID="t38">es</token>
+      <token ID="t39">Rotkäppchen</token>
+      <token ID="t40">.</token>
+      <token ID="t41">Eines</token>
+      <token ID="t42">Tages</token>
+      <token ID="t43">,</token>
+      <token ID="t44">da</token>
+      <token ID="t45">die</token>
+      <token ID="t46">Mutter</token>
+      <token ID="t47">Kuchen</token>
+      <token ID="t48">gebacken</token>
+      <token ID="t49">,</token>
+      <token ID="t50">sagte</token>
+      <token ID="t51">sie</token>
+      <token ID="t52">zu</token>
+      <token ID="t53">Rotkäppchen</token>
+      <token ID="t54">:</token>
+      <token ID="t55">»</token>
+      <token ID="t56">Rotkäppchen</token>
+      <token ID="t57">,</token>
+      <token ID="t58">die</token>
+      <token ID="t59">Großmama</token>
+      <token ID="t60">ist</token>
+      <token ID="t61">krank</token>
+      <token ID="t62">,</token>
+      <token ID="t63">geh</token>
+      <token ID="t64">hin</token>
+      <token ID="t65">und</token>
+      <token ID="t66">erkundige</token>
+      <token ID="t67">dich</token>
+      <token ID="t68">,</token>
+      <token ID="t69">wie</token>
+      <token ID="t70">es</token>
+      <token ID="t71">ihr</token>
+      <token ID="t72">geht</token>
+      <token ID="t73">,</token>
+      <token ID="t74">und</token>
+      <token ID="t75">bringe</token>
+      <token ID="t76">ihr</token>
+      <token ID="t77">hier</token>
+      <token ID="t78">von</token>
+      <token ID="t79">den</token>
+      <token ID="t80">schönen</token>
+      <token ID="t81">Kuchen</token>
+      <token ID="t82">,</token>
+      <token ID="t83">solange</token>
+      <token ID="t84">sie</token>
+      <token ID="t85">noch</token>
+      <token ID="t86">frisch</token>
+      <token ID="t87">sind</token>
+      <token ID="t88">,</token>
+      <token ID="t89">und</token>
+      <token ID="t90">etwas</token>
+      <token ID="t91">Wein</token>
+      <token ID="t92">und</token>
+      <token ID="t93">Butter</token>
+      <token ID="t94">dazu</token>
+      <token ID="t95">und</token>
+      <token ID="t96">allerlei</token>
+      <token ID="t97">gute</token>
+      <token ID="t98">Sachen</token>
+      <token ID="t99">,</token>
+      <token ID="t100">die</token>
+      <token ID="t101">ich</token>
+      <token ID="t102">in</token>
+      <token ID="t103">das</token>
+      <token ID="t104">Körbchen</token>
+      <token ID="t105">packe</token>
+      <token ID="t106">.</token>
+      <token ID="t107">«</token>
+      <token ID="t108">Rotkäppchen</token>
+      <token ID="t109">ging</token>
+      <token ID="t110">immer</token>
+      <token ID="t111">gerne</token>
+      <token ID="t112">zur</token>
+      <token ID="t113">Großmutter</token>
+      <token ID="t114">,</token>
+      <token ID="t115">obwohl</token>
+      <token ID="t116">es</token>
+      <token ID="t117">ein</token>
+      <token ID="t118">langer</token>
+      <token ID="t119">Weg</token>
+      <token ID="t120">war</token>
+      <token ID="t121">,</token>
+      <token ID="t122">denn</token>
+      <token ID="t123">man</token>
+      <token ID="t124">weiß</token>
+      <token ID="t125">es</token>
+      <token ID="t126">ja</token>
+      <token ID="t127">,</token>
+      <token ID="t128">wie</token>
+      <token ID="t129">die</token>
+      <token ID="t130">Großmütter</token>
+      <token ID="t131">die</token>
+      <token ID="t132">Enkelchen</token>
+      <token ID="t133">lieben</token>
+      <token ID="t134">,</token>
+      <token ID="t135">und</token>
+      <token ID="t136">das</token>
+      <token ID="t137">Enkelchen</token>
+      <token ID="t138">möcht</token>
+      <token ID="t139">ich</token>
+      <token ID="t140">sehen</token>
+      <token ID="t141">,</token>
+      <token ID="t142">das</token>
+      <token ID="t143">nicht</token>
+      <token ID="t144">auch</token>
+      <token ID="t145">die</token>
+      <token ID="t146">Großmutter</token>
+      <token ID="t147">liebhätte</token>
+      <token ID="t148">.</token>
+    </tokens>
+    <sentences tokRef="true">
+      <sentence ID="s1" tokenIDs="t1 t2 t3 t4 t5 t6 t7 t8 t9 t10 t11 t12 t13 t14 t15 t16"/>
+      <sentence ID="s2" tokenIDs="t17 t18 t19 t20 t21 t22 t23 t24 t25 t26 t27 t28 t29 t30 t31 t32 t33 t34 t35 t36 t37 t38 t39 t40"/>
+      <sentence ID="s3" tokenIDs="t41 t42 t43 t44 t45 t46 t47 t48 t49 t50 t51 t52 t53 t54 t55 t56 t57 t58 t59 t60 t61 t62 t63 t64 t65 t66 t67 t68 t69 t70 t71 t72 t73 t74 t75 t76 t77 t78 t79 t80 t81 t82 t83 t84 t85 t86 t87 t88 t89 t90 t91 t92 t93 t94 t95 t96 t97 t98 t99 t100 t101 t102 t103 t104 t105 t106 t107"/>
+      <sentence ID="s4" tokenIDs="t108 t109 t110 t111 t112 t113 t114 t115 t116 t117 t118 t119 t120 t121 t122 t123 t124 t125 t126 t127 t128 t129 t130 t131 t132 t133 t134 t135 t136 t137 t138 t139 t140 t141 t142 t143 t144 t145 t146 t147 t148"/>
+    </sentences>
+  </TextCorpus>
+</D-Spin>

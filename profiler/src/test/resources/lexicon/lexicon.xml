@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<D-Spin xmlns="http://www.dspin.de/data" version="0.3">
+    <tns:MetaData xmlns:tns="http://www.dspin.de/data/metadata">
+        <tns:source/>
+    </tns:MetaData>
+
+    <tns:Lexicon lang="de" xmlns:tns="http://www.dspin.de/data/lexicon">
+        <tns:lemmas>
+            <tns:lemma ID="t1">Die</tns:lemma>
+            <tns:lemma ID="t2">Ereignisse</tns:lemma>
+            <tns:lemma ID="t3">der</tns:lemma>
+            <tns:lemma ID="t4">letzten</tns:lemma>
+            <tns:lemma ID="t5">Jahre</tns:lemma>
+            <tns:lemma ID="t6">haben</tns:lemma>
+            <tns:lemma ID="t7">verdeutlicht</tns:lemma>
+            <tns:lemma ID="t8">,</tns:lemma>
+            <tns:lemma ID="t9">vor</tns:lemma>
+            <tns:lemma ID="t10">welch</tns:lemma>
+            <tns:lemma ID="t11">riesigen</tns:lemma>
+            <tns:lemma ID="t12">Problemen</tns:lemma>
+            <tns:lemma ID="t13">nicht</tns:lemma>
+            <tns:lemma ID="t14">nur</tns:lemma>
+            <tns:lemma ID="t15">die</tns:lemma>
+            <tns:lemma ID="t16">Lebensmittelproduzenten</tns:lemma>
+            <tns:lemma ID="t17">,</tns:lemma>
+            <tns:lemma ID="t18">sondern</tns:lemma>
+            <tns:lemma ID="t19">auch</tns:lemma>
+            <tns:lemma ID="t20">die</tns:lemma>
+            <tns:lemma ID="t21">Verbraucher</tns:lemma>
+            <tns:lemma ID="t22">stehen</tns:lemma>
+            <tns:lemma ID="t23">.</tns:lemma>
+            <tns:lemma ID="t24">Hier</tns:lemma>
+            <tns:lemma ID="t25">gilt</tns:lemma>
+            <tns:lemma ID="t26">es</tns:lemma>
+            <tns:lemma ID="t27">,</tns:lemma>
+            <tns:lemma ID="t28">ein</tns:lemma>
+            <tns:lemma ID="t29">Gleichgewicht</tns:lemma>
+            <tns:lemma ID="t30">herzustellen</tns:lemma>
+            <tns:lemma ID="t31">.</tns:lemma>
+            <tns:lemma ID="t32">Wir</tns:lemma>
+            <tns:lemma ID="t33">müssen</tns:lemma>
+            <tns:lemma ID="t34">eine</tns:lemma>
+            <tns:lemma ID="t35">Lösung</tns:lemma>
+            <tns:lemma ID="t36">finden</tns:lemma>
+            <tns:lemma ID="t37">,</tns:lemma>
+            <tns:lemma ID="t38">denn</tns:lemma>
+            <tns:lemma ID="t39">es</tns:lemma>
+            <tns:lemma ID="t40">ist</tns:lemma>
+            <tns:lemma ID="t41">wichtig</tns:lemma>
+            <tns:lemma ID="t42">,</tns:lemma>
+            <tns:lemma ID="t43">daß</tns:lemma>
+            <tns:lemma ID="t44">die</tns:lemma>
+            <tns:lemma ID="t45">Verbraucher</tns:lemma>
+            <tns:lemma ID="t46">wieder</tns:lemma>
+            <tns:lemma ID="t47">Vertrauen</tns:lemma>
+            <tns:lemma ID="t48">in</tns:lemma>
+            <tns:lemma ID="t49">die</tns:lemma>
+            <tns:lemma ID="t50">Lebensmittel</tns:lemma>
+            <tns:lemma ID="t51">haben</tns:lemma>
+            <tns:lemma ID="t52">,</tns:lemma>
+            <tns:lemma ID="t53">die</tns:lemma>
+            <tns:lemma ID="t54">sie</tns:lemma>
+            <tns:lemma ID="t55">verzehren</tns:lemma>
+            <tns:lemma ID="t56">.</tns:lemma>
+        </tns:lemmas>
+    </tns:Lexicon>
+</D-Spin>

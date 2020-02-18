@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<D-Spin xmlns="http://www.dspin.de/data" version="0.4">
+    <MetaData xmlns="http://www.dspin.de/data/metadata">
+        <source></source>
+    </MetaData>
+    <TextCorpus xmlns="http://www.dspin.de/data/textcorpus" lang="tr">
+        <text>Ayşe New York'a gidiyor. Orada tatil yapacak.</text>
+        <tokens xmlns:tc="http://www.dspin.de/data/textcorpus">
+            <token ID="t_0">Ayşe</token>
+            <token ID="t_1">New</token>
+            <token ID="t_2">York'a</token>
+            <token ID="t_3">gidiyor</token>
+            <token ID="t_4">.</token>
+            <token ID="t_5">Orada</token>
+            <token ID="t_6">tatil</token>
+            <token ID="t_7">yapacak</token>
+            <token ID="t_8">.</token>
+        </tokens>
+        <sentences xmlns:tc="http://www.dspin.de/data/textcorpus">
+            <sentence tokenIDs="t_0 t_1 t_2 t_3 t_4"></sentence>
+            <sentence tokenIDs="t_0 t_1 t_2 t_3 t_4 t_5 t_6 t_7 t_8"></sentence>
+        </sentences>
+        <lemmas xmlns:tc="http://www.dspin.de/data/textcorpus">
+            <lemma ID="l_0" tokenIDs="t_0">Ayşe</lemma>
+            <lemma ID="l_1" tokenIDs="t_1">new</lemma>
+            <lemma ID="l_2" tokenIDs="t_2">York</lemma>
+            <lemma ID="l_3" tokenIDs="t_3">git</lemma>
+            <lemma ID="l_4" tokenIDs="t_4">.</lemma>
+            <lemma ID="l_5" tokenIDs="t_5">ora</lemma>
+            <lemma ID="l_6" tokenIDs="t_6">tatil</lemma>
+            <lemma ID="l_7" tokenIDs="t_7">yap</lemma>
+            <lemma ID="l_8" tokenIDs="t_8">.</lemma>
+        </lemmas>
+        <POStags xmlns:tc="http://www.dspin.de/data/textcorpus" tagset="metu-sabanci">
+            <tag tokenIDs="t_0">Noun</tag>
+            <tag tokenIDs="t_1">Noun</tag>
+            <tag tokenIDs="t_2">Noun</tag>
+            <tag tokenIDs="t_3">Verb</tag>
+            <tag tokenIDs="t_4">Punc</tag>
+            <tag tokenIDs="t_5">Pron</tag>
+            <tag tokenIDs="t_6">Noun</tag>
+            <tag tokenIDs="t_7">Verb</tag>
+            <tag tokenIDs="t_8">Punc</tag>
+        </POStags>
+    </TextCorpus>
+</D-Spin>

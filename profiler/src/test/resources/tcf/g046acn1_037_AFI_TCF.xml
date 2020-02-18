@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="http://de.clarin.eu/images/weblicht-tutorials/resources/tcf-04/schemas/latest/d-spin_0_4.rnc" type="application/relax-ng-compact-syntax"?>
+<D-Spin xmlns="http://www.dspin.de/data" version="0.4">
+  <MetaData xmlns="http://www.dspin.de/data/metadata"/>
+  <ExternalData xmlns="http://www.dspin.de/data/extdata">
+    <speechsignal numberchannels="1" type="audio/wav">https://weblicht.sfs.uni-tuebingen.de/tced_example/g046acn1_037_AFI.wav</speechsignal>
+  </ExternalData>
+  <TextCorpus xmlns="http://www.dspin.de/data/textcorpus" lang="de">
+    <text>&lt;ähm&gt; ich würde diesmal sagen Theater das ist dann immer so aufge in letzter Minute
+      so was spielt man heute abend ich wäre eher dafür daß wir vielleicht ins Kino gehen und
+      nachher irgendwo in eine nette Kneipe</text>
+  </TextCorpus>
+</D-Spin>

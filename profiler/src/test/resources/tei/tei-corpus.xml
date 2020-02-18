@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TEI>
+    <teiHeader type="aacr2">
+        <fileDesc>
+
+            <titleStmt>
+
+                <title>The work's title [a machine-readable transcription]</title>
+                <author>The work's author, last name first</author>
+                <respStmt>
+
+                    <resp>Creator:</resp>
+                    <name>University of Virginia Library Electronic Text Center.</name>
+
+                </respStmt>
+
+            </titleStmt>
+            <extent>ca. XXX kilobytes</extent>
+            <publicationStmt>
+
+                <publisher>University of Virginia Library.</publisher>
+                <pubPlace>Charlottesville, Va.</pubPlace>
+                <idno type="ETC">collection and ID, e.g. Modern English, AusEmma</idno>
+                <availability>
+
+                    <p>Place where text can be found, e.g. Available from: Oxford Text Archive</p>
+                    <p>URL: http://etext.lib.virginia.edu/modeng.browse.html</p>
+                    <p>Available commercially from:</p>
+
+                </availability>
+                <date>Current year</date>
+
+            </publicationStmt>
+            <seriesStmt>
+
+                <p>Name of electronic series, if any</p>
+
+            </seriesStmt>
+            <notesStmt>
+
+                <note>Illustrations have been included from the print version. Note about image, if needed; note, for
+                    instance, if source differs from print source.
+                </note>
+                <note>any other notes</note>
+
+            </notesStmt>
+            <sourceDesc>
+
+                <biblFull>
+
+                    <titleStmt>
+
+                        <title>The work's title</title>
+                        <title level="a">The title of the physical volume, if different</title>
+                        <author>The author's name, first name first</author>
+                        <respStmt>
+                            <resp>e.g. Editor / Translator / Annotator</resp>
+                            <name></name>
+                        </respStmt>
+
+                    </titleStmt>
+                    <editionStmt>
+
+                        <p>Edition information, e.g. 1st Edition.</p>
+
+                    </editionStmt>
+                    <extent></extent>
+                    <publicationStmt>
+
+                        <publisher></publisher>
+                        <pubPlace>place of publication</pubPlace>
+                        <date>date of publication</date>
+
+                    </publicationStmt>
+                    <seriesStmt>
+
+                        <p>Name of print series.</p>
+
+                    </seriesStmt>
+                    <notesStmt>
+
+                        <note></note>
+
+                    </notesStmt>
+
+                </biblFull>
+
+            </sourceDesc>
+
+        </fileDesc>
+        <encodingDesc>
+
+            <projectDesc>
+
+                <p>Prepared for the University of Virginia Library Electronic Text Center.</p>
+
+            </projectDesc>
+            <editorialDecl>
+
+                <p>All quotation marks retained as data.</p>
+                <p>Spell-check and verification made against printed text using WordPerfect spell checker.</p>
+                <p>All unambiguous end-of-line hyphens have been removed, and the trailing part of a word has been
+                    joined to the preceding line.
+                </p>
+                <p>The images exist as archived TIFF images, one or more JPEG versions for general use, and thumbnail
+                    GIFs.
+                </p>
+                <p>Keywords in the header are a local Electronic Text Center scheme to aid in establishing analytical
+                    groupings.
+                </p>
+
+            </editorialDecl>
+            <refsDecl>
+
+                <p>ID elements are given for each page element and are composed of the text's unique cryptogram and the
+                    given page number, as in AusEmma1 for page one of Jane Austen's Emma.
+                </p>
+
+            </refsDecl>
+            <classDecl>
+
+                <taxonomy>
+
+                    <bibl>
+
+                        <title>Library of Congress Subject Headings</title>
+
+                    </bibl>
+
+                </taxonomy>
+
+            </classDecl>
+
+        </encodingDesc>
+        <profileDesc>
+
+            <creation>
+
+                <date>First published date</date>
+
+            </creation>
+            <langUsage>
+
+                <language ident="en">languages used in the text; use one "language pair of tags for each language, and
+                    for the id= value, use an ISO639 code
+                </language>
+
+            </langUsage>
+            <textClass>
+
+                <keywords scheme="http://classificationweb.net">
+
+                    <term>fiction or non-fiction; poetry, prose, or drama</term>
+
+                </keywords>
+                <keywords scheme="LCSH">
+
+                    <term>LCSH</term>
+
+                </keywords>
+
+            </textClass>
+            <textClass>
+
+                <keywords scheme="http://classificationweb.net">
+
+                    <term type="artist">name of illustrator, painter, etc.</term>
+                    <term type="visualwork">engraving/painting/illustration,</term>
+
+                </keywords>
+                <keywords scheme="http://classificationweb.net">
+
+                    <term>24-bit color; 600 dpi [or variant]</term>
+
+                </keywords>
+
+            </textClass>
+
+        </profileDesc>
+        <revisionDesc>
+
+            <change>
+
+                <date>date of changes</date>
+
+            </change>
+
+        </revisionDesc>
+    </teiHeader>
+
+    <text>
+
+
+        <body>
+
+
+            <div type="chapter" n="1">
+                <head>Chapter 1</head>
+            </div>
+
+            <p>contents of chapter 1</p>
+
+            <div type="chapter" n="2">
+                <head>Chapter 2</head>
+            </div>
+
+            <p>contents of chapter 2</p>
+
+            <div type="chapter" n="3">
+                <head>Chapter 3</head>
+            </div>
+
+            <p>contents of chapter 3</p>
+
+            <div type="chapter" n="4">
+                <head>Chapter 4</head>
+            </div>
+
+            <p>contents of chapter 4</p>
+
+        </body>
+
+    </text>
+</TEI> 

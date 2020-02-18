@@ -1,0 +1,256 @@
+{
+    "discriminator": "http://vocab.lappsgrid.org/ns/media/jsonld#lif",
+    "payload": {
+        "@context": "http://vocab.lappsgrid.org/context-1.0.0.jsonld",
+        "metadata": {
+            
+        },
+        "text": {
+            "@value": "Karen flew to New York.\n",
+            "@language": "en"
+        },
+        "views": [
+            {
+                "metadata": {
+                    "contains": {
+                        "http://vocab.lappsgrid.org/Token": {
+                            "producer": "edu.brandeis.cs.lappsgrid.stanford.corenlp.Parser:2.0.3",
+                            "type": "tokenizer:stanford"
+                        },
+                        "http://vocab.lappsgrid.org/PhraseStructure": {
+                            "producer": "edu.brandeis.cs.lappsgrid.stanford.corenlp.Parser:2.0.3",
+                            "type": "syntacticparser:stanford"
+                        },
+                        "http://vocab.lappsgrid.org/Constituent": {
+                            "producer": "edu.brandeis.cs.lappsgrid.stanford.corenlp.Parser:2.0.3",
+                            "type": "syntacticparser:stanford"
+                        }
+                    }
+                },
+                "annotations": [
+                    {
+                        "id": "tk_0_0",
+                        "start": 0,
+                        "end": 5,
+                        "@type": "http://vocab.lappsgrid.org/Token",
+                        "features": {
+                            "pos": "NNP",
+                            "word": "Karen"
+                        }
+                    },
+                    {
+                        "id": "tk_0_1",
+                        "start": 6,
+                        "end": 10,
+                        "@type": "http://vocab.lappsgrid.org/Token",
+                        "features": {
+                            "pos": "VBD",
+                            "word": "flew"
+                        }
+                    },
+                    {
+                        "id": "tk_0_2",
+                        "start": 11,
+                        "end": 13,
+                        "@type": "http://vocab.lappsgrid.org/Token",
+                        "features": {
+                            "pos": "TO",
+                            "word": "to"
+                        }
+                    },
+                    {
+                        "id": "tk_0_3",
+                        "start": 14,
+                        "end": 17,
+                        "@type": "http://vocab.lappsgrid.org/Token",
+                        "features": {
+                            "pos": "NNP",
+                            "word": "New"
+                        }
+                    },
+                    {
+                        "id": "tk_0_4",
+                        "start": 18,
+                        "end": 22,
+                        "@type": "http://vocab.lappsgrid.org/Token",
+                        "features": {
+                            "pos": "NNP",
+                            "word": "York"
+                        }
+                    },
+                    {
+                        "id": "tk_0_5",
+                        "start": 22,
+                        "end": 23,
+                        "@type": "http://vocab.lappsgrid.org/Token",
+                        "features": {
+                            "pos": ".",
+                            "word": "."
+                        }
+                    },
+                    {
+                        "id": "ps_0",
+                        "start": 0,
+                        "end": 23,
+                        "@type": "http://vocab.lappsgrid.org/PhraseStructure",
+                        "features": {
+                            "sentence": "Karen flew to New York.",
+                            "penntree": "(ROOT [40.118]\n  (S [39.965]\n    (NP [12.050] (NNP Karen))\n    (VP [26.780] (VBD flew)\n      (PP [14.690] (TO to)\n        (NP [12.219] (NNP New) (NNP York))))\n    (. .)))\n",
+                            "constituents": [
+                                "c_0_0",
+                                "c_0_1",
+                                "c_0_2",
+                                "c_0_3",
+                                "c_0_4",
+                                "c_0_5",
+                                "c_0_6",
+                                "c_0_7",
+                                "c_0_8",
+                                "c_0_9",
+                                "c_0_10",
+                                "c_0_11"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "c_0_0",
+                        "@type": "http://vocab.lappsgrid.org/Constituent",
+                        "label": "ROOT",
+                        "features": {
+                            "children": [
+                                "c_0_1"
+                            ],
+                            "parent": null
+                        }
+                    },
+                    {
+                        "id": "c_0_1",
+                        "@type": "http://vocab.lappsgrid.org/Constituent",
+                        "label": "S",
+                        "features": {
+                            "children": [
+                                "c_0_2",
+                                "c_0_3",
+                                "c_0_4"
+                            ],
+                            "parent": "c_0_0"
+                        }
+                    },
+                    {
+                        "id": "c_0_2",
+                        "@type": "http://vocab.lappsgrid.org/Constituent",
+                        "label": "NP",
+                        "features": {
+                            "children": [
+                                "c_0_5"
+                            ],
+                            "parent": "c_0_1"
+                        }
+                    },
+                    {
+                        "id": "c_0_3",
+                        "@type": "http://vocab.lappsgrid.org/Constituent",
+                        "label": "VP",
+                        "features": {
+                            "children": [
+                                "c_0_6",
+                                "c_0_7"
+                            ],
+                            "parent": "c_0_1"
+                        }
+                    },
+                    {
+                        "id": "c_0_4",
+                        "@type": "http://vocab.lappsgrid.org/Constituent",
+                        "label": ".",
+                        "features": {
+                            "children": [
+                                "tk_0_5"
+                            ],
+                            "parent": "c_0_1"
+                        }
+                    },
+                    {
+                        "id": "c_0_5",
+                        "@type": "http://vocab.lappsgrid.org/Constituent",
+                        "label": "NNP",
+                        "features": {
+                            "children": [
+                                "tk_0_0"
+                            ],
+                            "parent": "c_0_2"
+                        }
+                    },
+                    {
+                        "id": "c_0_6",
+                        "@type": "http://vocab.lappsgrid.org/Constituent",
+                        "label": "VBD",
+                        "features": {
+                            "children": [
+                                "tk_0_1"
+                            ],
+                            "parent": "c_0_3"
+                        }
+                    },
+                    {
+                        "id": "c_0_7",
+                        "@type": "http://vocab.lappsgrid.org/Constituent",
+                        "label": "PP",
+                        "features": {
+                            "children": [
+                                "c_0_8",
+                                "c_0_9"
+                            ],
+                            "parent": "c_0_3"
+                        }
+                    },
+                    {
+                        "id": "c_0_8",
+                        "@type": "http://vocab.lappsgrid.org/Constituent",
+                        "label": "TO",
+                        "features": {
+                            "children": [
+                                "tk_0_2"
+                            ],
+                            "parent": "c_0_7"
+                        }
+                    },
+                    {
+                        "id": "c_0_9",
+                        "@type": "http://vocab.lappsgrid.org/Constituent",
+                        "label": "NP",
+                        "features": {
+                            "children": [
+                                "c_0_10",
+                                "c_0_11"
+                            ],
+                            "parent": "c_0_7"
+                        }
+                    },
+                    {
+                        "id": "c_0_10",
+                        "@type": "http://vocab.lappsgrid.org/Constituent",
+                        "label": "NNP",
+                        "features": {
+                            "children": [
+                                "tk_0_3"
+                            ],
+                            "parent": "c_0_9"
+                        }
+                    },
+                    {
+                        "id": "c_0_11",
+                        "@type": "http://vocab.lappsgrid.org/Constituent",
+                        "label": "NNP",
+                        "features": {
+                            "children": [
+                                "tk_0_4"
+                            ],
+                            "parent": "c_0_9"
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+}

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<D-Spin xmlns="http://www.dspin.de/data" version="5">
+    <MetaData xmlns="http://www.dspin.de/data/metadata">
+        <source></source>
+    </MetaData>
+    <TextCorpus xmlns="http://www.dspin.de/data/textcorpus" lang="de">
+        <text>Karin fliegt nach New York. Zum Beispiel die Innenstadt.</text>
+        <tokens>
+            <token ID="t1">Karin</token>
+            <token ID="t2">fliegt</token>
+            <token ID="t3">nach</token>
+            <token ID="t4" surfaceForm="New York">NewYork</token>
+            <token ID="t5">.</token>
+            <token ID="t6" surfaceForm="Zum" parts="t6 t7">Zu</token>
+            <token ID="t7">dem</token>
+            <token ID="t8">Beispiel</token>
+            <token ID="t9">die</token>
+            <token ID="t10">Innenstadt</token>
+            <token ID="t11">.</token>
+        </tokens>
+        <sentences xmlns="http://www.dspin.de/data/textcorpus">
+            <sentence ID="s1" tokenIDs="t1 t2 t3 t4 t5"></sentence>
+            <sentence ID="s2" tokenIDs="t6 t7 t8 t9 t10 t11"></sentence>
+        </sentences>
+        <POStags xmlns:tc="http://www.dspin.de/data/textcorpus" tagset="stts">
+      		<tag tokenIDs="t1">NE</tag>
+      		<tag tokenIDs="t2">VVFIN</tag>
+      		<tag tokenIDs="t3">APPR</tag>
+      		<tag tokenIDs="t4">NE</tag>
+      		<tag tokenIDs="t5">NE</tag>
+      		<tag tokenIDs="t6">$.</tag>
+      		<tag tokenIDs="t7">APPRART</tag>
+      		<tag tokenIDs="t8">NN</tag>
+      		<tag tokenIDs="t9">ART</tag>
+      		<tag tokenIDs="t10">NN</tag>
+      		<tag tokenIDs="t11">$.</tag>
+    	</POStags>
+    	<topologicalFields xmlns:tc="http://www.dspin.de/data/textcorpus" tagset="sd-tdz">
+      		<field tokenIDs="t1">VF</field>
+      		<field tokenIDs="t2">LK</field>
+      		<field tokenIDs="t3">MF</field>
+      		<field tokenIDs="t4">MF</field>
+      		<field tokenIDs="t5">MF</field>
+      		<field tokenIDs="t6">UNK</field>
+      		<field tokenIDs="t7">UNK</field>
+     		<field tokenIDs="t8">UNK</field>
+      		<field tokenIDs="t9">UNK</field>
+      		<field tokenIDs="t10">UNK</field>
+      		<field tokenIDs="t11">UNK</field>
+    	</topologicalFields>
+        <chunks tagset="placeholder" xmlns="http://www.dspin.de/data/textcorpus">
+            <chunk type="NP" tokenIDs="t1"/>
+            <chunk type="VP" voice="none" tense="present" baseForm="baseForm" alterForm="alterForm" tokenIDs="t2"/>
+            <chunk type="PP" tokenIDs="t2 t3"/>
+        </chunks>
+        <morphology tagset="STTS" xmlns="http://www.dspin.de/data/textcorpus">
+            <analysis tokenIDs="t1">
+                <tag>
+                    <fs>
+                        <f name="cat">proper name</f>
+                        <f name="case">nominative</f>
+                        <f name="number">singular</f>
+                        <f name="gender">feminine</f>
+                    </fs>
+                </tag>
+            </analysis>
+            <analysis tokenIDs="t10">
+                <tag score="0.8">
+                    <fs>
+                        <f name="cat">regular noun</f>
+                        <f name="case">accusative</f>
+                        <f name="number">singular</f>
+                        <f name="gender">masculine</f>
+                        <f name="test1">
+                            <fs>
+                                <f name="cat">regular noun</f>
+                                <f name="case">accusative</f>
+                                <f name="number">singular</f>
+                                <f name="gender">masculine</f>
+                            </fs>
+                        </f>
+                    </fs>
+                </tag>
+                <tag score="0.6">
+                    <fs>
+                        <f name="cat">regular noun</f>
+                        <f name="case">dative</f>
+                        <f name="number">plural</f>
+                        <f name="gender">masculine</f>
+                        <f name="test1">
+                            <fs>
+                                <f name="cat">regular noun</f>
+                                <f name="case">dative</f>
+                                <f name="number">plural</f>
+                                <f name="gender">masculine</f>
+                            </fs>
+                        </f>
+                    </fs>
+                </tag>
+            </analysis>
+        </morphology>
+    </TextCorpus>
+</D-Spin>

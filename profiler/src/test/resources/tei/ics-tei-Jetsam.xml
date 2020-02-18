@@ -1,0 +1,270 @@
+<?xml version="1.0" ?>
+<teiCorpus xmlns="http://www.tei-c.org/ns/1.0" xmlns:nkjp="http://www.nkjp.pl/ns/1.0">
+    <teiHeader>
+        <fileDesc>
+            <titleStmt>
+                <title>Treebank representation of the text</title>
+            </titleStmt>
+            <publicationStmt>
+                <distributor>ICS PAS Multiservice</distributor>
+                <date when="2011-10-25">
+                    <time when="10:07:16" dur="PT00H00M0.02S"></time>
+                </date>
+            </publicationStmt>
+            <sourceDesc>
+                <p>Text retrieved in electronic form.</p>
+            </sourceDesc>
+        </fileDesc>
+    </teiHeader>
+    <TEI>
+        <teiHeader>
+            <fileDesc>
+                <titleStmt>
+                    <title>Text structure</title>
+                </titleStmt>
+                <publicationStmt></publicationStmt>
+                <sourceDesc>
+                    <p>Text retrieved in electronic form.</p>
+                </sourceDesc>
+            </fileDesc>
+        </teiHeader>
+        <text>
+            <body>
+                <p xml:id="txt_1-p">Jetsam sam.</p>
+            </body>
+        </text>
+    </TEI>
+    <TEI>
+        <teiHeader>
+            <fileDesc>
+                <titleStmt>
+                    <title>Segmentation</title>
+                </titleStmt>
+                <publicationStmt>
+                    <distributor>Pantera</distributor>
+                    <date when="2011-10-25">
+                        <time when="10:07:16" dur="PT0H0M0.014S"></time>
+                    </date>
+                </publicationStmt>
+                <sourceDesc>
+                    <p>Text retrieved in electronic form.</p>
+                </sourceDesc>
+            </fileDesc>
+        </teiHeader>
+        <text>
+            <body>
+                <p xml:id="txt_1-p" corresp="txt_1-p">
+                    <s xml:id="segm_1.1-s">
+                        <!-- Jetsam -->
+                        <seg xml:id="segm_1.1.1-seg" corresp="string-range(txt_1-p,0,6)"/>
+                        <!-- sam -->
+                        <seg xml:id="segm_1.1.2-seg" corresp="string-range(txt_1-p,7,3)"/>
+                        <!-- . -->
+                        <seg xml:id="segm_1.1.3-seg" corresp="string-range(txt_1-p,10,1)" nkjp:nps="true"/>
+                    </s>
+                </p>
+            </body>
+        </text>
+    </TEI>
+    <TEI>
+        <teiHeader>
+            <fileDesc>
+                <titleStmt>
+                    <title>Morphosyntax</title>
+                </titleStmt>
+                <publicationStmt>
+                    <distributor>Pantera</distributor>
+                    <date when="2011-10-25">
+                        <time when="10:07:16" dur="PT0H0M0.014S"></time>
+                    </date>
+                </publicationStmt>
+                <sourceDesc>
+                    <p>Text retrieved in electronic form.</p>
+                </sourceDesc>
+            </fileDesc>
+        </teiHeader>
+        <text>
+            <body>
+                <p xml:id="morph_1-p" corresp="segm_1-p">
+                    <s xml:id="morph_1.1-s" corresp="segm_1.1-s">
+                        <!-- Jetsam -->
+                        <seg xml:id="morph_1.1.1-seg" corresp="segm_1.1.1-seg">
+                            <fs type="morph">
+                                <f name="orth">
+                                    <string>Jetsam</string>
+                                </f>
+                                <f name="interps">
+                                    <fs type="lex" xml:id="morph_1.1.1.1-lex">
+                                        <f name="base">
+                                            <string>Jetsam</string>
+                                        </f>
+                                        <f name="ctag">
+                                            <symbol value="ign"/>
+                                        </f>
+                                        <f name="msd">
+                                            <symbol xml:id="morph_1.1.1.1.1-msd" value=""/>
+                                        </f>
+                                    </fs>
+                                    <fs type="lex" xml:id="morph_1.1.1.2-lex">
+                                        <f name="base">
+                                            <string>jetsam</string>
+                                        </f>
+                                        <f name="ctag">
+                                            <symbol value="adj"/>
+                                        </f>
+                                        <f name="msd">
+                                            <vAlt>
+                                                <symbol xml:id="morph_1.1.1.2.1-msd" value="sg:nom:m1:pos"/>
+                                                <symbol xml:id="morph_1.1.1.2.2-msd" value="sg:nom:m2:pos"/>
+                                                <symbol xml:id="morph_1.1.1.2.3-msd" value="sg:nom:m3:pos"/>
+                                                <symbol xml:id="morph_1.1.1.2.4-msd" value="sg:acc:m3:pos"/>
+                                            </vAlt>
+                                        </f>
+                                    </fs>
+                                    <fs type="lex" xml:id="morph_1.1.1.3-lex">
+                                        <f name="base">
+                                            <string>jetsam</string>
+                                        </f>
+                                        <f name="ctag">
+                                            <symbol value="subst"/>
+                                        </f>
+                                        <f name="msd">
+                                            <vAlt>
+                                                <symbol xml:id="morph_1.1.1.3.1-msd" value="sg:nom:m3"/>
+                                                <symbol xml:id="morph_1.1.1.3.2-msd" value="sg:acc:m3"/>
+                                            </vAlt>
+                                        </f>
+                                    </fs>
+                                    <fs type="lex" xml:id="morph_1.1.1.4-lex">
+                                        <f name="base">
+                                            <string>jetsać</string>
+                                        </f>
+                                        <f name="ctag">
+                                            <symbol value="fin"/>
+                                        </f>
+                                        <f name="msd">
+                                            <symbol xml:id="morph_1.1.1.4.1-msd" value="sg:pri:imperf"/>
+                                        </f>
+                                    </fs>
+                                </f>
+                                <f name="disamb">
+                                    <fs type="tool_report">
+                                        <f fVal="#morph_1.1.1.3.1-msd" name="choice"></f>
+                                        <f name="interpretation">
+                                            <string>jetsam:subst:sg:nom:m3</string>
+                                        </f>
+                                    </fs>
+                                </f>
+                            </fs>
+                        </seg>
+                        <!-- sam -->
+                        <seg xml:id="morph_1.1.2-seg" corresp="segm_1.1.2-seg">
+                            <fs type="morph">
+                                <f name="orth">
+                                    <string>sam</string>
+                                </f>
+                                <f name="interps">
+                                    <fs type="lex" xml:id="morph_1.1.2.1-lex">
+                                        <f name="base">
+                                            <string>Sam</string>
+                                        </f>
+                                        <f name="ctag">
+                                            <symbol value="subst"/>
+                                        </f>
+                                        <f name="msd">
+                                            <symbol xml:id="morph_1.1.2.1.1-msd" value="sg:nom:m1"/>
+                                        </f>
+                                    </fs>
+                                    <fs type="lex" xml:id="morph_1.1.2.2-lex">
+                                        <f name="base">
+                                            <string>sam</string>
+                                        </f>
+                                        <f name="ctag">
+                                            <symbol value="adj"/>
+                                        </f>
+                                        <f name="msd">
+                                            <vAlt>
+                                                <symbol xml:id="morph_1.1.2.2.1-msd" value="sg:nom:m1:pos"/>
+                                                <symbol xml:id="morph_1.1.2.2.2-msd" value="sg:nom:m2:pos"/>
+                                                <symbol xml:id="morph_1.1.2.2.3-msd" value="sg:nom:m3:pos"/>
+                                                <symbol xml:id="morph_1.1.2.2.4-msd" value="sg:acc:m3:pos"/>
+                                                <symbol xml:id="morph_1.1.2.2.5-msd" value="sg:voc:m1:pos"/>
+                                                <symbol xml:id="morph_1.1.2.2.6-msd" value="sg:voc:m2:pos"/>
+                                                <symbol xml:id="morph_1.1.2.2.7-msd" value="sg:voc:m3:pos"/>
+                                            </vAlt>
+                                        </f>
+                                    </fs>
+                                    <fs type="lex" xml:id="morph_1.1.2.3-lex">
+                                        <f name="base">
+                                            <string>sam</string>
+                                        </f>
+                                        <f name="ctag">
+                                            <symbol value="adv"/>
+                                        </f>
+                                        <f name="msd">
+                                            <symbol xml:id="morph_1.1.2.3.1-msd" value=""/>
+                                        </f>
+                                    </fs>
+                                    <fs type="lex" xml:id="morph_1.1.2.4-lex">
+                                        <f name="base">
+                                            <string>sam</string>
+                                        </f>
+                                        <f name="ctag">
+                                            <symbol value="subst"/>
+                                        </f>
+                                        <f name="msd">
+                                            <vAlt>
+                                                <symbol xml:id="morph_1.1.2.4.1-msd" value="sg:nom:m3"/>
+                                                <symbol xml:id="morph_1.1.2.4.2-msd" value="sg:acc:m3"/>
+                                            </vAlt>
+                                        </f>
+                                    </fs>
+                                </f>
+                                <f name="disamb">
+                                    <fs type="tool_report">
+                                        <f fVal="#morph_1.1.2.2.3-msd" name="choice"></f>
+                                        <f name="interpretation">
+                                            <string>sam:adj:sg:nom:m3:pos</string>
+                                        </f>
+                                    </fs>
+                                </f>
+                            </fs>
+                        </seg>
+                        <!-- . -->
+                        <seg xml:id="morph_1.1.3-seg" corresp="segm_1.1.3-seg">
+                            <fs type="morph">
+                                <f name="orth">
+                                    <string>.</string>
+                                </f>
+                                <f name="nps">
+                                    <binary value="true"/>
+                                </f>
+                                <f name="interps">
+                                    <fs type="lex" xml:id="morph_1.1.3.1-lex">
+                                        <f name="base">
+                                            <string>.</string>
+                                        </f>
+                                        <f name="ctag">
+                                            <symbol value="interp"/>
+                                        </f>
+                                        <f name="msd">
+                                            <symbol xml:id="morph_1.1.3.1.1-msd" value=""/>
+                                        </f>
+                                    </fs>
+                                </f>
+                                <f name="disamb">
+                                    <fs type="tool_report">
+                                        <f fVal="#morph_1.1.3.1.1-msd" name="choice"></f>
+                                        <f name="interpretation">
+                                            <string>.:interp:</string>
+                                        </f>
+                                    </fs>
+                                </f>
+                            </fs>
+                        </seg>
+                    </s>
+                </p>
+            </body>
+        </text>
+    </TEI>
+</teiCorpus>
