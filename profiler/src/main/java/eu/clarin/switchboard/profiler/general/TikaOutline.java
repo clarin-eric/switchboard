@@ -123,7 +123,7 @@ public class TikaOutline implements Outline {
         }
 
         @Override
-        public void startDocument() throws SAXException {
+        public void startDocument() {
             outline = new TikaOutline();
             nodeStack.push(outline.root);
         }

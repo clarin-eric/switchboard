@@ -4,19 +4,17 @@ import com.google.common.io.ByteStreams;
 import eu.clarin.switchboard.app.config.ToolConfig;
 import eu.clarin.switchboard.core.Tool;
 import eu.clarin.switchboard.core.ToolRegistry;
+import eu.clarin.switchboard.profiler.ProfileMatcher;
 import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.StreamingOutput;
+import javax.ws.rs.core.*;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.List;
 
 @Path("")
@@ -36,14 +34,40 @@ public class ToolsResource {
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public Response getTools(@QueryParam("mediatype") String mediatype,
                              @QueryParam("language") String language,
-                             @QueryParam("onlyProductionTools") String onlyProductionTools) {
+                             @QueryParam("onlyProductionTools") String onlyProductionTools,
+                             @Context UriInfo uriInfo) {
+        ProfileMatcher.Builder profileMatcher = ProfileMatcher.builder();
+
+        MultivaluedMap<String, String> queryParams = uriInfo.getQueryParameters();
+        for (String param: queryParams.keySet()) {
+            if ("mediatype".equalsIgnoreCase(param) ||
+                    "language".equalsIgnoreCase(param) ||
+                    "onlyProductionTools".equalsIgnoreCase(param)) {
+                continue;
+            }
+
+            List<String> values = queryParams.get(param);
+            if (values.size() > 1) {
+                return Response.status(400).entity("optional parameters cannot have multiple values: see `" + param + "`").build();
+            }
+            if (values.isEmpty()) {
+                profileMatcher.feature(param);
+            } else {
+                profileMatcher.feature(param, values.get(0));
+            }
+        }
+
         boolean onlyProd = toolConfig.getShowOnlyProductionTools();
         if (onlyProductionTools != null && !onlyProductionTools.isEmpty()) {
             onlyProd = Boolean.parseBoolean(onlyProductionTools);
         }
 
-        language = language == null ? "" : language;
-        mediatype = mediatype == null ? "" : mediatype;
+        mediatype = (mediatype != null && mediatype.isEmpty()) ? null : mediatype;
+        language = (language != null && language.isEmpty()) ? null : language;
+        if (language != null && language.length() != 3) {
+            return Response.status(400).entity("parameter `language` must be a ISO 639-3 language code").build();
+        }
+
         List<Tool> tools = toolRegistry.filterTools(mediatype, language, onlyProd);
         tools.sort((t1, t2) -> t1.getName().compareToIgnoreCase(t2.getName()));
         return Response.ok(tools).build();
@@ -70,6 +94,7 @@ public class ToolsResource {
         StreamingOutput fileStream = output -> {
             output.write(data);
             output.flush();
+            // doc says not to close the output stream
         };
         return Response
                 .ok(fileStream, imageMimeType)

@@ -73,29 +73,16 @@
         </dependency>
 
         <dependency>
-            <groupId>org.apache.tika</groupId>
-            <artifactId>tika-core</artifactId>
-            <version>1.23</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.tika</groupId>
-            <artifactId>tika-parsers</artifactId>
-            <version>1.23</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.optimaize.languagedetector</groupId>
-            <artifactId>language-detector</artifactId>
-            <version>0.6</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <groupId>net.sf.trove4j</groupId>
             <artifactId>trove4j</artifactId>
             <version>3.0.3</version>
             <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>eu.clarin.switchboard</groupId>
+            <artifactId>profiler</artifactId>
+            <version>0.1.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>

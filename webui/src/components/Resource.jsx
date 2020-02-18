@@ -2,7 +2,7 @@ import React from 'react';
 import Select from 'react-select';
 
 const SelectLanguage = (props) => {
-    const value = props.languages.find(x => x.value == props.res.language);
+    const value = props.languages.find(x => x.value == props.res.profile.language);
     return <Select
         value={value}
         options={props.languages.asMutable()}
@@ -12,7 +12,7 @@ const SelectLanguage = (props) => {
 }
 
 const SelectMediatype = (props) => {
-    const value = props.mediatypes.find(x => x.value == props.res.mediatype);
+    const value = props.mediatypes.find(x => x.value == props.res.profile.mediaType);
     return <Select
         value={value}
         options={props.mediatypes.asMutable()}
@@ -27,9 +27,8 @@ export class Resource extends React.Component {
     }
 
     onChange(type, sel) {
-        const res = this.props.resource;
-        const newres = res.set(type, sel.value);
-        this.props.updateResource(newres);
+        const newresource = this.props.resource.setIn(['profile', type], sel.value);
+        this.props.updateResource(newresource);
     }
 
     render() {
@@ -47,7 +46,7 @@ export class Resource extends React.Component {
                         <div className="resource-header">Mediatype</div>
                         <div>
                             <SelectMediatype res={res} mediatypes={this.props.mediatypes}
-                                onMediatype={v => this.onChange('mediatype', v)}/>
+                                onMediatype={v => this.onChange('mediaType', v)}/>
                         </div>
                     </div>
                     <div className="col-md-4">

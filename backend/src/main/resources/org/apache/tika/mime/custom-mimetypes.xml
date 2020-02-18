@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Notes:
+   * Tika supports a wider range of match types than Freedesktop does
+   * Glob patterns must be unique, if there's a clash assign to the most
+     popular format
+   * The main mime type should be the canonical one, use aliases for any
+     other widely used forms
+   * Where there's a hierarchy in the types, list it via a parent
+   * Highly specific magic matches get a high priority
+   * General magic matches which could trigger a false-positive need
+     a low one
+   * The priority for containers normally need to be higher than for
+     the things they contain, so they don't accidently get detected
+     as what's in them
+   * For logic too complex to be expressed in a magic match, do the best
+     you can here, then provide a Custom Detector for the rest
+-->
+<mime-info>
+    <mime-type type="application/tei+xml">
+        <_comment>Text Encoding and Interchange</_comment>
+        <acronym>TEI</acronym>
+        <tika:link>https://datatracker.ietf.org/doc/rfc6129</tika:link>
+        <sub-class-of type="application/xml"/>
+        <root-XML localName="TEI" namespaceURI="http://www.tei-c.org/ns/1.0"/>
+        <root-XML localName="TEI.2"/>
+        <glob pattern="*.xml"/>
+        <glob pattern="*.tei"/>
+        <!--<magic priority="60">-->
+            <!--<match value="TEI" type="string" offset="0" />-->
+            <!--<match value="0x00051600" type="string" offset="0"/>-->
+            <!--<match value="W\x00o\x00r\x00k\x00b\x00o\x00o\x00k" type="string" offset="1152:4096" />-->
+            <!--<match value="0x6C72F33D" type="little32" offset="0">-->
+                <!--<match value="0x03" mask="0x0F" type="string" offset="4"/>-->
+            <!--</match>-->
+        <!--</magic>-->
+    </mime-type>
+</mime-info>

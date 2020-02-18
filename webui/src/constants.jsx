@@ -34,3 +34,6 @@ export const actionType = [
     actions[value] = value;
     return actions;
 }, {});
+
+
+export const NO_MEDIATYPE = "application/octet-stream";

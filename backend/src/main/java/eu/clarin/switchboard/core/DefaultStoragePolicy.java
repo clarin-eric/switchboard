@@ -2,10 +2,10 @@ package eu.clarin.switchboard.core;
 
 import eu.clarin.switchboard.app.config.DataStoreConfig;
 import eu.clarin.switchboard.core.xc.StoragePolicyException;
+import eu.clarin.switchboard.profiler.api.Profile;
 
 import java.io.File;
 import java.time.Duration;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -46,32 +46,14 @@ public class DefaultStoragePolicy implements StoragePolicy {
     }
 
     @Override
-    public void acceptProfile(String mediatype, String language) throws StoragePolicyException {
-        if (!allowedMediaTypes.contains(mediatype)) {
+    public void acceptProfile(Profile profile) throws StoragePolicyException {
+        if (!allowedMediaTypes.contains(profile.getMediaType())) {
             // allow xml as a special case, see https://github.com/clarin-eric/switchboard/issues/14
-            if (!isXmlMediatype(mediatype)) {
-                throw new StoragePolicyException("This resource type (" + mediatype + ") is currently not supported.",
+            if (!profile.isXmlMediaType()) {
+                throw new StoragePolicyException("This resource type (" + profile.getMediaType() + ") is currently not supported.",
                         StoragePolicyException.Kind.MEDIA_NOT_ALLOWED);
             }
         }
-    }
-
-    public static boolean isXmlMediatype(String mediatype) {
-        // mediatype format is: type "/" subtype ["+" suffix]* [";" parameter]
-        // 1. remove parameter suffix
-        int formatStartIndex = mediatype.indexOf(';');
-        if (formatStartIndex > 0) {
-            mediatype = mediatype.substring(0, formatStartIndex);
-        }
-        // 2. split in type and subtypes
-        String[] typeSubtypes = mediatype.split("/");
-        if (typeSubtypes.length == 2) {
-            // 3. find subtypes
-            String[] subtypes = typeSubtypes[1].split("\\+");
-            // it's xml if any subtype is "xml"
-            return Arrays.asList(subtypes).contains("xml");
-        }
-        return false;
     }
 
     private String human(long maxSize) {

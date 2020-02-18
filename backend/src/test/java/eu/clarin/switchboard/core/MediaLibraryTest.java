@@ -3,7 +3,12 @@ package eu.clarin.switchboard.core;
 import eu.clarin.switchboard.app.config.DataStoreConfig;
 import eu.clarin.switchboard.app.config.UrlResolverConfig;
 import eu.clarin.switchboard.core.xc.CommonException;
+import eu.clarin.switchboard.core.xc.LinkException;
 import eu.clarin.switchboard.core.xc.StoragePolicyException;
+import eu.clarin.switchboard.profiler.api.Profiler;
+import eu.clarin.switchboard.profiler.api.ProfilingException;
+import eu.clarin.switchboard.profiler.general.TikaProfiler;
+import org.apache.tika.config.TikaConfig;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -26,20 +31,22 @@ public class MediaLibraryTest {
         StoragePolicy storagePolicy = new DefaultStoragePolicy(dataStoreConfig);
         DataStore dataStore = new DataStore(dataStoreRoot, storagePolicy);
 
-        Profiler profiler;
-        profiler = new Profiler();
-
-        Converter converter = new Converter("./tikaConfig.xml");
+        TikaConfig tikaConfig = new TikaConfig(this.getClass().getResourceAsStream("/tikaConfig.xml"));
+        Profiler profiler = new TikaProfiler(tikaConfig);
 
         UrlResolverConfig urlResolver = new UrlResolverConfig(3, 3, "seconds");
 
-        mediaLibrary = new MediaLibrary(dataStore, profiler, converter, storagePolicy,
-                urlResolver);
+        mediaLibrary = new MediaLibrary(dataStore, profiler, storagePolicy, urlResolver);
+    }
+
+    @Test(expected = LinkException.class)
+    public void addMedia1() throws CommonException, ProfilingException {
+        mediaLibrary.addMedia("http://this^is&a)bad@url");
     }
 
     @Test(expected = StoragePolicyException.class)
     public void addMedia() throws CommonException {
-        // just a random site that does a HTTP redirect
+        // a site that does a HTTP redirect
         mediaLibrary.addMedia("http://clarin.eu");
     }
 }

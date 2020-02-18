@@ -1,8 +1,9 @@
 package eu.clarin.switchboard.profiler.general;
 
-import eu.clarin.switchboard.profiler.api.LanguageCode;
+import com.google.common.collect.ImmutableSet;
 import eu.clarin.switchboard.profiler.api.Profile;
 import eu.clarin.switchboard.profiler.api.Profiler;
+import jdk.nashorn.internal.runtime.PropertyAccess;
 import org.apache.tika.Tika;
 import org.apache.tika.config.TikaConfig;
 import org.apache.tika.detect.Detector;
@@ -14,21 +15,41 @@ import org.apache.tika.parser.AutoDetectParser;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.*;
+import java.util.List;
 
 public class TikaProfiler implements Profiler {
     private static final ch.qos.logback.classic.Logger LOGGER = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(TikaProfiler.class);
+    private static final Set<String> CERTAIN_MEDIATYPES = ImmutableSet.<String>builder()
+            .add("application/pdf")
+            .add("application/rtf")
+            .add("application/msword")
+            .add("application/vnd.ms-excel")
+            .add("application/vnd.openxmlformats-officedocument.presentationml.presentation")
+            .add("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+            .add("application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+            .add("application/zip")
+            .add("application/x-gzip")
+            .add("audio/vnd.wave")
+            .add("audio/x-wav")
+            .add("audio/wav")
+            .add("audio/mp3")
+            .add("audio/mp4")
+            .add("audio/x-mpeg")
+            .build();
 
     Detector mediaTypeDetector;
     AutoDetectParser parser = new AutoDetectParser();
 
-    public TikaProfiler(TikaConfig config) throws IOException, SAXException, TikaException {
+    public TikaProfiler(TikaConfig config) {
         mediaTypeDetector = new Tika().getDetector();
     }
 
     @Override
-    public Profile profile(File file) throws IOException {
+    public List<Profile> profile(File file) throws IOException {
         String mediatype;
         try (TikaInputStream inputStream = TikaInputStream.get(file.toPath())) {
             Metadata metadata = new Metadata();
@@ -46,6 +67,10 @@ public class TikaProfiler implements Profiler {
 //            System.out.println(handler.getDocumentOutline());
 //        }
 
-        return Profile.builder().mediaType(mediatype).build();
+        Profile.Builder profileBuilder = Profile.builder().mediaType(mediatype);
+        if (CERTAIN_MEDIATYPES.contains(mediatype)) {
+            profileBuilder.certain();
+        }
+        return Collections.singletonList(profileBuilder.build());
     }
 }

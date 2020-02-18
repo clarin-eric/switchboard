@@ -1,8 +1,10 @@
 package eu.clarin.switchboard.profiler.xml;
 
 import eu.clarin.switchboard.profiler.api.ProfilingException;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -19,9 +21,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class XmlUtils {
-    private static final ch.qos.logback.classic.Logger LOGGER = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(XmlUtils.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(XmlUtils.class);
 
     public static final String NS_RELAX_NG = "http://relaxng.org/ns/structure/1.0";
+    public static final QName QNAME_XMLNS = new QName("http://www.w3.org/2000/xmlns/", "xmlns");
 
     public static XMLEventReader newReader(XMLInputFactory xmlInputFactory, File file) throws IOException, ProfilingException {
         try {
@@ -50,26 +53,24 @@ public class XmlUtils {
                 if (event.isProcessingInstruction() && event instanceof ProcessingInstruction) {
                     processPI((ProcessingInstruction) event, xmlFeatures);
                 }
-                if (event instanceof DTD) {
-                    DTD dtd = (DTD)event;
-                    LOGGER.info("dtd: " + dtd.getDocumentTypeDeclaration());
-                }
-                if (event.isNamespace() && event instanceof Namespace) {
-                    Namespace ns = (Namespace) event;
-                    LOGGER.info("namespace: " + ns.getPrefix() + ":" + ns.getNamespaceURI());
-                    if (ns.getPrefix().isEmpty()) {
-                        xmlFeatures.rootNamespace = ns.getNamespaceURI();
-                    }
-                }
                 if (event.isStartElement()) {
                     if (xmlFeatures.rootName == null) {
-                        xmlFeatures.rootName = event.asStartElement().getName().getLocalPart();
+                        xmlFeatures.rootName = event.asStartElement().getName();
 
-                        Iterator<?> iter = event.asStartElement().getAttributes();
-                        while (iter.hasNext()) {
-                            Attribute attr = (Attribute) iter.next();
-                            LOGGER.info("root attr: " + attr.getName().getLocalPart() + "=" + attr.getValue());
-                            xmlFeatures.rootAttributes.put(attr.getName().getLocalPart(), attr.getValue());
+                        Iterator<?> attrIterator = event.asStartElement().getAttributes();
+                        while (attrIterator.hasNext()) {
+                            Attribute attr = (Attribute) attrIterator.next();
+                            xmlFeatures.rootAttributes.put(attr.getName(), attr.getValue());
+                        }
+
+                        Iterator<?> nsIterator = event.asStartElement().getNamespaces();
+                        while (nsIterator.hasNext()) {
+                            Namespace ns = (Namespace) nsIterator.next();
+                            if (QNAME_XMLNS.equals(ns.getName())) {
+                                xmlFeatures.rootNamespace = ns.getValue();
+                            } else {
+                                xmlFeatures.rootNamespaces.put(ns.getName(), ns.getValue());
+                            }
                         }
                     } else {
                         break;
@@ -88,9 +89,10 @@ public class XmlUtils {
     }
 
     public static class XmlFeatures {
-        String rootName;
+        QName rootName;
         String rootNamespace;
-        Map<String, String> rootAttributes = new LinkedHashMap<>();
+        Map<QName, String> rootNamespaces = new LinkedHashMap<>();
+        Map<QName, String> rootAttributes = new LinkedHashMap<>();
         String schemaRelaxNG;
         String schemaSchematron;
     }

@@ -1,8 +1,10 @@
 package eu.clarin.switchboard.core;
 
-import com.google.common.collect.ImmutableSet;
 import eu.clarin.switchboard.app.config.UrlResolverConfig;
 import eu.clarin.switchboard.core.xc.*;
+import eu.clarin.switchboard.profiler.api.Profile;
+import eu.clarin.switchboard.profiler.api.Profiler;
+import eu.clarin.switchboard.profiler.api.ProfilingException;
 import org.glassfish.jersey.media.multipart.ContentDisposition;
 import org.slf4j.LoggerFactory;
 
@@ -29,34 +31,14 @@ import java.util.concurrent.TimeUnit;
 public class MediaLibrary {
     public static final int MAX_ALLOWED_REDIRECTS = 5;
 
-
     private static final ch.qos.logback.classic.Logger LOGGER = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(MediaLibrary.class);
 
     DataStore dataStore;
     Profiler profiler;
-    Converter converter;
     StoragePolicy storagePolicy;
     UrlResolverConfig urlResolverConfig;
 
     Map<UUID, FileInfo> fileInfoMap = Collections.synchronizedMap(new HashMap<>());
-
-    public static final Set<String> convertableMediatypes = ImmutableSet.of(
-            "application/pdf",
-            "application/rtf",
-            "application/msword",
-            "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-    );
-
-    public static final Set<String> nonTextMediatypes = ImmutableSet.of(
-            "application/zip",
-            "application/x-gzip",
-            "audio/vnd.wave",
-            "audio/x-wav",
-            "audio/wav",
-            "audio/mp3",
-            "audio/mp4",
-            "audio/x-mpeg"
-    );
 
     public static class FileInfo {
         UUID id;
@@ -66,8 +48,7 @@ public class MediaLibrary {
         Path path; // actual path on disk
         long fileLength;
 
-        String mediatype;
-        String language;
+        Profile profile;
 
         String originalLink; // original link; can point to a landing page, not to the data
         String downloadLink; // link used for downloading from original location
@@ -102,12 +83,8 @@ public class MediaLibrary {
             return fileLength;
         }
 
-        public String getMediatype() {
-            return mediatype;
-        }
-
-        public String getLanguage() {
-            return language;
+        public Profile getProfile() {
+            return profile;
         }
 
         public String getOriginalLink() {
@@ -130,17 +107,15 @@ public class MediaLibrary {
                     "\nfilename='" + filename + '\'' +
                     "\npath=" + path +
                     "\nfileLength=" + fileLength +
-                    "\nmediatype='" + mediatype + '\'' +
-                    "\nlanguage='" + language + '\'' +
                     "\noriginalLink='" + originalLink + '\'' +
-                    "\nhttpRedirects=" + httpRedirects;
+                    "\nhttpRedirects=" + httpRedirects +
+                    "\nprofile=" + profile;
         }
     }
 
-    public MediaLibrary(DataStore dataStore, Profiler profiler, Converter converter, StoragePolicy storagePolicy, UrlResolverConfig urlResolverConfig) {
+    public MediaLibrary(DataStore dataStore, Profiler profiler, StoragePolicy storagePolicy, UrlResolverConfig urlResolverConfig) {
         this.dataStore = dataStore;
         this.profiler = profiler;
-        this.converter = converter;
         this.storagePolicy = storagePolicy;
         this.urlResolverConfig = urlResolverConfig;
 
@@ -167,7 +142,7 @@ public class MediaLibrary {
         }
     }
 
-    public FileInfo addMedia(String originalUrlOrDoiOrHandle) throws CommonException {
+    public FileInfo addMedia(String originalUrlOrDoiOrHandle) throws CommonException, ProfilingException {
         LinkMetadata.LinkInfo linkInfo;
         try {
             linkInfo = LinkMetadata.getLinkData(originalUrlOrDoiOrHandle);
@@ -246,28 +221,19 @@ public class MediaLibrary {
         File file = path.toFile();
 
         try {
-            fileInfo.mediatype = profiler.detectMediatype(file);
-            if (convertableMediatypes.contains(fileInfo.mediatype)) {
-                try {
-                    String text = converter.parseToPlainText(file);
-                    fileInfo.language = profiler.detectLanguage(text);
-                } catch (ConverterException xc) {
-                    LOGGER.info("Cannot convert media to text for detecting the language: " + xc.getMessage());
-                }
-            } else if (nonTextMediatypes.contains(fileInfo.mediatype)) {
-                // language cannot be detected in this case
-            } else {
-                fileInfo.language = profiler.detectLanguage(file);
-            }
+            fileInfo.profile = profiler.profile(file);
         } catch (IOException xc) {
             dataStore.delete(id, path);
-            throw new ProfilingException(xc);
+            throw new StorageException(xc);
+        } catch (ProfilingException xc) {
+            dataStore.delete(id, path);
+            throw xc;
         }
 
         fileInfoMap.put(id, fileInfo);
 
         try {
-            storagePolicy.acceptProfile(fileInfo.mediatype, fileInfo.language);
+            storagePolicy.acceptProfile(fileInfo.profile);
         } catch (StoragePolicyException xc) {
             LOGGER.debug("profile not accepted: " + fileInfo);
             dataStore.delete(id, path);

@@ -2,6 +2,7 @@ package eu.clarin.switchboard.resources;
 
 import eu.clarin.switchboard.core.MediaLibrary;
 import eu.clarin.switchboard.core.xc.CommonException;
+import eu.clarin.switchboard.profiler.api.ProfilingException;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.slf4j.LoggerFactory;
@@ -48,10 +49,11 @@ public class DataResource {
             output.write(data);
             output.flush();
         };
-        return Response
-                .ok(fileStream, fi.getMediatype())
-                .header("content-disposition", "attachment; filename=" + fi.getFilename())
-                .build();
+
+        Response.ResponseBuilder builder = Response.ok(fileStream);
+        builder.type(fi.getProfile().getMediaType());
+        builder.header("content-disposition", "attachment; filename=" + fi.getFilename());
+        return builder.build();
     }
 
 
@@ -60,7 +62,7 @@ public class DataResource {
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public Response postFile(@FormDataParam("file") InputStream inputStream,
                              @FormDataParam("file") final FormDataContentDisposition contentDispositionHeader,
-                             @FormDataParam("link") String link) throws CommonException {
+                             @FormDataParam("link") String link) throws CommonException, ProfilingException {
         MediaLibrary.FileInfo fileInfo;
 
         if (contentDispositionHeader != null) {
@@ -76,8 +78,7 @@ public class DataResource {
         ret.put("id", fileInfo.getId());
         ret.put("filename", fileInfo.getFilename());
         ret.put("fileLength", fileInfo.getFileLength());
-        ret.put("mediatype", fileInfo.getMediatype());
-        ret.put("language", fileInfo.getLanguage());
+        ret.put("profile", fileInfo.getProfile());
         ret.put("originalLink", fileInfo.getOriginalLink());
         ret.put("downloadLink", fileInfo.getDownloadLink());
         ret.put("httpRedirects", fileInfo.getHttpRedirects());

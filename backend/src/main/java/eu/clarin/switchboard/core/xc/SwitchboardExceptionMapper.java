@@ -1,5 +1,6 @@
 package eu.clarin.switchboard.core.xc;
 
+import eu.clarin.switchboard.profiler.api.ProfilingException;
 import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.core.Response;
@@ -36,39 +37,40 @@ public class SwitchboardExceptionMapper implements javax.ws.rs.ext.ExceptionMapp
 
     @Override
     public Response toResponse(Exception exception) {
-        if (exception instanceof CommonException) {
-            return toResponse((CommonException) exception);
-        }
-        LOGGER.error("Exception", exception);
-        JsonXc json = new JsonXc();
-        json.message = "Server error." + BUG;
-        return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(json).build();
-    }
-
-    public Response toResponse(CommonException exception) {
         if (exception instanceof LinkException) {
             return toResponse((LinkException) exception);
+        } else if (exception instanceof StoragePolicyException) {
+            return toResponse((StoragePolicyException) exception);
         }
 
         JsonXc json = new JsonXc();
         Response.Status status = Response.Status.INTERNAL_SERVER_ERROR;
+
         if (exception instanceof StorageException) {
             LOGGER.error("StorageException", exception);
-            json.message = "Server storage error." + TRY_AGAIN;
+            json.message = "Server storage/IO error." + TRY_AGAIN;
         } else if (exception instanceof ProfilingException) {
             LOGGER.error("ProfilingException", exception);
             json.message = "Resource's media type could not be detected." + BUG;
-        } else if (exception instanceof StoragePolicyException) {
-            StoragePolicyException spe = (StoragePolicyException) exception;
-            json.message = spe.getMessage();
-            if (spe.getKind() == StoragePolicyException.Kind.TOO_BIG) {
-                status = Response.Status.REQUEST_ENTITY_TOO_LARGE;
-            } else if (spe.getKind() == StoragePolicyException.Kind.MEDIA_NOT_ALLOWED) {
-                status = Response.Status.UNSUPPORTED_MEDIA_TYPE;
-            }
         } else {
-            LOGGER.error("unknown CommonException", exception);
+            LOGGER.error("Exception", exception);
+            json.message = "Server error." + BUG;
         }
+
+        return Response.status(status).entity(json).build();
+    }
+
+    public Response toResponse(StoragePolicyException exception) {
+        JsonXc json = new JsonXc();
+        Response.Status status = Response.Status.INTERNAL_SERVER_ERROR;
+
+        json.message = exception.getMessage();
+        if (exception.getKind() == StoragePolicyException.Kind.TOO_BIG) {
+            status = Response.Status.REQUEST_ENTITY_TOO_LARGE;
+        } else if (exception.getKind() == StoragePolicyException.Kind.MEDIA_NOT_ALLOWED) {
+            status = Response.Status.UNSUPPORTED_MEDIA_TYPE;
+        }
+
         return Response.status(status).entity(json).build();
     }
 

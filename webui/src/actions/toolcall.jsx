@@ -16,12 +16,12 @@ export function getInvocationURL(tool, resource) {
         } else if (param === 'lang') {
             if (tool.langEncoding == "639-1") {
                 // some tools expect an ISO 639-1 language parameter
-                value = iso_639_3_to_639_1(resource.language);
+                value = iso_639_3_to_639_1(resource.profile.language);
             } else {
-                value = resource.language;
+                value = resource.profile.language;
             }
         } else if (param === 'type') {
-            value = resource.mediatype;
+            value = resource.profile.mediaType;
         }
 
         parameters[key] = value;

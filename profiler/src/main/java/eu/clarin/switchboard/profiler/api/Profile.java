@@ -1,10 +1,14 @@
 package eu.clarin.switchboard.profiler.api;
 
 import com.google.common.base.MoreObjects;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
-public class Profile {
+public class Profile implements Comparable<Profile> {
+    // how sure we are this is the right profile
+    Confidence confidence = Confidence.Uncertain;
+
     // profile mediatype, e.g. application/xml
     String mediaType;
 
@@ -21,6 +25,10 @@ public class Profile {
 
     public static Profile.Builder builder(Profile profile) {
         return new Profile.Builder(profile);
+    }
+
+    public Confidence getConfidence() {
+        return confidence;
     }
 
     public String getMediaType() {
@@ -72,7 +80,8 @@ public class Profile {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Profile profile = (Profile) o;
-        return Objects.equals(mediaType, profile.mediaType) &&
+        return Objects.equals(confidence, profile.confidence) &&
+                Objects.equals(mediaType, profile.mediaType) &&
                 Objects.equals(language, profile.language) &&
                 Objects.equals(features, profile.features);
     }
@@ -85,34 +94,52 @@ public class Profile {
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
+                .add("\nconfidence", confidence)
                 .add("\nmediaType", mediaType)
                 .add("\nlanguage", language)
                 .add("\nfeatures", features)
                 .toString();
     }
 
+    @Override
+    public int compareTo(@NotNull Profile o) {
+        int x = confidence.compareTo(o.confidence);
+        if (x == 0 && mediaType != null) {
+            x = mediaType.compareToIgnoreCase(o.mediaType);
+        }
+        if (x == 0 && language != null) {
+            x = language.compareToIgnoreCase(o.language);
+        }
+        return x;
+    }
+
     public static class Builder {
+        Confidence confidence = Confidence.Uncertain;
+
         String mediaType;
 
         // language code, ISO 639-3
         String language;
-
-        // document format version, used when appropriate (e.g. TCF4/5, XML 1.0/1.1)
-        String version;
 
         // dynamic parameters or features
         Map<String, String> features = new HashMap<>();
 
         public Builder(Profile p) {
             if (p != null) {
+                this.confidence = p.confidence;
                 this.mediaType = p.mediaType;
-                this.language= p.language;
+                this.language = p.language;
                 p.features.forEach(this::feature);
             }
         }
 
+        public Builder certain() {
+            this.confidence = Confidence.Certain;
+            return this;
+        }
+
         public Builder mediaType(String mediaType) {
-            if (mediaType!= null && mediaType.isEmpty()) {
+            if (mediaType != null && mediaType.isEmpty()) {
                 throw new IllegalArgumentException("bad mediaType argument: empty");
             }
             this.mediaType = mediaType;
@@ -124,7 +151,7 @@ public class Profile {
             if (language != null && language.length() != 3) {
                 throw new IllegalArgumentException("Profile.Builder: language is not ISO 639-3: " + language);
             }
-            this.language= language;
+            this.language = language;
             return this;
         }
 
@@ -142,6 +169,7 @@ public class Profile {
 
         public Profile build() {
             Profile profile = new Profile();
+            profile.confidence = confidence;
             profile.mediaType = mediaType;
             profile.language = language;
             profile.features = features;
