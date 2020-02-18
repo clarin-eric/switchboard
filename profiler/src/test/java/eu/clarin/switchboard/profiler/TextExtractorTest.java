@@ -28,7 +28,7 @@ public class TextExtractorTest {
     @Test
     public void pdf() throws IOException, TikaException, SAXException {
         String fileName = "./src/test/resources/pdf/test.pdf";
-        String converted = textExtractor.getText(Paths.get(fileName).toFile());
+        String converted = textExtractor.getText(Paths.get(fileName).toFile(), "application/pdf");
         // pdf is a lossy format, we have to normalize spacing characters
         converted = converted.replaceAll("\\s+", " ");
         assertEquals(expected, converted);
@@ -37,14 +37,14 @@ public class TextExtractorTest {
     @Test
     public void doc() throws IOException, TikaException, SAXException {
         String fileName = "./src/test/resources/doc/test.doc";
-        String converted = textExtractor.getText(Paths.get(fileName).toFile());
+        String converted = textExtractor.getText(Paths.get(fileName).toFile(), "application/msword");
         assertEquals(expected, converted);
     }
 
     @Test
     public void rtf() throws IOException, TikaException, SAXException {
         String fileName = "./src/test/resources/rtf/test.rtf";
-        String converted = textExtractor.getText(Paths.get(fileName).toFile());
+        String converted = textExtractor.getText(Paths.get(fileName).toFile(), "application/rtf");
         assertEquals(expected, converted);
     }
 }

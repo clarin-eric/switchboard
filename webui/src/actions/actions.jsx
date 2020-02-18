@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { apiPath, actionType, resourceMatchSettings } from '../constants';
+import { apiPath, actionType, resourceMatchSettings, NO_MEDIATYPE } from '../constants';
 import { processLanguage, processMediatype } from './utils';
 
 
@@ -11,7 +11,7 @@ export function updateResource(resource) {
         });
 
         if (resource.localLink) {
-            dispatch(fetchMatchingTools(resource.mediatype, resource.language));
+            dispatch(fetchMatchingTools(resource.profile.mediaType, resource.profile.language));
         }
     }
 }
@@ -39,8 +39,7 @@ function uploadData(formData) {
             .then(response => {
                 const resource = response.data;
 
-                const lang = processLanguage(response.data.language)
-                resource.language = lang && lang.value;
+                resource.profile.mediaType = resource.profile.mediaType || NO_MEDIATYPE;
 
                 if (resource.localLink && resource.localLink.startsWith(apiPath.api)) {
                     resource.localLink = window.origin + resource.localLink;
@@ -106,6 +105,9 @@ export function fetchAllTools() {
 
 export function fetchMatchingTools(mediatype, language) {
     return function (dispatch, getState) {
+        // set language to 'undetermined' if it's not set
+        // so we only match tools that take any language
+        language = language || "und";
         const params = {
             mediatype: mediatype,
             language: language,

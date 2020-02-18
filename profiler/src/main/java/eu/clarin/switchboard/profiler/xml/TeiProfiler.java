@@ -1,17 +1,14 @@
 package eu.clarin.switchboard.profiler.xml;
 
-import eu.clarin.switchboard.profiler.api.LanguageCode;
-import eu.clarin.switchboard.profiler.api.Profile;
-import eu.clarin.switchboard.profiler.api.Profiler;
-import eu.clarin.switchboard.profiler.api.ProfilingException;
+import eu.clarin.switchboard.profiler.api.*;
 
+import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.events.StartElement;
-import javax.xml.stream.events.XMLEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 
 public class TeiProfiler implements Profiler {
     public final static String XMLNAME_ROOT_TEI = "TEI";
@@ -42,9 +39,9 @@ public class TeiProfiler implements Profiler {
     }
 
     @Override
-    public Profile profile(File file) throws IOException, ProfilingException {
+    public List<Profile> profile(File file) throws IOException, ProfilingException {
         XmlUtils.XmlFeatures xmlFeatures;
-        Profile.Builder profileBuilder = Profile.builder();
+        Profile.Builder profileBuilder = Profile.builder().certain();
 
         XMLEventReader xmlReader = XmlUtils.newReader(xmlInputFactory, file);
         try {
@@ -52,11 +49,11 @@ public class TeiProfiler implements Profiler {
             if (xmlFeatures.schemaRelaxNG != null &&
                     xmlFeatures.schemaRelaxNG.equalsIgnoreCase(SCHEMALOCATION_DTA_RELAXNG)) {
                 profileBuilder.mediaType(MEDIATYPE_TEI_DTA);
-            } else if (XMLNAME_ROOT_TEI.equals(xmlFeatures.rootName)) {
+            } else if (XMLNAME_ROOT_TEI.equals(xmlFeatures.rootName.getLocalPart())) {
                 profileBuilder.mediaType(MEDIATYPE_TEI);
-            } else if (XMLNAME_ROOT_TEI2.equals(xmlFeatures.rootName)) {
+            } else if (XMLNAME_ROOT_TEI2.equals(xmlFeatures.rootName.getLocalPart())) {
                 profileBuilder.mediaType(MEDIATYPE_TEI);
-                String lang = xmlFeatures.rootAttributes.get("lang");
+                String lang = xmlFeatures.rootAttributes.get(new QName("lang"));
                 if (lang != null) {
                     String lang3 = LanguageCode.iso639_1to639_3(lang);
                     if (lang3 != null) {
@@ -66,13 +63,13 @@ public class TeiProfiler implements Profiler {
                         profileBuilder.language(lang);
                     }
                 }
-            } else if (XMLNAME_ROOT_TEI_CORPUS.equals(xmlFeatures.rootName)) {
+            } else if (XMLNAME_ROOT_TEI_CORPUS.equals(xmlFeatures.rootName.getLocalPart())) {
                 profileBuilder.mediaType(MEDIATYPE_TEI_CORPUS);
             }
         } finally {
             XmlUtils.close(xmlReader);
         }
-        return profileBuilder.build();
+        return Collections.singletonList(profileBuilder.build());
     }
 
     public boolean isTEIRoot(String rootName) {

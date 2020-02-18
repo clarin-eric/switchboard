@@ -9,11 +9,11 @@ import org.slf4j.LoggerFactory;
 import javax.ws.rs.core.MediaType;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLResolver;
-import javax.xml.stream.XMLStreamException;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 public class XmlProfiler implements Profiler {
@@ -34,21 +34,18 @@ public class XmlProfiler implements Profiler {
 
     public XmlProfiler() {
         xmlInputFactory = XMLInputFactory.newFactory();
-        xmlInputFactory.setXMLResolver(new XMLResolver() {
-            @Override
-            public Object resolveEntity(String publicID, String systemID, String baseURI, String namespace) throws XMLStreamException {
-                LOGGER.info("entity resolve request: "
-                        + "publicID: " + publicID + "; "
-                        + "systemID: " + systemID + "; "
-                        + "baseURI: " + baseURI + "; "
-                        + "namespace: " + namespace);
-                return new ByteArrayInputStream(new byte[0]);
-            }
+        xmlInputFactory.setXMLResolver((publicID, systemID, baseURI, namespace) -> {
+            LOGGER.info("entity resolve request: "
+                    + "publicID: " + publicID + "; "
+                    + "systemID: " + systemID + "; "
+                    + "baseURI: " + baseURI + "; "
+                    + "namespace: " + namespace);
+            return new ByteArrayInputStream(new byte[0]);
         });
     }
 
     @Override
-    public Profile profile(File file) throws IOException, ProfilingException {
+    public List<Profile> profile(File file) throws IOException, ProfilingException {
         XmlUtils.XmlFeatures xmlFeatures;
 
         XMLEventReader xmlReader = XmlUtils.newReader(xmlInputFactory, file);
@@ -58,19 +55,19 @@ public class XmlProfiler implements Profiler {
             XmlUtils.close(xmlReader);
         }
 
-        if (xmlFeatures.rootName.equals(TcfProfiler.XMLNAME_TCF_ROOT)) {
+        if (TcfProfiler.XMLNAME_TCF_ROOT.equals(xmlFeatures.rootName.getLocalPart())) {
             TcfProfiler tcfProfiler = new TcfProfiler(xmlInputFactory);
             return tcfProfiler.profile(file);
         } else {
             TeiProfiler teiProfiler = new TeiProfiler(xmlInputFactory);
-            if (teiProfiler.isTEIRoot(xmlFeatures.rootName)) {
+            if (teiProfiler.isTEIRoot(xmlFeatures.rootName.getLocalPart())) {
                 return teiProfiler.profile(file);
             }
         }
 
-        Profile.Builder profileBuilder = Profile.builder();
+        Profile.Builder profileBuilder = Profile.builder().certain();
 
-        String mediaType = root2mediaType.get(xmlFeatures.rootName);
+        String mediaType = root2mediaType.get(xmlFeatures.rootName.getLocalPart());
         profileBuilder.mediaType(mediaType == null ? MediaType.APPLICATION_XML : mediaType);
 
         if (xmlFeatures.schemaRelaxNG != null) {
@@ -80,6 +77,6 @@ public class XmlProfiler implements Profiler {
             profileBuilder.feature(FEATURE_SCHEMA_SCHEMATRON, xmlFeatures.schemaSchematron);
         }
 
-        return profileBuilder.build();
+        return Collections.singletonList(profileBuilder.build());
     }
 }

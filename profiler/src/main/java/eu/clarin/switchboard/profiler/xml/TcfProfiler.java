@@ -1,10 +1,7 @@
 package eu.clarin.switchboard.profiler.xml;
 
 import com.google.common.collect.ImmutableSet;
-import eu.clarin.switchboard.profiler.api.LanguageCode;
-import eu.clarin.switchboard.profiler.api.Profile;
-import eu.clarin.switchboard.profiler.api.Profiler;
-import eu.clarin.switchboard.profiler.api.ProfilingException;
+import eu.clarin.switchboard.profiler.api.*;
 
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
@@ -15,8 +12,7 @@ import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 import java.io.File;
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 public class TcfProfiler implements Profiler {
     public final static String XMLNAME_TCF_ROOT = "D-Spin";
@@ -49,10 +45,10 @@ public class TcfProfiler implements Profiler {
     }
 
     @Override
-    public Profile profile(File file) throws IOException, ProfilingException {
+    public List<Profile> profile(File file) throws IOException, ProfilingException {
         XMLEventReader xmlReader = XmlUtils.newReader(xmlInputFactory, file);
 
-        Profile.Builder profileBuilder = Profile.builder();
+        Profile.Builder profileBuilder = Profile.builder().certain();
         try {
             boolean isInDocument = false;
             boolean isInExternalData = false;
@@ -127,6 +123,6 @@ public class TcfProfiler implements Profiler {
             throw new ProfilingException("xml stream error", ex);
         }
 
-        return profileBuilder.build();
+        return Collections.singletonList(profileBuilder.build());
     }
 }

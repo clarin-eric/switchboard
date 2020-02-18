@@ -2,9 +2,14 @@ package eu.clarin.switchboard.app;
 
 import eu.clarin.switchboard.app.config.RootConfig;
 import eu.clarin.switchboard.app.config.SwitchboardConfig;
-import eu.clarin.switchboard.core.*;
+import eu.clarin.switchboard.core.DataStore;
+import eu.clarin.switchboard.core.DefaultStoragePolicy;
+import eu.clarin.switchboard.core.MediaLibrary;
+import eu.clarin.switchboard.core.ToolRegistry;
 import eu.clarin.switchboard.core.xc.SwitchboardExceptionMapper;
 import eu.clarin.switchboard.health.AppHealthCheck;
+import eu.clarin.switchboard.profiler.DefaultProfiler;
+import eu.clarin.switchboard.profiler.api.Profiler;
 import eu.clarin.switchboard.resources.DataResource;
 import eu.clarin.switchboard.resources.InfoResource;
 import eu.clarin.switchboard.resources.ToolsResource;
@@ -42,7 +47,7 @@ public class SwitchboardApp extends Application<RootConfig> {
     }
 
     @Override
-    public void run(RootConfig configuration, Environment environment) throws IOException, TikaException, SAXException {
+    public void run(RootConfig configuration, Environment environment) throws IOException, SAXException, TikaException {
         SwitchboardConfig switchboardConfig = configuration.getSwitchboard();
         System.out.println("" + switchboardConfig);
 
@@ -68,10 +73,8 @@ public class SwitchboardApp extends Application<RootConfig> {
 
         Map<String, String> gitProperties = GitProperties.load("switchboard");
 
-        Profiler profiler = new Profiler();
-        Converter converter = new Converter(switchboardConfig.getTikaConfigPath());
-        MediaLibrary mediaLibrary = new MediaLibrary(dataStore, profiler, converter, storagePolicy,
-                switchboardConfig.getUrlResolver());
+        Profiler profiler = new DefaultProfiler();
+        MediaLibrary mediaLibrary = new MediaLibrary(dataStore, profiler, storagePolicy, switchboardConfig.getUrlResolver());
 
         InfoResource infoResource = new InfoResource(toolRegistry, gitProperties,
                 switchboardConfig.getDataStore().getMaxSize(), switchboardConfig.getContactEmail());
