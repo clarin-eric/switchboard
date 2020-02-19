@@ -40,6 +40,6 @@ public class MediaLibraryTest {
     @Test(expected = StoragePolicyException.class)
     public void addMedia() throws CommonException {
         // just a random site that does a HTTP redirect
-        mediaLibrary.addMedia("http://hoc.com");
+        mediaLibrary.addMedia("http://clarin.eu");
     }
 }
