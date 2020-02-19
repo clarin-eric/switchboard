@@ -1,5 +1,5 @@
 [![Travis Status](https://travis-ci.org/clarin-eric/switchboard.svg?branch=master)](https://travis-ci.org/clarin-eric/switchboard)
-[![Sauce Test Status](https://saucelabs.com/buildstatus/switchboard)](https://app.saucelabs.com/u/switchboard)
+
 # switchboard
 Code Repository for the Language Resource Switchboard.
 
@@ -45,22 +45,6 @@ See https://www.clarin.eu/sites/default/files/zinn-CLARIN2016_paper_26.pdf
 - Claus Zinn. <a href="http://www.ep.liu.se/ecp/147/004/ecp17147004.pdf"> A Bridge from EUDAT's B2DROP cloud service to CLARIN's Language Resource Switchboard.</a> Selected papers from the CLARIN Annual Conference 2017, Budapest, 18-20 September 2017, Linköping University Electronic Press, vol. 147, pages 36-45, 2018.
 
 - Claus Zinn, <a href="https://www.mitpressjournals.org/doi/pdf/10.1162/coli_a_00329"> The Language Resource Switchboard. </a> Computational Linguistics 44(4), pages 631-639, December 2018.
-
-# Continuous Integration
-
-Automated cross-browser testing is executed by the continuous integration system on every commit.
-
-Current test results per browser:
-
-[![Build Status](https://app.saucelabs.com/browser-matrix/switchboard.svg)](https://saucelabs.com/u/switchboard)
-
-#### Big Thanks
-
-Cross-browser testing platform and open source ❤️ provided by [Sauce Labs][homepage]
-
-[homepage]: https://saucelabs.com
-
-<img src="PoweredbySauceLabs.svg" width="180" alt="Powered by SauceLabs">
 
 # Contact
 
