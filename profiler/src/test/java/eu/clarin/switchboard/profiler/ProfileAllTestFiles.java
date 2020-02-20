@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 
+import javax.ws.rs.core.MediaType;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -32,11 +33,11 @@ public class ProfileAllTestFiles {
 
             // .put("exmaralda/", Profile.builder().mediaType("application/").build())
 
-             .put("folia/folia-WR-P-E-J-0000000000.folia.xml", Profile.builder().certain().mediaType("text/folia+xml").build())
+            .put("folia/folia-WR-P-E-J-0000000000.folia.xml", Profile.builder().certain().mediaType("text/folia+xml").language("nld").build())
 
             // .put("folker/", Profile.builder().mediaType("application/").build())
 
-            .put("html/geoVis.html", Profile.builder().mediaType("text/html").language("eng").build())
+            .put("html/geoVis.html", Profile.builder().mediaType("text/html").build())
 
             // .put("lexicon/", Profile.builder().mediaType("application/").build())
 
@@ -62,22 +63,22 @@ public class ProfileAllTestFiles {
 
             .put("tei/tei-eAla007.xml", Profile.builder().certain().mediaType("application/tei+xml").language("eng").build())
 
-            .put("tei/tei.xml", Profile.builder().certain().mediaType("application/tei+xml").build())
-            .put("tei/tei-corpus.xml", Profile.builder().certain().mediaType("application/tei+xml").build())
-            .put("tei/ics-tei-Jetsam.xml", Profile.builder().certain().mediaType("application/tei+xml;format-variant=teiCorpus").build())
+            .put("tei/tei.xml", Profile.builder().certain().mediaType("application/tei+xml").language("deu").build())
+            .put("tei/tei-corpus.xml", Profile.builder().certain().mediaType("application/tei+xml").language("eng").build())
+            .put("tei/ics-tei-Jetsam.xml", Profile.builder().certain().mediaType("application/tei+xml;format-variant=teiCorpus").language("eng").build())
             .put("tei/tei-11_souq_salesman.tei.xml", Profile.builder().certain().mediaType("application/tei+xml").build())
-            .put("tei/tei-anonyme_actricenouvelle.xml", Profile.builder().certain().mediaType("application/tei+xml").build())
-            .put("tei/tei-greek-xmlchunk.xml", Profile.builder().certain().mediaType("application/tei+xml").build())
-            .put("tei/tei-tempest.xml", Profile.builder().certain().mediaType("application/tei+xml").build())
-            .put("tei/tei_no_xml_header.xml", Profile.builder().certain().mediaType("application/tei+xml").build())
+            .put("tei/tei-anonyme_actricenouvelle.xml", Profile.builder().certain().mediaType("application/tei+xml").language("fra").build())
+            .put("tei/tei-greek-xmlchunk.xml", Profile.builder().certain().mediaType("application/tei+xml").language("ell").build())
+            .put("tei/tei-tempest.xml", Profile.builder().certain().mediaType("application/tei+xml").language("eng").build())
+            .put("tei/tei_no_xml_header.xml", Profile.builder().certain().mediaType("application/tei+xml").language("deu").build())
 
-            .put("tei/Baedeker-Palaestina_und_Syrien_1875.xml", Profile.builder().certain().mediaType("application/tei+xml").build())
-            .put("tei/ger.xml", Profile.builder().certain().mediaType("application/tei+xml").build())
-            .put("tei/ota-5729.xml", Profile.builder().certain().mediaType("application/tei+xml").build())
+            .put("tei/Baedeker-Palaestina_und_Syrien_1875.xml", Profile.builder().certain().mediaType("application/tei+xml").language("deu").build())
+            .put("tei/ger.xml", Profile.builder().certain().mediaType("application/tei+xml").language("deu").build())
+            .put("tei/ota-5729.xml", Profile.builder().certain().mediaType("application/tei+xml").language("eng").build())
             //.put("tei/tei-dc_aeb_eng.xml.tei", Profile.builder().mediaType("application/tei+xml").build())
 
-            .put("tei-dta/brandenburg_zigeuner_1684.TEI-P5.xml", Profile.builder().certain().mediaType("application/tei+xml;format-variant=tei-dta").build())
-            .put("tei-dta/zwinger_theatrum_1690.TEI-P5.xml", Profile.builder().certain().mediaType("application/tei+xml;format-variant=tei-dta").build())
+            .put("tei-dta/brandenburg_zigeuner_1684.TEI-P5.xml", Profile.builder().certain().mediaType("application/tei+xml;format-variant=tei-dta").language("deu").build())
+            .put("tei-dta/zwinger_theatrum_1690.TEI-P5.xml", Profile.builder().certain().mediaType("application/tei+xml;format-variant=tei-dta").language("deu").build())
 
             .put("text/test.txt", Profile.builder().mediaType("text/plain").language("eng").build())
             .put("text/test.de.txt", Profile.builder().mediaType("text/plain").language("deu").build())
@@ -93,7 +94,15 @@ public class ProfileAllTestFiles {
 
     static final Map<String, List<Profile>> EXPECTED_MULTIPLE = new ImmutableMap.Builder<String, List<Profile>>()
             .put("text/test", TextProfiler.TEXT_PROFILES)
-            .put("text/test the second", TextProfiler.TEXT_PROFILES)
+            .put("text/test the second", Arrays.asList(
+                    Profile.builder().mediaType(MediaType.TEXT_PLAIN).language("eng").build(),
+                    Profile.builder().mediaType(TextProfiler.MEDIATYPE_QUERY_CQP).build(),
+                    Profile.builder().mediaType(TextProfiler.MEDIATYPE_QUERY_DDC).build(),
+                    Profile.builder().mediaType(TextProfiler.MEDIATYPE_QUERY_DLEXDB).build(),
+                    Profile.builder().mediaType(TextProfiler.MEDIATYPE_QUERY_CQL).build(),
+                    Profile.builder().mediaType(TextProfiler.MEDIATYPE_EXMARALDA_SIMPLE).build()
+                    )
+            )
             .build();
 
     DefaultProfiler profiler = new DefaultProfiler();

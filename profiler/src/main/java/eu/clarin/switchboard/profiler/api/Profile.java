@@ -93,12 +93,20 @@ public class Profile implements Comparable<Profile> {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .add("\nconfidence", confidence)
-                .add("\nmediaType", mediaType)
-                .add("\nlanguage", language)
-                .add("\nfeatures", features)
-                .toString();
+        StringBuilder buf = new StringBuilder("Profile { confidence=");
+        buf.append(confidence).append("; mediaType=").append(mediaType);
+        if (language != null) {
+            buf.append("; language=").append(language);
+        }
+        for (String k : features.keySet()) {
+            buf.append("; ").append(k);
+            String v = features.get(k);
+            if (v != null) {
+                buf.append("=").append(v);
+            }
+        }
+        buf.append(" }");
+        return buf.toString();
     }
 
     @Override

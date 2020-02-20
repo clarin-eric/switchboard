@@ -22,6 +22,7 @@ public class OptimaizeLanguageDetector implements LanguageDetector {
     private static final Logger LOGGER = LoggerFactory.getLogger(OptimaizeLanguageDetector.class);
 
     public static final int SHORT_TEXT_THRESHOLD = 15;
+    private static final int TEXT_LIMIT = 99000;
 
     final com.optimaize.langdetect.LanguageDetector detector;
 
@@ -41,6 +42,9 @@ public class OptimaizeLanguageDetector implements LanguageDetector {
     public String detect(String text) {
         if (text == null || text.isEmpty()) {
             return null;
+        }
+        if (text.length() > TEXT_LIMIT) {
+            text = text.substring(0, TEXT_LIMIT);
         }
 
         TextObjectFactory textObjectFactory;

@@ -15,18 +15,18 @@ public class TeiProfiler implements Profiler {
     public final static String XMLNAME_ROOT_TEI2 = "TEI.2";
     public final static String XMLNAME_ROOT_TEI_CORPUS = "teiCorpus";
 
-    private final static String MEDIATYPE_TEI = "application/tei+xml";
+    public final static String MEDIATYPE_TEI = "application/tei+xml";
 
-    private final static String MEDIATYPE_TEI_DTA = "application/tei+xml;format-variant=tei-dta";
-    private final static String SCHEMALOCATION_DTA_RELAXNG = "http://www.deutschestextarchiv.de/basisformat.rng";
+    public final static String MEDIATYPE_TEI_DTA = "application/tei+xml;format-variant=tei-dta";
+    public final static String SCHEMALOCATION_DTA_RELAXNG = "http://www.deutschestextarchiv.de/basisformat.rng";
 
-    private final static String MEDIATYPE_TEI_CORPUS = "application/tei+xml;format-variant=teiCorpus";
+    public final static String MEDIATYPE_TEI_CORPUS = "application/tei+xml;format-variant=teiCorpus";
 
-//    private final static String MEDIATYPE_TEI_ISOSPOKEN = "application/tei+xml;format-variant=tei-iso-spoken";
-//    private final static String MEDIATYPE_TEI_CLANCHA = "application/xml;format-variant=clan-cha";
-//    private final static String MEDIATYPE_TEI_EXMARALDAAEXB = "application/xml;format-variant=exmaralda-exb";
-//    private final static String MEDIATYPE_TEI_FOLKERFLN = "application/xml;format-variant=folker-fln";
-//    private final static String MEDIATYPE_TEI_TRANSCRIBERTRS = "application/xml;format-variant=transcriber-trs";
+//    public final static String MEDIATYPE_TEI_ISOSPOKEN = "application/tei+xml;format-variant=tei-iso-spoken";
+//    public final static String MEDIATYPE_TEI_CLANCHA = "application/xml;format-variant=clan-cha";
+//    public final static String MEDIATYPE_TEI_EXMARALDAAEXB = "application/xml;format-variant=exmaralda-exb";
+//    public final static String MEDIATYPE_TEI_FOLKERFLN = "application/xml;format-variant=folker-fln";
+//    public final static String MEDIATYPE_TEI_TRANSCRIBERTRS = "application/xml;format-variant=transcriber-trs";
 
     XMLInputFactory xmlInputFactory;
 

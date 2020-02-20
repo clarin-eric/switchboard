@@ -17,8 +17,8 @@ import java.util.*;
 public class TcfProfiler implements Profiler {
     public final static String XMLNAME_TCF_ROOT = "D-Spin";
 
-    private final static String MEDIATYPE_TCF = "text/tcf+xml";
-    private final static String MEDIATYPE_LEXICON  = "text/lexicon+xml";
+    public final static String MEDIATYPE_TCF = "text/tcf+xml";
+    public final static String MEDIATYPE_LEXICON  = "text/lexicon+xml";
 
     public static final String FEATURE_VERSION = "version";
 
