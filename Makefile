@@ -36,6 +36,7 @@ build-webui-production:
 	(cd webui && node_modules/webpack/bin/webpack.js --mode production -p)
 
 run-backend:
+	(cd profiler && mvn -q package install)
 	(cd backend && mvn -q package && JAVA_OPTS="-Xmx4g" target/appassembler/bin/switchboard server config.yaml)
 
 run-webui-dev-server:
@@ -46,6 +47,7 @@ dependencies:
 
 clean:
 	(cd backend && mvn -q clean)
+	(cd profiler && mvn -q clean)
 	rm -rf webui/node_modules
 	rm -f $(WEBUIAPP)/bundle.js*
 
