@@ -26,13 +26,18 @@ ARG version
 ARG MAVEN_VERSION=3.6.1-r0
 ENV SWITCHBOARD_VERSION=$version
 
+RUN apk add maven=$MAVEN_VERSION
+
 WORKDIR /build
 COPY ./.git                     ./.git
 COPY ./backend                  ./backend
+COPY ./profiler                 ./profiler
 COPY --from=webui_builder /build/backend/src/main/resources/webui/bundle.js* ./backend/src/main/resources/webui/
 
+WORKDIR /build/profiler
+RUN mvn -q package install
+
 WORKDIR /build/backend
-RUN apk add maven=$MAVEN_VERSION
 RUN mvn versions:set -DnewVersion=${SWITCHBOARD_VERSION}
 RUN mvn versions:commit
 RUN mvn -q package
