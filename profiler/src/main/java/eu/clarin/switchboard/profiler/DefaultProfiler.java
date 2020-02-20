@@ -18,7 +18,7 @@ import org.xml.sax.SAXException;
 import javax.ws.rs.core.MediaType;
 import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -43,55 +43,58 @@ public class DefaultProfiler implements Profiler {
     }
 
     public List<Profile> profile(File file) throws IOException, ProfilingException {
-        Profile profile;
+        List<Profile> profiles;
+        Profile firstProfile;
         {
-            List<Profile> tikaProfiles = tikaProfiler.profile(file);
-            assert tikaProfiles.size() == 1;
-            profile = tikaProfiles.get(0);
-            LOGGER.debug("file " + file.getName() + "; tika returned: " + profile.getMediaType());
+            profiles = tikaProfiler.profile(file);
+            LOGGER.debug("file " + file.getName() + "; tika returned: " + profiles);
+            assert profiles.size() == 1;
+            firstProfile = profiles.get(0);
         }
 
-        if (profile.isMediaType(MediaType.APPLICATION_XML)) {
+        if (firstProfile.isMediaType(MediaType.APPLICATION_XML)) {
             List<Profile> xmlProfiles = xmlProfiler.profile(file);
-            assert xmlProfiles.size() == 1;
-            LOGGER.debug("file " + file.getName() + "; xmlprof returned: " + xmlProfiles.get(0).getMediaType());
-            return xmlProfiles;
-        }
-
-        if (profile.isMediaType(MediaType.APPLICATION_JSON)) {
-            List<Profile> jsonProfiles = jsonProfiler.profile(file);
-            if (jsonProfiles != null) {
-                assert jsonProfiles.size() == 1;
-                LOGGER.debug("file " + file.getName() + "; jsonprof returned: " + jsonProfiles.get(0).getMediaType());
-                return jsonProfiles;
+            LOGGER.debug("file " + file.getName() + "; xmlprof returned: " + xmlProfiles);
+            if (xmlProfiles != null && !xmlProfiles.isEmpty()) {
+                profiles = xmlProfiles;
+                firstProfile = profiles.get(0);
             }
-        }
-
-        if (profile.isMediaType(MediaType.TEXT_PLAIN)) {
+        } else if (firstProfile.isMediaType(MediaType.APPLICATION_JSON)) {
+            List<Profile> jsonProfiles = jsonProfiler.profile(file);
+            LOGGER.debug("file " + file.getName() + "; jsonprof returned: " + jsonProfiles);
+            if (jsonProfiles != null && !jsonProfiles.isEmpty()) {
+                assert jsonProfiles.size() == 1;
+                profiles = jsonProfiles;
+                firstProfile = profiles.get(0);
+            }
+        } else if (firstProfile.isMediaType(MediaType.TEXT_PLAIN)) {
             List<Profile> textProfiles = textProfiler.profile(file);
             LOGGER.debug("file " + file.getName() + "; textprof returned: " + textProfiles);
-            if (textProfiles != null) {
-                if (textProfiles.size() > 1) {
-                    return textProfiles;
-                } else if (textProfiles.size() == 1) {
-                    profile = textProfiles.get(0);
-                }
+            if (textProfiles != null && !textProfiles.isEmpty()) {
+                profiles = textProfiles;
+                firstProfile = profiles.get(0);
             }
         }
 
-        if (profile.getLanguage() == null) {
+        if (firstProfile.getMediaType() == null) {
+            firstProfile = Profile.builder(firstProfile).mediaType(MediaType.APPLICATION_OCTET_STREAM).build();
+            profiles = new ArrayList<>(profiles);
+            profiles.set(0, firstProfile);
+        } else if (firstProfile.getLanguage() == null) {
             try {
-                String text = textExtractor.getText(file, profile.getMediaType());
+                String text = textExtractor.getText(file, firstProfile.getMediaType());
                 String language = languageDetector.detect(text);
                 LOGGER.debug("file " + file.getName() + "; detected language: " + language);
                 if (language != null) {
-                    profile = Profile.builder(profile).language(language).build();
+                    firstProfile = Profile.builder(firstProfile).language(language).build();
+                    profiles = new ArrayList<>(profiles);
+                    profiles.set(0, firstProfile);
                 }
-            } catch (IOException | TikaException | SAXException xc) {
+            } catch (IOException | TikaException xc) {
                 LOGGER.info("Cannot convert media to text for detecting the language: " + xc.getMessage());
             }
         }
 
-        return Collections.singletonList(Profile.builder(profile).build());
+        return profiles;
     }
 }

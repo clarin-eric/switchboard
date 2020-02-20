@@ -45,7 +45,7 @@ public class MediaLibraryTest {
     }
 
     @Test(expected = StoragePolicyException.class)
-    public void addMedia() throws CommonException {
+    public void addMedia2() throws CommonException, ProfilingException {
         // a site that does a HTTP redirect
         mediaLibrary.addMedia("http://clarin.eu");
     }

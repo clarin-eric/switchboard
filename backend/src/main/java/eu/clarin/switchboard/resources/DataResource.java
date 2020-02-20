@@ -79,6 +79,7 @@ public class DataResource {
         ret.put("filename", fileInfo.getFilename());
         ret.put("fileLength", fileInfo.getFileLength());
         ret.put("profile", fileInfo.getProfile());
+        ret.put("secondaryProfiles", fileInfo.getSecondaryProfiles());
         ret.put("originalLink", fileInfo.getOriginalLink());
         ret.put("downloadLink", fileInfo.getDownloadLink());
         ret.put("httpRedirects", fileInfo.getHttpRedirects());

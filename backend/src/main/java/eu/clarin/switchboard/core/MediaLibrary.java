@@ -49,6 +49,7 @@ public class MediaLibrary {
         long fileLength;
 
         Profile profile;
+        List<Profile> secondaryProfiles;
 
         String originalLink; // original link; can point to a landing page, not to the data
         String downloadLink; // link used for downloading from original location
@@ -87,6 +88,10 @@ public class MediaLibrary {
             return profile;
         }
 
+        public List<Profile> getSecondaryProfiles() {
+            return secondaryProfiles;
+        }
+
         public String getOriginalLink() {
             return originalLink;
         }
@@ -109,7 +114,8 @@ public class MediaLibrary {
                     "\nfileLength=" + fileLength +
                     "\noriginalLink='" + originalLink + '\'' +
                     "\nhttpRedirects=" + httpRedirects +
-                    "\nprofile=" + profile;
+                    "\nprofile=" + profile +
+                    "\nsecondaryProfiles=" + secondaryProfiles;
         }
     }
 
@@ -221,7 +227,12 @@ public class MediaLibrary {
         File file = path.toFile();
 
         try {
-            fileInfo.profile = profiler.profile(file);
+            List<Profile> profileList = profiler.profile(file);
+            if (profileList == null || profileList.isEmpty()) {
+                throw new ProfilingException("null profiling result");
+            }
+            fileInfo.profile = profileList.get(0);
+            fileInfo.secondaryProfiles = profileList.subList(1, profileList.size());
         } catch (IOException xc) {
             dataStore.delete(id, path);
             throw new StorageException(xc);

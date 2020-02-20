@@ -1,6 +1,5 @@
 package eu.clarin.switchboard.profiler.text;
 
-import eu.clarin.switchboard.profiler.api.Confidence;
 import eu.clarin.switchboard.profiler.api.Profile;
 import eu.clarin.switchboard.profiler.api.Profiler;
 import eu.clarin.switchboard.profiler.api.ProfilingException;
@@ -9,10 +8,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.core.MediaType;
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.regex.Pattern;
 
 /**
@@ -57,13 +61,6 @@ public class TextProfiler implements Profiler {
 
     public TextProfiler() throws IOException {
     }
-
-    // todo
-//    @Override
-//    public void setLanguageHint(IO.Feature.Value languageHint) {
-//        conllUProfiler.setLanguageHint(languageHint);
-//    }
-
 
     @Override
     public List<Profile> profile(File file) throws IOException, ProfilingException {
