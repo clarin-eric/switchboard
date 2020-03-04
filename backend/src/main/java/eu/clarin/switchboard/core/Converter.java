@@ -11,7 +11,7 @@ import org.xml.sax.SAXException;
 import java.io.*;
 
 public class Converter {
-    TikaConfig config;
+    private final TikaConfig config;
 
     public Converter(String configPath) throws TikaException, IOException, SAXException {
         config = new TikaConfig(configPath);

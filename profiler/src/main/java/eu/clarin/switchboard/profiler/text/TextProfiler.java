@@ -35,7 +35,7 @@ public class TextProfiler implements Profiler {
     public static final String MEDIATYPE_QUERY_CQL = "text/query-cql";
 
     public static final List<Profile> TEXT_PROFILES = Arrays.asList(
-            Profile.builder().mediaType(MediaType.TEXT_PLAIN).build(),
+            Profile.builder().mediaType(MediaType.TEXT_PLAIN).language("und").build(),
             Profile.builder().mediaType(MEDIATYPE_QUERY_CQP).build(),
             Profile.builder().mediaType(MEDIATYPE_QUERY_DDC).build(),
             Profile.builder().mediaType(MEDIATYPE_QUERY_DLEXDB).build(),

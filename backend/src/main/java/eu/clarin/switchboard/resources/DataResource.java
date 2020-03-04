@@ -1,7 +1,9 @@
 package eu.clarin.switchboard.resources;
 
+import eu.clarin.switchboard.core.FileInfo;
 import eu.clarin.switchboard.core.MediaLibrary;
 import eu.clarin.switchboard.core.xc.CommonException;
+import eu.clarin.switchboard.profiler.api.Profile;
 import eu.clarin.switchboard.profiler.api.ProfilingException;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
@@ -16,6 +18,7 @@ import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Path("storage")
 public class DataResource {
@@ -39,7 +42,7 @@ public class DataResource {
         } catch (IllegalArgumentException xc) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        MediaLibrary.FileInfo fi = mediaLibrary.getFileInfo(id);
+        FileInfo fi = mediaLibrary.getFileInfo(id);
         if (fi == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
@@ -63,7 +66,7 @@ public class DataResource {
     public Response postFile(@FormDataParam("file") InputStream inputStream,
                              @FormDataParam("file") final FormDataContentDisposition contentDispositionHeader,
                              @FormDataParam("link") String link) throws CommonException, ProfilingException {
-        MediaLibrary.FileInfo fileInfo;
+        FileInfo fileInfo;
 
         if (contentDispositionHeader != null) {
             String filename = contentDispositionHeader.getFileName();
@@ -78,8 +81,9 @@ public class DataResource {
         ret.put("id", fileInfo.getId());
         ret.put("filename", fileInfo.getFilename());
         ret.put("fileLength", fileInfo.getFileLength());
-        ret.put("profile", fileInfo.getProfile());
-        ret.put("secondaryProfiles", fileInfo.getSecondaryProfiles());
+        ret.put("profile", fileInfo.getProfile().flat());
+        ret.put("secondaryProfiles",
+                fileInfo.getSecondaryProfiles().stream().map(Profile::flat).collect(Collectors.toList()));
         ret.put("originalLink", fileInfo.getOriginalLink());
         ret.put("downloadLink", fileInfo.getDownloadLink());
         ret.put("httpRedirects", fileInfo.getHttpRedirects());

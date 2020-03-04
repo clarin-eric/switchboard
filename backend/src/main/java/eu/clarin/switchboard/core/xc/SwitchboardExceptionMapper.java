@@ -3,6 +3,7 @@ package eu.clarin.switchboard.core.xc;
 import eu.clarin.switchboard.profiler.api.ProfilingException;
 import org.slf4j.LoggerFactory;
 
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import java.net.HttpURLConnection;
 
@@ -52,6 +53,9 @@ public class SwitchboardExceptionMapper implements javax.ws.rs.ext.ExceptionMapp
         } else if (exception instanceof ProfilingException) {
             LOGGER.error("ProfilingException", exception);
             json.message = "Resource's media type could not be detected." + BUG;
+        } else if (exception instanceof WebApplicationException) {
+            LOGGER.error("WebApplicationException: " + exception.getMessage());
+            return ((WebApplicationException)exception).getResponse();
         } else {
             LOGGER.error("Exception", exception);
             json.message = "Server error." + BUG;

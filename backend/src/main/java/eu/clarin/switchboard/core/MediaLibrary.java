@@ -33,91 +33,12 @@ public class MediaLibrary {
 
     private static final ch.qos.logback.classic.Logger LOGGER = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(MediaLibrary.class);
 
-    DataStore dataStore;
-    Profiler profiler;
-    StoragePolicy storagePolicy;
-    UrlResolverConfig urlResolverConfig;
+    private final DataStore dataStore;
+    private final Profiler profiler;
+    private final StoragePolicy storagePolicy;
+    private final UrlResolverConfig urlResolverConfig;
 
     Map<UUID, FileInfo> fileInfoMap = Collections.synchronizedMap(new HashMap<>());
-
-    public static class FileInfo {
-        UUID id;
-        Instant creation;
-
-        String filename; // original filename, on disk we use a sanitized form
-        Path path; // actual path on disk
-        long fileLength;
-
-        Profile profile;
-        List<Profile> secondaryProfiles;
-
-        String originalLink; // original link; can point to a landing page, not to the data
-        String downloadLink; // link used for downloading from original location
-        int httpRedirects; // if getting the data requires redirects
-
-        public FileInfo(UUID id, String filename, Path path) {
-            this.id = id;
-            this.filename = filename;
-            this.path = path;
-
-            this.creation = new Date().toInstant();
-            this.fileLength = path.toFile().length();
-        }
-
-        public UUID getId() {
-            return id;
-        }
-
-        public Instant getCreation() {
-            return creation;
-        }
-
-        public String getFilename() {
-            return filename;
-        }
-
-        public Path getPath() {
-            return path;
-        }
-
-        public long getFileLength() {
-            return fileLength;
-        }
-
-        public Profile getProfile() {
-            return profile;
-        }
-
-        public List<Profile> getSecondaryProfiles() {
-            return secondaryProfiles;
-        }
-
-        public String getOriginalLink() {
-            return originalLink;
-        }
-
-        public String getDownloadLink() {
-            return downloadLink;
-        }
-
-        public int getHttpRedirects() {
-            return httpRedirects;
-        }
-
-        @Override
-        public String toString() {
-            return "FileInfo: " +
-                    "\nid=" + id +
-                    "\ncreation=" + creation.toString() +
-                    "\nfilename='" + filename + '\'' +
-                    "\npath=" + path +
-                    "\nfileLength=" + fileLength +
-                    "\noriginalLink='" + originalLink + '\'' +
-                    "\nhttpRedirects=" + httpRedirects +
-                    "\nprofile=" + profile +
-                    "\nsecondaryProfiles=" + secondaryProfiles;
-        }
-    }
 
     public MediaLibrary(DataStore dataStore, Profiler profiler, StoragePolicy storagePolicy, UrlResolverConfig urlResolverConfig) {
         this.dataStore = dataStore;
@@ -204,9 +125,7 @@ public class MediaLibrary {
 
         try (InputStream stream = connection.getInputStream()) {
             FileInfo fileInfo = addMedia(linkInfo.filename, stream);
-            fileInfo.downloadLink = linkInfo.downloadLink;
-            fileInfo.originalLink = originalUrlOrDoiOrHandle;
-            fileInfo.httpRedirects = redirects;
+            fileInfo.setLinksInfo(originalUrlOrDoiOrHandle, linkInfo.downloadLink, redirects);
             return fileInfo;
         } catch (IOException xc) {
             throw new LinkException(LinkException.Kind.DATA_STREAM_ERROR, "" + connection.getURL(), xc);
@@ -231,8 +150,10 @@ public class MediaLibrary {
             if (profileList == null || profileList.isEmpty()) {
                 throw new ProfilingException("null profiling result");
             }
-            fileInfo.profile = profileList.get(0);
-            fileInfo.secondaryProfiles = profileList.subList(1, profileList.size());
+            fileInfo.setProfiles(
+                    profileList.get(0),
+                    profileList.subList(1, profileList.size())
+            );
         } catch (IOException xc) {
             dataStore.delete(id, path);
             throw new StorageException(xc);
@@ -244,7 +165,7 @@ public class MediaLibrary {
         fileInfoMap.put(id, fileInfo);
 
         try {
-            storagePolicy.acceptProfile(fileInfo.profile);
+            storagePolicy.acceptProfile(fileInfo.getProfile());
         } catch (StoragePolicyException xc) {
             LOGGER.debug("profile not accepted: " + fileInfo);
             dataStore.delete(id, path);

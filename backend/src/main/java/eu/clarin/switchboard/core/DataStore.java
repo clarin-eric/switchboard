@@ -19,8 +19,8 @@ import java.util.UUID;
 public class DataStore {
     private static final ch.qos.logback.classic.Logger LOGGER = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(DataStore.class);
 
-    Path dataStoreRoot;
-    StoragePolicy storagePolicy;
+    private final Path dataStoreRoot;
+    private final StoragePolicy storagePolicy;
 
     public DataStore(Path dataStoreRoot, StoragePolicy storagePolicy) {
         this.dataStoreRoot = dataStoreRoot;

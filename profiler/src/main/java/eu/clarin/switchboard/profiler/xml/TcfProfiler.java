@@ -2,6 +2,7 @@ package eu.clarin.switchboard.profiler.xml;
 
 import com.google.common.collect.ImmutableSet;
 import eu.clarin.switchboard.profiler.api.*;
+import eu.clarin.switchboard.profiler.utils.LanguageCode;
 
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;

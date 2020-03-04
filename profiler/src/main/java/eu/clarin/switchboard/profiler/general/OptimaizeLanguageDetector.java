@@ -8,7 +8,7 @@ import com.optimaize.langdetect.profiles.LanguageProfileReader;
 import com.optimaize.langdetect.text.CommonTextObjectFactories;
 import com.optimaize.langdetect.text.TextObject;
 import com.optimaize.langdetect.text.TextObjectFactory;
-import eu.clarin.switchboard.profiler.api.LanguageCode;
+import eu.clarin.switchboard.profiler.utils.LanguageCode;
 import eu.clarin.switchboard.profiler.api.LanguageDetector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,9 +39,13 @@ public class OptimaizeLanguageDetector implements LanguageDetector {
         return detect(s);
     }
 
+    /**
+     * @return the detected ISO 639-3 code of the detected language, and "und"
+     * (also a valid ISO code) if the language cannot be determined.
+     */
     public String detect(String text) {
         if (text == null || text.isEmpty()) {
-            return null;
+            return LanguageCode.UNDETERMINED;
         }
         if (text.length() > TEXT_LIMIT) {
             text = text.substring(0, TEXT_LIMIT);
@@ -60,10 +64,15 @@ public class OptimaizeLanguageDetector implements LanguageDetector {
 
         if (locale.isPresent()) {
             String lang = locale.get().getLanguage();
-            String lang3 = LanguageCode.iso639_1to639_3(lang);
-            return lang3 != null ? lang3 : lang;
+            if (LanguageCode.isIso639_3(lang)) {
+                return lang;
+            }
+            lang = LanguageCode.iso639_1to639_3(lang);
+            if (LanguageCode.isIso639_3(lang)) {
+                return lang;
+            }
         }
 
-        return null;
+        return LanguageCode.UNDETERMINED;
     }
 }

@@ -24,7 +24,7 @@ public class DefaultProfilerTest {
         List<Profile> profiles = profiler.profile(file("pdf", "test.pdf"));
         assertEquals(1, profiles.size());
         assertEquals("application/pdf", profiles.get(0).getMediaType());
-        assertEquals("eng", profiles.get(0).getLanguage());
+        assertEquals("eng", profiles.get(0).getFeature(Profile.FEATURE_LANGUAGE));
     }
 
     @Test
@@ -32,7 +32,7 @@ public class DefaultProfilerTest {
         List<Profile> profiles = profiler.profile(file("text", "test.txt"));
         assertEquals(1, profiles.size());
         assertEquals("text/plain", profiles.get(0).getMediaType());
-        assertEquals("eng", profiles.get(0).getLanguage());
+        assertEquals("eng", profiles.get(0).getFeature(Profile.FEATURE_LANGUAGE));
     }
 
     private File file(String type, String name) {

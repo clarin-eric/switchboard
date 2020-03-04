@@ -1,5 +1,6 @@
 package eu.clarin.switchboard.core;
 
+import eu.clarin.switchboard.profiler.api.Profile;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -24,6 +25,17 @@ public class ToolRegistryTest {
         assertEquals(1, tools.size());
 
         tools = toolRegistry.filterTools("text/plain", "eng", false);
+        assertEquals(2, tools.size());
+    }
+
+    @Test
+    public void filterToolsByProfile() {
+        List<Tool> tools;
+
+        tools = toolRegistry.filterTools(Profile.builder().mediaType("text/plain").language("eng").build(), true);
+        assertEquals(1, tools.size());
+
+        tools = toolRegistry.filterTools(Profile.builder().mediaType("text/plain").language("eng").build(), false);
         assertEquals(2, tools.size());
     }
 

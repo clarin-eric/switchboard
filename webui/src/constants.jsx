@@ -6,6 +6,7 @@ export const apiPath = {
     mediatypes: `${urlRoot}/api/mediatypes`,
     languages:  `${urlRoot}/api/languages`,
     tools:      `${urlRoot}/api/tools`,
+    toolsMatch: `${urlRoot}/api/tools/match`,
     storage:    `${urlRoot}/api/storage`,
     logo:       name => `${urlRoot}/api/logos/${name}`,
 };
@@ -34,6 +35,3 @@ export const actionType = [
     actions[value] = value;
     return actions;
 }, {});
-
-
-export const NO_MEDIATYPE = "application/octet-stream";

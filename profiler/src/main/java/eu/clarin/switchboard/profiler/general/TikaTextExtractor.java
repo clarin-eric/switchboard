@@ -13,14 +13,14 @@ import org.apache.tika.sax.BodyContentHandler;
 import org.xml.sax.SAXException;
 
 import javax.ws.rs.core.MediaType;
-import java.io.*;
-import java.nio.charset.StandardCharsets;
+import java.io.File;
+import java.io.IOException;
 import java.util.Objects;
-import java.util.Scanner;
 import java.util.Set;
 
 public class TikaTextExtractor {
     public static final Set<String> textualMediatypes = ImmutableSet.of(
+            MediaType.TEXT_PLAIN,
             MediaType.TEXT_HTML,
 
             "application/pdf",
@@ -43,17 +43,6 @@ public class TikaTextExtractor {
             JsonProfiler.MEDIATYPE_LIF
     );
 
-    public static final Set<String> nonTextMediatypes = ImmutableSet.of(
-            "application/zip",
-            "application/x-gzip",
-            "audio/vnd.wave",
-            "audio/x-wav",
-            "audio/wav",
-            "audio/mp3",
-            "audio/mp4",
-            "audio/x-mpeg"
-    );
-
     AutoDetectParser parser;
 
     public TikaTextExtractor(TikaConfig config) {
@@ -62,29 +51,20 @@ public class TikaTextExtractor {
 
     public String getText(File file, String mediaType) throws IOException, TikaException {
         Objects.requireNonNull(mediaType);
-        String text = null;
 
-        if (textualMediatypes.contains(mediaType)) {
-            BodyContentHandler handler = new BodyContentHandler();
-            try (TikaInputStream inputStream = TikaInputStream.get(file.toPath())) {
-                Metadata metadata = new Metadata();
-                metadata.add(Metadata.RESOURCE_NAME_KEY, file.getName());
-                metadata.add(Metadata.CONTENT_TYPE, mediaType);
-                parser.parse(inputStream, handler, metadata);
-            } catch (SAXException e) {
-                // ignore, we just try to get the text
-            }
-            text = handler.toString();
-        } else if (!nonTextMediatypes.contains(mediaType)) {
-            try (InputStream is = new BufferedInputStream(new FileInputStream(file))) {
-                Scanner s = new Scanner(is, StandardCharsets.UTF_8.name()).useDelimiter("\\A");
-                text = s.hasNext() ? s.next() : "";
-            }
+        if (!textualMediatypes.contains(mediaType)) {
+            return null;
         }
 
-        if (text != null) {
-            text = text.trim();
+        BodyContentHandler handler = new BodyContentHandler();
+        try (TikaInputStream inputStream = TikaInputStream.get(file.toPath())) {
+            Metadata metadata = new Metadata();
+            metadata.add(Metadata.RESOURCE_NAME_KEY, file.getName());
+            metadata.add(Metadata.CONTENT_TYPE, mediaType);
+            parser.parse(inputStream, handler, metadata);
+        } catch (SAXException e) {
+            // ignore, we just try to get the text
         }
-        return text;
+        return handler.toString().trim();
     }
 }
