@@ -9,8 +9,8 @@ import org.xml.sax.SAXException;
 import java.util.*;
 
 public class TikaOutline implements Outline {
-    Map<String, String> prefixes = new HashMap<>();
-    Node root = new Node();
+    private final Map<String, String> prefixes = new HashMap<>();
+    private final Node root = new Node();
 
     @Override
     public Outline.Node getRoot() {
@@ -61,11 +61,7 @@ public class TikaOutline implements Outline {
         StringBuilder buf = new StringBuilder();
         buf.append("Prefixes:\n");
         prefixes.forEach((key, value) -> {
-            buf.append(INDENT);
-            buf.append(key);
-            buf.append(" : ");
-            buf.append(value);
-            buf.append("\n");
+            buf.append(INDENT).append(key).append(" : ").append(value).append("\n");
         });
 
         recursePrint(buf, root, 0);
@@ -87,21 +83,12 @@ public class TikaOutline implements Outline {
             indent(buf, indent);
             if (n instanceof TextNode) {
                 TextNode node = (TextNode) n;
-                buf.append("‘");
-                buf.append(node.value);
-                buf.append("’");
-                buf.append("\n");
+                buf.append("‘").append(node.value).append("’").append("\n");
             } else if (n instanceof PINode) {
                 PINode node = (PINode) n;
-                buf.append(node.target);
-                buf.append(" : ");
-                buf.append(node.value);
-                buf.append("\n");
+                buf.append(node.target).append(" : ").append(node.value).append("\n");
             } else {
-                buf.append("<");
-                buf.append(n.value);
-                buf.append(">");
-                buf.append("\n");
+                buf.append("<").append(n.value).append(">").append("\n");
                 recursePrint(buf, n, indent + 1);
             }
         }
@@ -186,7 +173,7 @@ public class TikaOutline implements Outline {
         private String reduceWS(String text) {
             int len = text.length();
             text = text.replaceAll("\\s\\s", " ");
-            while(len != text.length()) {
+            while (len != text.length()) {
                 len = text.length();
                 text = text.replaceAll("\\s\\s", " ");
             }

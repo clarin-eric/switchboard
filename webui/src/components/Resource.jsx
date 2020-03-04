@@ -1,5 +1,6 @@
 import React from 'react';
 import Select from 'react-select';
+import { processMediatype } from '../actions/utils';
 
 const SelectLanguage = (props) => {
     const value = props.languages.find(x => x.value == props.res.profile.language);
@@ -12,13 +13,18 @@ const SelectLanguage = (props) => {
 }
 
 const SelectMediatype = (props) => {
-    const value = props.mediatypes.find(x => x.value == props.res.profile.mediaType);
-    return <Select
-        value={value}
-        options={props.mediatypes.asMutable()}
-        onChange={props.onMediatype}
-        placeholder="Select the mediatype of the resource"
-    />;
+    const options = props.mediatypes.asMutable();
+    let value = props.mediatypes.find(x => x.value == props.res.profile.mediaType);
+    if (props.res.profile.mediaType && !value) {
+        value = processMediatype(props.res.profile.mediaType);
+        value.label = value.label + " [unsupported]";
+        if (value) {
+            options.unshift(value);
+        }
+    }
+
+    return <Select value={value} options={options} onChange={props.onMediatype}
+            placeholder="Select the mediatype of the resource"/>;
 }
 
 export class Resource extends React.Component {

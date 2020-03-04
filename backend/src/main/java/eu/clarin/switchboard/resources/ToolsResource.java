@@ -4,11 +4,14 @@ import com.google.common.io.ByteStreams;
 import eu.clarin.switchboard.app.config.ToolConfig;
 import eu.clarin.switchboard.core.Tool;
 import eu.clarin.switchboard.core.ToolRegistry;
-import eu.clarin.switchboard.profiler.ProfileMatcher;
+import eu.clarin.switchboard.profiler.api.Confidence;
+import eu.clarin.switchboard.profiler.api.Profile;
 import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.StreamingOutput;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,10 +19,15 @@ import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Map;
 
 @Path("")
 public class ToolsResource {
     private static final ch.qos.logback.classic.Logger LOGGER = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(ToolsResource.class);
+
+    public static final String QUERY_PARAM_MEDIATYPE = "mediatype";
+    public static final String QUERY_PARAM_LANGUAGE = "language";
+    public static final String QUERY_PARAM_ONLY_PRODUCTION_TOOLS = "onlyProductionTools";
 
     ToolRegistry toolRegistry;
     ToolConfig toolConfig;
@@ -34,41 +42,30 @@ public class ToolsResource {
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public Response getTools(@QueryParam("mediatype") String mediatype,
                              @QueryParam("language") String language,
-                             @QueryParam("onlyProductionTools") String onlyProductionTools,
-                             @Context UriInfo uriInfo) {
-        ProfileMatcher.Builder profileMatcher = ProfileMatcher.builder();
-
-        MultivaluedMap<String, String> queryParams = uriInfo.getQueryParameters();
-        for (String param: queryParams.keySet()) {
-            if ("mediatype".equalsIgnoreCase(param) ||
-                    "language".equalsIgnoreCase(param) ||
-                    "onlyProductionTools".equalsIgnoreCase(param)) {
-                continue;
-            }
-
-            List<String> values = queryParams.get(param);
-            if (values.size() > 1) {
-                return Response.status(400).entity("optional parameters cannot have multiple values: see `" + param + "`").build();
-            }
-            if (values.isEmpty()) {
-                profileMatcher.feature(param);
-            } else {
-                profileMatcher.feature(param, values.get(0));
-            }
-        }
-
+                             @QueryParam("onlyProductionTools") String onlyProductionTools) {
         boolean onlyProd = toolConfig.getShowOnlyProductionTools();
         if (onlyProductionTools != null && !onlyProductionTools.isEmpty()) {
             onlyProd = Boolean.parseBoolean(onlyProductionTools);
         }
 
-        mediatype = (mediatype != null && mediatype.isEmpty()) ? null : mediatype;
-        language = (language != null && language.isEmpty()) ? null : language;
-        if (language != null && language.length() != 3) {
-            return Response.status(400).entity("parameter `language` must be a ISO 639-3 language code").build();
+        language = language == null ? "" : language;
+        mediatype = mediatype == null ? "" : mediatype;
+        List<Tool> tools = toolRegistry.filterTools(mediatype, language, onlyProd);
+        tools.sort((t1, t2) -> t1.getName().compareToIgnoreCase(t2.getName()));
+        return Response.ok(tools).build();
+    }
+
+    @POST
+    @Path("tools/match")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+    public Response getToolsByProfile(@QueryParam("onlyProductionTools") String onlyProductionTools, Profile.Flat flat) {
+        boolean onlyProd = toolConfig.getShowOnlyProductionTools();
+        if (onlyProductionTools != null && !onlyProductionTools.isEmpty()) {
+            onlyProd = Boolean.parseBoolean(onlyProductionTools);
         }
 
-        List<Tool> tools = toolRegistry.filterTools(mediatype, language, onlyProd);
+        List<Tool> tools = toolRegistry.filterTools(flat.toProfile(), onlyProd);
         tools.sort((t1, t2) -> t1.getName().compareToIgnoreCase(t2.getName()));
         return Response.ok(tools).build();
     }
@@ -110,5 +107,12 @@ public class ToolsResource {
             ByteStreams.copy(is, baos);
             return baos.toByteArray();
         }
+    }
+
+    /** Utility for conversion to and from Json */
+    public static class JsonProfile {
+        public Confidence confidence;
+        public String mediaType;
+        public Map<String, String> features;
     }
 }

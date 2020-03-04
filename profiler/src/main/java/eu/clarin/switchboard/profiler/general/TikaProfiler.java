@@ -3,23 +3,20 @@ package eu.clarin.switchboard.profiler.general;
 import com.google.common.collect.ImmutableSet;
 import eu.clarin.switchboard.profiler.api.Profile;
 import eu.clarin.switchboard.profiler.api.Profiler;
-import jdk.nashorn.internal.runtime.PropertyAccess;
 import org.apache.tika.Tika;
 import org.apache.tika.config.TikaConfig;
 import org.apache.tika.detect.Detector;
-import org.apache.tika.exception.TikaException;
 import org.apache.tika.io.TikaInputStream;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.metadata.TikaMetadataKeys;
 import org.apache.tika.parser.AutoDetectParser;
 import org.slf4j.LoggerFactory;
-import org.xml.sax.SAXException;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 public class TikaProfiler implements Profiler {
     private static final ch.qos.logback.classic.Logger LOGGER = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(TikaProfiler.class);

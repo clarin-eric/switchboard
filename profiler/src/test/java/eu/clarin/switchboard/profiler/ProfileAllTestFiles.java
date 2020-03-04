@@ -37,7 +37,7 @@ public class ProfileAllTestFiles {
 
             // .put("folker/", Profile.builder().mediaType("application/").build())
 
-            .put("html/geoVis.html", Profile.builder().mediaType("text/html").build())
+            .put("html/geoVis.html", Profile.builder().mediaType("text/html").language("und").build())
 
             // .put("lexicon/", Profile.builder().mediaType("application/").build())
 
@@ -66,7 +66,7 @@ public class ProfileAllTestFiles {
             .put("tei/tei.xml", Profile.builder().certain().mediaType("application/tei+xml").language("deu").build())
             .put("tei/tei-corpus.xml", Profile.builder().certain().mediaType("application/tei+xml").language("eng").build())
             .put("tei/ics-tei-Jetsam.xml", Profile.builder().certain().mediaType("application/tei+xml;format-variant=teiCorpus").language("eng").build())
-            .put("tei/tei-11_souq_salesman.tei.xml", Profile.builder().certain().mediaType("application/tei+xml").build())
+            .put("tei/tei-11_souq_salesman.tei.xml", Profile.builder().certain().mediaType("application/tei+xml").language("und").build())
             .put("tei/tei-anonyme_actricenouvelle.xml", Profile.builder().certain().mediaType("application/tei+xml").language("fra").build())
             .put("tei/tei-greek-xmlchunk.xml", Profile.builder().certain().mediaType("application/tei+xml").language("ell").build())
             .put("tei/tei-tempest.xml", Profile.builder().certain().mediaType("application/tei+xml").language("eng").build())
@@ -85,15 +85,23 @@ public class ProfileAllTestFiles {
             .put("text/test.ro.txt", Profile.builder().mediaType("text/plain").language("ron").build())
             .put("text/pg76.txt", Profile.builder().mediaType("text/plain").language("eng").build())
 
-            .put("xls/Tcf2Excel.xls", Profile.builder().certain().mediaType("application/vnd.ms-excel").build())
-            .put("xls/Tcf2Excel.xlsx", Profile.builder().certain().mediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet").build())
+            .put("xls/Tcf2Excel.xls", Profile.builder().certain().mediaType("application/vnd.ms-excel").language("und").build())
+            .put("xls/Tcf2Excel.xlsx", Profile.builder().certain().mediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet").language("und").build())
 
             .put("zip/htmlfiles.zip", Profile.builder().certain().mediaType("application/zip").build())
 
             .build();
 
     static final Map<String, List<Profile>> EXPECTED_MULTIPLE = new ImmutableMap.Builder<String, List<Profile>>()
-            .put("text/test", TextProfiler.TEXT_PROFILES)
+            .put("text/test", Arrays.asList(
+                    Profile.builder().mediaType(MediaType.TEXT_PLAIN).language("und").build(),
+                    Profile.builder().mediaType(TextProfiler.MEDIATYPE_QUERY_CQP).build(),
+                    Profile.builder().mediaType(TextProfiler.MEDIATYPE_QUERY_DDC).build(),
+                    Profile.builder().mediaType(TextProfiler.MEDIATYPE_QUERY_DLEXDB).build(),
+                    Profile.builder().mediaType(TextProfiler.MEDIATYPE_QUERY_CQL).build(),
+                    Profile.builder().mediaType(TextProfiler.MEDIATYPE_EXMARALDA_SIMPLE).build()
+                    )
+            )
             .put("text/test the second", Arrays.asList(
                     Profile.builder().mediaType(MediaType.TEXT_PLAIN).language("eng").build(),
                     Profile.builder().mediaType(TextProfiler.MEDIATYPE_QUERY_CQP).build(),

@@ -1,7 +1,9 @@
 package eu.clarin.switchboard.core;
 
+import com.google.common.base.Strings;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
+import eu.clarin.switchboard.profiler.api.Profile;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
@@ -15,20 +17,32 @@ public class ToolRegistry {
     private static final ch.qos.logback.classic.Logger LOGGER = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(ToolRegistry.class);
     private static final String PRODUCTION_DEPLOYMENT = "production";
 
-    Path registryPath;
-    AtomicReference<List<Tool>> tools = new AtomicReference<>();
-    Runnable callback;
+    private final Path registryPath;
+    private final AtomicReference<List<Tool>> tools = new AtomicReference<>();
+    private Runnable callback;
 
     public List<Tool> filterTools(String mediatype, String language, boolean onlyProductionTools) {
-        Predicate<Tool> filterMediatypes = tool -> mediatype == null || mediatype.isEmpty() || tool.getMediatypes().contains(mediatype);
+        Predicate<Tool> filterMediatypes = tool -> Strings.isNullOrEmpty(mediatype) || tool.getMediatypes().contains(mediatype);
 
         // accept tools with matching languages, or tools with 'generic' language input
-        Predicate<Tool> filterLanguages = tool -> language == null || language.isEmpty()
+        Predicate<Tool> filterLanguages = tool -> Strings.isNullOrEmpty(language)
                 || tool.getLanguages().contains(language) || tool.getLanguages().contains("generic");
 
         Predicate<Tool> filterDeployment = tool -> !onlyProductionTools || tool.getDeployment().equalsIgnoreCase(PRODUCTION_DEPLOYMENT);
 
         Predicate<Tool> filter = filterDeployment.and(filterLanguages).and(filterMediatypes);
+        return tools.get()
+                .stream()
+                .filter(filter)
+                .collect(Collectors.toList());
+    }
+
+
+    public List<Tool> filterTools(Profile profile, boolean onlyProductionTools) {
+        Predicate<Tool> filterProfile = tool -> tool.getMatcher().matches(profile);
+        Predicate<Tool> filterDeployment = tool -> !onlyProductionTools || tool.getDeployment().equalsIgnoreCase(PRODUCTION_DEPLOYMENT);
+
+        Predicate<Tool> filter = filterDeployment.and(filterProfile);
         return tools.get()
                 .stream()
                 .filter(filter)

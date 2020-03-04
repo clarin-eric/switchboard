@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { apiPath, actionType, resourceMatchSettings, NO_MEDIATYPE } from '../constants';
+import { apiPath, actionType, resourceMatchSettings } from '../constants';
 import { processLanguage, processMediatype } from './utils';
 
 
@@ -11,7 +11,7 @@ export function updateResource(resource) {
         });
 
         if (resource.localLink) {
-            dispatch(fetchMatchingTools(resource.profile.mediaType, resource.profile.language));
+            dispatch(fetchMatchingTools(resource.profile));
         }
     }
 }
@@ -38,8 +38,6 @@ function uploadData(formData) {
             })
             .then(response => {
                 const resource = response.data;
-
-                resource.profile.mediaType = resource.profile.mediaType || NO_MEDIATYPE;
 
                 if (resource.localLink && resource.localLink.startsWith(apiPath.api)) {
                     resource.localLink = window.origin + resource.localLink;
@@ -103,29 +101,21 @@ export function fetchAllTools() {
     }
 }
 
-export function fetchMatchingTools(mediatype, language) {
+export function fetchMatchingTools(profile) {
     return function (dispatch, getState) {
-        // set language to 'undetermined' if it's not set
-        // so we only match tools that take any language
-        language = language || "und";
-        const params = {
-            mediatype: mediatype,
-            language: language,
-        }
-
         dispatch({
             type: actionType.MATCHING_TOOLS_FETCH_START,
         })
 
-        axios.get(apiPath.tools, {params})
+        axios.post(apiPath.toolsMatch, profile)
             .then(response => {
                 response.data.forEach(normalizeTool);
                 dispatch({
                     type: actionType.MATCHING_TOOLS_FETCH_SUCCESS,
                     data: response.data,
                 });
-            }).catch(errHandler(dispatch, "Cannot fetch tools data"));
-        _paq.push(['trackEvent', 'Tools', 'MatchTools', mediatype, language]);
+            }).catch(errHandler(dispatch, "Cannot fetch matching tools"));
+        _paq.push(['trackEvent', 'Tools', 'MatchTools', profile.mediaType, profile.language]);
     }
 }
 

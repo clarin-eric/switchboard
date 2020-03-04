@@ -10,8 +10,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class DefaultStoragePolicy implements StoragePolicy {
-    DataStoreConfig dataStoreConfig;
-    Set<String> allowedMediaTypes = new HashSet<>();
+    private final DataStoreConfig dataStoreConfig;
+    private Set<String> allowedMediaTypes = new HashSet<>();
 
     public DefaultStoragePolicy(DataStoreConfig dataStoreConfig) {
         this.dataStoreConfig = dataStoreConfig;

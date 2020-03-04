@@ -1,6 +1,7 @@
 package eu.clarin.switchboard.profiler.xml;
 
 import eu.clarin.switchboard.profiler.api.*;
+import eu.clarin.switchboard.profiler.utils.LanguageCode;
 
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
@@ -24,7 +25,7 @@ public class TeiProfiler implements Profiler {
 
 //    public final static String MEDIATYPE_TEI_ISOSPOKEN = "application/tei+xml;format-variant=tei-iso-spoken";
 //    public final static String MEDIATYPE_TEI_CLANCHA = "application/xml;format-variant=clan-cha";
-//    public final static String MEDIATYPE_TEI_EXMARALDAAEXB = "application/xml;format-variant=exmaralda-exb";
+//    public final static String MEDIATYPE_TEI_EXMARALDAEXB = "application/xml;format-variant=exmaralda-exb";
 //    public final static String MEDIATYPE_TEI_FOLKERFLN = "application/xml;format-variant=folker-fln";
 //    public final static String MEDIATYPE_TEI_TRANSCRIBERTRS = "application/xml;format-variant=transcriber-trs";
 

@@ -28,8 +28,8 @@ import java.util.List;
 public class Profiler {
     public static final int SHORT_TEXT_THRESHOLD = 15;
 
-    private Detector mediaTypeDetector;
-    private LanguageDetector languageDetector;
+    private final Detector mediaTypeDetector;
+    private final LanguageDetector languageDetector;
 
     public Profiler() throws IOException {
         mediaTypeDetector = new Tika().getDetector();
