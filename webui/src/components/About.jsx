@@ -80,6 +80,14 @@ export default class About extends React.Component {
                     The <a href="https://github.com/clarin-eric/switchboard">Switchboard GitHub repository</a> provides the source code.
                 </p>
 
+                <h3 id="funding">Funding</h3>
+                <p>Development of the VLO has been made possible in part through funding received from the
+                European Union’s Horizon 2020 research and innovation programme through:
+                </p>
+                <ul>
+                    <li><a href="https://www.clarin.eu/content/clarin-stronger-ever-clarin-plus-project-outcomes">CLARIN-PLUS</a> under grant agreement No 676529</li>
+                    <li><a href="https://www.eosc-hub.eu/">EOSC-hub</a> under grant agreement No 777536</li>
+                </ul>
 
                 <hr />
                 <p> We value your feedback! For any questions or suggestions, please <a href={ this.props.contact }>contact the Switchboard Team</a>. </p>
