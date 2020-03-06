@@ -81,7 +81,7 @@ export default class About extends React.Component {
                 </p>
 
                 <h3 id="funding">Funding</h3>
-                <p>Development of the VLO has been made possible in part through funding received from the
+                <p>Development of the Language Resource Switchboard has been made possible in part through funding received from the
                 European Union’s Horizon 2020 research and innovation programme through:
                 </p>
                 <ul>
