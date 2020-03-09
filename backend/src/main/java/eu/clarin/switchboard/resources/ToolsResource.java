@@ -25,10 +25,6 @@ import java.util.Map;
 public class ToolsResource {
     private static final ch.qos.logback.classic.Logger LOGGER = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(ToolsResource.class);
 
-    public static final String QUERY_PARAM_MEDIATYPE = "mediatype";
-    public static final String QUERY_PARAM_LANGUAGE = "language";
-    public static final String QUERY_PARAM_ONLY_PRODUCTION_TOOLS = "onlyProductionTools";
-
     ToolRegistry toolRegistry;
     ToolConfig toolConfig;
 
