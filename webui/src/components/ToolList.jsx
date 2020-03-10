@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { makeHighlighter } from './Highlighter.jsx';
 import { processLanguage, image } from '../actions/utils';
 import { getInvocationURL } from '../actions/toolcall';
 import { apiPath } from '../constants';
 
 const SPACE_REGEX = /\s/;
-const RE_ESCAPE_REGEX = /[-\/\\^$*+?.()|[\]{}]/g;
 
 
 export class ToolListWithControls extends React.Component {
@@ -91,7 +91,7 @@ export class ToolListWithControls extends React.Component {
                     <div className="col-md-10">
                         <ToolList tools={tools} resource={this.props.resource}
                             groupByTask={this.state.groupByTask}
-                            highlighter={highlighter(this.state.searchTerms)}/>
+                            highlighter={makeHighlighter(this.state.searchTerms)}/>
 
                         { hiddenTools.length
                             ? <p className="alert alert-info">There are {hiddenTools.length} tools not matching the search term.</p>
@@ -238,7 +238,7 @@ class ToolCard extends React.Component {
                             >Start Tool <Indicator title={"new-window"} style={styles.toolStartIndicator}/></a>
                         : false
                     }
-                    <Highlighter text={tool.name} style={{fontSize:"120%"}}/>
+                    <span style={{fontSize:"120%"}}><Highlighter text={tool.name}/></span>
                     <a style={{fontSize: 20}} onClick={stopBubbling} href={tool.homepage} target="_blank">
                         <Indicator title={"new-window"} style={styles.toolHomeIndicator}/>
                     </a>
@@ -252,9 +252,9 @@ class ToolCard extends React.Component {
         return (
             <div>
                 { showTask ? <DetailsRow title="Task" summary={<Highlighter text={tool.task}/>} /> : false }
-                <DetailsRow title="Description" summary={<Highlighter text={tool.description}/>} />
+                <DetailsRow title="Description" summary={<Highlighter markdown={tool.description}/>} />
                 { tool.authentication == "no" ? null :
-                    <DetailsRow title="Authentication" summary={tool.authentication} />
+                    <DetailsRow title="Authentication" summary={<Highlighter markdown={tool.authentication}/>} />
                 }
                 <DetailsRow title="Input Format" summary={tool.mimetypes.join(", ")} />
                 <DetailsRow title="Language(s)" summary={tool.languages.map(l => (processLanguage(l) || {label:l}).label).join(", ")} />
@@ -332,35 +332,3 @@ function toggle(name, event) {
     event.stopPropagation();
     this.setState({[name]: !this.state[name]});
 }
-
-
-function escapeRegExp(string) {
-    // $& means the whole matched string
-    return string.replace(RE_ESCAPE_REGEX, '\\$&');
-}
-
-function highlighter(terms) {
-    let splitter = null;
-    if (terms.length > 0) {
-        const re_string = "("+terms.map(escapeRegExp).join("|")+")";
-        splitter = new RegExp(re_string, 'gi');
-    }
-    return function({text, style}) {
-        // Split on higlight term and include term into parts, ignore case
-        let parts = splitter == null ? [text] : text.split(splitter);
-        let spans = parts.map((part, i) => ({
-            key: i,
-            text: part,
-            highlight: terms.some(term => term.toLowerCase() === part.toLowerCase()),
-        }));
-        return (
-            <span style={style}>
-                { spans.map(({key, text, highlight}) =>
-                    <span key={key} className={highlight ? "highlight" : ""}>
-                        { text }
-                    </span>
-                )}
-            </span>
-        );
-    };
-};
