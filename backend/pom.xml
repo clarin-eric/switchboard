@@ -69,7 +69,8 @@
         <dependency>
             <groupId>org.glassfish.jersey.media</groupId>
             <artifactId>jersey-media-multipart</artifactId>
-            <version>2.30</version>
+            <!-- this version is compatible with jersey-server 2.25 included by dropwizard -->
+            <version>2.25</version>
         </dependency>
 
         <dependency>
