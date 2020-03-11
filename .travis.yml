@@ -21,7 +21,6 @@ deploy:
     tags: true
   overwrite: true
   provider: releases
-  cleanup: false
 notifications:
   email:
     on_success: change
