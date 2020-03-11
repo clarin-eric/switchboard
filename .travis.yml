@@ -1,5 +1,6 @@
-sudo: required
 language: generic
+dist: xenial
+os: linux
 addons:
   apt:
     packages:
@@ -14,13 +15,13 @@ env:
   global:
   - COMMIT_AUTHOR_EMAIL: "travis-bot@clarin.eu"
 deploy:
-  api_key: $DEPLOY_OAUTH_TOKEN
+  token: $DEPLOY_OAUTH_TOKEN
   file: "build/switchboard-${TRAVIS_TAG}.tar.gz"
   on:
     tags: true
   overwrite: true
   provider: releases
-  skip_cleanup: true
+  cleanup: false
 notifications:
   email:
     on_success: change
