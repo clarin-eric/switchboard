@@ -14,8 +14,7 @@ env:
   global:
   - COMMIT_AUTHOR_EMAIL: "travis-bot@clarin.eu"
 deploy:
-  api_key:
-    secure: "$DEPLOY_OAUTH_TOKEN"
+  api_key: $DEPLOY_OAUTH_TOKEN
   file: "build/switchboard-${TRAVIS_TAG}.tar.gz"
   on:
     tags: true
