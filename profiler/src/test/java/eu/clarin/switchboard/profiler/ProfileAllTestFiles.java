@@ -61,6 +61,9 @@ public class ProfileAllTestFiles {
 
             // .put("tcf/", Profile.builder().mediaType("application/").build())
 
+            .put("tei-arche/Aachen_Prot_1.xml", Profile.builder().certain().mediaType("application/tei+xml").language("und").build())
+            .put("tei-arche/Verona_I_11.xml", Profile.builder().certain().mediaType("application/tei+xml").language("und").build())
+
             .put("tei/tei-eAla007.xml", Profile.builder().certain().mediaType("application/tei+xml").language("eng").build())
 
             .put("tei/tei.xml", Profile.builder().certain().mediaType("application/tei+xml").language("deu").build())
@@ -79,6 +82,7 @@ public class ProfileAllTestFiles {
 
             .put("tei-dta/brandenburg_zigeuner_1684.TEI-P5.xml", Profile.builder().certain().mediaType("application/tei+xml;format-variant=tei-dta").language("deu").build())
             .put("tei-dta/zwinger_theatrum_1690.TEI-P5.xml", Profile.builder().certain().mediaType("application/tei+xml;format-variant=tei-dta").language("deu").build())
+            .put("tei-dta/nn_msgermqu2124_1827.TEI-P5.xml", Profile.builder().certain().mediaType("application/tei+xml;format-variant=tei-dta").language("deu").build())
 
             .put("text/test.txt", Profile.builder().mediaType("text/plain").language("eng").build())
             .put("text/test.de.txt", Profile.builder().mediaType("text/plain").language("deu").build())

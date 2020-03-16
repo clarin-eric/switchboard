@@ -19,7 +19,7 @@ public class TeiProfiler implements Profiler {
     public final static String MEDIATYPE_TEI = "application/tei+xml";
 
     public final static String MEDIATYPE_TEI_DTA = "application/tei+xml;format-variant=tei-dta";
-    public final static String SCHEMALOCATION_DTA_RELAXNG = "http://www.deutschestextarchiv.de/basisformat.rng";
+    public final static String SCHEMALOCATION_DTA_RELAXNG_PREFIX = "http://www.deutschestextarchiv.de/basisformat";
 
     public final static String MEDIATYPE_TEI_CORPUS = "application/tei+xml;format-variant=teiCorpus";
 
@@ -48,7 +48,7 @@ public class TeiProfiler implements Profiler {
         try {
             xmlFeatures = XmlUtils.goAfterRoot(xmlReader);
             if (xmlFeatures.schemaRelaxNG != null &&
-                    xmlFeatures.schemaRelaxNG.equalsIgnoreCase(SCHEMALOCATION_DTA_RELAXNG)) {
+                    xmlFeatures.schemaRelaxNG.startsWith(SCHEMALOCATION_DTA_RELAXNG_PREFIX)) {
                 profileBuilder.mediaType(MEDIATYPE_TEI_DTA);
             } else if (XMLNAME_ROOT_TEI.equals(xmlFeatures.rootName.getLocalPart())) {
                 profileBuilder.mediaType(MEDIATYPE_TEI);
