@@ -121,8 +121,8 @@ export function fetchMatchingTools(profile) {
 
 function normalizeTool(tool) {
     let searchString = "";
-    for (const key of ['task', 'name', 'description']) {
-        searchString += tool[key].toLowerCase();
+    for (const key of ['task', 'name', 'description', 'licence']) {
+        searchString += (tool[key] || "").toLowerCase();
     }
     tool.searchString = searchString;
 }
