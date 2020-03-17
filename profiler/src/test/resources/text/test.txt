@@ -1,1 +1,0 @@
-The CLARIN center federation consists of universities and research institutes throughout Europe. These centers provide an infrastructure for the distributed access and processing of written, spoken and multi-modal language data.
