@@ -1,5 +1,15 @@
 # Changelog
 
+## [2.2.0] - 2020-03-18
+    - added new profiler module with support for tei, tcf, conllu and other formats
+    - added support for markdown (GitHub flavor) in tools description, auth info and licence
+    - improved help section (link to tool registry) and about section (funding info)
+    - updated dependencies: acorn, gson, jaxb, slf4j, logback, jersey, guava, dropwizard 
+
+## [2.1.2] - 2020-02-19
+    - fixed file system watcher bug (increase timer) 
+    - updated dependencies: logback, tika 
+
 ## [2.1.1] - 2019-11-13
     - fixed compatibility with IE 11
     - rewrote UI help section to conform to version 2.x.x 
