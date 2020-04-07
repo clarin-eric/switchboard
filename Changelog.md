@@ -1,6 +1,6 @@
 # Changelog
 
-## [2.2.0] - 2020-03-18
+## [2.2.0] - 2020-03-30
     - added new profiler module with support for tei, tcf, conllu and other formats
     - added support for markdown (GitHub flavor) in tools description, auth info and licence
     - improved help section (link to tool registry) and about section (funding info)

@@ -34,10 +34,14 @@ Cloning this repository is required. The default settings require it to have the
 
    Alternatively, the backend can be started from an IDE like Eclipse or IntelliJ IDEA.
 
-3. Build the frontend with webpack in hot development mode:
+3. Get the dependencies if it's the first time running the frontend:
+
+   ```make dependencies```
+
+4. Build the frontend with webpack in hot development mode:
 
    ```make run-webui-dev-server```
 
-4. Goto [http://localhost:8081](http://localhost:8081) in your browser to get access to the switchboard.
+5. Goto [http://localhost:8081](http://localhost:8081) in your browser to get access to the switchboard.
    Any change in the frontend code will trigger an automatic recompilation and browser refresh.
    Changing the backend java code requires a restart of the backend.
