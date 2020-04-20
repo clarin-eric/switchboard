@@ -26,9 +26,6 @@ public class DataResource {
 
     MediaLibrary mediaLibrary;
 
-    @Context
-    HttpServletRequest request;
-
     public DataResource(MediaLibrary mediaLibrary)  {
         this.mediaLibrary = mediaLibrary;
     }
@@ -63,7 +60,8 @@ public class DataResource {
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-    public Response postFile(@FormDataParam("file") InputStream inputStream,
+    public Response postFile(@Context HttpServletRequest request,
+                             @FormDataParam("file") InputStream inputStream,
                              @FormDataParam("file") final FormDataContentDisposition contentDispositionHeader,
                              @FormDataParam("link") String link) throws CommonException, ProfilingException {
         FileInfo fileInfo;

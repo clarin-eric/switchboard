@@ -22,7 +22,7 @@ public class HttpErrorHandler extends org.eclipse.jetty.server.handler.ErrorHand
     private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(HttpErrorHandler.class);
 
     public static final String REDIRECT_ROUTE = "/index.html";
-    private String rootPath;
+    private final String rootPath;
 
     public HttpErrorHandler(String appContextPath, String urlPattern) {
         String rootPattern = urlPattern.endsWith("/*") ? urlPattern.substring(0, urlPattern.length() - 1) : urlPattern;
@@ -33,7 +33,7 @@ public class HttpErrorHandler extends org.eclipse.jetty.server.handler.ErrorHand
 
 
     @Override
-    public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         // On 404 page we need to show index.html and let JS router do the work, otherwise show error page
         if (response.getStatus() == HttpServletResponse.SC_NOT_FOUND &&
                 !request.getRequestURI().startsWith(rootPath)) {
@@ -43,7 +43,7 @@ public class HttpErrorHandler extends org.eclipse.jetty.server.handler.ErrorHand
         }
     }
 
-    void forward(String target, Request request, HttpServletResponse response) throws IOException {
+    void forward(String target, Request request, HttpServletResponse response) throws IOException, ServletException {
         RequestDispatcher dispatcher = request.getRequestDispatcher(target);
         if (dispatcher == null) {
             LOGGER.error("Can not find internal redirect route '" + target + "' while handling error. Will show system error page");

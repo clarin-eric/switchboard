@@ -20,7 +20,7 @@ Cloning this repository is required. The default settings require it to have the
 
    (this may depend on your local computing environment).
 
-4. Goto [http://localhost:8080](http://localhost:8080) in your browser to get access to the switchboard.
+4. Go to [http://localhost:8080](http://localhost:8080) in your browser to get access to the switchboard.
 
 # Build and run for development
 
@@ -42,6 +42,6 @@ Cloning this repository is required. The default settings require it to have the
 
    ```make run-webui-dev-server```
 
-5. Goto [http://localhost:8081](http://localhost:8081) in your browser to get access to the switchboard.
+5. Go to [http://localhost:8081](http://localhost:8081) in your browser to get access to the switchboard.
    Any change in the frontend code will trigger an automatic recompilation and browser refresh.
    Changing the backend java code requires a restart of the backend.
