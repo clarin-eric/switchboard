@@ -1,6 +1,7 @@
 package eu.clarin.switchboard.core.xc;
 
 import eu.clarin.switchboard.profiler.api.ProfilingException;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.WebApplicationException;
@@ -8,8 +9,8 @@ import javax.ws.rs.core.Response;
 import java.net.HttpURLConnection;
 
 public class SwitchboardExceptionMapper implements javax.ws.rs.ext.ExceptionMapper<Exception> {
-    private static final ch.qos.logback.classic.Logger LOGGER =
-            (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(SwitchboardExceptionMapper.class);
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(SwitchboardExceptionMapper.class);
 
     public SwitchboardExceptionMapper() {
         super();

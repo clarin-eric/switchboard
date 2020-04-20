@@ -2,6 +2,7 @@ package eu.clarin.switchboard.app;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
@@ -12,7 +13,7 @@ import java.util.*;
 
 
 public class GitProperties {
-    private static final ch.qos.logback.classic.Logger LOGGER = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(GitProperties.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(GitProperties.class);
     final static String GIT_PROPERTIES_FILENAME = "git.properties";
 
     public static Map<String, String> load(String appOrLibName) {

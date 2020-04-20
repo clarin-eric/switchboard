@@ -3,6 +3,7 @@ package eu.clarin.switchboard.app;
 import com.google.common.io.Resources;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.servlets.assets.AssetServlet;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
@@ -16,7 +17,7 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 class TemplatedAssetsBundle extends AssetsBundle {
-    private static final ch.qos.logback.classic.Logger LOGGER = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(TemplatedAssetsBundle.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TemplatedAssetsBundle.class);
     String resourcePath;
     String uriPath;
     String indexFile;

@@ -4,6 +4,7 @@ import com.google.common.base.Strings;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 import eu.clarin.switchboard.profiler.api.Profile;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
@@ -14,7 +15,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class ToolRegistry {
-    private static final ch.qos.logback.classic.Logger LOGGER = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(ToolRegistry.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ToolRegistry.class);
     private static final String PRODUCTION_DEPLOYMENT = "production";
 
     private final Path registryPath;
