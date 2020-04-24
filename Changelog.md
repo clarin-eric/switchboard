@@ -1,7 +1,15 @@
 # Changelog
 
 ## [2.2.1] - 2020-04-24
-    - updated dependencies: profiler, validation-api, dropwizard (Fixes: [CVE-2019-10219](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-10219) and [CVE-2020-11002](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-11002)
+    - updated dependencies: profiler, validation-api, dropwizard
+<sub> 
+   Fixes:
+
+   - [CVE-2019-10219](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-10219)
+   
+   - [CVE-2020-11002](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-11002)
+</sub>
+
 ## [2.2.0] - 2020-03-30
     - added new profiler module with support for tei, tcf, conllu and other formats
     - added support for markdown (GitHub flavor) in tools description, auth info and licence
