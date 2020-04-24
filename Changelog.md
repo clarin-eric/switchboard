@@ -1,6 +1,6 @@
 # Changelog
 
-## [2.2.1] - 2020-04-24
+## [2.2.1] - 2020-04-XX
     - updated dependencies: profiler, validation-api, dropwizard
 <sub> 
    Fixes:
