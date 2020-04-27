@@ -39,25 +39,31 @@ export class Resource extends React.Component {
 
     render() {
         const res = this.props.resource;
+        console.log({res});
         return <React.Fragment>
             <div className="resource">
+                <div className="row not-on-mobile">
+                    <div className="col-md-12">
+                        <h2>Resource</h2>
+                    </div>
+                </div>
                 <div className="row">
                     <div className="col-md-4">
-                        <div className="resource-header">Resource</div>
-                        <div>
-                            <a href={res.originalLink || res.localLink}> {res.filename} </a>
+                        <div className="value namesize">
+                            <a href={res.originalLink || res.localLink}> {res.filename}</a>
+                            <span>{res.fileLength}&nbsp;bytes</span>
                         </div>
                     </div>
                     <div className="col-md-4">
                         <div className="resource-header">Mediatype</div>
-                        <div>
+                        <div className="value">
                             <SelectMediatype res={res} mediatypes={this.props.mediatypes}
                                 onMediatype={v => this.onChange('mediaType', v)}/>
                         </div>
                     </div>
                     <div className="col-md-4">
                         <div className="resource-header">Language</div>
-                        <div>
+                        <div className="value">
                             <SelectLanguage res={res} languages={this.props.languages}
                                 onLanguage={v => this.onChange('language', v)}/>
                         </div>
