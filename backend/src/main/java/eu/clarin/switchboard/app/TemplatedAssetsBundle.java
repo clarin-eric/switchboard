@@ -21,6 +21,7 @@ class TemplatedAssetsBundle extends AssetsBundle {
     String uriPath;
     String indexFile;
     String assetsName;
+    String indexPath;
     Set<String> suffixes = new HashSet<>();
     Map<Pattern, String> substitutions = new HashMap<>();
 
@@ -30,6 +31,10 @@ class TemplatedAssetsBundle extends AssetsBundle {
         this.uriPath = uriPath;
         this.indexFile = indexFile;
         this.assetsName = assetsName;
+        this.indexPath = resourcePath + indexFile;
+        if (this.indexPath.startsWith("/")) {
+            this.indexPath = this.indexPath.substring(1);
+        }
     }
     protected AssetServlet createServlet() {
         return new MyAssetServlet(resourcePath, uriPath, indexFile, StandardCharsets.UTF_8);
@@ -59,6 +64,7 @@ class TemplatedAssetsBundle extends AssetsBundle {
         public MyAssetServlet(String resourcePath, String uriPath, String indexFile, Charset charset) {
             super(resourcePath, uriPath, indexFile, charset);
         }
+
         protected byte[] readResource(URL requestedResourceURL) throws IOException {
             try {
                 for (String suffix : suffixes) {
@@ -75,6 +81,16 @@ class TemplatedAssetsBundle extends AssetsBundle {
             } catch (RuntimeException xc) {
                 LOGGER.warn("exception in readResource: ", xc);
                 throw xc;
+            }
+        }
+
+        protected URL getResourceUrl(String absoluteRequestedResourcePath) {
+            try {
+                return super.getResourceUrl(absoluteRequestedResourcePath);
+            } catch (IllegalArgumentException xc) {
+                // requested resource was not found, return index.html
+                LOGGER.info("returning default index file because: " + xc.getMessage());
+                return super.getResourceUrl(indexPath);
             }
         }
     }

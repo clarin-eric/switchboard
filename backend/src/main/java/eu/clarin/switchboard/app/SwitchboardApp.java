@@ -82,8 +82,6 @@ public class SwitchboardApp extends Application<RootConfig> {
         ToolsResource toolsResource = new ToolsResource(toolRegistry, switchboardConfig.getTools());
 
         environment.jersey().setUrlPattern(URL_PATTERN);
-        HttpErrorHandler httpErrorHandler = new HttpErrorHandler(appContextPath, URL_PATTERN);
-        environment.getApplicationContext().setErrorHandler(httpErrorHandler);
 
         environment.jersey().register(SwitchboardExceptionMapper.class);
         environment.jersey().register(MultiPartFeature.class);
