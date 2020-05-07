@@ -97,7 +97,8 @@ public class MediaLibrary {
             int status = getResponseCode(connection);
             if (status == HttpURLConnection.HTTP_MOVED_TEMP
                     || status == HttpURLConnection.HTTP_MOVED_PERM
-                    || status == HttpURLConnection.HTTP_SEE_OTHER) {
+                    || status == HttpURLConnection.HTTP_SEE_OTHER
+                    || status == 307 /* TEMPORARY REDIRECT */) {
                 downloadLink = connection.getHeaderField("Location");
                 cookies = connection.getHeaderField("Set-Cookie");
 
