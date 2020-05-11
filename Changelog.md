@@ -1,6 +1,8 @@
 # Changelog
 
 ## [2.2.1] - 2020-04-11
+    - Added support temporary redirects (HTTP 307) when resolving handles
+    - Updated WebUI dependencies: axios, core-js, react, react-dom, react-modal, react-redux, react-select, redux
     - updated dependencies: profiler, validation-api, dropwizard
 <sub> 
    Fixes:
@@ -9,9 +11,6 @@
    
    - [CVE-2020-11002](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-11002)
 </sub>
-   - Updated WebUI dependencies: axios, core-js, react, react-dom, react-modal, react-redux, react-select, redux
-   - Added support temporary redirects (HTTP 307) when resolving handles
-
 
 ## [2.2.0] - 2020-03-30
     - added new profiler module with support for tei, tcf, conllu and other formats
