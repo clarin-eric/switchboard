@@ -42,7 +42,7 @@ export class Resource extends React.Component {
         console.log({res});
         return <React.Fragment>
             <div className="resource">
-                <div className="row not-on-mobile">
+                <div className="row hidden-xs">
                     <div className="col-md-12">
                         <h2>Resource</h2>
                     </div>

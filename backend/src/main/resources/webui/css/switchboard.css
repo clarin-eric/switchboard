@@ -118,6 +118,9 @@ div.tool-sublist h3 {
 div.tool-sublist h3:hover {
     background-color: #eee;
 }
+div.tool-sublist h3 .section-left-padding {
+    padding-left: 180px;
+}
 
 div.tool {
     padding: 8px 0;
@@ -131,31 +134,45 @@ div.tool:hover {
 }
 
 div.tool .img-holder {
-    max-width: 5em;
+    width: 160px;
     height: 2em;
-    float: right;
-    line-height: 2em;
+    /*float: left;*/
+    line-height: 2.5em;
+    margin-right: 1em;
+    text-align: right;
+    display:inline-block;
 }
 
 div.tool .img-holder img {
+    border-radius: 6px;
     border: 1px solid #ddd;
-    max-width: 5em;
+    box-shadow: 2px 2px 2px #ccc;
+    /*padding: 2px;*/
+    max-width: 160px;
     max-height: 2em;
+    background-color: white;
 }
 
 div.tool .badge-holder {
-    margin-right: 4px;
-    line-height: 2em;
-    float: right;
+    padding-top:2px;
+    margin-right: 12px;
+    line-height: 2.5em;
+    display:inline;
+    /*float: left;*/
 }
 
-div.tool .badge-holder > span {
-    border-radius: 10px;
-    border: 1px solid #ddd;
-    padding: 4px 4px;
+div.tool .badge-holder > span, div.tool .badge-holder > a {
+    border-radius: 16px;
+    border: 1px solid #bbb;
+    padding: 4px;
     margin: 0;
-    font-size:75%;
-    background-color: #def;
+        background-color: #f8f8f8;
+    font-size:80%;
+}
+
+div.tool .dl-horizontal {
+    margin-top:8px;
+    margin-bottom:0;
 }
 
 div.tool .btn {
@@ -214,14 +231,10 @@ div.tool hr {
 }
 
 @media (max-width: 768px) {
-    .not-on-mobile {
-        display:none;
-    }
     div.resource .value {
         margin-bottom:0.5em;
     }
     div.resource hr {
         margin:0;
     }
-
 }

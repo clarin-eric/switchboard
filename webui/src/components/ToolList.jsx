@@ -151,6 +151,7 @@ class ToolSubList extends React.Component {
             <div className="tool-sublist" onClick={toggle.bind(this, 'show')}>
                 { !this.props.task ? false :
                     <h3 style={styles.task}>
+                        <span className="section-left-padding hidden-xs"/>
                         <Indicator title={"menu-" + (this.state.show ? "down":"right")} style={styles.taskChevron}/>
                         <Highlighter text={this.props.task}/>
                     </h3>
@@ -211,7 +212,8 @@ class ToolCard extends React.Component {
         }
         const Highlighter = this.props.highlighter;
         return (
-            <div>
+            <div style={{whiteSpace:'nowrap', display: 'inline'}}>
+                <div className="img-holder hidden-xs"><img src={imgSrc}/></div>
                 <Indicator title={"menu-" + (this.state.showDetails ? "down":"right")} style={styles.toolChevron}/>
                 { invocationURL
                     ? <a className="btn btn-success" onClick={trackCall} href={invocationURL} target="_blank"
@@ -222,32 +224,46 @@ class ToolCard extends React.Component {
                 <a style={{fontSize: 20}} onClick={stopBubbling} href={tool.homepage} target="_blank">
                     <Indicator title={"new-window"} style={styles.toolHomeIndicator}/>
                 </a>
-                <div className="img-holder"><img src={imgSrc}/></div>
+
+                <div style={{whiteSpace:'nowrap', display: 'inline'}}>
                 { !tool.authentication || tool.authentication == "no" ? null
-                    : <div className="badge-holder">
+                    : <div className="badge-holder" title="This tool requires a user account. Please check the Authentication information for more details.">
                         <span>
-                        <span className={"glyphicon glyphicon-info-sign"} style={{fontSize:'90%'}} aria-hidden="true"/>
-                        {" Requires Login"}
+                            <span className={"fa fa-key"} style={{color:"#e83"}} aria-hidden="true"/>
                         </span>
                     </div> }
-                <div style={{clear:'both'}}/>
+                { !tool.url.startsWith("https://") ? null
+                    : <div className="badge-holder" title="The connection to this tool is secure.">
+                        <span>
+                            <span className={"fa fa-shield-alt"} style={{color:"green"}} aria-hidden="true"/>
+                        </span>
+                    </div> }
+                </div>
             </div>
         );
+        // <div style={{clear:'both'}}/>
     }
 
     renderDetails(tool, showTask) {
         const Highlighter = this.props.highlighter;
         return (
             <div>
-                { showTask ? <DetailsRow title="Task" summary={<Highlighter text={tool.task}/>} /> : false }
-                <DetailsRow title="Description" summary={<Highlighter markdown={tool.description}/>} />
-                { !tool.authentication || tool.authentication == "no" ? null :
-                    <DetailsRow title="Authentication" summary={<Highlighter markdown={tool.authentication}/>} />
-                }
-                <DetailsRow title="Input Format" summary={tool.mimetypes.join(", ")} />
-                <DetailsRow title="Language(s)" summary={tool.languages.map(l => (processLanguage(l) || {label:l}).label).join(", ")} />
+                <div style={{alignSelf: 'flex-start'}}>
+                    <div style={{ width: '100%'}}>
+                        <dl className="dl-horizontal">
+                            { showTask ? <DetailsRow title="Task" summary={<p><Highlighter text={tool.task}/></p>} /> : false }
+                            <DetailsRow title="Description" summary={<Highlighter markdown={tool.description}/>} />
+                            { !tool.authentication || tool.authentication == "no" ? null :
+                                <DetailsRow title="Authentication" summary={<Highlighter markdown={tool.authentication}/>} />
+                            }
+                            <DetailsRow title="Input Format" summary={<p>{tool.mimetypes.join(", ")}</p>} />
+                            <DetailsRow title="Language(s)" summary={<p>{tool.languages.map(l => (processLanguage(l) || {label:l}).label).join(", ")}</p>} />
 
-                {  tool.licence && <DetailsRow title="Licence" summary={<Highlighter markdown={tool.licence}/>} /> }
+                            {  tool.licence && <DetailsRow title="Licence" summary={<Highlighter markdown={tool.licence}/>} /> }
+                        </dl>
+                    </div>
+                </div>
+
 
                 <IndicatorRow>
                     { tool.version && tool.version !== 'x.y.z'
@@ -278,17 +294,13 @@ class ToolCard extends React.Component {
 
 const DetailsRow = ({ title, summary }) => {
     return !summary ? null : (
-        <div style={{alignSelf: 'flex-start'}}>
-            <div style={{ width: '100%'}}>
-                <dl className="dl-horizontal">
-                    <dt>{title}</dt>
-                    <dd>{title == "Home"
-                        ? <a href={summary} target="_blank"> {summary}</a>
-                        : summary }
-                    </dd>
-                </dl>
-            </div>
-        </div>
+        <React.Fragment>
+            <dt>{title}</dt>
+            <dd>{title == "Home"
+                ? <a href={summary} target="_blank"> {summary}</a>
+                : summary }
+            </dd>
+        </React.Fragment>
     );
 };
 
@@ -318,5 +330,6 @@ const Indicator = (props) => {
 
 function toggle(name, event) {
     event.stopPropagation();
+    event.preventDefault();
     this.setState({[name]: !this.state[name]});
 }
