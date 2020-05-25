@@ -1,6 +1,8 @@
 # Changelog
 
-## [2.2.1] - 2020-04-XX
+## [2.2.1] - 2020-04-11
+    - Added support temporary redirects (HTTP 307) when resolving handles
+    - Updated WebUI dependencies: axios, core-js, react, react-dom, react-modal, react-redux, react-select, redux
     - updated dependencies: profiler, validation-api, dropwizard
 <sub> 
    Fixes:
