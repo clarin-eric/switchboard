@@ -82,7 +82,7 @@ const Uploading = () => (
 const Analysis = (props) => (
     <div>
         <Resource {...props} />
-        <hr/>
+        <hr style={{marginTop:0}}/>
 
         <MatchingTools matchingTools={props.matchingTools} resource={props.resource} />
     </div>

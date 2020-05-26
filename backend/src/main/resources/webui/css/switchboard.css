@@ -74,12 +74,13 @@ div.input form {
 
 
 /* resource table style */
-div.resource-header {
-    font-size: 20px;
-    margin: 0 0 6px 2px;
-}
 div.resource {
     padding: 0;
+}
+
+div.resource .resource-header {
+    font-size: 20px;
+    margin: 0 0 6px 0;
 }
 
 div.resource .namesize {
@@ -165,7 +166,8 @@ div.tool .badge-holder > span, div.tool .badge-holder > a {
     border: 1px solid #bbb;
     padding: 4px;
     margin: 0;
-        background-color: #f8f8f8;
+    color: #e83;
+    background-color: #f8f8f8;
     font-size:80%;
 }
 

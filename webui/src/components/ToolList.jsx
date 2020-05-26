@@ -148,7 +148,7 @@ class ToolSubList extends React.Component {
         const tools = [...this.props.tools].sort(sortFn);
         const Highlighter = this.props.highlighter;
         return (
-            <div className="tool-sublist" onClick={toggle.bind(this, 'show')}>
+            <div className="tool-sublist" onClick={toggle.bind(this, 'show')} >
                 { !this.props.task ? false :
                     <h3 style={styles.task}>
                         <span className="section-left-padding hidden-xs"/>
@@ -228,15 +228,7 @@ class ToolCard extends React.Component {
                 <div style={{whiteSpace:'nowrap', display: 'inline'}}>
                 { !tool.authentication || tool.authentication == "no" ? null
                     : <div className="badge-holder" title="This tool requires a user account. Please check the Authentication information for more details.">
-                        <span>
-                            <span className={"fa fa-key"} style={{color:"#e83"}} aria-hidden="true"/>
-                        </span>
-                    </div> }
-                { !tool.url.startsWith("https://") ? null
-                    : <div className="badge-holder" title="The connection to this tool is secure.">
-                        <span>
-                            <span className={"fa fa-shield-alt"} style={{color:"green"}} aria-hidden="true"/>
-                        </span>
+                        <span> <span className={"fa fa-key"} aria-hidden="true"/> </span>
                     </div> }
                 </div>
             </div>
@@ -330,6 +322,5 @@ const Indicator = (props) => {
 
 function toggle(name, event) {
     event.stopPropagation();
-    event.preventDefault();
     this.setState({[name]: !this.state[name]});
 }

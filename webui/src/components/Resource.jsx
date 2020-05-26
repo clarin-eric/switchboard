@@ -55,17 +55,21 @@ export class Resource extends React.Component {
                         </div>
                     </div>
                     <div className="col-md-4">
-                        <div className="resource-header">Mediatype</div>
-                        <div className="value">
-                            <SelectMediatype res={res} mediatypes={this.props.mediatypes}
-                                onMediatype={v => this.onChange('mediaType', v)}/>
+                        <div className="row">
+                            <div className="col-xs-4 col-md-12 resource-header">Mediatype</div>
+                            <div className="col-xs-8 col-md-12 value">
+                                <SelectMediatype res={res} mediatypes={this.props.mediatypes}
+                                    onMediatype={v => this.onChange('mediaType', v)}/>
+                            </div>
                         </div>
                     </div>
                     <div className="col-md-4">
-                        <div className="resource-header">Language</div>
-                        <div className="value">
-                            <SelectLanguage res={res} languages={this.props.languages}
-                                onLanguage={v => this.onChange('language', v)}/>
+                        <div className="row">
+                            <div className="col-xs-4 col-md-12 resource-header">Language</div>
+                            <div className="col-xs-8 col-md-12 value">
+                                <SelectLanguage res={res} languages={this.props.languages}
+                                    onLanguage={v => this.onChange('language', v)}/>
+                            </div>
                         </div>
                     </div>
                 </div>
