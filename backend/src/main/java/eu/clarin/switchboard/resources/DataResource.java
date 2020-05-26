@@ -64,16 +64,16 @@ public class DataResource {
     public Response postFile(@Context HttpServletRequest request,
                              @FormDataParam("file") InputStream inputStream,
                              @FormDataParam("file") final FormDataContentDisposition contentDispositionHeader,
-                             @FormDataParam("link") String link) throws CommonException, ProfilingException {
+                             @FormDataParam("url") String url) throws CommonException, ProfilingException {
         FileInfo fileInfo;
 
         if (contentDispositionHeader != null) {
             String filename = contentDispositionHeader.getFileName();
             fileInfo = mediaLibrary.addMedia(filename, inputStream);
-        } else if (link != null) {
-            fileInfo = mediaLibrary.addMedia(link);
+        } else if (url != null) {
+            fileInfo = mediaLibrary.addMedia(url);
         } else {
-            return Response.status(400).entity("Please provide either a file or a link to download in the form").build();
+            return Response.status(400).entity("Please provide either a file or a url to download in the form").build();
         }
 
         Map<String, Object> ret = new HashMap<>();

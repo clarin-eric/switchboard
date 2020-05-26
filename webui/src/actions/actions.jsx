@@ -16,10 +16,11 @@ export function updateResource(resource) {
     }
 }
 
-export function uploadLink(link, origin) {
+export function uploadLink(params) {
     var formData = new FormData();
-    formData.append("link", link);
-    formData.append("origin", origin);
+    for (const key in params) {
+        formData.append(key, params[key]);
+    }
     return uploadData(formData);
 }
 

@@ -43,7 +43,7 @@ export class Input extends React.Component {
         e.preventDefault();
         e.stopPropagation();
 
-        this.props.onLink(this.state.link);
+        this.props.onLink({url:this.state.link});
 
         this.props.history.push(clientPath.root);
     }
