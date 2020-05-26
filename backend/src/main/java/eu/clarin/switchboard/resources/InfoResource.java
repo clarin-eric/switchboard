@@ -1,6 +1,7 @@
 package eu.clarin.switchboard.resources;
 
 import eu.clarin.switchboard.core.ToolRegistry;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.GET;
@@ -14,7 +15,7 @@ import java.util.*;
 
 @Path("")
 public class InfoResource {
-    private static final ch.qos.logback.classic.Logger LOGGER = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(InfoResource.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(InfoResource.class);
 
     Map<String, String> gitProps;
     long maxAllowedDataSize;

@@ -74,13 +74,31 @@ div.input form {
 
 
 /* resource table style */
-div.resource-header {
-    font-weight: bold;
-    font-size: 18px;
-    margin: 20px 0 6px 2px;
-}
 div.resource {
-    padding: 1em 0;
+    padding: 0;
+}
+
+div.resource .resource-header {
+    font-size: 20px;
+    margin: 0 0 6px 0;
+}
+
+div.resource .namesize {
+    font-size: 20px;
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+div.resource .namesize a {
+    margin-right: 1em;
+}
+div.resource .namesize span {
+    color: #555;
 }
 
 /* transitions for matching tools */
@@ -95,35 +113,73 @@ div.resource {
 /* tools styles */
 div.tool-sublist h3 {
     margin: 0;
-    padding: 20px 0 10px 10px;
+    padding: 20px 0 10px 0px;
+    font-style: oblique;
 }
 div.tool-sublist h3:hover {
     background-color: #eee;
 }
-
-div.tool .dl-horizontal {
-    margin-bottom: 8px;
+div.tool-sublist h3 .section-left-padding {
+    padding-left: 180px;
 }
 
 div.tool {
-    padding: 10px 0;
+    padding: 8px 0;
     cursor: default;
+    line-height: 2em;
 }
 
 div.tool:hover {
     background-color: #f6f6f6;
 }
 
-div.tool .header dd {
-    line-height:38px;
+div.tool .img-holder {
+    width: 160px;
+    height: 2em;
+    /*float: left;*/
+    line-height: 2.5em;
+    margin-right: 1em;
+    text-align: right;
+    display:inline-block;
 }
-div.tool .header dt img {
-    height: 32px;
-    margin: 4px 4px 4px 0;
-    padding: 2px;
+
+div.tool .img-holder img {
+    border-radius: 6px;
     border: 1px solid #ddd;
     box-shadow: 2px 2px 2px #ccc;
+    /*padding: 2px;*/
+    max-width: 160px;
+    max-height: 2em;
+    background-color: white;
 }
+
+div.tool .badge-holder {
+    padding-top:2px;
+    margin-right: 12px;
+    line-height: 2.5em;
+    display:inline;
+    /*float: left;*/
+}
+
+div.tool .badge-holder > span, div.tool .badge-holder > a {
+    border-radius: 16px;
+    border: 1px solid #bbb;
+    padding: 4px;
+    margin: 0;
+    color: #e83;
+    background-color: #f8f8f8;
+    font-size:80%;
+}
+
+div.tool .dl-horizontal {
+    margin-top:8px;
+    margin-bottom:0;
+}
+
+div.tool .btn {
+    margin-right:8px
+}
+
 div.tool hr {
     margin-top: 10px;
     margin-bottom: 0;
@@ -135,12 +191,51 @@ div.tool hr {
     background-color: yellow;
 }
 
-.tool-list-with-controls .row .controls {
-    margin-top: 12px;
+.tool-list-with-controls h2 {
+    margin-top:0;
+}
+
+/* custom form css instead of using bootstrap's css
+   which breaks the "floating: right" behaviour */
+.tool-list-with-controls form.controls {
+    /*margin-top:1em;*/
+}
+.tool-list-with-controls form.controls label {
+    white-space: nowrap;
+    vertical-align: middle;
+    padding: 8px 12px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.2em;
+    color: #555;
+    text-align: center;
+    /*border: 1px solid #ddd;*/
+    background-color: #f0f0f0;
+    padding-right:26px;
+    margin-right:-22px;
+}
+.tool-list-with-controls form.controls input[type=checkbox] {
+    margin-right:14px;
+    line-height:1.2em;
+    vertical-align: text-top;
+}
+.tool-list-with-controls form.controls input[type=text] {
+    padding: 4px 12px;
+    line-height:1.5em;
+    border: 1px solid #ddd;
 }
 
 @media (min-width: 992px) {
-    .tool-list-with-controls .controls {
-        border-right: 1px solid #ccc;
+    div.resource .namesize {
+        margin-top: 1.2em;
+    }
+}
+
+@media (max-width: 768px) {
+    div.resource .value {
+        margin-bottom:0.5em;
+    }
+    div.resource hr {
+        margin:0;
     }
 }

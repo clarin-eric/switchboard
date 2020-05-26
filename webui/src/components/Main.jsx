@@ -15,16 +15,29 @@ export class Main extends React.Component {
     }
 
     componentDidMount() {
-        const hash = location.hash;
-        if (hash.startsWith("#/") && hash.length > 2) {
-            const [origin, url, mimetype, language] = hash.substring(2).split("/");
+        const params = {};
+        if (location.hash.startsWith("#/") && location.hash.length > 2) {
+            const [origin, url, mimetype, language] = location.hash.substring(2).split("/");
             if (origin && url) {
-                this.props.uploadLink(
-                    decodeURIComponent(url),
-                    decodeURIComponent(origin));
+                params.origin = decodeURIComponent(origin);
+                params.url = decodeURIComponent(url);
+                if (mimetype) {
+                    params.mimetype = decodeURIComponent(mimetype);
+                }
+                if (language) {
+                    params.language = decodeURIComponent(language);
+                }
             } else {
-                // todo: error???
+                console.error("Switchboard: incomplete parameter list");
             }
+        }
+        for (const [key, value] of new URLSearchParams(location.search)) {
+            if (key && value) {
+                params[key] = decodeURIComponent(value);
+            }
+        }
+        if (params.url && params.origin) {
+            this.props.uploadLink(params);
         }
     }
 
@@ -69,7 +82,7 @@ const Uploading = () => (
 const Analysis = (props) => (
     <div>
         <Resource {...props} />
-        <hr/>
+        <hr style={{marginTop:0}}/>
 
         <MatchingTools matchingTools={props.matchingTools} resource={props.resource} />
     </div>

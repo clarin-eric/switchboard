@@ -74,6 +74,10 @@ class Application extends React.Component {
         store.dispatch(fetchAllTools());
         store.dispatch(fetchMediatypes());
         store.dispatch(fetchLanguages());
+
+        // // load a text file by default for testing
+        // store.dispatch(require("./actions/actions").uploadLink({
+        //     url:'https://b2drop.eudat.eu/s/ekDJNz7fWw69w5Y', origin:'b2drop'}))
     }
 
     render() {

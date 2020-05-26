@@ -48,27 +48,15 @@ export class ToolListWithControls extends React.Component {
         return ret;
     }
 
-    renderSearch() {
+    renderControls() {
         return (
-            <div style={{margin:"5px 0"}}>
-                <form className="search" className="input-group">
-                    <input className="form-control" type="text" placeholder="Search for tool"
-                        onChange={this.setSearch} value={this.state.searchString} />
-                </form>
-            </div>
-        );
-    }
-
-    renderGroupByTask() {
-        return (
-            <div style={{margin:"5px 0"}}>
-                <form className="input-group">
-                    <label className="input-group-addon form-check-label" htmlFor="groupByTask"
-                        style={{backgroundColor:"white", border:"none"}}>Group by task</label>
-                        <input type="checkbox" id="groupByTask" name="groupByTask"
-                            onChange={toggle.bind(this, 'groupByTask')} checked={this.state.groupByTask} />
-                </form>
-            </div>
+            <form className="controls">
+                <label htmlFor="groupByTask">Group by task</label>
+                <input type="checkbox" id="groupByTask" name="groupByTask"
+                    onChange={toggle.bind(this, 'groupByTask')} checked={this.state.groupByTask} />
+                <input type="text" placeholder="Search for tool"
+                    onChange={this.setSearch} value={this.state.searchString} />
+            </form>
         );
     }
 
@@ -76,19 +64,15 @@ export class ToolListWithControls extends React.Component {
         const {tools, hiddenTools} = this.filterTools(this.props.tools, this.state.searchString, this.state.searchTerms);
         return (
             <div className="tool-list-with-controls">
-                <div className="row">
-                    <div className="col-md-offset-1 col-md-10">
-                        <h2>{this.props.title}</h2>
+                <div>
+                    <h2 style={{float:'left'}}>{this.props.title}</h2>
+                    <div style={{float:'right'}}>
+                        {this.renderControls()}
                     </div>
                 </div>
-
+                <div style={{clear:'both'}}/>
                 <div className="row">
-                    <div className="col-md-2 controls">
-                        {this.renderSearch()}
-                        {this.renderGroupByTask()}
-                    </div>
-
-                    <div className="col-md-10">
+                    <div className="col-md-12">
                         <ToolList tools={tools} resource={this.props.resource}
                             groupByTask={this.state.groupByTask}
                             highlighter={makeHighlighter(this.state.searchTerms)}/>
@@ -155,8 +139,8 @@ class ToolSubList extends React.Component {
                 cursor: "default"
             },
             taskChevron: {
-                fontSize: "75%",
-                marginRight: 4
+                fontSize: "80%",
+                marginRight: 0
             },
         };
 
@@ -164,10 +148,11 @@ class ToolSubList extends React.Component {
         const tools = [...this.props.tools].sort(sortFn);
         const Highlighter = this.props.highlighter;
         return (
-            <div className="tool-sublist" onClick={toggle.bind(this, 'show')}>
+            <div className="tool-sublist" onClick={toggle.bind(this, 'show')} >
                 { !this.props.task ? false :
                     <h3 style={styles.task}>
-                        <Indicator title={"chevron-" + (this.state.show ? "down":"right")} style={styles.taskChevron}/>
+                        <span className="section-left-padding hidden-xs"/>
+                        <Indicator title={"menu-" + (this.state.show ? "down":"right")} style={styles.taskChevron}/>
                         <Highlighter text={this.props.task}/>
                     </h3>
                 }
@@ -179,6 +164,7 @@ class ToolSubList extends React.Component {
                         resource={this.props.resource}
                         highlighter={this.props.highlighter}/>
                 )}
+                <hr style={{margin:0}}/>
             </div>
         );
     }
@@ -203,7 +189,7 @@ class ToolCard extends React.Component {
     renderHeader(imgSrc, tool, invocationURL) {
         const styles = {
             toolChevron: {
-                fontSize: "75%",
+                fontSize: "80%",
                 marginRight: 0,
                 color: '#444'
             },
@@ -226,40 +212,50 @@ class ToolCard extends React.Component {
         }
         const Highlighter = this.props.highlighter;
         return (
-            <dl className="dl-horizontal header">
-                <dt>
-                    <Indicator title={"chevron-" + (this.state.showDetails ? "down":"right")} style={styles.toolChevron}>
-                        <img src={imgSrc}/>
-                    </Indicator>
-                </dt>
-                <dd>
-                    { invocationURL
-                        ? <a className="btn btn-success" style={{marginRight:16}} onClick={trackCall} href={invocationURL} target="_blank"
-                            >Start Tool <Indicator title={"new-window"} style={styles.toolStartIndicator}/></a>
-                        : false
-                    }
-                    <span style={{fontSize:"120%"}}><Highlighter text={tool.name}/></span>
-                    <a style={{fontSize: 20}} onClick={stopBubbling} href={tool.homepage} target="_blank">
-                        <Indicator title={"new-window"} style={styles.toolHomeIndicator}/>
-                    </a>
-                </dd>
-            </dl>
+            <div style={{whiteSpace:'nowrap', display: 'inline'}}>
+                <div className="img-holder hidden-xs"><img src={imgSrc}/></div>
+                <Indicator title={"menu-" + (this.state.showDetails ? "down":"right")} style={styles.toolChevron}/>
+                { invocationURL
+                    ? <a className="btn btn-success" onClick={trackCall} href={invocationURL} target="_blank"
+                        >Open <Indicator title={"new-window"} style={styles.toolStartIndicator}/></a>
+                    : false
+                }
+                <span style={{fontSize:"120%"}}><Highlighter text={tool.name}/></span>
+                <a style={{fontSize: 20}} onClick={stopBubbling} href={tool.homepage} target="_blank">
+                    <Indicator title={"new-window"} style={styles.toolHomeIndicator}/>
+                </a>
+
+                <div style={{whiteSpace:'nowrap', display: 'inline'}}>
+                { !tool.authentication || tool.authentication == "no" ? null
+                    : <div className="badge-holder" title="This tool requires a user account. Please check the Authentication information for more details.">
+                        <span> <span className={"fa fa-key"} aria-hidden="true"/> </span>
+                    </div> }
+                </div>
+            </div>
         );
+        // <div style={{clear:'both'}}/>
     }
 
     renderDetails(tool, showTask) {
         const Highlighter = this.props.highlighter;
         return (
             <div>
-                { showTask ? <DetailsRow title="Task" summary={<Highlighter text={tool.task}/>} /> : false }
-                <DetailsRow title="Description" summary={<Highlighter markdown={tool.description}/>} />
-                { tool.authentication == "no" ? null :
-                    <DetailsRow title="Authentication" summary={<Highlighter markdown={tool.authentication}/>} />
-                }
-                <DetailsRow title="Input Format" summary={tool.mimetypes.join(", ")} />
-                <DetailsRow title="Language(s)" summary={tool.languages.map(l => (processLanguage(l) || {label:l}).label).join(", ")} />
+                <div style={{alignSelf: 'flex-start'}}>
+                    <div style={{ width: '100%'}}>
+                        <dl className="dl-horizontal">
+                            { showTask ? <DetailsRow title="Task" summary={<p><Highlighter text={tool.task}/></p>} /> : false }
+                            <DetailsRow title="Description" summary={<Highlighter markdown={tool.description}/>} />
+                            { !tool.authentication || tool.authentication == "no" ? null :
+                                <DetailsRow title="Authentication" summary={<Highlighter markdown={tool.authentication}/>} />
+                            }
+                            <DetailsRow title="Input Format" summary={<p>{tool.mimetypes.join(", ")}</p>} />
+                            <DetailsRow title="Language(s)" summary={<p>{tool.languages.map(l => (processLanguage(l) || {label:l}).label).join(", ")}</p>} />
 
-                {  tool.licence && <DetailsRow title="Licence" summary={<Highlighter markdown={tool.licence}/>} /> }
+                            {  tool.licence && <DetailsRow title="Licence" summary={<Highlighter markdown={tool.licence}/>} /> }
+                        </dl>
+                    </div>
+                </div>
+
 
                 <IndicatorRow>
                     { tool.version && tool.version !== 'x.y.z'
@@ -290,17 +286,13 @@ class ToolCard extends React.Component {
 
 const DetailsRow = ({ title, summary }) => {
     return !summary ? null : (
-        <div style={{alignSelf: 'flex-start'}}>
-            <div style={{ width: '100%'}}>
-                <dl className="dl-horizontal">
-                    <dt>{title}</dt>
-                    <dd>{title == "Home"
-                        ? <a href={summary} target="_blank"> {summary}</a>
-                        : summary }
-                    </dd>
-                </dl>
-            </div>
-        </div>
+        <React.Fragment>
+            <dt>{title}</dt>
+            <dd>{title == "Home"
+                ? <a href={summary} target="_blank"> {summary}</a>
+                : summary }
+            </dd>
+        </React.Fragment>
     );
 };
 

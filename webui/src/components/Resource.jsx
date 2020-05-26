@@ -39,27 +39,37 @@ export class Resource extends React.Component {
 
     render() {
         const res = this.props.resource;
+        console.log({res});
         return <React.Fragment>
             <div className="resource">
+                <div className="row hidden-xs">
+                    <div className="col-md-12">
+                        <h2>Resource</h2>
+                    </div>
+                </div>
                 <div className="row">
                     <div className="col-md-4">
-                        <div className="resource-header">Resource</div>
-                        <div>
-                            <a href={res.originalLink || res.localLink}> {res.filename} </a>
+                        <div className="value namesize">
+                            <a href={res.originalLink || res.localLink}> {res.filename}</a>
+                            <span>{res.fileLength}&nbsp;bytes</span>
                         </div>
                     </div>
                     <div className="col-md-4">
-                        <div className="resource-header">Mediatype</div>
-                        <div>
-                            <SelectMediatype res={res} mediatypes={this.props.mediatypes}
-                                onMediatype={v => this.onChange('mediaType', v)}/>
+                        <div className="row">
+                            <div className="col-xs-4 col-md-12 resource-header">Mediatype</div>
+                            <div className="col-xs-8 col-md-12 value">
+                                <SelectMediatype res={res} mediatypes={this.props.mediatypes}
+                                    onMediatype={v => this.onChange('mediaType', v)}/>
+                            </div>
                         </div>
                     </div>
                     <div className="col-md-4">
-                        <div className="resource-header">Language</div>
-                        <div>
-                            <SelectLanguage res={res} languages={this.props.languages}
-                                onLanguage={v => this.onChange('language', v)}/>
+                        <div className="row">
+                            <div className="col-xs-4 col-md-12 resource-header">Language</div>
+                            <div className="col-xs-8 col-md-12 value">
+                                <SelectLanguage res={res} languages={this.props.languages}
+                                    onLanguage={v => this.onChange('language', v)}/>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -6,6 +6,7 @@ import eu.clarin.switchboard.core.Tool;
 import eu.clarin.switchboard.core.ToolRegistry;
 import eu.clarin.switchboard.profiler.api.Confidence;
 import eu.clarin.switchboard.profiler.api.Profile;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.*;
@@ -23,7 +24,7 @@ import java.util.Map;
 
 @Path("")
 public class ToolsResource {
-    private static final ch.qos.logback.classic.Logger LOGGER = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(ToolsResource.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ToolsResource.class);
 
     ToolRegistry toolRegistry;
     ToolConfig toolConfig;
