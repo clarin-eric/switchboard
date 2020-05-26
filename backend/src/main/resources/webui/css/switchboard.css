@@ -113,14 +113,18 @@ div.resource .namesize span {
 /* tools styles */
 div.tool-sublist h3 {
     margin: 0;
-    padding: 20px 0 10px 0px;
-    font-style: oblique;
+    padding: 10px 0;
+    font-family: "Source Sans Pro",Calibri,Arial,Helvetica,sans-serif;
+    font-size: 20px;
+    color: #033d71;
+    background-color: #f3f9fc;
+    cursor: default;
 }
 div.tool-sublist h3:hover {
     background-color: #eee;
 }
 div.tool-sublist h3 .section-left-padding {
-    padding-left: 180px;
+    padding-left: 10px;
 }
 
 div.tool {

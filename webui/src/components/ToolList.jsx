@@ -133,15 +133,9 @@ class ToolSubList extends React.Component {
     };
 
     render() {
-        const styles = {
-            task: {
-                color:'#444',
-                cursor: "default"
-            },
-            taskChevron: {
-                fontSize: "80%",
-                marginRight: 0
-            },
+        const taskChevron = {
+            fontSize: "80%",
+            marginRight: 0
         };
 
         const sortFn = (t1, t2) => t1.name < t2.name ? -1 : t1.name == t2.name ? 0 : 1;
@@ -150,9 +144,9 @@ class ToolSubList extends React.Component {
         return (
             <div className="tool-sublist" onClick={toggle.bind(this, 'show')} >
                 { !this.props.task ? false :
-                    <h3 style={styles.task}>
+                    <h3>
                         <span className="section-left-padding hidden-xs"/>
-                        <Indicator title={"menu-" + (this.state.show ? "down":"right")} style={styles.taskChevron}/>
+                        <Indicator title={"menu-" + (this.state.show ? "down":"right")} style={taskChevron}/>
                         <Highlighter text={this.props.task}/>
                     </h3>
                 }
@@ -164,7 +158,6 @@ class ToolSubList extends React.Component {
                         resource={this.props.resource}
                         highlighter={this.props.highlighter}/>
                 )}
-                <hr style={{margin:0}}/>
             </div>
         );
     }
@@ -228,7 +221,7 @@ class ToolCard extends React.Component {
                 <div style={{whiteSpace:'nowrap', display: 'inline'}}>
                 { !tool.authentication || tool.authentication == "no" ? null
                     : <div className="badge-holder" title="This tool requires a user account. Please check the Authentication information for more details.">
-                        <span> <span className={"fa fa-key"} aria-hidden="true"/> </span>
+                        <span className={"fa fa-key"} style={{padding:"6px 6px"}} aria-hidden="true"/>
                     </div> }
                 </div>
             </div>
@@ -313,7 +306,7 @@ const Indicator = (props) => {
     return (
         <span style={Object.assign({marginRight:'1em'}, props.style)}>
             <span className={"glyphicon glyphicon-"+props.title} style={{fontSize:'90%'}} aria-hidden="true"/>
-            {" "}
+            {props.children && props.children.length ? " " : false}
             {props.children}
         </span>
     );
