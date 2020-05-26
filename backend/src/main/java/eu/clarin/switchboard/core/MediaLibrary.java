@@ -74,6 +74,12 @@ public class MediaLibrary {
     public FileInfo addMedia(String originalUrlOrDoiOrHandle) throws CommonException, ProfilingException {
         LinkMetadata.LinkInfo linkInfo = LinkMetadata.getLinkData(cachingClient, originalUrlOrDoiOrHandle);
         try {
+            if (linkInfo.response.getEntity().getContentLength() > storagePolicy.getMaxAllowedDataSize()) {
+                throw new StoragePolicyException(
+                        "The resource is too large. The maximum allowed data size is " +
+                                DefaultStoragePolicy.humanSize(storagePolicy.getMaxAllowedDataSize()) + ".",
+                        StoragePolicyException.Kind.TOO_BIG);
+            }
             FileInfo fileInfo = addMedia(linkInfo.filename, linkInfo.response.getEntity().getContent());
             fileInfo.setLinksInfo(originalUrlOrDoiOrHandle, linkInfo.downloadLink, linkInfo.redirects);
             return fileInfo;
@@ -121,7 +127,7 @@ public class MediaLibrary {
         fileInfoMap.put(id, fileInfo);
 
         try {
-            storagePolicy.acceptProfile(fileInfo.getProfile());
+            storagePolicy.acceptProfile(fileInfo.getProfile().toProfile());
         } catch (StoragePolicyException xc) {
             LOGGER.debug("profile not accepted: " + fileInfo);
             dataStore.delete(id, path);

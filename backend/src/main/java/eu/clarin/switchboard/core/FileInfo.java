@@ -7,6 +7,7 @@ import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class FileInfo {
     private final UUID id;
@@ -16,8 +17,8 @@ public class FileInfo {
     private final Path path; // actual path on disk
     private final long fileLength;
 
-    private Profile profile;
-    private List<Profile> secondaryProfiles;
+    private Profile.Flat profile;
+    private List<Profile.Flat> secondaryProfiles;
 
     private String originalLink; // original link; can point to a landing page, not to the data
     private String downloadLink; // link used for downloading from original location
@@ -52,11 +53,11 @@ public class FileInfo {
         return fileLength;
     }
 
-    public Profile getProfile() {
+    public Profile.Flat getProfile() {
         return profile;
     }
 
-    public List<Profile> getSecondaryProfiles() {
+    public List<Profile.Flat> getSecondaryProfiles() {
         return secondaryProfiles;
     }
 
@@ -79,8 +80,8 @@ public class FileInfo {
     }
 
     public void setProfiles(Profile profile, List<Profile> secondaryProfiles) {
-        this.profile = profile;
-        this.secondaryProfiles = secondaryProfiles;
+        this.profile = profile.flat();
+        this.secondaryProfiles = secondaryProfiles.stream().map(Profile::flat).collect(Collectors.toList());
     }
 
     @Override

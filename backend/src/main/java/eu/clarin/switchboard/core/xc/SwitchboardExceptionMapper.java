@@ -56,6 +56,7 @@ public class SwitchboardExceptionMapper implements javax.ws.rs.ext.ExceptionMapp
             json.message = "Resource's media type could not be detected." + BUG;
         } else if (exception instanceof WebApplicationException) {
             LOGGER.error("WebApplicationException: " + exception.getMessage());
+            LOGGER.error("WebApplicationException: ", exception);
             return ((WebApplicationException)exception).getResponse();
         } else {
             LOGGER.error("Exception", exception);

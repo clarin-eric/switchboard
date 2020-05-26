@@ -1,13 +1,17 @@
 package eu.clarin.switchboard.app;
 
 import eu.clarin.switchboard.resources.ToolsResource;
+import io.dropwizard.servlets.assets.ResourceURL;
+import io.dropwizard.util.Resources;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.core.*;
+import javax.ws.rs.core.EntityTag;
+import javax.ws.rs.core.Request;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.StreamingOutput;
 import java.io.IOException;
+import java.net.URL;
 import java.net.URLConnection;
 import java.nio.file.Files;
 import java.util.Date;
@@ -34,7 +38,30 @@ public class FileAsset {
             lastModifiedTime = new Date(filepath.toFile().lastModified());
         } catch (IOException e) {
             LOGGER.info("file asset not found:" + filepath);
+        }
+    }
+
+    public FileAsset(String resourcePath) {
+        URL requestedResourceURL;
+        try {
+            requestedResourceURL = Resources.getResource(resourcePath);
+        } catch (IllegalArgumentException xc) {
+            LOGGER.info(xc.getMessage());
             return;
+        }
+
+        try {
+            content = Resources.toByteArray(requestedResourceURL);
+            mimeType = URLConnection.guessContentTypeFromName(resourcePath);
+            eTag = new EntityTag('"' + hash(content) + '"');
+
+            long lastModified = ResourceURL.getLastModified(requestedResourceURL);
+            if (lastModified < 1L) {
+                lastModified = System.currentTimeMillis();
+            }
+            lastModifiedTime = new Date(lastModified);
+        } catch (IOException e) {
+            LOGGER.info("resource asset not found:" + resourcePath);
         }
     }
 

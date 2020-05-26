@@ -9,7 +9,6 @@ import eu.clarin.switchboard.profiler.api.Profile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -20,7 +19,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 
-@Path("")
+@Path("/api")
 public class ToolsResource {
     private static final Logger LOGGER = LoggerFactory.getLogger(ToolsResource.class);
 
