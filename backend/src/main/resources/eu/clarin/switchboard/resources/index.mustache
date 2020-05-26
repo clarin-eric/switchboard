@@ -6,34 +6,15 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <title>Language Resource Switchboard</title>
+    <link rel="icon" href="/favicon.ico">
 
     <link rel="stylesheet" href="/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/css/switchboard.css">
     <link rel="stylesheet" href="/css/fontawesome-all.min.css">
-    <script>window.APP_CONTEXT_PATH="";</script>
+
+    <script>window.APP_CONTEXT_PATH="{{appContextPath}}";</script>
 </head>
 <body>
-    <script type="text/javascript">
-        // <!-- Matomo -->
-        var _paq = window._paq || [];
-        _paq.push(["setDomains", [
-            "*.weblicht.sfs.uni-tuebingen.de/switchboard-test",
-            "switchboard.clarin-dev.eu",
-            "beta-switchboard.clarin.eu",
-            "switchboard.clarin.eu"
-        ]]);
-        _paq.push(['trackPageView']);
-        _paq.push(['enableLinkTracking']);
-        (function() {
-            var u="https://stats.clarin.eu/";
-            _paq.push(['setTrackerUrl', u+'matomo.php']);
-            _paq.push(['setSiteId', 21]);
-            var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-            g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js';
-            s.parentNode.insertBefore(g,s);
-        })();
-    </script>
-
     <div id='reactapp'>
         <div id="bodycontainer">
             <nav class="navbar navbar-static-top navbar-default">
@@ -64,9 +45,8 @@
                     </div>
                 </div>
             </nav>
-            <h1>...</h1>
         </div>
-
+        <noscript><p>This site requires JavaScript.</p></noscript>
         <footer id="footer">
             <div class="container">
                 <div class="row">
@@ -85,6 +65,26 @@
     </div>
 
     <script src="/bundle.js"></script>
-    <noscript><p>This site requires JavaScript.</p></noscript>
+
+    <script type="text/javascript">
+        // <!-- Matomo -->
+        var _paq = window._paq || [];
+        _paq.push(["setDomains", [
+            "*.weblicht.sfs.uni-tuebingen.de/switchboard-test",
+            "switchboard.clarin-dev.eu",
+            "beta-switchboard.clarin.eu",
+            "switchboard.clarin.eu"
+        ]]);
+        _paq.push(['trackPageView']);
+        _paq.push(['enableLinkTracking']);
+        (function() {
+            var u="https://stats.clarin.eu/";
+            _paq.push(['setTrackerUrl', u+'matomo.php']);
+            _paq.push(['setSiteId', 21]);
+            var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+            g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js';
+            s.parentNode.insertBefore(g,s);
+        })();
+    </script>
 </body>
 </html>

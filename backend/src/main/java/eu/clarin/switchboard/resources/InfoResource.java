@@ -13,7 +13,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.*;
 
-@Path("")
+@Path("/api")
 public class InfoResource {
     private static final Logger LOGGER = LoggerFactory.getLogger(InfoResource.class);
 

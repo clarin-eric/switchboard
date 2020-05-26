@@ -1,9 +1,11 @@
 package eu.clarin.switchboard.resources;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.clarin.switchboard.core.FileInfo;
 import eu.clarin.switchboard.core.MediaLibrary;
 import eu.clarin.switchboard.core.xc.CommonException;
-import eu.clarin.switchboard.profiler.api.Profile;
 import eu.clarin.switchboard.profiler.api.ProfilingException;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
@@ -16,24 +18,23 @@ import javax.ws.rs.core.*;
 import java.io.InputStream;
 import java.net.URI;
 import java.nio.file.Files;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
-@Path("storage")
+@Path("/api/storage")
 public class DataResource {
     private static final Logger LOGGER = LoggerFactory.getLogger(DataResource.class);
 
+    ObjectMapper mapper = new ObjectMapper();
     MediaLibrary mediaLibrary;
 
-    public DataResource(MediaLibrary mediaLibrary)  {
+    public DataResource(MediaLibrary mediaLibrary) {
         this.mediaLibrary = mediaLibrary;
     }
 
     @GET
     @Path("/{id}")
-    public Response getFile(@PathParam("id") String idString)  {
+    public Response getFile(@PathParam("id") String idString) {
         UUID id;
         try {
             id = UUID.fromString(idString);
@@ -52,11 +53,10 @@ public class DataResource {
         };
 
         Response.ResponseBuilder builder = Response.ok(fileStream);
-        builder.type(fi.getProfile().getMediaType());
+        builder.type(fi.getProfile().toProfile().getMediaType());
         builder.header("content-disposition", "attachment; filename=" + fi.getFilename());
         return builder.build();
     }
-
 
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
@@ -76,23 +76,21 @@ public class DataResource {
             return Response.status(400).entity("Please provide either a file or a url to download in the form").build();
         }
 
-        Map<String, Object> ret = new HashMap<>();
-        ret.put("id", fileInfo.getId());
-        ret.put("filename", fileInfo.getFilename());
-        ret.put("fileLength", fileInfo.getFileLength());
-        ret.put("profile", fileInfo.getProfile().flat());
-        ret.put("secondaryProfiles",
-                fileInfo.getSecondaryProfiles().stream().map(Profile::flat).collect(Collectors.toList()));
-        ret.put("originalLink", fileInfo.getOriginalLink());
-        ret.put("downloadLink", fileInfo.getDownloadLink());
-        ret.put("httpRedirects", fileInfo.getHttpRedirects());
+        Map<String, Object> ret;
+        try {
+            ret = mapper.readValue(mapper.writeValueAsString(fileInfo), new TypeReference<Map<String, Object>>() {});
+        } catch (JsonProcessingException xc) {
+            LOGGER.error("json conversion exception ", xc);
+            return Response.serverError().build();
+        }
+        ret.remove("path");
 
         URI localLink = UriBuilder.fromPath(request.getRequestURI())
-                .path(fileInfo.getId().toString()).build();
+                .path(fileInfo.getId().toString())
+                .build();
         ret.put("localLink", localLink);
 
-        LOGGER.debug("postFile return: " + ret);
-
+        LOGGER.debug("postFile returns: " + ret);
         return Response.ok(ret).build();
     }
 }
