@@ -1,6 +1,6 @@
 package eu.clarin.switchboard.resources;
 
-import com.google.common.io.ByteStreams;
+import eu.clarin.switchboard.app.FileAsset;
 import eu.clarin.switchboard.app.config.ToolConfig;
 import eu.clarin.switchboard.core.Tool;
 import eu.clarin.switchboard.core.ToolRegistry;
@@ -9,15 +9,13 @@ import eu.clarin.switchboard.profiler.api.Profile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.StreamingOutput;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URLConnection;
-import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
@@ -69,44 +67,15 @@ public class ToolsResource {
 
     @GET
     @Path("logos/{logoName}")
-    public Response getTools(@PathParam("logoName") String logoName) throws IOException {
-        String imageMimeType = URLConnection.guessContentTypeFromName(logoName);
+    public Response getTools(@Context Request request, @PathParam("logoName") String logoName) throws IOException {
         java.nio.file.Path logo = Paths.get(toolConfig.getLogoRegistryPath(), logoName);
-
-        byte[] data;
-        if (logo.toFile().exists()) {
-            data = Files.readAllBytes(logo);
-        } else {
-            LOGGER.debug("logo not found, trying to find it in resources: " + logoName);
-            data = readResource(logoName);
-        }
-
-        if (data == null) {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-
-        StreamingOutput fileStream = output -> {
-            output.write(data);
-            output.flush();
-            // doc says not to close the output stream
-        };
-        return Response
-                .ok(fileStream, imageMimeType)
-                .build();
+        FileAsset fileAsset = new FileAsset(logo);
+        return fileAsset.makeResponse(request);
     }
 
-    private byte[] readResource(String name) throws IOException {
-        try (InputStream is = this.getClass().getResourceAsStream("/webui/images/" + name)) {
-            if (is == null) {
-                return null;
-            }
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ByteStreams.copy(is, baos);
-            return baos.toByteArray();
-        }
-    }
-
-    /** Utility for conversion to and from Json */
+    /**
+     * Utility for conversion to and from Json
+     */
     public static class JsonProfile {
         public Confidence confidence;
         public String mediaType;
