@@ -20,13 +20,17 @@ public class UrlResolverConfig {
     @JsonProperty
     private String unit;
 
+    @NotNull
+    private int maxHttpCacheEntries;
+
     public UrlResolverConfig() {
     }
 
-    public UrlResolverConfig(int connectTimeout, int readTimeout, String unit) {
+    public UrlResolverConfig(int connectTimeout, int readTimeout, String unit, int maxHttpCacheEntries) {
         this.connectTimeout = connectTimeout;
         this.readTimeout = readTimeout;
         this.unit = unit;
+        this.maxHttpCacheEntries = maxHttpCacheEntries;
     }
 
     public int getConnectTimeout() {
@@ -39,6 +43,9 @@ public class UrlResolverConfig {
         return (int) Duration.of(readTimeout, u).getNano() / 1000 / 1000;
     }
 
+    public int getMaxHttpCacheEntries() {
+        return maxHttpCacheEntries;
+    }
 
     @Override
     public String toString() {
@@ -46,6 +53,7 @@ public class UrlResolverConfig {
                 .add("\nconnectTimeout", connectTimeout)
                 .add("\nreadTimeout", readTimeout)
                 .add("\nunit", unit)
+                .add("\nmaxHttpCacheEntries", maxHttpCacheEntries)
                 .toString();
     }
 }
