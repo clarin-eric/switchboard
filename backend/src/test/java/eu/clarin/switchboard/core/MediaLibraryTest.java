@@ -34,9 +34,9 @@ public class MediaLibraryTest {
         TikaConfig tikaConfig = new TikaConfig(this.getClass().getResourceAsStream("/tikaConfig.xml"));
         Profiler profiler = new TikaProfiler(tikaConfig);
 
-        UrlResolverConfig urlResolver = new UrlResolverConfig(3, 3, "seconds");
+        UrlResolverConfig urlResolver = new UrlResolverConfig(3, 3, "seconds", 10);
 
-        mediaLibrary = new MediaLibrary(dataStore, profiler, storagePolicy, urlResolver);
+        mediaLibrary = new MediaLibrary(dataStore, profiler, storagePolicy, urlResolver, dataStoreConfig);
     }
 
     @Test(expected = LinkException.class)

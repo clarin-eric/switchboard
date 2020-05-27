@@ -74,7 +74,8 @@ public class SwitchboardApp extends Application<RootConfig> {
         Map<String, String> gitProperties = GitProperties.load("switchboard");
 
         Profiler profiler = new DefaultProfiler();
-        MediaLibrary mediaLibrary = new MediaLibrary(dataStore, profiler, storagePolicy, switchboardConfig.getUrlResolver());
+        MediaLibrary mediaLibrary = new MediaLibrary(dataStore, profiler, storagePolicy,
+                switchboardConfig.getUrlResolver(), switchboardConfig.getDataStore());
 
         InfoResource infoResource = new InfoResource(toolRegistry, gitProperties,
                 switchboardConfig.getDataStore().getMaxSize(), switchboardConfig.getContactEmail());
