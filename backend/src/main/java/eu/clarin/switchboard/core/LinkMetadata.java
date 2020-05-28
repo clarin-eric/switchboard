@@ -91,7 +91,6 @@ public class LinkMetadata {
 
             Header header = response.getFirstHeader("Content-Disposition");
             if (header != null) {
-                System.out.println("httpget header: " + header.toString());
                 try {
                     ContentDisposition disposition = new ContentDisposition(header.getValue());
                     String name = disposition.getFileName();
