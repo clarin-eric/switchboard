@@ -16,9 +16,28 @@ var Zepto=function(){function L(t){return null==t?String(t):j[S.call(t)]||"objec
 
 var $ = window.$ = Zepto;
 
+const defaultSwitchboardURL = "https://switchboard.clarin.eu";
+var switchboardURL = null;
+
+function setSwitchboardURL(url) {
+    if (url) {
+        switchboardURL = url;
+        return;
+    } else {
+        for (const x of document.getElementsByTagName('script')) {
+            if (x.src && x.src.includes('switchboardpopup')) {
+                const url = x.src;
+                const end = url.indexOf('/popup/');
+                switchboardURL = url.substr(0, end);
+                return;
+            }
+        }
+        switchboardURL = defaultSwitchboardURL;
+        console.warn("Could not automatically set the Switchboard URL, defaulting to:", switchboardURL);
+    }
+}
+
 function showSwitchboardPopup(align, params) {
-    const switchboardURL = 'https://switchboard.clarin-dev.eu';
-    // const switchboardURL = 'http://localhost:8081';
     testArguments(align, params);
     buildParams(params);
     const {container, popup} = makeDomElements(align, switchboardURL, params);
@@ -118,14 +137,18 @@ function togglePopup(container) {
     }
 }
 
-// the only change to globals
-window.showSwitchboardPopup = showSwitchboardPopup;
-
-// remove global Zepto traces
+// cleanup: remove global Zepto traces
 if (typeof old$ === 'undefined') {
     delete window.$
 } else {
     window.$ = old$;
 }
+
+// set the switchboard url automatically
+setSwitchboardURL();
+
+// change globals
+window.showSwitchboardPopup = showSwitchboardPopup;
+window.setSwitchboardURL = setSwitchboardURL;
 
 })();
