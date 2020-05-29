@@ -16,6 +16,7 @@ var Zepto=function(){function L(t){return null==t?String(t):j[S.call(t)]||"objec
 
 var $ = window.$ = Zepto;
 
+const defaultSwitchboardURL = "https://switchboard.clarin.eu";
 var switchboardURL = null;
 
 function setSwitchboardURL(url) {
@@ -31,7 +32,8 @@ function setSwitchboardURL(url) {
                 return;
             }
         }
-        console.error("Could not find automatically set the Switchboard URL. Switchboard invocations will fail.");
+        switchboardURL = defaultSwitchboardURL;
+        console.warn("Could not automatically set the Switchboard URL, defaulting to:", switchboardURL);
     }
 }
 
