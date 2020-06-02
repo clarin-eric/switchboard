@@ -1,13 +1,16 @@
 package eu.clarin.switchboard.core;
 
+import com.google.common.io.ByteStreams;
 import eu.clarin.switchboard.app.config.DataStoreConfig;
 import eu.clarin.switchboard.app.config.UrlResolverConfig;
 import eu.clarin.switchboard.core.xc.CommonException;
+import eu.clarin.switchboard.core.xc.LinkException;
 import eu.clarin.switchboard.core.xc.StorageException;
 import eu.clarin.switchboard.core.xc.StoragePolicyException;
 import eu.clarin.switchboard.profiler.api.Profile;
 import eu.clarin.switchboard.profiler.api.Profiler;
 import eu.clarin.switchboard.profiler.api.ProfilingException;
+import org.apache.http.HttpEntity;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.cache.CacheConfig;
@@ -15,9 +18,7 @@ import org.apache.http.impl.client.cache.CachingHttpClients;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.file.Path;
 import java.time.Duration;
 import java.time.Instant;
@@ -72,10 +73,19 @@ public class MediaLibrary {
 
     public FileInfo addMedia(String originalUrlOrDoiOrHandle) throws CommonException, ProfilingException {
         LinkMetadata.LinkInfo linkInfo = LinkMetadata.getLinkData(cachingClient, originalUrlOrDoiOrHandle);
-
-        FileInfo fileInfo = addMedia(linkInfo.filename, linkInfo.stream);
-        fileInfo.setLinksInfo(originalUrlOrDoiOrHandle, linkInfo.downloadLink, linkInfo.redirects);
-        return fileInfo;
+        try {
+            FileInfo fileInfo = addMedia(linkInfo.filename, linkInfo.response.getEntity().getContent());
+            fileInfo.setLinksInfo(originalUrlOrDoiOrHandle, linkInfo.downloadLink, linkInfo.redirects);
+            return fileInfo;
+        } catch (IOException xc) {
+            throw new LinkException(LinkException.Kind.DATA_STREAM_ERROR, "" + linkInfo.downloadLink, xc);
+        } finally {
+            try {
+                linkInfo.response.close();
+            } catch (IOException e) {
+                // ignore
+            }
+        }
     }
 
     public FileInfo addMedia(String filename, InputStream inputStream) throws

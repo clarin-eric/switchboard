@@ -1,6 +1,6 @@
 import React from 'react';
 import Select from 'react-select';
-import { processMediatype } from '../actions/utils';
+import { processMediatype, humanSize } from '../actions/utils';
 
 const SelectLanguage = (props) => {
     const value = props.languages.find(x => x.value == props.res.profile.language);
@@ -51,7 +51,7 @@ export class Resource extends React.Component {
                     <div className="col-md-4">
                         <div className="value namesize">
                             <a href={res.originalLink || res.localLink}> {res.filename}</a>
-                            <span>{res.fileLength}&nbsp;bytes</span>
+                            <span>{humanSize(res.fileLength)}</span>
                         </div>
                     </div>
                     <div className="col-md-4">

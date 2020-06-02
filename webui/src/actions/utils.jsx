@@ -8,6 +8,20 @@ export function image(src) {
     return window.APP_CONTEXT_PATH + '/images/' + src;
 }
 
+
+export function humanSize(size) {
+    const K = 1024;
+    if (size < K) {
+        return `${size} bytes`;
+    } else if (size < K * K) {
+        return `${(size/K).toFixed(2)} KiB`;
+    } else if (size < K * K * K) {
+        return `${(size/K/K).toFixed(2)} MiB`;
+    } else {
+        return `${(size/K/K/K).toFixed(2)} GiB`;
+    }
+}
+
 export function processLanguage(language) {
     const array = LANG_MAP[language];
     if (array && array.length) {

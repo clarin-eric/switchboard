@@ -2,11 +2,7 @@ package eu.clarin.switchboard.core;
 
 import eu.clarin.switchboard.core.xc.CommonException;
 import eu.clarin.switchboard.core.xc.LinkException;
-import eu.clarin.switchboard.profiler.api.ProfilingException;
-import org.apache.commons.io.input.AutoCloseInputStream;
 import org.apache.http.Header;
-import org.apache.http.HttpEntity;
-import org.apache.http.client.cache.CacheResponseStatus;
 import org.apache.http.client.cache.HttpCacheContext;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -15,13 +11,11 @@ import org.glassfish.jersey.media.multipart.ContentDisposition;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -39,8 +33,8 @@ public class LinkMetadata {
     public static class LinkInfo {
         String filename;
         String downloadLink;
-        InputStream stream;
         int redirects;
+        CloseableHttpResponse response;
 
         public String getFilename() {
             return filename;
@@ -50,12 +44,12 @@ public class LinkMetadata {
             return downloadLink;
         }
 
-        public InputStream getStream() {
-            return stream;
-        }
-
         public int getRedirects() {
             return redirects;
+        }
+
+        public CloseableHttpResponse getResponse() {
+            return response;
         }
     }
 
@@ -73,66 +67,53 @@ public class LinkMetadata {
             throw new LinkException(LinkException.Kind.DATA_STREAM_ERROR, "" + linkInfo.downloadLink, xc);
         }
 
-        try {
-            switch (context.getCacheResponseStatus()) {
-                case CACHE_HIT:
-                    LOGGER.debug("A response was generated from the cache with no requests sent upstream");
-                    break;
-                case CACHE_MODULE_RESPONSE:
-                    LOGGER.debug("The response was generated directly by the caching module");
-                    break;
-                case CACHE_MISS:
-                    LOGGER.debug("The response came from an upstream server");
-                    break;
-                case VALIDATED:
-                    LOGGER.debug("The response was generated from the cache after validating the entry with the origin server");
-                    break;
-            }
+        switch (context.getCacheResponseStatus()) {
+            case CACHE_HIT:
+                LOGGER.debug("A response was generated from the cache with no requests sent upstream");
+                break;
+            case CACHE_MODULE_RESPONSE:
+                LOGGER.debug("The response was generated directly by the caching module");
+                break;
+            case CACHE_MISS:
+                LOGGER.debug("The response came from an upstream server");
+                break;
+            case VALIDATED:
+                LOGGER.debug("The response was generated from the cache after validating the entry with the origin server");
+                break;
+        }
 
-            Header header = response.getFirstHeader("Content-Disposition");
-            if (header != null) {
+        Header header = response.getFirstHeader("Content-Disposition");
+        if (header != null) {
+            try {
+                ContentDisposition disposition = new ContentDisposition(header.getValue());
+                String name = disposition.getFileName();
+                if (!DataStore.sanitize(name).isEmpty()) {
+                    linkInfo.filename = name;
+                }
+            } catch (ParseException e) {
+                LOGGER.debug("cannot parse content-disposition " + header);
+                // caused by ContentDisposition, ignore
+            }
+        }
+
+        linkInfo.response = response;
+
+        List<URI> redirectURIs = context.getRedirectLocations();
+        if (redirectURIs != null && !redirectURIs.isEmpty()) {
+            for (URI redirectURI : redirectURIs) {
+                LOGGER.debug("Redirect URI: " + redirectURI);
                 try {
-                    ContentDisposition disposition = new ContentDisposition(header.getValue());
-                    String name = disposition.getFileName();
-                    if (!DataStore.sanitize(name).isEmpty()) {
-                        linkInfo.filename = name;
-                    }
-                } catch (ParseException e) {
-                    LOGGER.debug("cannot parse content-disposition " + header);
-                    // caused by ContentDisposition, ignore
+                    tryToSetFilenameFromUrl(linkInfo, redirectURI.toURL());
+                } catch (MalformedURLException e) {
+                    // ignore
                 }
             }
+            linkInfo.redirects = redirectURIs.size();
+            linkInfo.downloadLink = redirectURIs.get(redirectURIs.size() - 1).toString();
+        }
 
-            HttpEntity entity = response.getEntity();
-            try {
-                linkInfo.stream = new AutoCloseInputStream(entity.getContent());
-            } catch (IOException xc) {
-                throw new LinkException(LinkException.Kind.DATA_STREAM_ERROR, "" + linkInfo.downloadLink, xc);
-            }
-
-            List<URI> redirectURIs = context.getRedirectLocations();
-            if (redirectURIs != null && !redirectURIs.isEmpty()) {
-                for (URI redirectURI : redirectURIs) {
-                    LOGGER.debug("Redirect URI: " + redirectURI);
-                    try {
-                        tryToSetFilenameFromUrl(linkInfo, redirectURI.toURL());
-                    } catch (MalformedURLException e) {
-                        // ignore
-                    }
-                }
-                linkInfo.redirects = redirectURIs.size();
-                linkInfo.downloadLink = redirectURIs.get(redirectURIs.size() - 1).toString();
-            }
-
-            if (linkInfo.filename == null) {
-                linkInfo.filename = DEFAULT_NAME;
-            }
-        } finally {
-            try {
-                response.close();
-            } catch (IOException e) {
-                // ignore
-            }
+        if (linkInfo.filename == null) {
+            linkInfo.filename = DEFAULT_NAME;
         }
 
         LOGGER.debug("final linkInfo: " + linkInfo.filename + "; " + linkInfo.downloadLink);
