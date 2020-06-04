@@ -25,24 +25,35 @@ export class NavBar extends React.Component {
         }));
     }
 
+    renderMenuButton() {
+        if (this.props.mode === 'popup') {
+            return false;
+        } else {
+            return (
+                <button type="button" className="navbar-toggle collapsed" aria-expanded="false" onClick={this.toggleNav}>
+                    <span className="sr-only">Toggle navigation</span>
+                    <span className="icon-bar"></span>
+                    <span className="icon-bar"></span>
+                    <span className="icon-bar"></span>
+                </button>
+            );
+        }
+    }
+
     render() {
         const navCollapseClass = this.state.showCollapsedNavbar ? "collapse navbar-collapse text-right show" : "collapse navbar-collapse";
         const navItemClass = (url) => {
             const currentUrl = window.location.href;
             return "nav-item" + (currentUrl.endsWith(url) ? " active" : "");
         }
+        const target = this.props.mode === 'popup' ? "_blank" : "_self";
 
         return (
             <nav className="navbar navbar-static-top navbar-default">
                 <div className="container">
                     <div className="navbar-header">
-                        <button type="button" className="navbar-toggle collapsed" aria-expanded="false" onClick={this.toggleNav}>
-                            <span className="sr-only">Toggle navigation</span>
-                            <span className="icon-bar"></span>
-                            <span className="icon-bar"></span>
-                            <span className="icon-bar"></span>
-                        </button>
-                        <a className="navbar-brand nav-link" href={clientPath.root} onClick={this.closeNav}>
+                        {this.renderMenuButton()}
+                        <a className="navbar-brand nav-link" href={clientPath.root} target={target} onClick={this.closeNav}>
                             <span style={{fontSize:14, marginRight:2}} className="glyphicon glyphicon-cog" aria-hidden="true"/>
                             <span style={{fontSize:18}}>Language Resource Switchboard</span>
                         </a>

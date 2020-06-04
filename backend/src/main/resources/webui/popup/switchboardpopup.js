@@ -63,7 +63,7 @@ function buildParams(params) {
         'b2share.eudat.eu': 'b2share',
     }
     params.origin = params.origin || originMap[window.location.host] || 'unknown';
-    params.url = encodeURIComponent(params.url);
+    params.popup = true;
 }
 
 function makeDomElements(align, invokeURL, params) {
@@ -78,17 +78,16 @@ function makeDomElements(align, invokeURL, params) {
 
     const formAttr = {
         target: 'switchboard_iframe',
-        // target: '_blank',
-        // action: invokeURL,
-        // method: 'POST',
-        action: invokeURL + '/#/' + params.origin + '/' + params.url + '/',
-        method: 'GET',
+        action: invokeURL,
+        method: 'POST',
+        enctype: 'multipart/form-data',
     };
     console.log({formAttr});
-    const form = $('<form>')
-        .attr(formAttr)
-        .append($('<input>').attr({type:'text', name:'url', value:params.url}))
-        .append($('<input>').attr('type', 'submit'))
+    const form = $('<form>').attr(formAttr);
+    for (const key in params) {
+        form.append($('<input>').attr({type:'text', name:key, value:params[key]}))
+    }
+    form.append($('<input>').attr('type', 'submit'))
         .appendTo(popup);
     const iframe = $('<iframe>').attr({name: 'switchboard_iframe'}).appendTo(popup);
 

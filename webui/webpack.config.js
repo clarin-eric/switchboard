@@ -42,11 +42,13 @@ module.exports = {
         contentBase: PATHS.compiled_app,
         historyApiFallback: true,
         proxy: {
-            '/api/**': {
-                target :'http://localhost:8080',
-                changeOrigin: true,
-                secure: false
-            }
+            '/api/**': {target :'http://localhost:8080', changeOrigin: true, secure: false},
+            '/': {target :'http://localhost:8080', changeOrigin: true, secure: false},
+            '/css': {target :'http://localhost:8080', changeOrigin: true, secure: false},
+            '/fonts': {target :'http://localhost:8080', changeOrigin: true, secure: false},
+            '/webfonts': {target :'http://localhost:8080', changeOrigin: true, secure: false},
+            '/images': {target :'http://localhost:8080', changeOrigin: true, secure: false},
+            '/popup': {target :'http://localhost:8080', changeOrigin: true, secure: false},
         }
     }
 };

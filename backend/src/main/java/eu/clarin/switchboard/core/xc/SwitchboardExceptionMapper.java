@@ -66,7 +66,7 @@ public class SwitchboardExceptionMapper implements javax.ws.rs.ext.ExceptionMapp
         return Response.status(status).entity(json).build();
     }
 
-    public Response toResponse(StoragePolicyException exception) {
+    private static Response toResponse(StoragePolicyException exception) {
         JsonXc json = new JsonXc();
         Response.Status status = Response.Status.INTERNAL_SERVER_ERROR;
 
@@ -80,7 +80,7 @@ public class SwitchboardExceptionMapper implements javax.ws.rs.ext.ExceptionMapp
         return Response.status(status).entity(json).build();
     }
 
-    public Response toResponse(LinkException exception) {
+    private static Response toResponse(LinkException exception) {
         JsonXc json = new JsonXc();
         Response.Status status = Response.Status.BAD_REQUEST;
         json.url = exception.getLink();

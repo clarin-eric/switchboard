@@ -104,7 +104,7 @@ public class SwitchboardApp extends Application<RootConfig> {
         environment.jersey().register(infoResource);
         environment.jersey().register(dataResource);
         environment.jersey().register(toolsResource);
-        environment.jersey().register(new MainResource());
+        environment.jersey().register(new MainResource(mediaLibrary));
 
         environment.healthChecks().register("switchboard", new AppHealthCheck());
     }
