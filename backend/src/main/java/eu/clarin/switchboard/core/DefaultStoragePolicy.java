@@ -39,10 +39,14 @@ public class DefaultStoragePolicy implements StoragePolicy {
     @Override
     public void acceptFile(File file) throws StoragePolicyException {
         if (file.length() > dataStoreConfig.getMaxSize()) {
-            throw new StoragePolicyException(
-                    "The resource is too large. The maximum allowed data size is " +
-                            humanSize(dataStoreConfig.getMaxSize()) + ".",
-                    StoragePolicyException.Kind.TOO_BIG);
+            throw tooBig();
+        }
+    }
+
+    @Override
+    public void acceptSize(long fileSize) throws StoragePolicyException {
+        if (fileSize > dataStoreConfig.getMaxSize()) {
+            throw tooBig();
         }
     }
 
@@ -55,6 +59,13 @@ public class DefaultStoragePolicy implements StoragePolicy {
                         StoragePolicyException.Kind.MEDIA_NOT_ALLOWED);
             }
         }
+    }
+
+    private StoragePolicyException tooBig() {
+        return new StoragePolicyException(
+                "The resource is too large. The maximum allowed data size is " +
+                        humanSize(getMaxAllowedDataSize()) + ".",
+                StoragePolicyException.Kind.TOO_BIG);
     }
 
     public static String humanSize(long maxSize) {
