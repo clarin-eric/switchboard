@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.clarin.switchboard.core.FileInfo;
 import eu.clarin.switchboard.core.MediaLibrary;
 import eu.clarin.switchboard.core.xc.CommonException;
-import eu.clarin.switchboard.core.xc.SwitchboardExceptionMapper;
 import eu.clarin.switchboard.profiler.api.ProfilingException;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
@@ -35,14 +34,14 @@ public class DataResource {
 
     @GET
     @Path("/{id}")
-    public Response getFile(@PathParam("id") String idString) {
+    public Response getFile(@PathParam("id") String idString) throws Throwable {
         UUID id;
         try {
             id = UUID.fromString(idString);
         } catch (IllegalArgumentException xc) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        FileInfo fi = mediaLibrary.getFileInfo(id);
+        FileInfo fi = mediaLibrary.waitForFileInfo(id);
         if (fi == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
@@ -63,7 +62,7 @@ public class DataResource {
     @Path("/{id}/info")
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public Response getFileInfo(@Context HttpServletRequest request, @PathParam("id") String idString)
-            throws Exception {
+            throws Throwable {
         UUID id;
         try {
             id = UUID.fromString(idString);
@@ -71,26 +70,12 @@ public class DataResource {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
 
-        while (true) {
-            Exception exception = mediaLibrary.getFileInfoAsyncError(id);
-            if (exception != null) {
-                LOGGER.debug("rethrow previous async error: {}", exception.getMessage());
-                throw exception;
-            }
-
-            FileInfo fi = mediaLibrary.getFileInfo(id);
-            if (fi == null) {
-                return Response.status(Response.Status.NOT_FOUND).build();
-            }
-
-            if (fi.getPath() == null) {
-                // async file transfer not finished, looping
-                continue;
-            }
-
-            // async file transfer has finished
-            return fileInfoToResponse(request.getRequestURI(), fi);
+        FileInfo fi = mediaLibrary.waitForFileInfo(id);
+        if (fi == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
         }
+
+        return fileInfoToResponse(request.getRequestURI(), fi);
     }
 
     @POST

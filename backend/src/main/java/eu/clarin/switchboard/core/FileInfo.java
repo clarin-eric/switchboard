@@ -3,15 +3,12 @@ package eu.clarin.switchboard.core;
 import eu.clarin.switchboard.profiler.api.Profile;
 
 import java.nio.file.Path;
-import java.time.Instant;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class FileInfo {
     private final UUID id;
-    private final Instant creation;
 
     private final String filename; // original filename, on disk we use a sanitized form
     private final Path path; // actual path on disk
@@ -29,16 +26,11 @@ public class FileInfo {
         this.filename = filename;
         this.path = path;
 
-        this.creation = new Date().toInstant();
         this.fileLength = path == null ? -1 : path.toFile().length();
     }
 
     public UUID getId() {
         return id;
-    }
-
-    public Instant getCreation() {
-        return creation;
     }
 
     public String getFilename() {
@@ -88,7 +80,6 @@ public class FileInfo {
     public String toString() {
         return "FileInfo: " +
                 "\nid=" + id +
-                "\ncreation=" + creation.toString() +
                 "\nfilename='" + filename + '\'' +
                 "\npath=" + path +
                 "\nfileLength=" + fileLength +

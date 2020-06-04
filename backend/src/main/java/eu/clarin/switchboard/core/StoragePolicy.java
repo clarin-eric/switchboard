@@ -11,6 +11,8 @@ public interface StoragePolicy {
 
     void acceptFile(File file) throws StoragePolicyException;
 
+    void acceptSize(long fileSize) throws StoragePolicyException;
+
     void acceptProfile(Profile profile) throws StoragePolicyException;
 
     Duration getMaxAllowedLifetime();
