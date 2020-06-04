@@ -4,6 +4,7 @@ import {Alerts} from '../components/Alerts';
 
 const mapStateToProps = (state) => ({
     alerts: state.alerts,
+    mode: state.mode,
 });
 const mapDispatchToProps = (dispatch) => ({
     clearAlerts: () => dispatch(clearAlerts()),

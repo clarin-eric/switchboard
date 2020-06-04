@@ -11,6 +11,15 @@ function apiinfo(state = SI({}), action) {
     }
 }
 
+function mode(state = null, action) {
+    switch (action.type) {
+        case actionType.MODE:
+            return SI(action.mode);
+        default:
+            return state;
+    }
+}
+
 function mediatypes(state = SI([]), action) {
     switch (action.type) {
         case actionType.MEDIATYPES_FETCH_SUCCESS:
@@ -83,6 +92,7 @@ function alerts(state = SI([]), action) {
 }
 
 const rootReducer = combineReducers({
+    mode,
     apiinfo,
     mediatypes,
     languages,

@@ -30,7 +30,7 @@ public class FileInfo {
         this.path = path;
 
         this.creation = new Date().toInstant();
-        this.fileLength = path.toFile().length();
+        this.fileLength = path == null ? -1 : path.toFile().length();
     }
 
     public UUID getId() {

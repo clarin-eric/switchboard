@@ -30,6 +30,45 @@ export function uploadFile(file) {
     return uploadData(formData);
 }
 
+export function fetchAsyncResourceState(id) {
+    return function (dispatch, getState) {
+        dispatch(updateResource({state: 'uploading'}));
+        axios.get(apiPath.storageInfo(id))
+            .then(response => {
+                const resource = response.data;
+
+                if (resource.localLink && resource.localLink.startsWith(apiPath.api)) {
+                    resource.localLink = window.origin + resource.localLink;
+                }
+                resource.state = 'stored';
+                dispatch(updateResource(resource));
+            })
+            .catch(error => {
+                dispatch(updateResource({state: 'error'}));
+                errHandler(dispatch)(error);
+            });
+    }
+}
+
+export function showResourceError(errorMessage) {
+    return function (dispatch, getState) {
+        dispatch(updateResource({state: 'error'}));
+        dispatch({
+            type: actionType.ERROR,
+            message: errorMessage,
+        });
+    }
+}
+
+export function setMode(mode) {
+    return function (dispatch, getState) {
+        dispatch({
+            type: actionType.MODE,
+            mode: 'popup',
+        });
+    }
+}
+
 function uploadData(formData) {
     return function (dispatch, getState) {
         dispatch(updateResource({state: 'uploading'}));

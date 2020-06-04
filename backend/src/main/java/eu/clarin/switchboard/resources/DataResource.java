@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.clarin.switchboard.core.FileInfo;
 import eu.clarin.switchboard.core.MediaLibrary;
 import eu.clarin.switchboard.core.xc.CommonException;
+import eu.clarin.switchboard.core.xc.SwitchboardExceptionMapper;
 import eu.clarin.switchboard.profiler.api.ProfilingException;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
@@ -25,7 +26,7 @@ import java.util.UUID;
 public class DataResource {
     private static final Logger LOGGER = LoggerFactory.getLogger(DataResource.class);
 
-    ObjectMapper mapper = new ObjectMapper();
+    static ObjectMapper mapper = new ObjectMapper();
     MediaLibrary mediaLibrary;
 
     public DataResource(MediaLibrary mediaLibrary) {
@@ -58,6 +59,40 @@ public class DataResource {
         return builder.build();
     }
 
+    @GET
+    @Path("/{id}/info")
+    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+    public Response getFileInfo(@Context HttpServletRequest request, @PathParam("id") String idString)
+            throws Exception {
+        UUID id;
+        try {
+            id = UUID.fromString(idString);
+        } catch (IllegalArgumentException xc) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        while (true) {
+            Exception exception = mediaLibrary.getFileInfoAsyncError(id);
+            if (exception != null) {
+                LOGGER.debug("rethrow previous async error: {}", exception.getMessage());
+                throw exception;
+            }
+
+            FileInfo fi = mediaLibrary.getFileInfo(id);
+            if (fi == null) {
+                return Response.status(Response.Status.NOT_FOUND).build();
+            }
+
+            if (fi.getPath() == null) {
+                // async file transfer not finished, looping
+                continue;
+            }
+
+            // async file transfer has finished
+            return fileInfoToResponse(request.getRequestURI(), fi);
+        }
+    }
+
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
@@ -76,18 +111,21 @@ public class DataResource {
             return Response.status(400).entity("Please provide either a file or a url to download in the form").build();
         }
 
+        return fileInfoToResponse(request.getRequestURI(), fileInfo);
+    }
+
+    static Response fileInfoToResponse(String requestURI, FileInfo fileInfo) {
         Map<String, Object> ret;
         try {
-            ret = mapper.readValue(mapper.writeValueAsString(fileInfo), new TypeReference<Map<String, Object>>() {});
+            ret = mapper.readValue(mapper.writeValueAsString(fileInfo), new TypeReference<Map<String, Object>>() {
+            });
         } catch (JsonProcessingException xc) {
             LOGGER.error("json conversion exception ", xc);
             return Response.serverError().build();
         }
         ret.remove("path");
 
-        URI localLink = UriBuilder.fromPath(request.getRequestURI())
-                .path(fileInfo.getId().toString())
-                .build();
+        URI localLink = UriBuilder.fromPath(requestURI).path(fileInfo.getId().toString()).build();
         ret.put("localLink", localLink);
 
         LOGGER.debug("postFile returns: " + ret);

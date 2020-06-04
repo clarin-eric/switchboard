@@ -51,9 +51,12 @@ export class Alerts extends React.Component {
                 <div className="alert alert-danger" style={{marginBottom:0, textAlign:'center'}}>
                     <h3 className="alert-danger" style={{marginTop:0}}>Error</h3>
                     {this.props.alerts.map(this.renderAlert)}
-                    <div style={{textAlign: 'center', marginTop:'1em'}}>
-                        <button className="btn btn-block" onClick={this.props.clearAlerts}>Close</button>
-                    </div>
+                    { this.props.mode === 'popup' ?
+                        false : // no close button when we are in a popup with an error
+                        <div style={{textAlign: 'center', marginTop:'1em'}}>
+                            <button className="btn btn-block" onClick={this.props.clearAlerts}>Close</button>
+                        </div>
+                    }
                 </div>
             </Modal>
         );

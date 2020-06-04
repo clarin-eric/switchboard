@@ -1,6 +1,5 @@
 package eu.clarin.switchboard.core;
 
-import com.google.common.io.ByteStreams;
 import eu.clarin.switchboard.app.config.DataStoreConfig;
 import eu.clarin.switchboard.app.config.UrlResolverConfig;
 import eu.clarin.switchboard.core.xc.CommonException;
@@ -10,7 +9,6 @@ import eu.clarin.switchboard.core.xc.StoragePolicyException;
 import eu.clarin.switchboard.profiler.api.Profile;
 import eu.clarin.switchboard.profiler.api.Profiler;
 import eu.clarin.switchboard.profiler.api.ProfilingException;
-import org.apache.http.HttpEntity;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.cache.CacheConfig;
@@ -23,6 +21,7 @@ import java.nio.file.Path;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.*;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -39,20 +38,38 @@ public class MediaLibrary {
     private final DataStore dataStore;
     private final Profiler profiler;
     private final StoragePolicy storagePolicy;
-    private final UrlResolverConfig urlResolverConfig;
     private final CloseableHttpClient cachingClient;
+    private final ExecutorService executorService;
 
     Map<UUID, FileInfo> fileInfoMap = Collections.synchronizedMap(new HashMap<>());
 
+    public static class FileError {
+        Instant creation;
+        Exception exception;
+
+        public FileError(Exception exception) {
+            this.creation = Instant.now();
+            this.exception = exception;
+        }
+
+        public Instant getCreation() {
+            return creation;
+        }
+
+        public Exception getException() {
+            return exception;
+        }
+    }
+    Map<UUID, FileError> fileInfoAsyncErrorMap = Collections.synchronizedMap(new HashMap<>());
+
     public MediaLibrary(DataStore dataStore, Profiler profiler, StoragePolicy storagePolicy,
-                        UrlResolverConfig urlResolver, DataStoreConfig dataStoreConfig) {
+                        UrlResolverConfig urlResolverConfig, DataStoreConfig dataStoreConfig) {
         this.dataStore = dataStore;
         this.profiler = profiler;
         this.storagePolicy = storagePolicy;
-        this.urlResolverConfig = urlResolver;
 
         CacheConfig cacheConfig = CacheConfig.custom()
-                .setMaxCacheEntries(urlResolver.getMaxHttpCacheEntries())
+                .setMaxCacheEntries(urlResolverConfig.getMaxHttpCacheEntries())
                 .setMaxObjectSize(dataStoreConfig.getMaxSize())
                 .build();
         RequestConfig requestConfig = RequestConfig.custom()
@@ -66,12 +83,64 @@ public class MediaLibrary {
                 .setDefaultRequestConfig(requestConfig)
                 .build();
 
+        executorService = Executors.newCachedThreadPool();
+
         ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
         Duration cleanup = storagePolicy.getCleanupPeriod();
         executor.scheduleAtFixedRate(this::periodicCleanup, cleanup.getSeconds(), cleanup.getSeconds(), TimeUnit.SECONDS);
     }
 
     public FileInfo addMedia(String originalUrlOrDoiOrHandle) throws CommonException, ProfilingException {
+        UUID id = UUID.randomUUID();
+        return addMedia(id, originalUrlOrDoiOrHandle);
+    }
+
+    public UUID addMediaAsync(String originalUrlOrDoiOrHandle) {
+        UUID id = UUID.randomUUID();
+        fileInfoMap.put(id, new FileInfo(id, null, null));
+        executorService.submit(() -> {
+            try {
+                addMedia(id, originalUrlOrDoiOrHandle);
+            } catch (Exception exception) {
+                LOGGER.debug("async error: {}", exception.getMessage());
+                fileInfoAsyncErrorMap.put(id, new FileError(exception));
+                fileInfoMap.remove(id);
+            }
+        });
+        return id;
+    }
+
+    public FileInfo addMedia(String filename, InputStream inputStream) throws
+            StoragePolicyException, StorageException, ProfilingException {
+        UUID id = UUID.randomUUID();
+        return addMedia(id, filename, inputStream);
+    }
+
+    public UUID addMediaAsync(String filename, InputStream inputStream) {
+        UUID id = UUID.randomUUID();
+        fileInfoMap.put(id, new FileInfo(id, null, null));
+        executorService.submit(() -> {
+            try {
+                addMedia(id, filename, inputStream);
+            } catch (Exception exception) {
+                LOGGER.debug("async error: {}", exception.getMessage());
+                fileInfoAsyncErrorMap.put(id, new FileError(exception));
+                fileInfoMap.remove(id);
+            }
+        });
+        return id;
+    }
+
+    public FileInfo getFileInfo(UUID id) {
+        return fileInfoMap.get(id);
+    }
+
+    public Exception getFileInfoAsyncError(UUID id) {
+        FileError fileError = fileInfoAsyncErrorMap.get(id);
+        return fileError == null ? null : fileError.getException();
+    }
+
+    private FileInfo addMedia(UUID id, String originalUrlOrDoiOrHandle) throws CommonException, ProfilingException {
         LinkMetadata.LinkInfo linkInfo = LinkMetadata.getLinkData(cachingClient, originalUrlOrDoiOrHandle);
         try {
             if (linkInfo.response.getEntity().getContentLength() > storagePolicy.getMaxAllowedDataSize()) {
@@ -80,7 +149,7 @@ public class MediaLibrary {
                                 DefaultStoragePolicy.humanSize(storagePolicy.getMaxAllowedDataSize()) + ".",
                         StoragePolicyException.Kind.TOO_BIG);
             }
-            FileInfo fileInfo = addMedia(linkInfo.filename, linkInfo.response.getEntity().getContent());
+            FileInfo fileInfo = addMedia(id, linkInfo.filename, linkInfo.response.getEntity().getContent());
             fileInfo.setLinksInfo(originalUrlOrDoiOrHandle, linkInfo.downloadLink, linkInfo.redirects);
             return fileInfo;
         } catch (IOException xc) {
@@ -94,9 +163,8 @@ public class MediaLibrary {
         }
     }
 
-    public FileInfo addMedia(String filename, InputStream inputStream) throws
+    private FileInfo addMedia(UUID id, String filename, InputStream inputStream) throws
             StoragePolicyException, StorageException, ProfilingException {
-        UUID id = UUID.randomUUID();
         Path path;
         try {
             path = dataStore.save(id, filename, inputStream);
@@ -138,10 +206,6 @@ public class MediaLibrary {
         return fileInfo;
     }
 
-    public FileInfo getFileInfo(UUID id) {
-        return fileInfoMap.get(id);
-    }
-
     private void periodicCleanup() {
         // this runs on its own thread
         LOGGER.info("start periodic cleanup now");
@@ -151,6 +215,15 @@ public class MediaLibrary {
             if (lifetime.compareTo(storagePolicy.getMaxAllowedLifetime()) > 0) {
                 LOGGER.debug("removing entry: " + fi.getId());
                 dataStore.delete(fi.getId(), fi.getPath());
+                iterator.remove();
+            }
+        }
+
+        LOGGER.info("start periodic error cleanup now");
+        for (Iterator<FileError> iterator = fileInfoAsyncErrorMap.values().iterator(); iterator.hasNext(); ) {
+            FileError fe = iterator.next();
+            Duration lifetime = Duration.between(fe.getCreation(), Instant.now());
+            if (lifetime.compareTo(storagePolicy.getMaxAllowedLifetime()) > 0) {
                 iterator.remove();
             }
         }

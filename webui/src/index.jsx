@@ -8,7 +8,7 @@ import Modal from 'react-modal';
 
 import {clientPath} from './constants';
 import rootReducers from './actions/reducers';
-import {fetchApiInfo, fetchAllTools, fetchMediatypes, fetchLanguages} from './actions/actions';
+import * as actions from './actions/actions';
 
 import {NavBar} from './components/NavBar';
 import {FooterContainer} from './containers/FooterContainer';
@@ -51,7 +51,7 @@ class FrameComponent extends React.Component {
     render() {
         return (
             <div id="bodycontainer">
-                <NavBar history={this.props.history}/>
+                <NavBar history={this.props.history} mode={this.props.mode}/>
                 <div className="container">
                     <div className="row">
                         <div className="col-md-12">
@@ -64,16 +64,29 @@ class FrameComponent extends React.Component {
         );
     }
 }
-const Frame = withRouter(connect(state=>({}), ()=>({}))(FrameComponent));
+const Frame = withRouter(connect(state=>({mode:state.mode}), ()=>({}))(FrameComponent));
 
 
 class Application extends React.Component {
     constructor(props) {
         super(props);
-        store.dispatch(fetchApiInfo());
-        store.dispatch(fetchAllTools());
-        store.dispatch(fetchMediatypes());
-        store.dispatch(fetchLanguages());
+        store.dispatch(actions.fetchApiInfo());
+        store.dispatch(actions.fetchAllTools());
+        store.dispatch(actions.fetchMediatypes());
+        store.dispatch(actions.fetchLanguages());
+
+        if (window.SWITCHBOARD_DATA) {
+            const data = window.SWITCHBOARD_DATA;
+            if (data.popup) {
+                store.dispatch(actions.setMode('popup'));
+            }
+            if (data.errorMessage) {
+                store.dispatch(actions.showResourceError(data.errorMessage));
+            } else if (data.fileInfoID) {
+                store.dispatch(actions.fetchAsyncResourceState(data.fileInfoID));
+            }
+            delete window.SWITCHBOARD_DATA;
+        }
 
         // // load a text file by default for testing
         // store.dispatch(require("./actions/actions").uploadLink({
@@ -94,7 +107,10 @@ class Application extends React.Component {
                             <Route component={NotFound} />
                         </Switch>
                     </Frame>
-                    <FooterContainer />
+                    { store.getState().mode === 'popup' ?
+                        false : // no footer in popup mode
+                        <FooterContainer />
+                    }
                 </BrowserRouter>
             </Provider>
         );
