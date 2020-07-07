@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.nio.file.Files;
@@ -24,6 +25,7 @@ import java.util.UUID;
 @Path("/api/storage")
 public class DataResource {
     private static final Logger LOGGER = LoggerFactory.getLogger(DataResource.class);
+    private static final long MAX_INLINE_CONTENT = 1024;
 
     static ObjectMapper mapper = new ObjectMapper();
     MediaLibrary mediaLibrary;
@@ -89,9 +91,9 @@ public class DataResource {
 
         if (contentDispositionHeader != null) {
             String filename = contentDispositionHeader.getFileName();
-            fileInfo = mediaLibrary.addMedia(filename, inputStream);
+            fileInfo = mediaLibrary.addFile(filename, inputStream);
         } else if (url != null) {
-            fileInfo = mediaLibrary.addMedia(url);
+            fileInfo = mediaLibrary.addByUrl(url);
         } else {
             return Response.status(400).entity("Please provide either a file or a url to download in the form").build();
         }
@@ -112,6 +114,15 @@ public class DataResource {
 
         URI localLink = UriBuilder.fromPath(requestURI).path(fileInfo.getId().toString()).build();
         ret.put("localLink", localLink);
+
+        if (fileInfo.getFileLength() < MAX_INLINE_CONTENT &&
+                fileInfo.getProfile().toProfile().isMediaType("text/plain")) {
+            try {
+                ret.put("content", new String(Files.readAllBytes(fileInfo.getPath())));
+            } catch (IOException e) {
+                LOGGER.warn("Cannot read file to return inline content: " + e.getMessage());
+            }
+        }
 
         LOGGER.debug("postFile returns: " + ret);
         return Response.ok(ret).build();

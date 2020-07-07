@@ -22,7 +22,7 @@ public class ToolRegistry {
     private final AtomicReference<List<Tool>> tools = new AtomicReference<>();
     private Runnable callback;
 
-    public List<Tool> filterTools(String mediatype, String language, boolean onlyProductionTools) {
+    public List<Tool> filterTools(String mediatype, String language, boolean onlyProductionTools, boolean withContent) {
         Predicate<Tool> filterMediatypes = tool -> Strings.isNullOrEmpty(mediatype) || tool.getMediatypes().contains(mediatype);
 
         // accept tools with matching languages, or tools with 'generic' language input
@@ -30,8 +30,9 @@ public class ToolRegistry {
                 || tool.getLanguages().contains(language) || tool.getLanguages().contains("generic");
 
         Predicate<Tool> filterDeployment = tool -> !onlyProductionTools || tool.getDeployment().equalsIgnoreCase(PRODUCTION_DEPLOYMENT);
+        Predicate<Tool> filterContent = tool -> withContent || !tool.requiresContent();
 
-        Predicate<Tool> filter = filterDeployment.and(filterLanguages).and(filterMediatypes);
+        Predicate<Tool> filter = filterDeployment.and(filterLanguages).and(filterMediatypes).and(filterContent);
         return tools.get()
                 .stream()
                 .filter(filter)
@@ -39,11 +40,12 @@ public class ToolRegistry {
     }
 
 
-    public List<Tool> filterTools(Profile profile, boolean onlyProductionTools) {
+    public List<Tool> filterTools(Profile profile, boolean onlyProductionTools, boolean withContent) {
         Predicate<Tool> filterProfile = tool -> tool.getMatcher().matches(profile);
         Predicate<Tool> filterDeployment = tool -> !onlyProductionTools || tool.getDeployment().equalsIgnoreCase(PRODUCTION_DEPLOYMENT);
+        Predicate<Tool> filterContent = tool -> withContent || !tool.requiresContent();
 
-        Predicate<Tool> filter = filterDeployment.and(filterProfile);
+        Predicate<Tool> filter = filterDeployment.and(filterProfile).and(filterContent);
         return tools.get()
                 .stream()
                 .filter(filter)

@@ -41,12 +41,12 @@ public class MediaLibraryTest {
 
     @Test(expected = LinkException.class)
     public void addMedia1() throws CommonException, ProfilingException {
-        mediaLibrary.addMedia("http://this^is&a)bad@url");
+        mediaLibrary.addByUrl("http://this^is&a)bad@url");
     }
 
     @Test(expected = StoragePolicyException.class)
     public void addMedia2() throws CommonException, ProfilingException {
         // a site that does a HTTP redirect
-        mediaLibrary.addMedia("http://clarin.eu");
+        mediaLibrary.addByUrl("http://clarin.eu");
     }
 }
