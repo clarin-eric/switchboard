@@ -1,5 +1,6 @@
 /* to set footer at page bottom */
 html, body, #reactapp { height: 100%; }
+body { overflow-x:hidden; }
 #bodycontainer {
     height: auto;
     min-height: 100%;
@@ -130,18 +131,19 @@ div.tool-sublist h3 .section-left-padding {
 div.tool {
     padding: 8px 0;
     cursor: default;
-    line-height: 2em;
 }
 
 div.tool:hover {
     background-color: #f6f6f6;
 }
 
+div.tool .toolheader > *{
+    vertical-align:middle;
+}
+
 div.tool .img-holder {
     width: 160px;
     height: 2em;
-    /*float: left;*/
-    line-height: 2.5em;
     margin-right: 1em;
     text-align: right;
     display:inline-block;
@@ -151,18 +153,23 @@ div.tool .img-holder img {
     border-radius: 6px;
     border: 1px solid #ddd;
     box-shadow: 2px 2px 2px #ccc;
-    /*padding: 2px;*/
     max-width: 160px;
     max-height: 2em;
     background-color: white;
 }
 
+div.tool .name-and-badges {
+    display: inline-block;
+}
+
+div.tool .badges {
+    display: inline;
+}
+
 div.tool .badge-holder {
-    padding-top:2px;
-    margin-right: 12px;
-    line-height: 2.5em;
-    display:inline;
-    /*float: left;*/
+    margin-left: 6px;
+    margin-right: 6px;
+    display: inline;
 }
 
 div.tool .badge-holder > span, div.tool .badge-holder > a {
@@ -213,7 +220,6 @@ div.tool hr {
     line-height: 1.2em;
     color: #555;
     text-align: center;
-    /*border: 1px solid #ddd;*/
     background-color: #f0f0f0;
     padding-right:26px;
     margin-right:-22px;
@@ -242,4 +248,16 @@ div.tool hr {
     div.resource hr {
         margin:0;
     }
+    div.tool .badges {
+        position: absolute;
+        right: 15px;
+    }
 }
+
+/* phones and popup */
+@media (max-width: 375px) {
+    div.tool.match .name-and-badges {
+        max-width: 200px;
+    }
+}
+

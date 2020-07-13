@@ -205,7 +205,7 @@ class ToolCard extends React.Component {
         }
         const Highlighter = this.props.highlighter;
         return (
-            <div style={{whiteSpace:'nowrap', display: 'inline'}}>
+            <div className="toolheader">
                 <div className="img-holder hidden-xs"><img src={imgSrc}/></div>
                 <Indicator title={"menu-" + (this.state.showDetails ? "down":"right")} style={styles.toolChevron}/>
                 { invocationURL
@@ -213,16 +213,14 @@ class ToolCard extends React.Component {
                         >Open <Indicator title={"new-window"} style={styles.toolStartIndicator}/></a>
                     : false
                 }
-                <span style={{fontSize:"120%"}}><Highlighter text={tool.name}/></span>
-                <a style={{fontSize: 20}} onClick={stopBubbling} href={tool.homepage} target="_blank">
-                    <Indicator title={"new-window"} style={styles.toolHomeIndicator}/>
-                </a>
-
-                <div style={{whiteSpace:'nowrap', display: 'inline'}}>
-                { !tool.authentication || tool.authentication == "no" ? null
-                    : <div className="badge-holder" title="This tool requires a user account. Please check the Authentication information for more details.">
-                        <span className={"fa fa-key"} style={{padding:"6px 6px"}} aria-hidden="true"/>
-                    </div> }
+                <div className="name-and-badges">
+                    <span style={{fontSize:"120%"}}><Highlighter text={tool.name}/></span>
+                    <div className="badges">
+                        { !tool.authentication || tool.authentication == "no" ? null
+                            : <div className="badge-holder" title="This tool requires a user account. Please check the Authentication information for more details.">
+                                <span className={"fa fa-key"} style={{padding:"6px 6px"}} aria-hidden="true"/>
+                            </div> }
+                    </div>
                 </div>
             </div>
         );
@@ -237,6 +235,7 @@ class ToolCard extends React.Component {
                     <div style={{ width: '100%'}}>
                         <dl className="dl-horizontal">
                             { showTask ? <DetailsRow title="Task" summary={<p><Highlighter text={tool.task}/></p>} /> : false }
+                            <DetailsRow title="Homepage" summary={<Highlighter markdown={tool.homepage}/>} />
                             <DetailsRow title="Description" summary={<Highlighter markdown={tool.description}/>} />
                             { !tool.authentication || tool.authentication == "no" ? null :
                                 <DetailsRow title="Authentication" summary={<Highlighter markdown={tool.authentication}/>} />
@@ -267,8 +266,9 @@ class ToolCard extends React.Component {
 
     render() {
         const invocationURL = getInvocationURL(this.props.tool, this.props.resource);
+        const toolClassName = invocationURL ? "tool match" : "tool";
         return (
-            <div className="tool" onClick={toggle.bind(this, 'showDetails')}>
+            <div className={toolClassName} onClick={toggle.bind(this, 'showDetails')}>
                 { this.renderHeader(this.props.imgSrc, this.props.tool, invocationURL) }
                 { this.state.showDetails ? this.renderDetails(this.props.tool, this.props.showTask) : false }
             </div>
