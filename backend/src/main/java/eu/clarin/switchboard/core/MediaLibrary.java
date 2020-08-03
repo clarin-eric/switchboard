@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.time.Duration;
 import java.time.Instant;
@@ -68,39 +69,33 @@ public class MediaLibrary {
         executor.scheduleAtFixedRate(this::periodicCleanup, cleanup.getSeconds(), cleanup.getSeconds(), TimeUnit.SECONDS);
     }
 
-    public FileInfo addMedia(String originalUrlOrDoiOrHandle) throws CommonException, ProfilingException {
+    public FileInfo addByUrl(String originalUrlOrDoiOrHandle) throws CommonException, ProfilingException {
         UUID id = UUID.randomUUID();
-        FileInfo fileInfo = addMedia(cachingClient, dataStore, profiler, storagePolicy, id, originalUrlOrDoiOrHandle);
+        FileInfo fileInfo = addByUrl(cachingClient, dataStore, profiler, storagePolicy, id, originalUrlOrDoiOrHandle);
         fileInfoFutureMap.put(id, new FileInfoFuture(id, wrap(fileInfo)));
         return fileInfo;
     }
 
-    public FileInfo addMedia(String filename, InputStream inputStream) throws
+    public FileInfo addFile(String filename, InputStream inputStream) throws
             StoragePolicyException, StorageException, ProfilingException {
         UUID id = UUID.randomUUID();
-        FileInfo fileInfo = addMedia(dataStore, profiler, storagePolicy, id, filename, inputStream);
+        FileInfo fileInfo = addFile(dataStore, profiler, storagePolicy, id, filename, inputStream);
         fileInfoFutureMap.put(id, new FileInfoFuture(id, wrap(fileInfo)));
         return fileInfo;
     }
 
-    public UUID addMediaAsync(String originalUrlOrDoiOrHandle) {
+    public UUID addByUrlAsync(String originalUrlOrDoiOrHandle) {
         UUID id = UUID.randomUUID();
         Future<FileInfo> future = executorService.submit(() ->
-                addMedia(cachingClient, dataStore, profiler, storagePolicy, id, originalUrlOrDoiOrHandle));
+                addByUrl(cachingClient, dataStore, profiler, storagePolicy, id, originalUrlOrDoiOrHandle));
         fileInfoFutureMap.put(id, new FileInfoFuture(id, future));
         return id;
     }
 
-    private Future<FileInfo> wrap(FileInfo fileInfo) {
-        FutureTask<FileInfo> future = new FutureTask<>(() -> fileInfo);
-        future.run();
-        return future;
-    }
-
-    public UUID addMediaAsync(String filename, InputStream inputStream) {
+    public UUID addFileAsync(String filename, InputStream inputStream) {
         UUID id = UUID.randomUUID();
         Future<FileInfo> future = executorService.submit(() ->
-                addMedia(dataStore, profiler, storagePolicy, id, filename, inputStream));
+                addFile(dataStore, profiler, storagePolicy, id, filename, inputStream));
         fileInfoFutureMap.put(id, new FileInfoFuture(id, future));
         return id;
     }
@@ -119,13 +114,19 @@ public class MediaLibrary {
         }
     }
 
-    private static FileInfo addMedia(CloseableHttpClient cachingClient,
+    private static Future<FileInfo> wrap(FileInfo fileInfo) {
+        FutureTask<FileInfo> future = new FutureTask<>(() -> fileInfo);
+        future.run();
+        return future;
+    }
+
+    private static FileInfo addByUrl(CloseableHttpClient cachingClient,
                                      DataStore dataStore, Profiler profiler, StoragePolicy storagePolicy,
                                      UUID id, String originalUrlOrDoiOrHandle) throws CommonException, ProfilingException {
         LinkMetadata.LinkInfo linkInfo = LinkMetadata.getLinkData(cachingClient, originalUrlOrDoiOrHandle);
         try {
             storagePolicy.acceptSize(linkInfo.response.getEntity().getContentLength());
-            FileInfo fileInfo = addMedia(dataStore, profiler, storagePolicy,
+            FileInfo fileInfo = addFile(dataStore, profiler, storagePolicy,
                     id, linkInfo.filename, linkInfo.response.getEntity().getContent());
             fileInfo.setLinksInfo(originalUrlOrDoiOrHandle, linkInfo.downloadLink, linkInfo.redirects);
             return fileInfo;
@@ -140,7 +141,7 @@ public class MediaLibrary {
         }
     }
 
-    private static FileInfo addMedia(DataStore dataStore, Profiler profiler, StoragePolicy storagePolicy,
+    private static FileInfo addFile(DataStore dataStore, Profiler profiler, StoragePolicy storagePolicy,
                                      UUID id, String filename, InputStream inputStream) throws
             StoragePolicyException, StorageException, ProfilingException {
         Path path;

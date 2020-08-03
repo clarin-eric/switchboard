@@ -21,10 +21,10 @@ public class ToolRegistryTest {
     public void filterTools() {
         List<Tool> tools;
 
-        tools = toolRegistry.filterTools("text/plain", "eng", true);
+        tools = toolRegistry.filterTools("text/plain", "eng", true, false);
         assertEquals(1, tools.size());
 
-        tools = toolRegistry.filterTools("text/plain", "eng", false);
+        tools = toolRegistry.filterTools("text/plain", "eng", false, false);
         assertEquals(2, tools.size());
     }
 
@@ -32,10 +32,10 @@ public class ToolRegistryTest {
     public void filterToolsByProfile() {
         List<Tool> tools;
 
-        tools = toolRegistry.filterTools(Profile.builder().mediaType("text/plain").language("eng").build(), true);
+        tools = toolRegistry.filterTools(Profile.builder().mediaType("text/plain").language("eng").build(), true, false);
         assertEquals(1, tools.size());
 
-        tools = toolRegistry.filterTools(Profile.builder().mediaType("text/plain").language("eng").build(), false);
+        tools = toolRegistry.filterTools(Profile.builder().mediaType("text/plain").language("eng").build(), false, false);
         assertEquals(2, tools.size());
     }
 

@@ -36,15 +36,17 @@ public class ToolsResource {
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public Response getTools(@QueryParam("mediatype") String mediatype,
                              @QueryParam("language") String language,
-                             @QueryParam("onlyProductionTools") String onlyProductionTools) {
+                             @QueryParam("onlyProductionTools") String onlyProductionTools,
+                             @QueryParam("withContent") String withContent) {
         boolean onlyProd = toolConfig.getShowOnlyProductionTools();
         if (onlyProductionTools != null && !onlyProductionTools.isEmpty()) {
             onlyProd = Boolean.parseBoolean(onlyProductionTools);
         }
+        boolean content = Boolean.parseBoolean(withContent);
 
         language = language == null ? "" : language;
         mediatype = mediatype == null ? "" : mediatype;
-        List<Tool> tools = toolRegistry.filterTools(mediatype, language, onlyProd);
+        List<Tool> tools = toolRegistry.filterTools(mediatype, language, onlyProd, content);
         tools.sort((t1, t2) -> t1.getName().compareToIgnoreCase(t2.getName()));
         return Response.ok(tools).build();
     }
@@ -53,13 +55,16 @@ public class ToolsResource {
     @Path("tools/match")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-    public Response getToolsByProfile(@QueryParam("onlyProductionTools") String onlyProductionTools, Profile.Flat flat) {
+    public Response getToolsByProfile(@QueryParam("onlyProductionTools") String onlyProductionTools,
+                                      @QueryParam("withContent") String withContent,
+                                      Profile.Flat flat) {
         boolean onlyProd = toolConfig.getShowOnlyProductionTools();
         if (onlyProductionTools != null && !onlyProductionTools.isEmpty()) {
             onlyProd = Boolean.parseBoolean(onlyProductionTools);
         }
+        boolean content = Boolean.parseBoolean(withContent);
 
-        List<Tool> tools = toolRegistry.filterTools(flat.toProfile(), onlyProd);
+        List<Tool> tools = toolRegistry.filterTools(flat.toProfile(), onlyProd, content);
         tools.sort((t1, t2) -> t1.getName().compareToIgnoreCase(t2.getName()));
         return Response.ok(tools).build();
     }

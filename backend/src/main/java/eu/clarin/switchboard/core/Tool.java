@@ -5,6 +5,7 @@ import eu.clarin.switchboard.profiler.api.Matcher;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class Tool extends HashMap<String, Object> {
@@ -36,6 +37,11 @@ public class Tool extends HashMap<String, Object> {
 
     public String getUrl() {
         return (String) get("url");
+    }
+
+    public boolean requiresContent() {
+        Map<String, String> parameters = (Map<String, String>) get("parameters");
+        return parameters.containsKey("content");
     }
 
     public Matcher getMatcher() {

@@ -15,8 +15,10 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
-import java.io.IOException;
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.net.URI;
+import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -85,9 +87,10 @@ public class MainResource {
     public View postToRoot(@FormDataParam("file") InputStream inputStream,
                            @FormDataParam("file") final FormDataContentDisposition contentDispositionHeader,
                            @FormDataParam("url") String url,
+                           @FormDataParam("selection") String selection,
                            @FormDataParam("popup") boolean popup)
             throws JsonProcessingException {
-        return post(inputStream, contentDispositionHeader, url, popup);
+        return post(inputStream, contentDispositionHeader, url, selection, popup);
     }
 
     @POST
@@ -97,22 +100,28 @@ public class MainResource {
     public View postToIndex(@FormDataParam("file") InputStream inputStream,
                             @FormDataParam("file") final FormDataContentDisposition contentDispositionHeader,
                             @FormDataParam("url") String url,
+                            @FormDataParam("selection") String selection,
                             @FormDataParam("popup") boolean popup)
             throws JsonProcessingException {
-        return post(inputStream, contentDispositionHeader, url, popup);
+        return post(inputStream, contentDispositionHeader, url, selection, popup);
     }
 
     public View post(InputStream inputStream,
                      final FormDataContentDisposition contentDispositionHeader,
                      String url,
+                     String selection,
                      boolean popup)
             throws JsonProcessingException {
         if (contentDispositionHeader != null) {
             String filename = contentDispositionHeader.getFileName();
-            UUID id = mediaLibrary.addMediaAsync(filename, inputStream);
+            UUID id = mediaLibrary.addFileAsync(filename, inputStream);
             return IndexView.fileInfoID(id, popup);
         } else if (url != null) {
-            UUID id = mediaLibrary.addMediaAsync(url);
+            UUID id = mediaLibrary.addByUrlAsync(url);
+            return IndexView.fileInfoID(id, popup);
+        } else if (selection != null && !selection.isEmpty()) {
+            ByteArrayInputStream bais = new ByteArrayInputStream(selection.getBytes(StandardCharsets.UTF_8));
+            UUID id = mediaLibrary.addFileAsync("selection", bais);
             return IndexView.fileInfoID(id, popup);
         } else {
             return IndexView.error("Switchboard needs either a file or a url in the POST request", popup);

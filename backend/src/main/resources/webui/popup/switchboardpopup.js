@@ -37,6 +37,38 @@ function setSwitchboardURL(url) {
     }
 }
 
+function showSwitchboardPopupOnSelection(align, params) {
+    // testArguments(align, params);
+    buildParams(params);
+
+    let mouseDown = false;
+    let nowSelecting = false;
+    let selection = null;
+    document.onmousedown = () => {
+        mouseDown = true;
+    };
+    document.onselectionchange = () => {
+        selection = document.getSelection();
+        if (selection.type !== 'Range') {
+            selection = null;
+        }
+    };
+    document.onmouseup = (event) => {
+        if (!mouseDown) {
+            return;
+        }
+        mouseDown = false;
+        if (!selection) {
+            return;
+        }
+        const newAlign = Object.assign({}, align, {alignSelection:selection});
+        const newParams = Object.assign({}, params, {selection: selection.toString()});
+        console.log({selection, event, newAlign, newParams});
+        const {container, popup} = makeDomElements(newAlign, switchboardURL, newParams);
+        togglePopup(container);
+    };
+}
+
 function showSwitchboardPopup(align, params) {
     testArguments(align, params);
     buildParams(params);
@@ -91,13 +123,25 @@ function makeDomElements(align, invokeURL, params) {
         .appendTo(popup);
     const iframe = $('<iframe>').attr({name: 'switchboard_iframe'}).appendTo(popup);
 
-    const selectorOffset = $(align.alignSelector).offset();
+
     const offset = {
-        left: selectorOffset.left,
-        top: selectorOffset.top + selectorOffset.height,
-        right: window.innerWidth - selectorOffset.left - selectorOffset.width,
+        left: 0,
+        top: 0,
+        right: 0,
     };
+    if (align && align.alignSelector) {
+        const selectorOffset = $(align.alignSelector).offset();
+        offset.left = selectorOffset.left;
+        offset.top = selectorOffset.top + selectorOffset.height;
+        offset.right = window.innerWidth - selectorOffset.left - selectorOffset.width;
+    } else if (align && align.alignSelection) {
+        const selectorOffset = $(align.alignSelection.getRangeAt(0)).offset();
+        offset.left = selectorOffset.left;
+        offset.top = selectorOffset.top + selectorOffset.height;
+        offset.right = window.innerWidth - selectorOffset.left - selectorOffset.width;
+    }
     console.log({offset});
+
     if (align.alignRight) {
         container.css({
             left: 'auto',
@@ -148,6 +192,7 @@ setSwitchboardURL();
 
 // change globals
 window.showSwitchboardPopup = showSwitchboardPopup;
+window.showSwitchboardPopupOnSelection = showSwitchboardPopupOnSelection;
 window.setSwitchboardURL = setSwitchboardURL;
 
 })();

@@ -11,7 +11,8 @@ export function updateResource(resource) {
         });
 
         if (resource.localLink) {
-            dispatch(fetchMatchingTools(resource.profile));
+            const withContent = !!resource.content;
+            dispatch(fetchMatchingTools(resource.profile, withContent));
         }
     }
 }
@@ -141,13 +142,13 @@ export function fetchAllTools() {
     }
 }
 
-export function fetchMatchingTools(profile) {
+export function fetchMatchingTools(profile, withContent) {
     return function (dispatch, getState) {
         dispatch({
             type: actionType.MATCHING_TOOLS_FETCH_START,
         })
 
-        axios.post(apiPath.toolsMatch, profile)
+        axios.post(apiPath.toolsMatch, profile, {params:{withContent}})
             .then(response => {
                 response.data.forEach(normalizeTool);
                 dispatch({
