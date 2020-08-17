@@ -87,7 +87,7 @@ public class LinkMetadata {
             try {
                 ContentDisposition disposition = new ContentDisposition(header.getValue());
                 String name = disposition.getFileName();
-                if (!DataStore.sanitize(name).isEmpty()) {
+                if (name != null && !DataStore.sanitize(name).isEmpty()) {
                     linkInfo.filename = name;
                 }
             } catch (ParseException e) {

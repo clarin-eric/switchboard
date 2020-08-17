@@ -80,6 +80,9 @@ public class DataStore {
     }
 
     public static String sanitize(String filename) {
+        if (filename == null) {
+            return null;
+        }
         StringBuilder cleanName = new StringBuilder();
         filename.codePoints().forEachOrdered(c -> {
             boolean replace = c < 32 || illegalChars.contains(c);
