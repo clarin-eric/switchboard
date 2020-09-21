@@ -30,6 +30,7 @@ export const actionType = [
     'MATCHING_TOOLS_FETCH_START',
     'MATCHING_TOOLS_FETCH_SUCCESS',
     'RESOURCE_UPDATE',
+    'RESOURCE_REMOVE',
     'MODE',
     'ERROR',
     'CLEAR_ERRORS',

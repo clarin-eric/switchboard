@@ -63,7 +63,7 @@ function showSwitchboardPopupOnSelection(align, params) {
         }
         const newAlign = Object.assign({}, align, {alignSelection:selection});
         const newParams = Object.assign({}, params, {selection: selection.toString()});
-        console.log({selection, event, newAlign, newParams});
+        // console.log({selection, event, newAlign, newParams});
         const {container, popup} = makeDomElements(newAlign, switchboardURL, newParams);
         togglePopup(container);
     };
@@ -114,7 +114,7 @@ function makeDomElements(align, invokeURL, params) {
         method: 'POST',
         enctype: 'multipart/form-data',
     };
-    console.log({formAttr});
+    // console.log({formAttr});
     const form = $('<form>').attr(formAttr);
     for (const key in params) {
         form.append($('<input>').attr({type:'text', name:key, value:params[key]}))
@@ -140,7 +140,7 @@ function makeDomElements(align, invokeURL, params) {
         offset.top = selectorOffset.top + selectorOffset.height;
         offset.right = window.innerWidth - selectorOffset.left - selectorOffset.width;
     }
-    console.log({offset});
+    // console.log({offset});
 
     if (align.alignRight) {
         container.css({

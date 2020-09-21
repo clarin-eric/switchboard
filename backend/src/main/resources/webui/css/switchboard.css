@@ -95,11 +95,20 @@ div.resource .namesize {
     border-radius: 4px;
 }
 
-div.resource .namesize a {
-    margin-right: 1em;
-}
 div.resource .namesize span {
     color: #555;
+}
+
+div.more-data-button {
+    padding-bottom: 1em;
+}
+div.more-data-pane {
+    border: 2px solid #008;
+    padding: 1em;
+    border-radius: 4px;
+}
+div.more-data-button .glyphicon, div.more-data-pane .glyphicon {
+    font-size: 80%;
 }
 
 /* transitions for matching tools */
@@ -196,6 +205,9 @@ div.tool hr {
     margin-bottom: 0;
 }
 
+div.tool .inputclass {
+    font-style: italic;
+}
 
 /* highlight search matches e.g. in tools */
 .highlight {

@@ -21,7 +21,7 @@ export class ToolListWithControls extends React.Component {
     static propTypes = {
         title: PropTypes.string.isRequired,
         tools: PropTypes.array.isRequired,
-        resource: PropTypes.object,
+        resourceList: PropTypes.array,
     };
 
     setSearch(event) {
@@ -30,19 +30,25 @@ export class ToolListWithControls extends React.Component {
         if (searchString.length >= 2) {
             searchTerms = searchString.trim().toLowerCase().split(SPACE_REGEX);
         }
-        this.setState({searchString, searchTerms });
+        this.setState({searchString, searchTerms});
     }
 
-    filterTools(tools, searchString, searchTerms) {
-        if (searchString.length < 2) {
-            return {tools, hiddenTools:[]};
-        }
-        const ret = {tools: [], hiddenTools: []};
+    filterTools(tools, resourceCount, searchString, searchTerms) {
+        const ret = {tools: [], hiddenTools: [], partial: [], hiddenPartial: []};
         tools.forEach(tool => {
-            if (searchTerms.every(term => tool.searchString.includes(term))) {
-                ret.tools.push(tool);
+            const isFullMatch = resourceCount == 0 || tool.bestMatchPercent == 100 && tool.inputs.length == resourceCount;
+            if (searchString.length < 2 || searchTerms.every(term => tool.searchString.includes(term))) {
+                if (isFullMatch) {
+                    ret.tools.push(tool);
+                } else {
+                    ret.partial.push(tool);
+                }
             } else {
-                ret.hiddenTools.push(tool);
+                if (isFullMatch) {
+                    ret.hiddenTools.push(tool);
+                } else {
+                    ret.hiddenPartial.push(tool);
+                }
             }
         });
         return ret;
@@ -61,7 +67,9 @@ export class ToolListWithControls extends React.Component {
     }
 
     render() {
-        const {tools, hiddenTools} = this.filterTools(this.props.tools, this.state.searchString, this.state.searchTerms);
+        const resourceLength = this.props.resourceList ? this.props.resourceList.length : 0;
+        const {tools, hiddenTools, partial, hiddenPartial} = this.filterTools(
+            this.props.tools, resourceLength, this.state.searchString, this.state.searchTerms);
         return (
             <div className="tool-list-with-controls">
                 <div>
@@ -73,16 +81,40 @@ export class ToolListWithControls extends React.Component {
                 <div style={{clear:'both'}}/>
                 <div className="row">
                     <div className="col-md-12">
-                        <ToolList tools={tools} resource={this.props.resource}
-                            groupByTask={this.state.groupByTask}
-                            highlighter={makeHighlighter(this.state.searchTerms)}/>
-
-                        { hiddenTools.length
-                            ? <p className="alert alert-info">There are {hiddenTools.length} tools not matching the search term.</p>
-                            : false
+                        <ToolList tools={tools} resourceList={this.props.resourceList}
+                                  groupByTask={this.state.groupByTask}
+                                  highlighter={makeHighlighter(this.state.searchTerms)}/>
+                    </div>
+                    <div>
+                        { hiddenTools.length > 0 &&
+                            <p className="alert alert-info">There are {hiddenTools.length} tools not matching the search term.</p>
+                        }
+                        { tools.length == 0 && hiddenTools.length == 0 &&
+                            <p className="alert alert-info">There are no tools perfectly matching the resource.</p>
                         }
                     </div>
                 </div>
+                { partial.length || hiddenPartial.length ?
+                    <React.Fragment>
+                        <div>
+                            <h2 style={{float:'left', marginTop:32}}>Partial matches</h2>
+                        </div>
+                        <div style={{ clear:"both"}}/>
+                        <div className="row">
+                            <div className="col-md-12">
+                                <ToolList tools={partial} resourceList={this.props.resourceList}
+                                          groupByTask={this.state.groupByTask}
+                                          highlighter={makeHighlighter(this.state.searchTerms)}/>
+                            </div>
+                        </div>
+                        <div className="row">
+                            { hiddenPartial.length
+                                ? <p className="alert alert-info">There are {hiddenPartial.length} tools not matching the search term.</p>
+                                : false
+                            }
+                        </div>
+                    </React.Fragment> : false
+                }
             </div>
         );
     }
@@ -92,7 +124,7 @@ export class ToolListWithControls extends React.Component {
 class ToolList extends React.Component {
     static propTypes = {
         tools: PropTypes.array.isRequired,
-        resource: PropTypes.object,
+        resourceList: PropTypes.array,
         groupByTask: PropTypes.bool.isRequired,
         highlighter: PropTypes.func.isRequired,
     };
@@ -100,7 +132,7 @@ class ToolList extends React.Component {
     render() {
         if (!this.props.groupByTask) {
             return <ToolSubList tools={this.props.tools} showTask={true}
-                                resource={this.props.resource} highlighter={this.props.highlighter}/>;
+                                resourceList={this.props.resourceList} highlighter={this.props.highlighter}/>;
         }
 
         const reduceFn = (buckets, tool) => {
@@ -112,7 +144,7 @@ class ToolList extends React.Component {
         const buckets = this.props.tools.reduce(reduceFn, {});
         const tasks = Object.keys(buckets).sort();
         return tasks.map(task => <ToolSubList key={task} task={task} tools={buckets[task]} showTask={false}
-                                              resource={this.props.resource} highlighter={this.props.highlighter}/>);
+                                              resourceList={this.props.resourceList} highlighter={this.props.highlighter}/>);
     }
 }
 
@@ -128,7 +160,7 @@ class ToolSubList extends React.Component {
         tools: PropTypes.array.isRequired,
         task: PropTypes.string,
         showTask: PropTypes.bool.isRequired,
-        resource: PropTypes.object,
+        resourceList: PropTypes.array,
         highlighter: PropTypes.func.isRequired,
     };
 
@@ -155,7 +187,7 @@ class ToolSubList extends React.Component {
                         imgSrc={apiPath.logo(tool.logo)}
                         showTask={this.props.showTask}
                         tool={tool}
-                        resource={this.props.resource}
+                        resourceList={this.props.resourceList}
                         highlighter={this.props.highlighter}/>
                 )}
             </div>
@@ -174,7 +206,7 @@ class ToolCard extends React.Component {
     static propTypes = {
         tool: PropTypes.object.isRequired,
         showTask: PropTypes.bool.isRequired,
-        resource: PropTypes.object,
+        resourceList: PropTypes.array,
         imgSrc: PropTypes.string.isRequired,
         highlighter: PropTypes.func.isRequired,
     };
@@ -224,7 +256,6 @@ class ToolCard extends React.Component {
                 </div>
             </div>
         );
-        // <div style={{clear:'both'}}/>
     }
 
     renderDetails(tool, showTask) {
@@ -240,8 +271,10 @@ class ToolCard extends React.Component {
                             { !tool.authentication || tool.authentication == "no" ? null :
                                 <DetailsRow title="Authentication" summary={<Highlighter markdown={tool.authentication}/>} />
                             }
-                            <DetailsRow title="Input Format" summary={<p>{tool.mimetypes.join(", ")}</p>} />
-                            <DetailsRow title="Language(s)" summary={<p>{tool.languages.map(l => (processLanguage(l) || {label:l}).label).join(", ")}</p>} />
+                            {tool.inputs &&
+                                tool.inputs.map((input, i) => <InputRow  key={input.id || i} input={input}/>)}
+                            {tool.matches && !(tool.bestMatchPercent == 100 && this.props.resourceList.length == 1) &&
+                                <InputMatches tool={tool}/>}
 
                             {  tool.licence && <DetailsRow title="Licence" summary={<Highlighter markdown={tool.licence}/>} /> }
                         </dl>
@@ -265,15 +298,76 @@ class ToolCard extends React.Component {
     }
 
     render() {
-        const invocationURL = getInvocationURL(this.props.tool, this.props.resource);
+        const tool = this.props.tool;
+        const invocationURL = tool.bestMatchPercent == 100 && getInvocationURL(tool, this.props.resourceList, 0);
         const toolClassName = invocationURL ? "tool match" : "tool";
         return (
             <div className={toolClassName} onClick={toggle.bind(this, 'showDetails')}>
-                { this.renderHeader(this.props.imgSrc, this.props.tool, invocationURL) }
-                { this.state.showDetails ? this.renderDetails(this.props.tool, this.props.showTask) : false }
+                { this.renderHeader(this.props.imgSrc, tool, invocationURL) }
+                { this.state.showDetails ?
+                    this.renderDetails(tool, this.props.showTask) :
+                    false }
             </div>
         );
     }
+};
+
+
+const InputMatches = ({tool}) => {
+    const inputFn = (input, i) => {
+        return <p key={i}>Input {input.name ? <em><strong>{input.name}</strong></em> : false} {text}</p>
+    };
+
+    return (
+        <React.Fragment>
+            { tool.matches.map((match, matchIndex) => {
+                return (
+                    <React.Fragment key={matchIndex}>
+                        <dt>Resource Match</dt>
+                        <dd> {
+                            tool.inputs.map((input, inputIndex) => {
+                                let text = match[inputIndex] < 0 ?
+                                    'does not match any resource' :
+                                    `matches resource ${match[inputIndex] + 1}`;
+                                return (<p key={inputIndex}>
+                                    Input {input.name ? <em><strong>{input.name}</strong></em> : false} {text}
+                                </p>);
+                            })}
+                        </dd>
+                    </React.Fragment>
+                );
+            })}
+        </React.Fragment>
+    );
+}
+
+
+const InputRow = ({ input }) => {
+    const languageLabel = langCode => (processLanguage(langCode) || {label:langCode}).label;
+
+    return (
+        <React.Fragment>
+            <dt>{"Input " + (input.name ? `[${input.name}]` : "")}</dt>
+            <dd>
+                <div className="row">
+                    <div className="col-sm-2 inputclass">Mediatypes:</div>
+                    <div className="col-sm-10">{input.mediatypes.join(", ")}</div>
+                </div>
+                {!input.languages ? false :
+                    <div className="row">
+                        <div className="col-sm-2 inputclass">Languages:</div>
+                        <div className="col-sm-10">
+                            {input.languages === "generic" ?
+                                "Any language" :
+                                input.languages.map(languageLabel).join(", ")
+                            }
+                        </div>
+                    </div>
+                }
+            </dd>
+
+        </React.Fragment>
+    );
 };
 
 
