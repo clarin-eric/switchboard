@@ -20,10 +20,11 @@ export class Input extends React.Component {
         this.handleSubmitText = this.handleSubmitText.bind(this);
     }
     static propTypes = {
+        title: PropTypes.string.isRequired,
         onFile: PropTypes.func.isRequired,
         onLink: PropTypes.func.isRequired,
+        onSubmit: PropTypes.func,
     };
-
 
     handleFiles(files) {
         if (!files.length) {
@@ -32,7 +33,12 @@ export class Input extends React.Component {
         }
 
         this.props.onFile(files[0]);
-        this.props.history.push(clientPath.root);
+        if (this.props.history && this.props.history.push) {
+            this.props.history.push(clientPath.root);
+        }
+        if (this.props.onSubmit) {
+            this.props.onSubmit();
+        }
     }
 
     handleChangeLink(e) {
@@ -44,8 +50,12 @@ export class Input extends React.Component {
         e.stopPropagation();
 
         this.props.onLink({url:this.state.link});
-
-        this.props.history.push(clientPath.root);
+        if (this.props.history && this.props.history.push) {
+            this.props.history.push(clientPath.root);
+        }
+        if (this.props.onSubmit) {
+            this.props.onSubmit();
+        }
     }
 
     handleChangeText(e) {
@@ -59,14 +69,18 @@ export class Input extends React.Component {
         const blob = new Blob([this.state.text], {type: "text/plain"});
         blob.name = "submitted_text.txt";
         this.props.onFile(blob);
-
-        this.props.history.push(clientPath.root);
+        if (this.props.history && this.props.history.push) {
+            this.props.history.push(clientPath.root);
+        }
+        if (this.props.onSubmit) {
+            this.props.onSubmit();
+        }
     }
 
     render() {
         return (
             <div className="input">
-                <h3>Add your data</h3>
+                <h3>{this.props.title}</h3>
 
                 <Tabs titles={['Upload File', 'Submit URL', 'Submit Text']}>
 

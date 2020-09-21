@@ -47,10 +47,28 @@ function allTools(state = SI([]), action) {
     }
 }
 
-function resource(state = SI({}), action) {
+function resourceList(state = SI([]), action) {
     switch (action.type) {
-        case actionType.RESOURCE_UPDATE:
-            return SI(action.data);
+        case actionType.RESOURCE_UPDATE: {
+            const index = state.findIndex(r => r.id === action.data.id);
+            if (index >= 0) {
+                const newstate = state.asMutable();
+                newstate[index] = action.data;
+                return SI(newstate);
+            } else {
+                const newstate = state.asMutable();
+                newstate.push(action.data);
+                return SI(newstate);
+            }
+        }
+        case actionType.RESOURCE_REMOVE: {
+            const index = state.findIndex(r => r.id === action.data.id);
+            if (index >= 0) {
+                const newstate = state.asMutable();
+                newstate.splice(index, 1);
+                return SI(newstate);
+            }
+        }
         default:
             return state;
     }
@@ -58,8 +76,6 @@ function resource(state = SI({}), action) {
 
 function matchingTools(state = SI({}), action) {
     switch (action.type) {
-        case actionType.RESOURCE_INIT:
-            return SI({});
         case actionType.MATCHING_TOOLS_FETCH_START:
             return SI({tools: null});
         case actionType.MATCHING_TOOLS_FETCH_SUCCESS:
@@ -97,7 +113,7 @@ const rootReducer = combineReducers({
     mediatypes,
     languages,
     allTools,
-    resource,
+    resourceList,
     matchingTools,
     alerts
 });

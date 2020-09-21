@@ -4,7 +4,6 @@ import eu.clarin.switchboard.app.FileAsset;
 import eu.clarin.switchboard.app.config.ToolConfig;
 import eu.clarin.switchboard.core.Tool;
 import eu.clarin.switchboard.core.ToolRegistry;
-import eu.clarin.switchboard.profiler.api.Confidence;
 import eu.clarin.switchboard.profiler.api.Profile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +16,7 @@ import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 @Path("/api")
 public class ToolsResource {
@@ -34,19 +33,12 @@ public class ToolsResource {
     @GET
     @Path("tools")
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-    public Response getTools(@QueryParam("mediatype") String mediatype,
-                             @QueryParam("language") String language,
-                             @QueryParam("onlyProductionTools") String onlyProductionTools,
-                             @QueryParam("withContent") String withContent) {
+    public Response getTools(@QueryParam("onlyProductionTools") String onlyProductionTools) {
         boolean onlyProd = toolConfig.getShowOnlyProductionTools();
         if (onlyProductionTools != null && !onlyProductionTools.isEmpty()) {
             onlyProd = Boolean.parseBoolean(onlyProductionTools);
         }
-        boolean content = Boolean.parseBoolean(withContent);
-
-        language = language == null ? "" : language;
-        mediatype = mediatype == null ? "" : mediatype;
-        List<Tool> tools = toolRegistry.filterTools(mediatype, language, onlyProd, content);
+        List<Tool> tools = toolRegistry.filterTools(onlyProd);
         tools.sort((t1, t2) -> t1.getName().compareToIgnoreCase(t2.getName()));
         return Response.ok(tools).build();
     }
@@ -56,17 +48,22 @@ public class ToolsResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public Response getToolsByProfile(@QueryParam("onlyProductionTools") String onlyProductionTools,
-                                      @QueryParam("withContent") String withContent,
-                                      Profile.Flat flat) {
+                                      List<Profile.Flat> flat) {
         boolean onlyProd = toolConfig.getShowOnlyProductionTools();
         if (onlyProductionTools != null && !onlyProductionTools.isEmpty()) {
             onlyProd = Boolean.parseBoolean(onlyProductionTools);
         }
-        boolean content = Boolean.parseBoolean(withContent);
+        List<Profile> profiles = flat.stream().map(Profile.Flat::toProfile).collect(Collectors.toList());
+        List<ToolRegistry.ToolMatches> toolMatches = toolRegistry.filterTools(profiles, onlyProd);
 
-        List<Tool> tools = toolRegistry.filterTools(flat.toProfile(), onlyProd, content);
-        tools.sort((t1, t2) -> t1.getName().compareToIgnoreCase(t2.getName()));
-        return Response.ok(tools).build();
+        toolMatches.sort((tm1, tm2) -> {
+            final int K = 1000;
+            int diff = (int) (K * tm2.getBestMatchPercent()) - (int) (K * tm1.getBestMatchPercent());
+            return diff != 0 ? diff :
+                    tm1.getTool().getName().compareToIgnoreCase(tm2.getTool().getName());
+        });
+
+        return Response.ok(toolMatches).build();
     }
 
     @GET
@@ -75,14 +72,5 @@ public class ToolsResource {
         java.nio.file.Path logo = Paths.get(toolConfig.getLogoRegistryPath(), logoName);
         FileAsset fileAsset = new FileAsset(logo);
         return fileAsset.makeResponse(request);
-    }
-
-    /**
-     * Utility for conversion to and from Json
-     */
-    public static class JsonProfile {
-        public Confidence confidence;
-        public String mediaType;
-        public Map<String, String> features;
     }
 }

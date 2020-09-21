@@ -4,9 +4,9 @@ import "regenerator-runtime/runtime";
 
 import React from 'react';
 import { HashLink as Link } from 'react-router-hash-link';
-import {Resource} from './Resource';
+import {ResourceList} from './Resource';
 import {ToolListWithControls} from './ToolList';
-import {clientPath} from '../constants';
+import {clientPath } from '../constants';
 
 
 export class Main extends React.Component {
@@ -44,14 +44,12 @@ export class Main extends React.Component {
     render() {
         return (
             <div className="main">
-                { this.props.resource.state === 'uploading'
-                    ? <Uploading/>
-                    : this.props.resource.state === 'error'
-                    ? <Home/>
-                    : this.props.resource.state === 'stored'
-                        ? <Analysis {...this.props}/>
-                        : <Home/>
-                }
+                { this.props.resourceList.length ?
+                    <Analysis mediatypes={this.props.mediatypes} languages={this.props.languages}
+                              resourceList={this.props.resourceList}
+                              updateResource={this.props.updateResource} removeResource={this.props.removeResource}
+                              matchingTools={this.props.matchingTools} /> :
+                    <Home/> }
             </div>
         );
     }
@@ -81,10 +79,12 @@ const Uploading = () => (
 
 const Analysis = (props) => (
     <div>
-        <Resource {...props} />
+        <ResourceList mediatypes={props.mediatypes} languages={props.languages}
+                      resourceList={props.resourceList}
+                      updateResource={props.updateResource} removeResource={props.removeResource} />
         <hr style={{marginTop:0}}/>
 
-        <MatchingTools matchingTools={props.matchingTools} resource={props.resource} />
+        <MatchingTools matchingTools={props.matchingTools} resourceList={props.resourceList} />
     </div>
 );
 
@@ -98,6 +98,6 @@ const MatchingTools = (props) => {
         return <h3 className="smooth-update">No matching tools found.</h3>;
 
     return <div className="smooth-update">
-        <ToolListWithControls title="Matching Tools" tools={tools} resource={props.resource}/>
+        <ToolListWithControls title="Matching Tools" tools={tools} resourceList={props.resourceList}/>
     </div>;
 };

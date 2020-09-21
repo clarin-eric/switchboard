@@ -2,6 +2,7 @@ import axios from 'axios';
 import { apiPath, actionType, resourceMatchSettings } from '../constants';
 import { addLanguageMapping, processLanguage, processMediatype } from './utils';
 
+let lastResourceID = 0;
 
 export function updateResource(resource) {
     return function (dispatch, getState) {
@@ -9,12 +10,51 @@ export function updateResource(resource) {
             type: actionType.RESOURCE_UPDATE,
             data: resource,
         });
-
-        if (resource.localLink) {
-            const withContent = !!resource.content;
-            dispatch(fetchMatchingTools(resource.profile, withContent));
-        }
+        dispatch(fetchMatchingTools());
     }
+}
+
+export function removeResource(resource) {
+    return function (dispatch, getState) {
+        dispatch({
+            type: actionType.RESOURCE_REMOVE,
+            data: resource,
+        });
+        dispatch(fetchMatchingTools());
+    }
+}
+
+function uploadData(formData) {
+    return function (dispatch, getState) {
+        const newResource = {id: ++lastResourceID};
+        dispatch(updateResource(newResource));
+        axios
+            .post(apiPath.storage, formData, {
+                headers: {'Content-Type': 'multipart/form-data'}
+            })
+            .then(updateResourceCallback(dispatch, newResource))
+            .catch(resourceErrorCallback(dispatch, newResource));
+    }
+}
+
+function updateResourceCallback(dispatch, resource) {
+    return response => {
+        const res = response.data;
+        if (res.localLink && res.localLink.startsWith(apiPath.api)) {
+            res.localLink = window.origin + res.localLink;
+        }
+        if (resource.id !== res.id) {
+            dispatch(removeResource(resource));
+        }
+        dispatch(updateResource(Object.assign({}, resource, res)));
+    };
+}
+
+function resourceErrorCallback(dispatch, resource) {
+    return error => {
+        dispatch(removeResource(resource));
+        errHandler(dispatch)(error);
+    };
 }
 
 export function uploadLink(params) {
@@ -33,63 +73,11 @@ export function uploadFile(file) {
 
 export function fetchAsyncResourceState(id) {
     return function (dispatch, getState) {
-        dispatch(updateResource({state: 'uploading'}));
+        const newResource = {id};
+        dispatch(updateResource(newResource));
         axios.get(apiPath.storageInfo(id))
-            .then(response => {
-                const resource = response.data;
-
-                if (resource.localLink && resource.localLink.startsWith(apiPath.api)) {
-                    resource.localLink = window.origin + resource.localLink;
-                }
-                resource.state = 'stored';
-                dispatch(updateResource(resource));
-            })
-            .catch(error => {
-                dispatch(updateResource({state: 'error'}));
-                errHandler(dispatch)(error);
-            });
-    }
-}
-
-export function showResourceError(errorMessage) {
-    return function (dispatch, getState) {
-        dispatch(updateResource({state: 'error'}));
-        dispatch({
-            type: actionType.ERROR,
-            message: errorMessage,
-        });
-    }
-}
-
-export function setMode(mode) {
-    return function (dispatch, getState) {
-        dispatch({
-            type: actionType.MODE,
-            mode: 'popup',
-        });
-    }
-}
-
-function uploadData(formData) {
-    return function (dispatch, getState) {
-        dispatch(updateResource({state: 'uploading'}));
-        axios
-            .post(apiPath.storage, formData, {
-                headers: {'Content-Type': 'multipart/form-data'}
-            })
-            .then(response => {
-                const resource = response.data;
-
-                if (resource.localLink && resource.localLink.startsWith(apiPath.api)) {
-                    resource.localLink = window.origin + resource.localLink;
-                }
-                resource.state = 'stored';
-                dispatch(updateResource(resource));
-            })
-            .catch(error => {
-                dispatch(updateResource({state: 'error'}));
-                errHandler(dispatch)(error);
-            });
+            .then(updateResourceCallback(dispatch, newResource))
+            .catch(resourceErrorCallback(dispatch, newResource));
     }
 }
 
@@ -146,21 +134,38 @@ export function fetchAllTools() {
     }
 }
 
-export function fetchMatchingTools(profile, withContent) {
+function fetchMatchingTools() {
     return function (dispatch, getState) {
         dispatch({
             type: actionType.MATCHING_TOOLS_FETCH_START,
         })
 
-        axios.post(apiPath.toolsMatch, profile, {params:{withContent}})
+        const profiles = getState().resourceList
+                .filter(r => r.localLink && r.profile)
+                .map(r => Object.assign({}, r.profile, {contentIsAvailable: (""+!!r.content)}));
+
+        if (!profiles.length) {
+            return;
+        }
+
+        axios.post(apiPath.toolsMatch, profiles)
             .then(response => {
-                response.data.forEach(normalizeTool);
+                const toolMatches = response.data;
+
+                const tools = toolMatches.map(tm => {
+                    const tool = tm.tool;
+                    normalizeTool(tool);
+                    tool.matches = tm.matches;
+                    tool.bestMatchPercent = tm.bestMatchPercent;
+                    return tool;
+                });
                 dispatch({
                     type: actionType.MATCHING_TOOLS_FETCH_SUCCESS,
-                    data: response.data,
+                    data: tools,
                 });
             }).catch(errHandler(dispatch, "Cannot fetch matching tools"));
-        _paq.push(['trackEvent', 'Tools', 'MatchTools', profile.mediaType, profile.language]);
+
+        _paq.push(['trackEvent', 'Tools', 'MatchTools', JSON.stringify(profiles)]);
     }
 }
 
@@ -172,7 +177,25 @@ function normalizeTool(tool) {
     tool.searchString = searchString;
 }
 
-export function errHandler(dispatch, msg) {
+export function setMode(mode) {
+    return function (dispatch, getState) {
+        dispatch({
+            type: actionType.MODE,
+            mode: 'popup',
+        });
+    }
+}
+
+export function showError(errorMessage) {
+    return function (dispatch, getState) {
+        dispatch({
+            type: actionType.ERROR,
+            message: errorMessage,
+        });
+    }
+}
+
+function errHandler(dispatch, msg) {
     return function(err) {
         console.log({msg, err, response: err.response});
         msg = msg ? (msg + ": ") : "";
