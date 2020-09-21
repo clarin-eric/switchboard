@@ -13,7 +13,7 @@ import * as actions from './actions/actions';
 import {NavBar} from './components/NavBar';
 import {FooterContainer} from './containers/FooterContainer';
 import {MainContainer} from './containers/MainContainer';
-import {InputContainer} from './containers/InputContainer';
+import {MainInputContainer} from './containers/InputContainer';
 import {AllToolsContainer} from './containers/AllToolsContainer';
 import {AlertsContainer} from './containers/AlertsContainer';
 import {AboutContainer, HelpContainer} from './containers/HelpContainers';
@@ -81,7 +81,7 @@ class Application extends React.Component {
                 store.dispatch(actions.setMode('popup'));
             }
             if (data.errorMessage) {
-                store.dispatch(actions.showResourceError(data.errorMessage));
+                store.dispatch(actions.showError(data.errorMessage));
             } else if (data.fileInfoID) {
                 store.dispatch(actions.fetchAsyncResourceState(data.fileInfoID));
             }
@@ -100,7 +100,7 @@ class Application extends React.Component {
                     <Frame>
                         <Switch>
                             <Route exact path={clientPath.root} component={MainContainer} />
-                            <Route exact path={clientPath.input} component={InputContainer} />
+                            <Route exact path={clientPath.input} component={MainInputContainer} />
                             <Route exact path={clientPath.tools} component={AllToolsContainer} />
                             <Route exact path={clientPath.help} component={HelpContainer} />
                             <Route exact path={clientPath.about} component={AboutContainer} />

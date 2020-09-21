@@ -20,7 +20,7 @@
     ],
     "langEncoding": "639-1",
     "mimetypes": [
-        "text/plain",
+        "text/plain"
     ],
     "output": [
         "application/tcf+xml"
