@@ -82,13 +82,11 @@ export default class About extends React.Component {
 
                 <h3 id="funding">Funding</h3>
                 <p>Development of the Language Resource Switchboard has been made possible in part through funding received from the European Union’s Horizon 2020 research and innovation programme through:
-                <p>Development of the Language Resource Switchboard has been made possible in part through funding received from the
-                European Union’s Horizon 2020 research and innovation programme through:
                 </p>
                 <ul>
-                    <li><a href="https://www.sshopencloud.eu/">SSHOC</a> under grant agreement No 823782</li>
                     <li><a href="https://www.clarin.eu/content/clarin-stronger-ever-clarin-plus-project-outcomes">CLARIN-PLUS</a> under grant agreement No 676529</li>
                     <li><a href="https://www.eosc-hub.eu/">EOSC-hub</a> under grant agreement No 777536</li>
+                    <li><a href="https://www.sshopencloud.eu/">SSHOC</a> under grant agreement No 823782</li>
                 </ul>
 
                 <hr />
