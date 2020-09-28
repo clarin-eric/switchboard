@@ -131,7 +131,7 @@ export function fetchLanguages() {
 
 export function fetchAllTools() {
     return function (dispatch, getState) {
-        axios.get(apiPath.tools)
+        axios.get(apiPath.tools, {params:{withContent:true}})
             .then(response => {
                 response.data.forEach(normalizeTool);
                 dispatch({
