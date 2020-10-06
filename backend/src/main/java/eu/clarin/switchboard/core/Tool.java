@@ -233,7 +233,6 @@ public class Tool {
         List<String> languages = (List<String>) v1map.get("languages");
         if (languages.contains(ANY_LANGUAGE_KEYWORD_V1)) {
             input.setLanguages(ANY_LANGUAGE_KEYWORD);
-            System.out.println(this.getName());
         } else {
             input.setLanguages(languages);
         }
@@ -285,6 +284,15 @@ public class Tool {
                 }
                 queryParameters.add(p);
             }
+        }
+    }
+
+    public void check() {
+        if (queryParameters != null) {
+            queryParameters.removeIf(Objects::isNull);
+        }
+        if (pathParameters != null) {
+            pathParameters.removeIf(Objects::isNull);
         }
     }
 

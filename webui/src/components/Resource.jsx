@@ -110,7 +110,7 @@ export class ResourceList extends React.Component {
             </div>
             { this.state.showAddMoreDataPane ?
                 <div className="more-data-pane">
-                    <InputContainer title="Add more data" onSubmit={() => this.setState({showAddMoreDataPane:false})}/>
+                    <InputContainer title="Add another resource" onSubmit={() => this.setState({showAddMoreDataPane:false})}/>
                     <a onClick={e => this.setState({showAddMoreDataPane:false})} className="btn btn-default" style={{float:'right'}}>
                         <span className={"glyphicon glyphicon-remove"} aria-hidden="true"/>
                         {" "}Dismiss
@@ -120,7 +120,7 @@ export class ResourceList extends React.Component {
                 <div className="more-data-button">
                     <a onClick={e => this.setState({showAddMoreDataPane:true})} style={{float:'right'}}>
                         <span className={"glyphicon glyphicon-plus"} aria-hidden="true"/>
-                        {" "}Add more data
+                        {" "}Add another resource
                     </a>
                 </div>
             }

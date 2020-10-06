@@ -77,18 +77,17 @@ public class ToolRegistryTest {
         toolMatches = toolRegistry.filterTools(profiles, false);
         assertEquals(3, toolMatches.size());
 
-        assertEquals("First", toolMatches.get(0).tool.getName());
+        assertEquals("Fourth", toolMatches.get(0).tool.getName());
         assertEquals(1, toolMatches.get(0).getMatches().size());
-        assertEquals(Arrays.asList(0), toolMatches.get(0).getMatches().get(0));
+        assertEquals(Arrays.asList(1, 0), toolMatches.get(0).getMatches().get(0));
 
-        assertEquals("Second", toolMatches.get(1).tool.getName());
+        assertEquals("First", toolMatches.get(1).tool.getName());
         assertEquals(1, toolMatches.get(1).getMatches().size());
         assertEquals(Arrays.asList(0), toolMatches.get(1).getMatches().get(0));
 
-        assertEquals("Fourth", toolMatches.get(2).tool.getName());
+        assertEquals("Second", toolMatches.get(2).tool.getName());
         assertEquals(1, toolMatches.get(2).getMatches().size());
-        System.out.println(toolMatches.get(2).getMatches());
-        assertEquals(Arrays.asList(1, 0), toolMatches.get(2).getMatches().get(0));
+        assertEquals(Arrays.asList(0), toolMatches.get(2).getMatches().get(0));
     }
 
     @Test

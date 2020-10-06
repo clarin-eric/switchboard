@@ -1,5 +1,6 @@
 package eu.clarin.switchboard.core;
 
+import com.google.common.base.MoreObjects;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 import eu.clarin.switchboard.core.xc.BadToolException;
@@ -97,6 +98,14 @@ public class ToolRegistry {
             // the matches should always be ordered by matchCount
             return matches.get(0).matchPercent();
         }
+
+        @Override
+        public String toString() {
+            return MoreObjects.toStringHelper(this)
+                    .add("tool", tool.getName())
+                    .add("matches", matches)
+                    .toString();
+        }
     }
 
     public List<ToolMatches> filterTools(List<Profile> profiles, boolean onlyProductionTools) {
@@ -141,6 +150,19 @@ public class ToolRegistry {
                 results.add(toolMatches);
             }
         }
+
+        results.sort((tm1, tm2) -> {
+            final int K = 1000;
+            int x = (int) (K * tm1.getBestMatchPercent()) - (int) (K * tm2.getBestMatchPercent());
+            if (x != 0) {
+                return -x;
+            }
+            x = tm1.getMatches().get(0).size() - tm2.getMatches().get(0).size();
+            if (x != 0) {
+                return -x;
+            }
+            return tm1.getTool().getName().compareToIgnoreCase(tm2.getTool().getName());
+        });
 
         return results;
     }
@@ -244,6 +266,7 @@ public class ToolRegistry {
                 try (Reader r2 = new BufferedReader(new FileReader(f))) {
                     tool.augment(gson.fromJson(r2, Map.class));
                 }
+                tool.check();
 
                 if (tool.getName() == null || tool.getUrl() == null) {
                     LOGGER.warn("json file " + f.getPath() + " does not seem to be a tool (no name and url) and will be ignored");
