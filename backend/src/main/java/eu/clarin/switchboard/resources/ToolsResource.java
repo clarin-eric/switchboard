@@ -56,13 +56,6 @@ public class ToolsResource {
         List<Profile> profiles = flat.stream().map(Profile.Flat::toProfile).collect(Collectors.toList());
         List<ToolRegistry.ToolMatches> toolMatches = toolRegistry.filterTools(profiles, onlyProd);
 
-        toolMatches.sort((tm1, tm2) -> {
-            final int K = 1000;
-            int diff = (int) (K * tm2.getBestMatchPercent()) - (int) (K * tm1.getBestMatchPercent());
-            return diff != 0 ? diff :
-                    tm1.getTool().getName().compareToIgnoreCase(tm2.getTool().getName());
-        });
-
         return Response.ok(toolMatches).build();
     }
 
