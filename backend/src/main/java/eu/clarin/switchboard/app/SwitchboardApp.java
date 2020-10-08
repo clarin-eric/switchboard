@@ -6,6 +6,7 @@ import eu.clarin.switchboard.core.DataStore;
 import eu.clarin.switchboard.core.DefaultStoragePolicy;
 import eu.clarin.switchboard.core.MediaLibrary;
 import eu.clarin.switchboard.core.ToolRegistry;
+import eu.clarin.switchboard.core.xc.BadToolException;
 import eu.clarin.switchboard.core.xc.SwitchboardExceptionMapper;
 import eu.clarin.switchboard.health.AppHealthCheck;
 import eu.clarin.switchboard.profiler.DefaultProfiler;
@@ -62,7 +63,7 @@ public class SwitchboardApp extends Application<RootConfig> {
     }
 
     @Override
-    public void run(RootConfig configuration, Environment environment) throws IOException, SAXException, TikaException {
+    public void run(RootConfig configuration, Environment environment) throws IOException, SAXException, TikaException, BadToolException {
         APP_CONTEXT_PATH = ((DefaultServerFactory) configuration.getServerFactory()).getApplicationContextPath();
         if (APP_CONTEXT_PATH.endsWith("/")) {
             APP_CONTEXT_PATH = APP_CONTEXT_PATH.substring(0, APP_CONTEXT_PATH.length() - 1);
