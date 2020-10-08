@@ -22,6 +22,7 @@ export class ToolListWithControls extends React.Component {
         title: PropTypes.string.isRequired,
         tools: PropTypes.array.isRequired,
         resourceList: PropTypes.array,
+        selectResourceMatch: PropTypes.func,
     };
 
     setSearch(event) {
@@ -83,14 +84,15 @@ export class ToolListWithControls extends React.Component {
                     <div className="col-md-12">
                         <ToolList tools={tools} resourceList={this.props.resourceList}
                                   groupByTask={this.state.groupByTask}
-                                  highlighter={makeHighlighter(this.state.searchTerms)}/>
+                                  highlighter={makeHighlighter(this.state.searchTerms)}
+                                  selectResourceMatch={this.props.selectResourceMatch}/>
                     </div>
                     <div>
                         { hiddenTools.length > 0 &&
                             <p className="alert alert-info">There are {hiddenTools.length} tools not matching the search term.</p>
                         }
                         { tools.length == 0 && hiddenTools.length == 0 &&
-                            <p className="alert alert-info">There are no tools perfectly matching the resource.</p>
+                            <p className="alert alert-info">There are no tools perfectly matching the resource(s).</p>
                         }
                     </div>
                 </div>
@@ -104,7 +106,8 @@ export class ToolListWithControls extends React.Component {
                             <div className="col-md-12">
                                 <ToolList tools={partial} resourceList={this.props.resourceList}
                                           groupByTask={this.state.groupByTask}
-                                          highlighter={makeHighlighter(this.state.searchTerms)}/>
+                                          highlighter={makeHighlighter(this.state.searchTerms)}
+                                          selectResourceMatch={this.props.selectResourceMatch}/>
                             </div>
                         </div>
                         <div className="row">
@@ -127,12 +130,15 @@ class ToolList extends React.Component {
         resourceList: PropTypes.array,
         groupByTask: PropTypes.bool.isRequired,
         highlighter: PropTypes.func.isRequired,
+        selectResourceMatch: PropTypes.func,
     };
 
     render() {
         if (!this.props.groupByTask) {
             return <ToolSubList tools={this.props.tools} showTask={true}
-                                resourceList={this.props.resourceList} highlighter={this.props.highlighter}/>;
+                                resourceList={this.props.resourceList}
+                                highlighter={this.props.highlighter}
+                                selectResourceMatch={this.props.selectResourceMatch} />;
         }
 
         const reduceFn = (buckets, tool) => {
@@ -144,7 +150,9 @@ class ToolList extends React.Component {
         const buckets = this.props.tools.reduce(reduceFn, {});
         const tasks = Object.keys(buckets).sort();
         return tasks.map(task => <ToolSubList key={task} task={task} tools={buckets[task]} showTask={false}
-                                              resourceList={this.props.resourceList} highlighter={this.props.highlighter}/>);
+                                              resourceList={this.props.resourceList}
+                                              highlighter={this.props.highlighter}
+                                              selectResourceMatch={this.props.selectResourceMatch} />);
     }
 }
 
@@ -162,6 +170,7 @@ class ToolSubList extends React.Component {
         showTask: PropTypes.bool.isRequired,
         resourceList: PropTypes.array,
         highlighter: PropTypes.func.isRequired,
+        selectResourceMatch: PropTypes.func,
     };
 
     render() {
@@ -188,13 +197,20 @@ class ToolSubList extends React.Component {
                         showTask={this.props.showTask}
                         tool={tool}
                         resourceList={this.props.resourceList}
-                        highlighter={this.props.highlighter}/>
+                        highlighter={this.props.highlighter}
+                        selectResourceMatch={
+                            this.props.selectResourceMatch && this.props.selectResourceMatch.bind(this, tool.name)
+                        }/>
                 )}
             </div>
         );
     }
 }
 
+const trackCall = (e) => {
+    stopBubbling(e);
+    _paq.push(['trackEvent', 'Tools', 'StartTool', tool.name]);
+}
 
 class ToolCard extends React.Component {
     constructor(props) {
@@ -207,42 +223,24 @@ class ToolCard extends React.Component {
         tool: PropTypes.object.isRequired,
         showTask: PropTypes.bool.isRequired,
         resourceList: PropTypes.array,
+        selectResourceMatch: PropTypes.func,
         imgSrc: PropTypes.string.isRequired,
         highlighter: PropTypes.func.isRequired,
     };
 
     renderHeader(imgSrc, tool, invocationURL) {
-        const styles = {
-            toolChevron: {
-                fontSize: "80%",
-                marginRight: 0,
-                color: '#444'
-            },
-            toolStartIndicator: {
-                marginRight: 0,
-                marginLeft: 2,
-                fontSize: "90%"
-            },
-            toolHomeIndicator: {
-                marginLeft: 4,
-                fontSize: "75%"
-            }
-        };
         const stopBubbling = (e) => {
             e.stopPropagation();
-        }
-        const trackCall = (e) => {
-            stopBubbling(e);
-            _paq.push(['trackEvent', 'Tools', 'StartTool', tool.name]);
         }
         const Highlighter = this.props.highlighter;
         return (
             <div className="toolheader">
                 <div className="img-holder hidden-xs"><img src={imgSrc}/></div>
-                <Indicator title={"menu-" + (this.state.showDetails ? "down":"right")} style={styles.toolChevron}/>
+                <Indicator className="tool-chevron" title={"menu-" + (this.state.showDetails ? "down":"right")}/>
                 { invocationURL
-                    ? <a className="btn btn-success" onClick={trackCall} href={invocationURL} target="_blank"
-                        >Open <Indicator title={"new-window"} style={styles.toolStartIndicator}/></a>
+                    ? <a className="btn btn-success" onClick={trackCall} href={invocationURL} target="_blank">
+                        Open <Indicator className="tool-starter" title={"new-window"}/>
+                      </a>
                     : false
                 }
                 <div className="name-and-badges">
@@ -258,7 +256,7 @@ class ToolCard extends React.Component {
         );
     }
 
-    renderDetails(tool, showTask) {
+    renderDetails(tool, showTask, selectResourceMatch) {
         const Highlighter = this.props.highlighter;
         return (
             <div>
@@ -274,7 +272,7 @@ class ToolCard extends React.Component {
                             {tool.inputs &&
                                 tool.inputs.map((input, i) => <InputRow  key={input.id || i} input={input}/>)}
                             {tool.matches && !(tool.bestMatchPercent == 100 && this.props.resourceList.length == 1) &&
-                                <InputMatches tool={tool}/>}
+                                <InputMatches tool={tool} selectResourceMatch={selectResourceMatch}/>}
 
                             {  tool.licence && <DetailsRow title="Licence" summary={<Highlighter markdown={tool.licence}/>} /> }
                         </dl>
@@ -299,13 +297,14 @@ class ToolCard extends React.Component {
 
     render() {
         const tool = this.props.tool;
-        const invocationURL = tool.bestMatchPercent == 100 && getInvocationURL(tool, this.props.resourceList, 0);
+        const invocationURL = tool.invokeMatchIndex >= 0 &&
+            getInvocationURL(tool, this.props.resourceList, tool.matches[tool.invokeMatchIndex]);
         const toolClassName = invocationURL ? "tool match" : "tool";
         return (
             <div className={toolClassName} onClick={toggle.bind(this, 'showDetails')}>
                 { this.renderHeader(this.props.imgSrc, tool, invocationURL) }
                 { this.state.showDetails ?
-                    this.renderDetails(tool, this.props.showTask) :
+                    this.renderDetails(tool, this.props.showTask, this.props.selectResourceMatch) :
                     false }
             </div>
         );
@@ -313,30 +312,47 @@ class ToolCard extends React.Component {
 };
 
 
-const InputMatches = ({tool}) => {
+const InputMatches = ({tool, selectResourceMatch}) => {
     const inputFn = (input, i) => {
         return <p key={i}>Input {input.name ? <em><strong>{input.name}</strong></em> : false} {text}</p>
     };
 
     return (
         <React.Fragment>
-            { tool.matches.map((match, matchIndex) => {
-                return (
-                    <React.Fragment key={matchIndex}>
-                        <dt>Resource Match</dt>
-                        <dd> {
-                            tool.inputs.map((input, inputIndex) => {
-                                let text = match[inputIndex] < 0 ?
+            <dt>Resource Match</dt>
+            <dd>
+                { tool.matches.map((match, matchIndex) => {
+                    const invokeThis = tool.invokeMatchIndex == matchIndex;
+                    return (
+                        <div key={matchIndex}>
+                        { tool.inputs.map((input, inputIndex) =>
+                            <p key={inputIndex}>
+                                <span className={"glyphicon glyphicon-" + (invokeThis ? "check" : "unchecked")}
+                                      style={{fontSize:'90%'}} aria-hidden="true"/>
+                                {" "}
+                                Input
+                                {" "}
+                                {input.name && <span className="resource-index">{input.name}</span>}
+                                {" "}
+                                {match[inputIndex] < 0 ?
                                     'does not match any resource' :
-                                    `matches resource ${match[inputIndex] + 1}`;
-                                return (<p key={inputIndex}>
-                                    Input {input.name ? <em><strong>{input.name}</strong></em> : false} {text}
-                                </p>);
-                            })}
-                        </dd>
-                    </React.Fragment>
-                );
-            })}
+                                    `matches resource no. ${match[inputIndex] + 1}`
+                                }
+                                .
+                                {" "}
+                                { tool.matches.length <= 1 ? false : invokeThis ?
+                                        <span> Currently using this resource match.
+                                        </span>
+                                        :
+                                        <a onClick={e => selectResourceMatch(matchIndex)}
+                                           className="btn btn-xs btn-default"> Use this Resource Match </a>
+                                }
+                            </p>)
+                        }
+                        </div>
+                    );
+                })}
+            </dd>
         </React.Fragment>
     );
 }
@@ -398,7 +414,7 @@ const IndicatorRow = (props) => {
 
 const Indicator = (props) => {
     return (
-        <span style={Object.assign({marginRight:'1em'}, props.style)}>
+        <span className={props.className||""} style={Object.assign({marginRight:'1em'}, props.style)}>
             <span className={"glyphicon glyphicon-"+props.title} style={{fontSize:'90%'}} aria-hidden="true"/>
             {props.children && props.children.length ? " " : false}
             {props.children}

@@ -24,6 +24,15 @@ export function removeResource(resource) {
     }
 }
 
+export function selectResourceMatch(toolName, matchIndex) {
+    return function (dispatch, getState) {
+        dispatch({
+            type: actionType.SELECT_RESOURCE_MATCH,
+            data: {toolName, matchIndex},
+        });
+    }
+}
+
 function uploadData(formData) {
     return function (dispatch, getState) {
         const newResource = {id: ++lastResourceID};
@@ -150,9 +159,9 @@ function fetchMatchingTools() {
 
                 const tools = toolMatches.map(tm => {
                     const tool = tm.tool;
-                    normalizeTool(tool);
                     tool.matches = tm.matches;
                     tool.bestMatchPercent = tm.bestMatchPercent;
+                    normalizeTool(tool);
                     return tool;
                 });
                 dispatch({
@@ -171,6 +180,10 @@ function normalizeTool(tool) {
         searchString += (tool[key] || "").toLowerCase();
     }
     tool.searchString = searchString;
+
+    if (tool.bestMatchPercent == 100 && tool.matches && tool.matches.length) {
+        tool.invokeMatchIndex = 0;
+    }
 }
 
 export function setMode(mode) {

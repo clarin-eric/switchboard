@@ -1,6 +1,6 @@
 import { processLanguage, processMediatype, iso_639_3_to_639_1, image } from './utils';
 
-export function getInvocationURL(tool, resourceList, matchIndex) {
+export function getInvocationURL(tool, resourceList, match) {
     if (!resourceList || !resourceList.length) {
         return false;
     }
@@ -8,7 +8,7 @@ export function getInvocationURL(tool, resourceList, matchIndex) {
     if (tool.queryParameters) {
         for (const param of tool.queryParameters) {
 
-            const value = getBoundValue(param, resourceList, tool.inputs, tool.matches[matchIndex]);
+            const value = getBoundValue(param, resourceList, tool.inputs, match);
             if (queryParams !== "") {
                 queryParams += "&";
             }
@@ -21,7 +21,7 @@ export function getInvocationURL(tool, resourceList, matchIndex) {
     let pathParams = "";
     if (tool.pathParameters) {
         for (const param of tool.pathParameters) {
-            const value = getBoundValue(param, resourceList, tool.inputs, tool.matches[matchIndex]);
+            const value = getBoundValue(param, resourceList, tool.inputs, match);
             pathParams += "/";
             pathParams += encodeURIComponent(value);
         }
