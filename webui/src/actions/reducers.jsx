@@ -80,6 +80,14 @@ function matchingTools(state = SI({}), action) {
             return SI({tools: null});
         case actionType.MATCHING_TOOLS_FETCH_SUCCESS:
             return SI({tools: action.data});
+        case actionType.SELECT_RESOURCE_MATCH:
+            const newstate = state.asMutable({deep:true});
+            newstate.tools.forEach(t => {
+                if (t.name === action.data.toolName) {
+                    t.invokeMatchIndex = action.data.matchIndex;
+                }
+            })
+            return SI(newstate);
         default:
             return state;
     }

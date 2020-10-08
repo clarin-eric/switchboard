@@ -287,15 +287,6 @@ public class Tool {
         }
     }
 
-    public void check() {
-        if (queryParameters != null) {
-            queryParameters.removeIf(Objects::isNull);
-        }
-        if (pathParameters != null) {
-            pathParameters.removeIf(Objects::isNull);
-        }
-    }
-
     public static class Contact {
         String person;
         String email;

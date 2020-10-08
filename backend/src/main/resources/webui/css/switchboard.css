@@ -150,6 +150,18 @@ div.tool .toolheader > *{
     vertical-align:middle;
 }
 
+div.tool .toolheader .tool-chevron {
+    font-size: 80%;
+    margin-right: 0;
+    color: #444;
+}
+div.tool .toolheader .tool-starter {
+    font-size: 90%;
+    margin-right: 0;
+    margin-left: 2px;
+}
+
+
 div.tool .img-holder {
     width: 160px;
     height: 2em;
@@ -206,7 +218,12 @@ div.tool hr {
 }
 
 div.tool .inputclass {
+    font-weight: bold;
+    font-size: 90%;
+}
+div.tool .resource-index {
     font-style: italic;
+    font-weight: bold;
 }
 
 /* highlight search matches e.g. in tools */

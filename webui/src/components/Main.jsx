@@ -47,8 +47,10 @@ export class Main extends React.Component {
                 { this.props.resourceList.length ?
                     <Analysis mediatypes={this.props.mediatypes} languages={this.props.languages}
                               resourceList={this.props.resourceList}
-                              updateResource={this.props.updateResource} removeResource={this.props.removeResource}
-                              matchingTools={this.props.matchingTools} /> :
+                              updateResource={this.props.updateResource}
+                              removeResource={this.props.removeResource}
+                              matchingTools={this.props.matchingTools}
+                              selectResourceMatch={this.props.selectResourceMatch} /> :
                     <Home/> }
             </div>
         );
@@ -84,7 +86,8 @@ const Analysis = (props) => (
                       updateResource={props.updateResource} removeResource={props.removeResource} />
         <hr style={{marginTop:0}}/>
 
-        <MatchingTools matchingTools={props.matchingTools} resourceList={props.resourceList} />
+        <MatchingTools matchingTools={props.matchingTools} resourceList={props.resourceList}
+                       selectResourceMatch={props.selectResourceMatch}/>
     </div>
 );
 
@@ -98,6 +101,7 @@ const MatchingTools = (props) => {
         return <h3 className="smooth-update">No matching tools found.</h3>;
 
     return <div className="smooth-update">
-        <ToolListWithControls title="Matching Tools" tools={tools} resourceList={props.resourceList}/>
+        <ToolListWithControls title="Matching Tools" tools={tools} resourceList={props.resourceList}
+                              selectResourceMatch={props.selectResourceMatch}/>
     </div>;
 };

@@ -68,7 +68,7 @@ public class ToolRegistry {
         }
 
         public float matchPercent() {
-            return 100 * matchCount() / (float)size();
+            return 100 * matchCount() / (float) size();
         }
     }
 
@@ -200,7 +200,7 @@ public class ToolRegistry {
         this.callback = callback;
     }
 
-    public ToolRegistry(String toolRegistryPath) throws IOException {
+    public ToolRegistry(String toolRegistryPath) throws IOException, BadToolException {
         registryPath = Paths.get(toolRegistryPath);
 
         LOGGER.info("reading tool definitions from: " + registryPath);
@@ -231,6 +231,9 @@ public class ToolRegistry {
                     } catch (IOException e) {
                         LOGGER.warn("tool watching thread: io exception: ", e);
                         e.printStackTrace();
+                    } catch (BadToolException e) {
+                        LOGGER.warn("tool watching thread: bad tool exception: ", e);
+                        e.printStackTrace();
                     }
 
                     try {
@@ -250,7 +253,7 @@ public class ToolRegistry {
         }).start();
     }
 
-    static List<Tool> read(Path registryDir) throws IOException {
+    static List<Tool> read(Path registryDir) throws IOException, BadToolException {
         Objects.requireNonNull(registryDir);
         FilenameFilter filter = (dir, name) -> name.endsWith(".json");
         File[] files = registryDir.toFile().listFiles(filter);
@@ -266,7 +269,6 @@ public class ToolRegistry {
                 try (Reader r2 = new BufferedReader(new FileReader(f))) {
                     tool.augment(gson.fromJson(r2, Map.class));
                 }
-                tool.check();
 
                 if (tool.getName() == null || tool.getUrl() == null) {
                     LOGGER.warn("json file " + f.getPath() + " does not seem to be a tool (no name and url) and will be ignored");
@@ -277,7 +279,25 @@ public class ToolRegistry {
                 LOGGER.error("error reading tool: " + f + "\n" + xc.getMessage());
             }
         }
+        checkTools(tools);
 
         return Collections.unmodifiableList(tools);
+    }
+
+    private static void checkTools(List<Tool> tools) throws BadToolException {
+        Set<String> names = new HashSet<>();
+        for (Tool t : tools) {
+            if (names.contains(t.getName())) {
+                throw new BadToolException("tools with same name found: " + t.getName());
+            }
+            names.add(t.getName());
+
+            if (t.queryParameters != null) {
+                t.queryParameters.removeIf(Objects::isNull);
+            }
+            if (t.pathParameters != null) {
+                t.pathParameters.removeIf(Objects::isNull);
+            }
+        }
     }
 }

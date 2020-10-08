@@ -31,6 +31,7 @@ export const actionType = [
     'MATCHING_TOOLS_FETCH_SUCCESS',
     'RESOURCE_UPDATE',
     'RESOURCE_REMOVE',
+    'SELECT_RESOURCE_MATCH',
     'MODE',
     'ERROR',
     'CLEAR_ERRORS',
