@@ -6,6 +6,9 @@ import com.google.gson.JsonParseException;
 import eu.clarin.switchboard.core.xc.BadToolException;
 import eu.clarin.switchboard.profiler.api.Matcher;
 import eu.clarin.switchboard.profiler.api.Profile;
+import eu.clarin.switchboard.tool.Input;
+import eu.clarin.switchboard.tool.Tool;
+import eu.clarin.switchboard.tool.WebApplication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -117,7 +120,7 @@ public class ToolRegistry {
             if (!filterDeployment.test(tool)) {
                 continue;
             }
-            List<Tool.Input> inputs = tool.getInputs();
+            List<Input> inputs = tool.getInputs();
             List<ProfilesToolMatch> matches = new ArrayList<>();
             matches.add(new ProfilesToolMatch(inputs.size()));
 
@@ -174,7 +177,7 @@ public class ToolRegistry {
     public Set<String> getAllMediatypes() {
         Set<String> mediatypes = new HashSet<>();
         for (Tool tool : getAllTools()) {
-            for (Tool.Input input : tool.getInputs()) {
+            for (Input input : tool.getInputs()) {
                 if (input.getMediatypes() != null) {
                     mediatypes.addAll(input.getMediatypes());
                 }
@@ -186,7 +189,7 @@ public class ToolRegistry {
     public Set<String> getAllLanguages() {
         Set<String> languages = new HashSet<>();
         for (Tool tool : getAllTools())
-            for (Tool.Input input : tool.getInputs()) {
+            for (Input input : tool.getInputs()) {
                 Object langs = input.getLanguages();
                 if (langs instanceof List) {
                     languages.addAll((List<String>) langs);
@@ -270,8 +273,8 @@ public class ToolRegistry {
                     tool.augment(gson.fromJson(r2, Map.class));
                 }
 
-                if (tool.getName() == null || tool.getUrl() == null) {
-                    LOGGER.warn("json file " + f.getPath() + " does not seem to be a tool (no name and url) and will be ignored");
+                if (tool.getName() == null || tool.getDescription() == null) {
+                    LOGGER.warn("json file " + f.getPath() + " does not seem to be a tool (no name or description) and will be ignored");
                 } else {
                     tools.add(tool);
                 }
@@ -292,11 +295,14 @@ public class ToolRegistry {
             }
             names.add(t.getName());
 
-            if (t.queryParameters != null) {
-                t.queryParameters.removeIf(Objects::isNull);
-            }
-            if (t.pathParameters != null) {
-                t.pathParameters.removeIf(Objects::isNull);
+            WebApplication webApplication = t.getWebApplication();
+            if (webApplication != null) {
+                if (webApplication.getQueryParameters() != null) {
+                    webApplication.getQueryParameters().removeIf(Objects::isNull);
+                }
+                if (webApplication.getPathParameters() != null) {
+                    webApplication.getPathParameters().removeIf(Objects::isNull);
+                }
             }
         }
     }

@@ -234,7 +234,7 @@ class ToolCard extends React.Component {
                 <div className="img-holder hidden-xs"><img src={imgSrc}/></div>
                 <Indicator className="tool-chevron" title={"menu-" + (this.state.showDetails ? "down":"right")}/>
                 { invocationURL
-                    ? <a className="btn btn-success" onClick={trackCall} href={invocationURL} target="_blank">
+                    ? <a className="btn btn-success" onClick={e => trackCall(e, tool)} href={invocationURL} target="_blank">
                         Open <Indicator className="tool-starter" title={"new-window"}/>
                       </a>
                     : false
@@ -243,12 +243,159 @@ class ToolCard extends React.Component {
                     <span style={{fontSize:"120%"}}><Highlighter text={tool.name}/></span>
                     <div className="badges">
                         { !tool.authentication || tool.authentication == "no" ? null
-                            : <div className="badge-holder" title="This tool requires a user account. Please check the Authentication information for more details.">
+                            : <div className="badge-holder auth" title="This tool requires a user account. Please check the Authentication information for more details.">
                                 <span className={"fa fa-key"} style={{padding:"6px 6px"}} aria-hidden="true"/>
+                            </div> }
+                        { !tool.standaloneApplication ? null
+                            : <div className="badge-holder standalone" title="This tool requires local installation on one of your devices, please check the details.">
+                                <span className={"fa fa-download"} style={{padding:"6px 6px"}} aria-hidden="true"/>
                             </div> }
                     </div>
                 </div>
             </div>
+        );
+    }
+
+    renderUsageRestrictions(tool) {
+        const Highlighter = this.props.highlighter;
+        if (!tool.usageRestrictions) {
+            return false;
+        }
+        const individuals = tool.usageRestrictions.individualUserRestrictions || {};
+        const notSupported = tool.usageRestrictions.countriesNotSupported || {};
+        const supported = tool.usageRestrictions.countriesSupported || {};
+
+        if (!individuals.length && !notSupported.length && !supported.length) {
+            return false;
+        }
+
+        return (
+            <React.Fragment>
+                <dt>Restrictions</dt>
+                <dd>
+                    {individuals.length &&
+                        <React.Fragment>
+                            <div className="row">
+                            <div className="col-sm-4 inputclass">Individual User Restrictions</div>
+                            <div className="col-sm-8">{individuals}</div>
+                            </div>
+                        </React.Fragment>
+                    }
+                    {notSupported.length &&
+                        <React.Fragment>
+                            <div className="row">
+                            <div className="col-sm-4 inputclass">Countries Not Supported</div>
+                            <div className="col-sm-8">{notSupported}</div>
+                            </div>
+                        </React.Fragment>
+                    }
+                    {supported.length &&
+                        <React.Fragment>
+                            <div className="row">
+                            <div className="col-sm-4 inputclass">Countries Supported</div>
+                            <div className="col-sm-8">{supported}</div>
+                            </div>
+                        </React.Fragment>
+                    }
+                </dd>
+            </React.Fragment>
+        );
+    }
+
+    renderWebApp(tool) {
+        if (!tool.webApplication) {
+            return false;
+        }
+        const webapp = tool.webApplication;
+        const Highlighter = this.props.highlighter;
+        return (
+            <React.Fragment>
+                {  webapp.browserRequirements &&
+                    <DetailsRow title="Browser Requires"
+                                summary={<Highlighter markdown={webapp.browserRequirements}/>} />
+                }
+                {  webapp.applicationSuite &&
+                    <DetailsRow title="Application Suite"
+                                summary={<Highlighter markdown={webapp.applicationSuite}/>} />
+                }
+                {  webapp.scalabilityType &&
+                    <DetailsRow title="Scalability"
+                                summary={<Highlighter markdown={webapp.scalabilityType}/>} />
+                }
+                {  webapp.licenceInformation &&
+                    <DetailsRow title="Licence Information"
+                                summary={<Highlighter markdown={webapp.licenceInformation}/>} />
+                }
+            </React.Fragment>
+        );
+    }
+
+    renderDetailRow(title, text) {
+        const Highlighter = this.props.highlighter;
+        return text && text.length > 0 &&
+            <DetailsRow title={title} summary={<Highlighter markdown={text}/>} />
+    }
+
+    renderDetailRowArray(title, arr, f) {
+        const Highlighter = this.props.highlighter;
+        return arr && arr.length > 0 &&
+            <React.Fragment>
+                <dt>{title}</dt>
+                <dd>{arr.map(f)}</dd>
+            </React.Fragment>
+    }
+
+    renderStandaloneApp(tool) {
+        if (!tool.standaloneApplication) {
+            return false;
+        }
+        const standalone = tool.standaloneApplication;
+        const Highlighter = this.props.highlighter;
+
+        return (
+            <React.Fragment>
+                {this.renderDetailRowArray("Available on Device", standalone.availableOnDevice,
+                    (x,i) => <p key={i}>{x}</p> )}
+                {this.renderDetailRowArray("Installation URL", standalone.installURL,
+                    (x,i) => <p key={i}><a href={x}>{x}</a></p> )}
+                {this.renderDetailRowArray("Download URL", standalone.downloadURL,
+                    (x,i) => <p key={i}>{x.type}: <a href={x.url}>{x.url}</a></p> )}
+                {this.renderDetailRow("Application Suite", standalone.applicationSuite)}
+                {this.renderDetailRow("Feature List", standalone.featureList)}
+                {this.renderDetailRow("Permissions", standalone.permissions)}
+                {this.renderDetailRow("Release Notes", standalone.releaseNotes)}
+                {this.renderDetailRow("SoftwareAddOn", standalone.softwareAddOn)}
+                {this.renderDetailRow("Software Requirements", standalone.softwareRequirements)}
+                {this.renderDetailRow("Supporting Data", standalone.supportingData)}
+                {this.renderDetailRow("Data Transfer", standalone.dataTransfer)}
+                {this.renderDetailRowArray("Licence Information", standalone.licenseInformation,
+                    (x,i) => <p key={i}>{x}</p> )}
+                {  this.renderRuntimeInformation(tool, standalone.runtimeInformation) }
+            </React.Fragment>
+        );
+    }
+
+    renderRuntimeInformation(tool, runtime) {
+        if (!tool || !runtime) {
+            return false;
+        }
+        const Highlighter = this.props.highlighter;
+        return (
+            <React.Fragment>
+                {this.renderDetailRow("Memory Requirements", runtime.memoryRequirements)}
+                {this.renderDetailRow("Storage Requirements", runtime.storageRequirements)}
+                {this.renderDetailRow("Processor Requirements", runtime.processorRequirements)}
+                {this.renderDetailRowArray("Operating System", runtime.operatingSystem,
+                    (x,i) => <p key={i}>{
+                        x.name +
+                        (x.versionFrom || x.versionTo ? ` ${x.versionFrom||""} - ${x.versionTo||""}` : "")
+                    }</p> )}
+                {this.renderDetailRow("File Size", runtime.fileSize)}
+                {this.renderDetailRowArray("Installation Licence", runtime.installationLicense,
+                    (x,i) => <p key={i}>{x}</p> )}
+                {this.renderDetailRowArray("Runtime Environment", runtime.runtimeEnvironment,
+                    (x,i) => <p key={i}>{x}</p> )}
+            </React.Fragment>
         );
     }
 
@@ -262,10 +409,19 @@ class ToolCard extends React.Component {
                             { showTask ? <DetailsRow title="Task" summary={<p><Highlighter text={tool.task}/></p>} /> : false }
                             <DetailsRow title="Homepage" summary={<Highlighter markdown={tool.homepage}/>} />
                             <DetailsRow title="Description" summary={<Highlighter markdown={tool.description}/>} />
+                            { tool.creators && tool.creators.length &&
+                                <DetailsRow title="Creators" summary={<Highlighter markdown={tool.creators}/>} />
+                            }
                             { !tool.authentication || tool.authentication == "no" ? null :
                                 <DetailsRow title="Authentication" summary={<Highlighter markdown={tool.authentication}/>} />
                             }
-                            {  tool.licence && <DetailsRow title="Licence" summary={<Highlighter markdown={tool.licence}/>} /> }
+                            { tool.licence && <DetailsRow title="Licence" summary={<Highlighter markdown={tool.licence}/>} /> }
+
+                            { this.renderUsageRestrictions(tool)}
+
+                            {tool.webApplication && this.renderWebApp(tool, selectResourceMatch)}
+                            {tool.standaloneApplication && this.renderStandaloneApp(tool)}
+
                             {tool.inputs &&
                                 tool.inputs.map((input, i) => <InputRow  key={input.id || i} input={input}/>)}
                             {tool.matches && !(tool.bestMatchPercent == 100 && this.props.resourceList.length == 1) &&
@@ -385,10 +541,7 @@ const DetailsRow = ({ title, summary }) => {
     return !summary ? null : (
         <React.Fragment>
             <dt>{title}</dt>
-            <dd>{title == "Home"
-                ? <a href={summary} target="_blank"> {summary}</a>
-                : summary }
-            </dd>
+            <dd>{summary}</dd>
         </React.Fragment>
     );
 };

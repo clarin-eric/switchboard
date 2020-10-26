@@ -1,6 +1,7 @@
 package eu.clarin.switchboard.core;
 
 import eu.clarin.switchboard.profiler.api.Profile;
+import eu.clarin.switchboard.tool.Tool;
 import org.junit.Before;
 import org.junit.Test;
 

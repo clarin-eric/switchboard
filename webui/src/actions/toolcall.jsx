@@ -1,12 +1,17 @@
 import { iso_639_3_to_639_1, image } from './utils';
 
 export function getInvocationURL(tool, resourceList, match) {
+    if (!tool.webApplication) {
+        return false;
+    }
     if (!resourceList || !resourceList.length) {
         return false;
     }
+    const webapp = tool.webApplication;
+
     let queryParams = "";
-    if (tool.queryParameters) {
-        for (const param of tool.queryParameters) {
+    if (webapp.queryParameters) {
+        for (const param of webapp.queryParameters) {
 
             const value = getBoundValue(param, resourceList, tool.inputs, match);
             if (queryParams !== "") {
@@ -19,15 +24,15 @@ export function getInvocationURL(tool, resourceList, match) {
     }
 
     let pathParams = "";
-    if (tool.pathParameters) {
-        for (const param of tool.pathParameters) {
+    if (webapp.pathParameters) {
+        for (const param of webapp.pathParameters) {
             const value = getBoundValue(param, resourceList, tool.inputs, match);
             pathParams += "/";
             pathParams += encodeURIComponent(value);
         }
     }
 
-    let url = tool.url;
+    let url = webapp.url;
 
     if (pathParams) {
         if (url.endsWith('/')) {
@@ -37,8 +42,8 @@ export function getInvocationURL(tool, resourceList, match) {
     }
 
     if (queryParams) {
-        // need to check whether tool.url already contains parameters (that is, a '?')
-        if (tool.url.indexOf("\?") !== -1  || tool.url.includes('?') || tool.url.includes('\?'))  {
+        // need to check whether webapp.url already contains parameters (that is, a '?')
+        if (webapp.url.indexOf("\?") !== -1  || webapp.url.includes('?') || webapp.url.includes('\?'))  {
             url += "&" + queryParams;
         } else {
             url += "?" + queryParams;
