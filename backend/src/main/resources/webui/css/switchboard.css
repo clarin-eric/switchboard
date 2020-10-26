@@ -191,14 +191,21 @@ div.tool .badge-holder {
     display: inline;
 }
 
-div.tool .badge-holder > span, div.tool .badge-holder > a {
+div.tool .badge-holder > span {
     border-radius: 16px;
     border: 1px solid #bbb;
     padding: 4px;
     margin: 0;
-    color: #e83;
     background-color: #f8f8f8;
     font-size:80%;
+}
+
+div.tool .badge-holder.auth > span {
+    color: #e83;
+}
+
+div.tool .badge-holder.standalone > span {
+    color: #38e;
 }
 
 div.tool .dl-horizontal {

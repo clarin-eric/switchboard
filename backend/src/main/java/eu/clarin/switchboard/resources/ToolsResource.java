@@ -2,7 +2,7 @@ package eu.clarin.switchboard.resources;
 
 import eu.clarin.switchboard.app.FileAsset;
 import eu.clarin.switchboard.app.config.ToolConfig;
-import eu.clarin.switchboard.core.Tool;
+import eu.clarin.switchboard.tool.Tool;
 import eu.clarin.switchboard.core.ToolRegistry;
 import eu.clarin.switchboard.profiler.api.Profile;
 import org.slf4j.Logger;
