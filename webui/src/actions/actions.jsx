@@ -180,7 +180,7 @@ function fetchMatchingTools() {
 
 function normalizeTool(tool) {
     let searchString = "";
-    for (const key of ['task', 'name', 'description', 'licence']) {
+    for (const key of ['task', 'name', 'description']) {
         searchString += (tool[key] || "").toLowerCase();
     }
     tool.searchString = searchString;
