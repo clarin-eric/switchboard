@@ -16,19 +16,36 @@ function updateResource(resource) {
 
 export function setResourceProfile(id, profileKey, value) {
     return function (dispatch, getState) {
-        const resourceSI = getState().resourceList.find(r => r.id === id);
+        const resourceList = getState().resourceList;
+        const resourceSI = resourceList.find(r => r.id === id);
         if (!resourceSI) {
             console.error("cannot find resource with id", id);
             return;
         }
         const resource = resourceSI.asMutable({deep:true});
         resource.profile[profileKey] = value;
+
         dispatch({
             type: actionType.RESOURCE_UPDATE,
             data: resource,
         });
         // update matching tools because the profile has changed
         dispatch(fetchMatchingTools());
+
+        if (resource.sourceID) {
+            let parent = resourceList.find(r => r.id === resource.sourceID);
+            if (parent) {
+                parent = parent.asMutable ? parent.asMutable({deep:true}) : parent;
+                const entry = parent.outline.find(e => e.name == resource.sourceEntryName);
+                if (entry) {
+                    entry.profile = Object.assign({}, entry.profile, resource.profile);
+                    dispatch({
+                        type: actionType.RESOURCE_UPDATE,
+                        data: {id: parent.id, outline: parent.outline},
+                    });
+                }
+            }
+        }
     }
 }
 
@@ -73,9 +90,24 @@ export function removeResource(resource) {
     return function (dispatch, getState) {
         dispatch({
             type: actionType.RESOURCE_REMOVE,
-            data: resource,
+            data: new Set([resource.id]),
         });
+
         dispatch(fetchMatchingTools());
+
+        if (resource.sourceID && resource.sourceEntryName) {
+            let parent = getState().resourceList.find(r => r.id == resource.sourceID);
+            parent = parent.asMutable ? parent.asMutable({deep:true}) : parent;
+            const outline = parent.outline || [];
+            const entry = outline.find(e => e.name === resource.sourceEntryName);
+            if (entry) {
+                entry.checked = false;
+                dispatch({
+                    type: actionType.RESOURCE_MERGE,
+                    data: {id: parent.id, outline},
+                });
+            }
+        }
     }
 }
 
@@ -88,15 +120,52 @@ export function selectResourceMatch(toolName, matchIndex) {
     }
 }
 
-function uploadData(formData) {
+export function addZipEntryToInputs(zipRes, zipEntry) {
     return function (dispatch, getState) {
-        const apiinfo = getState().apiinfo;
-        if (!apiinfo || !apiinfo.enableMultipleResources) {
+        const state = getState();
+
+        const outline = zipRes.outline.asMutable({deep:true});
+        if (!state.apiinfo?.enableMultipleResources) {
+            const list = state.resourceList.filter(r => r.sourceID == zipRes.id).map(r => r.id);
             dispatch({
-                type: actionType.RESOURCE_CLEAR_ALL,
+                type: actionType.RESOURCE_REMOVE,
+                data: new Set(list),
             });
+
+            outline.forEach(e => {e.checked = false})
+        }
+        const entry = outline.find(e => e.name === zipEntry.name);
+        if (entry.checked) {
+            // already checked
+            return;
+        } else {
+            entry.checked = true;
+        }
+        dispatch({
+            type: actionType.RESOURCE_MERGE,
+            data: {id: zipRes.id, outline},
+        });
+
+        var formData = new FormData();
+        formData.append("zipID", zipRes.id);
+        formData.append("zipEntryName", zipEntry.name);
+        if (zipEntry.profile) {
+            formData.append("profile", JSON.stringify(zipEntry.profile));
         }
 
+        const newResource = {id: ++lastResourceID, sourceID: zipRes.id};
+        dispatch(updateResource(newResource));
+        axios
+            .post(apiPath.storage, formData, {
+                headers: {'Content-Type': 'multipart/form-data'}
+            })
+            .then(updateResourceCallback(dispatch, newResource))
+            .catch(resourceErrorCallback(dispatch, newResource));
+    }
+}
+
+function uploadData(formData) {
+    return function (dispatch, getState) {
         const newResource = {id: ++lastResourceID};
         dispatch(updateResource(newResource));
         axios
@@ -119,6 +188,17 @@ function updateResourceCallback(dispatch, resource) {
         }
         res.isDictionaryResource = isDictionaryResource(res);
         dispatch(updateResource(Object.assign({}, resource, res)));
+
+        if (!res.outline) {
+            axios
+                .get(apiPath.storageOutline(res.id))
+                .then(outlineResponse => {
+                    dispatch({
+                        type: actionType.RESOURCE_MERGE,
+                        data: {id: res.id, outline: outlineResponse.data},
+                    });
+                });
+        }
     };
 }
 
@@ -212,9 +292,11 @@ function fetchMatchingTools() {
             type: actionType.MATCHING_TOOLS_FETCH_START,
         })
 
-        const isDict = getState().resourceList.every(r => r.isDictionaryResource);
+        const allResources = getState().resourceList.asMutable({deep:true});
+        const resourceList = allResources.filter(r => !r.isContainer);
+        const isDict = resourceList.every(r => r.isDictionaryResource);
 
-        const profiles = getState().resourceList
+        const profiles = resourceList
                 .filter(r => r.localLink && r.profile)
                 .map(r => {
                     const ret = Object.assign({}, r.profile);
@@ -231,6 +313,14 @@ function fetchMatchingTools() {
         axios.post(apiPath.toolsMatch, profiles)
             .then(response => {
                 const toolMatches = response.data;
+                // find correct matching indices (we have container resources, which are sources for others)
+                toolMatches.forEach(toolMatch => {
+                    toolMatch.matches = toolMatch.matches.map(indicesList =>
+                        indicesList.map(index => index < 0 ? index :
+                            allResources.findIndex(r => r.id === resourceList[index].id)
+                        )
+                    );
+                });
 
                 const tools = toolMatches.map(tm => {
                     const tool = tm.tool;
@@ -291,22 +381,23 @@ function errHandler(dispatch, msg) {
         console.log({msg, err, response: err.response});
         msg = msg ? (msg + ": ") : "";
 
-        if (!err.response) {
-            dispatch({
-                type: actionType.ERROR,
-                message: msg + "Connection error",
-            });
-            return;
-        }
+        let data = {};
+        let errorText = "Connection error";
 
-        const data = err.response.data || {};
-        const errorText = data.message ? data.message : err.response.statusText;
+        if (err.message && err.stack) {
+            errorText = err.message;
+        }
+        if (err.response) {
+            data = err.response.data || {};
+            errorText = data.message ? data.message : err.response.statusText;
+        }
 
         dispatch({
             type: actionType.ERROR,
             message: msg + errorText,
             url: data.url,
         });
+        //throw err;
     }
 }
 

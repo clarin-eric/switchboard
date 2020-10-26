@@ -1,7 +1,6 @@
 import React from 'react';
-import SI from 'seamless-immutable';
 import Select from 'react-select';
-import { processMediatype, humanSize } from '../actions/utils';
+import { processMediatype, humanSize, isViewableProfile, isTextProfile, isContainerProfile } from '../actions/utils';
 import { InputContainer } from '../containers/InputContainer';
 
 const SelectLanguage = (props) => {
@@ -43,51 +42,112 @@ class BlurableTextInput extends React.Component {
 }
 
 
-export class ResourceList extends React.Component {
+class NormalResource extends React.Component {
     constructor(props) {
         super(props);
-        this.renderResource = this.renderResource.bind(this);
         this.state = {
-            showAddMoreDataPane: false,
+            showContent: false,
         }
     }
 
-    renderResourceDetails(res) {
-        const removeButton = this.props.resourceList.length > 1 ?
+    render() {
+        const res = this.props.res;
+        const showContent = this.state.showContent && isViewableProfile(res.profile.mediaType);
+        const toggleContentButton = res.content && isViewableProfile(res.profile.mediaType) || res.outline ?
+            <a  style={{fontSize:'70%', marginLeft:10}}
+                onClick={e => this.setState({showContent:!this.state.showContent})} >
+                { showContent ?
+                    <span className="glyphicon glyphicon-eye-close" aria-hidden="true"/> :
+                    <span className="glyphicon glyphicon-eye-open" aria-hidden="true"/>
+                }
+            </a> : false;
+        const removeButton = (this.props.enableMultipleResources || res.sourceID) ?
             <a onClick={e => this.props.removeResource(res)}>
                 <span className={"glyphicon glyphicon-trash"}
                     style={{fontSize:'80%', marginLeft: 10}} aria-hidden="true"/>
             </a> : false;
-        return <div className="row">
-                <div className="col-md-4">
+        const contentDiv = showContent ?
+            <div className="content">
+                {res.content && isTextProfile(res.profile.mediaType) ?
+                    <pre style={{maxHeight: 200}}> {res.content} </pre> :
+                    false
+                }
+                {res.outline ?
+                    <div style={{maxHeight: 200, margin:10, overflow: 'auto'}}>
+                        {res.outline.map(entry =>
+                            <div className="row" style={{margin:4, padding:0}} key={entry.name}>
+                                <div className="col-sm-8" style={{padding:0}}>
+                                    <label style={{fontWeight:'normal', marginBottom:0}}>
+                                        <input type={this.props.enableMultipleResources ? "checkbox" : "radio"}
+                                            name={entry.name}
+                                            checked={entry.checked || false}
+                                            onChange={() => this.props.addZipEntryToInputs(res, entry)}
+                                            />
+                                        {" "}
+                                        <span className={"glyphicon glyphicon-file"} aria-hidden="true"/>
+                                        {" "}
+                                        {entry.name}
+                                    </label>
+                                </div>
+                                <div className="col-sm-2">{(entry.profile||{}).mediaType || ""}</div>
+                                <div className="col-sm-2">{humanSize(entry.size)}</div>
+                            </div>
+                        ) }
+                    </div> : false
+                }
+            </div> : false;
+        return <div className={"row" + (res.isContainer ? " disabled":"") + (res.sourceID ? " dependent" : "")}>
+                <div className={res.isContainer ? "col-md-12" : "col-md-5"}>
                     <div className="value namesize">
                         <a href={res.originalLink || res.localLink} style={{marginRight:10}}> {res.filename}</a>
-                        <span style={{fontSize:'66%'}}>{humanSize(res.fileLength)}</span>
+                        <span style={{fontSize:'66%'}} style={{marginRight:10}}>{humanSize(res.fileLength)}</span>
                         {removeButton}
+                        {toggleContentButton}
                     </div>
                 </div>
-                <div className="col-md-4">
-                    <div className="row">
-                        <div className="col-xs-4 col-md-12 resource-header">Mediatype</div>
-                        <div className="col-xs-8 col-md-12 value">
-                            <SelectMediatype res={res} mediatypes={this.props.mediatypes}
-                                onMediatype={v => this.props.setResourceProfile(res.id, 'mediaType', v.value)}/>
+                { showContent ?
+                    <div className="col-md-12 visible-xs visible-sm">
+                        {contentDiv}
+                    </div> : false
+                }
+                { res.isContainer ? false :
+                    <React.Fragment>
+                    <div className="col-md-4">
+                        <div className="row">
+                            <div className="col-xs-4 col-md-12 resource-header">Mediatype</div>
+                            <div className="col-xs-8 col-md-12 value">
+                                <SelectMediatype res={res} mediatypes={this.props.mediatypes}
+                                    onMediatype={v => this.props.setResourceProfile(res.id, 'mediaType', v.value)}/>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="col-md-4">
-                    <div className="row">
-                        <div className="col-xs-4 col-md-12 resource-header">Language</div>
-                        <div className="col-xs-8 col-md-12 value">
-                            <SelectLanguage res={res} languages={this.props.languages}
-                                onLanguage={v => this.props.setResourceProfile(res.id, 'language', v.value)}/>
+                    <div className="col-md-3">
+                        <div className="row">
+                            <div className="col-xs-4 col-md-12 resource-header">Language</div>
+                            <div className="col-xs-8 col-md-12 value">
+                                <SelectLanguage res={res} languages={this.props.languages}
+                                    onLanguage={v => this.props.setResourceProfile(res.id, 'language', v.value)}/>
+                            </div>
                         </div>
                     </div>
-                </div>
+                    </React.Fragment>
+                }
+                { showContent ?
+                    <div className="col-md-12 hidden-xs hidden-sm">
+                        {contentDiv}
+                    </div> : false
+                }
             </div>
     }
+}
 
-    renderSelectionResource(res) {
+class SelectionResource extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        const res = this.props.res;
         return (
             <div key={res.id} className="row">
                 <div className="col-md-8">
@@ -110,63 +170,94 @@ export class ResourceList extends React.Component {
             </div>
         );
     }
+}
+
+
+export class ResourceList extends React.Component {
+    constructor(props) {
+        super(props);
+        this.renderResource = this.renderResource.bind(this);
+        this.state = {
+            showAddMoreDataPane: false,
+            // showContent: {},
+        }
+    }
 
     renderResource(res) {
         if (res.isDictionaryResource) {
-            return this.renderSelectionResource(res);
+            return <SelectionResource
+                        languages={this.props.languages}
+                        setResourceProfile={this.props.setResourceProfile}
+                        setResourceContent={this.props.setResourceContent}
+                        res={res} />;
         }
-        return <React.Fragment key={res.id}>
-                {res.profile ?
-                    this.renderResourceDetails(res) :
-                    <div className="row">
-                        <div className="col-md-4">
-                            <div className="value namesize">
-                                <p>Uploading...</p>
-                            </div>
-                        </div>
+        if (res.profile) {
+            return <NormalResource
+                        mediatypes={this.props.mediatypes}
+                        languages={this.props.languages}
+                        setResourceProfile={this.props.setResourceProfile}
+                        removeResource={this.props.removeResource}
+                        addZipEntryToInputs={this.props.addZipEntryToInputs}
+                        enableMultipleResources={this.props.enableMultipleResources}
+                        res={res} />;
+        }
+        return (
+            <div className={"row" + (res.sourceID ? " dependent" : "")}>
+                <div className="col-md-4">
+                    <div className="value namesize">
+                        <p>Uploading...</p>
                     </div>
-                }
-               </React.Fragment>
+                </div>
+            </div>
+        );
     }
 
     renderAddMoreDataPane() {
-        return <div className="more-data-pane">
+        return (
+            <div className="more-data-pane">
                 <InputContainer title="Add another resource" onSubmit={() => this.setState({showAddMoreDataPane:false})}/>
                 <a onClick={e => this.setState({showAddMoreDataPane:false})} className="btn btn-default" style={{float:'right'}}>
                     <span className={"glyphicon glyphicon-remove"} aria-hidden="true"/>
                     {" "}Dismiss
                 </a>
                 <div style={{clear:'both'}}/>
-               </div>
+           </div>
+        );
     }
 
     renderAddResourceButton() {
-        return <div className="more-data-button">
+        return (
+            <div className="more-data-button">
                 <a onClick={e => this.setState({showAddMoreDataPane:true})} style={{float:'right'}}>
                     <span className={"glyphicon glyphicon-plus"} aria-hidden="true"/>
                     {" "}Add another resource
                 </a>
-               </div>
+            </div>
+        );
     }
 
     render() {
         const isDict = this.props.resourceList.every(res => res.isDictionaryResource);
-        return <React.Fragment>
-            <div className="resource">
-                <div className="row hidden-xs">
-                    <div className="col-md-12">
-                        <h2>Resources</h2>
+        return (
+            <React.Fragment>
+                <div className="resource">
+                    <div className="row hidden-xs">
+                        <div className="col-md-12">
+                            <h2>Resources</h2>
+                        </div>
                     </div>
+                    {this.props.resourceList.map(r =>
+                        <React.Fragment key={r.id}>{this.renderResource(r)}</React.Fragment>
+                     )}
                 </div>
-                {this.props.resourceList.map(this.renderResource)}
-            </div>
-            { this.state.showAddMoreDataPane ?
-                this.renderAddMoreDataPane() :
-                (this.props.enableMultipleResources && !isDict ?
-                    this.renderAddResourceButton() :
-                    false)
-            }
-            <div style={{clear:'both'}}/>
-        </React.Fragment>;
+                { this.state.showAddMoreDataPane ?
+                    this.renderAddMoreDataPane() :
+                    (this.props.enableMultipleResources && !isDict ?
+                        this.renderAddResourceButton() :
+                        false)
+                }
+                <div style={{clear:'both'}}/>
+            </React.Fragment>
+        );
     }
 }

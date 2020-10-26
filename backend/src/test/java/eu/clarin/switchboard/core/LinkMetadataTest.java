@@ -40,8 +40,8 @@ public class LinkMetadataTest {
         info = LinkMetadata.getLinkData(cachingClient, "https://b2drop.eudat.eu/s/ekDJNz7fWw69w5Y");
         assertEquals("sherlock-short.txt", info.filename);
 
-        info = LinkMetadata.getLinkData(cachingClient, "https://google.com/maps");
-        assertEquals("maps", info.filename);
+        info = LinkMetadata.getLinkData(cachingClient, "https://google.com/trends");
+        assertEquals("trends", info.filename);
     }
 
     @Test

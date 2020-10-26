@@ -48,33 +48,46 @@ function allTools(state = SI([]), action) {
 }
 
 function resourceList(state = SI([]), action) {
+    let ret = state.asMutable();
     switch (action.type) {
         case actionType.RESOURCE_CLEAR_ALL: {
-            return SI([])
+            ret = [];
         }
+        break;
+
         case actionType.RESOURCE_UPDATE: {
             const index = state.findIndex(r => r.id === action.data.id);
             if (index >= 0) {
-                const newstate = state.asMutable();
-                newstate[index] = action.data;
-                return SI(newstate);
+                ret[index] = Object.assign({}, ret[index].asMutable(), action.data);
             } else {
-                const newstate = state.asMutable();
-                newstate.push(action.data);
-                return SI(newstate);
+                ret.push(action.data);
             }
         }
-        case actionType.RESOURCE_REMOVE: {
+        break;
+
+        case actionType.RESOURCE_MERGE: {
             const index = state.findIndex(r => r.id === action.data.id);
             if (index >= 0) {
-                const newstate = state.asMutable();
-                newstate.splice(index, 1);
-                return SI(newstate);
+                ret[index] = ret[index].merge(action.data);
             }
         }
-        default:
-            return state;
+        break;
+
+        case actionType.RESOURCE_REMOVE:{
+            ret = ret.filter(r => !action.data.has(r.id));
+        }
+        break;
     }
+    ret = ret.map(r => {
+        const isContainer = ret.some(r2 => r.id === r2.sourceID);
+        if (r.set) {
+            r = r.set("isContainer", isContainer);
+        } else {
+            r.isContainer = isContainer;
+        }
+        return r;
+    });
+    return SI(ret);
 }
 
 function matchingTools(state = SI({}), action) {

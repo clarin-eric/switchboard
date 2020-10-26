@@ -10,6 +10,7 @@ export const apiPath = {
     storage:        `${urlRoot}/api/storage`,
     storageID:      id => `${urlRoot}/api/storage/${id}`,
     storageInfo:    id => `${urlRoot}/api/storage/${id}/info`,
+    storageOutline: id => `${urlRoot}/api/storage/${id}/outline`,
     logo:           name => `${urlRoot}/api/logos/${name}`,
 };
 
@@ -32,6 +33,7 @@ export const actionType = [
     'MATCHING_TOOLS_FETCH_SUCCESS',
     'RESOURCE_CLEAR_ALL',
     'RESOURCE_UPDATE',
+    'RESOURCE_MERGE',
     'RESOURCE_REMOVE',
     'SELECT_RESOURCE_MATCH',
     'MODE',
