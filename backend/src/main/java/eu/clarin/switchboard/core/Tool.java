@@ -252,7 +252,7 @@ public class Tool {
 
             String name = e.getKey();
             String mapping = (String) v1mappings.get(name);
-            if (Arrays.asList("input", "lang", "type").contains(name) && mapping != null && !mapping.isEmpty()) {
+            if (mapping != null && !mapping.isEmpty()) {
                 p.setName(mapping);
             } else {
                 p.setName(name);
