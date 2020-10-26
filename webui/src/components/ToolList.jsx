@@ -183,9 +183,9 @@ class ToolSubList extends React.Component {
         const tools = [...this.props.tools].sort(sortFn);
         const Highlighter = this.props.highlighter;
         return (
-            <div className="tool-sublist" onClick={toggle.bind(this, 'show')} >
+            <div className="tool-sublist" >
                 { !this.props.task ? false :
-                    <h3>
+                    <h3 onClick={toggle.bind(this, 'show')}>
                         <span className="section-left-padding hidden-xs"/>
                         <Indicator title={"menu-" + (this.state.show ? "down":"right")} style={taskChevron}/>
                         <Highlighter text={this.props.task}/>
@@ -207,11 +207,6 @@ class ToolSubList extends React.Component {
     }
 }
 
-const trackCall = (e) => {
-    stopBubbling(e);
-    _paq.push(['trackEvent', 'Tools', 'StartTool', tool.name]);
-}
-
 class ToolCard extends React.Component {
     constructor(props) {
         super(props);
@@ -229,12 +224,13 @@ class ToolCard extends React.Component {
     };
 
     renderHeader(imgSrc, tool, invocationURL) {
-        const stopBubbling = (e) => {
+        const trackCall = (e) => {
             e.stopPropagation();
+            _paq.push(['trackEvent', 'Tools', 'StartTool', tool.name]);
         }
         const Highlighter = this.props.highlighter;
         return (
-            <div className="toolheader">
+            <div className="toolheader" onClick={toggle.bind(this, 'showDetails')}>
                 <div className="img-holder hidden-xs"><img src={imgSrc}/></div>
                 <Indicator className="tool-chevron" title={"menu-" + (this.state.showDetails ? "down":"right")}/>
                 { invocationURL
@@ -269,13 +265,11 @@ class ToolCard extends React.Component {
                             { !tool.authentication || tool.authentication == "no" ? null :
                                 <DetailsRow title="Authentication" summary={<Highlighter markdown={tool.authentication}/>} />
                             }
-
+                            {  tool.licence && <DetailsRow title="Licence" summary={<Highlighter markdown={tool.licence}/>} /> }
                             {tool.inputs &&
                                 tool.inputs.map((input, i) => <InputRow  key={input.id || i} input={input}/>)}
                             {tool.matches && !(tool.bestMatchPercent == 100 && this.props.resourceList.length == 1) &&
                                 <InputMatches tool={tool} selectResourceMatch={selectResourceMatch}/>}
-
-                            {  tool.licence && <DetailsRow title="Licence" summary={<Highlighter markdown={tool.licence}/>} /> }
                         </dl>
                     </div>
                 </div>
@@ -302,7 +296,7 @@ class ToolCard extends React.Component {
             getInvocationURL(tool, this.props.resourceList, tool.matches[tool.invokeMatchIndex]);
         const toolClassName = invocationURL ? "tool match" : "tool";
         return (
-            <div className={toolClassName} onClick={toggle.bind(this, 'showDetails')}>
+            <div className={toolClassName}>
                 { this.renderHeader(this.props.imgSrc, tool, invocationURL) }
                 { this.state.showDetails ?
                     this.renderDetails(tool, this.props.showTask, this.props.selectResourceMatch) :
@@ -314,41 +308,40 @@ class ToolCard extends React.Component {
 
 
 const InputMatches = ({tool, selectResourceMatch}) => {
+    const ignoreEvent = e => {e.preventDefault(); e.stopPropagation()};
     const inputFn = (input, i) => {
         return <p key={i}>Input {input.name ? <em><strong>{input.name}</strong></em> : false} {text}</p>
     };
-
     return (
         <React.Fragment>
             <dt>Resource Match</dt>
             <dd>
+                { tool.matches.length > 1 ?
+                    <span>Multiple resource matches are available, please select one:</span> : null
+                }
                 { tool.matches.map((match, matchIndex) => {
                     const invokeThis = tool.invokeMatchIndex == matchIndex;
                     return (
                         <div key={matchIndex}>
+                        {tool.matches.length <= 1 ? false :
+                            <form className="form form-inline" style={{display:'inline-block', paddingRight:4}}>
+                                <input type="checkbox" id={"matchIndex"+matchIndex} name={"matchIndex"+matchIndex}
+                                    checked={!!invokeThis}
+                                    onChange={e => {selectResourceMatch(matchIndex)}} />
+                            </form>
+                        }
                         { tool.inputs.map((input, inputIndex) =>
-                            <p key={inputIndex}>
-                                <span className={"glyphicon glyphicon-" + (invokeThis ? "check" : "unchecked")}
-                                      style={{fontSize:'90%'}} aria-hidden="true"/>
+                            <span key={inputIndex}>
                                 {" "}
                                 Input
                                 {" "}
                                 {input.name && <span className="resource-index">{input.name}</span>}
                                 {" "}
                                 {match[inputIndex] < 0 ?
-                                    'does not match any resource' :
-                                    `matches resource no. ${match[inputIndex] + 1}`
+                                    'does not match any resource.' :
+                                    `matches resource no. ${match[inputIndex] + 1}.`
                                 }
-                                .
-                                {" "}
-                                { tool.matches.length <= 1 ? false : invokeThis ?
-                                        <span> Currently using this resource match.
-                                        </span>
-                                        :
-                                        <a onClick={e => selectResourceMatch(matchIndex)}
-                                           className="btn btn-xs btn-default"> Use this Resource Match </a>
-                                }
-                            </p>)
+                            </span>)
                         }
                         </div>
                     );

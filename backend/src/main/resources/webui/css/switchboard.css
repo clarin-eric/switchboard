@@ -128,7 +128,6 @@ div.tool-sublist h3 {
     font-size: 20px;
     color: #033d71;
     background-color: #f3f9fc;
-    cursor: default;
 }
 div.tool-sublist h3:hover {
     background-color: #eee;
@@ -139,7 +138,6 @@ div.tool-sublist h3 .section-left-padding {
 
 div.tool {
     padding: 8px 0;
-    cursor: default;
 }
 
 div.tool:hover {
