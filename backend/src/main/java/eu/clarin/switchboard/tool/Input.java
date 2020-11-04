@@ -14,6 +14,7 @@ public class Input {
     String name;
     List<String> mediatypes;
     Object languages;
+    Integer maxSize;
 
     public String getId() {
         return id;
@@ -47,6 +48,14 @@ public class Input {
         this.languages = languages;
     }
 
+    public Integer getMaxSize() {
+        return maxSize;
+    }
+
+    public void setMaxSize(Integer maxSize) {
+        this.maxSize = maxSize;
+    }
+
     @JsonIgnore
     public Matcher getMatcher(boolean requiresContent) {
         DefaultMatcher.Builder matcherBuilder = DefaultMatcher.builder();
@@ -65,7 +74,6 @@ public class Input {
         return matcherBuilder.build();
     }
 
-
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
@@ -73,6 +81,7 @@ public class Input {
                 .add("\nname", name)
                 .add("\nmediatypes", mediatypes)
                 .add("\nlanguages", languages)
+                .add("\nmaxSize", maxSize)
                 .toString();
     }
 }

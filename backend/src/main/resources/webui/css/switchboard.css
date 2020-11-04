@@ -159,6 +159,10 @@ div.tool .toolheader .tool-starter {
     margin-left: 2px;
 }
 
+div.tool .toolheader .label {
+    padding: 2px 4px;
+    margin-right: 8px;
+}
 
 div.tool .img-holder {
     width: 160px;

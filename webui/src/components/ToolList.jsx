@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeHighlighter } from './Highlighter.jsx';
-import { processLanguage, image } from '../actions/utils';
+import { processLanguage, image, humanSize } from '../actions/utils';
 import { getInvocationURL } from '../actions/toolcall';
 import { apiPath } from '../constants';
 
@@ -223,7 +223,7 @@ class ToolCard extends React.Component {
         highlighter: PropTypes.func.isRequired,
     };
 
-    renderHeader(imgSrc, tool, invocationURL) {
+    renderHeader(imgSrc, tool, invocationURL, error) {
         const trackCall = (e) => {
             e.stopPropagation();
             _paq.push(['trackEvent', 'Tools', 'StartTool', tool.name]);
@@ -239,6 +239,7 @@ class ToolCard extends React.Component {
                       </a>
                     : false
                 }
+                { error ? <span className="label label-danger">{error}</span> : false }
                 <div className="name-and-badges">
                     <span style={{fontSize:"120%"}}><Highlighter text={tool.name}/></span>
                     <div className="badges">
@@ -451,12 +452,11 @@ class ToolCard extends React.Component {
 
     render() {
         const tool = this.props.tool;
-        const invocationURL = tool.invokeMatchIndex >= 0 &&
-            getInvocationURL(tool, this.props.resourceList, tool.matches[tool.invokeMatchIndex]);
+        const {invocationURL, error} = tool.invokeMatchIndex >= 0 && getInvocationURL(tool, this.props.resourceList) || {};
         const toolClassName = invocationURL ? "tool match" : "tool";
         return (
             <div className={toolClassName}>
-                { this.renderHeader(this.props.imgSrc, tool, invocationURL) }
+                { this.renderHeader(this.props.imgSrc, tool, invocationURL, error) }
                 { this.state.showDetails ?
                     this.renderDetails(tool, this.props.showTask, this.props.selectResourceMatch) :
                     false }
@@ -531,6 +531,12 @@ const InputRow = ({ input }) => {
                                 input.languages.map(languageLabel).join(", ")
                             }
                         </div>
+                    </div>
+                }
+                {!input.maxSize ? false :
+                    <div className="row">
+                        <div className="col-sm-2 inputclass">Max Size:</div>
+                        <div className="col-sm-10">{humanSize(input.maxSize)}</div>
                     </div>
                 }
             </dd>
