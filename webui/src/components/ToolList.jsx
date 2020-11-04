@@ -408,6 +408,9 @@ class ToolCard extends React.Component {
                         <dl className="dl-horizontal">
                             { showTask ? <DetailsRow title="Task" summary={<p><Highlighter text={tool.task}/></p>} /> : false }
                             <DetailsRow title="Homepage" summary={<Highlighter markdown={tool.homepage}/>} />
+                            {tool.keywords ?
+                                <KeywordsRow title="Keywords" keywords={tool.keywords.map(kw => <Highlighter text={kw}/>)} />:
+                                false }
                             <DetailsRow title="Description" summary={<Highlighter markdown={tool.description}/>} />
                             { tool.creators && tool.creators.length &&
                                 <DetailsRow title="Creators" summary={<Highlighter markdown={tool.creators}/>} />
@@ -542,6 +545,15 @@ const DetailsRow = ({ title, summary }) => {
         <React.Fragment>
             <dt>{title}</dt>
             <dd>{summary}</dd>
+        </React.Fragment>
+    );
+};
+
+const KeywordsRow = ({ title, keywords }) => {
+    return !keywords ? null : (
+        <React.Fragment>
+            <dt>{title}</dt>
+            <dd> <p> {keywords.map((kw,i) => <span className="keyword" key={i}>{kw}</span>)} </p> </dd>
         </React.Fragment>
     );
 };
