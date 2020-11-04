@@ -49,8 +49,7 @@ export class ResourceList extends React.Component {
     }
 
     renderResourceDetails(res) {
-        return (
-            <div className="row">
+        return <div className="row">
                 <div className="col-md-4">
                     <div className="value namesize">
                         <a href={res.originalLink || res.localLink} style={{marginRight:10}}> {res.filename}</a>
@@ -80,25 +79,45 @@ export class ResourceList extends React.Component {
                     </div>
                 </div>
             </div>
-        );
     }
 
     renderResource(res) {
         return <React.Fragment key={res.id}>
-            {res.profile ?
-                this.renderResourceDetails(res) :
-                <div className="row">
-                    <div className="col-md-4">
-                        <div className="value namesize">
-                            <p>Uploading...</p>
+                {res.profile ?
+                    this.renderResourceDetails(res) :
+                    <div className="row">
+                        <div className="col-md-4">
+                            <div className="value namesize">
+                                <p>Uploading...</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            }
-        </React.Fragment>;
+                }
+               </React.Fragment>
+    }
+
+    renderAddMoreDataPane() {
+        return <div className="more-data-pane">
+                <InputContainer title="Add another resource" onSubmit={() => this.setState({showAddMoreDataPane:false})}/>
+                <a onClick={e => this.setState({showAddMoreDataPane:false})} className="btn btn-default" style={{float:'right'}}>
+                    <span className={"glyphicon glyphicon-remove"} aria-hidden="true"/>
+                    {" "}Dismiss
+                </a>
+                <div style={{clear:'both'}}/>
+               </div>
+    }
+
+    renderAddResourceButton() {
+        return <div className="more-data-button">
+                <a onClick={e => this.setState({showAddMoreDataPane:true})} style={{float:'right'}}>
+                    <span className={"glyphicon glyphicon-plus"} aria-hidden="true"/>
+                    {" "}Add another resource
+                </a>
+               </div>
     }
 
     render() {
+        console.log({enableMultipleResources: this.props.enableMultipleResources});
         return <React.Fragment>
             <div className="resource">
                 <div className="row hidden-xs">
@@ -109,20 +128,10 @@ export class ResourceList extends React.Component {
                 {this.props.resourceList.map(this.renderResource)}
             </div>
             { this.state.showAddMoreDataPane ?
-                <div className="more-data-pane">
-                    <InputContainer title="Add another resource" onSubmit={() => this.setState({showAddMoreDataPane:false})}/>
-                    <a onClick={e => this.setState({showAddMoreDataPane:false})} className="btn btn-default" style={{float:'right'}}>
-                        <span className={"glyphicon glyphicon-remove"} aria-hidden="true"/>
-                        {" "}Dismiss
-                    </a>
-                    <div style={{clear:'both'}}/>
-                </div> :
-                <div className="more-data-button">
-                    <a onClick={e => this.setState({showAddMoreDataPane:true})} style={{float:'right'}}>
-                        <span className={"glyphicon glyphicon-plus"} aria-hidden="true"/>
-                        {" "}Add another resource
-                    </a>
-                </div>
+                this.renderAddMoreDataPane() :
+                (this.props.enableMultipleResources ?
+                    this.renderAddResourceButton() :
+                    false)
             }
             <div style={{clear:'both'}}/>
         </React.Fragment>;

@@ -46,6 +46,7 @@ export class Main extends React.Component {
             <div className="main">
                 { this.props.resourceList.length ?
                     <Analysis mediatypes={this.props.mediatypes} languages={this.props.languages}
+                              enableMultipleResources={this.props.apiinfo.enableMultipleResources}
                               resourceList={this.props.resourceList}
                               updateResource={this.props.updateResource}
                               removeResource={this.props.removeResource}
@@ -82,8 +83,10 @@ const Uploading = () => (
 const Analysis = (props) => (
     <div>
         <ResourceList mediatypes={props.mediatypes} languages={props.languages}
+                      enableMultipleResources={props.enableMultipleResources}
                       resourceList={props.resourceList}
-                      updateResource={props.updateResource} removeResource={props.removeResource} />
+                      updateResource={props.updateResource}
+                      removeResource={props.removeResource} />
         <hr style={{marginTop:0}}/>
 
         <MatchingTools matchingTools={props.matchingTools} resourceList={props.resourceList}

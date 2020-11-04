@@ -10,7 +10,7 @@ import {clientPath} from './constants';
 import rootReducers from './actions/reducers';
 import * as actions from './actions/actions';
 
-import {NavBar} from './components/NavBar';
+import {NavBarContainer} from './containers/NavBarContainer';
 import {FooterContainer} from './containers/FooterContainer';
 import {MainContainer} from './containers/MainContainer';
 import {MainInputContainer} from './containers/InputContainer';
@@ -51,7 +51,7 @@ class FrameComponent extends React.Component {
     render() {
         return (
             <div id="bodycontainer">
-                <NavBar history={this.props.history} mode={this.props.mode}/>
+                <NavBarContainer history={this.props.history} mode={this.props.mode}/>
                 <div className="container">
                     <div className="row">
                         <div className="col-md-12">

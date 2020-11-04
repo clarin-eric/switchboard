@@ -6,11 +6,17 @@ import {clientPath} from '../constants';
 export class NavBar extends React.Component {
     constructor(props) {
         super(props);
+        this.gotoUpload = this.gotoUpload.bind(this);
         this.closeNav = this.closeNav.bind(this);
         this.toggleNav = this.toggleNav.bind(this);
         this.state = {
             showCollapsedNavbar: false
         };
+    }
+
+    gotoUpload(e) {
+        this.props.clearResources();
+        this.closeNav(e);
     }
 
     closeNav(e) {
@@ -62,7 +68,7 @@ export class NavBar extends React.Component {
                     <div className={navCollapseClass}>
                         <ul className="nav navbar-nav">
                             <li className={navItemClass(clientPath.input)} onClick={this.closeNav}>
-                                <Link className="nav-link input" to={clientPath.input} onClick={this.closeNav}>Upload</Link>
+                                <Link className="nav-link input" to={clientPath.input} onClick={this.gotoUpload}>Upload</Link>
                             </li>
                             <li className={navItemClass(clientPath.tools)} onClick={this.closeNav}>
                                 <Link className="nav-link all-tools" to={clientPath.tools} onClick={this.closeNav}>Tool Inventory</Link>

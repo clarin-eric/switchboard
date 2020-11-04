@@ -21,6 +21,7 @@ switchboard:
         toolRegistryPath: ${REGISTRY_TOOL_PATH:-../../switchboard-tool-registry/tools}
         logoRegistryPath: ${REGISTRY_LOGO_PATH:-../../switchboard-tool-registry/logos}
         showOnlyProductionTools: ${REGISTRY_PRODUCTIONTOOLS_ONLY:-false}
+        enableMultipleResources: ${ENABLE_MULTIPLE_RESOURCES:-false}
     dataStore:
         location: # e.g. /my/data; defaults to temporary storage
         eraseAllStorageOnStart: ${DATASTORE_STARTERASE:-false}

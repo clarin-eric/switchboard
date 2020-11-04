@@ -49,6 +49,9 @@ function allTools(state = SI([]), action) {
 
 function resourceList(state = SI([]), action) {
     switch (action.type) {
+        case actionType.RESOURCE_CLEAR_ALL: {
+            return SI([])
+        }
         case actionType.RESOURCE_UPDATE: {
             const index = state.findIndex(r => r.id === action.data.id);
             if (index >= 0) {

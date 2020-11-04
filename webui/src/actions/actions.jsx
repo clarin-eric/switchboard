@@ -14,6 +14,14 @@ export function updateResource(resource) {
     }
 }
 
+export function clearResources() {
+    return function (dispatch, getState) {
+        dispatch({
+            type: actionType.RESOURCE_CLEAR_ALL,
+        });
+    }
+}
+
 export function removeResource(resource) {
     return function (dispatch, getState) {
         dispatch({
