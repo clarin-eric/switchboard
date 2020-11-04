@@ -19,6 +19,7 @@ public class Tool {
     String name;
     String description;
     String logo;
+    List<String> keywords;
     String homepage;
     String creators;
     Contact contact;
@@ -57,6 +58,14 @@ public class Tool {
 
     public void setLogo(String logo) {
         this.logo = logo;
+    }
+
+    public List<String> getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(List<String> keywords) {
+        this.keywords = keywords;
     }
 
     public String getTask() {
@@ -266,6 +275,7 @@ public class Tool {
         }
         webApplication.setUrl((String) v1map.get("url"));
         setWebApplication(webApplication);
+        setFormatVersion("2");
     }
 
     public boolean requiresContent(int inputIndex) {
@@ -285,17 +295,18 @@ public class Tool {
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("\nformatVersion", formatVersion)
-                .add("\nname", name)
-                .add("\nlogo", logo)
                 .add("\ntask", task)
                 .add("\ndeployment", deployment)
+                .add("\nname", name)
+                .add("\ndescription", description)
+                .add("\nlogo", logo)
+                .add("\nkeywords", keywords)
                 .add("\nhomepage", homepage)
-                .add("\nlocation", location)
                 .add("\ncreators", creators)
                 .add("\ncontact", contact)
+                .add("\nlocation", location)
                 .add("\nversion", version)
                 .add("\nauthentication", authentication)
-                .add("\ndescription", description)
                 .add("\ninputs", inputs)
                 .add("\nbatchProcessing", batchProcessing)
                 .add("\noutput", output)

@@ -231,6 +231,13 @@ div.tool .resource-index {
     font-weight: bold;
 }
 
+div.tool .keyword {
+    border: 1px solid #c9edf7;
+    background-color: #f0f8ff;
+    padding: 2px 4px;
+    margin-right: 4px;
+}
+
 /* highlight search matches e.g. in tools */
 .highlight {
     background-color: yellow;

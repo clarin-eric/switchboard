@@ -190,6 +190,11 @@ function normalizeTool(tool) {
     let searchString = "";
     for (const key of ['task', 'name', 'description']) {
         searchString += (tool[key] || "").toLowerCase();
+        searchString += " ";
+    }
+    for (const kw in (tool.keywords||[])) {
+        searchString += kw.toLowerCase();
+        searchString += " ";
     }
     tool.searchString = searchString;
 

@@ -117,7 +117,6 @@ export class ResourceList extends React.Component {
     }
 
     render() {
-        console.log({enableMultipleResources: this.props.enableMultipleResources});
         return <React.Fragment>
             <div className="resource">
                 <div className="row hidden-xs">
