@@ -18,13 +18,21 @@ public class ToolConfig {
     @NotNull
     private boolean showOnlyProductionTools;
 
+    @Valid
+    @NotNull
+    private boolean enableMultipleResources;
+
     public ToolConfig() {
     }
 
-    public ToolConfig(String toolRegistryPath, String logoRegistryPath, boolean showOnlyProductionTools) {
+    public ToolConfig(String toolRegistryPath,
+                      String logoRegistryPath,
+                      boolean showOnlyProductionTools,
+                      boolean enableMultipleResources) {
         this.toolRegistryPath = toolRegistryPath;
         this.logoRegistryPath = logoRegistryPath;
         this.showOnlyProductionTools = showOnlyProductionTools;
+        this.enableMultipleResources = enableMultipleResources;
     }
 
     public String getToolRegistryPath() {
@@ -39,12 +47,17 @@ public class ToolConfig {
         return showOnlyProductionTools;
     }
 
+    public boolean getEnableMultipleResources() {
+        return enableMultipleResources;
+    }
+
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("\ntoolRegistryPath", toolRegistryPath)
                 .add("\nlogoRegistryPath", logoRegistryPath)
                 .add("\nshowOnlyProductionTools", showOnlyProductionTools)
+                .add("\nenableMultipleResources", enableMultipleResources)
                 .toString();
     }
 }

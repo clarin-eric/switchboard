@@ -20,14 +20,19 @@ public class InfoResource {
     private static final Logger LOGGER = LoggerFactory.getLogger(InfoResource.class);
 
     Map<String, String> gitProps;
+    boolean enableMultipleResources;
     long maxAllowedDataSize;
     String contactEmail;
     ToolRegistry toolRegistry;
     Map<String, String> languageCodeToName;
 
-    public InfoResource(ToolRegistry toolRegistry, Map<String, String> gitProps, long maxAllowedDataSize, String contactEmail) throws IOException {
+    public InfoResource(ToolRegistry toolRegistry, Map<String, String> gitProps,
+                        boolean enableMultipleResources,
+                        long maxAllowedDataSize,
+                        String contactEmail) {
         this.toolRegistry = toolRegistry;
         this.gitProps = gitProps == null ? new HashMap<>() : gitProps;
+        this.enableMultipleResources = enableMultipleResources;
         this.maxAllowedDataSize = maxAllowedDataSize;
         this.contactEmail = contactEmail;
 
@@ -52,8 +57,9 @@ public class InfoResource {
         Map<String, Object> map = new HashMap<>();
         map.put("git", gitProps);
         map.put("version", gitProps.get("git.build.version"));
-        map.put("contactEmail", contactEmail);
+        map.put("enableMultipleResources", enableMultipleResources);
         map.put("maxAllowedDataSize", maxAllowedDataSize);
+        map.put("contactEmail", contactEmail);
         try {
             InetAddress host = InetAddress.getLocalHost();
             map.put("host", new HashMap<String, String>() {{
