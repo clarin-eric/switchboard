@@ -77,7 +77,12 @@ public class DataResource {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
 
-        return fileInfoToResponse(request.getRequestURI(), fi);
+        final String trimEnd = "/info";
+        String localLink = request.getRequestURI();
+        assert (localLink.endsWith(trimEnd));
+        localLink = localLink.substring(0, localLink.length() - trimEnd.length());
+
+        return fileInfoToResponse(URI.create(localLink), fi);
     }
 
     @POST
@@ -98,10 +103,13 @@ public class DataResource {
             return Response.status(400).entity("Please provide either a file or a url to download in the form").build();
         }
 
-        return fileInfoToResponse(request.getRequestURI(), fileInfo);
+        URI localLink = UriBuilder.fromPath(request.getRequestURI())
+                .path(fileInfo.getId().toString())
+                .build();
+        return fileInfoToResponse(localLink, fileInfo);
     }
 
-    static Response fileInfoToResponse(String requestURI, FileInfo fileInfo) {
+    static Response fileInfoToResponse(URI localLink, FileInfo fileInfo) {
         Map<String, Object> ret;
         try {
             ret = mapper.readValue(mapper.writeValueAsString(fileInfo), new TypeReference<Map<String, Object>>() {
@@ -111,8 +119,6 @@ public class DataResource {
             return Response.serverError().build();
         }
         ret.remove("path");
-
-        URI localLink = UriBuilder.fromPath(requestURI).path(fileInfo.getId().toString()).build();
         ret.put("localLink", localLink);
 
         if (fileInfo.getFileLength() < MAX_INLINE_CONTENT &&
