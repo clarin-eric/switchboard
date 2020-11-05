@@ -63,7 +63,12 @@ export function getInvocationURL(tool, resourceList) {
 
 function getBoundValue(param, resourceList, inputs, match) {
     if (!param.bind) {
-        return param.value;
+        if (param.value) {
+            return param.value
+        } else {
+            console.error("missing param bind and value:", param);
+            return {error: "Incorrect tool specification: " + param.name};
+        }
     }
 
     const [inputID, bind] = param.bind.split("/");
@@ -83,10 +88,10 @@ function getBoundValue(param, resourceList, inputs, match) {
     if (bind === 'dataurl') {
         return resource.localLink;
     } else if (bind === 'language') {
-        const lang = resource.profile.language;
+        let lang = resource.profile.language;
         if (param.encoding == "639-1") {
             // some tools expect an ISO 639-1 language parameter
-            return iso_639_3_to_639_1(lang);
+            lang = iso_639_3_to_639_1(lang);
         }
         return lang ? lang : {error: "Unknown language"};
     } else if (bind === 'type') {
