@@ -16,7 +16,7 @@ var Zepto=function(){function L(t){return null==t?String(t):j[S.call(t)]||"objec
 
 var $ = window.$ = Zepto;
 
-const defaultSwitchboardURL = "https://switchboard.clarin.eu";
+const defaultSwitchboardURL = "https://switchboard.clarin.eu/";
 var switchboardURL = null;
 
 function setSwitchboardURL(url) {
@@ -29,6 +29,10 @@ function setSwitchboardURL(url) {
                 const url = x.src;
                 const end = url.indexOf('/popup/');
                 switchboardURL = url.substr(0, end);
+                if (!switchboardURL.endsWith("/")) {
+                    // to avoid a server redirect
+                    switchboardURL += "/";
+                }
                 return;
             }
         }
