@@ -33,7 +33,11 @@ public class FileAsset {
     public FileAsset(java.nio.file.Path filepath) {
         try {
             content = Files.readAllBytes(filepath);
-            mimeType = URLConnection.guessContentTypeFromName(filepath.getFileName().toString());
+            String filename = filepath.getFileName().toString();
+            mimeType = URLConnection.guessContentTypeFromName(filename);
+            if (mimeType == null && filename.endsWith(".svg")) {
+                mimeType = "image/svg+xml";
+            }
             eTag = new EntityTag('"' + hash(content) + '"');
             lastModifiedTime = new Date(filepath.toFile().lastModified());
         } catch (IOException e) {
