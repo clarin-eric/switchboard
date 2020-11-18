@@ -254,7 +254,7 @@ public class Tool {
             } else if (name.equals("content")) {
                 p.setBind(input.id + "/content");
             } else {
-                p.setValue((String) e.getValue());
+                p.setValue("" + e.getValue());
             }
 
             if (mapping != null && mapping.isEmpty()) {
