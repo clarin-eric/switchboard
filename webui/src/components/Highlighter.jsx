@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactMarkdown from 'react-markdown';
+import gfm from 'remark-gfm';
 
 const RE_ESCAPE_REGEX = /[-\/\\^$*+?.()|[\]{}]/g;
 
@@ -48,6 +49,7 @@ export function makeHighlighter(terms) {
         }
         return (
             <ReactMarkdown
+                plugins={[gfm]}
                 source={markdown}
                 skipHtml={true}
                 escapeHtml={true}
