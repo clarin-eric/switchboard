@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { apiPath, actionType, resourceMatchSettings } from '../constants';
+import { apiPath, actionType } from '../constants';
 import { addLanguageMapping, processLanguage, processMediatype } from './utils';
 
 let lastResourceID = 0;
