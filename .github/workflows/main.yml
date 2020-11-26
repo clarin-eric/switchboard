@@ -37,7 +37,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: build-package
-          path: dist/clarin_bootstrap-${{ steps.get_version.outputs.VERSION }}.tar.gz
+          path: build/switchboard-${{ steps.get_version.outputs.VERSION }}.tar.gz
 
   release:
     if: github.event_name == 'release' || github.event_name == 'push' && contains(github.ref, 'refs/tags/')
