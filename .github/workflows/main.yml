@@ -50,6 +50,7 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: build-package
+        fetch-depth: '0'
     # For releases created via GitHub webUI
     - name: Upload binaries to release
       if: github.event_name == 'release'
