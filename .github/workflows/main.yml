@@ -25,7 +25,7 @@ jobs:
         run: echo ::set-output name=VERSION::${GITHUB_REF#refs/*/}
       - name: Build
         run: |
-          sudo apt-get install bsdtar cmake docker-ce docker-cli
+          sudo apt-get install bsdtar cmake moby-engine moby-cli
           make package
           cp build/switchboard.tar.gz build/switchboard-${{ steps.get_version.outputs.VERSION }}.tar.gz
         env:
