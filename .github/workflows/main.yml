@@ -1,0 +1,87 @@
+name: CI
+
+on:
+  push:
+    branches:
+    - '*'
+    tags:
+    - '*'
+  pull_request:
+    branches:
+    - '*'
+  release:
+    types: [published]
+  workflow_dispatch:
+  schedule:
+  - cron: "23 4 12 * *"
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2  
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF#refs/*/}
+      - name: Build
+        run: |
+          sudo apt-get install bsdtar cmake docker-ce docker-cli
+          make package
+          cp build/switchboard.tar.gz build/switchboard-${{ steps.get_version.outputs.VERSION }}.tar.gz
+        env:
+          THEME_VERSION: ${{ steps.get_version.outputs.VERSION }}
+      - name: Upload build package
+        uses: actions/upload-artifact@v2
+        with:
+          name: build-package
+          path: dist/clarin_bootstrap-${{ steps.get_version.outputs.VERSION }}.tar.gz
+
+  release:
+    if: github.event_name == 'release' || github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    needs: [build]
+    runs-on: ubuntu-18.04
+    steps:
+    - name: Get the version
+      id: get_version
+      run: echo ::set-output name=VERSION::${GITHUB_REF#refs/*/}
+    - name: Download build package from build job
+      uses: actions/download-artifact@v2
+      with:
+        name: build-package
+    # For releases created via GitHub webUI
+    - name: Upload binaries to release
+      if: github.event_name == 'release'
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: build/switchboard-${{ steps.get_version.outputs.VERSION }}.tar.gz
+        asset_name: build/switchboard-${{ steps.get_version.outputs.VERSION }}.tar.gz
+        tag: ${{ github.ref }}
+        overwrite: true
+    # Create a release when a tag is pushed to the repository
+    - name: Create Draft Release
+      if: github.event_name == 'push'
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ steps.get_version.outputs.VERSION }}
+        release_name: Release ${{ steps.get_version.outputs.VERSION }}
+        draft: true
+        prerelease: true
+    - uses: actions/upload-release-asset@v1.0.1
+      if: github.event_name == 'push'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./build/switchboard-${{ steps.get_version.outputs.VERSION }}.tar.gz
+        asset_name: build/switchboard-${{ steps.get_version.outputs.VERSION }}.tar.gz
+        asset_content_type: application/tar+gzip
+    - uses: eregon/publish-release@v1
+      if: github.event_name == 'push'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        release_id: ${{ steps.create_release.outputs.id }}
