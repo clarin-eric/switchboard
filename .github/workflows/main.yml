@@ -11,7 +11,7 @@ on:
 
 jobs:
   run_check:
-    name: Check for duplicate wokflows
+    name: Check for duplicate workflows
     runs-on: ubuntu-18.04
     outputs:
       should_skip: ${{ steps.skip_check.outputs.should_skip }}
