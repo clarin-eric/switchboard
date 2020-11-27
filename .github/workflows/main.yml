@@ -49,7 +49,7 @@ jobs:
       with:
         name: build-package
     # For releases created via GitHub webUI
-    - name: Upload binaries to release
+    - name: Upload binaries to release existing
       if: github.event_name == 'release'
       uses: svenstaro/upload-release-action@v2
       with:
@@ -59,7 +59,8 @@ jobs:
         tag: ${{ github.ref }}
         overwrite: true
     # Create a release when a tag is pushed to the repository
-    - name: Check if it's a tagged release
+    # Skip if tag is from pre created release
+    - name: Check if tag already has a release
       id: get_release
       run: |
         URL="https://api.github.com/repos/${GITHUB_REPOSITORY}/releases/tags/${{ steps.get_version.outputs.VERSION }}"
