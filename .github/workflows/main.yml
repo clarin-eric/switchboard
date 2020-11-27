@@ -63,7 +63,7 @@ jobs:
     # Create a release when a tag is pushed to the repository
     # Skip if tag is from pre created release
     - name: Check if tag already has a release
-      if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+      if: github.event_name == 'push'
       id: get_release
       run: |
         URL="https://api.github.com/repos/${{ github.repository }}/releases/tags/${{ steps.get_version.outputs.VERSION }}"
