@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-18.04
     outputs:
       version: ${{ steps.get_version.outputs.VERSION }}
-      release_tag: ${{ steps.release_tag.outputs.RELEASETAG }}
+      release_tag: ${{ steps.get_release.outputs.RELEASETAG }}
     steps:
       - name: Get the version
         id: get_version
@@ -23,6 +23,7 @@ jobs:
           echo ::set-output name=VERSION::${GITHUB_REF#refs/*/}
       - name: Check tag's target release
         if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+        id: get_release
         run: |
           URL="https://api.github.com/repos/${{ github.repository }}/releases/tags/${{ steps.get_version.outputs.VERSION }}"
           StatusCode=$(curl -o -I -L -s -w "%{http_code}" -X GET -G $URL)
@@ -45,7 +46,6 @@ jobs:
           fetch-depth: '50'
       - name: Build
         run: |
-          echo ${{ needs.prepare.outputs.release_tag }}
           make package
           cp build/switchboard.tar.gz build/switchboard-${{ needs.prepare.outputs.version }}.tar.gz
       - name: Upload build package
