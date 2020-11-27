@@ -22,8 +22,8 @@ jobs:
         run: |
           echo ${GITHUB_REF}
           echo ::set-output name=VERSION::${GITHUB_REF#refs/*/}
-      - name: Is tagged release?
-        if: contains(github.ref, 'refs/tags/')
+      - name: Check tag's target release
+        if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
         id: release_tag
         run: |
           URL="https://api.github.com/repos/${{ github.repository }}/releases/tags/${{ steps.get_version.outputs.VERSION }}"
