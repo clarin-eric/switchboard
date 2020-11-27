@@ -11,15 +11,20 @@ on:
 
 jobs:
   pre_run:
-    runs-on: ubuntu-18.04
     name: Check release tag
+    runs-on: ubuntu-18.04
+    outputs:
+      version: ${{ steps.get_version.outputs.VERSION }}
+      release_tag: ${{ steps.release_tag.outputs.RELEASETAG }}
     steps:
       - name: Get the version
         id: get_version
         run: |
           echo ${GITHUB_REF}
           echo ::set-output name=VERSION::${GITHUB_REF#refs/*/}
-      - run: |
+      - name: Check if this is release tag exists
+        id: release_tag
+        run: |
           URL="https://api.github.com/repos/${{ github.repository }}/releases/tags/${{ steps.get_version.outputs.VERSION }}"
           StatusCode=$(curl -o -I -L -s -w "%{http_code}" -X GET -G $URL)
           if [ "$StatusCode" == 200 ]; then
@@ -32,7 +37,7 @@ jobs:
   build:
     needs: [pre_run]
     # for: releases, pushes that are not tag, and tag pushes without release
-    if: github.event_name == 'release' || !contains(github.ref, 'refs/tags/') || contains(github.ref, 'refs/tags/') && needs.pre_run.outputs.RELEASETAG == false
+    if: github.event_name == 'release' || !contains(github.ref, 'refs/tags/') || contains(github.ref, 'refs/tags/') && needs.pre_run.outputs.release_tag == false
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
@@ -42,12 +47,12 @@ jobs:
       - name: Build
         run: |
           make package
-          cp build/switchboard.tar.gz build/switchboard-${{ needs.pre_run.get_version.outputs.VERSION }}.tar.gz
+          cp build/switchboard.tar.gz build/switchboard-${{ needs.pre_run.outputs.version }}.tar.gz
       - name: Upload build package
         uses: actions/upload-artifact@v2
         with:
           name: build-package
-          path: build/switchboard-${{ needs.pre_run.get_version.outputs.VERSION }}.tar.gz
+          path: build/switchboard-${{ needs.pre_run.outputs.VERSION }}.tar.gz
 
   release:
     needs: [pre_run, build]
@@ -64,34 +69,34 @@ jobs:
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: ./switchboard-${{ needs.pre_run.get_version.outputs.VERSION }}.tar.gz
-        asset_name: switchboard-${{ needs.pre_run.get_version.outputs.VERSION }}.tar.gz
+        file: ./switchboard-${{ needs.pre_run.outputs.VERSION }}.tar.gz
+        asset_name: switchboard-${{ needs.pre_run.outputs.VERSION }}.tar.gz
         tag: ${{ github.ref }}
         overwrite: true
     # Create a release when a tag is pushed to the repository
     # Skip if tag is from pre created release
     - name: Create prelease for this tag
-      if: needs.pre_run.outputs.RELEASETAG == false
+      if: needs.pre_run.outputs.release_tag == false
       id: create_release
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ needs.pre_run.get_version.outputs.VERSION }}
-        release_name: Release ${{ needs.pre_run.get_version.outputs.VERSION }}
+        tag_name: ${{ needs.pre_run.outputs.VERSION }}
+        release_name: Release ${{ needs.pre_run.outputs.VERSION }}
         draft: true
         prerelease: true
     - uses: actions/upload-release-asset@v1.0.1
-      if: needs.pre_run.outputs.RELEASETAG == false
+      if: needs.pre_run.outputs.release_tag == false
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./switchboard-${{ needs.pre_run.get_version.outputs.VERSION }}.tar.gz
-        asset_name: switchboard-${{ needs.pre_run.get_version.outputs.VERSION }}.tar.gz
+        asset_path: ./switchboard-${{ needs.pre_run.outputs.VERSION }}.tar.gz
+        asset_name: switchboard-${{ needs.pre_run.outputs.VERSION }}.tar.gz
         asset_content_type: application/tar+gzip
     - uses: eregon/publish-release@v1
-      if: steps.get_release.outputs.RELEASETAG == false
+      if: steps.get_release.outputs.release_tag == false
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
