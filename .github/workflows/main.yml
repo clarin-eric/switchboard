@@ -21,6 +21,8 @@ jobs:
         with:
           github_token: ${{ github.token }}
           do_not_skip: '["release", "workflow_dispatch", "schedule"]'
+      - run: |
+          echo parseJSON(${{  github }})
   build:
     needs: [run_check]
     if: needs.pre_job.outputs.should_skip != 'true'
