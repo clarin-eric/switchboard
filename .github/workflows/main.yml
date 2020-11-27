@@ -8,7 +8,6 @@ on:
   workflow_dispatch:
   schedule:
   - cron: "23 4 12 * *"
-
 jobs:
   prepare:
     runs-on: ubuntu-18.04
@@ -34,7 +33,7 @@ jobs:
           fi
   build:
     needs: [prepare]
-    # for: releases, pushes that are not tag, and tag pushes without release
+    # Run job for: github releases, tag pushes without github release and regular pushes (not tag)
     if: github.event_name == 'release' || !contains(github.ref, 'refs/tags/') || needs.prepare.outputs.create_tagrelease == 'true'
     runs-on: ubuntu-18.04
     steps:
@@ -44,10 +43,6 @@ jobs:
           fetch-depth: '50'
       - name: Build
         run: |
-          echo ${{ needs.prepare.outputs.create_tagrelease }}
-          echo ${{ contains(github.ref, 'refs/tags/') }}
-          echo ${{ github.ref }}
-          echo ${{ github.event_name }}
           make package
           cp build/switchboard.tar.gz build/switchboard-${{ needs.prepare.outputs.version }}.tar.gz
       - name: Upload build package
@@ -55,22 +50,18 @@ jobs:
         with:
           name: build-package
           path: build/switchboard-${{ needs.prepare.outputs.version }}.tar.gz
-
   release:
     needs: [prepare, build]
+    # Run job for github releases, tag pushes without github release
     if: github.event_name == 'release' || needs.prepare.outputs.create_tagrelease == 'true'
     runs-on: ubuntu-18.04
     steps:
-    - run: |
-          echo ${{ needs.prepare.outputs.create_tagrelease }}
-          echo ${{ contains(github.ref, 'refs/tags/') }}
-          echo ${{ github.ref }}
-          echo ${{ github.event_name }}
     - name: Download build package from build job
       uses: actions/download-artifact@v2
       with:
         name: build-package
-    # For releases created via GitHub webUI
+    # For github releases
+    # Upload release package to existing release
     - name: Upload binaries to existing release
       if: github.event_name == 'release'
       uses: svenstaro/upload-release-action@v2
@@ -80,8 +71,8 @@ jobs:
         asset_name: switchboard-${{ needs.prepare.outputs.version }}.tar.gz
         tag: ${{ github.ref }}
         overwrite: true
-    # Create a release when a tag is pushed to the repository
-    # Skip if tag is from pre created release
+    # For tag pushes without github release
+    # Create a github release with release package
     - name: Create prelease for this tag
       if: needs.prepare.outputs.create_tagrelease == 'true'
       id: create_release
