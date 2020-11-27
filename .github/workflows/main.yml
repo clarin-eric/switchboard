@@ -18,9 +18,7 @@ jobs:
     steps:
       - name: Get the version
         id: get_version
-        run: |
-          echo ${GITHUB_REF}
-          echo ::set-output name=VERSION::${GITHUB_REF#refs/*/}
+        run: echo ::set-output name=VERSION::${GITHUB_REF#refs/*/}
       - name: Check tag's target release
         if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
         id: get_release
@@ -45,21 +43,19 @@ jobs:
           submodules: true
           fetch-depth: '50'
       - name: Build
-        env:
-          RELEASE_TAG: ${{ needs.prepare.outputs.release_tag  }}
         run: |
-          echo ${RELEASE_TAG}
+          echo ${{ needs.prepare.outputs.release_tag }}
           make package
           cp build/switchboard.tar.gz build/switchboard-${{ needs.prepare.outputs.version }}.tar.gz
       - name: Upload build package
         uses: actions/upload-artifact@v2
         with:
           name: build-package
-          path: build/switchboard-${{ needs.prepare.outputs.VERSION }}.tar.gz
+          path: build/switchboard-${{ needs.prepare.outputs.version }}.tar.gz
 
   release:
     needs: [prepare, build]
-    if: github.event_name == 'release' || contains(github.ref, 'refs/tags/') && needs.prepare.outputs.release_tag == false
+    if: github.event_name == 'release' || (contains(github.ref, 'refs/tags/') && needs.prepare.outputs.release_tag == false)
     runs-on: ubuntu-18.04
     steps:
     - name: Download build package from build job
@@ -72,34 +68,34 @@ jobs:
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: ./switchboard-${{ needs.prepare.outputs.VERSION }}.tar.gz
-        asset_name: switchboard-${{ needs.prepare.outputs.VERSION }}.tar.gz
+        file: ./switchboard-${{ needs.prepare.outputs.version }}.tar.gz
+        asset_name: switchboard-${{ needs.prepare.outputs.version }}.tar.gz
         tag: ${{ github.ref }}
         overwrite: true
     # Create a release when a tag is pushed to the repository
     # Skip if tag is from pre created release
     - name: Create prelease for this tag
-      if: needs.prepare.outputs.release_tag == false
+      if: contains(github.ref, 'refs/tags/') && needs.prepare.outputs.release_tag == false
       id: create_release
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ needs.prepare.outputs.VERSION }}
-        release_name: Release ${{ needs.prepare.outputs.VERSION }}
+        tag_name: ${{ needs.prepare.outputs.version }}
+        release_name: Release ${{ needs.prepare.outputs.version }}
         draft: true
         prerelease: true
     - uses: actions/upload-release-asset@v1.0.1
-      if: needs.prepare.outputs.release_tag == false
+      if: contains(github.ref, 'refs/tags/') && needs.prepare.outputs.release_tag == false
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./switchboard-${{ needs.prepare.outputs.VERSION }}.tar.gz
-        asset_name: switchboard-${{ needs.prepare.outputs.VERSION }}.tar.gz
+        asset_path: ./switchboard-${{ needs.prepare.outputs.version }}.tar.gz
+        asset_name: switchboard-${{ needs.prepare.outputs.version }}.tar.gz
         asset_content_type: application/tar+gzip
     - uses: eregon/publish-release@v1
-      if: needs.prepare.outputs.release_tag == false
+      if: contains(github.ref, 'refs/tags/') && needs.prepare.outputs.release_tag == false
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
