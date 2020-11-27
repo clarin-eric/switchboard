@@ -1,6 +1,9 @@
 language: generic
 dist: xenial
 os: linux
+branches:
+  except:
+  - github-actions-ci
 addons:
   apt:
     packages:
