@@ -35,7 +35,7 @@ jobs:
   build:
     needs: [prepare]
     # for: releases, pushes that are not tag, and tag pushes without release
-    if: github.event_name == 'release' || !contains(github.ref, 'refs/tags/') || needs.prepare.outputs.release_tag == false
+    if: github.event_name == 'release' || !contains(github.ref, 'refs/tags/') || (contains(github.ref, 'refs/tags/') && needs.prepare.outputs.release_tag == false)
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
