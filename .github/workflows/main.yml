@@ -12,7 +12,6 @@ on:
 jobs:
   run_check:
     if: github.event_name == 'push'  && contains(github.ref, 'refs/tags/')
-    id: check_skip
     steps:
       - run: |
           URL="https://api.github.com/repos/${{ github.repository }}/releases/tags/${{ steps.get_version.outputs.VERSION }}"
@@ -25,7 +24,8 @@ jobs:
             echo ::set-output name=RELEASETAG::false
           fi
   build:
-    if: github.event_name == 'release' || steps.get_release.outputs.RELEASETAG == false
+    needs: [run_check]
+    if: github.event_name == 'release' || needs.run_check.outputs.RELEASETAG == false
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
@@ -48,8 +48,8 @@ jobs:
           path: build/switchboard-${{ steps.get_version.outputs.VERSION }}.tar.gz
 
   release:
-    needs: [build]
-    if: github.event_name == 'release' || steps.get_release.outputs.RELEASETAG == false
+    needs: [run_check, build]
+    if: github.event_name == 'release' || needs.run_check.outputs.RELEASETAG == false
     runs-on: ubuntu-18.04
     steps:
     - name: Download build package from build job
@@ -69,7 +69,7 @@ jobs:
     # Create a release when a tag is pushed to the repository
     # Skip if tag is from pre created release
     - name: Create prelease for this tag
-      if: steps.get_release.outputs.RELEASETAG == false
+      if: needs.run_check.outputs.RELEASETAG == false
       id: create_release
       uses: actions/create-release@v1
       env:
@@ -80,7 +80,7 @@ jobs:
         draft: true
         prerelease: true
     - uses: actions/upload-release-asset@v1.0.1
-      if: steps.get_release.outputs.RELEASETAG == false
+      if: needs.run_check.outputs.RELEASETAG == false
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
