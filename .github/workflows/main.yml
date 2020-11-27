@@ -26,7 +26,7 @@ jobs:
           fi
   build:
     needs: [run_check]
-    if: github.event_name == 'release' || needs.run_check.outputs.RELEASETAG == false
+    if: github.event_name == 'release' || github.event_name == 'push'  && !contains(github.ref, 'refs/tags/') || needs.run_check.outputs.RELEASETAG == false
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
