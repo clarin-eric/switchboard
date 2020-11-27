@@ -49,7 +49,7 @@ jobs:
           echo ${{ needs.prepare.outputs.release_tag }}
           echo ${{ contains(github.ref, 'refs/tags/') }}
           echo ${{ github.ref }}
-          echi ${{ github.event_name }}
+          echo ${{ github.event_name }}
           make package
           cp build/switchboard.tar.gz build/switchboard-${{ needs.prepare.outputs.version }}.tar.gz
       - name: Upload build package
