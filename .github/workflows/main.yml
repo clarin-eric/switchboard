@@ -60,7 +60,7 @@ jobs:
           path: build/switchboard-${{ steps.get_version.outputs.VERSION }}.tar.gz
 
   release:
-    needs: [run_check, build]
+    needs: [build]
     if: github.event_name == 'release' || github.event_name == 'push' && contains(github.ref, 'refs/tags/')
     runs-on: ubuntu-18.04
     steps:
