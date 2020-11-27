@@ -62,7 +62,7 @@ jobs:
         overwrite: true
     # Create a release when a tag is pushed to the repository
     # Skip if tag is from pre created release
-    - name: Check if tag already has a release
+    - name: Check if release already exists for this tag
       if: github.event_name == 'push'
       id: get_release
       run: |
@@ -72,10 +72,10 @@ jobs:
           echo "Release exists"
           echo ::set-output name=RELEASETAG::true
         else
-          echo "Tag does not have corresponding release"
+          echo "Release does not exist yet"
           echo ::set-output name=RELEASETAG::false
         fi
-    - name: Create Draft Release from tag
+    - name: Create prelease for this tag
       if: github.event_name == 'push' && steps.get_release.outputs.RELEASETAG == false
       id: create_release
       uses: actions/create-release@v1
