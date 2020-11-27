@@ -55,7 +55,7 @@ jobs:
 
   release:
     needs: [prepare, build]
-    if: github.event_name == 'release' || (contains(github.ref, 'refs/tags/') && needs.prepare.outputs.release_tag == false)
+    if: github.event_name == 'release' || contains(github.ref, 'refs/tags/') && needs.prepare.outputs.release_tag == false
     runs-on: ubuntu-18.04
     steps:
     - name: Download build package from build job
