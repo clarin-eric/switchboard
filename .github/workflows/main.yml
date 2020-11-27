@@ -14,7 +14,7 @@ jobs:
     if: github.event_name == 'push'  && contains(github.ref, 'refs/tags/')
     id: check_skip
     steps:
-      run: |
+      - run: |
         URL="https://api.github.com/repos/${{ github.repository }}/releases/tags/${{ steps.get_version.outputs.VERSION }}"
         StatusCode=$(curl -o -I -L -s -w "%{http_code}" -X GET -G $URL)
         if [ "$StatusCode" == 200 ]; then
