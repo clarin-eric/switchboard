@@ -22,7 +22,8 @@ jobs:
         run: |
           echo ${GITHUB_REF}
           echo ::set-output name=VERSION::${GITHUB_REF#refs/*/}
-      - name: Check if this is release tag exists
+      - name: Is tagged release?
+        if: contains(github.ref, 'refs/tags/')
         id: release_tag
         run: |
           URL="https://api.github.com/repos/${{ github.repository }}/releases/tags/${{ steps.get_version.outputs.VERSION }}"
@@ -37,7 +38,7 @@ jobs:
   build:
     needs: [pre_run]
     # for: releases, pushes that are not tag, and tag pushes without release
-    if: github.event_name == 'release' || !contains(github.ref, 'refs/tags/') || contains(github.ref, 'refs/tags/') && needs.pre_run.outputs.release_tag == false
+    if: github.event_name == 'release' || !contains(github.ref, 'refs/tags/') || needs.pre_run.outputs.release_tag == false
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
@@ -56,7 +57,7 @@ jobs:
 
   release:
     needs: [pre_run, build]
-    if: github.event_name == 'release' || contains(github.ref, 'refs/tags/')
+    if: github.event_name == 'release' || needs.pre_run.outputs.release_tag == false
     runs-on: ubuntu-18.04
     steps:
     - name: Download build package from build job
@@ -96,7 +97,7 @@ jobs:
         asset_name: switchboard-${{ needs.pre_run.outputs.VERSION }}.tar.gz
         asset_content_type: application/tar+gzip
     - uses: eregon/publish-release@v1
-      if: steps.get_release.outputs.release_tag == false
+      if: needs.pre_run.outputs.release_tag == false
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
