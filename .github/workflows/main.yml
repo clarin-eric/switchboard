@@ -45,8 +45,10 @@ jobs:
           submodules: true
           fetch-depth: '50'
       - name: Build
+        env:
+          RELEASE_TAG: ${{ needs.prepare.outputs.release_tag  }}
         run: |
-          echo ${{ needs.prepare.outputs.release_tag }}
+          echo ${RELEASE_TAG}
           make package
           cp build/switchboard.tar.gz build/switchboard-${{ needs.prepare.outputs.version }}.tar.gz
       - name: Upload build package
