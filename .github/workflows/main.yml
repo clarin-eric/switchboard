@@ -49,7 +49,7 @@ jobs:
       with:
         name: build-package
     # For releases created via GitHub webUI
-    - name: Upload binaries to release existing
+    - name: Upload binaries to existing release
       if: github.event_name == 'release'
       uses: svenstaro/upload-release-action@v2
       with:
@@ -73,7 +73,7 @@ jobs:
           echo ::set-output name=RELEASETAG::false
         fi
     - name: Create Draft Release
-      if: github.event_name == 'push' && ${{ steps.get_release.outputs.RELEASETAG }} == false
+      if: github.event_name == 'push' && steps.get_release.outputs.RELEASETAG == false
       id: create_release
       uses: actions/create-release@v1
       env:
@@ -84,7 +84,7 @@ jobs:
         draft: true
         prerelease: true
     - uses: actions/upload-release-asset@v1.0.1
-      if: github.event_name == 'push' && ${{ steps.get_release.outputs.RELEASETAG }} == false
+      if: github.event_name == 'push' && ${{ steps.get_release.outputs.RELEASETAG == false
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
@@ -93,7 +93,7 @@ jobs:
         asset_name: switchboard-${{ steps.get_version.outputs.VERSION }}.tar.gz
         asset_content_type: application/tar+gzip
     - uses: eregon/publish-release@v1
-      if: github.event_name == 'push' && ${{ steps.get_release.outputs.RELEASETAG }} == false
+      if: github.event_name == 'push' && steps.get_release.outputs.RELEASETAG == false
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
