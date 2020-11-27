@@ -12,6 +12,7 @@ on:
 jobs:
   run_check:
     if: github.event_name == 'push'  && contains(github.ref, 'refs/tags/')
+    runs-on: ubuntu-18.04
     steps:
       - run: |
           URL="https://api.github.com/repos/${{ github.repository }}/releases/tags/${{ steps.get_version.outputs.VERSION }}"
