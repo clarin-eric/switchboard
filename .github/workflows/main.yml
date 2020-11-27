@@ -63,7 +63,7 @@ jobs:
     - name: Check if tag already has a release
       id: get_release
       run: |
-        URL="https://api.github.com/repos/${GITHUB_REPOSITORY}/releases/tags/${{ steps.get_version.outputs.VERSION }}"
+        URL="https://api.github.com/repos/${{ github.repository }}/releases/tags/${{ steps.get_version.outputs.VERSION }}"
         StatusCode=$(curl -o -I -L -s -w "%{http_code}" -X GET -G $URL)
         if [["$StatusCode" == 200]]; then
           echo "Release exists"
