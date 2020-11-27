@@ -46,6 +46,7 @@ jobs:
           fetch-depth: '50'
       - name: Build
         run: |
+          echo ${{ needs.prepare.outputs.release_tag }}
           make package
           cp build/switchboard.tar.gz build/switchboard-${{ needs.prepare.outputs.version }}.tar.gz
       - name: Upload build package
