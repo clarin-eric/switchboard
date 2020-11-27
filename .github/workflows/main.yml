@@ -10,34 +10,21 @@ on:
   - cron: "23 4 12 * *"
 
 jobs:
-  print-contexts:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
-      - name: Dump job context
-        env:
-          JOB_CONTEXT: ${{ toJson(job) }}
-        run: echo "$JOB_CONTEXT"
-      - name: Dump steps context
-        env:
-          STEPS_CONTEXT: ${{ toJson(steps) }}
-        run: echo "$STEPS_CONTEXT"
-      - name: Dump runner context
-        env:
-          RUNNER_CONTEXT: ${{ toJson(runner) }}
-        run: echo "$RUNNER_CONTEXT"
-      - name: Dump strategy context
-        env:
-          STRATEGY_CONTEXT: ${{ toJson(strategy) }}
-        run: echo "$STRATEGY_CONTEXT"
-      - name: Dump matrix context
-        env:
-          MATRIX_CONTEXT: ${{ toJson(matrix) }}
-        run: echo "$MATRIX_CONTEXT"
+  run_check:
+    if: github.event_name == 'push'  && contains(github.ref, 'refs/tags/')
+    id: check_skip
+      run: |
+        URL="https://api.github.com/repos/${{ github.repository }}/releases/tags/${{ steps.get_version.outputs.VERSION }}"
+        StatusCode=$(curl -o -I -L -s -w "%{http_code}" -X GET -G $URL)
+        if [ "$StatusCode" == 200 ]; then
+          echo "Release exists"
+          echo ::set-output name=RELEASETAG::true
+        else
+          echo "Release does not exist yet"
+          echo ::set-output name=RELEASETAG::false
+        fi
   build:
+    if: github.event_name == 'release' || steps.get_release.outputs.RELEASETAG == false
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
@@ -61,12 +48,9 @@ jobs:
 
   release:
     needs: [build]
-    if: github.event_name == 'release' || github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    if: github.event_name == 'release' || steps.get_release.outputs.RELEASETAG == false
     runs-on: ubuntu-18.04
     steps:
-    - name: Get the version
-      id: get_version
-      run: echo ::set-output name=VERSION::${GITHUB_REF#refs/*/}
     - name: Download build package from build job
       uses: actions/download-artifact@v2
       with:
@@ -83,21 +67,8 @@ jobs:
         overwrite: true
     # Create a release when a tag is pushed to the repository
     # Skip if tag is from pre created release
-    - name: Check if release already exists for this tag
-      if: github.event_name == 'push'
-      id: get_release
-      run: |
-        URL="https://api.github.com/repos/${{ github.repository }}/releases/tags/${{ steps.get_version.outputs.VERSION }}"
-        StatusCode=$(curl -o -I -L -s -w "%{http_code}" -X GET -G $URL)
-        if [ "$StatusCode" == 200 ]; then
-          echo "Release exists"
-          echo ::set-output name=RELEASETAG::true
-        else
-          echo "Release does not exist yet"
-          echo ::set-output name=RELEASETAG::false
-        fi
     - name: Create prelease for this tag
-      if: github.event_name == 'push' && steps.get_release.outputs.RELEASETAG == false
+      if: steps.get_release.outputs.RELEASETAG == false
       id: create_release
       uses: actions/create-release@v1
       env:
@@ -108,7 +79,7 @@ jobs:
         draft: true
         prerelease: true
     - uses: actions/upload-release-asset@v1.0.1
-      if: github.event_name == 'push' && steps.get_release.outputs.RELEASETAG == false
+      if: steps.get_release.outputs.RELEASETAG == false
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
@@ -117,7 +88,7 @@ jobs:
         asset_name: switchboard-${{ steps.get_version.outputs.VERSION }}.tar.gz
         asset_content_type: application/tar+gzip
     - uses: eregon/publish-release@v1
-      if: github.event_name == 'push' && steps.get_release.outputs.RELEASETAG == false
+      if: steps.get_release.outputs.RELEASETAG == false
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
