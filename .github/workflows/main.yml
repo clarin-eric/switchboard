@@ -56,8 +56,8 @@ jobs:
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: build/switchboard-${{ steps.get_version.outputs.VERSION }}.tar.gz
-        asset_name: build/switchboard-${{ steps.get_version.outputs.VERSION }}.tar.gz
+        file: ./switchboard-${{ steps.get_version.outputs.VERSION }}.tar.gz
+        asset_name: switchboard-${{ steps.get_version.outputs.VERSION }}.tar.gz
         tag: ${{ github.ref }}
         overwrite: true
     # Create a release when a tag is pushed to the repository
@@ -78,8 +78,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./build/switchboard-${{ steps.get_version.outputs.VERSION }}.tar.gz
-        asset_name: build/switchboard-${{ steps.get_version.outputs.VERSION }}.tar.gz
+        asset_path: ./switchboard-${{ steps.get_version.outputs.VERSION }}.tar.gz
+        asset_name: switchboard-${{ steps.get_version.outputs.VERSION }}.tar.gz
         asset_content_type: application/tar+gzip
     - uses: eregon/publish-release@v1
       if: github.event_name == 'push'
