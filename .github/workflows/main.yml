@@ -59,8 +59,19 @@ jobs:
         tag: ${{ github.ref }}
         overwrite: true
     # Create a release when a tag is pushed to the repository
+    - name: Check if it's a tagged release
+        run: |
+          URL="https://api.github.com/repos/${GITHUB_REPOSITORY}/releases/tags/${{ steps.get_version.outputs.VERSION }}"
+          StatusCode=$(curl -o -I -L -s -w "%{http_code}" -X GET -G $URL)
+          if [["$StatusCode" == 200]]; then
+            echo "Tagged release. Nothing to do."
+            echo ::set-output name=TAGRELEASE::true
+          else
+            echo "Tag is not release. Creating release..."
+            echo ::set-output name=TAGRELEASE::false
+          fi
     - name: Create Draft Release
-      if: github.event_name == 'push'
+      if: github.event_name == 'push' && TAGRELEASE == false
       id: create_release
       uses: actions/create-release@v1
       env:
@@ -71,7 +82,7 @@ jobs:
         draft: true
         prerelease: true
     - uses: actions/upload-release-asset@v1.0.1
-      if: github.event_name == 'push'
+      if: github.event_name == 'push' && TAGRELEASE == false
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
