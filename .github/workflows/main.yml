@@ -97,7 +97,8 @@ jobs:
       if: |
         github.event_name == 'push' && 
         contains(github.ref, 'refs/tags/') && 
-        needs.prepare.outputs.release_tag == false      env:
+        needs.prepare.outputs.release_tag == false
+      env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
