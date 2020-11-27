@@ -13,16 +13,16 @@ jobs:
   run_check:
     if: github.event_name == 'push'  && contains(github.ref, 'refs/tags/')
     id: check_skip
-      run: |
-        URL="https://api.github.com/repos/${{ github.repository }}/releases/tags/${{ steps.get_version.outputs.VERSION }}"
-        StatusCode=$(curl -o -I -L -s -w "%{http_code}" -X GET -G $URL)
-        if [ "$StatusCode" == 200 ]; then
-          echo "Release exists"
-          echo ::set-output name=RELEASETAG::true
-        else
-          echo "Release does not exist yet"
-          echo ::set-output name=RELEASETAG::false
-        fi
+    run: |
+      URL="https://api.github.com/repos/${{ github.repository }}/releases/tags/${{ steps.get_version.outputs.VERSION }}"
+      StatusCode=$(curl -o -I -L -s -w "%{http_code}" -X GET -G $URL)
+      if [ "$StatusCode" == 200 ]; then
+        echo "Release exists"
+        echo ::set-output name=RELEASETAG::true
+      else
+        echo "Release does not exist yet"
+        echo ::set-output name=RELEASETAG::false
+      fi
   build:
     if: github.event_name == 'release' || steps.get_release.outputs.RELEASETAG == false
     runs-on: ubuntu-18.04
