@@ -1,4 +1,4 @@
-import { processLanguage, processMediatype, iso_639_3_to_639_1, image } from './utils';
+import { iso_639_3_to_639_1, image } from './utils';
 
 export function getInvocationURL(tool, resource) {
     if (!resource) {

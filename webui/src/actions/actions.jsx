@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { apiPath, actionType, resourceMatchSettings } from '../constants';
-import { processLanguage, processMediatype } from './utils';
+import { addLanguageMapping, processLanguage, processMediatype } from './utils';
 
 
 export function updateResource(resource) {
@@ -121,9 +121,13 @@ export function fetchLanguages() {
     return function (dispatch, getState) {
         axios.get(apiPath.languages)
             .then(response => {
+                response.data.map(addLanguageMapping);
                 dispatch({
                     type: actionType.LANGUAGES_FETCH_SUCCESS,
-                    data: response.data.map(processLanguage).filter(x => x),
+                    data: response.data
+                            .map(x => processLanguage(x[0]))
+                            .filter(x => x)
+                            .sort((a,b) => a.label.localeCompare(b.label)),
                 });
             }).catch(errHandler(dispatch, "Cannot fetch languages"));
     }
