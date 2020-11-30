@@ -240,9 +240,11 @@ class ToolCard extends React.Component {
                             { !tool.authentication || tool.authentication == "no" ? null :
                                 <DetailsRow title="Authentication" summary={<Highlighter markdown={tool.authentication}/>} />
                             }
-                            <DetailsRow title="Input Format" summary={<p>{tool.mimetypes.join(", ")}</p>} />
-                            <DetailsRow title="Language(s)" summary={<p>{tool.languages.map(l => (processLanguage(l) || {label:l}).label).join(", ")}</p>} />
 
+                            <DetailsRow title="Input Format" summary={<p>{tool.mimetypes.join(", ")}</p>} />
+                            { tool.languages.length >0 ?
+                                <DetailsRow title="Language(s)" summary={<p>{tool.languages.map(l => (processLanguage(l) || {label:l}).label).join(", ")}</p>} /> : null
+                            }
                             {  tool.licence && <DetailsRow title="Licence" summary={<Highlighter markdown={tool.licence}/>} /> }
                         </dl>
                     </div>

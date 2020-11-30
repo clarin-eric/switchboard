@@ -67,6 +67,11 @@ public class LinkMetadata {
             throw new LinkException(LinkException.Kind.DATA_STREAM_ERROR, "" + linkInfo.downloadLink, xc);
         }
 
+        int status = response.getStatusLine().getStatusCode();
+        if (status >= 400) {
+            throw new LinkException(LinkException.Kind.STATUS_ERROR, "" + linkInfo.downloadLink, status);
+        }
+
         switch (context.getCacheResponseStatus()) {
             case CACHE_HIT:
                 LOGGER.debug("A response was generated from the cache with no requests sent upstream");
