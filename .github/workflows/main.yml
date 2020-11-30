@@ -1,0 +1,90 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  release:
+    types: [published]
+  workflow_dispatch:
+  schedule:
+  - cron: "23 4 12 * *"
+jobs:
+  prepare:
+    runs-on: ubuntu-18.04
+    outputs:
+      version: ${{ steps.get_version.outputs.VERSION }}
+      create_release: ${{ steps.check_release.outputs.CREATE_RELEASE }}
+    steps:
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF##*/}
+      - name: Check create release for tag
+        if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+        id: check_release
+        run: |
+          URL="https://api.github.com/repos/${{ github.repository }}/releases/tags/${{ steps.get_version.outputs.VERSION }}"
+          StatusCode=$(curl -o -I -L -s -w "%{http_code}" -X GET -G $URL)
+          if [ "$StatusCode" == 200 ]; then
+            echo "Release exists"
+            echo ::set-output name=CREATE_RELEASE::false
+          else
+            echo "Release does not exist"
+            echo ::set-output name=CREATE_RELEASE::true
+          fi
+  build:
+    needs: [prepare]
+    # Run job for: github releases, tag pushes without github release and regular pushes (not tag)
+    if: github.event_name == 'release' || !contains(github.ref, 'refs/tags/') || needs.prepare.outputs.create_release == 'true'
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+          fetch-depth: '50'
+      - name: Build
+        run: |
+          make package
+          cp build/switchboard.tar.gz build/switchboard-${{ needs.prepare.outputs.version }}.tar.gz
+      - name: Upload build package
+        uses: actions/upload-artifact@v2
+        with:
+          name: switchboard-build-package
+          path: build/switchboard-${{ needs.prepare.outputs.version }}.tar.gz
+  release:
+    needs: [prepare, build]
+    # Run job for github releases and tag pushes (without github release)
+    if: github.event_name == 'release' || needs.prepare.outputs.create_release == 'true'
+    runs-on: ubuntu-18.04
+    steps:
+    - name: Download build package from build job
+      uses: actions/download-artifact@v2
+      with:
+        name: switchboard-build-package
+    # For github releases -> upload release package to existing release
+    # For tag pushes without github release -> create a github release with release package
+    - name: Create prelease for this tag
+      if: needs.prepare.outputs.create_release == 'true'
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ needs.prepare.outputs.version }}
+        release_name: Release ${{ needs.prepare.outputs.version }}
+        draft: true
+        prerelease: true
+    - uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        # Pseudo-ternary expression: get "upload_url" from the release created above, or from github "release" event if release is pre-created
+        upload_url: ${{ needs.prepare.outputs.create_release == 'true' && steps.create_release.outputs.upload_url || github.event.release.upload_url }} 
+        asset_path: ./switchboard-${{ needs.prepare.outputs.version }}.tar.gz
+        asset_name: switchboard-${{ needs.prepare.outputs.version }}.tar.gz
+        asset_content_type: application/tar+gzip
+    - uses: eregon/publish-release@v1
+      if: needs.prepare.outputs.create_release == 'true'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        release_id: ${{ steps.create_release.outputs.id }}
