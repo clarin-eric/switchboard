@@ -52,7 +52,7 @@ jobs:
           path: build/switchboard-${{ needs.prepare.outputs.version }}.tar.gz
   release:
     needs: [prepare, build]
-    # Run job for github releases, tag pushes without github release
+    # Run job for github releases and tag pushes (without github release)
     if: github.event_name == 'release' || needs.prepare.outputs.create_release == 'true'
     runs-on: ubuntu-18.04
     steps:
@@ -77,6 +77,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
+        # Pseudo-ternary expression: get "upload_url" from the release created above, or from github "release" event if release is pre-created
         upload_url: ${{ needs.prepare.outputs.create_release == 'true' && steps.create_release.outputs.upload_url || github.event.release.upload_url }} 
         asset_path: ./switchboard-${{ needs.prepare.outputs.version }}.tar.gz
         asset_name: switchboard-${{ needs.prepare.outputs.version }}.tar.gz
