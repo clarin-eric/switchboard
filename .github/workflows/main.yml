@@ -48,7 +48,7 @@ jobs:
       - name: Upload build package
         uses: actions/upload-artifact@v2
         with:
-          name: build-package
+          name: switchboard-build-package
           path: build/switchboard-${{ needs.prepare.outputs.version }}.tar.gz
   release:
     needs: [prepare, build]
@@ -59,20 +59,9 @@ jobs:
     - name: Download build package from build job
       uses: actions/download-artifact@v2
       with:
-        name: build-package
-    # For github releases
-    # Upload release package to existing release
-    - name: Upload binaries to existing release
-      if: github.event_name == 'release'
-      uses: svenstaro/upload-release-action@v2
-      with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: ./switchboard-${{ needs.prepare.outputs.version }}.tar.gz
-        asset_name: switchboard-${{ needs.prepare.outputs.version }}.tar.gz
-        tag: ${{ github.ref }}
-        overwrite: true
-    # For tag pushes without github release
-    # Create a github release with release package
+        name: switchboard-build-package
+    # For github releases -> upload release package to existing release
+    # For tag pushes without github release -> create a github release with release package
     - name: Create prelease for this tag
       if: needs.prepare.outputs.create_release == 'true'
       id: create_release
@@ -89,7 +78,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        upload_url: ${{ needs.prepare.outputs.create_release == 'true' && "steps.create_release.outputs.upload_url" || "github.event.release.upload_url" }} 
         asset_path: ./switchboard-${{ needs.prepare.outputs.version }}.tar.gz
         asset_name: switchboard-${{ needs.prepare.outputs.version }}.tar.gz
         asset_content_type: application/tar+gzip
