@@ -78,7 +78,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        upload_url: ${{ needs.prepare.outputs.create_release == 'true' && "steps.create_release.outputs.upload_url" || "github.event.release.upload_url" }} 
+        upload_url: ${{ needs.prepare.outputs.create_release == 'true' && steps.create_release.outputs.upload_url || github.event.release.upload_url }} 
         asset_path: ./switchboard-${{ needs.prepare.outputs.version }}.tar.gz
         asset_name: switchboard-${{ needs.prepare.outputs.version }}.tar.gz
         asset_content_type: application/tar+gzip
