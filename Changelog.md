@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.2.3] - 2020-11-30
+    - Fixed missing languages #150
+    - Fixed markdown highlighting bug introduced with #149
+    - Updated WebUI dependencies: react-markdown
+    - updated dependencies: dropwizard
+
 ## [2.2.2] - 2020-11-23
     - Added SSHOC funding information
     - Fixed a bug where some tools were not showing up in the "All Tools" list #141
