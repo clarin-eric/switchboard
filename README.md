@@ -1,4 +1,4 @@
-[![Travis Status](https://travis-ci.org/clarin-eric/switchboard.svg?branch=master)](https://travis-ci.org/clarin-eric/switchboard)
+[![CI](https://github.com/clarin-eric/switchboard/workflows/CI/badge.svg?branch=master)](https://github.com/clarin-eric/switchboard/actions?query=workflow%3ACI+branch%3Amaster)
 
 # switchboard
 Code Repository for the Language Resource Switchboard.
