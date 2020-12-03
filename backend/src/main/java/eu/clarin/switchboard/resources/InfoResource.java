@@ -29,7 +29,7 @@ public class InfoResource {
     public InfoResource(ToolRegistry toolRegistry, Map<String, String> gitProps,
                         boolean enableMultipleResources,
                         long maxAllowedDataSize,
-                        String contactEmail) {
+                        String contactEmail) throws IOException {
         this.toolRegistry = toolRegistry;
         this.gitProps = gitProps == null ? new HashMap<>() : gitProps;
         this.enableMultipleResources = enableMultipleResources;
