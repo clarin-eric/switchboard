@@ -36,7 +36,7 @@ public class DataResource {
 
     @GET
     @Path("/{id}")
-    public Response getFile(@PathParam("id") String idString) throws Throwable {
+    public Response getFile(@PathParam("id") String idString, @QueryParam("mediatype") String mediatype) throws Throwable {
         UUID id;
         try {
             id = UUID.fromString(idString);
@@ -55,7 +55,11 @@ public class DataResource {
         };
 
         Response.ResponseBuilder builder = Response.ok(fileStream);
-        builder.type(fi.getProfile().toProfile().getMediaType());
+        if (mediatype != null && !mediatype.isEmpty()) {
+            builder.type(mediatype);
+        } else {
+            builder.type(fi.getProfile().toProfile().getMediaType());
+        }
         builder.header("content-disposition", "attachment; filename=" + fi.getFilename());
         return builder.build();
     }

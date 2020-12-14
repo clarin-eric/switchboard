@@ -86,7 +86,7 @@ function getBoundValue(param, resourceList, inputs, match) {
     }
 
     if (bind === 'dataurl') {
-        return resource.localLink;
+        return `${resource.localLink}?mediatype=${resource.profile.mediaType}`;
     } else if (bind === 'language') {
         let lang = resource.profile.language;
         if (param.encoding == "639-1") {
@@ -95,7 +95,6 @@ function getBoundValue(param, resourceList, inputs, match) {
         }
         return lang ? lang : {error: "Unknown language"};
     } else if (bind === 'type') {
-        return resource.profile.mediaType;
         return resource.profile.mediaType ? resource.profile.mediaType : {error: "Unknown media type"};
     } else if (bind === 'content') {
         return resource.content ? resource.content : {error: "Content is not available"};
