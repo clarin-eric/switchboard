@@ -14,8 +14,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
-import java.net.URLConnection;
 import java.text.ParseException;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -105,8 +105,8 @@ public class LinkMetadata {
 
         List<URI> redirectURIs = context.getRedirectLocations();
         if (redirectURIs != null && !redirectURIs.isEmpty()) {
+            Collections.reverse(redirectURIs); // we want direct download as first link
             for (URI redirectURI : redirectURIs) {
-                LOGGER.debug("Redirect URI: " + redirectURI);
                 try {
                     tryToSetFilenameFromUrl(linkInfo, redirectURI.toURL());
                 } catch (MalformedURLException e) {
@@ -114,7 +114,7 @@ public class LinkMetadata {
                 }
             }
             linkInfo.redirects = redirectURIs.size();
-            linkInfo.downloadLink = redirectURIs.get(redirectURIs.size() - 1).toString();
+            linkInfo.downloadLink = redirectURIs.get(0).toString();
         }
 
         if (linkInfo.filename == null) {
@@ -146,9 +146,11 @@ public class LinkMetadata {
 
         tryToSetFilenameFromUrl(linkInfo, url);
 
-        // b2drop file: https://b2drop.eudat.eu/s/ekDJNz7fWw69w5Y
+        // e.g. b2drop file: https://b2drop.eudat.eu/s/ekDJNz7fWw69w5Y
         if (host.equals("b2drop.eudat.eu") && path.startsWith("/s/")) {
-            linkInfo.filename = "b2drop_file";
+            if (linkInfo.filename == null) {
+                linkInfo.filename = "b2drop_file";
+            }
             if (!path.endsWith("/download")) {
                 path += "/download";
                 try {
@@ -180,17 +182,13 @@ public class LinkMetadata {
             path = path.substring(0, path.length() - 1);
         }
 
-        String mediatype = URLConnection.guessContentTypeFromName(path);
-        if (mediatype == null) {
-            return;
-        }
-
         String filename = path;
         int lastSlash = path.lastIndexOf("/");
         if (lastSlash >= 0) {
             filename = path.substring(lastSlash + 1, path.length());
         }
-        if (!filename.isEmpty()) {
+
+        if (filename.contains(".")) {
             linkInfo.filename = filename;
         }
     }
