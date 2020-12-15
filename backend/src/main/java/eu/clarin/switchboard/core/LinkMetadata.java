@@ -15,6 +15,7 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.text.ParseException;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -51,66 +52,75 @@ public class LinkMetadata {
         public CloseableHttpResponse getResponse() {
             return response;
         }
+
+        @Override
+        public String toString() {
+            return "LinkInfo{" +
+                    "filename='" + filename + '\'' +
+                    ", downloadLink='" + downloadLink + '\'' +
+                    ", redirects=" + redirects +
+                    '}';
+        }
     }
 
     public static LinkInfo getLinkData(CloseableHttpClient client, String originalUrlOrDoiOrHandle) throws CommonException {
-        LinkMetadata.LinkInfo linkInfo = fixOriginalUrl(originalUrlOrDoiOrHandle);
+        String link = resolveDoiOrHandle(originalUrlOrDoiOrHandle);
+        link = urlFixSpecialCases(link);
+        LOGGER.debug("url fixup: " + originalUrlOrDoiOrHandle + " -> " + link);
 
+        // do the http call
         HttpCacheContext context = HttpCacheContext.create();
-
         CloseableHttpResponse response;
         try {
-            response = client.execute(new HttpGet(linkInfo.downloadLink), context);
+            response = client.execute(new HttpGet(link), context);
         } catch (IllegalArgumentException xc) {
-            throw new LinkException(LinkException.Kind.BAD_URL, "" + linkInfo.downloadLink, xc);
+            throw new LinkException(LinkException.Kind.BAD_URL, "" + link, xc);
         } catch (IOException xc) {
-            throw new LinkException(LinkException.Kind.DATA_STREAM_ERROR, "" + linkInfo.downloadLink, xc);
+            throw new LinkException(LinkException.Kind.DATA_STREAM_ERROR, "" + link, xc);
         }
 
+        // check status for errors
         int status = response.getStatusLine().getStatusCode();
         if (status >= 400) {
-            throw new LinkException(LinkException.Kind.STATUS_ERROR, "" + linkInfo.downloadLink, status);
+            throw new LinkException(LinkException.Kind.STATUS_ERROR, "" + link, status);
         }
 
-        switch (context.getCacheResponseStatus()) {
-            case CACHE_HIT:
-                LOGGER.debug("A response was generated from the cache with no requests sent upstream");
-                break;
-            case CACHE_MODULE_RESPONSE:
-                LOGGER.debug("The response was generated directly by the caching module");
-                break;
-            case CACHE_MISS:
-                LOGGER.debug("The response came from an upstream server");
-                break;
-            case VALIDATED:
-                LOGGER.debug("The response was generated from the cache after validating the entry with the origin server");
-                break;
-        }
+        LinkInfo linkInfo = new LinkInfo();
+        linkInfo.downloadLink = link;
+        linkInfo.response = response;
 
-        Header header = response.getFirstHeader("Content-Disposition");
-        if (header != null) {
-            try {
-                ContentDisposition disposition = new ContentDisposition(header.getValue());
-                String name = disposition.getFileName();
-                if (name != null && !DataStore.sanitize(name).isEmpty()) {
-                    linkInfo.filename = name;
+        // find filename in content-disposition headers
+        Header[] headers = response.getHeaders("Content-Disposition");
+        if (headers != null) {
+            for (Header header : headers) {
+                try {
+                    ContentDisposition disposition = new ContentDisposition(header.getValue());
+                    String filename = disposition.getFileName();
+                    if (filename != null && !DataStore.sanitize(filename).isEmpty()) {
+                        // LOGGER.debug("found content-disposition filename: " + filename);
+                        linkInfo.filename = filename;
+                        break;
+                    }
+                } catch (ParseException e) {
+                    LOGGER.debug("cannot parse content-disposition " + header);
+                    // caused by ContentDisposition, ignore
                 }
-            } catch (ParseException e) {
-                LOGGER.debug("cannot parse content-disposition " + header);
-                // caused by ContentDisposition, ignore
             }
         }
 
-        linkInfo.response = response;
-
+        // find filename in uri path if necessary, add redirect data
         List<URI> redirectURIs = context.getRedirectLocations();
         if (redirectURIs != null && !redirectURIs.isEmpty()) {
             Collections.reverse(redirectURIs); // we want direct download as first link
-            for (URI redirectURI : redirectURIs) {
-                try {
-                    tryToSetFilenameFromUrl(linkInfo, redirectURI.toURL());
-                } catch (MalformedURLException e) {
-                    // ignore
+            if (linkInfo.filename == null) {
+                for (URI redirectURI : redirectURIs) {
+                    // LOGGER.debug("check filename in redirect: " + redirectURI);
+                    String filename = getFilenameFromUri(redirectURI);
+                    if (filename != null && !filename.isEmpty()) {
+                        // LOGGER.debug("found uri filename: " + filename);
+                        linkInfo.filename = filename;
+                        break;
+                    }
                 }
             }
             linkInfo.redirects = redirectURIs.size();
@@ -118,79 +128,17 @@ public class LinkMetadata {
         }
 
         if (linkInfo.filename == null) {
-            linkInfo.filename = DEFAULT_NAME;
+            // LOGGER.debug("check filename in original uri: " + linkInfo.downloadLink);
+            String filename = getFilenameFromUri(URI.create(linkInfo.downloadLink));
+            if (filename == null || filename.isEmpty()) {
+                linkInfo.filename = DEFAULT_NAME;
+            } else {
+                linkInfo.filename = filename;
+            }
         }
 
-        LOGGER.debug("final linkInfo: " + linkInfo.filename + "; " + linkInfo.downloadLink);
+        LOGGER.debug("final linkInfo: " + linkInfo);
         return linkInfo;
-    }
-
-    private static LinkInfo fixOriginalUrl(String original) throws LinkException {
-        LinkInfo linkInfo = new LinkInfo();
-
-        String resolved = resolveDoiOrHandle(original);
-        linkInfo.downloadLink = resolved;
-
-        URL url;
-        try {
-            url = new URL(resolved);
-        } catch (MalformedURLException xc) {
-            throw new LinkException(LinkException.Kind.BAD_URL, original, xc);
-        }
-
-        String host = url.getHost();
-        String path = url.getPath();
-        while (path.endsWith("/")) {
-            path = path.substring(0, path.length() - 1);
-        }
-
-        tryToSetFilenameFromUrl(linkInfo, url);
-
-        // e.g. b2drop file: https://b2drop.eudat.eu/s/ekDJNz7fWw69w5Y
-        if (host.equals("b2drop.eudat.eu") && path.startsWith("/s/")) {
-            if (linkInfo.filename == null) {
-                linkInfo.filename = "b2drop_file";
-            }
-            if (!path.endsWith("/download")) {
-                path += "/download";
-                try {
-                    linkInfo.downloadLink = new URL(url.getProtocol(), url.getHost(), path).toString();
-                } catch (MalformedURLException xc) {
-                    throw new LinkException(LinkException.Kind.BAD_URL, url.toString(), xc);
-                }
-            }
-        }
-
-        // dropbox file: https://www.dropbox.com/s/9flyntc1353ve07/id_rsa.pub?dl=0
-        if ((url.getHost().equals("www.dropbox.com") || url.getHost().equals("dropbox.com"))
-                && path.startsWith("/s/")) {
-            if (!resolved.contains("?dl=1")) {
-                linkInfo.downloadLink = resolved.replaceFirst("\\?dl=0", "?dl=1");
-            }
-        }
-        LOGGER.debug("new linkInfo: " + linkInfo.filename + "; " + linkInfo.downloadLink);
-        return linkInfo;
-    }
-
-    private static void tryToSetFilenameFromUrl(LinkInfo linkInfo, URL url) {
-        if (linkInfo.filename != null) {
-            return;
-        }
-
-        String path = url.getPath();
-        while (path.endsWith("/")) {
-            path = path.substring(0, path.length() - 1);
-        }
-
-        String filename = path;
-        int lastSlash = path.lastIndexOf("/");
-        if (lastSlash >= 0) {
-            filename = path.substring(lastSlash + 1, path.length());
-        }
-
-        if (filename.contains(".")) {
-            linkInfo.filename = filename;
-        }
     }
 
     public static String resolveDoiOrHandle(String original) {
@@ -207,5 +155,53 @@ public class LinkMetadata {
             return HANDLE_URL_PREFIX + original;
         }
         return original;
+    }
+
+    public static String urlFixSpecialCases(String link) throws LinkException {
+        URL url;
+        try {
+            url = new URL(link);
+        } catch (MalformedURLException xc) {
+            throw new LinkException(LinkException.Kind.BAD_URL, link, xc);
+        }
+
+        String path = url.getPath();
+        while (path.endsWith("/")) {
+            path = path.substring(0, path.length() - 1);
+        }
+
+        // e.g. b2drop file: https://b2drop.eudat.eu/s/ekDJNz7fWw69w5Y
+        if (url.getHost().equals("b2drop.eudat.eu") && path.startsWith("/s/")) {
+            if (!path.endsWith("/download")) {
+                path += "/download";
+                try {
+                    link = new URL(url.getProtocol(), url.getHost(), path).toString();
+                } catch (MalformedURLException xc) {
+                    throw new LinkException(LinkException.Kind.BAD_URL, url.toString(), xc);
+                }
+            }
+        }
+
+        // dropbox file: https://www.dropbox.com/s/9flyntc1353ve07/id_rsa.pub?dl=0
+        if ((url.getHost().equals("www.dropbox.com") || url.getHost().equals("dropbox.com"))
+                && path.startsWith("/s/")) {
+            link = link.replaceFirst("\\?dl=0", "?dl=1");
+        }
+
+        return link;
+    }
+
+    private static String getFilenameFromUri(URI uri) {
+        String path = uri.getPath();
+        while (path.endsWith("/")) {
+            path = path.substring(0, path.length() - 1);
+        }
+
+        int lastSlash = path.lastIndexOf("/");
+        if (lastSlash >= 0) {
+            return path.substring(lastSlash + 1);
+        }
+
+        return null;
     }
 }
