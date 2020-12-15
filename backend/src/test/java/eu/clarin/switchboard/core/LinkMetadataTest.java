@@ -34,8 +34,14 @@ public class LinkMetadataTest {
         info = LinkMetadata.getLinkData(cachingClient, "https://people.sc.fsu.edu/~jburkardt/data/ply/airplane.ply");
         assertEquals("airplane.ply", info.filename);
 
+        info = LinkMetadata.getLinkData(cachingClient, "https://raw.githubusercontent.com/clarin-eric/switchboard/master/LICENCE");
+        assertEquals("LICENCE", info.filename);
+
         info = LinkMetadata.getLinkData(cachingClient, "https://b2drop.eudat.eu/s/ekDJNz7fWw69w5Y");
         assertEquals("sherlock-short.txt", info.filename);
+
+        info = LinkMetadata.getLinkData(cachingClient, "https://google.com/maps");
+        assertEquals("maps", info.filename);
     }
 
     @Test
