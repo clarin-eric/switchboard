@@ -87,12 +87,18 @@ export class ToolListWithControls extends React.Component {
                                   highlighter={makeHighlighter(this.state.searchTerms)}
                                   selectResourceMatch={this.props.selectResourceMatch}/>
                     </div>
-                    <div>
-                        { hiddenTools.length > 0 &&
-                            <p className="alert alert-info">There are {hiddenTools.length} tools not matching the search term.</p>
+                </div>
+                <div className="row">
+                    <div className="col-md-12">
+                        { hiddenTools.length > 0 ?
+                            <p className="alert alert-info" style={{marginTop:20}}>
+                                There are {hiddenTools.length} tools not matching the search term.
+                            </p> : false
                         }
-                        { tools.length == 0 && hiddenTools.length == 0 &&
-                            <p className="alert alert-info">There are no tools perfectly matching the resource(s).</p>
+                        { tools.length == 0 && hiddenTools.length == 0 ?
+                            <p className="alert alert-info" style={{marginTop:20}}>
+                                There are no tools perfectly matching the resource(s).
+                            </p> : false
                         }
                     </div>
                 </div>
@@ -111,10 +117,13 @@ export class ToolListWithControls extends React.Component {
                             </div>
                         </div>
                         <div className="row">
-                            { hiddenPartial.length
-                                ? <p className="alert alert-info">There are {hiddenPartial.length} tools not matching the search term.</p>
-                                : false
-                            }
+                            <div className="col-md-12">
+                                { hiddenPartial.length ?
+                                    <p className="alert alert-info" style={{marginTop:20}}>
+                                        There are {hiddenPartial.length} tools not matching the search term.
+                                    </p> : false
+                                }
+                            </div>
                         </div>
                     </React.Fragment> : false
                 }
