@@ -43,6 +43,13 @@ export function selectResourceMatch(toolName, matchIndex) {
 
 function uploadData(formData) {
     return function (dispatch, getState) {
+        const apiinfo = getState().apiinfo;
+        if (!apiinfo || !apiinfo.enableMultipleResources) {
+            dispatch({
+                type: actionType.RESOURCE_CLEAR_ALL,
+            });
+        }
+
         const newResource = {id: ++lastResourceID};
         dispatch(updateResource(newResource));
         axios
