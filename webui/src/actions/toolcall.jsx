@@ -86,7 +86,8 @@ function getBoundValue(param, resourceList, inputs, match) {
     }
 
     if (bind === 'dataurl') {
-        return `${resource.localLink}?mediatype=${resource.profile.mediaType}`;
+        const encodedMediatype = encodeURIComponent(resource.profile.mediaType);
+        return `${resource.localLink}?mediatype=${encodedMediatype}`;
     } else if (bind === 'language') {
         let lang = resource.profile.language;
         if (param.encoding == "639-1") {
