@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.3.0] - 2021-01-1X
+    - Added API v2 (support for POST calls #119)
+    - Added Switchboard popup
+    - Improved design of WebGUI match/list tools section
+    - Improved file format detection (support for 'ply' '3d' and 'cmdi' formats)
+    - Improved filename extraction from input URLs
+    - Improved tool wrapping for popup and phone sizes
+    - Cache tool logos
+    - Cache uploaded resources
+    - Added support for multiple files input (experimental - disabled by default)
+   
 ## [2.2.3] - 2020-11-30
     - Fixed missing languages #150
     - Fixed markdown highlighting bug introduced with #149
