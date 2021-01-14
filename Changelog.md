@@ -1,7 +1,7 @@
 # Changelog
 
 ## [2.2.3] - 2020-11-30
-    - Fixed missing languages [#150][1]
+    - Fixed missing languages #150
     - Fixed markdown highlighting bug introduced with #149
     - Upgraded backend dependencies:
         - dropwizard to 2.0.15
