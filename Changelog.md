@@ -1,5 +1,24 @@
 # Changelog
 
+## [2.2.3] - 2020-11-30
+    - Fixed missing languages [#150][1]
+    - Fixed markdown highlighting bug introduced with #149
+    - Upgraded backend dependencies:
+        - dropwizard to 2.0.15
+    - Upgraded WebUI dependencies:
+        - react-markdown to 5.0.3
+
+## [2.2.2] - 2020-11-23
+    - Added SSHOC funding information
+    - Fixed a bug where some tools were not showing up in the "All Tools" list #141
+    - Updated backend dependencies:
+       - jersey-media-multipart to 2.32
+       - dropwizard to 2.0.14
+    - Updated WebUI dependencies:
+       - react-markdown to 5.0.0
+       - lodash to 4.17.20
+       - react-router-dom to 5.2.0
+
 ## [2.2.1] - 2020-04-11
     - Added support temporary redirects (HTTP 307) when resolving handles
     - Updated WebUI dependencies: axios, core-js, react, react-dom, react-modal, react-redux, react-select, redux
