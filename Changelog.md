@@ -1,6 +1,6 @@
 # Changelog
 
-## [2.3.0] - 2021-01-1X
+## [2.3.0] - 2021-01-15
     - Added API v2 (support for POST calls #119)
     - Added Switchboard popup
     - Improved design of WebGUI match/list tools section
