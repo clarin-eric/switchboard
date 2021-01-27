@@ -280,6 +280,10 @@ class ToolCard extends React.Component {
                             : <div className="badge-holder standalone" title="This tool requires local installation on one of your devices, please check the details.">
                                 <span className={"fa fa-download"} aria-hidden="true"/>
                             </div> }
+                        { tool.webApplication && tool.webApplication.url && tool.webApplication.url.startsWith("http://") ?
+                            <div className="badge-holder unsafe" title="The connection to this tool is not secure. Unauthorized parties can spy on your data.">
+                                <span className={"fa fa-eye"} aria-hidden="true"/>
+                            </div>: null }
                     </div>
                 </div>
             </div>
