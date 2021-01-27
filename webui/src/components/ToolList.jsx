@@ -254,11 +254,11 @@ class ToolCard extends React.Component {
                     <div className="badges">
                         { !tool.authentication || tool.authentication == "no" ? null
                             : <div className="badge-holder auth" title="This tool requires a user account. Please check the Authentication information for more details.">
-                                <span className={"fa fa-key"} style={{padding:"6px 6px"}} aria-hidden="true"/>
+                                <span className={"fa fa-key"} aria-hidden="true"/>
                             </div> }
                         { !tool.standaloneApplication ? null
                             : <div className="badge-holder standalone" title="This tool requires local installation on one of your devices, please check the details.">
-                                <span className={"fa fa-download"} style={{padding:"6px 6px"}} aria-hidden="true"/>
+                                <span className={"fa fa-download"} aria-hidden="true"/>
                             </div> }
                     </div>
                 </div>

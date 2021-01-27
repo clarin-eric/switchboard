@@ -64,7 +64,7 @@ export function getInvocationURL(tool, resourceList) {
 function getBoundValue(param, resourceList, inputs, match) {
     if (!param.bind) {
         if (param.value) {
-            return param.value
+            return param.value;
         } else {
             console.error("missing param bind and value:", param);
             return {error: "Incorrect tool specification: " + param.name};
@@ -80,12 +80,18 @@ function getBoundValue(param, resourceList, inputs, match) {
     }
     const resourceIndex = match[inputIndex];
     const resource = resourceList[resourceIndex];
+    if (!resource.localLink) {
+        return {error: "Incomplete resource description"};
+    }
 
     if (inputs[inputIndex].maxSize && inputs[inputIndex].maxSize < resource.fileLength) {
         return {error: "Resource is too big"};
     }
 
     if (bind === 'dataurl') {
+        if (!resource.profile || !resource.profile.mediaType) {
+            return resource.localLink;
+        }
         const encodedMediatype = encodeURIComponent(resource.profile.mediaType);
         return `${resource.localLink}?mediatype=${encodedMediatype}`;
     } else if (bind === 'language') {
@@ -99,8 +105,8 @@ function getBoundValue(param, resourceList, inputs, match) {
         return resource.profile.mediaType ? resource.profile.mediaType : {error: "Unknown media type"};
     } else if (bind === 'content') {
         return resource.content ? resource.content : {error: "Content is not available"};
-    } else {
-        console.error("unexpected bind value:", bind);
-        return {error: "Incorrect tool specification: " + bind};
     }
+
+    console.error("unexpected bind value:", bind);
+    return {error: "Incorrect tool specification: " + bind};
 }

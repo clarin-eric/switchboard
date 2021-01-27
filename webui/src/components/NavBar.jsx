@@ -52,17 +52,25 @@ export class NavBar extends React.Component {
             const currentUrl = window.location.href;
             return "nav-item" + (currentUrl.endsWith(url) ? " active" : "");
         }
-        const target = this.props.mode === 'popup' ? "_blank" : "_self";
+        const isPopup = this.props.mode === 'popup';
 
         return (
             <nav className="navbar navbar-static-top navbar-default">
                 <div className="container">
                     <div className="navbar-header">
                         {this.renderMenuButton()}
-                        <a className="navbar-brand nav-link" href={clientPath.root} target={target} onClick={this.closeNav}>
+                        <a className="navbar-brand nav-link" href={clientPath.root}
+                           target={isPopup ? "_blank" : "_self"} onClick={this.closeNav} >
                             <span style={{fontSize:14, marginRight:2}} className="glyphicon glyphicon-cog" aria-hidden="true"/>
                             <span style={{fontSize:18}}>Language Resource Switchboard</span>
                         </a>
+                        {isPopup ?
+                            <form action="" method="post" encType="multipart/form-data"
+                                  target="_blank" style={{float:'right', margin:'12px 12px'}}>
+                                <input name="id" type="hidden" value={this.props.resourceList[0].id}/>
+                                <button type="submit" style={{borderColor:'transparent'}}><span style={{fontSize:14, marginRight:2}} className="glyphicon glyphicon-fullscreen" aria-hidden="true"/></button>
+                            </form> : false
+                        }
                     </div>
 
                     <div className={navCollapseClass}>
