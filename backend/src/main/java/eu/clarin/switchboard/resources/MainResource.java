@@ -87,10 +87,11 @@ public class MainResource {
     public View postToRoot(@FormDataParam("file") InputStream inputStream,
                            @FormDataParam("file") final FormDataContentDisposition contentDispositionHeader,
                            @FormDataParam("url") String url,
+                           @FormDataParam("id") String id,
                            @FormDataParam("selection") String selection,
                            @FormDataParam("popup") boolean popup)
             throws JsonProcessingException {
-        return post(inputStream, contentDispositionHeader, url, selection, popup);
+        return post(inputStream, contentDispositionHeader, url, id, selection, popup);
     }
 
     @POST
@@ -100,15 +101,17 @@ public class MainResource {
     public View postToIndex(@FormDataParam("file") InputStream inputStream,
                             @FormDataParam("file") final FormDataContentDisposition contentDispositionHeader,
                             @FormDataParam("url") String url,
+                            @FormDataParam("id") String id,
                             @FormDataParam("selection") String selection,
                             @FormDataParam("popup") boolean popup)
             throws JsonProcessingException {
-        return post(inputStream, contentDispositionHeader, url, selection, popup);
+        return post(inputStream, contentDispositionHeader, url, id, selection, popup);
     }
 
     public View post(InputStream inputStream,
                      final FormDataContentDisposition contentDispositionHeader,
                      String url,
+                     String idParam,
                      String selection,
                      boolean popup)
             throws JsonProcessingException {
@@ -118,6 +121,9 @@ public class MainResource {
             return IndexView.fileInfoID(id, popup);
         } else if (url != null) {
             UUID id = mediaLibrary.addByUrlAsync(url);
+            return IndexView.fileInfoID(id, popup);
+        } else if (idParam != null) {
+            UUID id = UUID.fromString(idParam);
             return IndexView.fileInfoID(id, popup);
         } else if (selection != null && !selection.isEmpty()) {
             ByteArrayInputStream bais = new ByteArrayInputStream(selection.getBytes(StandardCharsets.UTF_8));
