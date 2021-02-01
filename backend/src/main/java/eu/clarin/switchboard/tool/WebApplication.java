@@ -16,6 +16,7 @@ public class WebApplication {
     String url;
     List<Parameter> queryParameters;
     List<Parameter> pathParameters;
+    List<Parameter> manualParameters;
 
     public String getBrowserRequirements() {
         return browserRequirements;
@@ -81,6 +82,14 @@ public class WebApplication {
         this.pathParameters = pathParameters;
     }
 
+    public List<Parameter> getManualParameters() {
+        return manualParameters;
+    }
+
+    public void setManualParameters(List<Parameter> manualParameters) {
+        this.manualParameters = manualParameters;
+    }
+
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
@@ -92,6 +101,7 @@ public class WebApplication {
                 .add("\nurl", url)
                 .add("\nqueryParameters", queryParameters)
                 .add("\npathParameters", pathParameters)
+                .add("\nmanualParameters", manualParameters)
                 .toString();
     }
 }
