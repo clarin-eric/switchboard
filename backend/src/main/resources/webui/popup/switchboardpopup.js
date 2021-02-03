@@ -3,7 +3,7 @@
 
 /******************************************************************************
  * Here we include Zepto (inlined minified) and Zepto data plugin.
- * Go below to get to Switchboard dropdown code
+ * Go below to get to Switchboard popup code
  * We need to make sure $ is not changed after the execution of this code.
  ******************************************************************************/
 
@@ -41,6 +41,8 @@ function setSwitchboardURL(url) {
     }
 }
 
+var container, backdrop;
+
 function showSwitchboardPopupOnSelection(align, params) {
     // testArguments(align, params);
     buildParams(params);
@@ -62,21 +64,22 @@ function showSwitchboardPopupOnSelection(align, params) {
             return;
         }
         mouseDown = false;
+        if (container) {
+            return;
+        }
         if (!selection) {
             return;
         }
         const newAlign = Object.assign({}, align, {alignSelection:selection});
         const newParams = Object.assign({}, params, {selection: selection.toString()});
-        const {container, popup} = makeDomElements(newAlign, switchboardURL, newParams);
-        togglePopup(container);
+        makeDomElements(newAlign, switchboardURL, newParams);
     };
 }
 
 function showSwitchboardPopup(align, params) {
     testArguments(align, params);
     buildParams(params);
-    const {container, popup} = makeDomElements(align, switchboardURL, params);
-    togglePopup(container);
+    makeDomElements(align, switchboardURL, params);
 }
 
 function testArguments(align, params) {
@@ -101,42 +104,102 @@ function buildParams(params) {
     params.popup = true;
 }
 
+var oldOnkeydown = undefined;
+
+const newwindowimage = "data:image/png;base64,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"
+
 function makeDomElements(align, invokeURL, params) {
-    const container = $('<div>').attr('class', 'switchboardpopup-dropdown');
+    const maximizebutton = $('<button>')
+        .css({
+            'float': 'right',
+            'margin': '10px',
+            'padding': '2px',
+            'border': 'none',
+            'background': 'transparent',
+            'cursor': 'pointer',
+        })
+        .append($(`<img src="${newwindowimage}">`));
 
-    const popup = $('<ul>').attr({
-        'class': 'switchboardpopup-dropdown-menu '+
-            (align.alignRight ? 'switchboardpopup-dropdown-menu-right':''),
-        'role': 'menu',
-        "aria-labelledby": "dropdown-switchboardpopup"
-    }).appendTo(container);
+    container = $('<div>')
+        .css({
+            'position': 'absolute',
+            'z-index': 9999,
+            'top': 0,
+            'left': 0,
+            'padding': 0,
+            'margin': 0,
+            'float': 'left',
+            'min-width': '160px',
+            'list-style': 'none',
+            'background-color': '#fff',
+            'border': '1px solid #ccc',
+            'border-radius': '4px',
+            'box-shadow': '0 12px 24px rgba(0, 0, 0, 0.5)',
+            'background-clip': 'padding-box',
+            'transform-origin': '0 0',
+            'transform': 'scale(0.85)',
+        })
+        .append(maximizebutton)
+        .appendTo(container);
 
-    const formAttr = {
-        target: 'switchboard_iframe',
-        action: invokeURL,
-        method: 'POST',
-        enctype: 'multipart/form-data',
-    };
-    const form = $('<form>').attr(formAttr);
+    if (align.alignRight) {
+        container.css({
+            'transform-origin': '100% 0',
+            'left': 'auto',
+            'right': 0,
+        })
+    }
+
+    const titlebar = $('<div>')
+        .css({
+            'width': '100%',
+            'background-color': '#eee',
+            'border-color': '#d5d5d5',
+            'border-radius': '6px 6px 0 0',
+            'height': '48px',
+            'padding': '12px 12px',
+            'font-family': 'Helvetica',
+            'font-size': '18px',
+            'cursor': 'move'
+        })
+        .append("⚙️Language Resource Switchboard")
+        .appendTo(container);
+
+    const form = $('<form>')
+        .css({
+            display: 'none'
+        }).attr({
+            action: invokeURL,
+            method: 'POST',
+            enctype: 'multipart/form-data',
+            target: 'switchboard_iframe',
+        });
     for (const key in params) {
         form.append($('<input>').attr({type:'text', name:key, value:params[key]}))
     }
-    form.append($('<input>').attr('type', 'submit'))
-        .appendTo(popup);
-    const iframe = $('<iframe>').attr({name: 'switchboard_iframe'}).appendTo(popup);
+    form.append($('<input>').attr('type', 'submit'));
+    form.appendTo(container);
 
+    const iframe = $('<iframe>')
+        .css({
+            'border': 'none',
+            'width': '375px',
+            'height': '600px',
+        })
+        .attr({name: 'switchboard_iframe'})
+        .appendTo(container);
 
     const offset = {
         left: 0,
         top: 0,
         right: 0,
     };
-    if (align && align.alignSelector) {
+    if (align.alignSelector) {
         const selectorOffset = $(align.alignSelector).offset();
         offset.left = selectorOffset.left;
         offset.top = selectorOffset.top + selectorOffset.height;
         offset.right = window.innerWidth - selectorOffset.left - selectorOffset.width;
-    } else if (align && align.alignSelection) {
+    } else if (align.alignSelection) {
         const selectorOffset = $(align.alignSelection.getRangeAt(0)).offset();
         offset.left = selectorOffset.left;
         offset.top = selectorOffset.top + selectorOffset.height;
@@ -159,26 +222,69 @@ function makeDomElements(align, invokeURL, params) {
         });
     }
 
-    container.insertBefore(document.body);
-    form.submit();
-    form.remove();
+    function beginSliding(e) {
+        titlebar.get()[0].onpointermove = slide;
+        titlebar.get()[0].setPointerCapture(e.pointerId);
+        offset.startX = e.clientX;
+        offset.startY = e.clientY;
+    }
 
-    return {container, popup};
+    function stopSliding(e) {
+        titlebar.get()[0].onpointermove = null;
+        titlebar.get()[0].releasePointerCapture(e.pointerId);
+    }
+
+    function slide(e) {
+        offset.left += e.clientX - offset.startX;
+        offset.top += e.clientY - offset.startY;
+        offset.startX = e.clientX;
+        offset.startY = e.clientY;
+        if (offset.left < 0) { offset.left = 0; }
+        if (offset.top < 0) { offset.top = 0; }
+        container.css({left: `${offset.left}px`, top: `${offset.top}px`});
+    }
+
+    titlebar.get()[0].onpointerdown = beginSliding;
+    titlebar.get()[0].onpointerup = stopSliding;
+
+    // add backdrop and remove handlers
+    container.insertBefore(document.body.firstChild);
+    window.maximizebutton = maximizebutton.get()[0];
+    maximizebutton.on('click', function() {
+        form.attr({target:'_blank'});
+        form.submit();
+    });
+    backdrop = $('<div/>')
+        .css({
+            'position': 'fixed',
+            'left': 0,
+            'right': 0,
+            'bottom': 0,
+            'top': 0,
+            'opacity': 0.125,
+            'background-color': 'black',
+            'z-index': 9998,
+        })
+        .insertBefore(document.body.firstChild)
+        .on('click', removePopup);
+
+    if (oldOnkeydown === undefined) {
+        oldOnkeydown = window.onkeydown;
+    }
+    window.onkeydown = function(e) {
+        if (e.keyCode == 27) {
+            removePopup();
+        }
+    }
+
+    form.submit();
 }
 
-function togglePopup(container) {
-    var isActive = container.hasClass('switchboardpopup-open')
-    if (!isActive) {
-        $('<div class="switchboardpopup-dropdown-backdrop"/>')
-            .insertBefore(document.body)
-            .on('click', () => {
-                $('.switchboardpopup-dropdown-backdrop').remove();
-                $('.switchboardpopup-dropdown').remove();
-            })
-        container.trigger('show.switchboardpopup-dropdown');
-        container.toggleClass('switchboardpopup-open');
-        container.trigger('shown.switchboardpopup-dropdown');
-    }
+function removePopup() {
+    container.remove();
+    backdrop.remove();
+    window.onkeydown = oldOnkeydown;
+    container = null;
 }
 
 // cleanup: remove global Zepto traces

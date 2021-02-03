@@ -31,46 +31,33 @@ export class NavBar extends React.Component {
         }));
     }
 
-    renderMenuButton() {
-        if (this.props.mode === 'popup') {
-            return false;
-        } else {
-            return (
-                <button type="button" className="navbar-toggle collapsed" aria-expanded="false" onClick={this.toggleNav}>
-                    <span className="sr-only">Toggle navigation</span>
-                    <span className="icon-bar"></span>
-                    <span className="icon-bar"></span>
-                    <span className="icon-bar"></span>
-                </button>
-            );
-        }
-    }
-
     render() {
-        const navCollapseClass = this.state.showCollapsedNavbar ? "collapse navbar-collapse text-right show" : "collapse navbar-collapse";
+        if (this.props.mode === 'popup') {
+            return <div style={{marginTop: '0.5em'}}/>;
+        }
+
+        const navCollapseClass = this.state.showCollapsedNavbar ?
+            "collapse navbar-collapse text-right show" :
+            "collapse navbar-collapse";
         const navItemClass = (url) => {
             const currentUrl = window.location.href;
             return "nav-item" + (currentUrl.endsWith(url) ? " active" : "");
         }
-        const isPopup = this.props.mode === 'popup';
-
         return (
             <nav className="navbar navbar-static-top navbar-default">
                 <div className="container">
                     <div className="navbar-header">
-                        {this.renderMenuButton()}
+                        <button type="button" className="navbar-toggle collapsed" aria-expanded="false" onClick={this.toggleNav}>
+                            <span className="sr-only">Toggle navigation</span>
+                            <span className="icon-bar"></span>
+                            <span className="icon-bar"></span>
+                            <span className="icon-bar"></span>
+                        </button>
                         <a className="navbar-brand nav-link" href={clientPath.root}
                            target={isPopup ? "_blank" : "_self"} onClick={this.closeNav} >
                             <span style={{fontSize:14, marginRight:2}} className="glyphicon glyphicon-cog" aria-hidden="true"/>
                             <span style={{fontSize:18}}>Language Resource Switchboard</span>
                         </a>
-                        {isPopup ?
-                            <form action="" method="post" encType="multipart/form-data"
-                                  target="_blank" style={{float:'right', margin:'12px 12px'}}>
-                                <input name="id" type="hidden" value={this.props.resourceList[0].id}/>
-                                <button type="submit" style={{borderColor:'transparent'}}><span style={{fontSize:14, marginRight:2}} className="glyphicon glyphicon-fullscreen" aria-hidden="true"/></button>
-                            </form> : false
-                        }
                     </div>
 
                     <div className={navCollapseClass}>
