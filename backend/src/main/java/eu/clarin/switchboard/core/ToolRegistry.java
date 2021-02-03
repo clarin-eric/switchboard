@@ -129,7 +129,8 @@ public class ToolRegistry {
                     List<ProfilesToolMatch> betterMatches = new ArrayList<>();
                     for (ProfilesToolMatch currentMatch : matches) {
                         if (!currentMatch.usesProfileIndex(profileIndex) && !currentMatch.inputIndexOccupied(inputIndex)) {
-                            Matcher matcher = inputs.get(inputIndex).getMatcher(tool.requiresContent(inputIndex));
+                            boolean contentRequired = tool.requiresContent(inputIndex);
+                            Matcher matcher = inputs.get(inputIndex).getMatcher(contentRequired);
                             if (matcher.matches(profiles.get(profileIndex))) {
                                 betterMatches.add(currentMatch.update(inputIndex, profileIndex));
                             }

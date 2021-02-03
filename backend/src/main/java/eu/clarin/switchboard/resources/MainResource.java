@@ -3,7 +3,12 @@ package eu.clarin.switchboard.resources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.clarin.switchboard.app.FileAsset;
+import eu.clarin.switchboard.core.FileInfo;
 import eu.clarin.switchboard.core.MediaLibrary;
+import eu.clarin.switchboard.core.Quirks;
+import eu.clarin.switchboard.core.xc.StorageException;
+import eu.clarin.switchboard.core.xc.StoragePolicyException;
+import eu.clarin.switchboard.profiler.api.ProfilingException;
 import io.dropwizard.views.View;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
@@ -17,7 +22,6 @@ import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.Set;
@@ -88,10 +92,11 @@ public class MainResource {
                            @FormDataParam("file") final FormDataContentDisposition contentDispositionHeader,
                            @FormDataParam("url") String url,
                            @FormDataParam("id") String id,
+                           @FormDataParam("origin") String origin,
                            @FormDataParam("selection") String selection,
                            @FormDataParam("popup") boolean popup)
-            throws JsonProcessingException {
-        return post(inputStream, contentDispositionHeader, url, id, selection, popup);
+            throws JsonProcessingException, ProfilingException, StorageException, StoragePolicyException {
+        return post(inputStream, contentDispositionHeader, url, id, origin, selection, popup);
     }
 
     @POST
@@ -102,19 +107,21 @@ public class MainResource {
                             @FormDataParam("file") final FormDataContentDisposition contentDispositionHeader,
                             @FormDataParam("url") String url,
                             @FormDataParam("id") String id,
+                            @FormDataParam("origin") String origin,
                             @FormDataParam("selection") String selection,
                             @FormDataParam("popup") boolean popup)
-            throws JsonProcessingException {
-        return post(inputStream, contentDispositionHeader, url, id, selection, popup);
+            throws JsonProcessingException, ProfilingException, StorageException, StoragePolicyException {
+        return post(inputStream, contentDispositionHeader, url, id, origin, selection, popup);
     }
 
     public View post(InputStream inputStream,
                      final FormDataContentDisposition contentDispositionHeader,
                      String url,
                      String idParam,
+                     String origin,
                      String selection,
                      boolean popup)
-            throws JsonProcessingException {
+            throws JsonProcessingException, ProfilingException, StoragePolicyException, StorageException {
         if (contentDispositionHeader != null) {
             String filename = contentDispositionHeader.getFileName();
             UUID id = mediaLibrary.addFileAsync(filename, inputStream);
@@ -127,8 +134,10 @@ public class MainResource {
             return IndexView.fileInfoID(id, popup);
         } else if (selection != null && !selection.isEmpty()) {
             ByteArrayInputStream bais = new ByteArrayInputStream(selection.getBytes(StandardCharsets.UTF_8));
-            UUID id = mediaLibrary.addFileAsync("selection", bais);
-            return IndexView.fileInfoID(id, popup);
+            FileInfo fileInfo = mediaLibrary.addFile("selection", bais);
+            fileInfo.setSelection();
+            Quirks.fillInfoBasedOnOrigin(fileInfo, origin);
+            return IndexView.fileInfoID(fileInfo.getId(), popup);
         } else {
             return IndexView.error("Switchboard needs either a file or a url in the POST request", popup);
         }

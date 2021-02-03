@@ -32,6 +32,13 @@ export function processMediatype(mediatype) {
     return null;
 }
 
+export function isDictionaryResource(res) {
+    if (res.selection && res.content && res.fileLength < 100 && res.profile.mediaType === 'text/plain') {
+        const words = res.content.trim().split(/\s+/);
+        return words.length <= 3;
+    }
+    return false;
+}
 
 const LANG_MAP = {}; // will be initialized by addLanguageMapping
 
