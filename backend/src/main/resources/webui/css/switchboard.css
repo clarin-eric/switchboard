@@ -204,6 +204,10 @@ div.tool .badge-holder > span {
     font-size:80%;
 }
 
+div.tool .badge-holder.manual > span {
+    color: #088;
+}
+
 div.tool .badge-holder.auth > span {
     color: #e83;
 }

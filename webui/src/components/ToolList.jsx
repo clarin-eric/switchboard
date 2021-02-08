@@ -232,26 +232,44 @@ class ToolCard extends React.Component {
         highlighter: PropTypes.func.isRequired,
     };
 
+    renderInvocationButton(tool, invocationURL, error) {
+        const isManual = tool.webApplication && tool.webApplication.manualParameters;
+        const btnClass = isManual ? "btn btn-default" : "btn btn-success";
+        const btnText = isManual ? "Go to site" : "Open";
+        if (invocationURL) {
+            return (
+                <a className={btnClass} onClick={e => trackCall(e, tool)} href={invocationURL} target="_blank">
+                    {btnText}
+                    <Indicator className="tool-starter" title={"new-window"}
+                               style={{marginLeft:'0.5em', marginRight:0}}/>
+                </a>
+            );
+        } else if (error) {
+            return (<span className="label label-danger">{error}</span>);
+        }
+        return false;
+    }
+
     renderHeader(imgSrc, tool, invocationURL, error) {
         const trackCall = (e) => {
             e.stopPropagation();
             _paq.push(['trackEvent', 'Tools', 'StartTool', tool.name]);
         }
         const Highlighter = this.props.highlighter;
+        const isManual = tool.webApplication && tool.webApplication.manualParameters;
+        const manualHelpText = "The Switchboard cannot automatically send the data to this web application. Please download the resources locally and upload them manually in the web applications' environment";
         return (
-            <div className="toolheader" onClick={toggle.bind(this, 'showDetails')}>
+            <div className="toolheader" onClick={toggle.bind(this, 'showDetails')} title={isManual ? manualHelpText : ""}>
                 <div className="img-holder hidden-xs"><img src={imgSrc}/></div>
                 <Indicator className="tool-chevron" title={"menu-" + (this.state.showDetails ? "down":"right")}/>
-                { invocationURL
-                    ? <a className="btn btn-success" onClick={e => trackCall(e, tool)} href={invocationURL} target="_blank">
-                        Open <Indicator className="tool-starter" title={"new-window"}/>
-                      </a>
-                    : false
-                }
-                { error ? <span className="label label-danger">{error}</span> : false }
+                {this.renderInvocationButton(tool, invocationURL, error)}
                 <div className="name-and-badges">
                     <span style={{fontSize:"120%"}}><Highlighter text={tool.name}/></span>
                     <div className="badges">
+                        { !isManual ? null
+                            : <div className="badge-holder manual" title={manualHelpText}>
+                                <span className={"fa fa-file-upload"} aria-hidden="true" style={{padding: '6px 8px', fontSize:'100%'}}/>
+                            </div> }
                         { !tool.authentication || tool.authentication == "no" ? null
                             : <div className="badge-holder auth" title="This tool requires a user account. Please check the Authentication information for more details.">
                                 <span className={"fa fa-key"} aria-hidden="true"/>
