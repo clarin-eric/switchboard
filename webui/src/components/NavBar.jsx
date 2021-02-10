@@ -54,7 +54,7 @@ export class NavBar extends React.Component {
                             <span className="icon-bar"></span>
                         </button>
                         <a className="navbar-brand nav-link" href={clientPath.root}
-                           target={isPopup ? "_blank" : "_self"} onClick={this.closeNav} >
+                           target="_self" onClick={this.closeNav} >
                             <span style={{fontSize:14, marginRight:2}} className="glyphicon glyphicon-cog" aria-hidden="true"/>
                             <span style={{fontSize:18}}>Language Resource Switchboard</span>
                         </a>

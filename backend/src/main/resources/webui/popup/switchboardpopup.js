@@ -189,22 +189,17 @@ function makeDomElements(align, invokeURL, params) {
         .attr({name: 'switchboard_iframe'})
         .appendTo(container);
 
-    const offset = {
-        left: 0,
-        top: 0,
-        right: 0,
-    };
+    var selectorOffset;
     if (align.alignSelector) {
-        const selectorOffset = $(align.alignSelector).offset();
-        offset.left = selectorOffset.left;
-        offset.top = selectorOffset.top + selectorOffset.height;
-        offset.right = window.innerWidth - selectorOffset.left - selectorOffset.width;
+        selectorOffset = $(align.alignSelector).offset();
     } else if (align.alignSelection) {
-        const selectorOffset = $(align.alignSelection.getRangeAt(0)).offset();
-        offset.left = selectorOffset.left;
-        offset.top = selectorOffset.top + selectorOffset.height;
-        offset.right = window.innerWidth - selectorOffset.left - selectorOffset.width;
+        selectorOffset = $(align.alignSelection.getRangeAt(0)).offset();
     }
+    const offset = {
+        left: selectorOffset.left,
+        top: selectorOffset.top + selectorOffset.height,
+        right: window.innerWidth - selectorOffset.left - selectorOffset.width,
+    };
 
     if (align.alignRight) {
         container.css({
@@ -235,13 +230,22 @@ function makeDomElements(align, invokeURL, params) {
     }
 
     function slide(e) {
-        offset.left += e.clientX - offset.startX;
+	    offset.left += e.clientX - offset.startX;
         offset.top += e.clientY - offset.startY;
-        offset.startX = e.clientX;
-        offset.startY = e.clientY;
+    	offset.right -= e.clientX - offset.startX;
+
         if (offset.left < 0) { offset.left = 0; }
         if (offset.top < 0) { offset.top = 0; }
-        container.css({left: `${offset.left}px`, top: `${offset.top}px`});
+        if (offset.right < 0) { offset.right = 0; }
+
+        offset.startX = e.clientX;
+        offset.startY = e.clientY;
+
+    	if (align.alignRight) {
+	        container.css({right: `${offset.right}px`, top: `${offset.top}px`});
+	    } else {
+    	    container.css({left: `${offset.left}px`, top: `${offset.top}px`});
+	    }
     }
 
     titlebar.get()[0].onpointerdown = beginSliding;
