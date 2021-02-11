@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { apiPath, actionType } from '../constants';
-import { addLanguageMapping, processLanguage, processMediatype, isDictionaryResource } from './utils';
+import { addLanguageMapping, processLanguage, processMediatype, isDictionaryResource, isDictionaryTool } from './utils';
 
 let lastResourceID = 0;
 
@@ -190,11 +190,12 @@ function fetchMatchingTools() {
                     tool.bestMatchPercent = tm.bestMatchPercent;
                     normalizeTool(tool);
                     return tool;
-                });
-                ;
+                })
+                .filter(isDict ? isDictionaryTool : !isDictionaryTool);
+
                 dispatch({
                     type: actionType.MATCHING_TOOLS_FETCH_SUCCESS,
-                    data: tools.filter(t => isDict ? (t.task == "Dictionary") : (t.task != "Dictionary")),
+                    data: tools,
                 });
             }).catch(errHandler(dispatch, "Cannot fetch matching tools"));
 

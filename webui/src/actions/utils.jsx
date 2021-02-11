@@ -40,6 +40,10 @@ export function isDictionaryResource(res) {
     return false;
 }
 
+export function isDictionaryTool(tool) {
+    return tool && tool.task === "Lookup Tools";
+}
+
 const LANG_MAP = {}; // will be initialized by addLanguageMapping
 
 export function addLanguageMapping(codeAndName) {
