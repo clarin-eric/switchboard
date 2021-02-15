@@ -282,7 +282,7 @@ class ToolCard extends React.Component {
                             </div> }
                         { tool.webApplication && tool.webApplication.url && tool.webApplication.url.startsWith("http://") ?
                             <div className="badge-holder unsafe" title="The connection to this tool is not secure. Unauthorized 3rd parties can potentially access the resource while we transfer it to the tool.">
-                                <span className={"fa fa-eye"} aria-hidden="true"/>
+                                <span><span className={"fa fa-exclamation-triangle"}/> <span> Not secure</span></span>
                             </div>: null }
                     </div>
                 </div>

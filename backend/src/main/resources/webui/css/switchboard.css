@@ -228,8 +228,7 @@ div.tool .badge-holder.standalone > span {
 }
 
 div.tool .badge-holder.unsafe > span {
-    color: #fff;
-    background-color: #f66;
+    padding: 4px 8px;
 }
 
 div.tool .dl-horizontal {
