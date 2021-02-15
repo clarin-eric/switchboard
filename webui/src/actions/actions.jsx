@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { apiPath, actionType } from '../constants';
-import { addLanguageMapping, processLanguage, processMediatype, isDictionaryResource, isDictionaryTool } from './utils';
+import { addLanguageMapping, processLanguage, processMediatype, isDictionaryResource, isDictionaryTool, isNotDictionaryTool } from './utils';
 
 let lastResourceID = 0;
 
@@ -191,7 +191,7 @@ function fetchMatchingTools() {
                     normalizeTool(tool);
                     return tool;
                 })
-                .filter(isDict ? isDictionaryTool : !isDictionaryTool);
+                .filter(isDict ? isDictionaryTool : isNotDictionaryTool);
 
                 dispatch({
                     type: actionType.MATCHING_TOOLS_FETCH_SUCCESS,
