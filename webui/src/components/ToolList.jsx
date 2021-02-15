@@ -236,9 +236,15 @@ class ToolCard extends React.Component {
         const isManual = tool.webApplication && tool.webApplication.manualParameters;
         const btnClass = isManual ? "btn btn-default" : "btn btn-success";
         const btnText = isManual ? "Go to site" : "Open";
+
+        const trackCall = (e) => {
+            e.stopPropagation();
+            _paq.push(['trackEvent', 'Tools', 'StartTool', tool.name]);
+        }
+
         if (invocationURL) {
             return (
-                <a className={btnClass} onClick={e => trackCall(e, tool)} href={invocationURL} target="_blank">
+                <a className={btnClass} onClick={trackCall} href={invocationURL} target="_blank">
                     {btnText}
                     <Indicator className="tool-starter" title={"new-window"}
                                style={{marginLeft:'0.5em', marginRight:0}}/>
@@ -251,10 +257,6 @@ class ToolCard extends React.Component {
     }
 
     renderHeader(imgSrc, tool, invocationURL, error) {
-        const trackCall = (e) => {
-            e.stopPropagation();
-            _paq.push(['trackEvent', 'Tools', 'StartTool', tool.name]);
-        }
         const Highlighter = this.props.highlighter;
         const isManual = tool.webApplication && tool.webApplication.manualParameters;
         const manualHelpText = "The Switchboard cannot automatically send the data to this web application. Please download the resources locally and upload them manually in the web applications' environment";

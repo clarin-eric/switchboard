@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { apiPath, actionType } from '../constants';
-import { addLanguageMapping, processLanguage, processMediatype } from './utils';
+import { addLanguageMapping, processLanguage, processMediatype, isDictionaryResource, isDictionaryTool } from './utils';
 
 let lastResourceID = 0;
 
@@ -147,7 +147,7 @@ export function fetchLanguages() {
 
 export function fetchAllTools() {
     return function (dispatch, getState) {
-        axios.get(apiPath.tools, {params:{withContent:true}})
+        axios.get(apiPath.tools)
             .then(response => {
                 response.data.forEach(normalizeTool);
                 dispatch({
@@ -164,9 +164,17 @@ function fetchMatchingTools() {
             type: actionType.MATCHING_TOOLS_FETCH_START,
         })
 
+        const isDict = getState().resourceList.every(isDictionaryResource);
+
         const profiles = getState().resourceList
                 .filter(r => r.localLink && r.profile)
-                .map(r => Object.assign({}, r.profile, {contentIsAvailable: (""+!!r.content)}));
+                .map(r => {
+                    const ret = Object.assign({}, r.profile);
+                    if (r.content) {
+                        ret["contentIsAvailable"] = true;
+                    }
+                    return ret;
+                });
 
         if (!profiles.length) {
             return;
@@ -182,7 +190,9 @@ function fetchMatchingTools() {
                     tool.bestMatchPercent = tm.bestMatchPercent;
                     normalizeTool(tool);
                     return tool;
-                });
+                })
+                .filter(isDict ? isDictionaryTool : !isDictionaryTool);
+
                 dispatch({
                     type: actionType.MATCHING_TOOLS_FETCH_SUCCESS,
                     data: tools,

@@ -21,6 +21,8 @@ public class FileInfo {
     private String downloadLink; // link used for downloading from original location
     private int httpRedirects; // if getting the data requires redirects
 
+    private boolean selection; // if content is coming from a user selection
+
     public FileInfo(UUID id, String filename, Path path) {
         this.id = id;
         this.filename = filename;
@@ -65,6 +67,10 @@ public class FileInfo {
         return httpRedirects;
     }
 
+    public boolean isSelection() {
+        return selection;
+    }
+
     void setLinksInfo(String originalUrlOrDoiOrHandle, String downloadLink, int redirects) {
         this.originalLink = originalUrlOrDoiOrHandle;
         this.downloadLink = downloadLink;
@@ -76,6 +82,10 @@ public class FileInfo {
         this.secondaryProfiles = secondaryProfiles.stream().map(Profile::flat).collect(Collectors.toList());
     }
 
+    public void setSelection(boolean selection) {
+        this.selection = selection;
+    }
+
     @Override
     public String toString() {
         return "FileInfo: " +
@@ -85,6 +95,7 @@ public class FileInfo {
                 "\nfileLength=" + fileLength +
                 "\noriginalLink='" + originalLink + '\'' +
                 "\nhttpRedirects=" + httpRedirects +
+                "\nselection=" + selection +
                 "\nprofile=" + profile +
                 "\nsecondaryProfiles=" + secondaryProfiles;
     }

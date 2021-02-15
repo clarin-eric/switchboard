@@ -11,11 +11,8 @@ import org.glassfish.jersey.media.multipart.ContentDisposition;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URL;
 import java.text.ParseException;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -65,7 +62,7 @@ public class LinkMetadata {
 
     public static LinkInfo getLinkData(CloseableHttpClient client, String originalUrlOrDoiOrHandle) throws CommonException {
         String link = resolveDoiOrHandle(originalUrlOrDoiOrHandle);
-        link = urlFixSpecialCases(link);
+        link = Quirks.urlFixSpecialCases(link);
         LOGGER.debug("url fixup: " + originalUrlOrDoiOrHandle + " -> " + link);
 
         // do the http call
@@ -155,40 +152,6 @@ public class LinkMetadata {
             return HANDLE_URL_PREFIX + original;
         }
         return original;
-    }
-
-    public static String urlFixSpecialCases(String link) throws LinkException {
-        URL url;
-        try {
-            url = new URL(link);
-        } catch (MalformedURLException xc) {
-            throw new LinkException(LinkException.Kind.BAD_URL, link, xc);
-        }
-
-        String path = url.getPath();
-        while (path.endsWith("/")) {
-            path = path.substring(0, path.length() - 1);
-        }
-
-        // e.g. b2drop file: https://b2drop.eudat.eu/s/ekDJNz7fWw69w5Y
-        if (url.getHost().equals("b2drop.eudat.eu") && path.startsWith("/s/")) {
-            if (!path.endsWith("/download")) {
-                path += "/download";
-                try {
-                    link = new URL(url.getProtocol(), url.getHost(), path).toString();
-                } catch (MalformedURLException xc) {
-                    throw new LinkException(LinkException.Kind.BAD_URL, url.toString(), xc);
-                }
-            }
-        }
-
-        // dropbox file: https://www.dropbox.com/s/9flyntc1353ve07/id_rsa.pub?dl=0
-        if ((url.getHost().equals("www.dropbox.com") || url.getHost().equals("dropbox.com"))
-                && path.startsWith("/s/")) {
-            link = link.replaceFirst("\\?dl=0", "?dl=1");
-        }
-
-        return link;
     }
 
     private static String getFilenameFromUri(URI uri) {

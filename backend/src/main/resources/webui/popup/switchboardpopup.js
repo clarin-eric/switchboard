@@ -42,24 +42,37 @@ function setSwitchboardURL(url) {
 }
 
 var container, backdrop;
+var oldOnkeydown = undefined;
+var oldOnmousedown = undefined;
+var oldOnselectionchange = undefined;
+var oldOnmouseup = undefined;
+
 
 function showSwitchboardPopupOnSelection(align, params) {
-    // testArguments(align, params);
     buildParams(params);
 
     let mouseDown = false;
     let nowSelecting = false;
     let selection = null;
-    document.onmousedown = () => {
+    oldOnmousedown = document.onmousedown;
+    oldOnselectionchange = document.onselectionchange;
+    oldOnmouseup = document.onmouseup;
+    document.onmousedown = (e) => {
         mouseDown = true;
+        if (oldOnmousedown) {
+            oldOnmousedown(e);
+        }
     };
-    document.onselectionchange = () => {
+    document.onselectionchange = (e) => {
         selection = document.getSelection();
         if (selection.type !== 'Range') {
             selection = null;
         }
+        if (oldOnselectionchange) {
+            oldOnselectionchange(e);
+        }
     };
-    document.onmouseup = (event) => {
+    document.onmouseup = (e) => {
         if (!mouseDown) {
             return;
         }
@@ -70,10 +83,20 @@ function showSwitchboardPopupOnSelection(align, params) {
         if (!selection) {
             return;
         }
-        const newAlign = Object.assign({}, align, {alignSelection:selection});
+        const newAlign = Object.assign({}, align, {alignSelection: selection});
         const newParams = Object.assign({}, params, {selection: selection.toString()});
         makeDomElements(newAlign, switchboardURL, newParams);
+        if (oldOnmouseup) {
+            oldOnmouseup(e);
+        }
     };
+}
+
+function disableSwitchboardPopupOnSelection() {
+    removePopup();
+    document.onmousedown = oldOnmousedown;
+    document.onselectionchange = oldOnselectionchange;
+    document.onmouseup = oldOnmouseup;
 }
 
 function showSwitchboardPopup(align, params) {
@@ -104,22 +127,9 @@ function buildParams(params) {
     params.popup = true;
 }
 
-var oldOnkeydown = undefined;
-
-const newwindowimage = "data:image/png;base64,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"
+const newwindowimage = "data:image/png;base64,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"
 
 function makeDomElements(align, invokeURL, params) {
-    const maximizebutton = $('<button>')
-        .css({
-            'float': 'right',
-            'margin': '10px',
-            'padding': '2px',
-            'border': 'none',
-            'background': 'transparent',
-            'cursor': 'pointer',
-        })
-        .append($(`<img src="${newwindowimage}">`));
-
     container = $('<div>')
         .css({
             'position': 'absolute',
@@ -138,9 +148,7 @@ function makeDomElements(align, invokeURL, params) {
             'background-clip': 'padding-box',
             'transform-origin': '0 0',
             'transform': 'scale(0.85)',
-        })
-        .append(maximizebutton)
-        .appendTo(container);
+        });
 
     if (align.alignRight) {
         container.css({
@@ -149,6 +157,34 @@ function makeDomElements(align, invokeURL, params) {
             'right': 0,
         })
     }
+
+    const maximizebutton = $('<button>')
+        .css({
+            'float': 'right',
+            'margin': '10px',
+            'padding': '2px',
+            'border': 'none',
+            'background': 'transparent',
+            'cursor': 'pointer',
+        })
+        .attr({title:"Open in new window"})
+        .append($(`<img src="${newwindowimage}" style="width:24px">`))
+        .appendTo(container);
+
+    const disablebutton = $('<button>')
+        .css({
+            'float': 'right',
+            'margin-top': '10px',
+            'padding': '2px',
+            'border': 'none',
+            'background': 'transparent',
+            'cursor': 'pointer',
+            'font-size': '20px',
+        })
+        .attr({title:"Disable until page refresh"})
+        .append("✖️")
+        .on('click', disableSwitchboardPopupOnSelection)
+        .appendTo(container);
 
     const titlebar = $('<div>')
         .css({
@@ -162,7 +198,7 @@ function makeDomElements(align, invokeURL, params) {
             'font-size': '18px',
             'cursor': 'move'
         })
-        .append("⚙️Language Resource Switchboard")
+        .append("⚙️ Resource Switchboard")
         .appendTo(container);
 
     const form = $('<form>')
@@ -179,6 +215,11 @@ function makeDomElements(align, invokeURL, params) {
     }
     form.append($('<input>').attr('type', 'submit'));
     form.appendTo(container);
+
+    maximizebutton.on('click', function() {
+        form.attr({target:'_blank'});
+        form.submit();
+    });
 
     const iframe = $('<iframe>')
         .css({
@@ -230,9 +271,9 @@ function makeDomElements(align, invokeURL, params) {
     }
 
     function slide(e) {
-	    offset.left += e.clientX - offset.startX;
+        offset.left += e.clientX - offset.startX;
         offset.top += e.clientY - offset.startY;
-    	offset.right -= e.clientX - offset.startX;
+        offset.right -= e.clientX - offset.startX;
 
         if (offset.left < 0) { offset.left = 0; }
         if (offset.top < 0) { offset.top = 0; }
@@ -241,11 +282,11 @@ function makeDomElements(align, invokeURL, params) {
         offset.startX = e.clientX;
         offset.startY = e.clientY;
 
-    	if (align.alignRight) {
-	        container.css({right: `${offset.right}px`, top: `${offset.top}px`});
-	    } else {
-    	    container.css({left: `${offset.left}px`, top: `${offset.top}px`});
-	    }
+        if (align.alignRight) {
+            container.css({right: `${offset.right}px`, top: `${offset.top}px`});
+        } else {
+            container.css({left: `${offset.left}px`, top: `${offset.top}px`});
+        }
     }
 
     titlebar.get()[0].onpointerdown = beginSliding;
@@ -253,11 +294,6 @@ function makeDomElements(align, invokeURL, params) {
 
     // add backdrop and remove handlers
     container.insertBefore(document.body.firstChild);
-    window.maximizebutton = maximizebutton.get()[0];
-    maximizebutton.on('click', function() {
-        form.attr({target:'_blank'});
-        form.submit();
-    });
     backdrop = $('<div/>')
         .css({
             'position': 'fixed',
@@ -285,10 +321,15 @@ function makeDomElements(align, invokeURL, params) {
 }
 
 function removePopup() {
-    container.remove();
-    backdrop.remove();
+    if (container) {
+        container.remove();
+        container = null;
+    }
+    if (backdrop) {
+        backdrop.remove();
+        backdrop = null;
+    }
     window.onkeydown = oldOnkeydown;
-    container = null;
 }
 
 // cleanup: remove global Zepto traces
@@ -302,8 +343,9 @@ if (typeof old$ === 'undefined') {
 setSwitchboardURL();
 
 // change globals
+window.setSwitchboardURL = setSwitchboardURL;
 window.showSwitchboardPopup = showSwitchboardPopup;
 window.showSwitchboardPopupOnSelection = showSwitchboardPopupOnSelection;
-window.setSwitchboardURL = setSwitchboardURL;
+window.disableSwitchboardPopupOnSelection = disableSwitchboardPopupOnSelection;
 
 })();

@@ -1,7 +1,7 @@
 import React from 'react';
 import SI from 'seamless-immutable';
 import Select from 'react-select';
-import { processMediatype, humanSize } from '../actions/utils';
+import { processMediatype, humanSize, isDictionaryResource } from '../actions/utils';
 import { InputContainer } from '../containers/InputContainer';
 
 const SelectLanguage = (props) => {
@@ -28,6 +28,7 @@ const SelectMediatype = (props) => {
     return <Select value={value} options={options} onChange={props.onMediatype}
             placeholder="Select the mediatype of the resource"/>;
 }
+
 
 export class ResourceList extends React.Component {
     constructor(props) {
@@ -81,7 +82,33 @@ export class ResourceList extends React.Component {
             </div>
     }
 
+    renderSelectionResource(res) {
+        return (
+            <div key={res.id} className="row">
+                <div className="col-md-8">
+                    <div className="row">
+                        <div className="col-xs-12 content namesize">
+                            "{res.content}"
+                        </div>
+                    </div>
+                </div>
+                <div className="col-md-4">
+                    <div className="row">
+                        <div className="col-xs-4 col-md-12 resource-header">Language</div>
+                        <div className="col-xs-8 col-md-12 value">
+                            <SelectLanguage res={res} languages={this.props.languages}
+                                onLanguage={v => this.onChange(res.id, 'language', v)}/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     renderResource(res) {
+        if (isDictionaryResource(res)) {
+            return this.renderSelectionResource(res);
+        }
         return <React.Fragment key={res.id}>
                 {res.profile ?
                     this.renderResourceDetails(res) :
@@ -117,6 +144,7 @@ export class ResourceList extends React.Component {
     }
 
     render() {
+        const isDict = this.props.resourceList.every(isDictionaryResource);
         return <React.Fragment>
             <div className="resource">
                 <div className="row hidden-xs">
@@ -128,7 +156,7 @@ export class ResourceList extends React.Component {
             </div>
             { this.state.showAddMoreDataPane ?
                 this.renderAddMoreDataPane() :
-                (this.props.enableMultipleResources ?
+                (this.props.enableMultipleResources && !isDict ?
                     this.renderAddResourceButton() :
                     false)
             }
