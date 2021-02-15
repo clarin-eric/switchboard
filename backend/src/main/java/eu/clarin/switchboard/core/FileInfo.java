@@ -67,7 +67,7 @@ public class FileInfo {
         return httpRedirects;
     }
 
-    public boolean getSelection() {
+    public boolean isSelection() {
         return selection;
     }
 
@@ -82,8 +82,8 @@ public class FileInfo {
         this.secondaryProfiles = secondaryProfiles.stream().map(Profile::flat).collect(Collectors.toList());
     }
 
-    public void setSelection() {
-        this.selection = true;
+    public void setSelection(boolean selection) {
+        this.selection = selection;
     }
 
     @Override
