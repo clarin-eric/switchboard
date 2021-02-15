@@ -44,6 +44,10 @@ export function isDictionaryTool(tool) {
     return tool && tool.task === "Lookup Tools";
 }
 
+export function isNotDictionaryTool(tool) {
+    return !isDictionaryTool(tool);
+}
+
 const LANG_MAP = {}; // will be initialized by addLanguageMapping
 
 export function addLanguageMapping(codeAndName) {
