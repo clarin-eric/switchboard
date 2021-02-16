@@ -181,7 +181,7 @@ function makeDomElements(align, invokeURL, params) {
             'cursor': 'pointer',
             'font-size': '20px',
         })
-        .attr({title:"Disable until page refresh"})
+        .attr({title:"Close"})
         .append("✖️")
         .on('click', disableSwitchboardPopupOnSelection)
         .appendTo(container);
