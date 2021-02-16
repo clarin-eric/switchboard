@@ -16,6 +16,7 @@ public class Tool {
     String formatVersion;
     String task;
     String deployment;
+    String integrationType;
     String name;
     String description;
     String logo;
@@ -82,6 +83,14 @@ public class Tool {
 
     public void setDeployment(String deployment) {
         this.deployment = deployment;
+    }
+
+    public String getIntegrationType() {
+        return integrationType;
+    }
+
+    public void setIntegrationType(String integrationType) {
+        this.integrationType = integrationType;
     }
 
     public String getHomepage() {
@@ -275,6 +284,7 @@ public class Tool {
         }
         webApplication.setUrl((String) v1map.get("url"));
         setWebApplication(webApplication);
+        setIntegrationType("Integrated");
         setFormatVersion("2");
     }
 
@@ -297,6 +307,7 @@ public class Tool {
                 .add("\nformatVersion", formatVersion)
                 .add("\ntask", task)
                 .add("\ndeployment", deployment)
+                .add("\nintegrationType", integrationType)
                 .add("\nname", name)
                 .add("\ndescription", description)
                 .add("\nlogo", logo)
