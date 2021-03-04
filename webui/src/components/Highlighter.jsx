@@ -54,6 +54,7 @@ export function makeHighlighter(terms) {
                 skipHtml={true}
                 escapeHtml={true}
                 renderers={{text: textRenderer}}
+                linkTarget='_blank'
             />
         );
     };
