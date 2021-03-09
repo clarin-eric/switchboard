@@ -391,9 +391,9 @@ class ToolCard extends React.Component {
                 {this.renderDetailRowArray("Available on Device", standalone.availableOnDevice,
                     (x,i) => <p key={i}>{x}</p> )}
                 {this.renderDetailRowArray("Installation URL", standalone.installURL,
-                    (x,i) => <p key={i}><a href={x}>{x}</a></p> )}
+                    (x,i) => <p key={i}><a href={x} target="_blank">{x}</a></p> )}
                 {this.renderDetailRowArray("Download URL", standalone.downloadURL,
-                    (x,i) => <p key={i}>{x.type}: <a href={x.url}>{x.url}</a></p> )}
+                    (x,i) => <p key={i}>{x.type}: <a href={x.url} target="_blank">{x.url}</a></p> )}
                 {this.renderDetailRow("Application Suite", standalone.applicationSuite)}
                 {this.renderDetailRow("Feature List", standalone.featureList)}
                 {this.renderDetailRow("Permissions", standalone.permissions)}
