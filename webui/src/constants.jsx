@@ -8,6 +8,7 @@ export const apiPath = {
     tools:          `${urlRoot}/api/tools`,
     toolsMatch:     `${urlRoot}/api/tools/match`,
     storage:        `${urlRoot}/api/storage`,
+    storageID:      id => `${urlRoot}/api/storage/${id}`,
     storageInfo:    id => `${urlRoot}/api/storage/${id}/info`,
     logo:           name => `${urlRoot}/api/logos/${name}`,
 };

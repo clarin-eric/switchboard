@@ -64,6 +64,30 @@ public class DataResource {
         return builder.build();
     }
 
+    @PUT
+    @Path("/{id}")
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.TEXT_PLAIN + ";charset=utf-8")
+    public Response putContent(@PathParam("id") String idString, String content) throws Throwable {
+        UUID id;
+        try {
+            id = UUID.fromString(idString);
+        } catch (IllegalArgumentException xc) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        FileInfo fi = mediaLibrary.waitForFileInfo(id);
+        if (fi == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        String currentMediaType = fi.getProfile().toProfile().getMediaType();
+        if (!currentMediaType.equals(MediaType.TEXT_PLAIN)) {
+            return Response.status(Response.Status.UNSUPPORTED_MEDIA_TYPE).build();
+        }
+
+        mediaLibrary.setContent(id, content);
+        return Response.ok(content).type(MediaType.TEXT_PLAIN).build();
+    }
+
     @GET
     @Path("/{id}/info")
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")

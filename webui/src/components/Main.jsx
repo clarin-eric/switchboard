@@ -48,7 +48,8 @@ export class Main extends React.Component {
                     <Analysis mediatypes={this.props.mediatypes} languages={this.props.languages}
                               enableMultipleResources={this.props.apiinfo.enableMultipleResources}
                               resourceList={this.props.resourceList}
-                              updateResource={this.props.updateResource}
+                              setResourceProfile={this.props.setResourceProfile}
+                              setResourceContent={this.props.setResourceContent}
                               removeResource={this.props.removeResource}
                               matchingTools={this.props.matchingTools}
                               selectResourceMatch={this.props.selectResourceMatch} /> :
@@ -85,7 +86,8 @@ const Analysis = (props) => (
         <ResourceList mediatypes={props.mediatypes} languages={props.languages}
                       enableMultipleResources={props.enableMultipleResources}
                       resourceList={props.resourceList}
-                      updateResource={props.updateResource}
+                      setResourceProfile={props.setResourceProfile}
+                      setResourceContent={props.setResourceContent}
                       removeResource={props.removeResource} />
         <hr style={{marginTop:0}}/>
 

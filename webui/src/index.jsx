@@ -75,6 +75,17 @@ class Application extends React.Component {
         store.dispatch(actions.fetchMediatypes());
         store.dispatch(actions.fetchLanguages());
 
+        // // load a selection by default for testing
+        // if (!window.SWITCHBOARD_DATA) {
+        //     const form = Object.assign(document.createElement('form'),
+        //         {method:'POST', enctype:'multipart/form-data'});
+        //     const sel  = Object.assign(document.createElement('input'),
+        //         {name:'selection', value:'Brunnen'});
+        //     form.appendChild(sel);
+        //     document.body.appendChild(form);
+        //     form.submit();
+        // }
+
         if (window.SWITCHBOARD_DATA) {
             const data = window.SWITCHBOARD_DATA;
             if (data.popup) {

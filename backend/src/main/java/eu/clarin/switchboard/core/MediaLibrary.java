@@ -176,6 +176,13 @@ public class MediaLibrary {
         }
     }
 
+    public void setContent(UUID id, String content) throws Throwable {
+        FileInfo fi = waitForFileInfo(id);
+        if (fi != null) {
+            dataStore.setContent(fi.getPath(), content);
+        }
+    }
+
     private void periodicCleanup() {
         // this runs on its own thread
         LOGGER.info("start periodic cleanup now");

@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.UUID;
@@ -47,6 +48,11 @@ public class DataStore {
         }
 
         return path;
+    }
+
+    public void setContent(Path path, String content) throws IOException, StoragePolicyException {
+        storagePolicy.acceptSize(content.length());
+        Files.write(path, content.getBytes(StandardCharsets.UTF_8));
     }
 
     public void delete(UUID id, Path path) {

@@ -39,16 +39,6 @@ export class ResourceList extends React.Component {
         }
     }
 
-    onChange(id, type, sel) {
-        this.props.resourceList.forEach(res => {
-            if (res.id === id) {
-                const mutable = res.asMutable({deep:true});
-                mutable.profile[type] = sel.value;
-                this.props.updateResource(mutable);
-            }
-        })
-    }
-
     renderResourceDetails(res) {
         return <div className="row">
                 <div className="col-md-4">
@@ -66,7 +56,7 @@ export class ResourceList extends React.Component {
                         <div className="col-xs-4 col-md-12 resource-header">Mediatype</div>
                         <div className="col-xs-8 col-md-12 value">
                             <SelectMediatype res={res} mediatypes={this.props.mediatypes}
-                                onMediatype={v => this.onChange(res.id, 'mediaType', v)}/>
+                                onMediatype={v => this.props.setResourceProfile(res.id, 'mediaType', v.value)}/>
                         </div>
                     </div>
                 </div>
@@ -75,7 +65,7 @@ export class ResourceList extends React.Component {
                         <div className="col-xs-4 col-md-12 resource-header">Language</div>
                         <div className="col-xs-8 col-md-12 value">
                             <SelectLanguage res={res} languages={this.props.languages}
-                                onLanguage={v => this.onChange(res.id, 'language', v)}/>
+                                onLanguage={v => this.props.setResourceProfile(res.id, 'language', v.value)}/>
                         </div>
                     </div>
                 </div>
@@ -87,8 +77,9 @@ export class ResourceList extends React.Component {
             <div key={res.id} className="row">
                 <div className="col-md-8">
                     <div className="row">
-                        <div className="col-xs-12 content namesize">
-                            "{res.content}"
+                        <div className="col-xs-12 namesize content">
+                            <input type="text" value={res.content}
+                                onChange={e => this.props.setResourceContent(res.id, e.target.value)}/>
                         </div>
                     </div>
                 </div>
@@ -97,7 +88,7 @@ export class ResourceList extends React.Component {
                         <div className="col-xs-4 col-md-12 resource-header">Language</div>
                         <div className="col-xs-8 col-md-12 value">
                             <SelectLanguage res={res} languages={this.props.languages}
-                                onLanguage={v => this.onChange(res.id, 'language', v)}/>
+                                onLanguage={v => this.props.setResourceProfile(res.id, 'language', v.value)}/>
                         </div>
                     </div>
                 </div>
