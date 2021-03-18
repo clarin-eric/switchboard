@@ -1,7 +1,7 @@
 import React from 'react';
 import SI from 'seamless-immutable';
 import Select from 'react-select';
-import { processMediatype, humanSize, isDictionaryResource } from '../actions/utils';
+import { processMediatype, humanSize } from '../actions/utils';
 import { InputContainer } from '../containers/InputContainer';
 
 const SelectLanguage = (props) => {
@@ -29,6 +29,19 @@ const SelectMediatype = (props) => {
             placeholder="Select the mediatype of the resource"/>;
 }
 
+class BlurableTextInput extends React.Component {
+    constructor(props) {
+        super(props);
+        this.inputRef = React.createRef();
+    }
+
+    render() {
+        return <input type="text" ref={this.inputRef} value={this.props.value}
+            onChange={e=>this.props.onChange(e.target.value)}
+            onKeyDown={e => {if (e.keyCode == 13) this.inputRef.current.blur() }}/>;
+    }
+}
+
 
 export class ResourceList extends React.Component {
     constructor(props) {
@@ -40,15 +53,17 @@ export class ResourceList extends React.Component {
     }
 
     renderResourceDetails(res) {
+        const removeButton = this.props.resourceList.length > 1 ?
+            <a onClick={e => this.props.removeResource(res)}>
+                <span className={"glyphicon glyphicon-trash"}
+                    style={{fontSize:'80%', marginLeft: 10}} aria-hidden="true"/>
+            </a> : false;
         return <div className="row">
                 <div className="col-md-4">
                     <div className="value namesize">
                         <a href={res.originalLink || res.localLink} style={{marginRight:10}}> {res.filename}</a>
                         <span style={{fontSize:'66%'}}>{humanSize(res.fileLength)}</span>
-                        <a onClick={e => this.props.removeResource(res)}>
-                            <span className={"glyphicon glyphicon-trash"}
-                                style={{fontSize:'80%', marginLeft: 10}} aria-hidden="true"/>
-                        </a>
+                        {removeButton}
                     </div>
                 </div>
                 <div className="col-md-4">
@@ -78,8 +93,8 @@ export class ResourceList extends React.Component {
                 <div className="col-md-8">
                     <div className="row">
                         <div className="col-xs-12 namesize content">
-                            <input type="text" value={res.content}
-                                onChange={e => this.props.setResourceContent(res.id, e.target.value)}/>
+                            <BlurableTextInput value={res.content}
+                                onChange={text => this.props.setResourceContent(res.id, text)}/>
                         </div>
                     </div>
                 </div>
@@ -97,7 +112,7 @@ export class ResourceList extends React.Component {
     }
 
     renderResource(res) {
-        if (isDictionaryResource(res)) {
+        if (res.isDictionaryResource) {
             return this.renderSelectionResource(res);
         }
         return <React.Fragment key={res.id}>
@@ -135,7 +150,7 @@ export class ResourceList extends React.Component {
     }
 
     render() {
-        const isDict = this.props.resourceList.every(isDictionaryResource);
+        const isDict = this.props.resourceList.every(res => res.isDictionaryResource);
         return <React.Fragment>
             <div className="resource">
                 <div className="row hidden-xs">

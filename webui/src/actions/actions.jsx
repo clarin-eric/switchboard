@@ -32,6 +32,7 @@ export function setResourceProfile(id, profileKey, value) {
     }
 }
 
+const contentDispatchers = {};
 export function setResourceContent(id, content) {
     return function (dispatch, getState) {
         const resourceSI = getState().resourceList.find(r => r.id === id);
@@ -45,8 +46,18 @@ export function setResourceContent(id, content) {
             type: actionType.RESOURCE_UPDATE,
             data: resource,
         });
-        // set content on server, but don't update matching tools because the profile is the same
-        axios.put(apiPath.storageID(id), content, { headers: {'Content-Type': 'text/plain'} });
+
+        // set content on server with a slight delay to coalesce repeated calls
+        // don't update matching tools because the profile is the same
+        if (contentDispatchers[id]) {
+            clearTimeout(contentDispatchers[id]);
+            contentDispatchers[id] = null;
+        }
+        const putCall = () => {
+            const headers = {'Content-Type': 'text/plain'};
+            axios.put(apiPath.storageID(id), content, { headers });
+        }
+        contentDispatchers[id] = setTimeout(putCall, 500);
     }
 }
 
@@ -106,6 +117,7 @@ function updateResourceCallback(dispatch, resource) {
         if (resource.id !== res.id) {
             dispatch(removeResource(resource));
         }
+        res.isDictionaryResource = isDictionaryResource(res);
         dispatch(updateResource(Object.assign({}, resource, res)));
     };
 }
@@ -200,7 +212,7 @@ function fetchMatchingTools() {
             type: actionType.MATCHING_TOOLS_FETCH_START,
         })
 
-        const isDict = getState().resourceList.every(isDictionaryResource);
+        const isDict = getState().resourceList.every(r => r.isDictionaryResource);
 
         const profiles = getState().resourceList
                 .filter(r => r.localLink && r.profile)
