@@ -4,13 +4,49 @@ import { addLanguageMapping, processLanguage, processMediatype, isDictionaryReso
 
 let lastResourceID = 0;
 
-export function updateResource(resource) {
+function updateResource(resource) {
     return function (dispatch, getState) {
         dispatch({
             type: actionType.RESOURCE_UPDATE,
             data: resource,
         });
         dispatch(fetchMatchingTools());
+    }
+}
+
+export function setResourceProfile(id, profileKey, value) {
+    return function (dispatch, getState) {
+        const resourceSI = getState().resourceList.find(r => r.id === id);
+        if (!resourceSI) {
+            console.error("cannot find resource with id", id);
+            return;
+        }
+        const resource = resourceSI.asMutable({deep:true});
+        resource.profile[profileKey] = value;
+        dispatch({
+            type: actionType.RESOURCE_UPDATE,
+            data: resource,
+        });
+        // update matching tools because the profile has changed
+        dispatch(fetchMatchingTools());
+    }
+}
+
+export function setResourceContent(id, content) {
+    return function (dispatch, getState) {
+        const resourceSI = getState().resourceList.find(r => r.id === id);
+        if (!resourceSI) {
+            console.error("cannot find resource with id", id);
+            return;
+        }
+        const resource = resourceSI.asMutable({deep:true});
+        resource.content = content;
+        dispatch({
+            type: actionType.RESOURCE_UPDATE,
+            data: resource,
+        });
+        // set content on server, but don't update matching tools because the profile is the same
+        axios.put(apiPath.storageID(id), content, { headers: {'Content-Type': 'text/plain'} });
     }
 }
 

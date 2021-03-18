@@ -14,9 +14,7 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.UUID;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 
 public class DataStoreTest {
@@ -53,6 +51,20 @@ public class DataStoreTest {
         dataStore.delete(id, path);
         assertFalse(path.toFile().exists());
         assertFalse(path.getParent().toFile().exists());
+    }
+
+    @Test
+    public void setContent() throws IOException, StoragePolicyException {
+        UUID id = UUID.randomUUID();
+        String content = "first content";
+        String newcontent = "now updated";
+
+        InputStream is = new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8));
+        Path path = dataStore.save(id, "test_set_content", is);
+        assertArrayEquals(Files.readAllBytes(path), content.getBytes(StandardCharsets.UTF_8));
+
+        dataStore.setContent(path, newcontent);
+        assertArrayEquals(Files.readAllBytes(path), newcontent.getBytes(StandardCharsets.UTF_8));
     }
 
     @Test

@@ -95,15 +95,12 @@ div.resource .namesize {
     border-radius: 4px;
 }
 
-div.resource .content {
-    font-size: 20px;
-    color: #11203f;
-    background-color: #f0f0ff;
-    border-color: #bce8f1;
-    padding: 15px;
-    margin-bottom: 20px;
-    border: 1px solid transparent;
-    border-radius: 4px;
+div.resource .content > input {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 10px;
+    color: black;
+    width: 100%;
 }
 
 div.resource .namesize span {
