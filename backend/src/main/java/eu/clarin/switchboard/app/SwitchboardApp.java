@@ -98,7 +98,8 @@ public class SwitchboardApp extends Application<RootConfig> {
         InfoResource infoResource = new InfoResource(toolRegistry, gitProperties,
                 switchboardConfig.getTools().getEnableMultipleResources(),
                 switchboardConfig.getDataStore().getMaxSize(),
-                switchboardConfig.getContactEmail()
+                switchboardConfig.getContactEmail(),
+                switchboardConfig.getFundingBadge()
         );
         DataResource dataResource = new DataResource(mediaLibrary);
         ToolsResource toolsResource = new ToolsResource(toolRegistry, switchboardConfig.getTools());

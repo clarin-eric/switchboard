@@ -1,10 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {image} from '../actions/utils'
 
 export default class About extends React.Component {
     render() {
         return (
             <React.Fragment>
+                { this.props.fundingBadge && this.props.fundingBadge.sshoc ?
+                    <div style={{float:'right'}}>
+                        <img src={image('empoweredbysshoc.png')} height="128px" />
+                    </div> : false
+                }
                 <h2>About</h2>
                 <p>
                     The Language Resource Switchboard has been developed

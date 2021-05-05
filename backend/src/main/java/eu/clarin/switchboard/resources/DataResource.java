@@ -158,7 +158,7 @@ public class DataResource {
             }
         }
 
-        LOGGER.debug("postFile returns: " + ret);
+        // LOGGER.debug("postFile returns: " + ret);
         return Response.ok(ret).build();
     }
 }
