@@ -99,7 +99,7 @@ public class SwitchboardApp extends Application<RootConfig> {
                 switchboardConfig.getTools().getEnableMultipleResources(),
                 switchboardConfig.getDataStore().getMaxSize(),
                 switchboardConfig.getContactEmail(),
-                switchboardConfig.getFundingBadge()
+                switchboardConfig.getShowFundingBadge()
         );
         DataResource dataResource = new DataResource(mediaLibrary);
         ToolsResource toolsResource = new ToolsResource(toolRegistry, switchboardConfig.getTools());

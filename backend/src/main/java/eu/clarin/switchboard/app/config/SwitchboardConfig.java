@@ -28,7 +28,7 @@ public class SwitchboardConfig {
     @NotNull
     private ToolConfig tools;
 
-    private Map<String, Boolean> fundingBadge;
+    private Boolean showFundingBadge;
 
     public String getContactEmail() {
         return contactEmail;
@@ -50,8 +50,8 @@ public class SwitchboardConfig {
         return tools;
     }
 
-    public Map<String, Boolean> getFundingBadge() {
-        return fundingBadge;
+    public Boolean getShowFundingBadge() {
+        return showFundingBadge;
     }
 
     @Override
@@ -62,7 +62,7 @@ public class SwitchboardConfig {
                 .add("\tdataStore", dataStore)
                 .add("\turlResolver", urlResolver)
                 .add("\ttoolConfig", tools)
-                .add("\tfundingBadge", fundingBadge)
+                .add("\tshowFundingBadge", showFundingBadge)
                 .toString();
     }
 

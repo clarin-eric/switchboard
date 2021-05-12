@@ -6,9 +6,9 @@ export default class About extends React.Component {
     render() {
         return (
             <React.Fragment>
-                { this.props.fundingBadge && this.props.fundingBadge.sshoc ?
+                { this.props.showFundingBadge ?
                     <div style={{float:'right'}}>
-                        <img src={image('empoweredbysshoc.png')} height="128px" />
+                        <img src={image('fundingbadge.png')} height="128px" />
                     </div> : false
                 }
                 <h2>About</h2>
