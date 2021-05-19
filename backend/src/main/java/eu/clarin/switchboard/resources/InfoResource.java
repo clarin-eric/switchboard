@@ -25,16 +25,19 @@ public class InfoResource {
     String contactEmail;
     ToolRegistry toolRegistry;
     Map<String, String> languageCodeToName;
+    Boolean showFundingBadge;
 
     public InfoResource(ToolRegistry toolRegistry, Map<String, String> gitProps,
                         boolean enableMultipleResources,
                         long maxAllowedDataSize,
-                        String contactEmail) throws IOException {
+                        String contactEmail,
+                        Boolean  showFundingBadge) throws IOException {
         this.toolRegistry = toolRegistry;
         this.gitProps = gitProps == null ? new HashMap<>() : gitProps;
         this.enableMultipleResources = enableMultipleResources;
         this.maxAllowedDataSize = maxAllowedDataSize;
         this.contactEmail = contactEmail;
+        this.showFundingBadge = showFundingBadge;
 
         this.languageCodeToName = new HashMap<>();
         try (InputStream is = getClass().getResourceAsStream("/iso639-3.tsv");
@@ -60,6 +63,7 @@ public class InfoResource {
         map.put("enableMultipleResources", enableMultipleResources);
         map.put("maxAllowedDataSize", maxAllowedDataSize);
         map.put("contactEmail", contactEmail);
+        map.put("showFundingBadge", showFundingBadge);
         try {
             InetAddress host = InetAddress.getLocalHost();
             map.put("host", new HashMap<String, String>() {{

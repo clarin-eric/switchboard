@@ -35,3 +35,4 @@ switchboard:
         readTimeout: ${URLRESOLVER_READTIMEOUT:-3}
         unit: ${URLRESOLVER_TIMEOUT_UNIT:-seconds}
         maxHttpCacheEntries: ${URLRESOLVER_MAX_HTTPCACHE_ENTRIES:-256}
+    showFundingBadge: ${SHOW_FUNDING_BADGE:-false}

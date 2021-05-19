@@ -5,6 +5,7 @@ import eu.clarin.switchboard.core.ToolRegistry;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.Map;
 
 public class SwitchboardConfig {
     @Valid
@@ -27,6 +28,8 @@ public class SwitchboardConfig {
     @NotNull
     private ToolConfig tools;
 
+    private Boolean showFundingBadge;
+
     public String getContactEmail() {
         return contactEmail;
     }
@@ -47,6 +50,10 @@ public class SwitchboardConfig {
         return tools;
     }
 
+    public Boolean getShowFundingBadge() {
+        return showFundingBadge;
+    }
+
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
@@ -55,6 +62,7 @@ public class SwitchboardConfig {
                 .add("\tdataStore", dataStore)
                 .add("\turlResolver", urlResolver)
                 .add("\ttoolConfig", tools)
+                .add("\tshowFundingBadge", showFundingBadge)
                 .toString();
     }
 
