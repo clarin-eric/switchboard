@@ -136,8 +136,18 @@ export function addZipEntryToInputs(zipRes, zipEntry) {
         }
         const entry = outline.find(e => e.name === zipEntry.name);
         if (entry.checked) {
-            // already checked
-            return;
+            if (state.apiinfo?.enableMultipleResources) {
+                entry.checked = false;
+                const resource = state.resourceList.find(r =>
+                    r.sourceID === zipRes.id && r.sourceEntryName === zipEntry.name);
+                if (resource) {
+                    dispatch(removeResource(resource));
+                }
+                return;
+            } else {
+                // single resource, already checked
+                return;
+            }
         } else {
             entry.checked = true;
         }

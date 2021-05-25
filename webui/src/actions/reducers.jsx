@@ -60,7 +60,18 @@ function resourceList(state = SI([]), action) {
             if (index >= 0) {
                 ret[index] = Object.assign({}, ret[index].asMutable(), action.data);
             } else {
-                ret.push(action.data);
+                let idx = ret.length;
+                if (action.data.sourceID) {
+                    let i = ret.findIndex(r => r.id === action.data.sourceID);
+                    if (i >= 0) {
+                        i++;
+                        while (i < ret.length && ret[i].sourceID) {
+                            i ++;
+                        }
+                        idx = i;
+                    }
+                }
+                ret.splice(idx, 0, action.data);
             }
         }
         break;
