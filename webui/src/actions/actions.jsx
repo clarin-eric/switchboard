@@ -1,3 +1,4 @@
+import SI from 'seamless-immutable';
 import axios from 'axios';
 import { apiPath, actionType } from '../constants';
 import { addLanguageMapping, processLanguage, processMediatype, isDictionaryResource, isDictionaryTool, isNotDictionaryTool } from './utils';
@@ -22,7 +23,7 @@ export function setResourceProfile(id, profileKey, value) {
             console.error("cannot find resource with id", id);
             return;
         }
-        const resource = resourceSI.asMutable({deep:true});
+        const resource = SI.asMutable(resourceSI, {deep:true});
         resource.profile[profileKey] = value;
 
         dispatch({
@@ -35,7 +36,7 @@ export function setResourceProfile(id, profileKey, value) {
         if (resource.sourceID) {
             let parent = resourceList.find(r => r.id === resource.sourceID);
             if (parent) {
-                parent = parent.asMutable ? parent.asMutable({deep:true}) : parent;
+                parent = SI.asMutable(parent, {deep:true});
                 const entry = parent.outline.find(e => e.name == resource.sourceEntryName);
                 if (entry) {
                     entry.profile = Object.assign({}, entry.profile, resource.profile);
@@ -57,7 +58,7 @@ export function setResourceContent(id, content) {
             console.error("cannot find resource with id", id);
             return;
         }
-        const resource = resourceSI.asMutable({deep:true});
+        const resource = SI.asMutable(resourceSI, {deep:true});
         resource.content = content;
         dispatch({
             type: actionType.RESOURCE_UPDATE,
@@ -93,11 +94,9 @@ export function removeResource(resource) {
             data: new Set([resource.id]),
         });
 
-        dispatch(fetchMatchingTools());
-
         if (resource.sourceID && resource.sourceEntryName) {
             let parent = getState().resourceList.find(r => r.id == resource.sourceID);
-            parent = parent.asMutable ? parent.asMutable({deep:true}) : parent;
+            parent = SI.asMutable(parent, {deep:true});
             const outline = parent.outline || [];
             const entry = outline.find(e => e.name === resource.sourceEntryName);
             if (entry) {
@@ -108,6 +107,16 @@ export function removeResource(resource) {
                 });
             }
         }
+
+        const dependants = getState().resourceList.filter(r => r.sourceID === resource.id).map(r => r.id);
+        if (dependants && dependants.length) {
+            dispatch({
+                type: actionType.RESOURCE_REMOVE_SOURCE,
+                data: new Set(dependants),
+            });
+        }
+
+        dispatch(fetchMatchingTools());
     }
 }
 
@@ -124,7 +133,7 @@ export function addZipEntryToInputs(zipRes, zipEntry) {
     return function (dispatch, getState) {
         const state = getState();
 
-        const outline = zipRes.outline.asMutable({deep:true});
+        const outline = SI.asMutable(zipRes.outline, {deep:true});
         if (!state.apiinfo?.enableMultipleResources) {
             const list = state.resourceList.filter(r => r.sourceID == zipRes.id).map(r => r.id);
             dispatch({
@@ -170,6 +179,7 @@ export function addZipEntryToInputs(zipRes, zipEntry) {
                 headers: {'Content-Type': 'multipart/form-data'}
             })
             .then(updateResourceCallback(dispatch, newResource))
+            // todo: fix error case (remove checkbox)
             .catch(resourceErrorCallback(dispatch, newResource));
     }
 }
@@ -212,8 +222,20 @@ function updateResourceCallback(dispatch, resource) {
     };
 }
 
-function resourceErrorCallback(dispatch, resource) {
+function resourceErrorCallback(dispatch, resource, parentResource) {
     return error => {
+      if (parentResource) {
+            let outline = parentResource.outline || [];
+            outline = SI.asMutable(outline);
+            const entry = outline.find(e => e.name === resource.sourceEntryName);
+            if (entry && entry.checked) {
+                entry.checked = false;
+                dispatch({
+                    type: actionType.RESOURCE_MERGE,
+                    data: {id: parentResource.id, outline},
+                });
+            }
+        }
         dispatch(removeResource(resource));
         errHandler(dispatch)(error);
     };
@@ -302,7 +324,7 @@ function fetchMatchingTools() {
             type: actionType.MATCHING_TOOLS_FETCH_START,
         })
 
-        const allResources = getState().resourceList.asMutable({deep:true});
+        const allResources = SI.asMutable(getState().resourceList, {deep:true});
         const resourceList = allResources.filter(r => !r.isContainer);
         const isDict = resourceList.every(r => r.isDictionaryResource);
 

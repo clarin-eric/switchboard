@@ -48,17 +48,27 @@ function allTools(state = SI([]), action) {
 }
 
 function resourceList(state = SI([]), action) {
-    let ret = state.asMutable();
+    let ret = SI.asMutable(state);
     switch (action.type) {
         case actionType.RESOURCE_CLEAR_ALL: {
             ret = [];
         }
         break;
 
+        case actionType.RESOURCE_REMOVE_SOURCE: {
+            for (let index = 0; index < ret.length; index++) {
+                const r = ret[index];
+                if (action.data.has(r.id)) {
+                    ret[index] = SI.without(r, ['sourceID', 'sourceEventName']);
+                }
+            }
+        }
+        break;
+
         case actionType.RESOURCE_UPDATE: {
             const index = state.findIndex(r => r.id === action.data.id);
             if (index >= 0) {
-                ret[index] = Object.assign({}, ret[index].asMutable(), action.data);
+                ret[index] = Object.assign({}, SI.asMutable(ret[index]), action.data);
             } else {
                 let idx = ret.length;
                 if (action.data.sourceID) {
@@ -79,7 +89,7 @@ function resourceList(state = SI([]), action) {
         case actionType.RESOURCE_MERGE: {
             const index = state.findIndex(r => r.id === action.data.id);
             if (index >= 0) {
-                ret[index] = ret[index].merge(action.data);
+                ret[index] = SI.merge(ret[index], action.data);
             }
         }
         break;

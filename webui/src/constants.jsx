@@ -35,6 +35,7 @@ export const actionType = [
     'RESOURCE_UPDATE',
     'RESOURCE_MERGE',
     'RESOURCE_REMOVE',
+    'RESOURCE_REMOVE_SOURCE',
     'SELECT_RESOURCE_MATCH',
     'MODE',
     'ERROR',

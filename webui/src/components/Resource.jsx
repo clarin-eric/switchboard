@@ -78,11 +78,12 @@ class NormalResource extends React.Component {
                             <div className="row" style={{margin:4, padding:0}} key={entry.name}>
                                 <div className="col-sm-8" style={{padding:0}}>
                                     <label style={{fontWeight:'normal', marginBottom:0}}>
-                                        <input type={this.props.enableMultipleResources ? "checkbox" : "radio"}
-                                            name={entry.name}
-                                            checked={entry.checked || false}
-                                            onChange={() => this.props.addZipEntryToInputs(res, entry)}
-                                            />
+                                        {res.sourceID ? false : // don't show selector in nested zips
+                                            <input type={this.props.enableMultipleResources ? "checkbox" : "radio"}
+                                                name={entry.name}
+                                                onChange={() => this.props.addZipEntryToInputs(res, entry)}
+                                                checked={entry.checked || false} />
+                                        }
                                         {" "}
                                         <span className={"glyphicon glyphicon-file"} aria-hidden="true"/>
                                         {" "}
