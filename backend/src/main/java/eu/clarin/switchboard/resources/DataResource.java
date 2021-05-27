@@ -25,12 +25,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 
 @Path("/api/storage")
 public class DataResource {
     private static final Logger LOGGER = LoggerFactory.getLogger(DataResource.class);
     private static final int MAX_INLINE_CONTENT = 4 * 1024;
+    private static final long MAX_ZIP_ENTRIES = 4 * 1024;
 
     static ObjectMapper mapper = new ObjectMapper();
     MediaLibrary mediaLibrary;
@@ -188,10 +190,17 @@ public class DataResource {
             return Response.status(Response.Status.NO_CONTENT).build();
         }
 
-        ZipFile zfile = new ZipFile(fi.getPath().toFile());
+        ZipFile zfile;
+        try {
+            zfile = new ZipFile(fi.getPath().toFile());
+        } catch (ZipException xc) {
+            LOGGER.info("bad zip: " + xc.getMessage());
+            return Response.status(Response.Status.NOT_ACCEPTABLE).entity(xc.getMessage()).build();
+        }
         List<ZipEntry> ret = zfile.stream()
                 .filter(e -> !e.isDirectory() && e.getSize() > 0)
                 .filter(e -> !e.getName().startsWith("__MACOSX/"))
+                .limit(MAX_ZIP_ENTRIES)
                 .map(e -> new ZipEntry(e.getName(), e.getSize()))
                 .sorted(Comparator.comparing(ZipEntry::getName))
                 .collect(Collectors.toList());

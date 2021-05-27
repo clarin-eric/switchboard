@@ -53,7 +53,7 @@ class NormalResource extends React.Component {
     render() {
         const res = this.props.res;
         const showContent = this.state.showContent && isViewableProfile(res.profile.mediaType);
-        const toggleContentButton = res.content && isViewableProfile(res.profile.mediaType) || res.outline ?
+        const toggleContentButton = (res.content && isTextProfile(res.profile.mediaType) || res.outline) ?
             <a  style={{fontSize:'70%', marginLeft:10}}
                 onClick={e => this.setState({showContent:!this.state.showContent})} >
                 { showContent ?

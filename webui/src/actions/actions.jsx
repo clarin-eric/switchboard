@@ -220,6 +220,8 @@ function updateResourceCallback(dispatch, resource) {
                         type: actionType.RESOURCE_MERGE,
                         data: {id: res.id, outline: outlineResponse.data},
                     });
+                }).catch(error => {
+                    console.warn("error when getting outline: ", error);
                 });
         }
     };
