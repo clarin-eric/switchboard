@@ -48,6 +48,23 @@ export function isNotDictionaryTool(tool) {
     return !isDictionaryTool(tool);
 }
 
+const TEXT_TYPES = new Set([
+    "model/prs.ply",
+    "model/prs.obj",
+]);
+
+export function isTextProfile(mediatype) {
+    return mediatype.startsWith("text") || TEXT_TYPES.has(mediatype);
+}
+
+export function isContainerProfile(mediatype) {
+    return mediatype == 'application/zip';
+}
+
+export function isViewableProfile(mediatype) {
+    return isTextProfile(mediatype) || isContainerProfile(mediatype);
+}
+
 const LANG_MAP = {}; // will be initialized by addLanguageMapping
 
 export function addLanguageMapping(codeAndName) {

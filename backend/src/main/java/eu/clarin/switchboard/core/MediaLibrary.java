@@ -16,13 +16,16 @@ import org.apache.http.impl.client.cache.CachingHttpClients;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
-import java.nio.charset.StandardCharsets;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.zip.ZipFile;
 
 /**
  * MediaLibrary keeps records about datafiles, identified by uuids.
@@ -76,10 +79,10 @@ public class MediaLibrary {
         return fileInfo;
     }
 
-    public FileInfo addFile(String filename, InputStream inputStream) throws
+    public FileInfo addFile(String filename, InputStream inputStream, Profile profile) throws
             StoragePolicyException, StorageException, ProfilingException {
         UUID id = UUID.randomUUID();
-        FileInfo fileInfo = addFile(dataStore, profiler, storagePolicy, id, filename, inputStream);
+        FileInfo fileInfo = addFile(dataStore, profiler, storagePolicy, id, filename, inputStream, profile);
         fileInfoFutureMap.put(id, new FileInfoFuture(id, wrap(fileInfo)));
         return fileInfo;
     }
@@ -95,9 +98,16 @@ public class MediaLibrary {
     public UUID addFileAsync(String filename, InputStream inputStream) {
         UUID id = UUID.randomUUID();
         Future<FileInfo> future = executorService.submit(() ->
-                addFile(dataStore, profiler, storagePolicy, id, filename, inputStream));
+                addFile(dataStore, profiler, storagePolicy, id, filename, inputStream, null));
         fileInfoFutureMap.put(id, new FileInfoFuture(id, future));
         return id;
+    }
+
+    public FileInfo addFromZip(Path zipPath, String zipEntry, Profile profile) throws IOException, StoragePolicyException, ProfilingException, StorageException {
+        Path path = Paths.get(zipEntry);
+        String name = path.getName(path.getNameCount() - 1).toString();
+        ZipFile zfile = new ZipFile(zipPath.toFile());
+        return addFile(name, zfile.getInputStream(zfile.getEntry(zipEntry)), profile);
     }
 
     public FileInfo waitForFileInfo(UUID id) throws Throwable {
@@ -127,7 +137,7 @@ public class MediaLibrary {
         try {
             storagePolicy.acceptSize(linkInfo.response.getEntity().getContentLength());
             FileInfo fileInfo = addFile(dataStore, profiler, storagePolicy,
-                    id, linkInfo.filename, linkInfo.response.getEntity().getContent());
+                    id, linkInfo.filename, linkInfo.response.getEntity().getContent(), null);
             fileInfo.setLinksInfo(originalUrlOrDoiOrHandle, linkInfo.downloadLink, linkInfo.redirects);
             return fileInfo;
         } catch (IOException xc) {
@@ -142,7 +152,7 @@ public class MediaLibrary {
     }
 
     private static FileInfo addFile(DataStore dataStore, Profiler profiler, StoragePolicy storagePolicy,
-                                     UUID id, String filename, InputStream inputStream) throws
+                                    UUID id, String filename, InputStream inputStream, Profile profile) throws
             StoragePolicyException, StorageException, ProfilingException {
         Path path;
         try {
@@ -155,7 +165,12 @@ public class MediaLibrary {
         try {
             File file = path.toFile();
 
-            List<Profile> profileList = profiler.profile(file);
+            List<Profile> profileList;
+            if (profile != null) {
+                profileList = Collections.singletonList(profile);
+            } else {
+                profileList = profiler.profile(file);
+            }
             if (profileList == null || profileList.isEmpty()) {
                 throw new ProfilingException("null profiling result");
             }

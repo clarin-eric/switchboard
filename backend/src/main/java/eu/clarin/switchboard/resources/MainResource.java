@@ -134,7 +134,7 @@ public class MainResource {
             return IndexView.fileInfoID(id, popup);
         } else if (selection != null && !selection.isEmpty()) {
             ByteArrayInputStream bais = new ByteArrayInputStream(selection.getBytes(StandardCharsets.UTF_8));
-            FileInfo fileInfo = mediaLibrary.addFile("selection", bais);
+            FileInfo fileInfo = mediaLibrary.addFile("selection", bais, null);
             fileInfo.setSelection(true);
             Quirks.fillInfoBasedOnOrigin(fileInfo, origin);
             return IndexView.fileInfoID(fileInfo.getId(), popup);

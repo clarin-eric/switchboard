@@ -50,6 +50,7 @@ export class Main extends React.Component {
                               resourceList={this.props.resourceList}
                               setResourceProfile={this.props.setResourceProfile}
                               setResourceContent={this.props.setResourceContent}
+                              toggleZipEntryToInputs={this.props.toggleZipEntryToInputs}
                               removeResource={this.props.removeResource}
                               matchingTools={this.props.matchingTools}
                               selectResourceMatch={this.props.selectResourceMatch} /> :
@@ -88,6 +89,7 @@ const Analysis = (props) => (
                       resourceList={props.resourceList}
                       setResourceProfile={props.setResourceProfile}
                       setResourceContent={props.setResourceContent}
+                      toggleZipEntryToInputs={props.toggleZipEntryToInputs}
                       removeResource={props.removeResource} />
         <hr style={{marginTop:0}}/>
 

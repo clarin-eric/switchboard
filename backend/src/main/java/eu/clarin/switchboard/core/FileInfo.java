@@ -23,6 +23,9 @@ public class FileInfo {
 
     private boolean selection; // if content is coming from a user selection
 
+    private UUID sourceID; // if this resource is derived from another resource (e.g. zip)
+    private String sourceEntryName; // if this resource is derived from another resource (e.g. zip)
+
     public FileInfo(UUID id, String filename, Path path) {
         this.id = id;
         this.filename = filename;
@@ -71,6 +74,14 @@ public class FileInfo {
         return selection;
     }
 
+    public UUID getSourceID() {
+        return sourceID;
+    }
+
+    public String getSourceEntryName() {
+        return sourceEntryName;
+    }
+
     void setLinksInfo(String originalUrlOrDoiOrHandle, String downloadLink, int redirects) {
         this.originalLink = originalUrlOrDoiOrHandle;
         this.downloadLink = downloadLink;
@@ -86,6 +97,11 @@ public class FileInfo {
         this.selection = selection;
     }
 
+    public void setSource(UUID sourceID, String sourceEntryName) {
+        this.sourceID = sourceID;
+        this.sourceEntryName = sourceEntryName;
+    }
+
     @Override
     public String toString() {
         return "FileInfo: " +
@@ -96,6 +112,8 @@ public class FileInfo {
                 "\noriginalLink='" + originalLink + '\'' +
                 "\nhttpRedirects=" + httpRedirects +
                 "\nselection=" + selection +
+                "\nsourceID=" + sourceID +
+                "\nsourceEntryName=" + sourceEntryName +
                 "\nprofile=" + profile +
                 "\nsecondaryProfiles=" + secondaryProfiles;
     }

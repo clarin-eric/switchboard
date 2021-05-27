@@ -1,6 +1,7 @@
 /* to set footer at page bottom */
 html, body, #reactapp { height: 100%; }
 body { overflow-x:hidden; }
+pre {margin:0; border:none;background-color:transparent;}
 #bodycontainer {
     height: auto;
     min-height: 100%;
@@ -81,7 +82,7 @@ div.resource {
 
 div.resource .resource-header {
     font-size: 20px;
-    margin: 0 0 6px 0;
+    margin: 5px 0 6px 0;
 }
 
 div.resource .namesize {
@@ -89,18 +90,36 @@ div.resource .namesize {
     color: #31708f;
     background-color: #d9edf7;
     border-color: #bce8f1;
-    padding: 15px;
+    padding: 20px 10px 15px;
     margin-bottom: 20px;
     border: 1px solid transparent;
     border-radius: 4px;
 }
-
 div.resource .content > input {
     border: 1px solid #ccc;
     border-radius: 6px;
     padding: 10px;
     color: black;
     width: 100%;
+}
+
+div.resource .content {
+    background: #f2faff;
+    border-radius: 0 0 20px 20px;
+    margin-bottom: 10px;
+    margin-top: -22px;
+    padding: 4px;
+}
+
+div.resource .dependent {
+    margin-left: 1em;
+}
+
+div.resource .disabled .namesize {
+    background-color: #eee;
+}
+div.resource .disabled .content {
+    background-color: #fafafa;
 }
 
 div.resource .namesize span {
@@ -111,9 +130,10 @@ div.more-data-button {
     padding-bottom: 1em;
 }
 div.more-data-pane {
-    border: 2px solid #008;
+    border: 2px solid #ddd;
     padding: 1em;
     border-radius: 4px;
+    background-color: #eee;
 }
 div.more-data-button .glyphicon, div.more-data-pane .glyphicon {
     font-size: 80%;
@@ -269,9 +289,6 @@ div.tool .keyword {
 
 /* custom form css instead of using bootstrap's css
    which breaks the "floating: right" behaviour */
-.tool-list-with-controls form.controls {
-    /*margin-top:1em;*/
-}
 .tool-list-with-controls form.controls label {
     white-space: nowrap;
     vertical-align: middle;
@@ -298,8 +315,12 @@ div.tool .keyword {
 
 @media (min-width: 992px) {
     div.resource .namesize {
-        margin-top: 1.2em;
+        margin-top: 10px;
     }
+    div.resource .resource-header {
+        font-size: 16px;
+    }
+
 }
 
 @media (max-width: 768px) {
