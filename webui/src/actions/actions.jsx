@@ -95,9 +95,8 @@ export function removeResource(resource) {
         });
 
         if (resource.sourceID && resource.sourceEntryName) {
-            let parent = getState().resourceList.find(r => r.id == resource.sourceID);
-            parent = SI.asMutable(parent, {deep:true});
-            const outline = parent.outline || [];
+            const parent = getState().resourceList.find(r => r.id == resource.sourceID);
+            const outline = SI.asMutable(parent && parent.outline ? parent.outline : [], {deep:true});
             const entry = outline.find(e => e.name === resource.sourceEntryName);
             if (entry) {
                 entry.checked = false;
@@ -172,7 +171,7 @@ export function toggleZipEntryToInputs(zipRes, zipEntry) {
             formData.append("profile", JSON.stringify(zipEntry.profile));
         }
 
-        const newResource = {id: ++lastResourceID, sourceID: zipRes.id};
+        const newResource = {id: ++lastResourceID, sourceID: zipRes.id, sourceEntryName: zipEntry.name};
         dispatch(updateResource(newResource));
         axios
             .post(apiPath.storage, formData, {
@@ -204,7 +203,11 @@ function updateResourceCallback(dispatch, resource) {
             res.localLink = window.origin + res.localLink;
         }
         if (resource.id !== res.id) {
-            dispatch(removeResource(resource));
+            // don't call removeResource which does other things, just erase it
+            dispatch({
+                type: actionType.RESOURCE_REMOVE,
+                data: new Set([resource.id]),
+            });
         }
         res.isDictionaryResource = isDictionaryResource(res);
         dispatch(updateResource(Object.assign({}, resource, res)));
@@ -222,20 +225,8 @@ function updateResourceCallback(dispatch, resource) {
     };
 }
 
-function resourceErrorCallback(dispatch, resource, parentResource) {
+function resourceErrorCallback(dispatch, resource) {
     return error => {
-      if (parentResource) {
-            let outline = parentResource.outline || [];
-            outline = SI.asMutable(outline);
-            const entry = outline.find(e => e.name === resource.sourceEntryName);
-            if (entry && entry.checked) {
-                entry.checked = false;
-                dispatch({
-                    type: actionType.RESOURCE_MERGE,
-                    data: {id: parentResource.id, outline},
-                });
-            }
-        }
         dispatch(removeResource(resource));
         errHandler(dispatch)(error);
     };
