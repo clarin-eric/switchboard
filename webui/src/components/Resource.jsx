@@ -81,7 +81,7 @@ class NormalResource extends React.Component {
                                         {res.sourceID ? false : // don't show selector in nested zips
                                             <input type={this.props.enableMultipleResources ? "checkbox" : "radio"}
                                                 name={entry.name}
-                                                onChange={() => this.props.addZipEntryToInputs(res, entry)}
+                                                onChange={() => this.props.toggleZipEntryToInputs(res, entry)}
                                                 checked={entry.checked || false} />
                                         }
                                         {" "}
@@ -198,7 +198,7 @@ export class ResourceList extends React.Component {
                         languages={this.props.languages}
                         setResourceProfile={this.props.setResourceProfile}
                         removeResource={this.props.removeResource}
-                        addZipEntryToInputs={this.props.addZipEntryToInputs}
+                        toggleZipEntryToInputs={this.props.toggleZipEntryToInputs}
                         enableMultipleResources={this.props.enableMultipleResources}
                         res={res} />;
         }

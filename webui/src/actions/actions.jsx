@@ -129,7 +129,7 @@ export function selectResourceMatch(toolName, matchIndex) {
     }
 }
 
-export function addZipEntryToInputs(zipRes, zipEntry) {
+export function toggleZipEntryToInputs(zipRes, zipEntry) {
     return function (dispatch, getState) {
         const state = getState();
 
