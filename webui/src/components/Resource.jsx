@@ -46,31 +46,36 @@ class NormalResource extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            showContent: false,
+            showContentOrOutline: false,
         }
     }
 
     render() {
         const res = this.props.res;
-        const showContent = this.state.showContent && isViewableProfile(res.profile.mediaType);
+        const showContentOrOutline = this.state.showContentOrOutline && isViewableProfile(res.profile.mediaType);
         const toggleContentButton = (res.content && isTextProfile(res.profile.mediaType) || res.outline) ?
             <a className="btn btn-xs btn-default" style={{fontSize:'70%', verticalAlign: "text-bottom"}}
-                onClick={e => this.setState({showContent:!this.state.showContent})} >
-                { showContent ? "Hide content" : "Show content" }
+                onClick={e => this.setState({showContentOrOutline:!this.state.showContentOrOutline})} >
+                { showContentOrOutline ? "Hide content" : "Show content" }
             </a> : false;
         const removeButton = (this.props.enableMultipleResources || res.sourceID) ?
             <a onClick={e => this.props.removeResource(res)}>
                 <span className={"glyphicon glyphicon-trash"}
                     style={{fontSize:'80%', marginLeft: 10}} aria-hidden="true"/>
             </a> : false;
-        const contentDiv = showContent ?
+        const showContent = res.content && isTextProfile(res.profile.mediaType);
+        const contentDiv = showContentOrOutline ?
             <div className="content">
-                {res.content && isTextProfile(res.profile.mediaType) ?
-                    <pre style={{maxHeight: 200}}> {res.content} </pre> :
-                 res.outline ?
-                    <div style={{maxHeight: 200, margin:10, overflow: 'auto'}}>
+                { showContent ?
+                    <pre> {res.content} </pre> : false
+                }
+                {res.outline && !showContent ?
+                    <div className="outline">
+                        <span className="outlineHeader">
+                            {this.props.enableMultipleResources ? "Select files for further processing":"Select a file for further processing"}
+                        </span>
                         {res.outline.map(entry =>
-                            <div className="row" style={{margin:4, padding:0}} key={entry.name}>
+                            <div className="row" key={entry.name}>
                                 <div className="col-sm-8" style={{padding:0}}>
                                     <label style={{fontWeight:'normal', marginBottom:0}}>
                                         {res.sourceID ? false : // don't show selector in nested zips
@@ -101,7 +106,7 @@ class NormalResource extends React.Component {
                         {removeButton}
                     </div>
                 </div>
-                { showContent ?
+                { showContentOrOutline ?
                     <div className="col-md-12 visible-xs visible-sm">
                         {contentDiv}
                     </div> : false
@@ -128,7 +133,7 @@ class NormalResource extends React.Component {
                     </div>
                     </React.Fragment>
                 }
-                { showContent ?
+                { showContentOrOutline ?
                     <div className="col-md-12 hidden-xs hidden-sm">
                         {contentDiv}
                     </div> : false
@@ -175,7 +180,6 @@ export class ResourceList extends React.Component {
         this.renderResource = this.renderResource.bind(this);
         this.state = {
             showAddMoreDataPane: false,
-            // showContent: {},
         }
     }
 
