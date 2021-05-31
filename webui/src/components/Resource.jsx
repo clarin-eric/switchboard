@@ -70,9 +70,7 @@ class NormalResource extends React.Component {
             <div className="content">
                 {res.content && isTextProfile(res.profile.mediaType) ?
                     <pre style={{maxHeight: 200}}> {res.content} </pre> :
-                    false
-                }
-                {res.outline ?
+                 res.outline ?
                     <div style={{maxHeight: 200, margin:10, overflow: 'auto'}}>
                         {res.outline.map(entry =>
                             <div className="row" style={{margin:4, padding:0}} key={entry.name}>
