@@ -54,12 +54,9 @@ class NormalResource extends React.Component {
         const res = this.props.res;
         const showContent = this.state.showContent && isViewableProfile(res.profile.mediaType);
         const toggleContentButton = (res.content && isTextProfile(res.profile.mediaType) || res.outline) ?
-            <a  style={{fontSize:'70%', marginLeft:10}}
+            <a className="btn btn-xs btn-default" style={{fontSize:'70%', verticalAlign: "text-bottom"}}
                 onClick={e => this.setState({showContent:!this.state.showContent})} >
-                { showContent ?
-                    <span className="glyphicon glyphicon-eye-close" aria-hidden="true"/> :
-                    <span className="glyphicon glyphicon-eye-open" aria-hidden="true"/>
-                }
+                { showContent ? "Hide content" : "Show content" }
             </a> : false;
         const removeButton = (this.props.enableMultipleResources || res.sourceID) ?
             <a onClick={e => this.props.removeResource(res)}>
@@ -100,8 +97,8 @@ class NormalResource extends React.Component {
                     <div className="value namesize">
                         <a href={res.originalLink || res.localLink} style={{marginRight:10}}> {res.filename}</a>
                         <span style={{fontSize:'66%'}} style={{marginRight:10}}>{humanSize(res.fileLength)}</span>
-                        {removeButton}
                         {toggleContentButton}
+                        {removeButton}
                     </div>
                 </div>
                 { showContent ?
