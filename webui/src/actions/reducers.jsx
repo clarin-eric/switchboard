@@ -48,28 +48,30 @@ function allTools(state = SI([]), action) {
 }
 
 function resourceList(state = SI([]), action) {
-    let ret = SI.asMutable(state);
     switch (action.type) {
         case actionType.RESOURCE_CLEAR_ALL: {
-            ret = [];
+            return SI([]);
         }
-        break;
 
         case actionType.RESOURCE_REMOVE_SOURCE: {
+            let ret = state;
             for (let index = 0; index < ret.length; index++) {
                 const r = ret[index];
                 if (action.data.has(r.id)) {
-                    ret[index] = SI.without(r, ['sourceID', 'sourceEventName']);
+                    ret = ret.set(index, SI.without(r, ['sourceID', 'sourceEventName']));
                 }
             }
+            ret = ret.map(r => r.set("isContainer", ret.some(r2 => r.id === r2.sourceID)));
+            return SI(ret);
         }
-        break;
 
         case actionType.RESOURCE_UPDATE: {
+            let ret = state;
             const index = state.findIndex(r => r.id === action.data.id);
             if (index >= 0) {
-                ret[index] = Object.assign({}, SI.asMutable(ret[index]), action.data);
+                ret = ret.set(index, SI.merge(ret[index], action.data));
             } else {
+                // add subresource at correct position
                 let idx = ret.length;
                 if (action.data.sourceID) {
                     let i = ret.findIndex(r => r.id === action.data.sourceID);
@@ -81,34 +83,19 @@ function resourceList(state = SI([]), action) {
                         idx = i;
                     }
                 }
-                ret.splice(idx, 0, action.data);
+                const mutable = SI.asMutable(ret);
+                mutable.splice(idx, 0, action.data);
+                ret = SI(mutable);
             }
+            ret = ret.map(r => r.set("isContainer", ret.some(r2 => r.id === r2.sourceID)));
+            return SI(ret);
         }
-        break;
-
-        case actionType.RESOURCE_MERGE: {
-            const index = state.findIndex(r => r.id === action.data.id);
-            if (index >= 0) {
-                ret[index] = SI.merge(ret[index], action.data);
-            }
-        }
-        break;
 
         case actionType.RESOURCE_REMOVE:{
-            ret = ret.filter(r => !action.data.has(r.id));
+            return SI(state.filter(r => !action.data.has(r.id)));
         }
-        break;
     }
-    ret = ret.map(r => {
-        const isContainer = ret.some(r2 => r.id === r2.sourceID);
-        if (r.set) {
-            r = r.set("isContainer", isContainer);
-        } else {
-            r.isContainer = isContainer;
-        }
-        return r;
-    });
-    return SI(ret);
+    return state;
 }
 
 function matchingTools(state = SI({}), action) {
