@@ -57,12 +57,21 @@ export function isTextProfile(mediatype) {
     return mediatype.startsWith("text") || TEXT_TYPES.has(mediatype);
 }
 
-export function isContainerProfile(mediatype) {
-    return mediatype == 'application/zip';
+const ARCHIVE_TYPES = new Set([
+    "application/zip",
+    "application/x-tar",
+]);
+
+const COMPRESSED_TYPES = new Set([
+    "application/gzip",
+]);
+
+export function isArchiveProfile(mediatype) {
+    return ARCHIVE_TYPES.has(mediatype);
 }
 
 export function isViewableProfile(mediatype) {
-    return isTextProfile(mediatype) || isContainerProfile(mediatype);
+    return isTextProfile(mediatype) || isArchiveProfile(mediatype);
 }
 
 const LANG_MAP = {}; // will be initialized by addLanguageMapping
