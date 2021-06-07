@@ -9,6 +9,8 @@ import java.time.Duration;
 public interface StoragePolicy {
     long getMaxAllowedDataSize();
 
+    long getMaxAllowedTotalFiles();
+
     void acceptFile(File file) throws StoragePolicyException;
 
     void acceptSize(long fileSize) throws StoragePolicyException;

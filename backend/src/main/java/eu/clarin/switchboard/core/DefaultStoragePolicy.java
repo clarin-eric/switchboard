@@ -6,6 +6,7 @@ import eu.clarin.switchboard.profiler.api.Profile;
 
 import java.io.File;
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,6 +25,11 @@ public class DefaultStoragePolicy implements StoragePolicy {
     @Override
     public long getMaxAllowedDataSize() {
         return dataStoreConfig.getMaxSize();
+    }
+
+    @Override
+    public long getMaxAllowedTotalFiles() {
+        return dataStoreConfig.getMaxFiles();
     }
 
     @Override
@@ -54,11 +60,22 @@ public class DefaultStoragePolicy implements StoragePolicy {
     public void acceptProfile(Profile profile) throws StoragePolicyException {
         if (!allowedMediaTypes.contains(profile.getMediaType())) {
             // allow xml as a special case, see https://github.com/clarin-eric/switchboard/issues/14
-            if (!profile.isXmlMediaType()) {
+            if (!profile.isXmlMediaType() && !isArchiveOrCompressed(profile)) {
                 throw new StoragePolicyException("This resource type (" + profile.getMediaType() + ") is currently not supported.",
                         StoragePolicyException.Kind.MEDIA_NOT_ALLOWED);
             }
         }
+    }
+
+    static Set<String> ARCHIVE_OR_COMPRESSED_MEDIATYPES = new HashSet<>(Arrays.asList(
+            Constants.MEDIATYPE_TAR,
+            Constants.MEDIATYPE_ZIP,
+            Constants.MEDIATYPE_GZIP,
+            Constants.MEDIATYPE_BZIP
+    ));
+
+    private boolean isArchiveOrCompressed(Profile profile) {
+        return ARCHIVE_OR_COMPRESSED_MEDIATYPES.contains(profile.getMediaType());
     }
 
     private StoragePolicyException tooBig() {
