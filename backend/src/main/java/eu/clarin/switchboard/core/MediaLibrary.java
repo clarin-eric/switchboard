@@ -1,5 +1,6 @@
 package eu.clarin.switchboard.core;
 
+import com.google.common.io.ByteStreams;
 import eu.clarin.switchboard.app.config.DataStoreConfig;
 import eu.clarin.switchboard.app.config.UrlResolverConfig;
 import eu.clarin.switchboard.core.xc.CommonException;
@@ -9,6 +10,12 @@ import eu.clarin.switchboard.core.xc.StoragePolicyException;
 import eu.clarin.switchboard.profiler.api.Profile;
 import eu.clarin.switchboard.profiler.api.Profiler;
 import eu.clarin.switchboard.profiler.api.ProfilingException;
+import org.apache.commons.compress.archivers.ArchiveEntry;
+import org.apache.commons.compress.archivers.ArchiveException;
+import org.apache.commons.compress.archivers.ArchiveInputStream;
+import org.apache.commons.compress.archivers.ArchiveStreamFactory;
+import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
+import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.cache.CacheConfig;
@@ -16,9 +23,7 @@ import org.apache.http.impl.client.cache.CachingHttpClients;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Duration;
@@ -72,10 +77,18 @@ public class MediaLibrary {
         executor.scheduleAtFixedRate(this::periodicCleanup, cleanup.getSeconds(), cleanup.getSeconds(), TimeUnit.SECONDS);
     }
 
+    private void addFileInfoFuture(FileInfoFuture fif) throws StoragePolicyException {
+        if (fileInfoFutureMap.size() >= storagePolicy.getMaxAllowedTotalFiles()) {
+            throw new StoragePolicyException("The server cannot accept more resources.",
+                    StoragePolicyException.Kind.TOO_MANY);
+        }
+        fileInfoFutureMap.put(fif.getId(), fif);
+    }
+
     public FileInfo addByUrl(String originalUrlOrDoiOrHandle) throws CommonException, ProfilingException {
         UUID id = UUID.randomUUID();
         FileInfo fileInfo = addByUrl(cachingClient, dataStore, profiler, storagePolicy, id, originalUrlOrDoiOrHandle);
-        fileInfoFutureMap.put(id, new FileInfoFuture(id, wrap(fileInfo)));
+        addFileInfoFuture(new FileInfoFuture(id, wrap(fileInfo)));
         return fileInfo;
     }
 
@@ -83,31 +96,57 @@ public class MediaLibrary {
             StoragePolicyException, StorageException, ProfilingException {
         UUID id = UUID.randomUUID();
         FileInfo fileInfo = addFile(dataStore, profiler, storagePolicy, id, filename, inputStream, profile);
-        fileInfoFutureMap.put(id, new FileInfoFuture(id, wrap(fileInfo)));
+        addFileInfoFuture(new FileInfoFuture(id, wrap(fileInfo)));
         return fileInfo;
     }
 
-    public UUID addByUrlAsync(String originalUrlOrDoiOrHandle) {
+    public UUID addByUrlAsync(String originalUrlOrDoiOrHandle) throws StoragePolicyException {
         UUID id = UUID.randomUUID();
         Future<FileInfo> future = executorService.submit(() ->
                 addByUrl(cachingClient, dataStore, profiler, storagePolicy, id, originalUrlOrDoiOrHandle));
-        fileInfoFutureMap.put(id, new FileInfoFuture(id, future));
+        addFileInfoFuture(new FileInfoFuture(id, future));
         return id;
     }
 
-    public UUID addFileAsync(String filename, InputStream inputStream) {
+    public UUID addFileAsync(String filename, InputStream inputStream) throws StoragePolicyException {
         UUID id = UUID.randomUUID();
         Future<FileInfo> future = executorService.submit(() ->
                 addFile(dataStore, profiler, storagePolicy, id, filename, inputStream, null));
-        fileInfoFutureMap.put(id, new FileInfoFuture(id, future));
+        addFileInfoFuture(new FileInfoFuture(id, future));
         return id;
     }
 
-    public FileInfo addFromZip(Path zipPath, String zipEntry, Profile profile) throws IOException, StoragePolicyException, ProfilingException, StorageException {
-        Path path = Paths.get(zipEntry);
-        String name = path.getName(path.getNameCount() - 1).toString();
-        ZipFile zfile = new ZipFile(zipPath.toFile());
-        return addFile(name, zfile.getInputStream(zfile.getEntry(zipEntry)), profile);
+    public FileInfo addFromArchive(Path archivePath, Profile archiveProfile, String archiveEntry, Profile entryProfile) throws IOException, StoragePolicyException, ProfilingException, StorageException, ArchiveException {
+        if (archiveProfile.isMediaType(Constants.MEDIATYPE_ZIP)) {
+            Path path = Paths.get(archiveEntry);
+            String name = path.getName(path.getNameCount() - 1).toString();
+            ZipFile zfile = new ZipFile(archivePath.toFile());
+            return addFile(name, zfile.getInputStream(zfile.getEntry(archiveEntry)), entryProfile);
+        } else if (archiveProfile.isMediaType(Constants.MEDIATYPE_TAR)) {
+            Path path = Paths.get(archiveEntry);
+            String name = path.getName(path.getNameCount() - 1).toString();
+            try (BufferedInputStream fis = new BufferedInputStream(new FileInputStream(archivePath.toFile()));
+                 TarArchiveInputStream tais = new TarArchiveInputStream(fis)) {
+                for (ArchiveEntry entry = tais.getNextEntry(); entry != null; entry = tais.getNextEntry()) {
+                    if (entry.getName().equals(archiveEntry) && tais.canReadEntryData(entry)) {
+                        InputStream entryStream = ByteStreams.limit(tais, entry.getSize());
+                        return addFile(name, entryStream, entryProfile);
+                    }
+                }
+            }
+            throw new StorageException(new Exception("Unknown archive entry"));
+        } else if (archiveProfile.isMediaType(Constants.MEDIATYPE_GZIP)) {
+            try (BufferedInputStream fis = new BufferedInputStream(new FileInputStream(archivePath.toFile()));
+                 GzipCompressorInputStream gzis = new GzipCompressorInputStream(fis)) {
+                String name = archivePath.getName(archivePath.getNameCount() - 1).toString();
+                if (name.endsWith(".gz") || name.endsWith(".GZ")) {
+                    name = name.substring(0, name.length() - 3);
+                }
+                return addFile(name, gzis, entryProfile);
+            }
+
+        }
+        throw new StorageException(new Exception("Unknown archive type"));
     }
 
     public FileInfo waitForFileInfo(UUID id) throws Throwable {

@@ -1,6 +1,6 @@
 import React from 'react';
 import Select from 'react-select';
-import { processMediatype, humanSize, isViewableProfile, isTextProfile, isArchiveProfile } from '../actions/utils';
+import { processMediatype, humanSize, isCompressedProfile, isTextProfile, isArchiveProfile } from '../actions/utils';
 import { InputContainer } from '../containers/InputContainer';
 
 const SelectLanguage = (props) => {
@@ -96,23 +96,35 @@ class NormalResource extends React.Component {
 
     render() {
         const res = this.props.res;
-        const showContentOrOutline = this.state.showContentOrOutline && isViewableProfile(res.profile.mediaType);
+
+        const showContentOrOutline = this.state.showContentOrOutline &&
+                (isTextProfile(res.profile.mediaType) || isArchiveProfile(res.profile.mediaType));
+
         const toggleContentButton = (res.content && isTextProfile(res.profile.mediaType) || res.outline) ?
             <a className="btn btn-xs btn-default" style={{fontSize:'70%', verticalAlign: "text-bottom"}}
                 onClick={e => this.setState({showContentOrOutline:!this.state.showContentOrOutline})} >
                 { showContentOrOutline ? "Hide content" : "Show content" }
             </a> : false;
+
+        const toggleCompressButton = isCompressedProfile(res.profile.mediaType) ?
+            <a className="btn btn-xs btn-default" style={{fontSize:'70%', verticalAlign: "text-bottom"}}
+                onClick={e => this.props.toggleCompressedResource(res)} >
+                Uncompress
+            </a> : false;
+
         const removeButton = (this.props.enableMultipleResources || res.sourceID) ?
             <a onClick={e => this.props.removeResource(res)}>
                 <span className={"glyphicon glyphicon-trash"}
                     style={{fontSize:'80%', marginLeft: 10}} aria-hidden="true"/>
             </a> : false;
+
         return <div className={"row" + (res.isArchive ? " disabled":"") + (res.sourceID ? " dependent" : "")}>
                 <div className={res.isArchive ? "col-md-12" : "col-md-5"}>
                     <div className="value namesize">
                         <a href={res.originalLink || res.localLink} style={{marginRight:10}}> {res.filename}</a>
                         <span style={{fontSize:'66%'}} style={{marginRight:10}}>{humanSize(res.fileLength)}</span>
                         {toggleContentButton}
+                        {toggleCompressButton}
                         {removeButton}
                     </div>
                 </div>
@@ -212,6 +224,7 @@ export class ResourceList extends React.Component {
                         setResourceProfile={this.props.setResourceProfile}
                         removeResource={this.props.removeResource}
                         toggleArchiveEntryToInputs={this.props.toggleArchiveEntryToInputs}
+                        toggleCompressedResource={this.props.toggleCompressedResource}
                         enableMultipleResources={this.props.enableMultipleResources}
                         res={res} />;
         }

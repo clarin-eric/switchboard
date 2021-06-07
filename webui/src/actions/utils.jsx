@@ -62,16 +62,17 @@ const ARCHIVE_TYPES = new Set([
     "application/x-tar",
 ]);
 
-const COMPRESSED_TYPES = new Set([
-    "application/gzip",
-]);
-
 export function isArchiveProfile(mediatype) {
     return ARCHIVE_TYPES.has(mediatype);
 }
 
-export function isViewableProfile(mediatype) {
-    return isTextProfile(mediatype) || isArchiveProfile(mediatype);
+const COMPRESSED_TYPES = new Set([
+    "application/gzip",
+    "application/x-bzip2",
+]);
+
+export function isCompressedProfile(mediatype) {
+    return COMPRESSED_TYPES.has(mediatype);
 }
 
 const LANG_MAP = {}; // will be initialized by addLanguageMapping

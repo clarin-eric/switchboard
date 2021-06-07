@@ -128,6 +128,28 @@ export function selectResourceMatch(toolName, matchIndex) {
     }
 }
 
+export function toggleCompressedResource(resource) {
+    return function (dispatch, getState) {
+        if (resource.originalID) {
+            // removeResource(resource);
+            // -- also remove from the originalID resource the dependantID entry
+        } else {
+            //-- it must be compressed, post to server to uncompress it
+            var formData = new FormData();
+            formData.append("archiveID", resource.id);
+
+            const newResource = {id: ++lastResourceID, originalID: resource.id};
+            dispatch(updateResource(newResource));
+            axios
+                .post(apiPath.storage, formData, {
+                    headers: {'Content-Type': 'multipart/form-data'}
+                })
+                .then(updateResourceCallback(dispatch, newResource, getState))
+                .catch(resourceErrorCallback(dispatch, newResource));
+        }
+    }
+}
+
 export function toggleArchiveEntryToInputs(archiveRes, archiveEntry) {
     return function (dispatch, getState) {
         const {apiinfo, resourceList} = getState();
@@ -178,7 +200,6 @@ export function toggleArchiveEntryToInputs(archiveRes, archiveEntry) {
                 headers: {'Content-Type': 'multipart/form-data'}
             })
             .then(updateResourceCallback(dispatch, newResource, getState))
-            // todo: fix error case (remove checkbox)
             .catch(resourceErrorCallback(dispatch, newResource));
     }
 }

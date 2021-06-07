@@ -4,9 +4,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.MoreObjects;
+import eu.clarin.switchboard.core.Constants;
 import eu.clarin.switchboard.core.FileInfo;
 import eu.clarin.switchboard.core.MediaLibrary;
 import eu.clarin.switchboard.profiler.api.Profile;
+import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
+import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
+import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.slf4j.Logger;
@@ -17,13 +21,9 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.io.*;
 import java.net.URI;
-import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
@@ -109,8 +109,8 @@ public class DataResource {
                              @FormDataParam("file") InputStream inputStream,
                              @FormDataParam("file") final FormDataContentDisposition contentDispositionHeader,
                              @FormDataParam("url") String url,
-                             @FormDataParam("zipID") String zipID,
-                             @FormDataParam("zipEntryName") String zipEntryName,
+                             @FormDataParam("archiveID") String archiveID,
+                             @FormDataParam("archiveEntryName") String archiveEntryName,
                              @FormDataParam("profile") String profileString
     ) throws Throwable {
         FileInfo fileInfo;
@@ -119,24 +119,14 @@ public class DataResource {
             fileInfo = mediaLibrary.addFile(filename, inputStream, null);
         } else if (url != null) {
             fileInfo = mediaLibrary.addByUrl(url);
-        } else if (zipID != null && !zipID.isEmpty() && zipEntryName != null && !zipEntryName.isEmpty()) {
-            FileInfo fi = getFileInfo(zipID);
+        } else if (archiveID != null && !archiveID.isEmpty()) {
+            FileInfo fi = getFileInfo(archiveID);
             if (fi == null) {
                 return Response.status(Response.Status.NOT_FOUND).build();
             }
-            Profile profile = null;
-            if (profileString != null && !profileString.isEmpty()) {
-                Profile.Flat flat;
-                try {
-                    flat = mapper.readValue(profileString, Profile.Flat.class);
-                } catch (JsonProcessingException xc) {
-                    LOGGER.error("json conversion exception ", xc);
-                    return Response.status(Response.Status.BAD_REQUEST).entity("Bad json profile").build();
-                }
-                profile = flat.toProfile();
-            }
-            fileInfo = mediaLibrary.addFromZip(fi.getPath(), zipEntryName, profile);
-            fileInfo.setSource(fi.getId(), zipEntryName);
+            Profile profile = readProfile(profileString);
+            fileInfo = mediaLibrary.addFromArchive(fi.getPath(), fi.getProfile().toProfile(), archiveEntryName, profile);
+            fileInfo.setSource(fi.getId(), archiveEntryName);
         } else {
             return Response.status(400).entity("Please provide either a file or a url to download in the form").build();
         }
@@ -145,6 +135,19 @@ public class DataResource {
                 .path(fileInfo.getId().toString())
                 .build();
         return fileInfoToResponse(localLink, fileInfo);
+    }
+
+    private Profile readProfile(String profileString) {
+        if (profileString != null && !profileString.isEmpty()) {
+            Profile.Flat flat;
+            try {
+                flat = mapper.readValue(profileString, Profile.Flat.class);
+                return flat.toProfile();
+            } catch (JsonProcessingException xc) {
+                LOGGER.error("json conversion exception ", xc);
+            }
+        }
+        return null;
     }
 
     static Response fileInfoToResponse(URI localLink, FileInfo fileInfo) {
@@ -185,26 +188,35 @@ public class DataResource {
         if (fi == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        if (!fi.getProfile().toProfile().isMediaType("application/zip")) {
-            LOGGER.debug("getOutline returns: no content");
-            return Response.status(Response.Status.NO_CONTENT).build();
-        }
 
-        ZipFile zfile;
-        try {
-            zfile = new ZipFile(fi.getPath().toFile());
-        } catch (ZipException xc) {
-            LOGGER.info("bad zip: " + xc.getMessage());
-            return Response.status(Response.Status.NOT_ACCEPTABLE).entity(xc.getMessage()).build();
+        if (fi.getProfile().toProfile().isMediaType(Constants.MEDIATYPE_ZIP)) {
+            try (ZipFile zfile = new ZipFile(fi.getPath().toFile())) {
+                List<ZEntry> ret = zfile.stream()
+                        .filter(e -> !e.isDirectory() && e.getSize() > 0)
+                        .filter(e -> !e.getName().startsWith("__MACOSX/"))
+                        .limit(MAX_ZIP_ENTRIES)
+                        .map(e -> new ZEntry(e.getName(), e.getSize()))
+                        .sorted(Comparator.comparing(ZEntry::getName))
+                        .collect(Collectors.toList());
+                return Response.ok(ret).build();
+            } catch (ZipException xc) {
+                LOGGER.info("bad zip archive: " + xc.getMessage());
+                return Response.status(Response.Status.NOT_ACCEPTABLE).entity(xc.getMessage()).build();
+            }
+        } else if (fi.getProfile().toProfile().isMediaType(Constants.MEDIATYPE_TAR)) {
+            try (BufferedInputStream fis = new BufferedInputStream(new FileInputStream(fi.getPath().toFile()));
+                 TarArchiveInputStream tais = new TarArchiveInputStream(fis)) {
+                List<ZEntry> ret = new ArrayList<>();
+                for (TarArchiveEntry entry = tais.getNextTarEntry(); entry != null; entry = tais.getNextTarEntry()) {
+                    if (tais.canReadEntryData(entry) && !entry.isDirectory() && entry.getSize() > 0) {
+                        ret.add(new ZEntry(entry.getName(), entry.getSize()));
+                    }
+                }
+                ret.sort(Comparator.comparing(ZEntry::getName));
+                return Response.ok(ret).build();
+            }
         }
-        List<ZipEntry> ret = zfile.stream()
-                .filter(e -> !e.isDirectory() && e.getSize() > 0)
-                .filter(e -> !e.getName().startsWith("__MACOSX/"))
-                .limit(MAX_ZIP_ENTRIES)
-                .map(e -> new ZipEntry(e.getName(), e.getSize()))
-                .sorted(Comparator.comparing(ZipEntry::getName))
-                .collect(Collectors.toList());
-        return Response.ok(ret).build();
+        return Response.status(Response.Status.NO_CONTENT).build();
     }
 
     private FileInfo getFileInfo(String idString) throws Throwable {
@@ -217,11 +229,11 @@ public class DataResource {
         return mediaLibrary.waitForFileInfo(id);
     }
 
-    static class ZipEntry {
+    static class ZEntry {
         String name;
         long size;
 
-        public ZipEntry(String name, long size) {
+        public ZEntry(String name, long size) {
             this.name = name;
             this.size = size;
         }

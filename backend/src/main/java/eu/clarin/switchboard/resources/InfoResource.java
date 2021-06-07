@@ -84,7 +84,22 @@ public class InfoResource {
         list.sort(new Comparator<String>() {
             @Override
             public int compare(String o1, String o2) {
-                int diff = Long.compare(o1.length(), o2.length());
+                MediaType m1 = MediaType.valueOf(o1);
+                MediaType m2 = MediaType.valueOf(o2);
+                String t1 = m1 != null ? m1.getType() : "";
+                String t2 = m2 != null ? m2.getType() : "";
+                // return smaller type classes first (text < image < application)
+                int diff = Long.compare(t1.length(), t2.length());
+                if (diff != 0) {
+                    return diff;
+                }
+                // normal ordering inside typeclasses (audio < image < video)
+                diff = m1.getType().compareToIgnoreCase(m2.getType());
+                if (diff != 0) {
+                    return diff;
+                }
+                // smaller first, then normal ordering
+                diff = Long.compare(o1.length(), o2.length());
                 return diff == 0 ? o1.compareToIgnoreCase(o2) : diff;
             }
         });
