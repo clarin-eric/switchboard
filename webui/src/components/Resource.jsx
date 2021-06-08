@@ -54,7 +54,13 @@ class ContentOrOutline extends React.Component {
             "Select a file for further processing";
         return (
            <div className="content">
-                { showContent ? <pre> {res.content} </pre> : false }
+                { showContent ?
+                    <pre>
+                        {res.content}
+                        <br/>
+                        { showContent && res.contentIsIncomplete ? <span>...</span> : false }
+                    </pre> : false
+                }
                 { res.outline && !showContent ?
                     <div className="outline">
                         <span className="outlineHeader">{headerText}</span>
@@ -78,6 +84,7 @@ class ContentOrOutline extends React.Component {
                                 <div className="col-sm-2">{entry.size > 0 ? humanSize(entry.size) : ""}</div>
                             </div>
                         )}
+                        {res.outlineIsIncomplete ? <span>...</span> : false}
                     </div> : false
                 }
             </div>
@@ -232,7 +239,7 @@ export class ResourceList extends React.Component {
             <div className={"row" + (res.sourceID ? " dependent" : "")}>
                 <div className="col-md-4">
                     <div className="value namesize">
-                        <p>Uploading...</p>
+                        <p>{(res.sourceID || res.originalResource) ? "Extracting..." : "Uploading..."}</p>
                     </div>
                 </div>
             </div>

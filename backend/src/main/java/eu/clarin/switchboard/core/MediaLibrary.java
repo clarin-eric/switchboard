@@ -15,6 +15,7 @@ import org.apache.commons.compress.archivers.ArchiveException;
 import org.apache.commons.compress.archivers.ArchiveInputStream;
 import org.apache.commons.compress.archivers.ArchiveStreamFactory;
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
+import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream;
 import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -138,15 +139,27 @@ public class MediaLibrary {
         } else if (archiveProfile.isMediaType(Constants.MEDIATYPE_GZIP)) {
             try (BufferedInputStream fis = new BufferedInputStream(new FileInputStream(archivePath.toFile()));
                  GzipCompressorInputStream gzis = new GzipCompressorInputStream(fis)) {
-                String name = archivePath.getName(archivePath.getNameCount() - 1).toString();
-                if (name.endsWith(".gz") || name.endsWith(".GZ")) {
-                    name = name.substring(0, name.length() - 3);
-                }
+                String filename = archivePath.getName(archivePath.getNameCount() - 1).toString();
+                String name = trimSuffixIgnoreCase(filename, ".gz");
                 return addFile(name, gzis, entryProfile);
             }
-
+        } else if (archiveProfile.isMediaType(Constants.MEDIATYPE_BZIP)) {
+            try (BufferedInputStream fis = new BufferedInputStream(new FileInputStream(archivePath.toFile()));
+                 BZip2CompressorInputStream bzis = new BZip2CompressorInputStream(fis)) {
+                String filename = archivePath.getName(archivePath.getNameCount() - 1).toString();
+                String name = trimSuffixIgnoreCase(filename, ".bz2");
+                return addFile(name, bzis, entryProfile);
+            }
         }
         throw new StorageException(new Exception("Unknown archive type"));
+    }
+
+    private static String trimSuffixIgnoreCase(String str, String suffix) {
+        int cutIndex = str.length() - suffix.length();
+        if (str.substring(cutIndex).equalsIgnoreCase(suffix)) {
+            return str.substring(0, cutIndex);
+        }
+        return str;
     }
 
     public FileInfo waitForFileInfo(UUID id) throws Throwable {

@@ -4,13 +4,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.MoreObjects;
+import com.google.common.io.ByteStreams;
 import eu.clarin.switchboard.core.Constants;
 import eu.clarin.switchboard.core.FileInfo;
 import eu.clarin.switchboard.core.MediaLibrary;
 import eu.clarin.switchboard.profiler.api.Profile;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
-import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream;
+import org.apache.commons.io.IOUtils;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.slf4j.Logger;
@@ -126,7 +127,9 @@ public class DataResource {
             }
             Profile profile = readProfile(profileString);
             fileInfo = mediaLibrary.addFromArchive(fi.getPath(), fi.getProfile().toProfile(), archiveEntryName, profile);
-            fileInfo.setSource(fi.getId(), archiveEntryName);
+            if (archiveEntryName != null) {
+                fileInfo.setSource(fi.getId(), archiveEntryName);
+            }
         } else {
             return Response.status(400).entity("Please provide either a file or a url to download in the form").build();
         }
@@ -164,12 +167,15 @@ public class DataResource {
 
         // add the file content
         File file = fileInfo.getPath().toFile();
-        try (InputStream in = new BufferedInputStream(new FileInputStream(file))) {
-            byte[] data = new byte[MAX_INLINE_CONTENT];
-            int n = in.read(data);
-            if (n > 0) {
-                String preview = new String(data, 0, n, StandardCharsets.UTF_8);
+        try (InputStream fin = new BufferedInputStream(new FileInputStream(file));
+             InputStream in = ByteStreams.limit(fin, MAX_INLINE_CONTENT)
+        ) {
+            String preview = IOUtils.toString(in, StandardCharsets.UTF_8);
+            if (preview != null && !preview.isEmpty()) {
                 ret.put("content", preview);
+                if (file.length() > MAX_INLINE_CONTENT) {
+                    ret.put("contentIsIncomplete", true);
+                }
             }
         } catch (IOException e) {
             LOGGER.warn("Cannot read file to return inline content: " + e.getMessage());
@@ -188,17 +194,20 @@ public class DataResource {
         if (fi == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
+        Map<String, Object> ret = new HashMap<>();
+        List<ZEntry> outline = null;
 
         if (fi.getProfile().toProfile().isMediaType(Constants.MEDIATYPE_ZIP)) {
             try (ZipFile zfile = new ZipFile(fi.getPath().toFile())) {
-                List<ZEntry> ret = zfile.stream()
+                outline = zfile.stream()
                         .filter(e -> !e.isDirectory() && e.getSize() > 0)
                         .filter(e -> !e.getName().startsWith("__MACOSX/"))
-                        .limit(MAX_ZIP_ENTRIES)
                         .map(e -> new ZEntry(e.getName(), e.getSize()))
-                        .sorted(Comparator.comparing(ZEntry::getName))
                         .collect(Collectors.toList());
-                return Response.ok(ret).build();
+                if (outline.size() > MAX_ZIP_ENTRIES) {
+                    outline = outline.subList(0, (int) MAX_ZIP_ENTRIES);
+                    ret.put("outlineIsIncomplete", true);
+                }
             } catch (ZipException xc) {
                 LOGGER.info("bad zip archive: " + xc.getMessage());
                 return Response.status(Response.Status.NOT_ACCEPTABLE).entity(xc.getMessage()).build();
@@ -206,17 +215,26 @@ public class DataResource {
         } else if (fi.getProfile().toProfile().isMediaType(Constants.MEDIATYPE_TAR)) {
             try (BufferedInputStream fis = new BufferedInputStream(new FileInputStream(fi.getPath().toFile()));
                  TarArchiveInputStream tais = new TarArchiveInputStream(fis)) {
-                List<ZEntry> ret = new ArrayList<>();
+                outline = new ArrayList<>();
                 for (TarArchiveEntry entry = tais.getNextTarEntry(); entry != null; entry = tais.getNextTarEntry()) {
                     if (tais.canReadEntryData(entry) && !entry.isDirectory() && entry.getSize() > 0) {
-                        ret.add(new ZEntry(entry.getName(), entry.getSize()));
+                        if (outline.size() >= MAX_ZIP_ENTRIES) {
+                            ret.put("outlineIsIncomplete", true);
+                            break;
+                        }
+                        outline.add(new ZEntry(entry.getName(), entry.getSize()));
                     }
                 }
-                ret.sort(Comparator.comparing(ZEntry::getName));
-                return Response.ok(ret).build();
             }
         }
-        return Response.status(Response.Status.NO_CONTENT).build();
+
+        if (outline == null) {
+            return Response.status(Response.Status.NO_CONTENT).build();
+        }
+
+        outline.sort(Comparator.comparing(ZEntry::getName));
+        ret.put("outline", outline);
+        return Response.ok(ret).build();
     }
 
     private FileInfo getFileInfo(String idString) throws Throwable {

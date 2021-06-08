@@ -128,28 +128,6 @@ export function selectResourceMatch(toolName, matchIndex) {
     }
 }
 
-export function toggleCompressedResource(resource) {
-    return function (dispatch, getState) {
-        if (resource.originalID) {
-            // removeResource(resource);
-            // -- also remove from the originalID resource the dependantID entry
-        } else {
-            //-- it must be compressed, post to server to uncompress it
-            var formData = new FormData();
-            formData.append("archiveID", resource.id);
-
-            const newResource = {id: ++lastResourceID, originalID: resource.id};
-            dispatch(updateResource(newResource));
-            axios
-                .post(apiPath.storage, formData, {
-                    headers: {'Content-Type': 'multipart/form-data'}
-                })
-                .then(updateResourceCallback(dispatch, newResource, getState))
-                .catch(resourceErrorCallback(dispatch, newResource));
-        }
-    }
-}
-
 export function toggleArchiveEntryToInputs(archiveRes, archiveEntry) {
     return function (dispatch, getState) {
         const {apiinfo, resourceList} = getState();
@@ -204,6 +182,32 @@ export function toggleArchiveEntryToInputs(archiveRes, archiveEntry) {
     }
 }
 
+export function toggleCompressedResource(resource) {
+    return function (dispatch, getState) {
+        if (resource.originalResource) {
+            // removeResource(resource);
+        } else {
+            //-- it must be compressed, post to server to uncompress it
+            const newResource = {id: ++lastResourceID, originalResource: SI.asMutable(resource, {deep:true})};
+            dispatch(updateResource(newResource));
+            dispatch(removeResource(resource));
+
+            var formData = new FormData();
+            formData.append("archiveID", resource.id);
+            axios
+                .post(apiPath.storage, formData, {
+                    headers: {'Content-Type': 'multipart/form-data'}
+                })
+                .then(updateResourceCallback(dispatch, newResource, getState))
+                .catch(error => {
+                    dispatch(updateResource(resource));
+                    dispatch(removeResource(newResource));
+                    errHandler(dispatch)(error);
+                });
+        }
+    }
+}
+
 function uploadData(formData) {
     return function (dispatch, getState) {
         const newResource = {id: ++lastResourceID};
@@ -239,7 +243,7 @@ function updateResourceCallback(dispatch, resource, getState) {
                 .then(outlineResponse => {
                     dispatch({
                         type: actionType.RESOURCE_UPDATE,
-                        data: {id: res.id, outline: outlineResponse.data},
+                        data: Object.assign({id: res.id}, outlineResponse.data),
                     });
                 }).catch(error => {
                     console.warn("error when getting outline: ", error);
