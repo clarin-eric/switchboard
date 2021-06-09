@@ -62,11 +62,11 @@ public class DataStoreConfig {
     }
 
     public long getMaxSize() {
-        return stringToLong(maxSize);
+        return convertStringWithMultiplicatorToLong(maxSize);
     }
 
     public long getMaxFiles() {
-        return stringToLong(maxFiles);
+        return convertStringWithMultiplicatorToLong(maxFiles);
     }
 
     public Duration getMaxLifetime() {
@@ -103,7 +103,7 @@ public class DataStoreConfig {
                 .toString();
     }
 
-    private static long stringToLong(String input) {
+    static long convertStringWithMultiplicatorToLong(String input) {
         String str = input.trim();
         final long onek = 1024;
         long multiplier = 1;

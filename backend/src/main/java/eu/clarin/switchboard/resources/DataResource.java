@@ -194,47 +194,55 @@ public class DataResource {
         if (fi == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        Map<String, Object> ret = new HashMap<>();
-        List<ZEntry> outline = null;
 
         if (fi.getProfile().toProfile().isMediaType(Constants.MEDIATYPE_ZIP)) {
-            try (ZipFile zfile = new ZipFile(fi.getPath().toFile())) {
-                outline = zfile.stream()
-                        .filter(e -> !e.isDirectory() && e.getSize() > 0)
-                        .filter(e -> !e.getName().startsWith("__MACOSX/"))
-                        .map(e -> new ZEntry(e.getName(), e.getSize()))
-                        .collect(Collectors.toList());
-                if (outline.size() > MAX_ZIP_ENTRIES) {
-                    outline = outline.subList(0, (int) MAX_ZIP_ENTRIES);
-                    ret.put("outlineIsIncomplete", true);
-                }
+            try {
+                Outline outline = extractOutlineFromZip(fi.getPath().toFile());
+                return Response.ok(outline).build();
             } catch (ZipException xc) {
                 LOGGER.info("bad zip archive: " + xc.getMessage());
                 return Response.status(Response.Status.NOT_ACCEPTABLE).entity(xc.getMessage()).build();
             }
         } else if (fi.getProfile().toProfile().isMediaType(Constants.MEDIATYPE_TAR)) {
-            try (BufferedInputStream fis = new BufferedInputStream(new FileInputStream(fi.getPath().toFile()));
-                 TarArchiveInputStream tais = new TarArchiveInputStream(fis)) {
-                outline = new ArrayList<>();
-                for (TarArchiveEntry entry = tais.getNextTarEntry(); entry != null; entry = tais.getNextTarEntry()) {
-                    if (tais.canReadEntryData(entry) && !entry.isDirectory() && entry.getSize() > 0) {
-                        if (outline.size() >= MAX_ZIP_ENTRIES) {
-                            ret.put("outlineIsIncomplete", true);
-                            break;
-                        }
-                        outline.add(new ZEntry(entry.getName(), entry.getSize()));
+            Outline outline = extractOutlineFromTar(fi.getPath().toFile());
+            return Response.ok(outline).build();
+        }
+
+        return Response.status(Response.Status.NO_CONTENT).build();
+    }
+
+    private static Outline extractOutlineFromZip(File zipfile) throws IOException {
+        try (ZipFile zfile = new ZipFile(zipfile)) {
+            List<ZEntry> outline = zfile.stream()
+                    .filter(e -> !e.isDirectory() && e.getSize() > 0)
+                    .filter(e -> !e.getName().startsWith("__MACOSX/"))
+                    .map(e -> new ZEntry(e.getName(), e.getSize()))
+                    .collect(Collectors.toList());
+            boolean outlineIsIncomplete = false;
+            if (outline.size() > MAX_ZIP_ENTRIES) {
+                outline = outline.subList(0, (int) MAX_ZIP_ENTRIES);
+                outlineIsIncomplete = true;
+            }
+            return new Outline(outline, outlineIsIncomplete);
+        }
+    }
+
+    private static Outline extractOutlineFromTar(File tarfile) throws IOException {
+        try (BufferedInputStream fis = new BufferedInputStream(new FileInputStream(tarfile));
+             TarArchiveInputStream tais = new TarArchiveInputStream(fis)) {
+            List<ZEntry> outline = new ArrayList<>();
+            boolean outlineIsIncomplete = false;
+            for (TarArchiveEntry entry = tais.getNextTarEntry(); entry != null; entry = tais.getNextTarEntry()) {
+                if (tais.canReadEntryData(entry) && !entry.isDirectory() && entry.getSize() > 0) {
+                    if (outline.size() >= MAX_ZIP_ENTRIES) {
+                        outlineIsIncomplete = true;
+                        break;
                     }
+                    outline.add(new ZEntry(entry.getName(), entry.getSize()));
                 }
             }
+            return new Outline(outline, outlineIsIncomplete);
         }
-
-        if (outline == null) {
-            return Response.status(Response.Status.NO_CONTENT).build();
-        }
-
-        outline.sort(Comparator.comparing(ZEntry::getName));
-        ret.put("outline", outline);
-        return Response.ok(ret).build();
     }
 
     private FileInfo getFileInfo(String idString) throws Throwable {
@@ -245,6 +253,25 @@ public class DataResource {
             return null;
         }
         return mediaLibrary.waitForFileInfo(id);
+    }
+
+    static class Outline {
+        List<ZEntry> outline;
+        boolean outlineIsIncomplete;
+
+        public Outline(List<ZEntry> outline, boolean outlineIsIncomplete) {
+            this.outline = outline;
+            this.outlineIsIncomplete = outlineIsIncomplete;
+            outline.sort(Comparator.comparing(ZEntry::getName));
+        }
+
+        public List<ZEntry> getOutline() {
+            return outline;
+        }
+
+        public boolean isOutlineIsIncomplete() {
+            return outlineIsIncomplete;
+        }
     }
 
     static class ZEntry {

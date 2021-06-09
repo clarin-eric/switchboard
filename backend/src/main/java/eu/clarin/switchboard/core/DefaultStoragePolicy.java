@@ -67,7 +67,7 @@ public class DefaultStoragePolicy implements StoragePolicy {
         }
     }
 
-    static Set<String> ARCHIVE_OR_COMPRESSED_MEDIATYPES = new HashSet<>(Arrays.asList(
+    static final Set<String> ARCHIVE_OR_COMPRESSED_MEDIATYPES = new HashSet<>(Arrays.asList(
             Constants.MEDIATYPE_TAR,
             Constants.MEDIATYPE_ZIP,
             Constants.MEDIATYPE_GZIP,
