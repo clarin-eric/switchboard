@@ -6,7 +6,6 @@ import eu.clarin.switchboard.profiler.api.Profile;
 
 import java.io.File;
 import java.time.Duration;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -67,12 +66,12 @@ public class DefaultStoragePolicy implements StoragePolicy {
         }
     }
 
-    static final Set<String> ARCHIVE_OR_COMPRESSED_MEDIATYPES = new HashSet<>(Arrays.asList(
+    static final Set<String> ARCHIVE_OR_COMPRESSED_MEDIATYPES = Set.of(
             Constants.MEDIATYPE_TAR,
             Constants.MEDIATYPE_ZIP,
             Constants.MEDIATYPE_GZIP,
             Constants.MEDIATYPE_BZIP
-    ));
+    );
 
     private boolean isArchiveOrCompressed(Profile profile) {
         return ARCHIVE_OR_COMPRESSED_MEDIATYPES.contains(profile.getMediaType());
