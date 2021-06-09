@@ -18,7 +18,6 @@ const SelectMediatype = (props) => {
     let value = props.mediatypes.find(x => x.value == props.res.profile.mediaType);
     if (props.res.profile.mediaType && !value) {
         value = processMediatype(props.res.profile.mediaType);
-        value.label = value.label + " [unsupported]";
         if (value) {
             options.unshift(value);
         }
@@ -48,20 +47,24 @@ class ContentOrOutline extends React.Component {
 
     render() {
         const res = this.props.res;
-        const showContent = res.content && isTextProfile(res.profile.mediaType);
+        const hasContent = res.content && isTextProfile(res.profile.mediaType);
+        if (!hasContent && !res.outline) {
+            return false;
+        }
+
         const headerText = this.props.enableMultipleResources ?
             "Select files for further processing":
             "Select a file for further processing";
         return (
            <div className="content">
-                { showContent ?
+                { hasContent ?
                     <pre>
                         {res.content}
                         <br/>
-                        { showContent && res.contentIsIncomplete ? <span>...</span> : false }
+                        { res.contentIsIncomplete ? <span>...</span> : false }
                     </pre> : false
                 }
-                { res.outline && !showContent ?
+                { res.outline && !hasContent ?
                     <div className="outline">
                         <span className="outlineHeader">{headerText}</span>
                         {res.outline.map(entry =>
@@ -104,13 +107,14 @@ class NormalResource extends React.Component {
     render() {
         const res = this.props.res;
 
-        const showContentOrOutline = this.state.showContentOrOutline &&
-                (isTextProfile(res.profile.mediaType) || isArchiveProfile(res.profile.mediaType));
+        const hasContentOrOutline = (isTextProfile(res.profile.mediaType) && res.content) ||
+                                    (isArchiveProfile(res.profile.mediaType) && res.outline);
+        const showContentOrOutline = this.state.showContentOrOutline && hasContentOrOutline;
 
-        const toggleContentButton = (res.content && isTextProfile(res.profile.mediaType) || res.outline) ?
+        const toggleContentButton = hasContentOrOutline ?
             <a className="btn btn-xs btn-default" style={{fontSize:'70%', verticalAlign: "text-bottom"}}
                 onClick={e => this.setState({showContentOrOutline:!this.state.showContentOrOutline})} >
-                { showContentOrOutline ? "Hide content" : "Show content" }
+                { this.state.showContentOrOutline ? "Hide content" : "Show content" }
             </a> : false;
 
         const toggleCompressButton = isCompressedProfile(res.profile.mediaType) ?
