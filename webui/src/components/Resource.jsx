@@ -66,7 +66,7 @@ class ContentOrOutline extends React.Component {
                 }
                 { res.outline && !hasContent ?
                     <div className="outline">
-                        <span className="outlineHeader">{headerText}</span>
+                        {res.sourceID ? false : <span className="outlineHeader">{headerText}</span>}
                         {res.outline.map(entry =>
                             <div className="row" key={entry.name}>
                                 <div className="col-sm-8" style={{padding:0}}>
