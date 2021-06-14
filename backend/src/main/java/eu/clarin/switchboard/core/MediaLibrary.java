@@ -121,21 +121,19 @@ public class MediaLibrary {
         if (archiveProfile.isMediaType(Constants.MEDIATYPE_ZIP)) {
             Path path = Paths.get(archiveEntry);
             String name = path.getName(path.getNameCount() - 1).toString();
-            ZipFile zfile = new ZipFile(archivePath.toFile());
-            return addFile(name, zfile.getInputStream(zfile.getEntry(archiveEntry)), entryProfile);
+            try (ZipFile zfile = new ZipFile(archivePath.toFile());
+                 InputStream zis = zfile.getInputStream(zfile.getEntry(archiveEntry))) {
+                return addFile(name, zis, entryProfile);
+            }
         } else if (archiveProfile.isMediaType(Constants.MEDIATYPE_TAR)) {
             Path path = Paths.get(archiveEntry);
             String name = path.getName(path.getNameCount() - 1).toString();
-            try (BufferedInputStream fis = new BufferedInputStream(new FileInputStream(archivePath.toFile()));
-                 TarArchiveInputStream tais = new TarArchiveInputStream(fis)) {
-                for (ArchiveEntry entry = tais.getNextEntry(); entry != null; entry = tais.getNextEntry()) {
-                    if (entry.getName().equals(archiveEntry) && tais.canReadEntryData(entry)) {
-                        InputStream entryStream = ByteStreams.limit(tais, entry.getSize());
-                        return addFile(name, entryStream, entryProfile);
-                    }
+            try (InputStream tis = ArchiveOps.extractFileFromTar(archivePath.toFile(), archiveEntry)) {
+                if (tis == null) {
+                    throw new StorageException(new Exception("Unknown archive entry"));
                 }
+                return addFile(name, tis, entryProfile);
             }
-            throw new StorageException(new Exception("Unknown archive entry"));
         } else if (archiveProfile.isMediaType(Constants.MEDIATYPE_GZIP)) {
             try (BufferedInputStream fis = new BufferedInputStream(new FileInputStream(archivePath.toFile()));
                  GzipCompressorInputStream gzis = new GzipCompressorInputStream(fis)) {
