@@ -86,9 +86,9 @@ public class MediaLibrary {
         fileInfoFutureMap.put(fif.getId(), fif);
     }
 
-    public FileInfo addByUrl(String originalUrlOrDoiOrHandle) throws CommonException, ProfilingException {
+    public FileInfo addByUrl(String originalUrlOrDoiOrHandle, Profile profile) throws CommonException, ProfilingException {
         UUID id = UUID.randomUUID();
-        FileInfo fileInfo = addByUrl(cachingClient, dataStore, profiler, storagePolicy, id, originalUrlOrDoiOrHandle);
+        FileInfo fileInfo = addByUrl(cachingClient, dataStore, profiler, storagePolicy, id, originalUrlOrDoiOrHandle, profile);
         addFileInfoFuture(new FileInfoFuture(id, wrap(fileInfo)));
         return fileInfo;
     }
@@ -101,10 +101,10 @@ public class MediaLibrary {
         return fileInfo;
     }
 
-    public UUID addByUrlAsync(String originalUrlOrDoiOrHandle) throws StoragePolicyException {
+    public UUID addByUrlAsync(String originalUrlOrDoiOrHandle, Profile profile) throws StoragePolicyException {
         UUID id = UUID.randomUUID();
         Future<FileInfo> future = executorService.submit(() ->
-                addByUrl(cachingClient, dataStore, profiler, storagePolicy, id, originalUrlOrDoiOrHandle));
+                addByUrl(cachingClient, dataStore, profiler, storagePolicy, id, originalUrlOrDoiOrHandle, profile));
         addFileInfoFuture(new FileInfoFuture(id, future));
         return id;
     }
@@ -184,13 +184,15 @@ public class MediaLibrary {
 
     private static FileInfo addByUrl(CloseableHttpClient cachingClient,
                                      DataStore dataStore, Profiler profiler, StoragePolicy storagePolicy,
-                                     UUID id, String originalUrlOrDoiOrHandle) throws CommonException, ProfilingException {
+                                     UUID id, String originalUrlOrDoiOrHandle, Profile profile)
+            throws CommonException, ProfilingException {
         LinkMetadata.LinkInfo linkInfo = LinkMetadata.getLinkData(cachingClient, originalUrlOrDoiOrHandle);
         try {
             storagePolicy.acceptSize(linkInfo.response.getEntity().getContentLength());
             FileInfo fileInfo = addFile(dataStore, profiler, storagePolicy,
                     id, linkInfo.filename, linkInfo.response.getEntity().getContent(), null);
             fileInfo.setLinksInfo(originalUrlOrDoiOrHandle, linkInfo.downloadLink, linkInfo.redirects);
+            Quirks.specializeProfile(fileInfo, profile);
             return fileInfo;
         } catch (IOException xc) {
             throw new LinkException(LinkException.Kind.DATA_STREAM_ERROR, "" + linkInfo.downloadLink, xc);

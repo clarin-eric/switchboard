@@ -110,6 +110,7 @@ public class DataResource {
                              @FormDataParam("file") InputStream inputStream,
                              @FormDataParam("file") final FormDataContentDisposition contentDispositionHeader,
                              @FormDataParam("url") String url,
+                             @FormDataParam("mimetype") String mimetype,
                              @FormDataParam("archiveID") String archiveID,
                              @FormDataParam("archiveEntryName") String archiveEntryName,
                              @FormDataParam("profile") String profileString
@@ -119,7 +120,11 @@ public class DataResource {
             String filename = contentDispositionHeader.getFileName();
             fileInfo = mediaLibrary.addFile(filename, inputStream, null);
         } else if (url != null) {
-            fileInfo = mediaLibrary.addByUrl(url);
+            Profile profile = null;
+            if (mimetype != null && !mimetype.isEmpty()) {
+                profile = Profile.builder().mediaType(mimetype).build();
+            }
+            fileInfo = mediaLibrary.addByUrl(url, profile);
         } else if (archiveID != null && !archiveID.isEmpty()) {
             FileInfo fi = getFileInfo(archiveID);
             if (fi == null) {
