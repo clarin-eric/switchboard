@@ -101,7 +101,7 @@ export function removeResource(resource) {
             if (entry) {
                 entry.checked = false;
                 dispatch({
-                    type: actionType.RESOURCE_MERGE,
+                    type: actionType.RESOURCE_UPDATE,
                     data: {id: parent.id, outline},
                 });
             }
@@ -130,11 +130,11 @@ export function selectResourceMatch(toolName, matchIndex) {
 
 export function toggleZipEntryToInputs(zipRes, zipEntry) {
     return function (dispatch, getState) {
-        const state = getState();
+        const {apiinfo, resourceList} = getState();
 
         const outline = SI.asMutable(zipRes.outline, {deep:true});
-        if (!state.apiinfo?.enableMultipleResources) {
-            const list = state.resourceList.filter(r => r.sourceID == zipRes.id).map(r => r.id);
+        if (!apiinfo?.enableMultipleResources) {
+            const list = resourceList.filter(r => r.sourceID == zipRes.id).map(r => r.id);
             dispatch({
                 type: actionType.RESOURCE_REMOVE,
                 data: new Set(list),
@@ -144,9 +144,9 @@ export function toggleZipEntryToInputs(zipRes, zipEntry) {
         }
         const entry = outline.find(e => e.name === zipEntry.name);
         if (entry.checked) {
-            if (state.apiinfo?.enableMultipleResources) {
+            if (apiinfo?.enableMultipleResources) {
                 entry.checked = false;
-                const resource = state.resourceList.find(r =>
+                const resource = resourceList.find(r =>
                     r.sourceID === zipRes.id && r.sourceEntryName === zipEntry.name);
                 if (resource) {
                     dispatch(removeResource(resource));
@@ -160,7 +160,7 @@ export function toggleZipEntryToInputs(zipRes, zipEntry) {
             entry.checked = true;
         }
         dispatch({
-            type: actionType.RESOURCE_MERGE,
+            type: actionType.RESOURCE_UPDATE,
             data: {id: zipRes.id, outline},
         });
 
@@ -177,7 +177,7 @@ export function toggleZipEntryToInputs(zipRes, zipEntry) {
             .post(apiPath.storage, formData, {
                 headers: {'Content-Type': 'multipart/form-data'}
             })
-            .then(updateResourceCallback(dispatch, newResource))
+            .then(updateResourceCallback(dispatch, newResource, getState))
             // todo: fix error case (remove checkbox)
             .catch(resourceErrorCallback(dispatch, newResource));
     }
@@ -196,7 +196,7 @@ function uploadData(formData) {
     }
 }
 
-function updateResourceCallback(dispatch, resource) {
+function updateResourceCallback(dispatch, resource, getState) {
     return response => {
         const res = response.data;
         if (res.localLink && res.localLink.startsWith(apiPath.api)) {
@@ -217,10 +217,28 @@ function updateResourceCallback(dispatch, resource) {
                 .get(apiPath.storageOutline(res.id))
                 .then(outlineResponse => {
                     dispatch({
-                        type: actionType.RESOURCE_MERGE,
+                        type: actionType.RESOURCE_UPDATE,
                         data: {id: res.id, outline: outlineResponse.data},
                     });
+                }).catch(error => {
+                    console.warn("error when getting outline: ", error);
                 });
+        }
+
+        if (getState && resource.sourceID && resource.sourceEntryName) {
+            // set the entry's profile in parent, if it's unset
+            const parentResource = getState().resourceList.find(r => r.id == resource.sourceID);
+            if (parentResource) {
+                const outline = SI.asMutable(parentResource.outline, {deep:true});
+                const entry = outline.find(e => e.name == res.sourceEntryName);
+                if (entry && !entry.profile) {
+                    entry.profile = Object.assign({}, res.profile);
+                    dispatch({
+                        type: actionType.RESOURCE_UPDATE,
+                        data: {id: parentResource.id, outline},
+                    });
+                }
+            }
         }
     };
 }
@@ -401,7 +419,6 @@ export function showError(errorMessage) {
 
 function errHandler(dispatch, msg) {
     return function(err) {
-        console.log({msg, err, response: err.response});
         msg = msg ? (msg + ": ") : "";
 
         let data = {};
@@ -420,7 +437,7 @@ function errHandler(dispatch, msg) {
             message: msg + errorText,
             url: data.url,
         });
-        //throw err;
+        throw err;
     }
 }
 
