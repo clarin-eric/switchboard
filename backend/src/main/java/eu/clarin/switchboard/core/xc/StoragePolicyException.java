@@ -4,6 +4,7 @@ public class StoragePolicyException extends CommonException {
     public enum Kind {
         TOO_BIG,
         MEDIA_NOT_ALLOWED,
+        TOO_MANY,
     }
 
     Kind kind;

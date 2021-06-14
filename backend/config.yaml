@@ -26,6 +26,7 @@ switchboard:
         location: # e.g. /my/data; defaults to temporary storage
         eraseAllStorageOnStart: ${DATASTORE_STARTERASE:-false}
         maxSize: ${DATASTORE_MAX_FILESIZE:-5M}
+        maxFiles: ${DATASTORE_MAX_FILES:-10k}
         maxLifetime: ${DATASTORE_MAX_FILELT:-2}
         maxLifetimeUnit: ${DATASTORE_FILELT_UNIT:-hours}
         cleanupPeriod: ${DATASTORE_CLEANPERIOD:-13}

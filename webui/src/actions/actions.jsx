@@ -128,13 +128,13 @@ export function selectResourceMatch(toolName, matchIndex) {
     }
 }
 
-export function toggleZipEntryToInputs(zipRes, zipEntry) {
+export function toggleArchiveEntryToInputs(archiveRes, archiveEntry) {
     return function (dispatch, getState) {
         const {apiinfo, resourceList} = getState();
 
-        const outline = SI.asMutable(zipRes.outline, {deep:true});
+        const outline = SI.asMutable(archiveRes.outline, {deep:true});
         if (!apiinfo?.enableMultipleResources) {
-            const list = resourceList.filter(r => r.sourceID == zipRes.id).map(r => r.id);
+            const list = resourceList.filter(r => r.sourceID == archiveRes.id).map(r => r.id);
             dispatch({
                 type: actionType.RESOURCE_REMOVE,
                 data: new Set(list),
@@ -142,12 +142,12 @@ export function toggleZipEntryToInputs(zipRes, zipEntry) {
 
             outline.forEach(e => {e.checked = false})
         }
-        const entry = outline.find(e => e.name === zipEntry.name);
+        const entry = outline.find(e => e.name === archiveEntry.name);
         if (entry.checked) {
             if (apiinfo?.enableMultipleResources) {
                 entry.checked = false;
                 const resource = resourceList.find(r =>
-                    r.sourceID === zipRes.id && r.sourceEntryName === zipEntry.name);
+                    r.sourceID === archiveRes.id && r.sourceEntryName === archiveEntry.name);
                 if (resource) {
                     dispatch(removeResource(resource));
                 }
@@ -161,25 +161,50 @@ export function toggleZipEntryToInputs(zipRes, zipEntry) {
         }
         dispatch({
             type: actionType.RESOURCE_UPDATE,
-            data: {id: zipRes.id, outline},
+            data: {id: archiveRes.id, outline},
         });
 
         var formData = new FormData();
-        formData.append("zipID", zipRes.id);
-        formData.append("zipEntryName", zipEntry.name);
-        if (zipEntry.profile) {
-            formData.append("profile", JSON.stringify(zipEntry.profile));
+        formData.append("archiveID", archiveRes.id);
+        formData.append("archiveEntryName", archiveEntry.name);
+        if (archiveEntry.profile) {
+            formData.append("profile", JSON.stringify(archiveEntry.profile));
         }
 
-        const newResource = {id: ++lastResourceID, sourceID: zipRes.id, sourceEntryName: zipEntry.name};
+        const newResource = {id: ++lastResourceID, sourceID: archiveRes.id, sourceEntryName: archiveEntry.name};
         dispatch(updateResource(newResource));
         axios
             .post(apiPath.storage, formData, {
                 headers: {'Content-Type': 'multipart/form-data'}
             })
             .then(updateResourceCallback(dispatch, newResource, getState))
-            // todo: fix error case (remove checkbox)
             .catch(resourceErrorCallback(dispatch, newResource));
+    }
+}
+
+export function toggleCompressedResource(resource) {
+    return function (dispatch, getState) {
+        if (resource.originalResource) {
+            // removeResource(resource);
+        } else {
+            //-- it must be compressed, post to server to uncompress it
+            const newResource = {id: ++lastResourceID, originalResource: SI.asMutable(resource, {deep:true})};
+            dispatch(updateResource(newResource));
+            dispatch(removeResource(resource));
+
+            var formData = new FormData();
+            formData.append("archiveID", resource.id);
+            axios
+                .post(apiPath.storage, formData, {
+                    headers: {'Content-Type': 'multipart/form-data'}
+                })
+                .then(updateResourceCallback(dispatch, newResource, getState))
+                .catch(error => {
+                    dispatch(updateResource(resource));
+                    dispatch(removeResource(newResource));
+                    errHandler(dispatch)(error);
+                });
+        }
     }
 }
 
@@ -218,7 +243,7 @@ function updateResourceCallback(dispatch, resource, getState) {
                 .then(outlineResponse => {
                     dispatch({
                         type: actionType.RESOURCE_UPDATE,
-                        data: {id: res.id, outline: outlineResponse.data},
+                        data: Object.assign({id: res.id}, outlineResponse.data),
                     });
                 }).catch(error => {
                     console.warn("error when getting outline: ", error);
@@ -334,7 +359,7 @@ function fetchMatchingTools() {
         })
 
         const allResources = SI.asMutable(getState().resourceList, {deep:true});
-        const resourceList = allResources.filter(r => !r.isContainer);
+        const resourceList = allResources.filter(r => !r.isArchive);
         const isDict = resourceList.every(r => r.isDictionaryResource);
 
         const profiles = resourceList
@@ -354,7 +379,7 @@ function fetchMatchingTools() {
         axios.post(apiPath.toolsMatch, profiles)
             .then(response => {
                 const toolMatches = response.data;
-                // find correct matching indices (we have container resources, which are sources for others)
+                // find correct matching indices (we have archive resources, which are sources for others)
                 toolMatches.forEach(toolMatch => {
                     toolMatch.matches = toolMatch.matches.map(indicesList =>
                         indicesList.map(index => index < 0 ? index :

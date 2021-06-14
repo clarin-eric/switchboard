@@ -27,6 +27,11 @@ public class DefaultStoragePolicy implements StoragePolicy {
     }
 
     @Override
+    public long getMaxAllowedTotalFiles() {
+        return dataStoreConfig.getMaxFiles();
+    }
+
+    @Override
     public Duration getMaxAllowedLifetime() {
         return dataStoreConfig.getMaxLifetime();
     }
@@ -54,11 +59,22 @@ public class DefaultStoragePolicy implements StoragePolicy {
     public void acceptProfile(Profile profile) throws StoragePolicyException {
         if (!allowedMediaTypes.contains(profile.getMediaType())) {
             // allow xml as a special case, see https://github.com/clarin-eric/switchboard/issues/14
-            if (!profile.isXmlMediaType()) {
+            if (!profile.isXmlMediaType() && !isArchiveOrCompressed(profile)) {
                 throw new StoragePolicyException("This resource type (" + profile.getMediaType() + ") is currently not supported.",
                         StoragePolicyException.Kind.MEDIA_NOT_ALLOWED);
             }
         }
+    }
+
+    static final Set<String> ARCHIVE_OR_COMPRESSED_MEDIATYPES = Set.of(
+            Constants.MEDIATYPE_TAR,
+            Constants.MEDIATYPE_ZIP,
+            Constants.MEDIATYPE_GZIP,
+            Constants.MEDIATYPE_BZIP
+    );
+
+    private boolean isArchiveOrCompressed(Profile profile) {
+        return ARCHIVE_OR_COMPRESSED_MEDIATYPES.contains(profile.getMediaType());
     }
 
     private StoragePolicyException tooBig() {

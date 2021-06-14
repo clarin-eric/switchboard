@@ -1,6 +1,7 @@
 package eu.clarin.switchboard.core;
 
 import eu.clarin.switchboard.app.config.DataStoreConfig;
+import eu.clarin.switchboard.core.xc.LinkException;
 import eu.clarin.switchboard.core.xc.StoragePolicyException;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,12 +25,13 @@ public class DataStoreTest {
     public void setUp() throws Exception {
         Path dataStoreRoot = Files.createTempDirectory("switchboard-test-");
         String maxSize = "1k";
+        String maxFiles = "10";
         String maxLifetime = "4";
         String maxLifetimeUnit = "seconds";
         String cleanupPeriod = "1";
         String cleanupPeriodUnit = "seconds";
         DataStoreConfig dataStoreConfig = new DataStoreConfig(
-                dataStoreRoot.toString(), false, maxSize, maxLifetime, maxLifetimeUnit, cleanupPeriod, cleanupPeriodUnit);
+                dataStoreRoot.toString(), false, maxSize, maxFiles, maxLifetime, maxLifetimeUnit, cleanupPeriod, cleanupPeriodUnit);
         StoragePolicy storagePolicy = new DefaultStoragePolicy(dataStoreConfig);
         dataStore = new DataStore(dataStoreRoot, storagePolicy);
     }
@@ -93,5 +95,15 @@ public class DataStoreTest {
         Path storePath = path1.getParent().getParent();
         assertTrue(storePath.toFile().exists());
         assertEquals(storePath.toFile().listFiles().length, 0);
+    }
+
+
+    @Test(expected = StoragePolicyException.class)
+    public void uploadTooLarge() throws IOException, StoragePolicyException {
+        UUID id = UUID.randomUUID();
+        InputStream is = new ByteArrayInputStream(new byte[2*1024]);
+        Path path = dataStore.save(id, "test", is);
+
+        assert(false); // will not get here
     }
 }

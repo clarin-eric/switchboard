@@ -61,7 +61,7 @@ function resourceList(state = SI([]), action) {
                     ret = ret.set(index, SI.without(r, ['sourceID', 'sourceEventName']));
                 }
             }
-            ret = ret.map(r => r.set("isContainer", ret.some(r2 => r.id === r2.sourceID)));
+            ret = ret.map(r => r.set("isArchive", ret.some(r2 => r.id === r2.sourceID)));
             return SI(ret);
         }
 
@@ -87,7 +87,7 @@ function resourceList(state = SI([]), action) {
                 mutable.splice(idx, 0, action.data);
                 ret = SI(mutable);
             }
-            ret = ret.map(r => r.set("isContainer", ret.some(r2 => r.id === r2.sourceID)));
+            ret = ret.map(r => r.set("isArchive", ret.some(r2 => r.id === r2.sourceID)));
             return SI(ret);
         }
 

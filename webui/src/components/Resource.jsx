@@ -1,6 +1,6 @@
 import React from 'react';
 import Select from 'react-select';
-import { processMediatype, humanSize, isViewableProfile, isTextProfile, isContainerProfile } from '../actions/utils';
+import { processMediatype, humanSize, isCompressedProfile, isTextProfile, isArchiveProfile } from '../actions/utils';
 import { InputContainer } from '../containers/InputContainer';
 
 const SelectLanguage = (props) => {
@@ -18,7 +18,6 @@ const SelectMediatype = (props) => {
     let value = props.mediatypes.find(x => x.value == props.res.profile.mediaType);
     if (props.res.profile.mediaType && !value) {
         value = processMediatype(props.res.profile.mediaType);
-        value.label = value.label + " [unsupported]";
         if (value) {
             options.unshift(value);
         }
@@ -41,6 +40,61 @@ class BlurableTextInput extends React.Component {
     }
 }
 
+class ContentOrOutline extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        const res = this.props.res;
+        const hasContent = res.content && isTextProfile(res.profile.mediaType);
+        if (!hasContent && !res.outline) {
+            return false;
+        }
+
+        const headerText = this.props.enableMultipleResources ?
+            "Select files for further processing":
+            "Select a file for further processing";
+        return (
+           <div className="content">
+                { hasContent ?
+                    <pre>
+                        {res.content}
+                        <br/>
+                        { res.contentIsIncomplete ? <span>...</span> : false }
+                    </pre> : false
+                }
+                { res.outline && !hasContent ?
+                    <div className="outline">
+                        {res.sourceID ? false : <span className="outlineHeader">{headerText}</span>}
+                        {res.outline.map(entry =>
+                            <div className="row" key={entry.name}>
+                                <div className="col-sm-8" style={{padding:0}}>
+                                    <label style={{fontWeight:'normal', marginBottom:0}}>
+                                        {res.sourceID ? false : // don't show selector in nested archives
+                                            <input type={this.props.enableMultipleResources ? "checkbox" : "radio"}
+                                                name={entry.name}
+                                                onChange={() => this.props.toggleArchiveEntryToInputs(res, entry)}
+                                                checked={entry.checked || false} />
+                                        }
+                                        {" "}
+                                        <span className={"glyphicon glyphicon-file"} aria-hidden="true"/>
+                                        {" "}
+                                        {entry.name}
+                                    </label>
+                                </div>
+                                <div className="col-sm-2">{(entry.profile||{}).mediaType || ""}</div>
+                                <div className="col-sm-2">{entry.size > 0 ? humanSize(entry.size) : ""}</div>
+                            </div>
+                        )}
+                        {res.outlineIsIncomplete ? <span>...</span> : false}
+                    </div> : false
+                }
+            </div>
+        );
+    }
+}
+
 
 class NormalResource extends React.Component {
     constructor(props) {
@@ -52,66 +106,47 @@ class NormalResource extends React.Component {
 
     render() {
         const res = this.props.res;
-        const showContentOrOutline = this.state.showContentOrOutline && isViewableProfile(res.profile.mediaType);
-        const toggleContentButton = (res.content && isTextProfile(res.profile.mediaType) || res.outline) ?
+
+        const hasContentOrOutline = (isTextProfile(res.profile.mediaType) && res.content) ||
+                                    (isArchiveProfile(res.profile.mediaType) && res.outline);
+        const showContentOrOutline = this.state.showContentOrOutline && hasContentOrOutline;
+
+        const toggleContentButton = hasContentOrOutline ?
             <a className="btn btn-xs btn-default" style={{fontSize:'70%', verticalAlign: "text-bottom"}}
                 onClick={e => this.setState({showContentOrOutline:!this.state.showContentOrOutline})} >
-                { showContentOrOutline ? "Hide content" : "Show content" }
+                { this.state.showContentOrOutline ? "Hide content" : "Show content" }
             </a> : false;
+
+        const toggleCompressButton = isCompressedProfile(res.profile.mediaType) ?
+            <a className="btn btn-xs btn-default" style={{fontSize:'70%', verticalAlign: "text-bottom"}}
+                onClick={e => this.props.toggleCompressedResource(res)} >
+                Uncompress
+            </a> : false;
+
         const removeButton = (this.props.enableMultipleResources || res.sourceID) ?
             <a onClick={e => this.props.removeResource(res)}>
                 <span className={"glyphicon glyphicon-trash"}
                     style={{fontSize:'80%', marginLeft: 10}} aria-hidden="true"/>
             </a> : false;
-        const showContent = res.content && isTextProfile(res.profile.mediaType);
-        const contentDiv = showContentOrOutline ?
-            <div className="content">
-                { showContent ?
-                    <pre> {res.content} </pre> : false
-                }
-                {res.outline && !showContent ?
-                    <div className="outline">
-                        <span className="outlineHeader">
-                            {this.props.enableMultipleResources ? "Select files for further processing":"Select a file for further processing"}
-                        </span>
-                        {res.outline.map(entry =>
-                            <div className="row" key={entry.name}>
-                                <div className="col-sm-8" style={{padding:0}}>
-                                    <label style={{fontWeight:'normal', marginBottom:0}}>
-                                        {res.sourceID ? false : // don't show selector in nested zips
-                                            <input type={this.props.enableMultipleResources ? "checkbox" : "radio"}
-                                                name={entry.name}
-                                                onChange={() => this.props.toggleZipEntryToInputs(res, entry)}
-                                                checked={entry.checked || false} />
-                                        }
-                                        {" "}
-                                        <span className={"glyphicon glyphicon-file"} aria-hidden="true"/>
-                                        {" "}
-                                        {entry.name}
-                                    </label>
-                                </div>
-                                <div className="col-sm-2">{(entry.profile||{}).mediaType || ""}</div>
-                                <div className="col-sm-2">{humanSize(entry.size)}</div>
-                            </div>
-                        ) }
-                    </div> : false
-                }
-            </div> : false;
-        return <div className={"row" + (res.isContainer ? " disabled":"") + (res.sourceID ? " dependent" : "")}>
-                <div className={res.isContainer ? "col-md-12" : "col-md-5"}>
+
+        return <div className={"row" + (res.isArchive ? " disabled":"") + (res.sourceID ? " dependent" : "")}>
+                <div className={res.isArchive ? "col-md-12" : "col-md-5"}>
                     <div className="value namesize">
                         <a href={res.originalLink || res.localLink} style={{marginRight:10}}> {res.filename}</a>
                         <span style={{fontSize:'66%'}} style={{marginRight:10}}>{humanSize(res.fileLength)}</span>
                         {toggleContentButton}
+                        {toggleCompressButton}
                         {removeButton}
                     </div>
                 </div>
                 { showContentOrOutline ?
                     <div className="col-md-12 visible-xs visible-sm">
-                        {contentDiv}
+                        <ContentOrOutline res={res}
+                            enableMultipleResources={this.props.enableMultipleResources}
+                            toggleArchiveEntryToInputs={this.props.toggleArchiveEntryToInputs} />
                     </div> : false
                 }
-                { res.isContainer ? false :
+                { res.isArchive ? false :
                     <React.Fragment>
                     <div className="col-md-4">
                         <div className="row">
@@ -135,7 +170,9 @@ class NormalResource extends React.Component {
                 }
                 { showContentOrOutline ?
                     <div className="col-md-12 hidden-xs hidden-sm">
-                        {contentDiv}
+                        <ContentOrOutline res={res}
+                            enableMultipleResources={this.props.enableMultipleResources}
+                            toggleArchiveEntryToInputs={this.props.toggleArchiveEntryToInputs} />
                     </div> : false
                 }
             </div>
@@ -197,7 +234,8 @@ export class ResourceList extends React.Component {
                         languages={this.props.languages}
                         setResourceProfile={this.props.setResourceProfile}
                         removeResource={this.props.removeResource}
-                        toggleZipEntryToInputs={this.props.toggleZipEntryToInputs}
+                        toggleArchiveEntryToInputs={this.props.toggleArchiveEntryToInputs}
+                        toggleCompressedResource={this.props.toggleCompressedResource}
                         enableMultipleResources={this.props.enableMultipleResources}
                         res={res} />;
         }
@@ -205,7 +243,7 @@ export class ResourceList extends React.Component {
             <div className={"row" + (res.sourceID ? " dependent" : "")}>
                 <div className="col-md-4">
                     <div className="value namesize">
-                        <p>Uploading...</p>
+                        <p>{(res.sourceID || res.originalResource) ? "Extracting..." : "Uploading..."}</p>
                     </div>
                 </div>
             </div>
