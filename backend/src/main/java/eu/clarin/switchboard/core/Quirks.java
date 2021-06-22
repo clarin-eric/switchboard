@@ -6,6 +6,10 @@ import eu.clarin.switchboard.profiler.api.Profile;
 import javax.ws.rs.core.MediaType;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Quirks {
     final static String REPO_ARACHNE = "arachne";
@@ -64,4 +68,49 @@ public class Quirks {
         return link;
     }
 
+    // Sometimes the profiler sets a very general mediatype (e.g. text/plain)
+    // instead of the correct mediatype which is a specialization of the
+    // general one.
+    static final Map<String, Set<String>> SPECIALIZED_MEDIATYPES = Map.of(
+            "text/plain", Set.of(
+                    "text/csv",
+                    "text/comma-separated-value",
+                    "text/plain; format-variant=praat-textgrid",
+                    "text/markdown",
+                    "text/rst",
+                    "application/vnd.dariahde.geobrowser.csv"
+            )
+    );
+
+    /**
+     * If the mediatype of the <i>declaredProfile</i> is a specialized version
+     * of the one in the fileInfo, than set the <i>declaredProfile</i> as the
+     * correct one.
+     */
+    public static void specializeProfile(FileInfo fileInfo, Profile declaredProfile) {
+        if (declaredProfile == null) {
+            return;
+        }
+
+        Profile profile = fileInfo.getProfile().toProfile();
+        String mediatype = profile.getMediaType();
+        if (!SPECIALIZED_MEDIATYPES.containsKey(mediatype)) {
+            return;
+        }
+
+        String declaredMediatype = declaredProfile.getMediaType();
+        if (!SPECIALIZED_MEDIATYPES.get(mediatype).contains(declaredMediatype)) {
+            return;
+        }
+
+        // update just the mediatype in the main profile of the fileInfo
+        Profile newProfile = Profile.builder(profile)
+                .mediaType(declaredMediatype)
+                .build();
+        List<Profile> sameSecondaryProfiles = fileInfo.getSecondaryProfiles()
+                .stream()
+                .map(Profile.Flat::toProfile)
+                .collect(Collectors.toList());
+        fileInfo.setProfiles(newProfile, sameSecondaryProfiles);
+    }
 }

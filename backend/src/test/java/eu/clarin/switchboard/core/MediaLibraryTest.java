@@ -70,16 +70,22 @@ public class MediaLibraryTest {
         assert (false); // will not get here
     }
 
+    public void testProfileSpecialization() throws CommonException, ProfilingException {
+        MediaLibrary mediaLibrary = new MediaLibrary(dataStore, profiler, storagePolicy, urlResolver, dataStoreConfig);
+        mediaLibrary.addByUrl("http://this^is&a)bad@url", null);
+    }
+
+
     @Test(expected = LinkException.class)
     public void addMedia1() throws CommonException, ProfilingException {
         MediaLibrary mediaLibrary = new MediaLibrary(dataStore, profiler, storagePolicy, urlResolver, dataStoreConfig);
-        mediaLibrary.addByUrl("http://this^is&a)bad@url");
+        mediaLibrary.addByUrl("http://this^is&a)bad@url", null);
     }
 
     @Test(expected = StoragePolicyException.class)
     public void addMedia2() throws CommonException, ProfilingException {
         MediaLibrary mediaLibrary = new MediaLibrary(dataStore, profiler, storagePolicy, urlResolver, dataStoreConfig);
         // a site that does a HTTP redirect
-        mediaLibrary.addByUrl("http://clarin.eu");
+        mediaLibrary.addByUrl("http://clarin.eu", null);
     }
 }

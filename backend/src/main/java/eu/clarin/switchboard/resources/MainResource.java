@@ -8,6 +8,7 @@ import eu.clarin.switchboard.core.MediaLibrary;
 import eu.clarin.switchboard.core.Quirks;
 import eu.clarin.switchboard.core.xc.StorageException;
 import eu.clarin.switchboard.core.xc.StoragePolicyException;
+import eu.clarin.switchboard.profiler.api.Profile;
 import eu.clarin.switchboard.profiler.api.ProfilingException;
 import io.dropwizard.views.View;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
@@ -93,10 +94,11 @@ public class MainResource {
                            @FormDataParam("url") String url,
                            @FormDataParam("id") String id,
                            @FormDataParam("origin") String origin,
+                           @FormDataParam("mimetype") String mimetype,
                            @FormDataParam("selection") String selection,
                            @FormDataParam("popup") boolean popup)
             throws JsonProcessingException, ProfilingException, StorageException, StoragePolicyException {
-        return post(inputStream, contentDispositionHeader, url, id, origin, selection, popup);
+        return post(inputStream, contentDispositionHeader, url, id, origin, mimetype, selection, popup);
     }
 
     @POST
@@ -106,12 +108,13 @@ public class MainResource {
     public View postToIndex(@FormDataParam("file") InputStream inputStream,
                             @FormDataParam("file") final FormDataContentDisposition contentDispositionHeader,
                             @FormDataParam("url") String url,
+                            @FormDataParam("mimetype") String mimetype,
                             @FormDataParam("id") String id,
                             @FormDataParam("origin") String origin,
                             @FormDataParam("selection") String selection,
                             @FormDataParam("popup") boolean popup)
             throws JsonProcessingException, ProfilingException, StorageException, StoragePolicyException {
-        return post(inputStream, contentDispositionHeader, url, id, origin, selection, popup);
+        return post(inputStream, contentDispositionHeader, url, id, origin, mimetype, selection, popup);
     }
 
     public View post(InputStream inputStream,
@@ -119,6 +122,7 @@ public class MainResource {
                      String url,
                      String idParam,
                      String origin,
+                     String mimetype,
                      String selection,
                      boolean popup)
             throws JsonProcessingException, ProfilingException, StoragePolicyException, StorageException {
@@ -127,7 +131,11 @@ public class MainResource {
             UUID id = mediaLibrary.addFileAsync(filename, inputStream);
             return IndexView.fileInfoID(id, popup);
         } else if (url != null) {
-            UUID id = mediaLibrary.addByUrlAsync(url);
+            Profile profile = null;
+            if (mimetype != null && !mimetype.isEmpty()) {
+                profile = Profile.builder().mediaType(mimetype).build();
+            }
+            UUID id = mediaLibrary.addByUrlAsync(url, profile);
             return IndexView.fileInfoID(id, popup);
         } else if (idParam != null) {
             UUID id = UUID.fromString(idParam);

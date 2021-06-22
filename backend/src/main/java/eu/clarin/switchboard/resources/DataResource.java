@@ -3,14 +3,12 @@ package eu.clarin.switchboard.resources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.base.MoreObjects;
 import com.google.common.io.ByteStreams;
+import eu.clarin.switchboard.core.ArchiveOps;
 import eu.clarin.switchboard.core.Constants;
 import eu.clarin.switchboard.core.FileInfo;
 import eu.clarin.switchboard.core.MediaLibrary;
 import eu.clarin.switchboard.profiler.api.Profile;
-import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
-import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
 import org.apache.commons.io.IOUtils;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
@@ -24,16 +22,14 @@ import java.io.*;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Map;
+import java.util.UUID;
 import java.util.zip.ZipException;
-import java.util.zip.ZipFile;
 
 @Path("/api/storage")
 public class DataResource {
     private static final Logger LOGGER = LoggerFactory.getLogger(DataResource.class);
     private static final int MAX_INLINE_CONTENT = 4 * 1024;
-    private static final long MAX_ZIP_ENTRIES = 4 * 1024;
 
     static ObjectMapper mapper = new ObjectMapper();
     MediaLibrary mediaLibrary;
@@ -110,6 +106,7 @@ public class DataResource {
                              @FormDataParam("file") InputStream inputStream,
                              @FormDataParam("file") final FormDataContentDisposition contentDispositionHeader,
                              @FormDataParam("url") String url,
+                             @FormDataParam("mimetype") String mimetype,
                              @FormDataParam("archiveID") String archiveID,
                              @FormDataParam("archiveEntryName") String archiveEntryName,
                              @FormDataParam("profile") String profileString
@@ -119,7 +116,11 @@ public class DataResource {
             String filename = contentDispositionHeader.getFileName();
             fileInfo = mediaLibrary.addFile(filename, inputStream, null);
         } else if (url != null) {
-            fileInfo = mediaLibrary.addByUrl(url);
+            Profile profile = null;
+            if (mimetype != null && !mimetype.isEmpty()) {
+                profile = Profile.builder().mediaType(mimetype).build();
+            }
+            fileInfo = mediaLibrary.addByUrl(url, profile);
         } else if (archiveID != null && !archiveID.isEmpty()) {
             FileInfo fi = getFileInfo(archiveID);
             if (fi == null) {
@@ -197,52 +198,18 @@ public class DataResource {
 
         if (fi.getProfile().toProfile().isMediaType(Constants.MEDIATYPE_ZIP)) {
             try {
-                Outline outline = extractOutlineFromZip(fi.getPath().toFile());
+                ArchiveOps.Outline outline = ArchiveOps.extractOutlineFromZip(fi.getPath().toFile());
                 return Response.ok(outline).build();
             } catch (ZipException xc) {
                 LOGGER.info("bad zip archive: " + xc.getMessage());
                 return Response.status(Response.Status.NOT_ACCEPTABLE).entity(xc.getMessage()).build();
             }
         } else if (fi.getProfile().toProfile().isMediaType(Constants.MEDIATYPE_TAR)) {
-            Outline outline = extractOutlineFromTar(fi.getPath().toFile());
+            ArchiveOps.Outline outline = ArchiveOps.extractOutlineFromTar(fi.getPath().toFile());
             return Response.ok(outline).build();
         }
 
         return Response.status(Response.Status.NO_CONTENT).build();
-    }
-
-    private static Outline extractOutlineFromZip(File zipfile) throws IOException {
-        try (ZipFile zfile = new ZipFile(zipfile)) {
-            List<ZEntry> outline = zfile.stream()
-                    .filter(e -> !e.isDirectory() && e.getSize() > 0)
-                    .filter(e -> !e.getName().startsWith("__MACOSX/"))
-                    .map(e -> new ZEntry(e.getName(), e.getSize()))
-                    .collect(Collectors.toList());
-            boolean outlineIsIncomplete = false;
-            if (outline.size() > MAX_ZIP_ENTRIES) {
-                outline = outline.subList(0, (int) MAX_ZIP_ENTRIES);
-                outlineIsIncomplete = true;
-            }
-            return new Outline(outline, outlineIsIncomplete);
-        }
-    }
-
-    private static Outline extractOutlineFromTar(File tarfile) throws IOException {
-        try (BufferedInputStream fis = new BufferedInputStream(new FileInputStream(tarfile));
-             TarArchiveInputStream tais = new TarArchiveInputStream(fis)) {
-            List<ZEntry> outline = new ArrayList<>();
-            boolean outlineIsIncomplete = false;
-            for (TarArchiveEntry entry = tais.getNextTarEntry(); entry != null; entry = tais.getNextTarEntry()) {
-                if (tais.canReadEntryData(entry) && !entry.isDirectory() && entry.getSize() > 0) {
-                    if (outline.size() >= MAX_ZIP_ENTRIES) {
-                        outlineIsIncomplete = true;
-                        break;
-                    }
-                    outline.add(new ZEntry(entry.getName(), entry.getSize()));
-                }
-            }
-            return new Outline(outline, outlineIsIncomplete);
-        }
     }
 
     private FileInfo getFileInfo(String idString) throws Throwable {
@@ -253,50 +220,5 @@ public class DataResource {
             return null;
         }
         return mediaLibrary.waitForFileInfo(id);
-    }
-
-    static class Outline {
-        List<ZEntry> outline;
-        boolean outlineIsIncomplete;
-
-        public Outline(List<ZEntry> outline, boolean outlineIsIncomplete) {
-            this.outline = outline;
-            this.outlineIsIncomplete = outlineIsIncomplete;
-            outline.sort(Comparator.comparing(ZEntry::getName));
-        }
-
-        public List<ZEntry> getOutline() {
-            return outline;
-        }
-
-        public boolean isOutlineIsIncomplete() {
-            return outlineIsIncomplete;
-        }
-    }
-
-    static class ZEntry {
-        String name;
-        long size;
-
-        public ZEntry(String name, long size) {
-            this.name = name;
-            this.size = size;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public long getSize() {
-            return size;
-        }
-
-        @Override
-        public String toString() {
-            return MoreObjects.toStringHelper(this)
-                    .add("name", name)
-                    .add("size", size)
-                    .toString();
-        }
     }
 }

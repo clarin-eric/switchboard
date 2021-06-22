@@ -86,9 +86,9 @@ public class MediaLibrary {
         fileInfoFutureMap.put(fif.getId(), fif);
     }
 
-    public FileInfo addByUrl(String originalUrlOrDoiOrHandle) throws CommonException, ProfilingException {
+    public FileInfo addByUrl(String originalUrlOrDoiOrHandle, Profile profile) throws CommonException, ProfilingException {
         UUID id = UUID.randomUUID();
-        FileInfo fileInfo = addByUrl(cachingClient, dataStore, profiler, storagePolicy, id, originalUrlOrDoiOrHandle);
+        FileInfo fileInfo = addByUrl(cachingClient, dataStore, profiler, storagePolicy, id, originalUrlOrDoiOrHandle, profile);
         addFileInfoFuture(new FileInfoFuture(id, wrap(fileInfo)));
         return fileInfo;
     }
@@ -101,10 +101,10 @@ public class MediaLibrary {
         return fileInfo;
     }
 
-    public UUID addByUrlAsync(String originalUrlOrDoiOrHandle) throws StoragePolicyException {
+    public UUID addByUrlAsync(String originalUrlOrDoiOrHandle, Profile profile) throws StoragePolicyException {
         UUID id = UUID.randomUUID();
         Future<FileInfo> future = executorService.submit(() ->
-                addByUrl(cachingClient, dataStore, profiler, storagePolicy, id, originalUrlOrDoiOrHandle));
+                addByUrl(cachingClient, dataStore, profiler, storagePolicy, id, originalUrlOrDoiOrHandle, profile));
         addFileInfoFuture(new FileInfoFuture(id, future));
         return id;
     }
@@ -121,21 +121,19 @@ public class MediaLibrary {
         if (archiveProfile.isMediaType(Constants.MEDIATYPE_ZIP)) {
             Path path = Paths.get(archiveEntry);
             String name = path.getName(path.getNameCount() - 1).toString();
-            ZipFile zfile = new ZipFile(archivePath.toFile());
-            return addFile(name, zfile.getInputStream(zfile.getEntry(archiveEntry)), entryProfile);
+            try (ZipFile zfile = new ZipFile(archivePath.toFile());
+                 InputStream zis = zfile.getInputStream(zfile.getEntry(archiveEntry))) {
+                return addFile(name, zis, entryProfile);
+            }
         } else if (archiveProfile.isMediaType(Constants.MEDIATYPE_TAR)) {
             Path path = Paths.get(archiveEntry);
             String name = path.getName(path.getNameCount() - 1).toString();
-            try (BufferedInputStream fis = new BufferedInputStream(new FileInputStream(archivePath.toFile()));
-                 TarArchiveInputStream tais = new TarArchiveInputStream(fis)) {
-                for (ArchiveEntry entry = tais.getNextEntry(); entry != null; entry = tais.getNextEntry()) {
-                    if (entry.getName().equals(archiveEntry) && tais.canReadEntryData(entry)) {
-                        InputStream entryStream = ByteStreams.limit(tais, entry.getSize());
-                        return addFile(name, entryStream, entryProfile);
-                    }
+            try (InputStream tis = ArchiveOps.extractFileFromTar(archivePath.toFile(), archiveEntry)) {
+                if (tis == null) {
+                    throw new StorageException(new Exception("Unknown archive entry"));
                 }
+                return addFile(name, tis, entryProfile);
             }
-            throw new StorageException(new Exception("Unknown archive entry"));
         } else if (archiveProfile.isMediaType(Constants.MEDIATYPE_GZIP)) {
             try (BufferedInputStream fis = new BufferedInputStream(new FileInputStream(archivePath.toFile()));
                  GzipCompressorInputStream gzis = new GzipCompressorInputStream(fis)) {
@@ -184,13 +182,15 @@ public class MediaLibrary {
 
     private static FileInfo addByUrl(CloseableHttpClient cachingClient,
                                      DataStore dataStore, Profiler profiler, StoragePolicy storagePolicy,
-                                     UUID id, String originalUrlOrDoiOrHandle) throws CommonException, ProfilingException {
+                                     UUID id, String originalUrlOrDoiOrHandle, Profile profile)
+            throws CommonException, ProfilingException {
         LinkMetadata.LinkInfo linkInfo = LinkMetadata.getLinkData(cachingClient, originalUrlOrDoiOrHandle);
         try {
             storagePolicy.acceptSize(linkInfo.response.getEntity().getContentLength());
             FileInfo fileInfo = addFile(dataStore, profiler, storagePolicy,
                     id, linkInfo.filename, linkInfo.response.getEntity().getContent(), null);
             fileInfo.setLinksInfo(originalUrlOrDoiOrHandle, linkInfo.downloadLink, linkInfo.redirects);
+            Quirks.specializeProfile(fileInfo, profile);
             return fileInfo;
         } catch (IOException xc) {
             throw new LinkException(LinkException.Kind.DATA_STREAM_ERROR, "" + linkInfo.downloadLink, xc);
