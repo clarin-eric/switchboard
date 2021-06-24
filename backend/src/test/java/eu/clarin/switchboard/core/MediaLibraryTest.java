@@ -6,6 +6,7 @@ import eu.clarin.switchboard.core.xc.CommonException;
 import eu.clarin.switchboard.core.xc.LinkException;
 import eu.clarin.switchboard.core.xc.StorageException;
 import eu.clarin.switchboard.core.xc.StoragePolicyException;
+import eu.clarin.switchboard.profiler.DefaultProfiler;
 import eu.clarin.switchboard.profiler.api.Profile;
 import eu.clarin.switchboard.profiler.api.Profiler;
 import eu.clarin.switchboard.profiler.api.ProfilingException;
@@ -47,8 +48,7 @@ public class MediaLibraryTest {
 
         dataStore = new DataStore(dataStoreRoot, storagePolicy);
 
-        TikaConfig tikaConfig = new TikaConfig(this.getClass().getResourceAsStream("/tikaConfig.xml"));
-        profiler = new TikaProfiler(tikaConfig);
+        profiler = new DefaultProfiler();
 
         urlResolver = new UrlResolverConfig(3, 3, "seconds", 10);
     }
