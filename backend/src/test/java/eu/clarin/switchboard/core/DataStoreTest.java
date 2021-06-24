@@ -1,7 +1,6 @@
 package eu.clarin.switchboard.core;
 
 import eu.clarin.switchboard.app.config.DataStoreConfig;
-import eu.clarin.switchboard.core.xc.LinkException;
 import eu.clarin.switchboard.core.xc.StoragePolicyException;
 import org.junit.Before;
 import org.junit.Test;

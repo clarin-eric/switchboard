@@ -4,12 +4,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.ByteStreams;
+import com.google.common.io.CharSource;
+import com.google.common.io.CharStreams;
 import eu.clarin.switchboard.core.ArchiveOps;
 import eu.clarin.switchboard.core.Constants;
 import eu.clarin.switchboard.core.FileInfo;
 import eu.clarin.switchboard.core.MediaLibrary;
 import eu.clarin.switchboard.profiler.api.Profile;
-import org.apache.commons.io.IOUtils;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.slf4j.Logger;
@@ -40,7 +41,54 @@ public class DataResource {
 
     @GET
     @Path("/{id}")
-    public Response getFile(@PathParam("id") String idString, @QueryParam("mediatype") String mediatype) throws Throwable {
+    public Response httpGetFile(@PathParam("id") String idString, @QueryParam("mediatype") String mediatype) throws Throwable {
+        return getFile(idString, mediatype);
+    }
+
+    @PUT
+    @Path("/{id}")
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.TEXT_PLAIN + ";charset=utf-8")
+    public Response httpPutContent(@PathParam("id") String idString, String content) throws Throwable {
+        return putContent(idString, content);
+    }
+
+    @GET
+    @Path("/{id}/info")
+    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+    public Response httpGetFileInfo(@Context HttpServletRequest request, @PathParam("id") String idString) throws Throwable {
+        return getFileInfo(request.getRequestURI(), idString);
+    }
+
+    @POST
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+    public Response httpPostFile(@Context HttpServletRequest request,
+                                 @FormDataParam("file") InputStream inputStream,
+                                 @FormDataParam("file") final FormDataContentDisposition contentDispositionHeader,
+                                 @FormDataParam("url") String url,
+                                 @FormDataParam("mimetype") String mimetype,
+                                 @FormDataParam("archiveID") String archiveID,
+                                 @FormDataParam("archiveEntryName") String archiveEntryName,
+                                 @FormDataParam("profile") String profileString
+    ) throws Throwable {
+        if (mimetype != null) {
+            throw new Exception("mimetype is deprecated, use `profile` form instead of mimetype: " + mimetype);
+        }
+        String filename = contentDispositionHeader == null ? null : contentDispositionHeader.getFileName();
+        return postFile(request.getRequestURI(),
+                inputStream, filename, url, archiveID, archiveEntryName, profileString);
+    }
+
+    @GET
+    @Path("/{id}/outline")
+    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+    public Response httpGetOutline(@PathParam("id") String idString)
+            throws Throwable {
+        return getOutline(idString);
+    }
+
+    public Response getFile(String idString, String mediatype) throws Throwable {
         FileInfo fi = getFileInfo(idString);
         if (fi == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
@@ -52,21 +100,22 @@ public class DataResource {
             output.flush();
         };
 
-        Response.ResponseBuilder builder = Response.ok(fileStream);
-        if (mediatype != null && !mediatype.isEmpty()) {
-            builder.type(mediatype);
-        } else {
-            builder.type(fi.getProfile().toProfile().getMediaType());
+        if (mediatype == null || mediatype.isEmpty()) {
+            mediatype = fi.getProfile().toProfile().getMediaType();
         }
-        builder.header("content-disposition", "attachment; filename=" + fi.getFilename());
-        return builder.build();
+        if (MediaType.TEXT_PLAIN.equalsIgnoreCase(mediatype)) {
+            String isUTF8Feature = fi.getProfile().toProfile().getFeature(Profile.FEATURE_IS_UTF8);
+            if (Boolean.parseBoolean(isUTF8Feature)) {
+                mediatype = mediatype + ";charset=utf-8";
+            }
+        }
+        return Response.ok(fileStream)
+                .type(mediatype)
+                .header("content-disposition", "attachment; filename=" + fi.getFilename())
+                .build();
     }
 
-    @PUT
-    @Path("/{id}")
-    @Consumes(MediaType.TEXT_PLAIN)
-    @Produces(MediaType.TEXT_PLAIN + ";charset=utf-8")
-    public Response putContent(@PathParam("id") String idString, String content) throws Throwable {
+    public Response putContent(String idString, String content) throws Throwable {
         FileInfo fi = getFileInfo(idString);
         if (fi == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
@@ -81,45 +130,33 @@ public class DataResource {
         return Response.ok(content).type(MediaType.TEXT_PLAIN).build();
     }
 
-    @GET
-    @Path("/{id}/info")
-    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-    public Response getFileInfo(@Context HttpServletRequest request, @PathParam("id") String idString)
-            throws Throwable {
+    public Response getFileInfo(String requestURI, String idString) throws Throwable {
         FileInfo fi = getFileInfo(idString);
         if (fi == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
 
         final String trimEnd = "/info";
-        String localLink = request.getRequestURI();
+        String localLink = requestURI;
         assert (localLink.endsWith(trimEnd));
         localLink = localLink.substring(0, localLink.length() - trimEnd.length());
 
         return fileInfoToResponse(URI.create(localLink), fi);
     }
 
-    @POST
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
-    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-    public Response postFile(@Context HttpServletRequest request,
-                             @FormDataParam("file") InputStream inputStream,
-                             @FormDataParam("file") final FormDataContentDisposition contentDispositionHeader,
-                             @FormDataParam("url") String url,
-                             @FormDataParam("mimetype") String mimetype,
-                             @FormDataParam("archiveID") String archiveID,
-                             @FormDataParam("archiveEntryName") String archiveEntryName,
-                             @FormDataParam("profile") String profileString
+    public Response postFile(String requestURI,
+                             InputStream inputStream,
+                             String filename,
+                             String url,
+                             String archiveID,
+                             String archiveEntryName,
+                             String profileString
     ) throws Throwable {
         FileInfo fileInfo;
-        if (contentDispositionHeader != null) {
-            String filename = contentDispositionHeader.getFileName();
+        if (inputStream != null && filename != null) {
             fileInfo = mediaLibrary.addFile(filename, inputStream, null);
         } else if (url != null) {
-            Profile profile = null;
-            if (mimetype != null && !mimetype.isEmpty()) {
-                profile = Profile.builder().mediaType(mimetype).build();
-            }
+            Profile profile = readProfile(profileString);
             fileInfo = mediaLibrary.addByUrl(url, profile);
         } else if (archiveID != null && !archiveID.isEmpty()) {
             FileInfo fi = getFileInfo(archiveID);
@@ -135,21 +172,20 @@ public class DataResource {
             return Response.status(400).entity("Please provide either a file or a url to download in the form").build();
         }
 
-        URI localLink = UriBuilder.fromPath(request.getRequestURI())
+        URI localLink = UriBuilder.fromPath(requestURI)
                 .path(fileInfo.getId().toString())
                 .build();
         return fileInfoToResponse(localLink, fileInfo);
     }
 
     private Profile readProfile(String profileString) {
-        if (profileString != null && !profileString.isEmpty()) {
-            Profile.Flat flat;
-            try {
-                flat = mapper.readValue(profileString, Profile.Flat.class);
-                return flat.toProfile();
-            } catch (JsonProcessingException xc) {
-                LOGGER.error("json conversion exception ", xc);
-            }
+        if (profileString == null || profileString.isEmpty()) {
+            return null;
+        }
+        try {
+            return mapper.readValue(profileString, Profile.Flat.class).toProfile();
+        } catch (JsonProcessingException xc) {
+            LOGGER.error("json conversion exception ", xc);
         }
         return null;
     }
@@ -169,9 +205,10 @@ public class DataResource {
         // add the file content
         File file = fileInfo.getPath().toFile();
         try (InputStream fin = new BufferedInputStream(new FileInputStream(file));
-             InputStream in = ByteStreams.limit(fin, MAX_INLINE_CONTENT)
+             InputStream in = ByteStreams.limit(fin, MAX_INLINE_CONTENT);
+             Reader reader = new InputStreamReader(in, StandardCharsets.UTF_8)
         ) {
-            String preview = IOUtils.toString(in, StandardCharsets.UTF_8);
+            String preview = CharStreams.toString(reader);
             if (preview != null && !preview.isEmpty()) {
                 ret.put("content", preview);
                 if (file.length() > MAX_INLINE_CONTENT) {
@@ -186,11 +223,7 @@ public class DataResource {
         return Response.ok(ret).build();
     }
 
-    @GET
-    @Path("/{id}/outline")
-    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-    public Response getOutline(@Context HttpServletRequest request, @PathParam("id") String idString)
-            throws Throwable {
+    public Response getOutline(String idString) throws Throwable {
         FileInfo fi = getFileInfo(idString);
         if (fi == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
