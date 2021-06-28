@@ -72,9 +72,6 @@ public class DataResource {
                                  @FormDataParam("archiveEntryName") String archiveEntryName,
                                  @FormDataParam("profile") String profileString
     ) throws Throwable {
-        if (mimetype != null) {
-            throw new Exception("mimetype is deprecated, use `profile` form instead of mimetype: " + mimetype);
-        }
         String filename = contentDispositionHeader == null ? null : contentDispositionHeader.getFileName();
         return postFile(request.getRequestURI(),
                 inputStream, filename, url, archiveID, archiveEntryName, profileString);
