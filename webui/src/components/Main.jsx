@@ -21,11 +21,14 @@ export class Main extends React.Component {
             if (origin && url) {
                 params.origin = decodeURIComponent(origin);
                 params.url = decodeURIComponent(url);
-                if (mimetype) {
-                    params.mimetype = decodeURIComponent(mimetype);
-                }
-                if (language) {
-                    params.language = decodeURIComponent(language);
+                if (mimetype || language) {
+                    params.profile = {};
+                    if (mimetype) {
+                        params.profile.mediaType = decodeURIComponent(mimetype);
+                    }
+                    if (language) {
+                        params.profile.language = decodeURIComponent(language);
+                    }
                 }
             } else {
                 console.error("Switchboard: incomplete parameter list");
