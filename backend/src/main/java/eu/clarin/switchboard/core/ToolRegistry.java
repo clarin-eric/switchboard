@@ -21,14 +21,17 @@ import java.util.stream.Collectors;
 
 public class ToolRegistry {
     private static final Logger LOGGER = LoggerFactory.getLogger(ToolRegistry.class);
+
     private static final String PRODUCTION_DEPLOYMENT = "production";
+    public static final Predicate<Tool> ALL_TOOLS = tool -> true;
+    public static final Predicate<Tool> ONLY_PRODUCTION_TOOLS = tool ->
+            tool.getDeployment().equalsIgnoreCase(PRODUCTION_DEPLOYMENT);
 
     private final Path registryPath;
     private final AtomicReference<List<Tool>> tools = new AtomicReference<>();
     private Runnable callback;
 
-    public List<Tool> filterTools(boolean onlyProductionTools) {
-        Predicate<Tool> filter = tool -> !onlyProductionTools || tool.getDeployment().equalsIgnoreCase(PRODUCTION_DEPLOYMENT);
+    public List<Tool> filterTools(Predicate<Tool> filter) {
         return tools.get()
                 .stream()
                 .filter(filter)
@@ -111,13 +114,11 @@ public class ToolRegistry {
         }
     }
 
-    public List<ToolMatches> filterTools(List<Profile> profiles, boolean onlyProductionTools) {
-        Predicate<Tool> filterDeployment = tool -> !onlyProductionTools || tool.getDeployment().equalsIgnoreCase(PRODUCTION_DEPLOYMENT);
-
+    public List<ToolMatches> filterTools(List<Profile> profiles, Predicate<Tool> filter) {
         List<ToolMatches> results = new ArrayList<>();
 
         for (Tool tool : tools.get()) {
-            if (!filterDeployment.test(tool)) {
+            if (!filter.test(tool)) {
                 continue;
             }
             List<Input> inputs = tool.getInputs();

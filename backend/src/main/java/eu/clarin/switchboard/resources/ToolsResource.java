@@ -16,6 +16,7 @@ import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Path("/api")
@@ -34,11 +35,11 @@ public class ToolsResource {
     @Path("tools")
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public Response getTools(@QueryParam("onlyProductionTools") String onlyProductionTools) {
-        boolean onlyProd = toolConfig.getShowOnlyProductionTools();
+        Predicate<Tool> filter = toolConfig.getShowOnlyProductionTools() ? ToolRegistry.ONLY_PRODUCTION_TOOLS : ToolRegistry.ALL_TOOLS;
         if (onlyProductionTools != null && !onlyProductionTools.isEmpty()) {
-            onlyProd = Boolean.parseBoolean(onlyProductionTools);
+            filter = Boolean.parseBoolean(onlyProductionTools) ? ToolRegistry.ONLY_PRODUCTION_TOOLS : ToolRegistry.ALL_TOOLS;
         }
-        List<Tool> tools = toolRegistry.filterTools(onlyProd);
+        List<Tool> tools = toolRegistry.filterTools(filter);
         tools.sort((t1, t2) -> t1.getName().compareToIgnoreCase(t2.getName()));
         return Response.ok(tools).build();
     }
@@ -49,12 +50,12 @@ public class ToolsResource {
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public Response getToolsByProfile(@QueryParam("onlyProductionTools") String onlyProductionTools,
                                       List<Profile.Flat> flat) {
-        boolean onlyProd = toolConfig.getShowOnlyProductionTools();
+        Predicate<Tool> filter = toolConfig.getShowOnlyProductionTools() ? ToolRegistry.ONLY_PRODUCTION_TOOLS : ToolRegistry.ALL_TOOLS;
         if (onlyProductionTools != null && !onlyProductionTools.isEmpty()) {
-            onlyProd = Boolean.parseBoolean(onlyProductionTools);
+            filter = Boolean.parseBoolean(onlyProductionTools) ? ToolRegistry.ONLY_PRODUCTION_TOOLS : ToolRegistry.ALL_TOOLS;
         }
         List<Profile> profiles = flat.stream().map(Profile.Flat::toProfile).collect(Collectors.toList());
-        List<ToolRegistry.ToolMatches> toolMatches = toolRegistry.filterTools(profiles, onlyProd);
+        List<ToolRegistry.ToolMatches> toolMatches = toolRegistry.filterTools(profiles, filter);
 
         return Response.ok(toolMatches).build();
     }

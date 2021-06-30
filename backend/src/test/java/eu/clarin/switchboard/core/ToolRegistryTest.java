@@ -25,10 +25,10 @@ public class ToolRegistryTest {
     public void filterTools() {
         List<Tool> tools;
 
-        tools = toolRegistry.filterTools(true);
+        tools = toolRegistry.filterTools(ToolRegistry.ONLY_PRODUCTION_TOOLS);
         assertEquals(1, tools.size());
 
-        tools = toolRegistry.filterTools(false);
+        tools = toolRegistry.filterTools(ToolRegistry.ALL_TOOLS);
         assertEquals(4, tools.size());
     }
 
@@ -40,7 +40,7 @@ public class ToolRegistryTest {
         profiles = Collections.singletonList(
                 Profile.builder().mediaType("text/plain").language("eng").build()
         );
-        toolMatches = toolRegistry.filterTools(profiles, true);
+        toolMatches = toolRegistry.filterTools(profiles, ToolRegistry.ONLY_PRODUCTION_TOOLS);
         assertEquals(1, toolMatches.size());
         assertEquals("First", toolMatches.get(0).tool.getName());
         assertEquals(1, toolMatches.get(0).getMatches().size());
@@ -49,7 +49,7 @@ public class ToolRegistryTest {
         profiles = Collections.singletonList(
                 Profile.builder().mediaType("text/plain").language("eng").build()
         );
-        toolMatches = toolRegistry.filterTools(profiles, false);
+        toolMatches = toolRegistry.filterTools(profiles, ToolRegistry.ALL_TOOLS);
         assertEquals(3, toolMatches.size());
 
         assertEquals("First", toolMatches.get(0).tool.getName());
@@ -75,7 +75,7 @@ public class ToolRegistryTest {
                 Profile.builder().mediaType("text/plain").language("eng").build(),
                 Profile.builder().mediaType("application/pdf").language("deu").build()
         );
-        toolMatches = toolRegistry.filterTools(profiles, false);
+        toolMatches = toolRegistry.filterTools(profiles, ToolRegistry.ALL_TOOLS);
         assertEquals(3, toolMatches.size());
 
         assertEquals("Fourth", toolMatches.get(0).tool.getName());
