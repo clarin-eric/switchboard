@@ -275,6 +275,12 @@ public class ToolRegistry {
                     tool.augment(gson.fromJson(r2, Map.class));
                 }
 
+                long distinctIDs = tool.getInputs().stream().map(Input::getId).distinct().count();
+                if (distinctIDs != tool.getInputs().size()) {
+                    LOGGER.error("duplicated id in inputs of tool: " + tool.getName());
+                    continue;
+                }
+
                 if (tool.getName() == null || tool.getDescription() == null) {
                     LOGGER.warn("json file " + f.getPath() + " does not seem to be a tool (no name or description) and will be ignored");
                 } else {

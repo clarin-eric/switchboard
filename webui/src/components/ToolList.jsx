@@ -502,7 +502,7 @@ class ToolCard extends React.Component {
 const InputMatches = ({tool, selectResourceMatch}) => {
     const ignoreEvent = e => {e.preventDefault(); e.stopPropagation()};
     const inputFn = (input, i) => {
-        return <p key={i}>Input {input.name ? <em><strong>{input.name}</strong></em> : false} {text}</p>
+        return <p key={i}>Input {input.id ? <em><strong>{input.id}</strong></em> : false} {text}</p>
     };
     return (
         <React.Fragment>
@@ -527,7 +527,7 @@ const InputMatches = ({tool, selectResourceMatch}) => {
                                 {" "}
                                 Input
                                 {" "}
-                                {input.name && <span className="resource-index">{input.name}</span>}
+                                {input.id && <span className="resource-index">{input.id}</span>}
                                 {" "}
                                 {match[inputIndex] < 0 ?
                                     'does not match any resource.' :
@@ -549,7 +549,7 @@ const InputRow = ({ input }) => {
 
     return (
         <React.Fragment>
-            <dt>{"Input " + (input.name ? `[${input.name}]` : "")}</dt>
+            <dt>{"Input " + (input.id ? `[${input.id}]` : "")}</dt>
             <dd>
                 <div className="row">
                     <div className="col-sm-2 inputclass">Mediatypes:</div>

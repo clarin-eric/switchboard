@@ -12,6 +12,7 @@ import java.util.Set;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static java.util.Arrays.asList;
 
 public class ToolRegistryTest {
     ToolRegistry toolRegistry;
@@ -29,72 +30,104 @@ public class ToolRegistryTest {
         assertEquals(1, tools.size());
 
         tools = toolRegistry.filterTools(ToolRegistry.ALL_TOOLS);
-        assertEquals(4, tools.size());
+        assertEquals(5, tools.size());
     }
 
     @Test
     public void filterToolsByProfile() {
-        List<ToolRegistry.ToolMatches> toolMatches;
+        List<ToolRegistry.ToolMatches> allToolsMatches;
         List<Profile> profiles;
 
         profiles = Collections.singletonList(
                 Profile.builder().mediaType("text/plain").language("eng").build()
         );
-        toolMatches = toolRegistry.filterTools(profiles, ToolRegistry.ONLY_PRODUCTION_TOOLS);
-        assertEquals(1, toolMatches.size());
-        assertEquals("First", toolMatches.get(0).tool.getName());
-        assertEquals(1, toolMatches.get(0).getMatches().size());
-        assertEquals(Arrays.asList(0), toolMatches.get(0).getMatches().get(0));
+        allToolsMatches = toolRegistry.filterTools(profiles, ToolRegistry.ONLY_PRODUCTION_TOOLS);
+        assertEquals(1, allToolsMatches.size());
+        {
+            ToolRegistry.ToolMatches toolMatches = allToolsMatches.get(0);
+            assertEquals("First", toolMatches.tool.getName());
+            assertEquals(asList(asList(0)), toolMatches.getMatches());
+        }
 
         profiles = Collections.singletonList(
                 Profile.builder().mediaType("text/plain").language("eng").build()
         );
-        toolMatches = toolRegistry.filterTools(profiles, ToolRegistry.ALL_TOOLS);
-        assertEquals(3, toolMatches.size());
+        allToolsMatches = toolRegistry.filterTools(profiles, ToolRegistry.ALL_TOOLS);
+        assertEquals(4, allToolsMatches.size());
 
-        assertEquals("First", toolMatches.get(0).tool.getName());
-        assertEquals(1, toolMatches.get(0).getMatches().size());
-        assertEquals(Arrays.asList(0), toolMatches.get(0).getMatches().get(0));
+        {
+            ToolRegistry.ToolMatches toolMatches = allToolsMatches.get(0);
+            assertEquals("First", toolMatches.tool.getName());
+            assertEquals(asList(asList(0)), toolMatches.getMatches());
+        }
 
-        assertEquals("Second", toolMatches.get(1).tool.getName());
-        assertEquals(1, toolMatches.get(1).getMatches().size());
-        assertEquals(Arrays.asList(0), toolMatches.get(1).getMatches().get(0));
+        {
+            ToolRegistry.ToolMatches toolMatches = allToolsMatches.get(1);
+            assertEquals("Second", toolMatches.tool.getName());
+            assertEquals(asList(asList(0)), toolMatches.getMatches());
+        }
 
-        assertEquals("Fourth", toolMatches.get(2).tool.getName());
-        assertEquals(2, toolMatches.get(2).getMatches().size());
-        assertEquals(Arrays.asList(0, -1), toolMatches.get(2).getMatches().get(0));
-        assertEquals(Arrays.asList(-1, 0), toolMatches.get(2).getMatches().get(1));
+        {
+            ToolRegistry.ToolMatches toolMatches = allToolsMatches.get(2);
+            assertEquals("Fourth", toolMatches.tool.getName());
+            assertEquals(asList(asList(0, -1), asList(-1, 0)), toolMatches.getMatches());
+        }
+
+        {
+            ToolRegistry.ToolMatches toolMatches = allToolsMatches.get(3);
+            assertEquals("Variadic", toolMatches.tool.getName());
+            assertEquals(asList(asList(0, -1), asList(-1, 0)), toolMatches.getMatches());
+        }
     }
 
     @Test
     public void filterToolsByMultipleProfiles() {
-        List<ToolRegistry.ToolMatches> toolMatches;
+        List<ToolRegistry.ToolMatches> allToolsMatches;
         List<Profile> profiles;
 
-        profiles = Arrays.asList(
+        profiles = asList(
+                Profile.builder().mediaType("text/plain").language("eng").build(),
                 Profile.builder().mediaType("text/plain").language("eng").build(),
                 Profile.builder().mediaType("application/pdf").language("deu").build()
         );
-        toolMatches = toolRegistry.filterTools(profiles, ToolRegistry.ALL_TOOLS);
-        assertEquals(3, toolMatches.size());
+        allToolsMatches = toolRegistry.filterTools(profiles, ToolRegistry.ALL_TOOLS);
+        assertEquals(4, allToolsMatches.size());
 
-        assertEquals("Fourth", toolMatches.get(0).tool.getName());
-        assertEquals(1, toolMatches.get(0).getMatches().size());
-        assertEquals(Arrays.asList(1, 0), toolMatches.get(0).getMatches().get(0));
+        {
+            ToolRegistry.ToolMatches toolMatches = allToolsMatches.get(0);
+            assertEquals("Fourth", toolMatches.tool.getName());
+            Object expected = asList(asList(1, 0), asList(2, 0), asList(0, 1), asList(2, 1));
+            assertEquals(expected, toolMatches.getMatches());
+        }
 
-        assertEquals("First", toolMatches.get(1).tool.getName());
-        assertEquals(1, toolMatches.get(1).getMatches().size());
-        assertEquals(Arrays.asList(0), toolMatches.get(1).getMatches().get(0));
+        {
+            ToolRegistry.ToolMatches toolMatches = allToolsMatches.get(1);
+            assertEquals("Variadic", toolMatches.tool.getName());
+            Object expected = asList(asList(1, 0), asList(2, 0), asList(0, 1), asList(2, 1));
+            assertEquals(expected, toolMatches.getMatches());
+        }
 
-        assertEquals("Second", toolMatches.get(2).tool.getName());
-        assertEquals(1, toolMatches.get(2).getMatches().size());
-        assertEquals(Arrays.asList(0), toolMatches.get(2).getMatches().get(0));
+        {
+            ToolRegistry.ToolMatches toolMatches = allToolsMatches.get(2);
+            assertEquals("First", toolMatches.tool.getName());
+            assertEquals(1, toolMatches.getMatches().size());
+            Object expected = asList(asList(1, 0), asList(2, 0), asList(0, 1), asList(2, 1));
+            assertEquals(expected, toolMatches.getMatches());
+        }
+
+        {
+            ToolRegistry.ToolMatches toolMatches = allToolsMatches.get(3);
+            assertEquals("Second", toolMatches.tool.getName());
+            assertEquals(1, toolMatches.getMatches().size());
+            Object expected = asList(asList(1, 0), asList(2, 0), asList(0, 1), asList(2, 1));
+            assertEquals(expected, toolMatches.getMatches());
+        }
     }
 
     @Test
     public void getAllTools() {
         List<Tool> tools = toolRegistry.getAllTools();
-        assertEquals(4, tools.size());
+        assertEquals(5, tools.size());
     }
 
     @Test
