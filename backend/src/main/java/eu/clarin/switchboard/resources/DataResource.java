@@ -67,7 +67,6 @@ public class DataResource {
                                  @FormDataParam("file") InputStream inputStream,
                                  @FormDataParam("file") final FormDataContentDisposition contentDispositionHeader,
                                  @FormDataParam("url") String url,
-                                 @FormDataParam("mimetype") String mimetype,
                                  @FormDataParam("archiveID") String archiveID,
                                  @FormDataParam("archiveEntryName") String archiveEntryName,
                                  @FormDataParam("profile") String profileString

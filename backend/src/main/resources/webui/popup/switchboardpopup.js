@@ -20,29 +20,50 @@ const newwindowimage = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC8AAAAwCA
 
 var $ = window.$ = Zepto;
 
-const defaultSwitchboardURL = "https://switchboard.clarin.eu/";
-var switchboardURL = null;
+const switchboardConfig = {switchboardURL: "https://switchboard.clarin.eu/"};
+
+function init() {
+    const originMap = {
+        'vlo.clarin.eu': 'vlo',
+        'collections.clarin.eu': 'vcr',
+        'contentsearch.clarin.eu': 'fcs',
+        'b2share.eudat.eu': 'b2share',
+    }
+    const origin = originMap[window.location.host];
+    if (origin) {
+        switchboardConfig.origin = origin;
+    }
+
+    for (const x of document.getElementsByTagName('script')) {
+        if (x.src && x.src.includes('switchboardpopup')) {
+            const url = x.src;
+            const end = url.indexOf('/popup/');
+            let switchboardURL = url.substr(0, end);
+            if (!switchboardURL.endsWith("/")) {
+                // to avoid a server redirect
+                switchboardURL += "/";
+            }
+            switchboardConfig.switchboardURL = switchboardURL;
+            return;
+        }
+    }
+    console.warn("Could not automatically set the Switchboard URL, defaulting to:",
+        switchboardConfig.switchboardURL);
+}
 
 function setSwitchboardURL(url) {
-    if (url) {
-        switchboardURL = url;
-        return;
-    } else {
-        for (const x of document.getElementsByTagName('script')) {
-            if (x.src && x.src.includes('switchboardpopup')) {
-                const url = x.src;
-                const end = url.indexOf('/popup/');
-                switchboardURL = url.substr(0, end);
-                if (!switchboardURL.endsWith("/")) {
-                    // to avoid a server redirect
-                    switchboardURL += "/";
-                }
-                return;
-            }
+    switchboardConfig.switchboardURL = url;
+}
+
+const ALLOWED_CONFIG_KEYS = new Set(['switchboardURL', 'title', 'origin']);
+
+function setSwitchboardConfig(config) {
+    for (const key in config) {
+        if (!ALLOWED_CONFIG_KEYS.has(key)) {
+            console.warn("Unknown key in setSwitchboardConfig: " + key);
         }
-        switchboardURL = defaultSwitchboardURL;
-        console.warn("Could not automatically set the Switchboard URL, defaulting to:", switchboardURL);
     }
+    Object.assign(switchboardConfig, config);
 }
 
 var container, backdrop;
@@ -51,10 +72,7 @@ var oldOnmousedown = undefined;
 var oldOnselectionchange = undefined;
 var oldOnmouseup = undefined;
 
-
 function showSwitchboardPopupOnSelection(align, params) {
-    buildParams(params);
-
     let mouseDown = false;
     let nowSelecting = false;
     let selection = null;
@@ -89,7 +107,7 @@ function showSwitchboardPopupOnSelection(align, params) {
         }
         const newAlign = Object.assign({}, align, {alignSelection: selection});
         const newParams = Object.assign({}, params, {selection: selection.toString()});
-        makeDomElements(newAlign, switchboardURL, newParams);
+        makeDomElements(newAlign, switchboardConfig, newParams);
         if (oldOnmouseup) {
             oldOnmouseup(e);
         }
@@ -104,34 +122,21 @@ function disableSwitchboardPopupOnSelection() {
 }
 
 function showSwitchboardPopup(align, params) {
-    testArguments(align, params);
-    buildParams(params);
-    makeDomElements(align, switchboardURL, params);
-}
-
-function testArguments(align, params) {
-    if (!align || !align.alignSelector || !params || !params.url) {
-        throw "Bad switchboardPopup arguments";
+    if (!align || !align.alignSelector) {
+        throw "Bad switchboardPopup first argument: .alignSelector must be valid";
+    }
+    if (!params || !params.url) {
+        throw "Bad switchboardPopup second argument: .url must be valid";
     }
     const selector = $(align.alignSelector);
     if (!selector || !selector.size()) {
-        throw "The switchboardPopup first argument must be a valid selector";
-        return;
+        throw "Bad switchboardPopup first argument: .alignSelector must be a valid selector";
     }
+
+    makeDomElements(align, switchboardConfig, params);
 }
 
-function buildParams(params) {
-    const originMap = {
-        'vlo.clarin.eu': 'vlo',
-        'collections.clarin.eu': 'vcr',
-        'contentsearch.clarin.eu': 'fcs',
-        'b2share.eudat.eu': 'b2share',
-    }
-    params.origin = params.origin || originMap[window.location.host] || 'unknown';
-}
-
-
-function makeDomElements(align, invokeURL, params) {
+function makeDomElements(align, config, params) {
     container = $('<div>')
         .css({
             'position': 'absolute',
@@ -202,20 +207,23 @@ function makeDomElements(align, invokeURL, params) {
             'user-select': 'none'
         })
         .append($(`<img src="${cogimage}" style="width:24px; vertical-align:sub">`))
-        .append("Resource Switchboard")
+        .append(config.title || "Switchboard")
         .appendTo(container);
 
     const form = $('<form>')
         .css({
             display: 'none'
         }).attr({
-            action: invokeURL,
+            action: config.switchboardURL,
             method: 'POST',
             enctype: 'multipart/form-data',
             target: 'switchboard_iframe',
         });
     for (const key in params) {
         form.append($('<input>').attr({type:'text', name:key, value:params[key]}))
+    }
+    if (!params.origin && config.origin) {
+        form.append($('<input>').attr({type:'text', name:'origin', value:config['origin']}))
     }
     const formPopupValue = $('<input>').attr({type:'text', name:'popup', value:'true'});
     form.append(formPopupValue);
@@ -345,11 +353,12 @@ if (typeof old$ === 'undefined') {
     window.$ = old$;
 }
 
-// set the switchboard url automatically
-setSwitchboardURL();
+// automatically set the config: switchboard url, origin
+init();
 
 // change globals
 window.setSwitchboardURL = setSwitchboardURL;
+window.setSwitchboardConfig = setSwitchboardConfig;
 window.showSwitchboardPopup = showSwitchboardPopup;
 window.showSwitchboardPopupOnSelection = showSwitchboardPopupOnSelection;
 window.disableSwitchboardPopupOnSelection = disableSwitchboardPopupOnSelection;
