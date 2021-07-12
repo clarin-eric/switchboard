@@ -14,7 +14,7 @@ public class Input {
     List<String> mediatypes;
     Object languages;
     Integer maxSize;
-    Boolean multiple;
+    boolean multiple;
 
     public String getId() {
         return id;

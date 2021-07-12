@@ -10,7 +10,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static java.util.Arrays.asList;
 
@@ -55,28 +54,34 @@ public class ToolRegistryTest {
         allToolsMatches = toolRegistry.filterTools(profiles, ToolRegistry.ALL_TOOLS);
         assertEquals(4, allToolsMatches.size());
 
+        System.out.println(""+allToolsMatches);
+
         {
             ToolRegistry.ToolMatches toolMatches = allToolsMatches.get(0);
             assertEquals("First", toolMatches.tool.getName());
             assertEquals(asList(asList(0)), toolMatches.getMatches());
+            assertEquals(100.0, toolMatches.getBestMatchPercent(), 0.1);
         }
 
         {
             ToolRegistry.ToolMatches toolMatches = allToolsMatches.get(1);
             assertEquals("Second", toolMatches.tool.getName());
             assertEquals(asList(asList(0)), toolMatches.getMatches());
+            assertEquals(100.0, toolMatches.getBestMatchPercent(), 0.1);
         }
 
         {
             ToolRegistry.ToolMatches toolMatches = allToolsMatches.get(2);
             assertEquals("Fourth", toolMatches.tool.getName());
-            assertEquals(asList(asList(0, -1), asList(-1, 0)), toolMatches.getMatches());
+            assertEquals(asList(asList(0), asList(1)), toolMatches.getMatches());
+            assertEquals(75.0, toolMatches.getBestMatchPercent(), 0.1);
         }
 
         {
             ToolRegistry.ToolMatches toolMatches = allToolsMatches.get(3);
             assertEquals("Variadic", toolMatches.tool.getName());
-            assertEquals(asList(asList(0, -1), asList(-1, 0)), toolMatches.getMatches());
+            assertEquals(asList(asList(0), asList(1)), toolMatches.getMatches());
+            assertEquals(75.0, toolMatches.getBestMatchPercent(), 0.1);
         }
     }
 
@@ -93,34 +98,42 @@ public class ToolRegistryTest {
         allToolsMatches = toolRegistry.filterTools(profiles, ToolRegistry.ALL_TOOLS);
         assertEquals(4, allToolsMatches.size());
 
+        System.out.println(""+allToolsMatches);
+
         {
             ToolRegistry.ToolMatches toolMatches = allToolsMatches.get(0);
-            assertEquals("Fourth", toolMatches.tool.getName());
-            Object expected = asList(asList(1, 0), asList(2, 0), asList(0, 1), asList(2, 1));
+            assertEquals("Variadic", toolMatches.tool.getName());
+            // inputs:  1: text/plain+application/pdf multiple;  2: text/plain;
+            Object expected = asList(asList(1, 0, 0), asList(0, 1, 0));
             assertEquals(expected, toolMatches.getMatches());
+            assertEquals(100.0, toolMatches.getBestMatchPercent(), 0.1);
         }
 
         {
             ToolRegistry.ToolMatches toolMatches = allToolsMatches.get(1);
-            assertEquals("Variadic", toolMatches.tool.getName());
-            Object expected = asList(asList(1, 0), asList(2, 0), asList(0, 1), asList(2, 1));
+            assertEquals("Fourth", toolMatches.tool.getName());
+            // inputs:  1: text/plain+application/pdf;  2: text/plain;
+            Object expected = asList(asList(1, 0, -1), asList(0, 1, -1), asList(1, -1, 0), asList(-1, 1, 0));
             assertEquals(expected, toolMatches.getMatches());
+            assertEquals(83.33, toolMatches.getBestMatchPercent(), 0.1);
         }
 
         {
             ToolRegistry.ToolMatches toolMatches = allToolsMatches.get(2);
             assertEquals("First", toolMatches.tool.getName());
-            assertEquals(1, toolMatches.getMatches().size());
-            Object expected = asList(asList(1, 0), asList(2, 0), asList(0, 1), asList(2, 1));
+            // inputs:  1: text/plain
+            Object expected = asList(asList(0, -1, -1), asList(-1, 0, -1));
             assertEquals(expected, toolMatches.getMatches());
+            assertEquals(66.66, toolMatches.getBestMatchPercent(), 0.1);
         }
 
         {
             ToolRegistry.ToolMatches toolMatches = allToolsMatches.get(3);
             assertEquals("Second", toolMatches.tool.getName());
-            assertEquals(1, toolMatches.getMatches().size());
-            Object expected = asList(asList(1, 0), asList(2, 0), asList(0, 1), asList(2, 1));
+            // inputs:  1: text/plain+application/pdf
+            Object expected = asList(asList(0, -1, -1), asList(-1, 0, -1));
             assertEquals(expected, toolMatches.getMatches());
+            assertEquals(66.66, toolMatches.getBestMatchPercent(), 0.1);
         }
     }
 

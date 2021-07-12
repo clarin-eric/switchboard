@@ -288,8 +288,8 @@ public class Tool {
         setFormatVersion("2");
     }
 
-    public boolean requiresContent(int inputIndex) {
-        String contentBind = inputs.get(inputIndex).getName() + "/content";
+    public boolean doesInputRequireContent(int inputIndex) {
+        String contentBind = inputs.get(inputIndex).getId() + "/content";
         Predicate<Parameter> bindsContent = p -> contentBind.equals(p.bind);
         if (webApplication == null) {
             return false;

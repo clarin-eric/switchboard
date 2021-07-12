@@ -1,13 +1,11 @@
 package eu.clarin.switchboard.resources;
 
-import com.google.common.io.ByteStreams;
 import eu.clarin.switchboard.app.config.DataStoreConfig;
 import eu.clarin.switchboard.app.config.UrlResolverConfig;
 import eu.clarin.switchboard.core.DataStore;
 import eu.clarin.switchboard.core.DefaultStoragePolicy;
 import eu.clarin.switchboard.core.MediaLibrary;
 import eu.clarin.switchboard.profiler.DefaultProfiler;
-import eu.clarin.switchboard.profiler.api.Profile;
 import eu.clarin.switchboard.profiler.api.Profiler;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,9 +19,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import static org.junit.Assert.*;
 
