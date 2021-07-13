@@ -1,5 +1,6 @@
 package eu.clarin.switchboard.resources;
 
+import eu.clarin.switchboard.app.config.SwitchboardConfig;
 import eu.clarin.switchboard.core.ToolRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,17 +28,13 @@ public class InfoResource {
     Map<String, String> languageCodeToName;
     Boolean showFundingBadge;
 
-    public InfoResource(ToolRegistry toolRegistry, Map<String, String> gitProps,
-                        boolean enableMultipleResources,
-                        long maxAllowedDataSize,
-                        String contactEmail,
-                        Boolean  showFundingBadge) throws IOException {
+    public InfoResource(ToolRegistry toolRegistry, Map<String, String> gitProps, SwitchboardConfig config) throws IOException {
         this.toolRegistry = toolRegistry;
         this.gitProps = gitProps == null ? new HashMap<>() : gitProps;
-        this.enableMultipleResources = enableMultipleResources;
-        this.maxAllowedDataSize = maxAllowedDataSize;
-        this.contactEmail = contactEmail;
-        this.showFundingBadge = showFundingBadge;
+        this.enableMultipleResources = config.getTools().getEnableMultipleResources();
+        this.maxAllowedDataSize = config.getDataStore().getMaxSize();
+        this.contactEmail = config.getContactEmail();
+        this.showFundingBadge = config.getShowFundingBadge();
 
         this.languageCodeToName = new HashMap<>();
         try (InputStream is = getClass().getResourceAsStream("/iso639-3.tsv");

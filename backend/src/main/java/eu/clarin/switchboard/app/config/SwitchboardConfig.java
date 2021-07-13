@@ -1,11 +1,9 @@
 package eu.clarin.switchboard.app.config;
 
 import com.google.common.base.MoreObjects;
-import eu.clarin.switchboard.core.ToolRegistry;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.util.Map;
 
 public class SwitchboardConfig {
     @Valid
@@ -28,6 +26,8 @@ public class SwitchboardConfig {
     @NotNull
     private ToolConfig tools;
 
+    @Valid
+    @NotNull
     private Boolean showFundingBadge;
 
     public String getContactEmail() {
@@ -65,5 +65,4 @@ public class SwitchboardConfig {
                 .add("\tshowFundingBadge", showFundingBadge)
                 .toString();
     }
-
 }
