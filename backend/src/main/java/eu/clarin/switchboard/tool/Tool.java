@@ -218,8 +218,14 @@ public class Tool {
         assert standaloneApplication == null;
 
         Input input = new Input();
-        input.id = "first_input";
-        input.setMediatypes((List<String>) v1map.get("mimetypes"));
+        input.id = "input";
+        List<String> mediatypes = (List<String>) v1map.get("mimetypes");
+        input.setMediatypes(mediatypes);
+        for (String mediatype: mediatypes) {
+            if (mediatype.startsWith("text/")) {
+                input.id = "text";
+            }
+        }
         List<String> languages = (List<String>) v1map.get("languages");
         if (languages.contains(ANY_LANGUAGE_KEYWORD_V1)) {
             input.setLanguages(ANY_LANGUAGE_KEYWORD);

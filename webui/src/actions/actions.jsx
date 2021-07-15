@@ -381,11 +381,15 @@ function fetchMatchingTools() {
                 const toolMatches = response.data;
                 // find correct matching indices (we have archive resources, which are sources for others)
                 toolMatches.forEach(toolMatch => {
-                    toolMatch.matches = toolMatch.matches.map(indicesList =>
-                        indicesList.map(index => index < 0 ? index :
-                            allResources.findIndex(r => r.id === resourceList[index].id)
-                        )
-                    );
+                    toolMatch.matches = toolMatch.matches.map(indicesList => {
+                        const newlist = Array(indicesList.length).fill(-1);
+                        for (let i = 0; i < indicesList.length; ++i) {
+                            const newindex = allResources.findIndex(r=> r.id === resourceList[i].id);
+                            newlist[newindex] = indicesList[i];
+                        }
+                        console.log({oldlist: indicesList, newlist});
+                        return newlist;
+                    });
                 });
 
                 const tools = toolMatches.map(tm => {
