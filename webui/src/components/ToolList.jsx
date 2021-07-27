@@ -37,7 +37,7 @@ export class ToolListWithControls extends React.Component {
     filterTools(tools, resourceCount, searchString, searchTerms) {
         const ret = {tools: [], hiddenTools: [], partial: [], hiddenPartial: []};
         tools.forEach(tool => {
-            const isFullMatch = resourceCount == 0 || tool.bestMatchPercent == 100 && tool.inputs.length <= resourceCount;
+            const isFullMatch = resourceCount == 0 || tool.mandatoryInputsMatchPercent == 100 && tool.profileMatchPercent == 100;
             if (searchString.length < 2 || searchTerms.every(term => tool.searchString.includes(term))) {
                 if (isFullMatch) {
                     ret.tools.push(tool);
@@ -461,7 +461,7 @@ class ToolCard extends React.Component {
 
                             {tool.inputs &&
                                 tool.inputs.map((input, i) => <InputRow  key={input.id || i} input={input}/>)}
-                            {tool.matches && (tool.bestMatchPercent < 100 || this.props.resourceList.length > 1) &&
+                            {tool.matches && (tool.mandatoryInputsMatchPercent < 100 || this.props.resourceList.length > 1) &&
                                 <InputMatches tool={tool} selectResourceMatch={selectResourceMatch}/>}
                         </dl>
                     </div>
@@ -524,14 +524,13 @@ const InputMatches = ({tool, selectResourceMatch}) => {
                         }
                         { tool.inputs.map((input, inputIndex) => {
                             const usedResources = findAllIndices(match, inputIndex).map(index => index + 1);
-                            console.log({usedResources});
                             const usedResourcesString = usedResources.join(", ");
                             return <span key={inputIndex}>
                                 {" Input "}
                                 <span className="resource-index">{input.id}</span>
-                                { usedResources.length == 0 ? ' does not match any resource.' :
-                                  usedResources.length == 1 ? ` matches resource ${usedResourcesString}.`
-                                                              : ` matches resources: ${usedResourcesString}.`
+                                { usedResources.length == 0 ? ' does not match any resource. ' :
+                                  usedResources.length == 1 ? ` matches resource ${usedResourcesString}. `
+                                                              : ` matches resources: ${usedResourcesString}. `
                                 }
                             </span>
                             })

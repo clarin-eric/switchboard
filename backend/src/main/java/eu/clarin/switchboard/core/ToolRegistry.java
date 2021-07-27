@@ -41,13 +41,13 @@ public class ToolRegistry {
     /// one matching possibility for a tool
     public static class ProfilesToToolInputMatch extends ArrayList<Integer> {
         // mapping from profile index, which is the index of the profile in array,
-        // to input index when they match, and -1 if there is no match
-        // e.g. [2, -1] means first profile matches input with index 2
+        // to input index when they match, and null if there is no match
+        // e.g. [2, null] means first profile matches input with index 2
         //      and the second profile does not match anything
         public ProfilesToToolInputMatch(int size) {
             super(size);
             for (int i = 0; i < size; ++i) {
-                add(-1);
+                add(null);
             }
         }
 
@@ -62,31 +62,23 @@ public class ToolRegistry {
         }
 
         public boolean isProfileIndexUsed(int profileIndex) {
-            return get(profileIndex) >= 0;
+            return get(profileIndex) != null;
         }
 
         public boolean isInputIndexUsed(int inputIndex) {
-            return stream().anyMatch(pIndex -> pIndex == inputIndex);
+            return stream().anyMatch(pIndex -> pIndex != null && pIndex == inputIndex);
         }
 
         private int getUsedProfilesCount() {
-            return (int) stream().filter(i -> i >= 0).count();
+            return (int) stream().filter(Objects::nonNull).count();
         }
 
-        private float getUsedProfilesPercent() {
-            return 100 * getUsedProfilesCount() / (float) size();
+        private Set<Integer> getUsedInputs() {
+            return stream().filter(Objects::nonNull).collect(Collectors.toSet());
         }
 
         private int getUsedInputsCount() {
-            return (int) stream().filter(i -> i >= 0).distinct().count();
-        }
-
-        private float getUsedInputsPercent(int totalInputs) {
-            return 100 * getUsedInputsCount() / (float) totalInputs;
-        }
-
-        public float getBestPercent(int totalInputs) {
-            return (getUsedInputsPercent(totalInputs) + getUsedProfilesPercent()) / 2;
+            return (int) stream().filter(Objects::nonNull).distinct().count();
         }
     }
 
@@ -112,9 +104,26 @@ public class ToolRegistry {
             this.matches.add(match);
         }
 
-        public float getBestMatchPercent() {
-            // the matches should always be ordered by matchCount
-            return matches.get(0).getBestPercent(this.getTool().getInputs().size());
+        public float getProfileMatchPercent() {
+            return 100 * matches.get(0).getUsedProfilesCount() / (float) matches.get(0).size();
+        }
+
+        public float getMandatoryInputsMatchPercent() {
+            long usedMandatoryInputs = matches.get(0).getUsedInputs()
+                    .stream()
+                    .filter(i -> !tool.getInputs().get(i).isOptional())
+                    .count();
+            long toolMandatoryInputs = tool.getInputs()
+                    .stream()
+                    .filter(in -> !in.isOptional())
+                    .count();
+            return 100 * usedMandatoryInputs / (float) toolMandatoryInputs;
+        }
+
+        public float getAllInputsMatchPercent() {
+            long usedInputs = matches.get(0).getUsedInputs().size();
+            long toolInputs = tool.getInputs().size();
+            return 100 * usedInputs / (float) toolInputs;
         }
 
         @Override
@@ -134,7 +143,6 @@ public class ToolRegistry {
                 continue;
             }
             List<Input> inputs = tool.getInputs();
-            int totalInputs = inputs.size();
             List<ProfilesToToolInputMatch> matches = new ArrayList<>();
             matches.add(new ProfilesToToolInputMatch(profiles.size()));
 
@@ -143,7 +151,7 @@ public class ToolRegistry {
                     List<ProfilesToToolInputMatch> betterMatches = new ArrayList<>();
                     for (ProfilesToToolInputMatch currentMatch : matches) {
                         boolean inputIsAlreadyUsed = currentMatch.isInputIndexUsed(inputIndex);
-                        boolean inputIsMultiple = inputs.get(inputIndex).getMultiple();
+                        boolean inputIsMultiple = inputs.get(inputIndex).isMultiple();
                         boolean profileIsAlreadyUsed = currentMatch.isProfileIndexUsed(profileIndex);
                         if (profileIsAlreadyUsed || (inputIsAlreadyUsed && !inputIsMultiple)) {
                             continue;
@@ -160,11 +168,12 @@ public class ToolRegistry {
             }
 
             if (matches.size() > 1) {
-                matches.sort((o1, o2) -> (int) (o2.getBestPercent(totalInputs) - o1.getBestPercent(totalInputs)));
-                float topPercent = matches.get(0).getBestPercent(totalInputs);
+                matches.sort((o1, o2) -> o2.getUsedInputsCount() - o1.getUsedInputsCount());
+                matches.sort((o1, o2) -> o2.getUsedProfilesCount() - o1.getUsedProfilesCount());
+                float topPercent = matches.get(0).getUsedInputsCount() + matches.get(0).getUsedProfilesCount();
                 ToolMatches toolMatches = new ToolMatches(tool);
                 for (int i = 0; i < matches.size() - 1; ++i) {
-                    if (matches.get(i).getBestPercent(totalInputs) >= topPercent) {
+                    if (matches.get(i).getUsedInputsCount() + matches.get(i).getUsedProfilesCount() >= topPercent) {
                         // only add the best matches (can be more than one with same matching percent)
                         toolMatches.add(matches.get(i));
                     }
@@ -174,14 +183,13 @@ public class ToolRegistry {
         }
 
         results.sort((tm1, tm2) -> {
-            final int K = 1000;
-            int x = (int) (K * tm1.getBestMatchPercent()) - (int) (K * tm2.getBestMatchPercent());
+            float x = tm2.getMandatoryInputsMatchPercent() - tm1.getMandatoryInputsMatchPercent();
             if (x != 0) {
-                return -x;
+                return (int) x;
             }
-            x = tm1.getMatches().get(0).getUsedInputsCount() - tm2.getMatches().get(0).getUsedInputsCount();
+            x = tm2.getProfileMatchPercent() - tm1.getProfileMatchPercent();
             if (x != 0) {
-                return -x;
+                return (int) x;
             }
             return tm1.getTool().getName().compareToIgnoreCase(tm2.getTool().getName());
         });
@@ -308,7 +316,6 @@ public class ToolRegistry {
             }
         }
         checkTools(tools);
-
         return Collections.unmodifiableList(tools);
     }
 

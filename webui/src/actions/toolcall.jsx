@@ -14,6 +14,7 @@ export function getInvocationURL(tool, resourceList) {
     let queryParams = "";
     if (webapp.queryParameters) {
         for (const param of webapp.queryParameters) {
+            let index = 1;
             for (const value of getServiceParameter(param, resourceList, tool.inputs, match)) {
                 if (value.error) {
                     return {error: value.error}
@@ -21,9 +22,11 @@ export function getInvocationURL(tool, resourceList) {
                 if (queryParams !== "") {
                     queryParams += "&";
                 }
-                queryParams += encodeURIComponent(param.name);
+                let name = param.name.replace(/\$\{index\}/, index);
+                queryParams += encodeURIComponent(name);
                 queryParams += "=";
                 queryParams += encodeURIComponent(value);
+                index += 1;
             }
         }
     }
@@ -81,13 +84,10 @@ function getServiceParameter(param, resourceList, inputs, match) {
     }
 
     const resourceIndices = findAllIndices(match, inputIndex);
-    console.log("for inputID: ", inputID, " found resourceIndices: ", resourceIndices);
 
     const ret = resourceIndices
         .map(resourceIndex => resourceList[resourceIndex])
         .map(resource => getResourceValueFromBind(resource, inputs[inputIndex], bind, param.encoding));
-
-    console.log("for inputID: ", inputID, " returning: ", ret);
     return ret;
 }
 

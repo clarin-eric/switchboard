@@ -29,6 +29,12 @@
             "id": "speech",
             "mediatypes": ["text/plain"],
             "languages": ["eng"]
+        },
+        {
+            "id": "optional",
+            "mediatypes": ["text/plain"],
+            "languages": ["zhu"],
+            "optional": true
         }
     ],
     "queryParameters": [

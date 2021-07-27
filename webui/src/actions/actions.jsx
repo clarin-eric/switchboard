@@ -379,15 +379,25 @@ function fetchMatchingTools() {
         axios.post(apiPath.toolsMatch, profiles)
             .then(response => {
                 const toolMatches = response.data;
+                for (const toolMatch of toolMatches) {
+                    for (const indicesList of toolMatch.matches) {
+                        if (indicesList.find(i => i != null && i < 0)) {
+                            throw {err: "-1 in indicesList:", toolMatches};
+                        }
+                    }
+                }
                 // find correct matching indices (we have archive resources, which are sources for others)
                 toolMatches.forEach(toolMatch => {
                     toolMatch.matches = toolMatch.matches.map(indicesList => {
-                        const newlist = Array(indicesList.length).fill(-1);
+                        const newlist = Array(indicesList.length).fill(null);
                         for (let i = 0; i < indicesList.length; ++i) {
                             const newindex = allResources.findIndex(r=> r.id === resourceList[i].id);
-                            newlist[newindex] = indicesList[i];
+                            if (newindex >= 0) {
+                                newlist[newindex] = indicesList[i];
+                            } else {
+                                console.error("cannot findIndex:", resourceList[i].id, " in allResources: ", allResources);
+                            }
                         }
-                        console.log({oldlist: indicesList, newlist});
                         return newlist;
                     });
                 });
@@ -395,7 +405,8 @@ function fetchMatchingTools() {
                 const tools = toolMatches.map(tm => {
                     const tool = tm.tool;
                     tool.matches = tm.matches;
-                    tool.bestMatchPercent = tm.bestMatchPercent;
+                    tool.profileMatchPercent = tm.profileMatchPercent;
+                    tool.mandatoryInputsMatchPercent = tm.mandatoryInputsMatchPercent;
                     normalizeTool(tool);
                     return tool;
                 })
@@ -423,7 +434,7 @@ function normalizeTool(tool) {
     }
     tool.searchString = searchString;
 
-    if (tool.bestMatchPercent == 100 && tool.matches && tool.matches.length) {
+    if (tool.mandatoryInputsMatchPercent == 100 && tool.matches && tool.matches.length) {
         tool.invokeMatchIndex = 0;
     }
 }

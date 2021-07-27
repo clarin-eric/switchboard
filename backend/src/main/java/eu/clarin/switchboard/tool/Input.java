@@ -15,6 +15,7 @@ public class Input {
     Object languages;
     Integer maxSize;
     boolean multiple;
+    boolean optional;
 
     public String getId() {
         return id;
@@ -48,12 +49,20 @@ public class Input {
         this.maxSize = maxSize;
     }
 
-    public Boolean getMultiple() {
+    public Boolean isMultiple() {
         return multiple;
     }
 
     public void setMultiple(Boolean multiple) {
         this.multiple = multiple;
+    }
+
+    public Boolean isOptional() {
+        return optional;
+    }
+
+    public void setOptional(Boolean optional) {
+        this.optional = optional;
     }
 
     @JsonIgnore
@@ -81,6 +90,7 @@ public class Input {
                 .add("\nmediatypes", mediatypes)
                 .add("\nlanguages", languages)
                 .add("\nmaxSize", maxSize)
+                .add("\noptional", optional)
                 .add("\nmultiple", multiple)
                 .toString();
     }
