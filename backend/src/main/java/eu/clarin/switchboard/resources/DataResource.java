@@ -67,13 +67,30 @@ public class DataResource {
                                  @FormDataParam("file") InputStream inputStream,
                                  @FormDataParam("file") final FormDataContentDisposition contentDispositionHeader,
                                  @FormDataParam("url") String url,
-                                 @FormDataParam("archiveID") String archiveID,
-                                 @FormDataParam("archiveEntryName") String archiveEntryName,
                                  @FormDataParam("profile") String profileString
     ) throws Throwable {
         String filename = contentDispositionHeader == null ? null : contentDispositionHeader.getFileName();
-        return postFile(request.getRequestURI(),
-                inputStream, filename, url, archiveID, archiveEntryName, profileString);
+        return postFile(request.getRequestURI(), inputStream, filename, url, profileString);
+    }
+
+    @POST
+    @Path("/{id}/extractEntry")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+    public Response httpPostExtractFromArchive(@Context HttpServletRequest request,
+                                               @PathParam("id") String archiveID,
+                                               @FormDataParam("archiveEntryName") String archiveEntryName,
+                                               @FormDataParam("profile") String profileString) throws Throwable {
+        return postExtractFromArchive(request.getRequestURI(), archiveID, archiveEntryName, profileString);
+    }
+
+    @POST
+    @Path("/{id}/extractText")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+    public Response httpPostExtractText(@Context HttpServletRequest request,
+                                        @PathParam("id") String textContainerID) throws Throwable {
+        return postExtractText(request.getRequestURI(), textContainerID);
     }
 
     @GET
@@ -131,47 +148,57 @@ public class DataResource {
         if (fi == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-
-        final String trimEnd = "/info";
-        String localLink = requestURI;
-        assert (localLink.endsWith(trimEnd));
-        localLink = localLink.substring(0, localLink.length() - trimEnd.length());
-
-        return fileInfoToResponse(URI.create(localLink), fi);
+        return fileInfoToResponse(requestURI, fi);
     }
 
     public Response postFile(String requestURI,
                              InputStream inputStream,
                              String filename,
                              String url,
-                             String archiveID,
-                             String archiveEntryName,
-                             String profileString
-    ) throws Throwable {
+                             String profileString) throws Throwable {
         FileInfo fileInfo;
         if (inputStream != null && filename != null) {
             fileInfo = mediaLibrary.addFile(filename, inputStream, null);
         } else if (url != null) {
             Profile profile = readProfile(profileString);
             fileInfo = mediaLibrary.addByUrl(url, profile);
-        } else if (archiveID != null && !archiveID.isEmpty()) {
-            FileInfo fi = getFileInfo(archiveID);
-            if (fi == null) {
-                return Response.status(Response.Status.NOT_FOUND).build();
-            }
-            Profile profile = readProfile(profileString);
-            fileInfo = mediaLibrary.addFromArchive(fi.getPath(), fi.getProfile().toProfile(), archiveEntryName, profile);
-            if (archiveEntryName != null) {
-                fileInfo.setSource(fi.getId(), archiveEntryName);
-            }
         } else {
             return Response.status(400).entity("Please provide either a file or a url to download in the form").build();
         }
 
-        URI localLink = UriBuilder.fromPath(requestURI)
-                .path(fileInfo.getId().toString())
-                .build();
-        return fileInfoToResponse(localLink, fileInfo);
+        return fileInfoToResponse(requestURI, fileInfo);
+    }
+
+    public Response postExtractFromArchive(String requestURI, String archiveID, String archiveEntryName,
+                                           String profileString) throws Throwable {
+        if (archiveID == null || archiveID.isEmpty()) {
+            return Response.status(400).entity("Mandatory parameter not found: id (for archive id)").build();
+        }
+        FileInfo fi = getFileInfo(archiveID);
+        if (fi == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        Profile profile = readProfile(profileString);
+        FileInfo fileInfo = mediaLibrary.addFromArchive(fi.getPath(), fi.getProfile().toProfile(), archiveEntryName, profile);
+        if (archiveEntryName != null) {
+            fileInfo.setSource(fi.getId(), archiveEntryName);
+        }
+
+        return fileInfoToResponse(requestURI, fileInfo);
+    }
+
+    public Response postExtractText(String requestURI, String textContainerID) throws Throwable {
+        if (textContainerID == null || textContainerID.isEmpty()) {
+            return Response.status(400).entity("Mandatory parameter not found: id (for archive id)").build();
+        }
+        FileInfo fi = getFileInfo(textContainerID);
+        if (fi == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        FileInfo fileInfo = mediaLibrary.addFromTextExtraction(
+                fi.getPath(), fi.getProfile().toProfile(), fi.getFilename());
+
+        return fileInfoToResponse(requestURI, fileInfo);
     }
 
     private Profile readProfile(String profileString) {
@@ -186,7 +213,7 @@ public class DataResource {
         return null;
     }
 
-    static Response fileInfoToResponse(URI localLink, FileInfo fileInfo) {
+    static Response fileInfoToResponse(String requestURI, FileInfo fileInfo) {
         Map<String, Object> ret;
         try {
             ret = mapper.readValue(mapper.writeValueAsString(fileInfo), new TypeReference<Map<String, Object>>() {
@@ -196,6 +223,10 @@ public class DataResource {
             return Response.serverError().build();
         }
         ret.remove("path");
+
+        URI localLink = UriBuilder.fromPath(requestURI)
+                .path(fileInfo.getId().toString())
+                .build();
         ret.put("localLink", localLink);
 
         // add the file content

@@ -165,7 +165,6 @@ export function toggleArchiveEntryToInputs(archiveRes, archiveEntry) {
         });
 
         var formData = new FormData();
-        formData.append("archiveID", archiveRes.id);
         formData.append("archiveEntryName", archiveEntry.name);
         if (archiveEntry.profile) {
             formData.append("profile", JSON.stringify(archiveEntry.profile));
@@ -174,7 +173,7 @@ export function toggleArchiveEntryToInputs(archiveRes, archiveEntry) {
         const newResource = {id: ++lastResourceID, sourceID: archiveRes.id, sourceEntryName: archiveEntry.name};
         dispatch(updateResource(newResource));
         axios
-            .post(apiPath.storage, formData, {
+            .post(apiPath.extractEntry(resource.id), formData, {
                 headers: {'Content-Type': 'multipart/form-data'}
             })
             .then(updateResourceCallback(dispatch, newResource, getState))
@@ -192,10 +191,32 @@ export function toggleCompressedResource(resource) {
             dispatch(updateResource(newResource));
             dispatch(removeResource(resource));
 
-            var formData = new FormData();
-            formData.append("archiveID", resource.id);
             axios
-                .post(apiPath.storage, formData, {
+                .post(apiPath.extractEntry(resource.id), new FormData(), {
+                    headers: {'Content-Type': 'multipart/form-data'}
+                })
+                .then(updateResourceCallback(dispatch, newResource, getState))
+                .catch(error => {
+                    dispatch(updateResource(resource));
+                    dispatch(removeResource(newResource));
+                    errHandler(dispatch)(error);
+                });
+        }
+    }
+}
+
+export function extractTextFromResource(resource) {
+    return function (dispatch, getState) {
+        if (resource.originalResource) {
+            // removeResource(resource);
+        } else {
+            //-- post to server to extract the text from within
+            const newResource = {id: ++lastResourceID, originalResource: SI.asMutable(resource, {deep:true})};
+            dispatch(updateResource(newResource));
+            dispatch(removeResource(resource));
+
+            axios
+                .post(apiPath.extractText(resource.id), new FormData(), {
                     headers: {'Content-Type': 'multipart/form-data'}
                 })
                 .then(updateResourceCallback(dispatch, newResource, getState))

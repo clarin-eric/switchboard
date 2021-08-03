@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import {Main} from '../components/Main';
-import {setResourceProfile, setResourceContent, removeResource, uploadLink, selectResourceMatch, toggleArchiveEntryToInputs, toggleCompressedResource} from '../actions/actions';
+import {setResourceProfile, setResourceContent, removeResource, uploadLink, selectResourceMatch, toggleArchiveEntryToInputs, toggleCompressedResource, extractTextFromResource} from '../actions/actions';
 
 const mapStateToProps = (state) => (state);
 const mapDispatchToProps = (dispatch) => ({
@@ -8,6 +8,7 @@ const mapDispatchToProps = (dispatch) => ({
     setResourceContent: (id, content) => dispatch(setResourceContent(id, content)),
     toggleArchiveEntryToInputs: (archiveID, archiveEntry) => dispatch(toggleArchiveEntryToInputs(archiveID, archiveEntry)),
     toggleCompressedResource: (res) => dispatch(toggleCompressedResource(res)),
+    extractTextFromResource: (res) => dispatch(extractTextFromResource(res)),
     removeResource: (res) => dispatch(removeResource(res)),
     uploadLink: (link) => dispatch(uploadLink(link)),
     selectResourceMatch: (toolName, matchIndex) => dispatch(selectResourceMatch(toolName, matchIndex)),

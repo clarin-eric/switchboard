@@ -43,9 +43,11 @@ public class DataResourceTest {
         storagePolicy.setAllowedMediaTypes(Collections.singleton("text/plain"));
 
         DataStore dataStore = new DataStore(dataStoreRoot, storagePolicy);
-        Profiler profiler = new DefaultProfiler();
+        DefaultProfiler profiler = new DefaultProfiler();
         UrlResolverConfig urlResolver = new UrlResolverConfig(3, 3, "seconds", 10);
-        MediaLibrary mediaLibrary = new MediaLibrary(dataStore, profiler, storagePolicy, urlResolver, dataStoreConfig);
+        MediaLibrary mediaLibrary = new MediaLibrary(
+                dataStore, profiler, profiler.getTextExtractor(),
+                storagePolicy, urlResolver, dataStoreConfig);
         dataResource = new DataResource(mediaLibrary);
     }
 
@@ -54,7 +56,7 @@ public class DataResourceTest {
     public void getFile() throws Throwable {
         InputStream is = new ByteArrayInputStream("first content".getBytes(StandardCharsets.UTF_8));
 
-        Response postResponse = dataResource.postFile("", is, "filename", null, null, null, null);
+        Response postResponse = dataResource.postFile("", is, "filename", null, null);
         String id = ((Map) postResponse.getEntity()).get("id").toString();
 
         Response r = dataResource.getFile(id, null);
@@ -66,7 +68,7 @@ public class DataResourceTest {
         String filename = "myfilename";
         InputStream is = new ByteArrayInputStream("first content".getBytes(StandardCharsets.UTF_8));
 
-        Response postResponse = dataResource.postFile("", is, filename, null, null, null, null);
+        Response postResponse = dataResource.postFile("", is, filename, null, null);
         String id = ((Map) postResponse.getEntity()).get("id").toString();
 
         Response r = dataResource.getFileInfo("/info", id);
@@ -84,7 +86,7 @@ public class DataResourceTest {
         String newContent = "new content";
         InputStream is = new ByteArrayInputStream("first content".getBytes(StandardCharsets.UTF_8));
 
-        Response postResponse = dataResource.postFile("", is, "filename", null, null, null, null);
+        Response postResponse = dataResource.postFile("", is, "filename", null, null);
         String id = ((Map) postResponse.getEntity()).get("id").toString();
 
         dataResource.putContent(id, newContent);

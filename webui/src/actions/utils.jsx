@@ -85,6 +85,21 @@ export function isCompressedProfile(mediatype) {
     return COMPRESSED_TYPES.has(mediatype);
 }
 
+const EXTRACTABLE_TEXT_TYPES = new Set([
+    "text/html",
+    "application/pdf",
+    "application/rtf",
+    "application/msword",
+    "application/vnd.ms-excel",
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+]);
+
+export function hasExtractableTextProfile(mediatype) {
+    return EXTRACTABLE_TEXT_TYPES.has(mediatype);
+}
+
 const LANG_MAP = {}; // will be initialized by addLanguageMapping
 
 export function addLanguageMapping(codeAndName) {

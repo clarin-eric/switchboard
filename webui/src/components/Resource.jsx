@@ -1,6 +1,6 @@
 import React from 'react';
 import Select from 'react-select';
-import { processMediatype, humanSize, isCompressedProfile, isTextProfile, isArchiveProfile } from '../actions/utils';
+import { processMediatype, humanSize, isCompressedProfile, hasExtractableTextProfile, isTextProfile, isArchiveProfile } from '../actions/utils';
 import { InputContainer } from '../containers/InputContainer';
 
 const SelectLanguage = (props) => {
@@ -123,6 +123,12 @@ class NormalResource extends React.Component {
                 Uncompress
             </a> : false;
 
+        const extractTextButton = hasExtractableTextProfile(res.profile.mediaType) ?
+            <a className="btn btn-xs btn-default" style={{fontSize:'70%', verticalAlign: "text-bottom"}}
+                onClick={e => this.props.extractTextFromResource(res)} >
+                Extract Text
+            </a> : false;
+
         const removeButton = (this.props.enableMultipleResources || res.sourceID) ?
             <a onClick={e => this.props.removeResource(res)}>
                 <span className={"glyphicon glyphicon-trash"}
@@ -136,6 +142,7 @@ class NormalResource extends React.Component {
                         <span style={{fontSize:'66%'}} style={{marginRight:10}}>{humanSize(res.fileLength)}</span>
                         {toggleContentButton}
                         {toggleCompressButton}
+                        {extractTextButton}
                         {removeButton}
                     </div>
                 </div>
@@ -236,6 +243,7 @@ export class ResourceList extends React.Component {
                         removeResource={this.props.removeResource}
                         toggleArchiveEntryToInputs={this.props.toggleArchiveEntryToInputs}
                         toggleCompressedResource={this.props.toggleCompressedResource}
+                        extractTextFromResource={this.props.extractTextFromResource}
                         enableMultipleResources={this.props.enableMultipleResources}
                         res={res} />;
         }
