@@ -68,7 +68,7 @@ export class ToolListWithControls extends React.Component {
     }
 
     render() {
-        const resourceLength = (this.props.resourceList || []).filter(r => !r.isArchive).length;
+        const resourceLength = (this.props.resourceList || []).filter(r => !r.isSource).length;
         const {tools, hiddenTools, partial, hiddenPartial} = this.filterTools(
             this.props.tools, resourceLength, this.state.searchString, this.state.searchTerms);
         return (

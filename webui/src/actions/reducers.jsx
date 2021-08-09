@@ -47,6 +47,34 @@ function allTools(state = SI([]), action) {
     }
 }
 
+function buildResourceTree(resources) {
+    resources = SI.asMutable(resources);
+    resources = resources.map(r => SI.asMutable(r));
+    resources.forEach(r => r.indent = 0);
+    resources.forEach(r => r.isSource = false);
+
+    const resmap = {};
+    resources.forEach(r => resmap[r.id] = r);
+
+    let loop = true;
+    while (loop) {
+        loop = false;
+        resources.forEach(r => {
+            if (r.sourceID) {
+                const parent = resmap[r.sourceID];
+                if (parent && !parent.isSource) {
+                    parent.isSource = true;
+                }
+                if (parent && parent.indent + 1 != r.indent ) {
+                    loop = true;
+                    r.indent = parent.indent + 1;
+                }
+            }
+        });
+    }
+    return resources;
+}
+
 function resourceList(state = SI([]), action) {
     switch (action.type) {
         case actionType.RESOURCE_CLEAR_ALL: {
@@ -61,7 +89,7 @@ function resourceList(state = SI([]), action) {
                     ret = ret.set(index, SI.without(r, ['sourceID', 'sourceEventName']));
                 }
             }
-            ret = ret.map(r => r.set("isArchive", ret.some(r2 => r.id === r2.sourceID)));
+            ret = buildResourceTree(ret);
             return SI(ret);
         }
 
@@ -87,12 +115,14 @@ function resourceList(state = SI([]), action) {
                 mutable.splice(idx, 0, action.data);
                 ret = SI(mutable);
             }
-            ret = ret.map(r => r.set("isArchive", ret.some(r2 => r.id === r2.sourceID)));
+            ret = buildResourceTree(ret);
             return SI(ret);
         }
 
-        case actionType.RESOURCE_REMOVE:{
-            return SI(state.filter(r => !action.data.has(r.id)));
+        case actionType.RESOURCE_REMOVE: {
+            let ret = state.filter(r => !action.data.has(r.id));
+            ret = buildResourceTree(ret);
+            return SI(ret);
         }
     }
     return state;

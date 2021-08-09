@@ -8,6 +8,10 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class FileInfo {
+    public enum SpecialResourceType {
+        EXTRACTED_TEXT, // text extracted from another resource
+    }
+
     private final UUID id;
 
     private final String filename; // original filename, on disk we use a sanitized form
@@ -23,8 +27,9 @@ public class FileInfo {
 
     private boolean selection; // if content is coming from a user selection
 
-    private UUID sourceID; // if this resource is derived from another resource (e.g. zip)
-    private String sourceEntryName; // if this resource is derived from another resource (e.g. zip)
+    private UUID sourceID; // parent resource id
+    private String sourceEntryName; // if parent is an archive, this is the archive entry (a path)
+    private SpecialResourceType specialResourceType;
 
     public FileInfo(UUID id, String filename, Path path) {
         this.id = id;
@@ -74,6 +79,10 @@ public class FileInfo {
         return selection;
     }
 
+    public SpecialResourceType getSpecialResourceType() {
+        return specialResourceType;
+    }
+
     public UUID getSourceID() {
         return sourceID;
     }
@@ -102,6 +111,10 @@ public class FileInfo {
         this.sourceEntryName = sourceEntryName;
     }
 
+    public void setSpecialResourceType(SpecialResourceType specialResourceType) {
+        this.specialResourceType = specialResourceType;
+    }
+
     @Override
     public String toString() {
         return "FileInfo: " +
@@ -112,6 +125,7 @@ public class FileInfo {
                 "\noriginalLink='" + originalLink + '\'' +
                 "\nhttpRedirects=" + httpRedirects +
                 "\nselection=" + selection +
+                "\nspecialResourceType=" + specialResourceType +
                 "\nsourceID=" + sourceID +
                 "\nsourceEntryName=" + sourceEntryName +
                 "\nprofile=" + profile +

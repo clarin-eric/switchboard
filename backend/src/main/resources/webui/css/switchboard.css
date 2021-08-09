@@ -95,6 +95,17 @@ div.resource .namesize {
     border: 1px solid transparent;
     border-radius: 4px;
 }
+div.resource .warning {
+    background-color: #fff8e0;
+    border-color: #fffaf0;
+    color: #004;
+    margin-top: -22px;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #fed;
+    border-radius: 4px;
+    font-size: 14px;
+}
 div.resource .content > input { /*selection mode*/
     border: 1px solid #ccc;
     border-radius: 6px;
@@ -127,8 +138,14 @@ div.resource .outline .row:nth-child(even) {
     background: #fff;
 }
 
-div.resource .dependent {
+div.resource .indent1 {
     margin-left: 1em;
+}
+div.resource .indent2 {
+    margin-left: 2em;
+}
+div.resource .indent3 {
+    margin-left: 3em;
 }
 
 div.resource .disabled .namesize {

@@ -4,13 +4,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.ByteStreams;
-import com.google.common.io.CharSource;
 import com.google.common.io.CharStreams;
 import eu.clarin.switchboard.core.ArchiveOps;
 import eu.clarin.switchboard.core.Constants;
 import eu.clarin.switchboard.core.FileInfo;
 import eu.clarin.switchboard.core.MediaLibrary;
 import eu.clarin.switchboard.profiler.api.Profile;
+import org.apache.commons.io.FilenameUtils;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.slf4j.Logger;
@@ -195,8 +195,12 @@ public class DataResource {
         if (fi == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
+
+        String filename = FilenameUtils.removeExtension(fi.getFilename()) + ".txt";
         FileInfo fileInfo = mediaLibrary.addFromTextExtraction(
-                fi.getPath(), fi.getProfile().toProfile(), fi.getFilename());
+                fi.getPath(), fi.getProfile().toProfile(), filename);
+        fileInfo.setSource(fi.getId(), null);
+        fileInfo.setSpecialResourceType(FileInfo.SpecialResourceType.EXTRACTED_TEXT);
 
         return fileInfoToResponse(requestURI, fileInfo);
     }
