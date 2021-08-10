@@ -72,7 +72,6 @@ class ContentOrOutline extends React.Component {
 
     render() {
         const res = this.props.res;
-        console.log("content or outline res:", SI.asMutable(res, {deep:true}));
         const hasContent = res.content && isTextProfile(res.profile.mediaType);
         if (!hasContent && !res.outline) {
             return false;
@@ -133,7 +132,7 @@ class NormalResource extends React.Component {
 
         const toggleCompressButton = isCompressedProfile(res.profile.mediaType) ?
             <a className="btn btn-xs btn-default" style={{fontSize:'70%', verticalAlign: "text-bottom"}}
-                onClick={e => this.props.toggleCompressedResource(res)} >
+                onClick={e => this.props.extractCompressedResource(res)} >
                 Uncompress
             </a> : false;
 
@@ -269,7 +268,7 @@ export class ResourceList extends React.Component {
                         setResourceProfile={this.props.setResourceProfile}
                         removeResource={this.props.removeResource}
                         toggleArchiveEntryToInputs={this.props.toggleArchiveEntryToInputs}
-                        toggleCompressedResource={this.props.toggleCompressedResource}
+                        extractCompressedResource={this.props.extractCompressedResource}
                         extractTextFromResource={this.props.extractTextFromResource}
                         enableMultipleResources={this.props.enableMultipleResources}
                         res={res} />;

@@ -47,32 +47,39 @@ function allTools(state = SI([]), action) {
     }
 }
 
-function buildResourceTree(resources) {
+function reorderAndIndent(resources) {
     resources = SI.asMutable(resources);
     resources = resources.map(r => SI.asMutable(r));
-    resources.forEach(r => r.indent = 0);
-    resources.forEach(r => r.isSource = false);
 
     const resmap = {};
-    resources.forEach(r => resmap[r.id] = r);
+    resources.forEach(r => {
+        resmap[r.id] = r;
+        r.indent = 0;
+        r.isSource = false;
+        r.dependants = [];
+    });
+    resources.forEach(r => {
+        if (r.sourceID && resmap[r.sourceID]) {
+            resmap[r.sourceID].isSource = true;
+            resmap[r.sourceID].dependants.push(r.id);
+        }
+    });
 
-    let loop = true;
-    while (loop) {
-        loop = false;
-        resources.forEach(r => {
-            if (r.sourceID) {
-                const parent = resmap[r.sourceID];
-                if (parent && !parent.isSource) {
-                    parent.isSource = true;
-                }
-                if (parent && parent.indent + 1 != r.indent ) {
-                    loop = true;
-                    r.indent = parent.indent + 1;
-                }
-            }
-        });
+    const neworder = [];
+    function recurse(id, indent) {
+        const res = resmap[id];
+        if (res) {
+            res.indent = indent;
+            neworder.push(res);
+            res.dependants.forEach(id2 => recurse(id2, indent + 1));
+        }
     }
-    return resources;
+    resources.forEach(r => {
+        if (!r.sourceID || !resmap[r.sourceID]) {
+            recurse(r.id, 0);
+        }
+    });
+    return neworder;
 }
 
 function resourceList(state = SI([]), action) {
@@ -89,40 +96,24 @@ function resourceList(state = SI([]), action) {
                     ret = ret.set(index, SI.without(r, ['sourceID', 'sourceEventName']));
                 }
             }
-            ret = buildResourceTree(ret);
-            return SI(ret);
+            return SI(reorderAndIndent(ret));
         }
 
         case actionType.RESOURCE_UPDATE: {
             let ret = state;
-            const index = state.findIndex(r => r.id === action.data.id);
+            const newres = action.data;
+            const index = state.findIndex(r => r.id === newres.id);
             if (index >= 0) {
-                ret = ret.set(index, SI.merge(ret[index], action.data));
+                ret = ret.set(index, SI.merge(ret[index], newres));
             } else {
-                // add subresource at correct position
-                let idx = ret.length;
-                if (action.data.sourceID) {
-                    let i = ret.findIndex(r => r.id === action.data.sourceID);
-                    if (i >= 0) {
-                        i++;
-                        while (i < ret.length && ret[i].sourceID) {
-                            i ++;
-                        }
-                        idx = i;
-                    }
-                }
-                const mutable = SI.asMutable(ret);
-                mutable.splice(idx, 0, action.data);
-                ret = SI(mutable);
+                ret = ret.set(ret.length, newres);
             }
-            ret = buildResourceTree(ret);
-            return SI(ret);
+            return SI(reorderAndIndent(ret));
         }
 
         case actionType.RESOURCE_REMOVE: {
             let ret = state.filter(r => !action.data.has(r.id));
-            ret = buildResourceTree(ret);
-            return SI(ret);
+            return SI(reorderAndIndent(ret));
         }
     }
     return state;

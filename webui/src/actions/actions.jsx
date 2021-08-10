@@ -26,10 +26,6 @@ function findSourceEntry(resource, getState) {
     return {parent, outline, entry}
 }
 
-function findDependentResources(resource, getState) {
-    return getState().resourceList.filter(r => r.sourceID === resource.id);
-}
-
 export function setResourceProfile(id, profileKey, value) {
     return function (dispatch, getState) {
         const resourceSI = findResourceByID(id, getState);
@@ -96,7 +92,6 @@ export function clearResources() {
 }
 
 export function removeResource(resource) {
-    console.log("removeResource", resource);
     return function (dispatch, getState) {
         dispatch({
             type: actionType.RESOURCE_REMOVE,
@@ -113,8 +108,6 @@ export function removeResource(resource) {
         }
 
         const dependants = getState().resourceList.filter(r => r.sourceID === resource.id).map(r => r.id);
-        console.log("dependants", SI.asMutable(dependants, {deep:true}));
-        console.log("resources", SI.asMutable(getState().resourceList, {deep:true}));
         if (dependants && dependants.length) {
             dispatch({
                 type: actionType.RESOURCE_REMOVE_SOURCE,
@@ -189,16 +182,15 @@ export function toggleArchiveEntryToInputs(archiveRes, archiveEntry) {
     }
 }
 
-// todo rename
-export function toggleCompressedResource(resource) {
+export function extractCompressedResource(resource) {
     return function (dispatch, getState) {
-        //-- must be a compressed resource, post to server to uncompress it
         const newResource = {id: ++lastResourceID, sourceID: resource.id};
         dispatch(updateResource(newResource));
         dispatch(removeResource(resource));
 
         var formData = new FormData();
-        formData.append("foo", null); // server call fails if formData is empty
+        // server call fails if formData is empty
+        formData.append("foo", null);
 
         axios
             .post(apiPath.extractEntry(resource.id), formData, {
@@ -219,7 +211,7 @@ export function extractTextFromResource(resource) {
         dispatch(updateResource(newResource));
 
         axios
-            .post(apiPath.extractText(resource.id), new FormData(), {
+            .post(apiPath.extractText(resource.id), null, {
                 headers: {'Content-Type': 'multipart/form-data'}
             })
             .then(updateResourceCallback(dispatch, newResource, getState))

@@ -27,8 +27,8 @@ public class FileInfo {
 
     private boolean selection; // if content is coming from a user selection
 
-    private UUID sourceID; // parent resource id
-    private String sourceEntryName; // if parent is an archive, this is the archive entry (a path)
+    private UUID sourceID; // if this resource is derived from another resource (e.g. zip)
+    private String sourceEntryName; // if this resource is derived from another resource (e.g. zip)
     private SpecialResourceType specialResourceType;
 
     public FileInfo(UUID id, String filename, Path path) {
