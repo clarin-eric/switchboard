@@ -150,6 +150,10 @@ div.resource .indent3 {
 
 div.resource .disabled .namesize {
     background-color: #eee;
+    padding: 10px 10px 10px;
+}
+div.resource .disabled .namesize a {
+    color: #666;
 }
 div.resource .disabled .content {
     background-color: #fafafa;

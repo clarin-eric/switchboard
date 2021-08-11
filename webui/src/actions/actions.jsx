@@ -98,7 +98,7 @@ export function removeResource(resource) {
             data: new Set([resource.id]),
         });
 
-        const {parent, outline, entry} = findSourceEntry(resource, getState);
+        const {parent, outline, entry} = findSourceEntry(resource.originalResource || resource, getState);
         if (entry) {
             entry.checked = false;
             dispatch({
@@ -134,7 +134,12 @@ export function toggleArchiveEntryToInputs(archiveRes, archiveEntry) {
 
         const outline = SI.asMutable(archiveRes.outline, {deep:true});
         if (!apiinfo?.enableMultipleResources) {
-            const list = resourceList.filter(r => r.sourceID == archiveRes.id).map(r => r.id);
+            const list = resourceList
+                .filter(res => {
+                    const r = res.originalResource || res;
+                    return r.sourceID == archiveRes.id;
+                })
+                .map(r => r.id);
             dispatch({
                 type: actionType.RESOURCE_REMOVE,
                 data: new Set(list),
@@ -147,8 +152,10 @@ export function toggleArchiveEntryToInputs(archiveRes, archiveEntry) {
         if (entry.checked) {
             if (apiinfo?.enableMultipleResources) {
                 entry.checked = false;
-                const resource = resourceList.find(r =>
-                    r.sourceID === archiveRes.id && r.sourceEntryName === archiveEntry.name);
+                const resource = resourceList.find(res => {
+                    const r = res.originalResource || res;
+                    return r.sourceID === archiveRes.id && r.sourceEntryName === archiveEntry.name
+                });
                 if (resource) {
                     dispatch(removeResource(resource));
                 }
@@ -205,21 +212,33 @@ export function extractCompressedResource(resource) {
     }
 }
 
-export function extractTextFromResource(resource) {
+export function toggleTextExtraction(resource) {
     return function (dispatch, getState) {
-        const newResource = {id: ++lastResourceID, sourceID: resource.id};
-        dispatch(updateResource(newResource));
-
-        axios
-            .post(apiPath.extractText(resource.id), null, {
-                headers: {'Content-Type': 'multipart/form-data'}
-            })
-            .then(updateResourceCallback(dispatch, newResource, getState))
-            .catch(error => {
-                dispatch(updateResource(resource));
-                dispatch(removeResource(newResource));
-                errHandler(dispatch)(error);
+        if (resource.originalResource) {
+            dispatch({
+                type: actionType.RESOURCE_REMOVE,
+                data: new Set([resource.id]),
             });
+            dispatch(updateResource(resource.originalResource));
+        } else {
+            dispatch({
+                type: actionType.RESOURCE_REMOVE,
+                data: new Set([resource.id]),
+            });
+            const newResource = {id: ++lastResourceID, sourceID: resource.id, originalResource: resource};
+            dispatch(updateResource(newResource));
+
+            axios
+                .post(apiPath.extractText(resource.id), null, {
+                    headers: {'Content-Type': 'multipart/form-data'}
+                })
+                .then(updateResourceCallback(dispatch, newResource, getState))
+                .catch(error => {
+                    dispatch(updateResource(resource));
+                    dispatch(removeResource(newResource));
+                    errHandler(dispatch)(error);
+                });
+        }
     }
 }
 

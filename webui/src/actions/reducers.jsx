@@ -58,10 +58,17 @@ function reorderAndIndent(resources) {
         r.isSource = false;
         r.dependants = [];
     });
+
+    function parentResource(r) {
+        const sourceID = r.originalResource ? r.originalResource.sourceID : r.sourceID;
+        return sourceID ? resmap[sourceID] : null;
+    }
+
     resources.forEach(r => {
-        if (r.sourceID && resmap[r.sourceID]) {
-            resmap[r.sourceID].isSource = true;
-            resmap[r.sourceID].dependants.push(r.id);
+        const parent = parentResource(r);
+        if (parent) {
+            parent.isSource = true;
+            parent.dependants.push(r.id);
         }
     });
 
@@ -75,7 +82,7 @@ function reorderAndIndent(resources) {
         }
     }
     resources.forEach(r => {
-        if (!r.sourceID || !resmap[r.sourceID]) {
+        if (!parentResource(r)) {
             recurse(r.id, 0);
         }
     });
