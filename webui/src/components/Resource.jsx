@@ -136,27 +136,33 @@ class NormalResource extends React.Component {
         const showContentOrOutline = hasContentOrOutline && this.showContentOrOutline(res);
 
         const toggleContentButton = hasContentOrOutline ?
-            <a className="btn btn-xs btn-default" style={{fontSize:'70%', verticalAlign: "text-bottom"}}
+            <a className="btn btn-xs btn-default" style={{fontSize:'75%', verticalAlign: "baseline"}}
                 onClick={e => this.setState({showContentOrOutline:!this.state.showContentOrOutline})} >
                 { showContentOrOutline ? "Hide content" : "Show content" }
             </a> : false;
 
         const toggleCompressButton = isCompressedProfile(res.profile.mediaType) ?
-            <a className="btn btn-xs btn-default" style={{fontSize:'70%', verticalAlign: "text-bottom"}}
+            <a className="btn btn-xs btn-default" style={{fontSize:'75%', verticalAlign: "baseline"}}
                 onClick={e => this.props.extractCompressedResource(res)} >
                 Uncompress
             </a> : false;
 
         const showExtractTextButton = hasExtractableTextProfile(res.profile.mediaType) && !res.isSource;
         const extractTextButton = showExtractTextButton ?
-            <a className="btn btn-xs btn-default" style={{fontSize:'70%', verticalAlign: "text-bottom"}}
+            <a className="btn btn-xs btn-default" style={{fontSize:'75%', verticalAlign: "baseline"}}
                 onClick={e => this.props.toggleTextExtraction(res)} >
                 Extract Text
             </a> : false;
         const revertToOriginalButton = res.originalResource ?
-            <a className="btn btn-xs btn-default" onClick={e => this.props.toggleTextExtraction(res)}>
+            <a className="btn btn-xs btn-default" onClick={e => this.props.toggleTextExtraction(res)}
+                style={{verticalAlign: "baseline"}}>
                 Revert to original
             </a> : false;
+        const extractedTextWarning = res.specialResourceType === 'EXTRACTED_TEXT' ?
+            <div className="warning">
+                ⚠️ This text was automatically extracted and may be incomplete or contain errors.
+                {"  "} {revertToOriginalButton}
+            </div> : false;
 
         const removeButton = (this.props.enableMultipleResources || res.sourceID) ?
             <a onClick={e => this.props.removeResource(res)}>
@@ -183,11 +189,7 @@ class NormalResource extends React.Component {
                         {removeButton}
                     </div>
                 </div>
-                {res.specialResourceType === 'EXTRACTED_TEXT' ?
-                    <div className="col-md-12 visible-xs visible-sm"><div className="warning">
-                        ⚠️ Automatically extracted text, may be incomplete or contain errors
-                        {"  "} {revertToOriginalButton}
-                    </div></div> : false }
+                {extractedTextWarning && <div className="col-md-12 visible-xs visible-sm">{extractedTextWarning}</div>}
                 { showContentOrOutline ?
                     <div className="col-md-12 visible-xs visible-sm">
                         <ContentOrOutline res={res}
@@ -217,11 +219,7 @@ class NormalResource extends React.Component {
                     </div>
                     </React.Fragment>
                 }
-                {res.specialResourceType === 'EXTRACTED_TEXT' ?
-                    <div className="col-md-12 hidden-xs hidden-sm"><div className="warning">
-                        ⚠️ Automatically extracted text, may be incomplete or contain errors
-                        {"  "} {revertToOriginalButton}
-                    </div></div> : false }
+                {extractedTextWarning && <div className="col-md-12 hidden-xs hidden-sm">{extractedTextWarning}</div>}
                 { showContentOrOutline ?
                     <div className="col-md-12 hidden-xs hidden-sm">
                         <ContentOrOutline res={res}
