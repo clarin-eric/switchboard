@@ -69,10 +69,10 @@ export function getInvocationURL(tool, resourceList) {
 function getServiceParameter(param, resourceList, inputs, match) {
     if (!param.bind) {
         if (param.value) {
-            return param.value;
+            return [param.value];
         } else {
             console.error("missing param bind and value:", param);
-            return {error: "Incorrect tool specification: " + param.name};
+            return [{error: "Incorrect tool specification: " + param.name}];
         }
     }
 
@@ -80,7 +80,7 @@ function getServiceParameter(param, resourceList, inputs, match) {
     const inputIndex = inputs.findIndex(input => input.id == inputID);
     if (inputIndex < 0) {
         console.error("cannot find input with id:", inputID);
-        return {error: "Incorrect tool specification: " + inputID};
+        return [{error: "Incorrect tool specification: " + inputID}];
     }
 
     const resourceIndices = findAllIndices(match, inputIndex);
