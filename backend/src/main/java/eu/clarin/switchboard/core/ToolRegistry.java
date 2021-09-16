@@ -21,14 +21,17 @@ import java.util.stream.Collectors;
 
 public class ToolRegistry {
     private static final Logger LOGGER = LoggerFactory.getLogger(ToolRegistry.class);
+
     private static final String PRODUCTION_DEPLOYMENT = "production";
+    public static final Predicate<Tool> ALL_TOOLS = tool -> true;
+    public static final Predicate<Tool> ONLY_PRODUCTION_TOOLS = tool ->
+            tool.getDeployment().equalsIgnoreCase(PRODUCTION_DEPLOYMENT);
 
     private final Path registryPath;
     private final AtomicReference<List<Tool>> tools = new AtomicReference<>();
     private Runnable callback;
 
-    public List<Tool> filterTools(boolean onlyProductionTools) {
-        Predicate<Tool> filter = tool -> !onlyProductionTools || tool.getDeployment().equalsIgnoreCase(PRODUCTION_DEPLOYMENT);
+    public List<Tool> filterTools(Predicate<Tool> filter) {
         return tools.get()
                 .stream()
                 .filter(filter)
@@ -36,49 +39,53 @@ public class ToolRegistry {
     }
 
     /// one matching possibility for a tool
-    public static class ProfilesToolMatch extends ArrayList<Integer> {
-        // mapping from input index, which is the index of the element in array,
-        // to profile index when they match, and -1 if they don't match
-        // e.g. [2, -1] means first input matches profile with index 2
-        //      and the second input does not match anything
-        public ProfilesToolMatch(int size) {
+    public static class ProfilesToToolInputMatch extends ArrayList<Integer> {
+        // mapping from profile index, which is the index of the profile in array,
+        // to input index when they match, and null if there is no match
+        // e.g. [2, null] means first profile matches input with index 2
+        //      and the second profile does not match anything
+        public ProfilesToToolInputMatch(int size) {
             super(size);
             for (int i = 0; i < size; ++i) {
-                add(-1);
+                add(null);
             }
         }
 
-        private ProfilesToolMatch(ProfilesToolMatch other) {
+        private ProfilesToToolInputMatch(ProfilesToToolInputMatch other) {
             super(other);
         }
 
-        public ProfilesToolMatch update(int inputIndex, int profileIndex) {
-            ProfilesToolMatch ret = new ProfilesToolMatch(this);
-            ret.set(inputIndex, profileIndex);
+        public ProfilesToToolInputMatch update(int profileIndex, int inputIndex) {
+            ProfilesToToolInputMatch ret = new ProfilesToToolInputMatch(this);
+            ret.set(profileIndex, inputIndex);
             return ret;
         }
 
-        public boolean usesProfileIndex(int profileIndex) {
-            return stream().anyMatch(pIndex -> pIndex == profileIndex);
+        public boolean isProfileIndexUsed(int profileIndex) {
+            return get(profileIndex) != null;
         }
 
-        public boolean inputIndexOccupied(int inputIndex) {
-            return get(inputIndex) >= 0;
+        public boolean isInputIndexUsed(int inputIndex) {
+            return stream().anyMatch(pIndex -> pIndex != null && pIndex == inputIndex);
         }
 
-        public int matchCount() {
-            return (int) stream().filter(pIndex -> pIndex >= 0).count();
+        private int getUsedProfilesCount() {
+            return (int) stream().filter(Objects::nonNull).count();
         }
 
-        public float matchPercent() {
-            return 100 * matchCount() / (float) size();
+        private Set<Integer> getUsedInputs() {
+            return stream().filter(Objects::nonNull).collect(Collectors.toSet());
+        }
+
+        private int getUsedInputsCount() {
+            return (int) stream().filter(Objects::nonNull).distinct().count();
         }
     }
 
     /// all matching possibilities for a tool
     public static class ToolMatches {
         Tool tool;
-        List<ProfilesToolMatch> matches;
+        List<ProfilesToToolInputMatch> matches;
 
         public ToolMatches(Tool tool) {
             this.tool = tool;
@@ -89,17 +96,34 @@ public class ToolRegistry {
             return tool;
         }
 
-        public List<ProfilesToolMatch> getMatches() {
+        public List<ProfilesToToolInputMatch> getMatches() {
             return matches;
         }
 
-        public void add(ProfilesToolMatch match) {
+        public void add(ProfilesToToolInputMatch match) {
             this.matches.add(match);
         }
 
-        public float getBestMatchPercent() {
-            // the matches should always be ordered by matchCount
-            return matches.get(0).matchPercent();
+        public float getProfileMatchPercent() {
+            return 100 * matches.get(0).getUsedProfilesCount() / (float) matches.get(0).size();
+        }
+
+        public float getMandatoryInputsMatchPercent() {
+            long usedMandatoryInputs = matches.get(0).getUsedInputs()
+                    .stream()
+                    .filter(i -> !tool.getInputs().get(i).isOptional())
+                    .count();
+            long toolMandatoryInputs = tool.getInputs()
+                    .stream()
+                    .filter(in -> !in.isOptional())
+                    .count();
+            return 100 * usedMandatoryInputs / (float) toolMandatoryInputs;
+        }
+
+        public float getAllInputsMatchPercent() {
+            long usedInputs = matches.get(0).getUsedInputs().size();
+            long toolInputs = tool.getInputs().size();
+            return 100 * usedInputs / (float) toolInputs;
         }
 
         @Override
@@ -111,29 +135,31 @@ public class ToolRegistry {
         }
     }
 
-    public List<ToolMatches> filterTools(List<Profile> profiles, boolean onlyProductionTools) {
-        Predicate<Tool> filterDeployment = tool -> !onlyProductionTools || tool.getDeployment().equalsIgnoreCase(PRODUCTION_DEPLOYMENT);
-
+    public List<ToolMatches> filterTools(List<Profile> profiles, Predicate<Tool> filter) {
         List<ToolMatches> results = new ArrayList<>();
 
         for (Tool tool : tools.get()) {
-            if (!filterDeployment.test(tool)) {
+            if (!filter.test(tool)) {
                 continue;
             }
             List<Input> inputs = tool.getInputs();
-            List<ProfilesToolMatch> matches = new ArrayList<>();
-            matches.add(new ProfilesToolMatch(inputs.size()));
+            List<ProfilesToToolInputMatch> matches = new ArrayList<>();
+            matches.add(new ProfilesToToolInputMatch(profiles.size()));
 
-            for (int inputIndex = 0; inputIndex < inputs.size(); ++inputIndex) {
-                for (int profileIndex = 0; profileIndex < profiles.size(); ++profileIndex) {
-                    List<ProfilesToolMatch> betterMatches = new ArrayList<>();
-                    for (ProfilesToolMatch currentMatch : matches) {
-                        if (!currentMatch.usesProfileIndex(profileIndex) && !currentMatch.inputIndexOccupied(inputIndex)) {
-                            boolean contentRequired = tool.requiresContent(inputIndex);
-                            Matcher matcher = inputs.get(inputIndex).getMatcher(contentRequired);
-                            if (matcher.matches(profiles.get(profileIndex))) {
-                                betterMatches.add(currentMatch.update(inputIndex, profileIndex));
-                            }
+            for (int profileIndex = 0; profileIndex < profiles.size(); ++profileIndex) {
+                for (int inputIndex = 0; inputIndex < inputs.size(); ++inputIndex) {
+                    List<ProfilesToToolInputMatch> betterMatches = new ArrayList<>();
+                    for (ProfilesToToolInputMatch currentMatch : matches) {
+                        boolean inputIsAlreadyUsed = currentMatch.isInputIndexUsed(inputIndex);
+                        boolean inputIsMultiple = inputs.get(inputIndex).isMultiple();
+                        boolean profileIsAlreadyUsed = currentMatch.isProfileIndexUsed(profileIndex);
+                        if (profileIsAlreadyUsed || (inputIsAlreadyUsed && !inputIsMultiple)) {
+                            continue;
+                        }
+                        boolean contentRequired = tool.doesInputRequireContent(inputIndex);
+                        Matcher matcher = inputs.get(inputIndex).getMatcher(contentRequired);
+                        if (matcher.matches(profiles.get(profileIndex))) {
+                            betterMatches.add(currentMatch.update(profileIndex, inputIndex));
                         }
                     }
                     matches.addAll(betterMatches);
@@ -142,11 +168,12 @@ public class ToolRegistry {
             }
 
             if (matches.size() > 1) {
-                matches.sort((o1, o2) -> o2.matchCount() - o1.matchCount());
-                float topPercent = matches.get(0).matchPercent();
+                matches.sort((o1, o2) -> o2.getUsedInputsCount() - o1.getUsedInputsCount());
+                matches.sort((o1, o2) -> o2.getUsedProfilesCount() - o1.getUsedProfilesCount());
+                float topPercent = matches.get(0).getUsedInputsCount() + matches.get(0).getUsedProfilesCount();
                 ToolMatches toolMatches = new ToolMatches(tool);
                 for (int i = 0; i < matches.size() - 1; ++i) {
-                    if (matches.get(i).matchPercent() >= topPercent) {
+                    if (matches.get(i).getUsedInputsCount() + matches.get(i).getUsedProfilesCount() >= topPercent) {
                         // only add the best matches (can be more than one with same matching percent)
                         toolMatches.add(matches.get(i));
                     }
@@ -156,14 +183,13 @@ public class ToolRegistry {
         }
 
         results.sort((tm1, tm2) -> {
-            final int K = 1000;
-            int x = (int) (K * tm1.getBestMatchPercent()) - (int) (K * tm2.getBestMatchPercent());
+            float x = tm2.getMandatoryInputsMatchPercent() - tm1.getMandatoryInputsMatchPercent();
             if (x != 0) {
-                return -x;
+                return (int) x;
             }
-            x = tm1.getMatches().get(0).size() - tm2.getMatches().get(0).size();
+            x = tm2.getProfileMatchPercent() - tm1.getProfileMatchPercent();
             if (x != 0) {
-                return -x;
+                return (int) x;
             }
             return tm1.getTool().getName().compareToIgnoreCase(tm2.getTool().getName());
         });
@@ -274,6 +300,12 @@ public class ToolRegistry {
                     tool.augment(gson.fromJson(r2, Map.class));
                 }
 
+                long distinctIDs = tool.getInputs().stream().map(Input::getId).distinct().count();
+                if (distinctIDs != tool.getInputs().size()) {
+                    LOGGER.error("duplicated id in inputs of tool: " + tool.getName());
+                    continue;
+                }
+
                 if (tool.getName() == null || tool.getDescription() == null) {
                     LOGGER.warn("json file " + f.getPath() + " does not seem to be a tool (no name or description) and will be ignored");
                 } else {
@@ -284,7 +316,6 @@ public class ToolRegistry {
             }
         }
         checkTools(tools);
-
         return Collections.unmodifiableList(tools);
     }
 

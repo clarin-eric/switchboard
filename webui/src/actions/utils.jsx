@@ -1,5 +1,15 @@
 const URL_REGEX = new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gi);
 
+export function findAllIndices(array, value) {
+    const ret = [];
+    array.forEach((v, i) => {
+        if (v == value) {
+            ret.push(i);
+        }
+    });
+    return ret;
+}
+
 export function isUrl(x) {
     return x.match(URL_REGEX);
 }

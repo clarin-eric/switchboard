@@ -218,8 +218,14 @@ public class Tool {
         assert standaloneApplication == null;
 
         Input input = new Input();
-        input.id = "first_input";
-        input.setMediatypes((List<String>) v1map.get("mimetypes"));
+        input.id = "input";
+        List<String> mediatypes = (List<String>) v1map.get("mimetypes");
+        input.setMediatypes(mediatypes);
+        for (String mediatype: mediatypes) {
+            if (mediatype.startsWith("text/")) {
+                input.id = "text";
+            }
+        }
         List<String> languages = (List<String>) v1map.get("languages");
         if (languages.contains(ANY_LANGUAGE_KEYWORD_V1)) {
             input.setLanguages(ANY_LANGUAGE_KEYWORD);
@@ -288,8 +294,8 @@ public class Tool {
         setFormatVersion("2");
     }
 
-    public boolean requiresContent(int inputIndex) {
-        String contentBind = inputs.get(inputIndex).getName() + "/content";
+    public boolean doesInputRequireContent(int inputIndex) {
+        String contentBind = inputs.get(inputIndex).getId() + "/content";
         Predicate<Parameter> bindsContent = p -> contentBind.equals(p.bind);
         if (webApplication == null) {
             return false;

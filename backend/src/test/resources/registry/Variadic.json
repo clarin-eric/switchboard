@@ -1,0 +1,47 @@
+{
+    "formatVersion": "2",
+    "task": "Lemmatization",
+    "deployment": "unknown",
+    "softwareType": "qualitative",
+    "name": "Variadic",
+    "logo": "weblicht.jpg",
+    "homepage": "https://weblicht.sfs.uni-tuebingen.de/weblichtwiki/index.php/Main_Page",
+    "location": "Tuebingen, Germany",
+    "creators": "CLARIN-D Centre at the University of Tuebingen, Germany",
+    "contact": {
+        "person": "CLARIN WebLicht Support",
+        "email": "wlsupport@sfs.uni-tuebingen.de"
+    },
+    "version": "v1.0",
+    "authentication": "Requires a CLARIN Service Provider Federation account, provided by many universities and institutions.",
+    "licence": null,
+    "description": "WebLicht Easy Chain for Lemmatization (English). The pipeline makes use of WebLicht's TCF converter, the Stanford tokenizer, the Jitar POS Tagger, and the lemmatizer service from MorphAdorner. WebLicht's Tundra can be used to visualize the result.",
+    "url": "https://weblicht.sfs.uni-tuebingen.de/weblicht/",
+    "output": ["application/tcf+xml"],
+    "inputs": [
+        {
+            "id": "text",
+            "mediatypes": ["text/plain", "text/rtf", "application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
+            "languages": ["eng", "deu", "zhu"],
+            "multiple": true
+        },
+        {
+            "id": "speech",
+            "mediatypes": ["text/plain"],
+            "languages": ["eng"]
+        },
+        {
+            "id": "optional",
+            "mediatypes": ["text/plain"],
+            "languages": ["zhu"],
+            "optional": true
+        }
+    ],
+    "queryParameters": [
+        {"name": "input", "bind": "text/dataurl"},
+        {"name": "lang", "bind": "text/language"},
+        {"name": "analysis", "value": "lemma"},
+        {"name": "speech", "value": "speech/dataurl"},
+        {"name": "bad", "value": "badinput/baddataurl"}
+    ]
+}

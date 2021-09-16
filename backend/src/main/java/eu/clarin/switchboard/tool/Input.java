@@ -11,10 +11,11 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Input {
     String id;
-    String name;
     List<String> mediatypes;
     Object languages;
     Integer maxSize;
+    boolean multiple;
+    boolean optional;
 
     public String getId() {
         return id;
@@ -22,14 +23,6 @@ public class Input {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public List<String> getMediatypes() {
@@ -56,6 +49,22 @@ public class Input {
         this.maxSize = maxSize;
     }
 
+    public Boolean isMultiple() {
+        return multiple;
+    }
+
+    public void setMultiple(Boolean multiple) {
+        this.multiple = multiple;
+    }
+
+    public Boolean isOptional() {
+        return optional;
+    }
+
+    public void setOptional(Boolean optional) {
+        this.optional = optional;
+    }
+
     @JsonIgnore
     public Matcher getMatcher(boolean requiresContent) {
         DefaultMatcher.Builder matcherBuilder = DefaultMatcher.builder();
@@ -78,10 +87,11 @@ public class Input {
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("\nid", id)
-                .add("\nname", name)
                 .add("\nmediatypes", mediatypes)
                 .add("\nlanguages", languages)
                 .add("\nmaxSize", maxSize)
+                .add("\noptional", optional)
+                .add("\nmultiple", multiple)
                 .toString();
     }
 }

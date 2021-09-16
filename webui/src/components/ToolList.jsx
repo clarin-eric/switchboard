@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeHighlighter } from './Highlighter.jsx';
-import { processLanguage, image, humanSize } from '../actions/utils';
+import { processLanguage, image, humanSize, findAllIndices } from '../actions/utils';
 import { getInvocationURL } from '../actions/toolcall';
 import { apiPath } from '../constants';
 
@@ -37,7 +37,7 @@ export class ToolListWithControls extends React.Component {
     filterTools(tools, resourceCount, searchString, searchTerms) {
         const ret = {tools: [], hiddenTools: [], partial: [], hiddenPartial: []};
         tools.forEach(tool => {
-            const isFullMatch = resourceCount == 0 || tool.bestMatchPercent == 100 && tool.inputs.length == resourceCount;
+            const isFullMatch = resourceCount == 0 || tool.mandatoryInputsMatchPercent == 100 && tool.profileMatchPercent == 100;
             if (searchString.length < 2 || searchTerms.every(term => tool.searchString.includes(term))) {
                 if (isFullMatch) {
                     ret.tools.push(tool);
@@ -461,7 +461,7 @@ class ToolCard extends React.Component {
 
                             {tool.inputs &&
                                 tool.inputs.map((input, i) => <InputRow  key={input.id || i} input={input}/>)}
-                            {tool.matches && !(tool.bestMatchPercent == 100 && this.props.resourceList.length == 1) &&
+                            {tool.matches && (tool.mandatoryInputsMatchPercent < 100 || this.props.resourceList.length > 1) &&
                                 <InputMatches tool={tool} selectResourceMatch={selectResourceMatch}/>}
                         </dl>
                     </div>
@@ -502,7 +502,7 @@ class ToolCard extends React.Component {
 const InputMatches = ({tool, selectResourceMatch}) => {
     const ignoreEvent = e => {e.preventDefault(); e.stopPropagation()};
     const inputFn = (input, i) => {
-        return <p key={i}>Input {input.name ? <em><strong>{input.name}</strong></em> : false} {text}</p>
+        return <p key={i}>Input {input.id ? <em><strong>{input.id}</strong></em> : false} {text}</p>
     };
     return (
         <React.Fragment>
@@ -522,18 +522,18 @@ const InputMatches = ({tool, selectResourceMatch}) => {
                                     onChange={e => {selectResourceMatch(matchIndex)}} />
                             </form>
                         }
-                        { tool.inputs.map((input, inputIndex) =>
-                            <span key={inputIndex}>
-                                {" "}
-                                Input
-                                {" "}
-                                {input.name && <span className="resource-index">{input.name}</span>}
-                                {" "}
-                                {match[inputIndex] < 0 ?
-                                    'does not match any resource.' :
-                                    `matches resource no. ${match[inputIndex] + 1}.`
+                        { tool.inputs.map((input, inputIndex) => {
+                            const usedResources = findAllIndices(match, inputIndex).map(index => index + 1);
+                            const usedResourcesString = usedResources.join(", ");
+                            return <span key={inputIndex}>
+                                {" Input "}
+                                <span className="resource-index">{input.id}</span>
+                                { usedResources.length == 0 ? ' does not match any resource. ' :
+                                  usedResources.length == 1 ? ` matches resource ${usedResourcesString}. `
+                                                              : ` matches resources: ${usedResourcesString}. `
                                 }
-                            </span>)
+                            </span>
+                            })
                         }
                         </div>
                     );
@@ -549,7 +549,7 @@ const InputRow = ({ input }) => {
 
     return (
         <React.Fragment>
-            <dt>{"Input " + (input.name ? `[${input.name}]` : "")}</dt>
+            <dt>{"Input " + (input.id ? `[${input.id}]` : "")}</dt>
             <dd>
                 <div className="row">
                     <div className="col-sm-2 inputclass">Mediatypes:</div>
@@ -570,6 +570,12 @@ const InputRow = ({ input }) => {
                     <div className="row">
                         <div className="col-sm-2 inputclass">Max Size:</div>
                         <div className="col-sm-10">{humanSize(input.maxSize)}</div>
+                    </div>
+                }
+                {!input.multiple ? false :
+                    <div className="row">
+                        <div className="col-sm-2 inputclass">Multiple</div>
+                        <div className="col-sm-10">This input slot accepts multiple resources.</div>
                     </div>
                 }
             </dd>

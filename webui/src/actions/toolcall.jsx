@@ -1,4 +1,4 @@
-import { iso_639_3_to_639_1, image } from './utils';
+import { iso_639_3_to_639_1, image, findAllIndices } from './utils';
 
 /// returns an object which can contain the 'invocationURL' or 'error' keys
 export function getInvocationURL(tool, resourceList) {
@@ -14,28 +14,33 @@ export function getInvocationURL(tool, resourceList) {
     let queryParams = "";
     if (webapp.queryParameters) {
         for (const param of webapp.queryParameters) {
-            const value = getBoundValue(param, resourceList, tool.inputs, match);
-            if (value.error) {
-                return {error: value.error}
+            let index = 1;
+            for (const value of getServiceParameter(param, resourceList, tool.inputs, match)) {
+                if (value.error) {
+                    return {error: value.error}
+                }
+                if (queryParams !== "") {
+                    queryParams += "&";
+                }
+                let name = param.name.replace(/\$\{index\}/, index);
+                queryParams += encodeURIComponent(name);
+                queryParams += "=";
+                queryParams += encodeURIComponent(value);
+                index += 1;
             }
-            if (queryParams !== "") {
-                queryParams += "&";
-            }
-            queryParams += encodeURIComponent(param.name);
-            queryParams += "=";
-            queryParams += encodeURIComponent(value);
         }
     }
 
     let pathParams = "";
     if (webapp.pathParameters) {
         for (const param of webapp.pathParameters) {
-            const value = getBoundValue(param, resourceList, tool.inputs, match);
-            if (value.error) {
-                return {error: value.error}
+            for (const value of getServiceParameter(param, resourceList, tool.inputs, match)) {
+                if (value.error) {
+                    return {error: value.error}
+                }
+                pathParams += "/";
+                pathParams += encodeURIComponent(value);
             }
-            pathParams += "/";
-            pathParams += encodeURIComponent(value);
         }
     }
 
@@ -61,7 +66,7 @@ export function getInvocationURL(tool, resourceList) {
 }
 
 
-function getBoundValue(param, resourceList, inputs, match) {
+function getServiceParameter(param, resourceList, inputs, match) {
     if (!param.bind) {
         if (param.value) {
             return param.value;
@@ -72,19 +77,26 @@ function getBoundValue(param, resourceList, inputs, match) {
     }
 
     const [inputID, bind] = param.bind.split("/");
-
     const inputIndex = inputs.findIndex(input => input.id == inputID);
     if (inputIndex < 0) {
         console.error("cannot find input with id:", inputID);
         return {error: "Incorrect tool specification: " + inputID};
     }
-    const resourceIndex = match[inputIndex];
-    const resource = resourceList[resourceIndex];
+
+    const resourceIndices = findAllIndices(match, inputIndex);
+
+    const ret = resourceIndices
+        .map(resourceIndex => resourceList[resourceIndex])
+        .map(resource => getResourceValueFromBind(resource, inputs[inputIndex], bind, param.encoding));
+    return ret;
+}
+
+function getResourceValueFromBind(resource, input, bind, encoding) {
     if (!resource.localLink) {
         return {error: "Incomplete resource description"};
     }
 
-    if (inputs[inputIndex].maxSize && inputs[inputIndex].maxSize < resource.fileLength) {
+    if (input.maxSize && input.maxSize < resource.fileLength) {
         return {error: "Resource is too big"};
     }
 
@@ -96,7 +108,7 @@ function getBoundValue(param, resourceList, inputs, match) {
         return `${resource.localLink}?mediatype=${encodedMediatype}`;
     } else if (bind === 'language') {
         let lang = resource.profile.language;
-        if (param.encoding == "639-1") {
+        if (encoding == "639-1") {
             // some tools expect an ISO 639-1 language parameter
             lang = iso_639_3_to_639_1(lang);
         }
