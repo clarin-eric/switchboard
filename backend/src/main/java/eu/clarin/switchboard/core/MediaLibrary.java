@@ -1,20 +1,9 @@
 package eu.clarin.switchboard.core;
 
-import com.google.common.io.ByteStreams;
 import eu.clarin.switchboard.app.config.DataStoreConfig;
 import eu.clarin.switchboard.app.config.UrlResolverConfig;
-import eu.clarin.switchboard.core.xc.CommonException;
-import eu.clarin.switchboard.core.xc.LinkException;
-import eu.clarin.switchboard.core.xc.StorageException;
-import eu.clarin.switchboard.core.xc.StoragePolicyException;
-import eu.clarin.switchboard.profiler.api.Profile;
-import eu.clarin.switchboard.profiler.api.Profiler;
-import eu.clarin.switchboard.profiler.api.ProfilingException;
-import org.apache.commons.compress.archivers.ArchiveEntry;
-import org.apache.commons.compress.archivers.ArchiveException;
-import org.apache.commons.compress.archivers.ArchiveInputStream;
-import org.apache.commons.compress.archivers.ArchiveStreamFactory;
-import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
+import eu.clarin.switchboard.core.xc.*;
+import eu.clarin.switchboard.profiler.api.*;
 import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream;
 import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream;
 import org.apache.http.client.config.RequestConfig;
@@ -24,7 +13,9 @@ import org.apache.http.impl.client.cache.CachingHttpClients;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.ws.rs.core.MediaType;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Duration;
@@ -44,16 +35,22 @@ public class MediaLibrary {
 
     private final DataStore dataStore;
     private final Profiler profiler;
+    private final TextExtractor textExtractor;
     private final StoragePolicy storagePolicy;
     private final CloseableHttpClient cachingClient;
     private final ExecutorService executorService;
 
     Map<UUID, FileInfoFuture> fileInfoFutureMap = Collections.synchronizedMap(new HashMap<>());
 
-    public MediaLibrary(DataStore dataStore, Profiler profiler, StoragePolicy storagePolicy,
-                        UrlResolverConfig urlResolverConfig, DataStoreConfig dataStoreConfig) {
+    public MediaLibrary(DataStore dataStore,
+                        Profiler profiler,
+                        TextExtractor textExtractor,
+                        StoragePolicy storagePolicy,
+                        UrlResolverConfig urlResolverConfig,
+                        DataStoreConfig dataStoreConfig) {
         this.dataStore = dataStore;
         this.profiler = profiler;
+        this.textExtractor = textExtractor;
         this.storagePolicy = storagePolicy;
 
         CacheConfig cacheConfig = CacheConfig.custom()
@@ -117,7 +114,9 @@ public class MediaLibrary {
         return id;
     }
 
-    public FileInfo addFromArchive(Path archivePath, Profile archiveProfile, String archiveEntry, Profile entryProfile) throws IOException, StoragePolicyException, ProfilingException, StorageException, ArchiveException {
+    public FileInfo addFromArchive(
+            Path archivePath, Profile archiveProfile, String archiveEntry, Profile entryProfile
+    ) throws IOException, StoragePolicyException, ProfilingException, StorageException {
         if (archiveProfile.isMediaType(Constants.MEDIATYPE_ZIP)) {
             Path path = Paths.get(archiveEntry);
             String name = path.getName(path.getNameCount() - 1).toString();
@@ -150,6 +149,22 @@ public class MediaLibrary {
             }
         }
         throw new StorageException(new Exception("Unknown archive type"));
+    }
+
+
+    public FileInfo addFromTextExtraction(Path sourcePath, Profile sourceProfile, String filename)
+            throws TextExtractionException, StoragePolicyException, ProfilingException, StorageException {
+        String text = this.textExtractor.extractText(sourcePath.toFile(), sourceProfile.getMediaType());
+        if (text == null) {
+            throw new TextExtractionException("Could not extract text: null result");
+        }
+        text = text.trim();
+        if (text.isEmpty()) {
+            throw new TextExtractionException("Could not extract text: empty result");
+        }
+        InputStream is = new ByteArrayInputStream(text.getBytes(StandardCharsets.UTF_8));
+        Profile profile = Profile.builder(sourceProfile).mediaType(MediaType.TEXT_PLAIN).build();
+        return addFile(filename, is, profile);
     }
 
     private static String trimSuffixIgnoreCase(String str, String suffix) {

@@ -54,7 +54,8 @@ export class Main extends React.Component {
                               setResourceProfile={this.props.setResourceProfile}
                               setResourceContent={this.props.setResourceContent}
                               toggleArchiveEntryToInputs={this.props.toggleArchiveEntryToInputs}
-                              toggleCompressedResource={this.props.toggleCompressedResource}
+                              extractCompressedResource={this.props.extractCompressedResource}
+                              toggleTextExtraction={this.props.toggleTextExtraction}
                               removeResource={this.props.removeResource}
                               matchingTools={this.props.matchingTools}
                               selectResourceMatch={this.props.selectResourceMatch} /> :
@@ -94,7 +95,8 @@ const Analysis = (props) => (
                       setResourceProfile={props.setResourceProfile}
                       setResourceContent={props.setResourceContent}
                       toggleArchiveEntryToInputs={props.toggleArchiveEntryToInputs}
-                      toggleCompressedResource={props.toggleCompressedResource}
+                      extractCompressedResource={props.extractCompressedResource}
+                      toggleTextExtraction={props.toggleTextExtraction}
                       removeResource={props.removeResource} />
         <hr style={{marginTop:0}}/>
 

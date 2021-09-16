@@ -1,6 +1,7 @@
+import SI from 'seamless-immutable';
 import React from 'react';
 import Select from 'react-select';
-import { processMediatype, humanSize, isCompressedProfile, isTextProfile, isArchiveProfile } from '../actions/utils';
+import { processMediatype, humanSize, isCompressedProfile, hasExtractableTextProfile, isTextProfile, isArchiveProfile } from '../actions/utils';
 import { InputContainer } from '../containers/InputContainer';
 
 const SelectLanguage = (props) => {
@@ -40,6 +41,30 @@ class BlurableTextInput extends React.Component {
     }
 }
 
+const ArchiveEntry = ({res, entry, enableMultipleResources, toggleArchiveEntryToInputs}) => {
+    return (
+        <div className="row" key={entry.name}>
+            <div className="col-sm-8" style={{padding:0}}>
+                <label style={{fontWeight:'normal', marginBottom:0}}>
+                    {res.sourceID ? false : // don't show selector in nested archives
+                        <input type={enableMultipleResources ? "checkbox" : "radio"}
+                            name={entry.name}
+                            onChange={() => toggleArchiveEntryToInputs(res, entry)}
+                            checked={entry.checked || false} />
+                    }
+                    {" "}
+                    <span className={"glyphicon glyphicon-file"} aria-hidden="true"/>
+                    {" "}
+                    {entry.name}
+                </label>
+            </div>
+            <div className="col-sm-2">{(entry.profile||{}).mediaType || ""}</div>
+            <div className="col-sm-2">{entry.size > 0 ? humanSize(entry.size) : ""}</div>
+        </div>
+    )
+}
+
+
 class ContentOrOutline extends React.Component {
     constructor(props) {
         super(props);
@@ -68,24 +93,12 @@ class ContentOrOutline extends React.Component {
                     <div className="outline">
                         {res.sourceID ? false : <span className="outlineHeader">{headerText}</span>}
                         {res.outline.map(entry =>
-                            <div className="row" key={entry.name}>
-                                <div className="col-sm-8" style={{padding:0}}>
-                                    <label style={{fontWeight:'normal', marginBottom:0}}>
-                                        {res.sourceID ? false : // don't show selector in nested archives
-                                            <input type={this.props.enableMultipleResources ? "checkbox" : "radio"}
-                                                name={entry.name}
-                                                onChange={() => this.props.toggleArchiveEntryToInputs(res, entry)}
-                                                checked={entry.checked || false} />
-                                        }
-                                        {" "}
-                                        <span className={"glyphicon glyphicon-file"} aria-hidden="true"/>
-                                        {" "}
-                                        {entry.name}
-                                    </label>
-                                </div>
-                                <div className="col-sm-2">{(entry.profile||{}).mediaType || ""}</div>
-                                <div className="col-sm-2">{entry.size > 0 ? humanSize(entry.size) : ""}</div>
-                            </div>
+                            <ArchiveEntry
+                                key={res.id+entry.name}
+                                res={res}
+                                entry={entry}
+                                enableMultipleResources={this.props.enableMultipleResources}
+                                toggleArchiveEntryToInputs={this.props.toggleArchiveEntryToInputs} />
                         )}
                         {res.outlineIsIncomplete ? <span>...</span> : false}
                     </div> : false
@@ -104,24 +117,52 @@ class NormalResource extends React.Component {
         }
     }
 
+    hasContentOrOutline(res) {
+        return (isTextProfile(res.profile.mediaType) && res.content) ||
+               (isArchiveProfile(res.profile.mediaType) && res.outline);
+    }
+
+    showContentOrOutline(res) {
+        let state = this.state.showContentOrOutline;
+        if (res.specialResourceType === 'EXTRACTED_TEXT') {
+            state = !state; // flip defaults for text resources
+        }
+        return state;
+    }
+
     render() {
         const res = this.props.res;
-
-        const hasContentOrOutline = (isTextProfile(res.profile.mediaType) && res.content) ||
-                                    (isArchiveProfile(res.profile.mediaType) && res.outline);
-        const showContentOrOutline = this.state.showContentOrOutline && hasContentOrOutline;
+        const hasContentOrOutline = this.hasContentOrOutline(res);
+        const showContentOrOutline = hasContentOrOutline && this.showContentOrOutline(res);
 
         const toggleContentButton = hasContentOrOutline ?
-            <a className="btn btn-xs btn-default" style={{fontSize:'70%', verticalAlign: "text-bottom"}}
+            <a className="btn btn-xs btn-default" style={{fontSize:'75%', verticalAlign: "baseline"}}
                 onClick={e => this.setState({showContentOrOutline:!this.state.showContentOrOutline})} >
-                { this.state.showContentOrOutline ? "Hide content" : "Show content" }
+                { showContentOrOutline ? "Hide content" : "Show content" }
             </a> : false;
 
         const toggleCompressButton = isCompressedProfile(res.profile.mediaType) ?
-            <a className="btn btn-xs btn-default" style={{fontSize:'70%', verticalAlign: "text-bottom"}}
-                onClick={e => this.props.toggleCompressedResource(res)} >
+            <a className="btn btn-xs btn-default" style={{fontSize:'75%', verticalAlign: "baseline"}}
+                onClick={e => this.props.extractCompressedResource(res)} >
                 Uncompress
             </a> : false;
+
+        const showExtractTextButton = hasExtractableTextProfile(res.profile.mediaType) && !res.isSource;
+        const extractTextButton = showExtractTextButton ?
+            <a className="btn btn-xs btn-default" style={{fontSize:'75%', verticalAlign: "baseline"}}
+                onClick={e => this.props.toggleTextExtraction(res)} >
+                Extract Text
+            </a> : false;
+        const revertToOriginalButton = res.originalResource ?
+            <a className="btn btn-xs btn-default" onClick={e => this.props.toggleTextExtraction(res)}
+                style={{verticalAlign: "baseline"}}>
+                Revert to original
+            </a> : false;
+        const extractedTextWarning = res.specialResourceType === 'EXTRACTED_TEXT' ?
+            <div className="warning">
+                ⚠️ This text was automatically extracted and may be incomplete or contain errors.
+                {"  "} {revertToOriginalButton}
+            </div> : false;
 
         const removeButton = (this.props.enableMultipleResources || res.sourceID) ?
             <a onClick={e => this.props.removeResource(res)}>
@@ -129,16 +170,26 @@ class NormalResource extends React.Component {
                     style={{fontSize:'80%', marginLeft: 10}} aria-hidden="true"/>
             </a> : false;
 
-        return <div className={"row" + (res.isArchive ? " disabled":"") + (res.sourceID ? " dependent" : "")}>
-                <div className={res.isArchive ? "col-md-12" : "col-md-5"}>
+        const resClass = `row indent${res.indent}` +
+            (res.isSource ? " disabled" : "") +
+            (res.specialResourceType === 'EXTRACTED_TEXT' ? " extracted" : "");
+
+        const resourceName = res.specialResourceType === 'EXTRACTED_TEXT' ? "Extracted Text" : res.filename;
+
+        return <div className={resClass}>
+                <div className={res.isSource ? "col-md-12" : "col-md-5"}>
                     <div className="value namesize">
-                        <a href={res.originalLink || res.localLink} style={{marginRight:10}}> {res.filename}</a>
+                        <a href={res.originalLink || res.localLink} title="Click to download" style={{marginRight:10}}>
+                            {resourceName}
+                        </a>
                         <span style={{fontSize:'66%'}} style={{marginRight:10}}>{humanSize(res.fileLength)}</span>
                         {toggleContentButton}
                         {toggleCompressButton}
+                        {extractTextButton}
                         {removeButton}
                     </div>
                 </div>
+                {extractedTextWarning && <div className="col-md-12 visible-xs visible-sm">{extractedTextWarning}</div>}
                 { showContentOrOutline ?
                     <div className="col-md-12 visible-xs visible-sm">
                         <ContentOrOutline res={res}
@@ -146,7 +197,7 @@ class NormalResource extends React.Component {
                             toggleArchiveEntryToInputs={this.props.toggleArchiveEntryToInputs} />
                     </div> : false
                 }
-                { res.isArchive ? false :
+                { res.isSource ? false :
                     <React.Fragment>
                     <div className="col-md-4">
                         <div className="row">
@@ -168,6 +219,7 @@ class NormalResource extends React.Component {
                     </div>
                     </React.Fragment>
                 }
+                {extractedTextWarning && <div className="col-md-12 hidden-xs hidden-sm">{extractedTextWarning}</div>}
                 { showContentOrOutline ?
                     <div className="col-md-12 hidden-xs hidden-sm">
                         <ContentOrOutline res={res}
@@ -235,15 +287,16 @@ export class ResourceList extends React.Component {
                         setResourceProfile={this.props.setResourceProfile}
                         removeResource={this.props.removeResource}
                         toggleArchiveEntryToInputs={this.props.toggleArchiveEntryToInputs}
-                        toggleCompressedResource={this.props.toggleCompressedResource}
+                        extractCompressedResource={this.props.extractCompressedResource}
+                        toggleTextExtraction={this.props.toggleTextExtraction}
                         enableMultipleResources={this.props.enableMultipleResources}
                         res={res} />;
         }
         return (
-            <div className={"row" + (res.sourceID ? " dependent" : "")}>
+            <div className={`row indent${res.indent}`}>
                 <div className="col-md-4">
                     <div className="value namesize">
-                        <p>{(res.sourceID || res.originalResource) ? "Extracting..." : "Uploading..."}</p>
+                        <span>{(res.sourceID || res.originalResource) ? "Extracting..." : "Uploading..."}</span>
                     </div>
                 </div>
             </div>

@@ -31,11 +31,7 @@ RUN apk add maven=$MAVEN_VERSION
 WORKDIR /build
 COPY ./.git                     ./.git
 COPY ./backend                  ./backend
-COPY ./profiler                 ./profiler
 COPY --from=webui_builder /build/backend/src/main/resources/webui/bundle.js* ./backend/src/main/resources/webui/
-
-WORKDIR /build/profiler
-RUN mvn -q package install
 
 WORKDIR /build/backend
 RUN mvn versions:set -DnewVersion=${SWITCHBOARD_VERSION}

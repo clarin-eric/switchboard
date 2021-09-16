@@ -89,7 +89,7 @@ class Application extends React.Component {
         if (window.SWITCHBOARD_DATA) {
             const data = window.SWITCHBOARD_DATA;
             if (data.popup) {
-                store.dispatch(actions.setMode('popup'));
+                store.dispatch(actions.setPopupMode());
             }
             if (data.errorMessage) {
                 store.dispatch(actions.showError(data.errorMessage));

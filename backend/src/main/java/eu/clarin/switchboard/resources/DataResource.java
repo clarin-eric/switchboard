@@ -4,13 +4,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.ByteStreams;
-import com.google.common.io.CharSource;
 import com.google.common.io.CharStreams;
 import eu.clarin.switchboard.core.ArchiveOps;
 import eu.clarin.switchboard.core.Constants;
 import eu.clarin.switchboard.core.FileInfo;
 import eu.clarin.switchboard.core.MediaLibrary;
 import eu.clarin.switchboard.profiler.api.Profile;
+import org.apache.commons.io.FilenameUtils;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.slf4j.Logger;
@@ -23,6 +23,8 @@ import java.io.*;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.zip.ZipException;
@@ -57,7 +59,8 @@ public class DataResource {
     @Path("/{id}/info")
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public Response httpGetFileInfo(@Context HttpServletRequest request, @PathParam("id") String idString) throws Throwable {
-        return getFileInfo(request.getRequestURI(), idString);
+        String requestUriRoot = trimPathComponents(request.getRequestURI(), 2);
+        return getFileInfo(requestUriRoot, idString);
     }
 
     @POST
@@ -67,13 +70,34 @@ public class DataResource {
                                  @FormDataParam("file") InputStream inputStream,
                                  @FormDataParam("file") final FormDataContentDisposition contentDispositionHeader,
                                  @FormDataParam("url") String url,
-                                 @FormDataParam("archiveID") String archiveID,
-                                 @FormDataParam("archiveEntryName") String archiveEntryName,
                                  @FormDataParam("profile") String profileString
     ) throws Throwable {
+        String requestUriRoot = trimPathComponents(request.getRequestURI(), 0);
         String filename = contentDispositionHeader == null ? null : contentDispositionHeader.getFileName();
-        return postFile(request.getRequestURI(),
-                inputStream, filename, url, archiveID, archiveEntryName, profileString);
+        return postFile(requestUriRoot, inputStream, filename, url, profileString);
+    }
+
+    @POST
+    @Path("/{id}/extractEntry")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+    public Response httpPostExtractFromArchive(@Context HttpServletRequest request,
+                                               @PathParam("id") String archiveID,
+                                               @FormDataParam("archiveEntryName") String archiveEntryName,
+                                               @FormDataParam("profile") String profileString) throws Throwable {
+
+        String requestUriRoot = trimPathComponents(request.getRequestURI(), 2);
+        return postExtractFromArchive(requestUriRoot, archiveID, archiveEntryName, profileString);
+    }
+
+    @POST
+    @Path("/{id}/extractText")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+    public Response httpPostExtractText(@Context HttpServletRequest request,
+                                        @PathParam("id") String textContainerID) throws Throwable {
+        String requestUriRoot = trimPathComponents(request.getRequestURI(), 2);
+        return postExtractText(requestUriRoot, textContainerID);
     }
 
     @GET
@@ -126,52 +150,78 @@ public class DataResource {
         return Response.ok(content).type(MediaType.TEXT_PLAIN).build();
     }
 
-    public Response getFileInfo(String requestURI, String idString) throws Throwable {
+    public Response getFileInfo(String requestURIRoot, String idString) throws Throwable {
         FileInfo fi = getFileInfo(idString);
         if (fi == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-
-        final String trimEnd = "/info";
-        String localLink = requestURI;
-        assert (localLink.endsWith(trimEnd));
-        localLink = localLink.substring(0, localLink.length() - trimEnd.length());
-
-        return fileInfoToResponse(URI.create(localLink), fi);
+        return fileInfoToResponse(requestURIRoot, fi);
     }
 
-    public Response postFile(String requestURI,
+    private static String trimPathComponents(String requestURIRoot, int trimCount) {
+        String path = URI.create(requestURIRoot).getPath();
+        while (path.endsWith("/")) {
+            path = path.substring(0, path.length() - 1);
+        }
+        List<String> components = Arrays.asList(path.split("/"));
+        List<String> trimmed = components.subList(0, Math.max(0, components.size() - trimCount));
+        String newPath = String.join("/", trimmed);
+
+        return UriBuilder.fromUri(requestURIRoot).replacePath(newPath).build().toASCIIString();
+    }
+
+    public Response postFile(String requestURIRoot,
                              InputStream inputStream,
                              String filename,
                              String url,
-                             String archiveID,
-                             String archiveEntryName,
-                             String profileString
-    ) throws Throwable {
+                             String profileString) throws Throwable {
         FileInfo fileInfo;
         if (inputStream != null && filename != null) {
             fileInfo = mediaLibrary.addFile(filename, inputStream, null);
         } else if (url != null) {
             Profile profile = readProfile(profileString);
             fileInfo = mediaLibrary.addByUrl(url, profile);
-        } else if (archiveID != null && !archiveID.isEmpty()) {
-            FileInfo fi = getFileInfo(archiveID);
-            if (fi == null) {
-                return Response.status(Response.Status.NOT_FOUND).build();
-            }
-            Profile profile = readProfile(profileString);
-            fileInfo = mediaLibrary.addFromArchive(fi.getPath(), fi.getProfile().toProfile(), archiveEntryName, profile);
-            if (archiveEntryName != null) {
-                fileInfo.setSource(fi.getId(), archiveEntryName);
-            }
         } else {
             return Response.status(400).entity("Please provide either a file or a url to download in the form").build();
         }
 
-        URI localLink = UriBuilder.fromPath(requestURI)
-                .path(fileInfo.getId().toString())
-                .build();
-        return fileInfoToResponse(localLink, fileInfo);
+        return fileInfoToResponse(requestURIRoot, fileInfo);
+    }
+
+    public Response postExtractFromArchive(String requestURIRoot, String archiveID, String archiveEntryName,
+                                           String profileString) throws Throwable {
+        if (archiveID == null || archiveID.isEmpty()) {
+            return Response.status(400).entity("Mandatory parameter not found: id (for archive id)").build();
+        }
+        FileInfo fi = getFileInfo(archiveID);
+        if (fi == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        Profile profile = readProfile(profileString);
+        FileInfo fileInfo = mediaLibrary.addFromArchive(fi.getPath(), fi.getProfile().toProfile(), archiveEntryName, profile);
+        if (archiveEntryName != null) {
+            fileInfo.setSource(fi.getId(), archiveEntryName);
+        }
+
+        return fileInfoToResponse(requestURIRoot, fileInfo);
+    }
+
+    public Response postExtractText(String requestURIRoot, String textContainerID) throws Throwable {
+        if (textContainerID == null || textContainerID.isEmpty()) {
+            return Response.status(400).entity("Mandatory parameter not found: id (for archive id)").build();
+        }
+        FileInfo fi = getFileInfo(textContainerID);
+        if (fi == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        String filename = FilenameUtils.removeExtension(fi.getFilename()) + ".txt";
+        FileInfo fileInfo = mediaLibrary.addFromTextExtraction(
+                fi.getPath(), fi.getProfile().toProfile(), filename);
+        fileInfo.setSource(fi.getId(), null);
+        fileInfo.setSpecialResourceType(FileInfo.SpecialResourceType.EXTRACTED_TEXT);
+
+        return fileInfoToResponse(requestURIRoot, fileInfo);
     }
 
     private Profile readProfile(String profileString) {
@@ -186,7 +236,7 @@ public class DataResource {
         return null;
     }
 
-    static Response fileInfoToResponse(URI localLink, FileInfo fileInfo) {
+    static Response fileInfoToResponse(String requestURIRoot, FileInfo fileInfo) {
         Map<String, Object> ret;
         try {
             ret = mapper.readValue(mapper.writeValueAsString(fileInfo), new TypeReference<Map<String, Object>>() {
@@ -196,6 +246,10 @@ public class DataResource {
             return Response.serverError().build();
         }
         ret.remove("path");
+
+        URI localLink = UriBuilder.fromPath(requestURIRoot)
+                .path(fileInfo.getId().toString())
+                .build();
         ret.put("localLink", localLink);
 
         // add the file content

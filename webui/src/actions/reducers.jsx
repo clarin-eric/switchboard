@@ -47,6 +47,48 @@ function allTools(state = SI([]), action) {
     }
 }
 
+function reorderAndIndent(resources) {
+    resources = SI.asMutable(resources);
+    resources = resources.map(r => SI.asMutable(r));
+
+    const resmap = {};
+    resources.forEach(r => {
+        resmap[r.id] = r;
+        r.indent = 0;
+        r.isSource = false;
+        r.dependants = [];
+    });
+
+    function parentResource(r) {
+        const sourceID = r.originalResource ? r.originalResource.sourceID : r.sourceID;
+        return sourceID ? resmap[sourceID] : null;
+    }
+
+    resources.forEach(r => {
+        const parent = parentResource(r);
+        if (parent) {
+            parent.isSource = true;
+            parent.dependants.push(r.id);
+        }
+    });
+
+    const neworder = [];
+    function recurse(id, indent) {
+        const res = resmap[id];
+        if (res) {
+            res.indent = indent;
+            neworder.push(res);
+            res.dependants.forEach(id2 => recurse(id2, indent + 1));
+        }
+    }
+    resources.forEach(r => {
+        if (!parentResource(r)) {
+            recurse(r.id, 0);
+        }
+    });
+    return neworder;
+}
+
 function resourceList(state = SI([]), action) {
     switch (action.type) {
         case actionType.RESOURCE_CLEAR_ALL: {
@@ -61,38 +103,24 @@ function resourceList(state = SI([]), action) {
                     ret = ret.set(index, SI.without(r, ['sourceID', 'sourceEventName']));
                 }
             }
-            ret = ret.map(r => r.set("isArchive", ret.some(r2 => r.id === r2.sourceID)));
-            return SI(ret);
+            return SI(reorderAndIndent(ret));
         }
 
         case actionType.RESOURCE_UPDATE: {
             let ret = state;
-            const index = state.findIndex(r => r.id === action.data.id);
+            const newres = action.data;
+            const index = state.findIndex(r => r.id === newres.id);
             if (index >= 0) {
-                ret = ret.set(index, SI.merge(ret[index], action.data));
+                ret = ret.set(index, SI.merge(ret[index], newres));
             } else {
-                // add subresource at correct position
-                let idx = ret.length;
-                if (action.data.sourceID) {
-                    let i = ret.findIndex(r => r.id === action.data.sourceID);
-                    if (i >= 0) {
-                        i++;
-                        while (i < ret.length && ret[i].sourceID) {
-                            i ++;
-                        }
-                        idx = i;
-                    }
-                }
-                const mutable = SI.asMutable(ret);
-                mutable.splice(idx, 0, action.data);
-                ret = SI(mutable);
+                ret = ret.set(ret.length, newres);
             }
-            ret = ret.map(r => r.set("isArchive", ret.some(r2 => r.id === r2.sourceID)));
-            return SI(ret);
+            return SI(reorderAndIndent(ret));
         }
 
-        case actionType.RESOURCE_REMOVE:{
-            return SI(state.filter(r => !action.data.has(r.id)));
+        case actionType.RESOURCE_REMOVE: {
+            let ret = state.filter(r => !action.data.has(r.id));
+            return SI(reorderAndIndent(ret));
         }
     }
     return state;
