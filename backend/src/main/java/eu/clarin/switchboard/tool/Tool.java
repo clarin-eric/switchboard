@@ -14,6 +14,7 @@ public class Tool {
     public static final String ANY_LANGUAGE_KEYWORD = "generic";
 
     String formatVersion;
+    Integer id;
     String task;
     String deployment;
     String integrationType;
@@ -31,7 +32,6 @@ public class Tool {
 
     List<Input> inputs;
     BatchProcessing batchProcessing;
-    List<String> output;
 
     WebApplication webApplication;
     StandaloneApplication standaloneApplication;
@@ -43,6 +43,14 @@ public class Tool {
 
     public void setFormatVersion(String formatVersion) {
         this.formatVersion = formatVersion;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -165,14 +173,6 @@ public class Tool {
         this.batchProcessing = batchProcessing;
     }
 
-    public List<String> getOutput() {
-        return output;
-    }
-
-    public void setOutput(List<String> output) {
-        this.output = output;
-    }
-
     public WebApplication getWebApplication() {
         return webApplication;
     }
@@ -224,6 +224,7 @@ public class Tool {
         for (String mediatype: mediatypes) {
             if (mediatype.startsWith("text/")) {
                 input.id = "text";
+                break;
             }
         }
         List<String> languages = (List<String>) v1map.get("languages");
@@ -311,6 +312,7 @@ public class Tool {
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("\nformatVersion", formatVersion)
+                .add("\nid", id)
                 .add("\ntask", task)
                 .add("\ndeployment", deployment)
                 .add("\nintegrationType", integrationType)
@@ -326,7 +328,6 @@ public class Tool {
                 .add("\nauthentication", authentication)
                 .add("\ninputs", inputs)
                 .add("\nbatchProcessing", batchProcessing)
-                .add("\noutput", output)
                 .add("\nwebApplication", webApplication)
                 .add("\nstandaloneApplication", standaloneApplication)
                 .add("\nusageRestrictions", usageRestrictions)

@@ -321,7 +321,19 @@ public class ToolRegistry {
 
     private static void checkTools(List<Tool> tools) throws BadToolException {
         Set<String> names = new HashSet<>();
+        Set<Integer> ids = new HashSet<>();
         for (Tool t : tools) {
+            if (t.getId() == null) {
+                // switch to throwing BadToolException when all the production tools have an id
+                LOGGER.warn("tools with null id found: " + t.getName());
+            }
+            if (ids.contains(t.getId())) {
+                throw new BadToolException("tools with duplicate ids found: id=" + t.getId() + "; name=" + t.getName());
+            }
+            if (t.getId() != null) {
+                ids.add(t.getId());
+            }
+
             if (names.contains(t.getName())) {
                 throw new BadToolException("tools with same name found: " + t.getName());
             }
