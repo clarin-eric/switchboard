@@ -1,5 +1,33 @@
 # Changelog
 
+## Coming soon
+	- Support unique service ids
+	- Update frontend and backend dependencies
+	- Improve resources UI
+	- Add extract text option
+	- Take the profiler submodule from Maven Central
+	- Support variadic inputs (optional and multiple resources per input)
+
+## [2.3.3] - 2021-07-13
+	- Add title parameter for popup
+
+## [2.3.2] - 2021-06-29
+	- Bug fix: allow old-style repository calls
+
+## [2.3.0] - 2021-06-24
+	- Set content-encoding when serving text utf8 files
+	- Allow repos to specialize resource profile (mediatype only)
+	- Add maxFiles configuration entry
+	- Support inspecting and extracting archive entries
+	- Show textual resource content
+	- Add funding badge
+	- Selection resources are now editable
+	- Show badge for unsage (http-only) tools
+	- Improved popup UI and behavior
+	- Add "manual" tool parameters
+	- Upgrade backend and frontend libraries
+
+
 ## [2.3.0] - 2021-01-15
     - Added API v2 (support for POST calls #119)
     - Added Switchboard popup
@@ -10,7 +38,7 @@
     - Cache tool logos
     - Cache uploaded resources
     - Added support for multiple files input (experimental - disabled by default)
-   
+
 ## [2.2.3] - 2020-11-30
     - Fixed missing languages #150
     - Fixed markdown highlighting bug introduced with #149
