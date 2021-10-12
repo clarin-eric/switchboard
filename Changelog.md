@@ -1,5 +1,37 @@
 # Changelog
 
+## Coming soon
+    - Support unique service ids
+    - Update frontend and backend dependencies
+    - Improve resources UI
+    - Add extract text option
+    - Take the profiler submodule from Maven Central
+    - Support variadic inputs (optional and multiple resources per input)
+
+## [2.3.3] - 2021-07-13
+    - Allow repositories to customize Switchboard popup title
+
+## [2.3.2] - 2021-06-29
+    - Backwards compatibility for legacy repository calls
+
+## [2.3.1] - 2021-06-24
+    - Added dictionary mode when selecting short text, with editable selection
+    - Show data outline for text based formats
+    - Show contents of archive files
+    - Show unsafe badge and description (on mouse hover) for tools not offering SSL transport
+    - Multiple improvements to Switchboard popup
+    - Added support for matching online tools which are not integrated with the Switchboard
+    - Improved support for input of multiple files
+    - Added configurable funding badge
+    - Upgraded backend dependencies:
+       - dropwizard to 2.0.22
+    - Upgraded WebUI dependencies:
+       - lodash to 4.17.21
+       - browserslist to 4.16.5
+     - Set content-encoding when serving text utf8 files
+     - Allow repos to specialize resource profile (mediatype only)
+     - Add maxFiles configuration entry
+
 ## [2.3.0] - 2021-01-15
     - Added API v2 (support for POST calls #119)
     - Added Switchboard popup
@@ -10,7 +42,7 @@
     - Cache tool logos
     - Cache uploaded resources
     - Added support for multiple files input (experimental - disabled by default)
-   
+
 ## [2.2.3] - 2020-11-30
     - Fixed missing languages #150
     - Fixed markdown highlighting bug introduced with #149
