@@ -14,7 +14,7 @@
 ## [2.3.2] - 2021-06-29
 	- Bug fix: allow old-style repository calls
 
-## [2.3.0] - 2021-06-24
+## [2.3.1] - 2021-06-24
 	- Set content-encoding when serving text utf8 files
 	- Allow repos to specialize resource profile (mediatype only)
 	- Add maxFiles configuration entry
