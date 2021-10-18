@@ -44,6 +44,18 @@ public class ToolsResource {
         return Response.ok(tools).build();
     }
 
+    @GET
+    @Path("tools/{id}")
+    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+    public Response getToolByID(@PathParam("id") Integer id) {
+        Predicate<Tool> filter = tool-> tool.getId() != null && tool.getId().equals(id);
+        List<Tool> tools = toolRegistry.filterTools(filter);
+        if (tools == null || tools.isEmpty()) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        return Response.ok(tools.get(0)).build();
+    }
+
     @POST
     @Path("tools/match")
     @Consumes(MediaType.APPLICATION_JSON)
