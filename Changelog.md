@@ -2,11 +2,18 @@
 
 ## Coming soon
     - Support unique service ids
-    - Update frontend and backend dependencies
     - Improve resources UI
     - Add extract text option
-    - Take the profiler submodule from Maven Central
+    - Remove profiler submodule from source and install it as artifact from Maven Central
     - Support variadic inputs (optional and multiple resources per input)
+    - Upgraded backend dependencies:
+      - dropwizard to 2.0.25
+      - logback-classic to 1.2.6
+      - logback-core to 1.2.6
+      - slf4j-api to 1.7.32
+      - commons-compress to 1.21
+    - Upgraded WebUI dependencies:
+      - caniuse-lite to 1.0.30001251
 
 ## [2.3.3] - 2021-07-13
     - Allow repositories to customize Switchboard popup title
