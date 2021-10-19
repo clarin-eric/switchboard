@@ -485,6 +485,20 @@ export function showError(errorMessage) {
     }
 }
 
+export function moreContent(res) {
+    return function (dispatch, getState) {
+        axios.get(apiPath.storageID(res.id), content, { headers });
+        axios.get(apiPath.tools)
+            .then(response => {
+                response.data.forEach(normalizeTool);
+                dispatch({
+                    type: actionType.ALL_TOOLS_FETCH_SUCCESS,
+                    data: response.data,
+                });
+            }).catch(errHandler(dispatch, "Cannot fetch all tools data"));
+    }
+}
+
 function errHandler(dispatch, msg) {
     return function(err) {
         msg = msg ? (msg + ": ") : "";
