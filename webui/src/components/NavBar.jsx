@@ -15,7 +15,6 @@ export class NavBar extends React.Component {
     }
 
     gotoUpload(e) {
-        this.props.clearResources();
         this.closeNav(e);
     }
 
