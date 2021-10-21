@@ -1,6 +1,6 @@
 import SI from 'seamless-immutable';
 import axios from 'axios';
-import { apiPath, actionType } from '../constants';
+import { apiPath, actionType, CONTENT_INCREMENT_SIZE } from '../constants';
 import { addLanguageMapping, processLanguage, processMediatype, isDictionaryResource, isDictionaryTool, isNotDictionaryTool } from './utils';
 
 let lastResourceID = 0;
@@ -64,13 +64,13 @@ export function setResourceContent(id, content) {
         }
         const resource = SI.asMutable(resourceSI, {deep:true});
         resource.content = content;
+        // don't update matching tools because the profile is the same
         dispatch({
             type: actionType.RESOURCE_UPDATE,
             data: resource,
         });
 
         // set content on server with a slight delay to coalesce repeated calls
-        // don't update matching tools because the profile is the same
         if (contentDispatchers[id]) {
             clearTimeout(contentDispatchers[id]);
             contentDispatchers[id] = null;
@@ -487,15 +487,22 @@ export function showError(errorMessage) {
 
 export function moreContent(res) {
     return function (dispatch, getState) {
-        axios.get(apiPath.storageID(res.id), content, { headers });
-        axios.get(apiPath.tools)
+        const start = res.content.length | 0;
+        const end = start + CONTENT_INCREMENT_SIZE - 1;
+        const headers = {'Range': `bytes=${start}-${end}`};
+        axios.get(apiPath.storageID(res.id), { headers })
             .then(response => {
-                response.data.forEach(normalizeTool);
-                dispatch({
-                    type: actionType.ALL_TOOLS_FETCH_SUCCESS,
-                    data: response.data,
-                });
-            }).catch(errHandler(dispatch, "Cannot fetch all tools data"));
+                if (response.status === 206) {
+                    const newres = res.set('content', res.content + response.data);
+                    // don't update matching tools because the profile is the same
+                    dispatch({
+                        type: actionType.RESOURCE_UPDATE,
+                        data: newres,
+                    });
+                } else {
+                    console.error("expected server response 206, got: ", response.status);
+                }
+            }).catch(errHandler(dispatch, "Cannot get resource content"));
     }
 }
 

@@ -99,9 +99,11 @@ class Application extends React.Component {
             delete window.SWITCHBOARD_DATA;
         }
 
-        // load a text file by default for testing
-        store.dispatch(require("./actions/actions").uploadLink({
-            url:'https://b2drop.eudat.eu/s/D6ACr5TomagTfoK', origin:'b2drop'}))
+        // // load a text file by default for testing
+        // store.dispatch(require("./actions/actions").uploadLink({
+        //     url:'https://b2drop.eudat.eu/s/D6ACr5TomagTfoK', origin:'b2drop'}))
+        // store.dispatch(require("./actions/actions").uploadLink({
+        //     url:'https://b2drop.eudat.eu/s/ekDJNz7fWw69w5Y', origin:'b2drop'}))
         // store.dispatch(require("./actions/actions").uploadLink({
         //     url:'http://localhost:8000/testzip.zip', origin:'local'}))
     }

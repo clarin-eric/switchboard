@@ -76,6 +76,12 @@ class ContentOrOutline extends React.Component {
         super(props);
     }
 
+    static propTypes = {
+        res: PropTypes.object.isRequired,
+        enableMultipleResources: PropTypes.bool.isRequired,
+        actions: PropTypes.object.isRequired,
+    };
+
     render() {
         const res = this.props.res;
         const actions = this.props.actions;
@@ -84,7 +90,7 @@ class ContentOrOutline extends React.Component {
             return false;
         }
 
-        const headerText = this.props.enableMultipleResources ?
+        const headerText = actions.enableMultipleResources ?
             "Select files for further processing":
             "Select a file for further processing";
         return (
@@ -92,8 +98,8 @@ class ContentOrOutline extends React.Component {
                 { hasContent ?
                     <pre>
                         {res.content}
-                        { res.contentIsIncomplete ?
-                            <button className="btn btn-info btn-xs" onClick={e=>actions.moreContent()}>
+                        { res.content.length < res.fileLength ?
+                            <button className="btn btn-info btn-xs" onClick={e=>actions.moreContent(res)}>
                                 Show more content
                             </button> : false
                         }
@@ -132,6 +138,7 @@ class NormalResource extends React.Component {
         languages: PropTypes.array.isRequired,
         res: PropTypes.object.isRequired,
         actions: PropTypes.object.isRequired,
+        enableMultipleResources: PropTypes.bool.isRequired,
     };
 
     hasContentOrOutline(res) {
@@ -210,9 +217,8 @@ class NormalResource extends React.Component {
                 {extractedTextWarning && <div className="col-md-12 visible-xs visible-sm">{extractedTextWarning}</div>}
                 { showContentOrOutline ?
                     <div className="col-md-12 visible-xs visible-sm">
-                        <ContentOrOutline res={res}
-                            enableMultipleResources={this.props.enableMultipleResources}
-                            toggleArchiveEntryToInputs={actions.toggleArchiveEntryToInputs} />
+                        <ContentOrOutline res={res} actions={actions}
+                            enableMultipleResources={this.props.enableMultipleResources} />
                     </div> : false
                 }
                 { res.isSource ? false :
@@ -240,9 +246,8 @@ class NormalResource extends React.Component {
                 {extractedTextWarning && <div className="col-md-12 hidden-xs hidden-sm">{extractedTextWarning}</div>}
                 { showContentOrOutline ?
                     <div className="col-md-12 hidden-xs hidden-sm">
-                        <ContentOrOutline res={res}
-                            enableMultipleResources={this.props.enableMultipleResources}
-                            toggleArchiveEntryToInputs={actions.toggleArchiveEntryToInputs} />
+                        <ContentOrOutline res={res} actions={actions}
+                            enableMultipleResources={this.props.enableMultipleResources} />
                     </div> : false
                 }
             </div>
@@ -259,6 +264,7 @@ class SelectionResource extends React.Component {
         languages: PropTypes.array.isRequired,
         res: PropTypes.object.isRequired,
         actions: PropTypes.object.isRequired,
+        enableMultipleResources: PropTypes.bool.isRequired,
     };
 
     render() {
@@ -312,14 +318,16 @@ export class ResourceList extends React.Component {
                         mediatypes={this.props.mediatypes}
                         languages={this.props.languages}
                         res={res}
-                        actions={this.props.actions}/>
+                        actions={this.props.actions}
+                        enableMultipleResources={this.props.enableMultipleResources} />
         }
         if (res.profile) {
             return <NormalResource
                         mediatypes={this.props.mediatypes}
                         languages={this.props.languages}
                         res={res}
-                        actions={this.props.actions}/>
+                        actions={this.props.actions}
+                        enableMultipleResources={this.props.enableMultipleResources} />
         }
         return (
             <div className={`row indent${res.indent}`}>
