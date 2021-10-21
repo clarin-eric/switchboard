@@ -59,7 +59,7 @@ public class DataResourceTest {
         Response postResponse = dataResource.postFile("", is, "filename", null, null);
         String id = ((Map) postResponse.getEntity()).get("id").toString();
 
-        Response r = dataResource.getFile(id, null);
+        Response r = dataResource.getFile(id, null, null);
         assertEquals("text/plain;charset=utf-8", r.getHeaderString("content-type"));
     }
 
@@ -91,7 +91,7 @@ public class DataResourceTest {
 
         dataResource.putContent(id, newContent);
 
-        Response r = dataResource.getFile(id, null);
+        Response r = dataResource.getFile(id, null, null);
         StreamingOutput output = (StreamingOutput) r.getEntity();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         output.write(baos);

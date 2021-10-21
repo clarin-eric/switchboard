@@ -33,6 +33,7 @@ import java.util.zip.ZipException;
 public class DataResource {
     private static final Logger LOGGER = LoggerFactory.getLogger(DataResource.class);
     private static final int MAX_INLINE_CONTENT = 4 * 1024;
+    private static final int MORE_CONTENT_BUFFER_SIZE = 4 * 1024;
 
     static ObjectMapper mapper = new ObjectMapper();
     MediaLibrary mediaLibrary;
@@ -43,8 +44,10 @@ public class DataResource {
 
     @GET
     @Path("/{id}")
-    public Response httpGetFile(@PathParam("id") String idString, @QueryParam("mediatype") String mediatype) throws Throwable {
-        return getFile(idString, mediatype);
+    public Response httpGetFile(@PathParam("id") String idString,
+                                @HeaderParam("Range") String range,
+                                @QueryParam("mediatype") String mediatype) throws Throwable {
+        return getFile(idString, range, mediatype);
     }
 
     @PUT
@@ -108,17 +111,11 @@ public class DataResource {
         return getOutline(idString);
     }
 
-    public Response getFile(String idString, String mediatype) throws Throwable {
+    public Response getFile(String idString, String range, String mediatype) throws Throwable {
         FileInfo fi = getFileInfo(idString);
         if (fi == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-
-        StreamingOutput fileStream = output -> {
-            byte[] data = Files.readAllBytes(fi.getPath());
-            output.write(data);
-            output.flush();
-        };
 
         if (mediatype == null || mediatype.isEmpty()) {
             mediatype = fi.getProfile().toProfile().getMediaType();
@@ -129,10 +126,59 @@ public class DataResource {
                 mediatype = mediatype + ";charset=utf-8";
             }
         }
-        return Response.ok(fileStream)
-                .type(mediatype)
-                .header("content-disposition", "attachment; filename=" + fi.getFilename())
-                .build();
+
+        if (range == null || range.isEmpty()) {
+            StreamingOutput fileStream = output -> {
+                byte[] data = Files.readAllBytes(fi.getPath());
+                output.write(data);
+                output.flush();
+            };
+            return Response.ok(fileStream)
+                    .type(mediatype)
+                    .header("content-disposition", "attachment; filename=" + fi.getFilename())
+                    .build();
+        }
+
+        String[] ranges = range.split("=");
+        if (ranges.length < 2) {
+            return Response.status(Response.Status.BAD_REQUEST).entity("bad range header").build();
+        }
+        ranges = ranges[1].split("-");
+        if (ranges.length > 2) {
+            return Response.status(Response.Status.BAD_REQUEST).entity("only one range is acceptable").build();
+        }
+
+        final int start = Integer.parseInt(ranges[0]);
+
+        // Chunk media if the range upper bound is unspecified. Chrome sends "bytes=0-"
+        final int requestedEnd = ranges.length < 2 ? start + MORE_CONTENT_BUFFER_SIZE : Integer.parseInt(ranges[1]);
+
+        final RandomAccessFile file = new RandomAccessFile(fi.getPath().toFile(), "r");
+        file.seek(start);
+
+        final int end = requestedEnd < file.length() ? requestedEnd : (int) (file.length() - 1);
+
+        StreamingOutput fileStream = output -> {
+            final byte[] buf = new byte[MORE_CONTENT_BUFFER_SIZE];
+            int len = end - start + 1;
+            try {
+                while (len != 0) {
+                    int read = file.read(buf, 0, Math.min(buf.length, len));
+                    output.write(buf, 0, read);
+                    len -= read;
+                }
+            } finally {
+                file.close();
+            }
+            output.flush();
+        };
+        final String responseRange = String.format("bytes %d-%d/%d", start, end, file.length());
+        Response.ResponseBuilder res = Response.status(Response.Status.PARTIAL_CONTENT)
+                .entity(fileStream)
+                .header("Accept-Ranges", "bytes")
+                .header("Content-Range", responseRange)
+                .header(HttpHeaders.CONTENT_LENGTH, end - start + 1);
+        return res.build();
     }
 
     public Response putContent(String idString, String content) throws Throwable {
@@ -261,9 +307,6 @@ public class DataResource {
             String preview = CharStreams.toString(reader);
             if (preview != null && !preview.isEmpty()) {
                 ret.put("content", preview);
-                if (file.length() > MAX_INLINE_CONTENT) {
-                    ret.put("contentIsIncomplete", true);
-                }
             }
         } catch (IOException e) {
             LOGGER.warn("Cannot read file to return inline content: " + e.getMessage());
