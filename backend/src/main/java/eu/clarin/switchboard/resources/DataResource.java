@@ -27,13 +27,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.zip.ZipException;
 
 @Path("/api/storage")
 public class DataResource {
     private static final Logger LOGGER = LoggerFactory.getLogger(DataResource.class);
     private static final int MAX_INLINE_CONTENT = 4 * 1024;
-    private static final int MORE_CONTENT_BUFFER_SIZE = 4 * 1024;
+    private static final int MORE_CONTENT_BUFFER_SIZE = 64 * 1024;
+    private static final Pattern RANGE_HEADER_PATTERN = Pattern.compile("bytes=(\\d+)-(\\d+)?");
 
     static ObjectMapper mapper = new ObjectMapper();
     MediaLibrary mediaLibrary;
@@ -139,42 +142,22 @@ public class DataResource {
                     .build();
         }
 
-        String[] ranges = range.split("=");
-        if (ranges.length < 2) {
+        Matcher matcher = RANGE_HEADER_PATTERN.matcher(range);
+        if (!matcher.matches()) {
             return Response.status(Response.Status.BAD_REQUEST).entity("bad range header").build();
         }
-        ranges = ranges[1].split("-");
-        if (ranges.length > 2) {
-            return Response.status(Response.Status.BAD_REQUEST).entity("only one range is acceptable").build();
-        }
-
-        final int start = Integer.parseInt(ranges[0]);
+        final int start = Integer.parseInt(matcher.group(1));
 
         // Chunk media if the range upper bound is unspecified. Chrome sends "bytes=0-"
-        final int requestedEnd = ranges.length < 2 ? start + MORE_CONTENT_BUFFER_SIZE : Integer.parseInt(ranges[1]);
+        final int requestedEnd = matcher.group(2) == null ?
+                start + MORE_CONTENT_BUFFER_SIZE :
+                Integer.parseInt(matcher.group(2));
 
         final RandomAccessFile file = new RandomAccessFile(fi.getPath().toFile(), "r");
-        file.seek(start);
-
         final int end = requestedEnd < file.length() ? requestedEnd : (int) (file.length() - 1);
-
-        StreamingOutput fileStream = output -> {
-            final byte[] buf = new byte[MORE_CONTENT_BUFFER_SIZE];
-            int len = end - start + 1;
-            try {
-                while (len != 0) {
-                    int read = file.read(buf, 0, Math.min(buf.length, len));
-                    output.write(buf, 0, read);
-                    len -= read;
-                }
-            } finally {
-                file.close();
-            }
-            output.flush();
-        };
         final String responseRange = String.format("bytes %d-%d/%d", start, end, file.length());
         Response.ResponseBuilder res = Response.status(Response.Status.PARTIAL_CONTENT)
-                .entity(fileStream)
+                .entity(new MidfileStreamingOutput(file, start, end))
                 .header("Accept-Ranges", "bytes")
                 .header("Content-Range", responseRange)
                 .header(HttpHeaders.CONTENT_LENGTH, end - start + 1);
@@ -346,5 +329,42 @@ public class DataResource {
             return null;
         }
         return mediaLibrary.waitForFileInfo(id);
+    }
+
+    public static class MidfileStreamingOutput implements StreamingOutput {
+        RandomAccessFile file;
+        int start;
+        int len;
+
+        public MidfileStreamingOutput(RandomAccessFile file, int start, int end) {
+            this.file = file;
+            this.start = start;
+            this.len = end - start + 1;
+        }
+
+        @Override
+        public void write(OutputStream outputStream) throws IOException {
+            final byte[] buf = new byte[MORE_CONTENT_BUFFER_SIZE];
+
+            try {
+                file.seek(start);
+                while (len != 0) {
+                    int read = file.read(buf, 0, Math.min(buf.length, len));
+                    outputStream.write(buf, 0, read);
+                    len -= read;
+                }
+            } finally {
+                close(file);
+            }
+        }
+
+        private void close(Closeable x) {
+            try {
+                x.close();
+            } catch (IOException e) {
+                // log but otherwise ignore this one
+                LOGGER.warn("exception closing file: " + e.getMessage());
+            }
+        }
     }
 }
