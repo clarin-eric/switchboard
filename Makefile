@@ -44,6 +44,9 @@ run-webui-dev-server:
 run-uitests:
 	(cd webui/test && ../node_modules/cypress/bin/cypress run --headed)
 
+run-interactive-uitests:
+	(cd webui/test && ../node_modules/cypress/bin/cypress run)
+
 dependencies:
 	(cd webui && npm install)
 
