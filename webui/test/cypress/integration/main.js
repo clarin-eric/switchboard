@@ -1,6 +1,6 @@
 describe('Frontpage', () => {
     it('renders all elements', () => {
-        cy.visit('http://localhost:8080');
+        cy.visit('/');
         cy.contains('h2', 'Switchboard').should('be.visible');
         cy.contains('a', 'Upload files or text').should('be.visible');
         cy.contains('a', 'Tool inventory').should('be.visible');
@@ -10,9 +10,10 @@ describe('Frontpage', () => {
     })
 })
 
+
 describe('Uploads', () => {
     it('can upload file', () => {
-        cy.visit('http://localhost:8080');
+        cy.visit('/');
 
         cy.contains('a', 'Upload files or text').should('be.visible').click();
 
@@ -22,8 +23,9 @@ describe('Uploads', () => {
         cy.get('.tool.match').should('be.visible');
         cy.get('.value.namesize').contains('a', textFile).should('be.visible');
     })
+
     it('can submit url', () => {
-        cy.visit('http://localhost:8080');
+        cy.visit('/');
 
         cy.contains('a', 'Upload files or text').should('be.visible').click();
         cy.contains('a', 'Submit URL').should('be.visible').click();
@@ -39,9 +41,10 @@ describe('Uploads', () => {
         cy.get('.tool.match').should('be.visible');
         cy.get('.value.namesize').contains('a', urlFileName).should('be.visible');
     })
+
     it('can submit typed text', () => {
         const myinput = 'This is a text document';
-        cy.visit('http://localhost:8080');
+        cy.visit('/');
 
         cy.contains('a', 'Upload files or text').should('be.visible').click();
         cy.contains('a', 'Submit Text').should('be.visible').click();
@@ -52,16 +55,35 @@ describe('Uploads', () => {
         cy.get('.inputzone') .type(myinput).should('have.value', myinput);
         cy.contains('button', "Submit Text").should('be.enabled') .click();
 
-        cy.get('.tool.match').should('be.visible');
-        cy.get('.value.namesize').contains('a', 'submitted_text.txt').should('be.visible');
+        cy.get('.tool-list-with-controls').contains('h2', "Matching Tools")
+            .should('be.visible');
     })
 })
 
 
-describe('Regression tests', () => {
+describe('Resource content and archives', () => {
+    it('can show content', () => {
+        const myinput = 'This is a text document';
+        cy.visit('/');
+
+        cy.contains('a', 'Upload files or text').click();
+
+        cy.contains('a', 'Submit Text').click();
+        cy.get('.inputzone').type(myinput).should('have.value', myinput);
+        cy.contains('button', "Submit Text").click();
+
+        cy.contains('a', "Show content").click();
+        cy.get('.resource .content pre')
+            .should('be.visible')
+            .should('satisfy', $el => $el[0].innerText === myinput);
+    })
+})
+
+
+describe('Regressions', () => {
     it('cannot upload multiple resources from main input screen', () => {
         const myinput = 'This is a text document';
-        cy.visit('http://localhost:8080');
+        cy.visit('/');
 
         cy.contains('a', 'Upload files or text').should('be.visible').click();
         cy.contains('a', 'Submit Text').should('be.visible').click();
@@ -69,7 +91,7 @@ describe('Regression tests', () => {
         cy.contains('button', "Submit Text").should('be.enabled') .click();
         cy.get('.tool.match').should('be.visible');
 
-        cy.get('.resource .row.indent0').should('have.length', 1);
+        cy.get('.resource').should('have.length', 1);
 
         cy.go('back');
 
@@ -78,6 +100,6 @@ describe('Regression tests', () => {
         cy.contains('button', "Submit Text").should('be.enabled') .click();
         cy.get('.tool.match').should('be.visible');
 
-        cy.get('.resource .row.indent0').should('have.length', 1);
+        cy.get('.resource').should('have.length', 1);
     })
 })
