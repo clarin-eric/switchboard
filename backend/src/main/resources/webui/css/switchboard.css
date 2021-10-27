@@ -76,7 +76,7 @@ div.input form {
 
 
 /* resource table style */
-div.resource {
+div.resourceList {
     padding: 0;
 }
 
@@ -138,13 +138,13 @@ div.resource .outline .row:nth-child(even) {
     background: #fff;
 }
 
-div.resource .indent1 {
+div.resource.indent1 {
     margin-left: 1em;
 }
-div.resource .indent2 {
+div.resource.indent2 {
     margin-left: 2em;
 }
-div.resource .indent3 {
+div.resource.indent3 {
     margin-left: 3em;
 }
 
@@ -361,11 +361,8 @@ div.tool .keyword {
 }
 
 @media (max-width: 768px) {
-    div.resource .value {
+    div.resourceList .value {
         margin-bottom:0.5em;
-    }
-    div.resource hr {
-        margin:0;
     }
     div.tool .badges {
         position: absolute;

@@ -195,7 +195,7 @@ class NormalResource extends React.Component {
                     style={{fontSize:'80%', marginLeft: 10}} aria-hidden="true"/>
             </a> : false;
 
-        const resClass = `row indent${res.indent}` +
+        const resClass = `resource row indent${res.indent}` +
             (res.isSource ? " disabled" : "") +
             (res.specialResourceType === 'EXTRACTED_TEXT' ? " extracted" : "");
 
@@ -271,7 +271,7 @@ class SelectionResource extends React.Component {
         const res = this.props.res;
         const actions = this.props.actions;
         return (
-            <div key={res.id} className="row">
+            <div key={res.id} className="resource row">
                 <div className="col-md-8">
                     <div className="row">
                         <div className="col-xs-12 namesize content">
@@ -368,7 +368,7 @@ export class ResourceList extends React.Component {
         const isDict = this.props.resourceList.every(res => res.isDictionaryResource);
         return (
             <React.Fragment>
-                <div className="resource">
+                <div className="resourceList">
                     <div className="row hidden-xs">
                         <div className="col-md-12">
                             <h2>Resources</h2>
