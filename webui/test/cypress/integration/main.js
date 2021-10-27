@@ -10,8 +10,8 @@ describe('Frontpage', () => {
     })
 })
 
-describe('Uploaded file', () => {
-    it('works', () => {
+describe('Uploads', () => {
+    it('can upload file', () => {
         cy.visit('http://localhost:8080');
 
         cy.contains('a', 'Upload files or text').should('be.visible').click();
@@ -19,17 +19,10 @@ describe('Uploaded file', () => {
         const textFile = 'txt-sherlock-short.txt';
         cy.get('.dropzone > input').attachFile(textFile);
 
-        // for a very short while this shows up...
-        cy.get('.value.namesize').contains('span', 'Uploading...');
-
-        // then we get real data
         cy.get('.tool.match').should('be.visible');
         cy.get('.value.namesize').contains('a', textFile).should('be.visible');
     })
-})
-
-describe('Submitted URL', () => {
-    it('works', () => {
+    it('can submit url', () => {
         cy.visit('http://localhost:8080');
 
         cy.contains('a', 'Upload files or text').should('be.visible').click();
@@ -43,17 +36,10 @@ describe('Submitted URL', () => {
         cy.get('.inputzone').type(url).should('have.value', url);
         cy.contains('button', "Submit URL").should('be.enabled') .click();
 
-        // for a very short while this shows up...
-        cy.get('.value.namesize').contains('span', 'Uploading...');
-
-        // then we get real data
         cy.get('.tool.match').should('be.visible');
         cy.get('.value.namesize').contains('a', urlFileName).should('be.visible');
     })
-})
-
-describe('Typed text', () => {
-    it('works', () => {
+    it('can submit typed text', () => {
         const myinput = 'This is a text document';
         cy.visit('http://localhost:8080');
 
@@ -71,3 +57,27 @@ describe('Typed text', () => {
     })
 })
 
+
+describe('Regression tests', () => {
+    it('cannot upload multiple resources from main input screen', () => {
+        const myinput = 'This is a text document';
+        cy.visit('http://localhost:8080');
+
+        cy.contains('a', 'Upload files or text').should('be.visible').click();
+        cy.contains('a', 'Submit Text').should('be.visible').click();
+        cy.get('.inputzone').type(myinput).should('have.value', myinput);
+        cy.contains('button', "Submit Text").should('be.enabled') .click();
+        cy.get('.tool.match').should('be.visible');
+
+        cy.get('.resource .row.indent0').should('have.length', 1);
+
+        cy.go('back');
+
+        cy.contains('a', 'Submit Text').should('be.visible').click();
+        cy.get('.inputzone').type(myinput).should('have.value', myinput);
+        cy.contains('button', "Submit Text").should('be.enabled') .click();
+        cy.get('.tool.match').should('be.visible');
+
+        cy.get('.resource .row.indent0').should('have.length', 1);
+    })
+})
