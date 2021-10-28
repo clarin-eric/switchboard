@@ -1,6 +1,6 @@
 # Changelog
 
-## Coming soon
+## [2.4.0] - 2021-10-28
     - Support unique service ids
     - Improve resources UI
     - Add extract text option
