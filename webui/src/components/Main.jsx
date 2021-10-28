@@ -90,8 +90,11 @@ const Analysis = (props) => (
                       actions={props.actions} />
         <hr style={{marginTop:0}}/>
 
-        <MatchingTools matchingTools={props.matchingTools} resourceList={props.resourceList}
+
+        <div className="results smooth-update">
+            <MatchingTools matchingTools={props.matchingTools} resourceList={props.resourceList}
                        actions={props.actions} />
+        </div>
     </div>
 );
 
@@ -104,8 +107,8 @@ const MatchingTools = (props) => {
     if (!tools.length)
         return <h3 className="smooth-update">No matching tools found.</h3>;
 
-    return <div className="smooth-update">
-        <ToolListWithControls title="Matching Tools" tools={tools} resourceList={props.resourceList}
-                              selectResourceMatch={props.selectResourceMatch}/>
-    </div>;
+    return <ToolListWithControls title="Matching Tools"
+                tools={tools}
+                resourceList={props.resourceList}
+                selectResourceMatch={props.selectResourceMatch}/>;
 };
