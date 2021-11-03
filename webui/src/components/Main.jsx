@@ -40,7 +40,7 @@ export class Main extends React.Component {
             }
         }
         if (params.url && params.origin) {
-            this.props.uploadLink(params);
+            this.props.actions.uploadLink(params);
         }
     }
 
@@ -49,17 +49,12 @@ export class Main extends React.Component {
             <div className="main">
                 { this.props.resourceList.length ?
                     <Analysis mediatypes={this.props.mediatypes} languages={this.props.languages}
-                              enableMultipleResources={this.props.apiinfo.enableMultipleResources}
+                              enableMultipleResources={this.props.apiinfo.enableMultipleResources || false}
                               resourceList={this.props.resourceList}
-                              setResourceProfile={this.props.setResourceProfile}
-                              setResourceContent={this.props.setResourceContent}
-                              toggleArchiveEntryToInputs={this.props.toggleArchiveEntryToInputs}
-                              extractCompressedResource={this.props.extractCompressedResource}
-                              toggleTextExtraction={this.props.toggleTextExtraction}
-                              removeResource={this.props.removeResource}
                               matchingTools={this.props.matchingTools}
-                              selectResourceMatch={this.props.selectResourceMatch} /> :
-                    <Home/> }
+                              actions={this.props.actions} /> :
+                    <Home/>
+                }
             </div>
         );
     }
@@ -92,16 +87,11 @@ const Analysis = (props) => (
         <ResourceList mediatypes={props.mediatypes} languages={props.languages}
                       enableMultipleResources={props.enableMultipleResources}
                       resourceList={props.resourceList}
-                      setResourceProfile={props.setResourceProfile}
-                      setResourceContent={props.setResourceContent}
-                      toggleArchiveEntryToInputs={props.toggleArchiveEntryToInputs}
-                      extractCompressedResource={props.extractCompressedResource}
-                      toggleTextExtraction={props.toggleTextExtraction}
-                      removeResource={props.removeResource} />
+                      actions={props.actions} />
         <hr style={{marginTop:0}}/>
 
         <MatchingTools matchingTools={props.matchingTools} resourceList={props.resourceList}
-                       selectResourceMatch={props.selectResourceMatch}/>
+                       actions={props.actions} />
     </div>
 );
 

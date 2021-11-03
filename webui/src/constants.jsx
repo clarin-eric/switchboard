@@ -45,3 +45,5 @@ export const actionType = [
     actions[value] = value;
     return actions;
 }, {});
+
+export const CONTENT_INCREMENT_SIZE = 4 * 1024;

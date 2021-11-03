@@ -1,5 +1,6 @@
 import SI from 'seamless-immutable';
 import React from 'react';
+import PropTypes from 'prop-types';
 import Select from 'react-select';
 import { processMediatype, humanSize, isCompressedProfile, hasExtractableTextProfile, isTextProfile, isArchiveProfile } from '../actions/utils';
 import { InputContainer } from '../containers/InputContainer';
@@ -33,6 +34,11 @@ class BlurableTextInput extends React.Component {
         super(props);
         this.inputRef = React.createRef();
     }
+
+    static propTypes = {
+        value: PropTypes.string.isRequired,
+        onChange: PropTypes.func.isRequired,
+    };
 
     render() {
         return <input type="text" ref={this.inputRef} value={this.props.value}
@@ -70,14 +76,21 @@ class ContentOrOutline extends React.Component {
         super(props);
     }
 
+    static propTypes = {
+        res: PropTypes.object.isRequired,
+        enableMultipleResources: PropTypes.bool.isRequired,
+        actions: PropTypes.object.isRequired,
+    };
+
     render() {
         const res = this.props.res;
+        const actions = this.props.actions;
         const hasContent = res.content && isTextProfile(res.profile.mediaType);
         if (!hasContent && !res.outline) {
             return false;
         }
 
-        const headerText = this.props.enableMultipleResources ?
+        const headerText = actions.enableMultipleResources ?
             "Select files for further processing":
             "Select a file for further processing";
         return (
@@ -85,8 +98,11 @@ class ContentOrOutline extends React.Component {
                 { hasContent ?
                     <pre>
                         {res.content}
-                        <br/>
-                        { res.contentIsIncomplete ? <span>...</span> : false }
+                        { res.content.length < res.fileLength ?
+                            <button className="btn btn-info btn-xs" onClick={e=>actions.moreContent(res)}>
+                                Show more content
+                            </button> : false
+                        }
                     </pre> : false
                 }
                 { res.outline && !hasContent ?
@@ -98,7 +114,7 @@ class ContentOrOutline extends React.Component {
                                 res={res}
                                 entry={entry}
                                 enableMultipleResources={this.props.enableMultipleResources}
-                                toggleArchiveEntryToInputs={this.props.toggleArchiveEntryToInputs} />
+                                toggleArchiveEntryToInputs={actions.toggleArchiveEntryToInputs} />
                         )}
                         {res.outlineIsIncomplete ? <span>...</span> : false}
                     </div> : false
@@ -117,6 +133,14 @@ class NormalResource extends React.Component {
         }
     }
 
+    static propTypes = {
+        mediatypes: PropTypes.array.isRequired,
+        languages: PropTypes.array.isRequired,
+        res: PropTypes.object.isRequired,
+        actions: PropTypes.object.isRequired,
+        enableMultipleResources: PropTypes.bool.isRequired,
+    };
+
     hasContentOrOutline(res) {
         return (isTextProfile(res.profile.mediaType) && res.content) ||
                (isArchiveProfile(res.profile.mediaType) && res.outline);
@@ -132,6 +156,7 @@ class NormalResource extends React.Component {
 
     render() {
         const res = this.props.res;
+        const actions = this.props.actions;
         const hasContentOrOutline = this.hasContentOrOutline(res);
         const showContentOrOutline = hasContentOrOutline && this.showContentOrOutline(res);
 
@@ -143,18 +168,18 @@ class NormalResource extends React.Component {
 
         const toggleCompressButton = isCompressedProfile(res.profile.mediaType) ?
             <a className="btn btn-xs btn-default" style={{fontSize:'75%', verticalAlign: "baseline"}}
-                onClick={e => this.props.extractCompressedResource(res)} >
+                onClick={e => actions.extractCompressedResource(res)} >
                 Uncompress
             </a> : false;
 
         const showExtractTextButton = hasExtractableTextProfile(res.profile.mediaType) && !res.isSource;
         const extractTextButton = showExtractTextButton ?
             <a className="btn btn-xs btn-default" style={{fontSize:'75%', verticalAlign: "baseline"}}
-                onClick={e => this.props.toggleTextExtraction(res)} >
+                onClick={e => actions.toggleTextExtraction(res)} >
                 Extract Text
             </a> : false;
         const revertToOriginalButton = res.originalResource ?
-            <a className="btn btn-xs btn-default" onClick={e => this.props.toggleTextExtraction(res)}
+            <a className="btn btn-xs btn-default" onClick={e => actions.toggleTextExtraction(res)}
                 style={{verticalAlign: "baseline"}}>
                 Revert to original
             </a> : false;
@@ -165,7 +190,7 @@ class NormalResource extends React.Component {
             </div> : false;
 
         const removeButton = (this.props.enableMultipleResources || res.sourceID) ?
-            <a onClick={e => this.props.removeResource(res)}>
+            <a onClick={e => actions.removeResource(res)}>
                 <span className={"glyphicon glyphicon-trash"}
                     style={{fontSize:'80%', marginLeft: 10}} aria-hidden="true"/>
             </a> : false;
@@ -192,9 +217,8 @@ class NormalResource extends React.Component {
                 {extractedTextWarning && <div className="col-md-12 visible-xs visible-sm">{extractedTextWarning}</div>}
                 { showContentOrOutline ?
                     <div className="col-md-12 visible-xs visible-sm">
-                        <ContentOrOutline res={res}
-                            enableMultipleResources={this.props.enableMultipleResources}
-                            toggleArchiveEntryToInputs={this.props.toggleArchiveEntryToInputs} />
+                        <ContentOrOutline res={res} actions={actions}
+                            enableMultipleResources={this.props.enableMultipleResources} />
                     </div> : false
                 }
                 { res.isSource ? false :
@@ -204,7 +228,7 @@ class NormalResource extends React.Component {
                             <div className="col-xs-4 col-md-12 resource-header">Mediatype</div>
                             <div className="col-xs-8 col-md-12 value">
                                 <SelectMediatype res={res} mediatypes={this.props.mediatypes}
-                                    onMediatype={v => this.props.setResourceProfile(res.id, 'mediaType', v.value)}/>
+                                    onMediatype={v => actions.setResourceProfile(res.id, 'mediaType', v.value)}/>
                             </div>
                         </div>
                     </div>
@@ -213,7 +237,7 @@ class NormalResource extends React.Component {
                             <div className="col-xs-4 col-md-12 resource-header">Language</div>
                             <div className="col-xs-8 col-md-12 value">
                                 <SelectLanguage res={res} languages={this.props.languages}
-                                    onLanguage={v => this.props.setResourceProfile(res.id, 'language', v.value)}/>
+                                    onLanguage={v => actions.setResourceProfile(res.id, 'language', v.value)}/>
                             </div>
                         </div>
                     </div>
@@ -222,9 +246,8 @@ class NormalResource extends React.Component {
                 {extractedTextWarning && <div className="col-md-12 hidden-xs hidden-sm">{extractedTextWarning}</div>}
                 { showContentOrOutline ?
                     <div className="col-md-12 hidden-xs hidden-sm">
-                        <ContentOrOutline res={res}
-                            enableMultipleResources={this.props.enableMultipleResources}
-                            toggleArchiveEntryToInputs={this.props.toggleArchiveEntryToInputs} />
+                        <ContentOrOutline res={res} actions={actions}
+                            enableMultipleResources={this.props.enableMultipleResources} />
                     </div> : false
                 }
             </div>
@@ -236,15 +259,24 @@ class SelectionResource extends React.Component {
         super(props);
     }
 
+    static propTypes = {
+        mediatypes: PropTypes.array.isRequired,
+        languages: PropTypes.array.isRequired,
+        res: PropTypes.object.isRequired,
+        actions: PropTypes.object.isRequired,
+        enableMultipleResources: PropTypes.bool.isRequired,
+    };
+
     render() {
         const res = this.props.res;
+        const actions = this.props.actions;
         return (
             <div key={res.id} className="row">
                 <div className="col-md-8">
                     <div className="row">
                         <div className="col-xs-12 namesize content">
                             <BlurableTextInput value={res.content}
-                                onChange={text => this.props.setResourceContent(res.id, text)}/>
+                                onChange={text => actions.setResourceContent(res.id, text)}/>
                         </div>
                     </div>
                 </div>
@@ -253,7 +285,7 @@ class SelectionResource extends React.Component {
                         <div className="col-xs-4 col-md-12 resource-header">Language</div>
                         <div className="col-xs-8 col-md-12 value">
                             <SelectLanguage res={res} languages={this.props.languages}
-                                onLanguage={v => this.props.setResourceProfile(res.id, 'language', v.value)}/>
+                                onLanguage={v => actions.setResourceProfile(res.id, 'language', v.value)}/>
                         </div>
                     </div>
                 </div>
@@ -272,25 +304,30 @@ export class ResourceList extends React.Component {
         }
     }
 
+    static propTypes = {
+        mediatypes: PropTypes.array.isRequired,
+        languages: PropTypes.array.isRequired,
+        enableMultipleResources: PropTypes.bool.isRequired,
+        resourceList: PropTypes.array.isRequired,
+        actions: PropTypes.object.isRequired,
+    };
+
     renderResource(res) {
         if (res.isDictionaryResource) {
             return <SelectionResource
+                        mediatypes={this.props.mediatypes}
                         languages={this.props.languages}
-                        setResourceProfile={this.props.setResourceProfile}
-                        setResourceContent={this.props.setResourceContent}
-                        res={res} />;
+                        res={res}
+                        actions={this.props.actions}
+                        enableMultipleResources={this.props.enableMultipleResources} />
         }
         if (res.profile) {
             return <NormalResource
                         mediatypes={this.props.mediatypes}
                         languages={this.props.languages}
-                        setResourceProfile={this.props.setResourceProfile}
-                        removeResource={this.props.removeResource}
-                        toggleArchiveEntryToInputs={this.props.toggleArchiveEntryToInputs}
-                        extractCompressedResource={this.props.extractCompressedResource}
-                        toggleTextExtraction={this.props.toggleTextExtraction}
-                        enableMultipleResources={this.props.enableMultipleResources}
-                        res={res} />;
+                        res={res}
+                        actions={this.props.actions}
+                        enableMultipleResources={this.props.enableMultipleResources} />
         }
         return (
             <div className={`row indent${res.indent}`}>
