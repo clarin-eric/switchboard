@@ -33,13 +33,13 @@ package: build-docker-image
 	(cd build && tar cvf switchboard.tar.gz switchboard)
 
 build-webui-production:
-	(cd webui && node_modules/webpack/bin/webpack.js --mode production -p)
+	(cd webui && node_modules/webpack/bin/webpack.js --mode production)
 
 run-backend:
 	(cd backend && mvn -q package && JAVA_OPTS="-Xmx4g" target/appassembler/bin/switchboard server config.yaml)
 
 run-webui-dev-server:
-	(cd webui && node_modules/webpack-dev-server/bin/webpack-dev-server.js --mode development -d --hot)
+	(cd webui && node_modules/webpack-dev-server/bin/webpack-dev-server.js --mode development)
 
 run-uitests:
 	(cd webui/test && ../node_modules/cypress/bin/cypress run -q)

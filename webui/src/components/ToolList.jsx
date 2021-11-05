@@ -234,7 +234,7 @@ class ToolCard extends React.Component {
 
     renderInvocationButton(tool, invocationURL, error) {
         const isManual = tool.webApplication && tool.webApplication.manualParameters;
-        const btnClass = isManual ? "btn btn-default" : "btn btn-success";
+        const btnClass = `open btn ${isManual ? "btn-default" : "btn-success"}`;
         const btnText = isManual ? "Go to site" : "Open";
 
         const trackCall = (e) => {
@@ -260,34 +260,39 @@ class ToolCard extends React.Component {
         const Highlighter = this.props.highlighter;
         const isManual = tool.webApplication && tool.webApplication.manualParameters;
         const manualHelpText = "The Switchboard cannot automatically send the data to this web application. Please download the resources locally and upload them manually in the web applications' environment";
-        return (
-            <div className="toolheader" onClick={toggle.bind(this, 'showDetails')} title={isManual ? manualHelpText : ""}>
-                <div className="img-holder hidden-xs"><img src={imgSrc}/></div>
-                <Indicator className="tool-chevron" title={"menu-" + (this.state.showDetails ? "down":"right")}/>
-                {this.renderInvocationButton(tool, invocationURL, error)}
-                <div className="name-and-badges">
+        return <div style={{display:'flex'}}>
+            <div className="img-holder hidden-xs"><img src={imgSrc}/></div>
+            <Indicator className="tool-chevron" title={"menu-" + (this.state.showDetails ? "down":"right")}/>
+            <div className="toolheader"
+                onClick={toggle.bind(this, 'showDetails')} title={isManual ? manualHelpText : ""}>
+                <div className="toolname">
                     <span style={{fontSize:"120%"}}><Highlighter text={tool.name}/></span>
-                    <div className="badges">
-                        { !isManual ? null
-                            : <div className="badge-holder manual" title={manualHelpText}>
-                                <span className={"fa fa-file-upload"} aria-hidden="true" style={{padding: '6px 8px', fontSize:'100%'}}/>
-                            </div> }
-                        { !tool.authentication || tool.authentication == "no" ? null
-                            : <div className="badge-holder auth" title="This tool requires a user account. Please check the Authentication information for more details.">
-                                <span className={"fa fa-key"} aria-hidden="true"/>
-                            </div> }
-                        { !tool.standaloneApplication ? null
-                            : <div className="badge-holder standalone" title="This tool requires local installation on one of your devices, please check the details.">
-                                <span className={"fa fa-download"} aria-hidden="true"/>
-                            </div> }
-                        { tool.webApplication && tool.webApplication.url && tool.webApplication.url.startsWith("http://") ?
-                            <div className="badge-holder unsafe" title="The connection to this tool is not secure. Unauthorized 3rd parties can potentially access the resource while we transfer it to the tool.">
-                                <span><span className={"fa fa-exclamation-triangle"}/> <span> Not secure</span></span>
-                            </div>: null }
-                    </div>
+                </div>
+                <div className="badges">
+                    {this.renderInvocationButton(tool, invocationURL, error)}
+                    { !isManual ? null
+                        : <div className="badge-holder manual" title={manualHelpText}>
+                            <span className={"fa fa-file-upload"} aria-hidden="true" style={{padding: '6px 8px', fontSize:'100%'}}/>
+                            <span> Requires data upload</span>
+                        </div> }
+                    { !tool.authentication || tool.authentication == "no" ? null
+                        : <div className="badge-holder auth" title="This tool requires a user account. Please check the Authentication information for more details.">
+                            <span className={"fa fa-key"} aria-hidden="true"/>
+                            <span> Requires authentication</span>
+                        </div> }
+                    { !tool.standaloneApplication ? null
+                        : <div className="badge-holder standalone" title="This tool requires local installation on one of your devices, please check the details.">
+                            <span className={"fa fa-desktop"} aria-hidden="true"/>
+                            <span> Desktop application</span>
+                        </div> }
+                    { tool?.webApplication?.url?.startsWith("http://") ?
+                        <div className="badge-holder unsafe" title="The connection to this tool is not secure. Unauthorized 3rd parties can potentially access the resource while we transfer it to the tool.">
+                            <span className={"fa fa-exclamation-triangle"}/>
+                            <span> Not secure</span>
+                        </div>: null }
                 </div>
             </div>
-        );
+        </div>;
     }
 
     renderUsageRestrictions(tool) {

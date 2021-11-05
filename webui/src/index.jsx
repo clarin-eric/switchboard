@@ -6,6 +6,8 @@ import thunk from 'redux-thunk';
 import {withRouter, BrowserRouter, Route, Switch, Link} from 'react-router-dom';
 import Modal from 'react-modal';
 
+import './style.scss';
+
 import {clientPath} from './constants';
 import rootReducers from './actions/reducers';
 import * as actions from './actions/actions';
@@ -97,15 +99,15 @@ class Application extends React.Component {
                 store.dispatch(actions.fetchAsyncResourceState(data.fileInfoID));
             }
             delete window.SWITCHBOARD_DATA;
+        } else {
+            // load a text file by default for testing
+            // store.dispatch(require("./actions/actions").uploadLink({
+            //     url:'https://b2drop.eudat.eu/s/D6ACr5TomagTfoK', origin:'b2drop'}))
+            // store.dispatch(require("./actions/actions").uploadLink({
+            //     url:'https://b2drop.eudat.eu/s/ekDJNz7fWw69w5Y', origin:'b2drop'}))
+            // store.dispatch(require("./actions/actions").uploadLink({
+            //     url:'http://localhost:8000/testzip.zip', origin:'local'}))
         }
-
-        // // load a text file by default for testing
-        // store.dispatch(require("./actions/actions").uploadLink({
-        //     url:'https://b2drop.eudat.eu/s/D6ACr5TomagTfoK', origin:'b2drop'}))
-        // store.dispatch(require("./actions/actions").uploadLink({
-        //     url:'https://b2drop.eudat.eu/s/ekDJNz7fWw69w5Y', origin:'b2drop'}))
-        // store.dispatch(require("./actions/actions").uploadLink({
-        //     url:'http://localhost:8000/testzip.zip', origin:'local'}))
     }
 
     render() {

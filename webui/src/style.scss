@@ -1,0 +1,390 @@
+/* to set footer at page bottom */
+html, body, #reactapp { height: 100%; }
+body { overflow-x:hidden; }
+pre {margin:0; border:none;background-color:transparent;}
+#bodycontainer {
+    height: auto;
+    min-height: 100%;
+    padding-bottom: 80px;
+}
+#footer {
+    clear: both;
+    position: relative;
+    height: 80px;
+    margin-top: -80px;
+    padding-top: 20px;
+    border-top: 1px solid #d5d5d5;
+    background-color: #eee;
+    color: #777;
+}
+
+/* large text on body */
+body {font-size: 16px}
+#footer *, nav * {font-size: 14px}
+
+/* headers should not have the same color as links */
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  color: black;
+}
+
+/* fix links without href (with onClick) */
+a { cursor: pointer }
+
+/* visual bug fix */
+.input-group input.form-control {
+    z-index: 0;
+}
+
+div.input {
+    /* margins for tab children */
+    .tab-child {
+        margin-top: 1em;
+    }
+
+    /* file drop input textarea style */
+    button.dropzone {
+        margin-top: 10px;
+        margin-bottom: 20px;
+        padding: 10px;
+        border: 3px dashed #888;
+        border-radius: 16px;
+        box-shadow: 2px 2px 5px #ccc;
+        &:hover{
+            border: 3px dashed #006d91;
+            box-shadow: 0 0 8px #006d91;
+        }
+        &:hover.active {
+            border: 3px dashed #0080aa;
+            box-shadow: 0 0 8px #0080aa;
+        }
+    }
+
+    /* text/url input textarea style */
+    form.linkinput {
+        margin-bottom:20px;
+    }
+
+    textarea.inputzone {
+        padding: 10px;
+        color: black;
+        border: 1px solid #ccc;
+    }
+    form {
+        box-shadow: 2px 2px 5px #ccc;
+    }
+}
+
+
+/* resource table style */
+div.resourceList {
+    padding: 0;
+}
+
+div.resource {
+    .resource-header {
+        font-size: 20px;
+        margin: 5px 0 6px 0;
+    }
+
+    .namesize {
+        font-size: 20px;
+        color: #31708f;
+        background-color: #d9edf7;
+        border-color: #bce8f1;
+        padding: 20px 10px 15px;
+        margin-bottom: 20px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+    }
+    .warning {
+        background-color: #fff8e0;
+        border-color: #fffaf0;
+        color: #004;
+        margin-top: -22px;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #fed;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+
+    .content {
+        background: #f2faff;
+        border-radius: 0 0 20px 20px;
+        margin: -22px 0 10px 0;
+        padding: 10px;
+
+        &.selection {
+            margin-top: 0;
+        }
+
+        & > input { /*selection mode*/
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            padding: 10px;
+            color: black;
+            width: 100%;
+        }
+
+        .outline {
+            max-height: 200px;
+            overflow: scroll;
+        }
+
+        pre {
+            max-height: 200px;
+            overflow: scroll;
+        }
+    }
+
+    .outline {
+        .outlineHeader {
+            font-size: 14px;
+            font-weight: 700;
+        }
+        .row {
+            margin: 0;
+            padding: 2px;
+
+            &:nth-child(even) {
+                background: #fff;
+            }
+        }
+    }
+
+    &.indent1 {
+        margin-left: 1em;
+    }
+    &.indent2 {
+        margin-left: 2em;
+    }
+    &.indent3 {
+        margin-left: 3em;
+    }
+
+    .disabled {
+        .namesize {
+            background-color: #eee;
+            padding: 10px 10px 10px;
+
+            a {
+                color: #666;
+            }
+        }
+        .content {
+            background-color: #fafafa;
+        }
+    }
+
+    .namesize span {
+        color: #555;
+    }
+}
+
+div.more-data-button {
+    padding-bottom: 1em;
+}
+div.more-data-pane {
+    border: 2px solid #ddd;
+    padding: 1em;
+    border-radius: 4px;
+    background-color: #eee;
+}
+div.more-data-button .glyphicon, div.more-data-pane .glyphicon {
+    font-size: 80%;
+}
+
+/* transitions for matching tools */
+.smooth-update {
+    animation: fadein .2s;
+}
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* tools styles */
+div.tool-sublist h3 {
+    margin: 0;
+    padding: 10px 0;
+    font-family: "Source Sans Pro",Calibri,Arial,Helvetica,sans-serif;
+    font-size: 20px;
+    color: #033d71;
+    background-color: #f3f9fc;
+
+    &:hover {
+        background-color: #eee;
+    }
+    .section-left-padding {
+        padding-left: 10px;
+    }
+}
+
+div.tool {
+    padding: 8px 0;
+
+    &:hover {
+        background-color: #f6f6f6;
+    }
+
+    .tool-chevron {
+        font-size: 80%;
+        margin-right: 1em;
+        line-height: 26px;
+        color: #444;
+    }
+
+    .toolheader {
+        display: inline;
+
+        .tool-starter {
+            font-size: 90%;
+            margin-right: 0;
+            margin-left: 2px;
+        }
+
+        .label {
+            padding: 2px 4px;
+            margin-right: 8px;
+        }
+    }
+
+    .img-holder {
+        width: 160px;
+        height: 2em;
+        margin-right: 1em;
+        text-align: right;
+        float: left;
+        flex-shrink: 0;
+
+        img {
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            box-shadow: 2px 2px 2px #ccc;
+            max-width: 160px;
+            max-height: 2em;
+            background-color: white;
+        }
+    }
+
+    .toolname {
+        display: inline;
+        margin-right: 4px;
+    }
+
+    .badges {
+        display: inline-block;
+        a {
+            vertical-align: baseline;
+        }
+    }
+
+    .badge-holder {
+        display: inline;
+        border-radius: 12px;
+        border: 1px solid #ddd;
+        padding: 4px 8px;
+        margin: 0 6px;
+        background-color: #fafafa;
+        font-size: 80%;
+        white-space: nowrap;
+
+        span {
+            margin: 0;
+            color: #777;
+        }
+    }
+
+    .dl-horizontal {
+        margin-top:8px;
+        margin-bottom:0;
+    }
+
+    .open.btn {
+        display: inline;
+        padding: 2px 10px;
+        border-radius: 4px;
+        color: #5cb85c;
+        background-color: #fff;
+    }
+
+    hr {
+        margin-top: 10px;
+        margin-bottom: 0;
+    }
+
+    .inputclass {
+        font-weight: bold;
+        font-size: 90%;
+    }
+    .resource-index {
+        font-style: italic;
+        font-weight: bold;
+    }
+
+    .keyword {
+        border: 1px solid #c9edf7;
+        background-color: #f0f8ff;
+        padding: 2px 4px;
+        margin-right: 4px;
+    }
+
+}
+
+/* highlight search matches e.g. in tools */
+.highlight {
+    background-color: yellow;
+}
+
+.tool-list-with-controls {
+    h2 {
+        margin-top:0;
+    }
+
+    form.controls  {
+        label {
+            /* custom form css instead of using bootstrap's css
+               which breaks the "floating: right" behaviour */
+            white-space: nowrap;
+            vertical-align: middle;
+            padding: 8px 12px;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 1.2em;
+            color: #555;
+            text-align: center;
+            background-color: #f0f0f0;
+            padding-right:26px;
+            margin-right:-22px;
+        }
+
+        input[type=checkbox] {
+            margin-right:14px;
+            line-height:1.2em;
+            vertical-align: text-top;
+        }
+
+        input[type=text] {
+            padding: 4px 12px;
+            line-height:1.5em;
+            border: 1px solid #ddd;
+        }
+    }
+}
+
+@media (min-width: 992px) {
+    div.resource .namesize {
+        margin-top: 10px;
+    }
+    div.resource .resource-header {
+        font-size: 16px;
+    }
+
+}
+
+@media (max-width: 768px) {
+    div.resourceList .value {
+        margin-bottom:0.5em;
+    }
+}

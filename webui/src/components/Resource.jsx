@@ -257,7 +257,7 @@ function SelectionResource({mediatypes, languages, res, actions, enableMultipleR
         <div key={res.id} className="resource row">
             <div className="col-md-8">
                 <div className="row">
-                    <div className="col-xs-12 namesize content">
+                    <div className="col-xs-12 namesize content selection">
                         <BlurableTextInput value={res.content}
                             onChange={text => actions.setResourceContent(res.id, text)}/>
                     </div>

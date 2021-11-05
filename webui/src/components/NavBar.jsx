@@ -32,7 +32,7 @@ export class NavBar extends React.Component {
 
     render() {
         if (this.props.mode === 'popup') {
-            return <div style={{marginTop: '0.5em'}}/>;
+            return false;
         }
 
         const navCollapseClass = this.state.showCollapsedNavbar ?
