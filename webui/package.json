@@ -15,6 +15,8 @@
         "babel-register": "^6.26.0",
         "browserslist": "^4.16.5",
         "css-loader": "^2.1.1",
+        "cypress": "^8.6.0",
+        "cypress-file-upload": "^5.0.8",
         "style-loader": "^0.23.1",
         "terser-webpack-plugin": "^3.0.6",
         "uglify-loader": "^3.0.0",

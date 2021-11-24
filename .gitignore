@@ -4,3 +4,5 @@ node_modules/
 build/
 *.iml
 bundle.js*
+webui/test/cypress/videos
+webui/test/cypress/screenshots

@@ -41,6 +41,12 @@ run-backend:
 run-webui-dev-server:
 	(cd webui && node_modules/webpack-dev-server/bin/webpack-dev-server.js --mode development -d --hot)
 
+run-uitests:
+	(cd webui/test && ../node_modules/cypress/bin/cypress run -q)
+
+run-interactive-uitests:
+	(cd webui/test && ../node_modules/cypress/bin/cypress run --headed --no-exit)
+
 dependencies:
 	(cd webui && npm install)
 
