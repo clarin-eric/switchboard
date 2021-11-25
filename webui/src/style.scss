@@ -294,6 +294,10 @@ div.tool {
             margin: 0;
             color: #777;
         }
+
+        &.unsafe {
+            background-color: #fec;
+        }
     }
 
     .dl-horizontal {

@@ -48,14 +48,9 @@ export function makeHighlighter(terms) {
             return textRenderer({value:text});
         }
         return (
-            <ReactMarkdown
-                plugins={[gfm]}
-                source={markdown}
-                skipHtml={true}
-                escapeHtml={true}
-                renderers={{text: textRenderer}}
-                linkTarget='_blank'
-            />
+            <ReactMarkdown plugins={[gfm]} skipHtml={true} components={{text: textRenderer}} linkTarget='_blank'>
+                {markdown}
+            </ReactMarkdown>
         );
     };
 };
