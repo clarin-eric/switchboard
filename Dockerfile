@@ -36,7 +36,7 @@ COPY --from=webui_builder /build/backend/src/main/resources/webui/bundle.js* ./b
 WORKDIR /build/backend
 RUN mvn versions:set -DnewVersion=${SWITCHBOARD_VERSION}
 RUN mvn versions:commit
-RUN mvn clean package
+RUN mvn -q clean package
 
 ###############################################################################
 
