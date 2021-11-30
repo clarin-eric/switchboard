@@ -251,7 +251,12 @@ class ToolCard extends React.Component {
                 </a>
             );
         } else if (error) {
-            return (<span className="label label-danger">{error}</span>);
+            return (
+                <span className="error">
+                    <span className={"glyphicon glyphicon-alert"} aria-hidden="true"/>
+                    {error}
+                </span>
+            );
         }
         return false;
     }

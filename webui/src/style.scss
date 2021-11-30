@@ -244,9 +244,18 @@ div.tool {
             margin-left: 2px;
         }
 
-        .label {
-            padding: 2px 4px;
+        .error {
             margin-right: 8px;
+            padding: 0.2em 0.6em 0.3em;
+            font-size: 80%;
+            color: #fff;
+            background-color: #d9534f;
+            white-space: nowrap;
+            border-radius: 0.25em;
+
+            span {
+                padding-right:0.5em;
+            }
         }
     }
 
@@ -309,8 +318,6 @@ div.tool {
         display: inline;
         padding: 2px 10px;
         border-radius: 4px;
-        color: #5cb85c;
-        background-color: #fff;
     }
 
     hr {
