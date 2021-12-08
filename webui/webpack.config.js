@@ -21,25 +21,19 @@ module.exports = {
                 exclude: /node_modules/,
                 loader: 'babel-loader',
                 include: path.join(__dirname, 'src')
+            },
+            {
+                test: /\.(scss|css)$/,
+                use: ['style-loader', 'css-loader', 'sass-loader']
             }
-            // {
-            //     test: /\.css$/,
-            //     use: ['style-loader', 'css-loader']
-            // },
-            // {
-            //     test: /\.(png|woff|woff2|eot|ttf|svg)/,
-            //     loader: 'url-loader?limit=100000'
-            // },
-            // {
-            //     test: /\.(png|jpg)$/,
-            //     loader: 'file-loader?name=[name].[ext]',
-            //     include: path.join(__dirname, 'src/images')
-            // },
         ]
     },
     // plugins: [new BundleAnalyzerPlugin()],
     devServer: {
-        contentBase: PATHS.compiled_app,
+        static: {
+            directory: PATHS.compiled_app,
+            watch: true,
+        },
         historyApiFallback: true,
         proxy: {
             '/api/**': {target :'http://localhost:8080', changeOrigin: true, secure: false},

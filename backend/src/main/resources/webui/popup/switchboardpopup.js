@@ -168,7 +168,7 @@ function makeDomElements(align, config, params) {
     const closebutton = $('<button>')
         .css({
             'float': 'right',
-            'margin': '10px',
+            'margin': '4px',
             'padding': '2px',
             'border': 'none',
             'background': 'transparent',
@@ -177,13 +177,13 @@ function makeDomElements(align, config, params) {
         })
         .attr({title: params.selection ? "Disable showing popup on selection" : "Close"})
         .append("✖️")
-        .on('click', params.selection ? disableSwitchboardPopupOnSelection : removePopup)
+        .on('click', removePopup)
         .appendTo(container);
 
     const maximizebutton = $('<button>')
         .css({
             'float': 'right',
-            'margin-top': '10px',
+            'margin-top': '4px',
             'padding': '2px',
             'border': 'none',
             'background': 'transparent',
@@ -196,15 +196,14 @@ function makeDomElements(align, config, params) {
     const titlebar = $('<div>')
         .css({
             'width': '100%',
-            'background-color': '#eee',
-            'border-color': '#d5d5d5',
+            'background-color': params.selection ? '#f1fafe' : '#eee',
             'border-radius': '6px 6px 0 0',
-            'height': '48px',
-            'padding': '12px 12px',
+            'padding': '8px',
             'font-family': 'Helvetica',
             'font-size': '18px',
             'cursor': 'move',
-            'user-select': 'none'
+            'user-select': 'none',
+            'margin-bottom': params.selection ? 0 : '12px',
         })
         .append($(`<img src="${cogimage}" style="width:24px; vertical-align:sub">`))
         .append(config.title || "Switchboard")
@@ -243,6 +242,37 @@ function makeDomElements(align, config, params) {
         })
         .attr({name: 'switchboard_iframe'})
         .appendTo(container);
+
+    if (params.selection) {
+        // add the footer with disable popup link
+        $('<div>')
+            .css({
+                'width': '100%',
+                'background-color': '#f1fafd',
+                'padding': '6px 6px',
+                'text-align': 'center',
+            })
+            .append($('<a>')
+                .css({
+                    'margin': 0,
+                    'padding': '2px',
+                    'font-size': '14px',
+                    'cursor': 'pointer',
+                })
+                .append("Stop showing this popup.")
+                .on('click', disableSwitchboardPopupOnSelection)
+            )
+            .append($('<span>')
+                .css({
+                    'margin-left': 4,
+                    'padding': '2px',
+                    'font-size': '14px',
+                    'color': 'gray',
+                })
+                .append("Reload page to show it again.")
+            )
+            .appendTo(container);
+    }
 
     var selectorOffset;
     if (align.alignSelector) {

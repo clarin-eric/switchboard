@@ -9,7 +9,7 @@ import { InputContainer } from '../containers/InputContainer';
 function SelectLanguage({languages, res, onLanguage}) {
     const value = languages.find(x => x.value == res.profile.language);
     return <Select value={value} options={languages.asMutable()}
-        onChange={onLanguage} placeholder="Select the language of the resource"
+        onChange={onLanguage} placeholder="Select language"
     />;
 }
 SelectLanguage.propTypes = {
@@ -30,7 +30,7 @@ function SelectMediatype({mediatypes, res, onMediatype}) {
     }
 
     return <Select value={value} options={options}
-        onChange={onMediatype} placeholder="Select the mediatype of the resource"/>;
+        onChange={onMediatype} placeholder="Select mediatype"/>;
 }
 SelectMediatype.propTypes = {
     mediatypes: PropTypes.array.isRequired,
@@ -101,7 +101,7 @@ function ContentOrOutline({res, actions, enableMultipleResources}) {
             }
             { res.outline && !hasContent ?
                 <div className="outline">
-                    {res.sourceID ? false : <span className="outlineHeader">{headerText}</span>}
+                    {res.sourceID ? false : <span className="outline-header">{headerText}</span>}
                     {res.outline.map(entry =>
                         <ArchiveEntry
                             key={res.id+entry.name}
@@ -133,8 +133,9 @@ const resourcePropTypes = Object.assign({}, commonPropTypes,
     {res: PropTypes.object.isRequired});
 
 function NormalResource({mediatypes, languages, res, actions, enableMultipleResources})  {
-    const [compactDesign, setCompactDesign] = React.useState(false);
-    const handleResize = () => setCompactDesign(window.innerWidth < 992);
+    const testCompactDesign = () => window.innerWidth < 992;
+    const [compactDesign, setCompactDesign] = React.useState(testCompactDesign());
+    const handleResize = () => setCompactDesign(testCompactDesign());
     React.useEffect(() => {
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
@@ -257,7 +258,7 @@ function SelectionResource({mediatypes, languages, res, actions, enableMultipleR
         <div key={res.id} className="resource row">
             <div className="col-md-8">
                 <div className="row">
-                    <div className="col-xs-12 namesize content">
+                    <div className="col-xs-12 namesize content selection">
                         <BlurableTextInput value={res.content}
                             onChange={text => actions.setResourceContent(res.id, text)}/>
                     </div>
@@ -329,7 +330,7 @@ export function ResourceList(props) {
 
     const isDict = resourceList.every(res => res.isDictionaryResource);
     return <>
-        <div className="resourceList">
+        <div className="resource-list">
             <div className="row hidden-xs">
                 <div className="col-md-12">
                     <h2>Resources</h2>

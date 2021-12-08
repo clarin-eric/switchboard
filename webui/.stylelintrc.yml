@@ -1,0 +1,25 @@
+defaultSeverity: warning
+extends:
+    - stylelint-config-standard
+    - stylelint-config-recommended
+    - stylelint-config-sass-guidelines
+plugins:
+    - stylelint-scss
+rules:
+  # Disallows
+  selector-max-id: 1
+  # Nesting
+  max-nesting-depth:
+    - 4
+    - ignore: ['blockless-at-rules', 'pseudo-classes']
+  # Selector names (override stylelint-config-sass-guidelines to allow `_`)
+  selector-class-pattern:
+    - ^[a-z0-9_\\-]+$
+    - message: "Selector should be written in lowercase with hyphens (selector-class-pattern)"
+  selector-no-qualifying-type:
+    - true
+    - ignore: ["class"]
+  # Style Guide
+  unit-case: lower
+  selector-max-compound-selectors: 6
+  indentation: 4
