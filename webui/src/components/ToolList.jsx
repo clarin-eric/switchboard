@@ -59,9 +59,9 @@ export class ToolListWithControls extends React.Component {
         return (
             <form className="controls">
                 <label htmlFor="groupByTask">Group by task</label>
-                <input type="checkbox" id="groupByTask" name="groupByTask"
+                <input type="checkbox" className="group-by-task" id="groupByTask" name="groupByTask"
                     onChange={toggle.bind(this, 'groupByTask')} checked={this.state.groupByTask} />
-                <input type="text" placeholder="Search for tool"
+                <input type="text" className="search-box" placeholder="Search for tool"
                     onChange={this.setSearch} value={this.state.searchString} />
             </form>
         );

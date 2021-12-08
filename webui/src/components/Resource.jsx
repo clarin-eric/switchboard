@@ -101,7 +101,7 @@ function ContentOrOutline({res, actions, enableMultipleResources}) {
             }
             { res.outline && !hasContent ?
                 <div className="outline">
-                    {res.sourceID ? false : <span className="outlineHeader">{headerText}</span>}
+                    {res.sourceID ? false : <span className="outline-header">{headerText}</span>}
                     {res.outline.map(entry =>
                         <ArchiveEntry
                             key={res.id+entry.name}
@@ -330,7 +330,7 @@ export function ResourceList(props) {
 
     const isDict = resourceList.every(res => res.isDictionaryResource);
     return <>
-        <div className="resourceList">
+        <div className="resource-list">
             <div className="row hidden-xs">
                 <div className="col-md-12">
                     <h2>Resources</h2>
