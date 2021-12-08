@@ -44,6 +44,7 @@ jobs:
       - name: Build
         run: |
           make package
+          test/run-end-to-end.sh
           cp build/switchboard.tar.gz build/switchboard-${{ needs.prepare.outputs.version }}.tar.gz
         env:
           CI_VERSION: ${{ needs.prepare.outputs.version }}

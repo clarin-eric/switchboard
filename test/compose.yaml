@@ -1,0 +1,17 @@
+version: '3.7'
+services:
+  switchboard:
+    image: switchboard/switchboard
+    ports: 
+      - 8080:8080
+    volumes: 
+      - toolsdata:/switchboard-tool-registry:ro
+    logging:
+      driver: "none"
+  
+  tester:
+    image: switchboard/switchboard-tester
+
+volumes:
+  toolsdata: 
+    external: true
