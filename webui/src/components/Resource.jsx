@@ -9,7 +9,7 @@ import { InputContainer } from '../containers/InputContainer';
 function SelectLanguage({languages, res, onLanguage}) {
     const value = languages.find(x => x.value == res.profile.language);
     return <Select value={value} options={languages.asMutable()}
-        onChange={onLanguage} placeholder="Select the language of the resource"
+        onChange={onLanguage} placeholder="Select language"
     />;
 }
 SelectLanguage.propTypes = {
@@ -30,7 +30,7 @@ function SelectMediatype({mediatypes, res, onMediatype}) {
     }
 
     return <Select value={value} options={options}
-        onChange={onMediatype} placeholder="Select the mediatype of the resource"/>;
+        onChange={onMediatype} placeholder="Select mediatype"/>;
 }
 SelectMediatype.propTypes = {
     mediatypes: PropTypes.array.isRequired,
@@ -133,8 +133,9 @@ const resourcePropTypes = Object.assign({}, commonPropTypes,
     {res: PropTypes.object.isRequired});
 
 function NormalResource({mediatypes, languages, res, actions, enableMultipleResources})  {
-    const [compactDesign, setCompactDesign] = React.useState(false);
-    const handleResize = () => setCompactDesign(window.innerWidth < 992);
+    const testCompactDesign = () => window.innerWidth < 992;
+    const [compactDesign, setCompactDesign] = React.useState(testCompactDesign());
+    const handleResize = () => setCompactDesign(testCompactDesign());
     React.useEffect(() => {
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
