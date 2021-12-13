@@ -42,14 +42,14 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: true
-          fetch-depth: '50'
+          fetch-depth: '1'
       - name: Build
         run: |
           make build-docker-image
           docker save switchboard/switchboard:latest > switchboard-docker-image.tar
         env:
           CI_VERSION: ${{ needs.prepare.outputs.version }}
-      - name: Upload workspace package
+      - name: Upload exported docker image
         uses: actions/upload-artifact@v2
         with:
           name: switchboard-docker-image
@@ -60,7 +60,12 @@ jobs:
     needs: [build]
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/download-artifact@v2
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+          fetch-depth: '1'
+      - name: Download docker image from build job
+        uses: actions/download-artifact@v2
         with:
           name: switchboard-docker-image
       - name: 'Fetch tools'
