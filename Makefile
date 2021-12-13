@@ -22,7 +22,7 @@ build-docker-image:
 	echo VERSION=$${VERSION}; \
 	docker build --build-arg version=$${VERSION} -t $(DOCKERTAG) . ;
 
-package: build-docker-image
+package:
 	rm -rf build
 	mkdir -p build/switchboard
 	EXISTING_CONTAINER=$$(docker ps -aq --filter name=switchboard-build) ;\
