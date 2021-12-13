@@ -49,11 +49,20 @@ jobs:
           docker save switchboard/switchboard:latest > switchboard-docker-image.tar
         env:
           CI_VERSION: ${{ needs.prepare.outputs.version }}
+      - name: Upload workspace package
+        uses: actions/upload-artifact@v2
+        with:
+          name: switchboard-docker-image
+          path: switchboard-docker-image.tar
+          retention-days: 1
   test-ui:
     name: "Test UI"
     needs: [build]
     runs-on: ubuntu-20.04
     steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: switchboard-docker-image
       - name: 'Fetch tools'
         uses: actions/checkout@v2
         with:
