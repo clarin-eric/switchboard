@@ -1,0 +1,13 @@
+version: '3.7'
+services:
+  switchboard:
+    image: switchboard/switchboard
+    ports: 
+      - 8080:8080
+    volumes: 
+       - ${SWITCHBOARD_TOOL_REGISTRY_DIR}:/switchboard-tool-registry:ro
+  
+  tester:
+    image: switchboard/switchboard-tester
+    environment:
+      SWITCHBOARD_URL: http://switchboard:8080

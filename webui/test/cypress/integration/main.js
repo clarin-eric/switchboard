@@ -33,8 +33,8 @@ describe('Uploads', () => {
         cy.get('.inputzone').should('have.value', '');
         cy.contains('button', "Submit URL").should('be.disabled');
 
-        const url = 'https://en.m.wikipedia.org/wiki/Bread';
-        const urlFileName = 'Bread';
+        const url = 'https://github.com/clarin-eric/switchboard-doc/raw/master/publications/CLARIN2017_paper.pdf';
+        const urlFileName = 'CLARIN2017_paper.pdf';
         cy.get('.inputzone').type(url).should('have.value', url);
         cy.contains('button', "Submit URL").should('be.enabled') .click();
 

@@ -10,6 +10,7 @@ on:
   - cron: "23 4 12 * *"
 jobs:
   prepare:
+    name: "Prepare"
     runs-on: ubuntu-18.04
     outputs:
       version: ${{ steps.get_version.outputs.VERSION }}
@@ -32,6 +33,7 @@ jobs:
             echo ::set-output name=CREATE_RELEASE::true
           fi
   build:
+    name: "Build"
     needs: [prepare]
     # Run job for: github releases, tag pushes without github release and regular pushes (not tag)
     if: github.event_name == 'release' || !contains(github.ref, 'refs/tags/') || needs.prepare.outputs.create_release == 'true'
@@ -41,9 +43,48 @@ jobs:
         with:
           submodules: true
           fetch-depth: '50'
+      - name: Fetch tools
+        uses: actions/checkout@v2
+        with:
+          repository: clarin-eric/switchboard-tool-registry
+          ref: production
+          fetch-depth: '1'
+          path: switchboard-tool-registry
       - name: Build
         run: |
           make package
+          docker save switchboard/switchboard:latest > switchboard-docker-image.tar
+        env:
+          CI_VERSION: ${{ needs.prepare.outputs.version }}
+      - name: 'Tar post build workspace'
+        run: tar -cvf workspace.tar .
+      - name: Upload workspace package
+        uses: actions/upload-artifact@v2
+        with:
+          name: workspace
+          path: workspace.tar
+          retention-days: 1
+  test-ui:
+    name: "Test UI"
+    needs: [build]
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: workspace
+      - name: 'Untar post build workspace'
+        run: tar -xf workspace.tar
+      - name: 'Fetch tools'
+        uses: actions/checkout@v2
+        with:
+          repository: clarin-eric/switchboard-tool-registry
+          ref: production
+          fetch-depth: '1'
+          path: switchboard-tool-registry
+      - name: Test UI
+        run: |
+          docker load < switchboard-docker-image.tar
+          SWITCHBOARD_TOOL_REGISTRY_DIR=${GITHUB_WORKSPACE}/switchboard-tool-registry  test/run-end-to-end.sh
           cp build/switchboard.tar.gz build/switchboard-${{ needs.prepare.outputs.version }}.tar.gz
         env:
           CI_VERSION: ${{ needs.prepare.outputs.version }}
@@ -53,7 +94,8 @@ jobs:
           name: switchboard-build-package
           path: build/switchboard-${{ needs.prepare.outputs.version }}.tar.gz
   release:
-    needs: [prepare, build]
+    name: "Release"
+    needs: [prepare, build, test-ui]
     # Run job for github releases and tag pushes (without github release)
     if: github.event_name == 'release' || needs.prepare.outputs.create_release == 'true'
     runs-on: ubuntu-18.04
