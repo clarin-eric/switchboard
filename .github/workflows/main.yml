@@ -44,6 +44,27 @@ jobs:
       - name: Build
         run: |
           make package
+        env:
+          CI_VERSION: ${{ needs.prepare.outputs.version }}
+      - name: 'Tar post build workspace'
+        run: tar -cvf workspace.tar .
+      - name: Upload workspace package
+      - uses: actions/upload-artifact@v2
+        with:
+          name: workspace
+          path: workspace.tar
+          retention-days: 1
+  test:
+    needs: [build]
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: workspace
+      - name: 'Untar post build workspace'
+        run: tar -xf workspace.tar
+      - name: Test
+        run: |
           test/run-end-to-end.sh
           cp build/switchboard.tar.gz build/switchboard-${{ needs.prepare.outputs.version }}.tar.gz
         env:
@@ -54,7 +75,7 @@ jobs:
           name: switchboard-build-package
           path: build/switchboard-${{ needs.prepare.outputs.version }}.tar.gz
   release:
-    needs: [prepare, build]
+    needs: [prepare, build, test]
     # Run job for github releases and tag pushes (without github release)
     if: github.event_name == 'release' || needs.prepare.outputs.create_release == 'true'
     runs-on: ubuntu-18.04
