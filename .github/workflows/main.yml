@@ -97,7 +97,7 @@ jobs:
         run: |
           docker load < switchboard-docker-image.tar
           make package
-          cp build/switchboard.tar.gz build/switchboard-${{ needs.prepare.outputs.version }}.tar.gz
+          cp build/switchboard.tar.gz switchboard-${{ needs.prepare.outputs.version }}.tar.gz
       # For github releases -> upload release package to existing release
       # For tag pushes without github release -> create a github release with release package
       - name: Create prelease for this tag
