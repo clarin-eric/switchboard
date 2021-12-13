@@ -79,15 +79,8 @@ jobs:
         run: |
           docker load < switchboard-docker-image.tar
           SWITCHBOARD_TOOL_REGISTRY_DIR=${GITHUB_WORKSPACE}/switchboard-tool-registry  test/run-end-to-end.sh
-          make package
-          cp build/switchboard.tar.gz build/switchboard-${{ needs.prepare.outputs.version }}.tar.gz
         env:
           CI_VERSION: ${{ needs.prepare.outputs.version }}
-      - name: Upload build package
-        uses: actions/upload-artifact@v2
-        with:
-          name: switchboard-build-package
-          path: build/switchboard-${{ needs.prepare.outputs.version }}.tar.gz
   release:
     name: "Release"
     needs: [prepare, build, test-ui]
@@ -95,35 +88,44 @@ jobs:
     if: github.event_name == 'release' || needs.prepare.outputs.create_release == 'true'
     runs-on: ubuntu-18.04
     steps:
-    - name: Download build package from build job
-      uses: actions/download-artifact@v2
-      with:
-        name: switchboard-build-package
-    # For github releases -> upload release package to existing release
-    # For tag pushes without github release -> create a github release with release package
-    - name: Create prelease for this tag
-      if: needs.prepare.outputs.create_release == 'true'
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ needs.prepare.outputs.version }}
-        release_name: Release ${{ needs.prepare.outputs.version }}
-        draft: true
-        prerelease: true
-    - uses: actions/upload-release-asset@v1.0.1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        # Pseudo-ternary expression: get "upload_url" from the release created above, or from github "release" event if release is pre-created
-        upload_url: ${{ needs.prepare.outputs.create_release == 'true' && steps.create_release.outputs.upload_url || github.event.release.upload_url }} 
-        asset_path: ./switchboard-${{ needs.prepare.outputs.version }}.tar.gz
-        asset_name: switchboard-${{ needs.prepare.outputs.version }}.tar.gz
-        asset_content_type: application/tar+gzip
-    - uses: eregon/publish-release@v1
-      if: needs.prepare.outputs.create_release == 'true'
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        release_id: ${{ steps.create_release.outputs.id }}
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+          fetch-depth: '1'
+      - name: Download docker image from build job
+        uses: actions/download-artifact@v2
+        with:
+          name: switchboard-docker-image
+      - name: Make release package
+        run: |
+          docker load < switchboard-docker-image.tar
+          make package
+          cp build/switchboard.tar.gz build/switchboard-${{ needs.prepare.outputs.version }}.tar.gz
+      # For github releases -> upload release package to existing release
+      # For tag pushes without github release -> create a github release with release package
+      - name: Create prelease for this tag
+        if: needs.prepare.outputs.create_release == 'true'
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ needs.prepare.outputs.version }}
+          release_name: Release ${{ needs.prepare.outputs.version }}
+          draft: true
+          prerelease: true
+      - uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          # Pseudo-ternary expression: get "upload_url" from the release created above, or from github "release" event if release is pre-created
+          upload_url: ${{ needs.prepare.outputs.create_release == 'true' && steps.create_release.outputs.upload_url || github.event.release.upload_url }} 
+          asset_path: ./switchboard-${{ needs.prepare.outputs.version }}.tar.gz
+          asset_name: switchboard-${{ needs.prepare.outputs.version }}.tar.gz
+          asset_content_type: application/tar+gzip
+      - uses: eregon/publish-release@v1
+        if: needs.prepare.outputs.create_release == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          release_id: ${{ steps.create_release.outputs.id }}
