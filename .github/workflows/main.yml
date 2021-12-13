@@ -45,28 +45,15 @@ jobs:
           fetch-depth: '50'
       - name: Build
         run: |
-          make package
+          make build-docker-image
           docker save switchboard/switchboard:latest > switchboard-docker-image.tar
         env:
           CI_VERSION: ${{ needs.prepare.outputs.version }}
-      - name: 'Tar post build workspace'
-        run: tar -cvf workspace.tar .
-      - name: Upload workspace package
-        uses: actions/upload-artifact@v2
-        with:
-          name: workspace
-          path: workspace.tar
-          retention-days: 1
   test-ui:
     name: "Test UI"
     needs: [build]
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/download-artifact@v2
-        with:
-          name: workspace
-      - name: 'Untar post build workspace'
-        run: tar -xf workspace.tar
       - name: 'Fetch tools'
         uses: actions/checkout@v2
         with:
@@ -78,6 +65,7 @@ jobs:
         run: |
           docker load < switchboard-docker-image.tar
           SWITCHBOARD_TOOL_REGISTRY_DIR=${GITHUB_WORKSPACE}/switchboard-tool-registry  test/run-end-to-end.sh
+          make package
           cp build/switchboard.tar.gz build/switchboard-${{ needs.prepare.outputs.version }}.tar.gz
         env:
           CI_VERSION: ${{ needs.prepare.outputs.version }}
