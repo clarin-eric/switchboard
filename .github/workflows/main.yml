@@ -54,7 +54,7 @@ jobs:
           name: workspace
           path: workspace.tar
           retention-days: 1
-  test:
+  test-ui:
     needs: [build]
     runs-on: ubuntu-20.04
     steps:
@@ -63,7 +63,7 @@ jobs:
           name: workspace
       - name: 'Untar post build workspace'
         run: tar -xf workspace.tar
-      - name: Test
+      - name: Test UI
         run: |
           test/run-end-to-end.sh
           cp build/switchboard.tar.gz build/switchboard-${{ needs.prepare.outputs.version }}.tar.gz
