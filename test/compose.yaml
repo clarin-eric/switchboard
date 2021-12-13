@@ -5,13 +5,14 @@ services:
     ports: 
       - 8080:8080
     volumes: 
-      - toolsdata:/switchboard-tool-registry:ro
+       - ${SWITCHBOARD_TOOL_REGISTRY_DIR}:/switchboard-tool-registry:ro
+#      - toolsdata:/switchboard-tool-registry:ro
   
   tester:
     image: switchboard/switchboard-tester
     environment:
       SWITCHBOARD_URL: http://switchboard:8080
 
-volumes:
-  toolsdata: 
-    external: true
+#volumes:
+#  toolsdata: 
+#    external: true
