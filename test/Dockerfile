@@ -10,6 +10,6 @@ COPY ./webui/webpack.config.js  ./webui/
 COPY ./webui/src                ./webui/src
 COPY ./webui/test               ./webui/test
 
-RUN make dependencies
+RUN make dev-dependencies
 
 CMD make run-uitests

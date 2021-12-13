@@ -52,9 +52,12 @@ run-interactive-uitests:
 dependencies:
 	(cd webui && npm install -g npm@${NPM_VERSION} && npm install)
 
+dev-dependencies:
+	(cd webui && npm install -g npm@${NPM_VERSION} && npm install --only=development)
+
 clean:
 	(cd backend && mvn -q clean)
 	rm -rf webui/node_modules
 	rm -f $(WEBUIAPP)/bundle.js*
 
-.PHONY: build-docker-image build-webui-production run-backend run-webui-dev-server dependencies clean
+.PHONY: build-docker-image build-webui-production run-backend run-webui-dev-server dependencies dev-dependencies clean
