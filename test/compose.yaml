@@ -11,4 +11,3 @@ services:
     image: switchboard/switchboard-tester
     environment:
       SWITCHBOARD_URL: http://switchboard:8080
-
