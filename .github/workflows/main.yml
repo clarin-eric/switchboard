@@ -75,7 +75,7 @@ jobs:
           name: switchboard-build-package
           path: build/switchboard-${{ needs.prepare.outputs.version }}.tar.gz
   release:
-    needs: [prepare, build, test]
+    needs: [prepare, build, test-ui]
     # Run job for github releases and tag pushes (without github release)
     if: github.event_name == 'release' || needs.prepare.outputs.create_release == 'true'
     runs-on: ubuntu-18.04
