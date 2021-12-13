@@ -1,6 +1,7 @@
 DOCKERTAG=switchboard/switchboard:latest
 WEBUIAPP=src/main/resources/webui
 JSBUNDLE=$(WEBUIAPP)/bundle.js
+SWITCHBOARD_URL?=http://localhost:8080
 
 build-docker-image:
 	@GIT_COMMIT=$(shell git log -1 --pretty=format:"%H"|cut -c1-7) ;\
@@ -42,10 +43,10 @@ run-webui-dev-server:
 	(cd webui && node_modules/webpack-dev-server/bin/webpack-dev-server.js --mode development)
 
 run-uitests:
-	(cd webui/test && ../node_modules/cypress/bin/cypress run -q)
+	(cd webui/test && ../node_modules/cypress/bin/cypress run -q -c baseUrl=${SWITCHBOARD_URL})
 
 run-interactive-uitests:
-	(cd webui/test && ../node_modules/cypress/bin/cypress run --headed --no-exit)
+	(cd webui/test && ../node_modules/cypress/bin/cypress run --headed --no-exit -c baseUrl=${SWITCHBOARD_URL})
 
 dependencies:
 	(cd webui && npm install)
