@@ -41,7 +41,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          submodules: true
           fetch-depth: '2'
       - name: Build
         run: |
@@ -62,7 +61,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          submodules: true
           fetch-depth: '1'
       - name: Download docker image from build job
         uses: actions/download-artifact@v2
@@ -90,7 +88,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          submodules: true
           fetch-depth: '1'
       - name: Download docker image from build job
         uses: actions/download-artifact@v2
