@@ -10,6 +10,7 @@ on:
   - cron: "23 4 12 * *"
 jobs:
   prepare:
+    name: "Prepare"
     runs-on: ubuntu-18.04
     outputs:
       version: ${{ steps.get_version.outputs.VERSION }}
@@ -32,6 +33,7 @@ jobs:
             echo ::set-output name=CREATE_RELEASE::true
           fi
   build:
+    name: "Build"
     needs: [prepare]
     # Run job for: github releases, tag pushes without github release and regular pushes (not tag)
     if: github.event_name == 'release' || !contains(github.ref, 'refs/tags/') || needs.prepare.outputs.create_release == 'true'
@@ -56,6 +58,7 @@ jobs:
           path: workspace.tar
           retention-days: 1
   test-ui:
+    name: "Test UI"
     needs: [build]
     runs-on: ubuntu-20.04
     steps:
@@ -77,6 +80,7 @@ jobs:
           name: switchboard-build-package
           path: build/switchboard-${{ needs.prepare.outputs.version }}.tar.gz
   release:
+    name: "Release"
     needs: [prepare, build, test-ui]
     # Run job for github releases and tag pushes (without github release)
     if: github.event_name == 'release' || needs.prepare.outputs.create_release == 'true'
