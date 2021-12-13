@@ -44,6 +44,7 @@ jobs:
       - name: Build
         run: |
           make package
+          docker save switchboard/switchboard:latest > switchboard-docker-image.tar
         env:
           CI_VERSION: ${{ needs.prepare.outputs.version }}
       - name: 'Tar post build workspace'
@@ -65,6 +66,7 @@ jobs:
         run: tar -xf workspace.tar
       - name: Test UI
         run: |
+          docker load < switchboard-docker-image.tar
           test/run-end-to-end.sh
           cp build/switchboard.tar.gz build/switchboard-${{ needs.prepare.outputs.version }}.tar.gz
         env:
