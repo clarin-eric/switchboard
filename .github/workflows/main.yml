@@ -49,7 +49,7 @@ jobs:
       - name: 'Tar post build workspace'
         run: tar -cvf workspace.tar .
       - name: Upload workspace package
-      - uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v2
         with:
           name: workspace
           path: workspace.tar
