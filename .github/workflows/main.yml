@@ -67,10 +67,17 @@ jobs:
           name: workspace
       - name: 'Untar post build workspace'
         run: tar -xf workspace.tar
+      - name: 'Fetch tools'
+        uses: actions/checkout@v2
+        with:
+          repository: clarin-eric/switchboard-tool-registry
+          ref: production
+          fetch-depth: '1'
+          path: switchboard-tool-registry
       - name: Test UI
         run: |
           docker load < switchboard-docker-image.tar
-          test/run-end-to-end.sh
+          SWITCHBOARD_TOOL_REGISTRY_DIR=${GITHUB_WORKSPACE}/switchboard-tool-registry  test/run-end-to-end.sh
           cp build/switchboard.tar.gz build/switchboard-${{ needs.prepare.outputs.version }}.tar.gz
         env:
           CI_VERSION: ${{ needs.prepare.outputs.version }}
