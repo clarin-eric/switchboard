@@ -5,13 +5,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.clarin.switchboard.app.SwitchboardApp;
 import io.dropwizard.views.View;
 
+import java.util.List;
 import java.util.UUID;
 
 public class IndexView extends View {
     static ObjectMapper mapper = new ObjectMapper();
 
     static class Data {
-        public UUID fileInfoID;
+        public List<UUID> fileInfoID;
         public String errorMessage;
         public boolean popup;
     }
@@ -23,13 +24,17 @@ public class IndexView extends View {
         super("index.mustache");
     }
 
-    public static IndexView fileInfoID(UUID id, boolean popup) throws JsonProcessingException {
+    public static IndexView fileInfoID(List<UUID> ids, boolean popup) throws JsonProcessingException {
         IndexView view = new IndexView();
         Data data = new Data();
-        data.fileInfoID = id;
+        data.fileInfoID = ids;
         data.popup = popup;
         view.data = mapper.writeValueAsString(data);
         return view;
+    }
+
+    public static IndexView fileInfoID(UUID id, boolean popup) throws JsonProcessingException {
+        return fileInfoID(List.of(id), popup);
     }
 
     public static IndexView error(String errorMessage, boolean popup) throws JsonProcessingException {

@@ -219,7 +219,13 @@ function makeDomElements(align, config, params) {
             target: 'switchboard_iframe',
         });
     for (const key in params) {
-        form.append($('<input>').attr({type:'text', name:key, value:params[key]}))
+        if (Array.isArray(params[key])) {
+            for (const value of params[key]) {
+                form.append($('<input>').attr({type:'text', name:key, value}))
+            }
+        } else {
+            form.append($('<input>').attr({type:'text', name:key, value:params[key]}))
+        }
     }
     if (!params.origin && config.origin) {
         form.append($('<input>').attr({type:'text', name:'origin', value:config['origin']}))

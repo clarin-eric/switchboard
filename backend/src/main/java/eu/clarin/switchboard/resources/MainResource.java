@@ -11,6 +11,7 @@ import eu.clarin.switchboard.core.xc.StoragePolicyException;
 import eu.clarin.switchboard.profiler.api.Profile;
 import eu.clarin.switchboard.profiler.api.ProfilingException;
 import io.dropwizard.views.View;
+import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.slf4j.Logger;
@@ -24,9 +25,7 @@ import javax.ws.rs.core.Response;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Path("")
 public class MainResource {
@@ -84,21 +83,20 @@ public class MainResource {
         return new FileAsset("webui/favicon.ico").makeResponse(request);
     }
 
-
     @POST
     // @Path("/")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.TEXT_HTML + ";charset=utf-8")
     public View postToRoot(@FormDataParam("file") InputStream inputStream,
                            @FormDataParam("file") final FormDataContentDisposition contentDispositionHeader,
-                           @FormDataParam("url") String url,
+                           @FormDataParam("url") List<FormDataBodyPart> url,
+                           @FormDataParam("mimetype") List<FormDataBodyPart> mimetype,
                            @FormDataParam("id") String id,
                            @FormDataParam("origin") String origin,
-                           @FormDataParam("mimetype") String mimetype,
                            @FormDataParam("selection") String selection,
                            @FormDataParam("popup") boolean popup)
             throws JsonProcessingException, ProfilingException, StorageException, StoragePolicyException {
-        return post(inputStream, contentDispositionHeader, url, id, origin, mimetype, selection, popup);
+        return post(inputStream, contentDispositionHeader, url, mimetype, id, origin, selection, popup);
     }
 
     @POST
@@ -107,22 +105,22 @@ public class MainResource {
     @Produces(MediaType.TEXT_HTML + ";charset=utf-8")
     public View postToIndex(@FormDataParam("file") InputStream inputStream,
                             @FormDataParam("file") final FormDataContentDisposition contentDispositionHeader,
-                            @FormDataParam("url") String url,
-                            @FormDataParam("mimetype") String mimetype,
+                            @FormDataParam("url") List<FormDataBodyPart> url,
+                            @FormDataParam("mimetype") List<FormDataBodyPart> mimetype,
                             @FormDataParam("id") String id,
                             @FormDataParam("origin") String origin,
                             @FormDataParam("selection") String selection,
                             @FormDataParam("popup") boolean popup)
             throws JsonProcessingException, ProfilingException, StorageException, StoragePolicyException {
-        return post(inputStream, contentDispositionHeader, url, id, origin, mimetype, selection, popup);
+        return post(inputStream, contentDispositionHeader, url, mimetype, id, origin, selection, popup);
     }
 
     public View post(InputStream inputStream,
                      final FormDataContentDisposition contentDispositionHeader,
-                     String url,
+                     List<FormDataBodyPart> urlList,
+                     List<FormDataBodyPart> mimetypeList,
                      String idParam,
                      String origin,
-                     String mimetype,
                      String selection,
                      boolean popup)
             throws JsonProcessingException, ProfilingException, StoragePolicyException, StorageException {
@@ -130,13 +128,19 @@ public class MainResource {
             String filename = contentDispositionHeader.getFileName();
             UUID id = mediaLibrary.addFileAsync(filename, inputStream);
             return IndexView.fileInfoID(id, popup);
-        } else if (url != null) {
-            Profile profile = null;
-            if (mimetype != null && !mimetype.isEmpty()) {
-                profile = Profile.builder().mediaType(mimetype).build();
+        } else if (urlList != null && !urlList.isEmpty()) {
+            List<UUID> ids = new ArrayList<>();
+            for (int i = 0; i < urlList.size(); ++i) {
+                String url = urlList.get(i).getValueAs(String.class);
+                String mimetype = mimetypeList == null ? null : i >= mimetypeList.size() ? null :
+                        mimetypeList.get(i).getValueAs(String.class);
+                Profile profile = null;
+                if (mimetype != null && !mimetype.isEmpty()) {
+                    profile = Profile.builder().mediaType(mimetype).build();
+                }
+                ids.add(mediaLibrary.addByUrlAsync(url, profile));
             }
-            UUID id = mediaLibrary.addByUrlAsync(url, profile);
-            return IndexView.fileInfoID(id, popup);
+            return IndexView.fileInfoID(ids, popup);
         } else if (idParam != null) {
             UUID id = UUID.fromString(idParam);
             return IndexView.fileInfoID(id, popup);
