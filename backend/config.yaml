@@ -32,6 +32,13 @@ switchboard:
         cleanupPeriod: ${DATASTORE_CLEANPERIOD:-13}
         cleanupPeriodUnit: ${DATASTORE_CLEANPERIOD_UNIT:-minutes}
     urlResolver:
+        # preflight = used for the preflight API, see
+        #   https://github.com/clarin-eric/switchboard-doc/blob/master/documentation/IntegrationProvider.md#preflight-api
+        preflightConnectTimeout: ${URLRESOLVER_PREFLIGHT_CONNECTTIMEOUT:-1}
+        preflightReadTimeout: ${URLRESOLVER_PREFLIGHT_READTIMEOUT:-1}
+        # connectTimeout is also used both as a socket connection timeout and
+        #   also as a timeout for the http client library, until it can provide
+        #   a thread for the request; 0 is infinite
         connectTimeout: ${URLRESOLVER_CONNECTTIMEOUT:-3}
         readTimeout: ${URLRESOLVER_READTIMEOUT:-3}
         unit: ${URLRESOLVER_TIMEOUT_UNIT:-seconds}

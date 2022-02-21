@@ -31,6 +31,9 @@ public class ToolsResource {
         this.toolConfig = toolConfig;
     }
 
+    /**
+     * PUBLIC API
+     */
     @GET
     @Path("tools")
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
@@ -44,11 +47,14 @@ public class ToolsResource {
         return Response.ok(tools).build();
     }
 
+    /**
+     * PUBLIC API
+     */
     @GET
     @Path("tools/{id}")
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public Response getToolByID(@PathParam("id") Integer id) {
-        Predicate<Tool> filter = tool-> tool.getId() != null && tool.getId().equals(id);
+        Predicate<Tool> filter = tool -> tool.getId() != null && tool.getId().equals(id);
         List<Tool> tools = toolRegistry.filterTools(filter);
         if (tools == null || tools.isEmpty()) {
             return Response.status(Response.Status.NOT_FOUND).build();
@@ -56,18 +62,23 @@ public class ToolsResource {
         return Response.ok(tools.get(0)).build();
     }
 
+    /**
+     * PUBLIC API
+     */
     @POST
     @Path("tools/match")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public Response getToolsByProfile(@QueryParam("onlyProductionTools") String onlyProductionTools,
                                       List<Profile.Flat> flat) {
+        long startTime = System.nanoTime();
         Predicate<Tool> filter = toolConfig.getShowOnlyProductionTools() ? ToolRegistry.ONLY_PRODUCTION_TOOLS : ToolRegistry.ALL_TOOLS;
         if (onlyProductionTools != null && !onlyProductionTools.isEmpty()) {
             filter = Boolean.parseBoolean(onlyProductionTools) ? ToolRegistry.ONLY_PRODUCTION_TOOLS : ToolRegistry.ALL_TOOLS;
         }
         List<Profile> profiles = flat.stream().map(Profile.Flat::toProfile).collect(Collectors.toList());
         List<ToolRegistry.ToolMatches> toolMatches = toolRegistry.filterTools(profiles, filter);
+        LOGGER.debug("getToolsByProfile finished in {}ms", ((System.nanoTime() - startTime) / 1000));
 
         return Response.ok(toolMatches).build();
     }

@@ -136,6 +136,7 @@ public class ToolRegistry {
     }
 
     public List<ToolMatches> filterTools(List<Profile> profiles, Predicate<Tool> filter) {
+        long startTime = System.nanoTime();
         List<ToolMatches> results = new ArrayList<>();
 
         for (Tool tool : tools.get()) {
@@ -194,6 +195,8 @@ public class ToolRegistry {
             return tm1.getTool().getName().compareToIgnoreCase(tm2.getTool().getName());
         });
 
+        LOGGER.debug("matched " + profiles.size() + " profile(s) against " + tools.get().size() + " tools in " +
+                (System.nanoTime() - startTime)/1000000 + "ms");
         return results;
     }
 
