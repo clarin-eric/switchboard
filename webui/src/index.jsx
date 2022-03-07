@@ -96,7 +96,12 @@ class Application extends React.Component {
             if (data.errorMessage) {
                 store.dispatch(actions.showError(data.errorMessage));
             } else if (data.fileInfoID) {
-                store.dispatch(actions.fetchAsyncResourceState(data.fileInfoID));
+                if (!Array.isArray(data.fileInfoID)) {
+                    data.fileInfoID = [data.fileInfoID];
+                }
+                data.fileInfoID.forEach(id =>
+                    store.dispatch(actions.fetchAsyncResourceState(id))
+                );
             }
             delete window.SWITCHBOARD_DATA;
         } else {
