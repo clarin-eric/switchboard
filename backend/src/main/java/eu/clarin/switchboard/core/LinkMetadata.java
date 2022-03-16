@@ -79,6 +79,11 @@ public class LinkMetadata {
         // check status for errors
         int status = response.getStatusLine().getStatusCode();
         if (status >= 400) {
+            try {
+                response.close();
+            } catch (IOException e) {
+                // ignore
+            }
             throw new LinkException(LinkException.Kind.STATUS_ERROR, "" + link, status);
         }
 
