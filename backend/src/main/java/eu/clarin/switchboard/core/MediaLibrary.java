@@ -2,7 +2,10 @@ package eu.clarin.switchboard.core;
 
 import eu.clarin.switchboard.app.config.DataStoreConfig;
 import eu.clarin.switchboard.app.config.UrlResolverConfig;
-import eu.clarin.switchboard.core.xc.*;
+import eu.clarin.switchboard.core.xc.CommonException;
+import eu.clarin.switchboard.core.xc.LinkException;
+import eu.clarin.switchboard.core.xc.StorageException;
+import eu.clarin.switchboard.core.xc.StoragePolicyException;
 import eu.clarin.switchboard.profiler.api.*;
 import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream;
 import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream;
@@ -63,9 +66,11 @@ public class MediaLibrary {
                 .setMaxRedirects(MAX_ALLOWED_REDIRECTS)
                 .setRedirectsEnabled(true)
                 .build();
+
         cachingClient = CachingHttpClients.custom()
                 .setCacheConfig(cacheConfig)
                 .setDefaultRequestConfig(requestConfig)
+                .addInterceptorFirst(Quirks.QUIRKS_REQUEST_INTERCEPTOR)
                 .build();
 
         executorService = Executors.newCachedThreadPool();
