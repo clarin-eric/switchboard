@@ -67,10 +67,10 @@ public class DataStore {
         if (dirList == null) {
             return;
         }
-        for (File dir: dirList) {
+        for (File dir : dirList) {
             File[] files = dir.listFiles();
             if (files != null) {
-                for (File f: files) {
+                for (File f : files) {
                     tryDelete(f.toPath());
                 }
             }
@@ -78,11 +78,13 @@ public class DataStore {
         }
     }
 
-    final static String illegalCharsString = "\"'*/:<>?\\|";
-    final static TIntHashSet illegalChars = new TIntHashSet();
+    final static TIntHashSet allowedChars = new TIntHashSet();
 
     static {
-        illegalCharsString.codePoints().forEachOrdered(illegalChars::add);
+        allowedChars.addAll(new int[]{' ', '.', '_', '+', '-', '='});
+        for (int i = '0'; i <= '9'; ++i) allowedChars.add(i);
+        for (int i = 'A'; i <= 'Z'; ++i) allowedChars.add(i);
+        for (int i = 'a'; i <= 'z'; ++i) allowedChars.add(i);
     }
 
     public static String sanitize(String filename) {
@@ -91,8 +93,7 @@ public class DataStore {
         }
         StringBuilder cleanName = new StringBuilder();
         filename.codePoints().forEachOrdered(c -> {
-            boolean replace = c < 32 || illegalChars.contains(c);
-            cleanName.appendCodePoint(replace ? '_' : c);
+            cleanName.appendCodePoint(allowedChars.contains(c) ? c : '_');
         });
         return cleanName.toString();
     }

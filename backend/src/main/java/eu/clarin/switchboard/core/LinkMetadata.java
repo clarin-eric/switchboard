@@ -63,7 +63,9 @@ public class LinkMetadata {
     public static LinkInfo getLinkData(CloseableHttpClient client, String originalUrlOrDoiOrHandle) throws CommonException {
         String link = resolveDoiOrHandle(originalUrlOrDoiOrHandle);
         link = Quirks.urlFixSpecialCases(link);
-        LOGGER.debug("url fixup: " + originalUrlOrDoiOrHandle + " -> " + link);
+        if (!originalUrlOrDoiOrHandle.equals(link)) {
+            LOGGER.debug("url fixup: " + originalUrlOrDoiOrHandle + " -> " + link);
+        }
 
         // do the http call
         HttpCacheContext context = HttpCacheContext.create();

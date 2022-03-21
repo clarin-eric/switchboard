@@ -68,14 +68,6 @@ public class MediaLibraryTest {
         assert (false); // will not get here
     }
 
-    public void testProfileSpecialization() throws CommonException, ProfilingException {
-        MediaLibrary mediaLibrary = new MediaLibrary(
-                dataStore, profiler, profiler.getTextExtractor(),
-                storagePolicy, urlResolver, dataStoreConfig);
-        mediaLibrary.addByUrl("http://this^is&a)bad@url", null);
-    }
-
-
     @Test(expected = LinkException.class)
     public void addMedia1() throws CommonException, ProfilingException {
         MediaLibrary mediaLibrary = new MediaLibrary(

@@ -40,7 +40,7 @@ public class DataStoreTest {
         UUID id = UUID.randomUUID();
         String content = "this is the file's cöntent";
 
-        InputStream is = new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8));
+        InputStream is = streamFrom(content);
         Path path = dataStore.save(id, "test", is);
 
         assertTrue(path.toFile().exists());
@@ -60,7 +60,7 @@ public class DataStoreTest {
         String content = "first content";
         String newcontent = "now updated";
 
-        InputStream is = new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8));
+        InputStream is = streamFrom(content);
         Path path = dataStore.save(id, "test_set_content", is);
         assertArrayEquals(Files.readAllBytes(path), content.getBytes(StandardCharsets.UTF_8));
 
@@ -73,12 +73,9 @@ public class DataStoreTest {
         String filename = "test";
         String content = "this is the file's cöntent";
 
-        Path path1 = dataStore.save(UUID.randomUUID(), "test",
-                new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8)));
-        Path path2 = dataStore.save(UUID.randomUUID(), "test2",
-                new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8)));
-        Path path3 = dataStore.save(UUID.randomUUID(), "test2",
-                new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8)));
+        Path path1 = dataStore.save(UUID.randomUUID(), "test", streamFrom(content));
+        Path path2 = dataStore.save(UUID.randomUUID(), "test2", streamFrom(content));
+        Path path3 = dataStore.save(UUID.randomUUID(), "test2", streamFrom(content));
 
         dataStore.eraseAllStorage();
 
@@ -96,13 +93,26 @@ public class DataStoreTest {
         assertEquals(storePath.toFile().listFiles().length, 0);
     }
 
-
     @Test(expected = StoragePolicyException.class)
     public void uploadTooLarge() throws IOException, StoragePolicyException {
         UUID id = UUID.randomUUID();
-        InputStream is = new ByteArrayInputStream(new byte[2*1024]);
+        InputStream is = new ByteArrayInputStream(new byte[2 * 1024]);
         Path path = dataStore.save(id, "test", is);
 
-        assert(false); // will not get here
+        assert (false); // will not get here
+    }
+
+    @Test
+    public void sanitize() {
+        assertEquals("___1_2_3_4_5_6_7_8_9_0", DataStore.sanitize("~`!1@2#3$4%5^6&7*8(9)0"));
+        assertEquals("_-+=_____________.__", DataStore.sanitize("_-+={[}]:;'\"|\\<,>.?/"));
+        assertEquals("abcdefghijklmnopqrstuvxyw", DataStore.sanitize("abcdefghijklmnopqrstuvxyw"));
+        assertEquals("ABCDEFGHIJKLMNOPQRSTUVXYZW", DataStore.sanitize("ABCDEFGHIJKLMNOPQRSTUVXYZW"));
+        assertEquals("_____alpha", DataStore.sanitize("❗️:)😀alpha"));
+        assertEquals("my.test.file+12-AZ=", DataStore.sanitize("my.test.file+12-AZ="));
+    }
+
+    public static InputStream streamFrom(String input) {
+        return new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
     }
 }

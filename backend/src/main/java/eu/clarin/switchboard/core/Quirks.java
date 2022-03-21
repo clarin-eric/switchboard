@@ -2,8 +2,17 @@ package eu.clarin.switchboard.core;
 
 import eu.clarin.switchboard.core.xc.LinkException;
 import eu.clarin.switchboard.profiler.api.Profile;
+import org.apache.http.HttpException;
+import org.apache.http.HttpHost;
+import org.apache.http.HttpRequest;
+import org.apache.http.HttpRequestInterceptor;
+import org.apache.http.protocol.HttpContext;
+import org.apache.http.protocol.HttpCoreContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.core.MediaType;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
@@ -20,6 +29,26 @@ public class Quirks {
 
     final static String PROFILE_MEDIATYPE_KEY = "mediaType";
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(MediaLibrary.class);
+
+    public static final HttpRequestInterceptor QUIRKS_REQUEST_INTERCEPTOR = new HttpRequestInterceptor() {
+        @Override
+        public void process(HttpRequest request, HttpContext context) throws
+                HttpException, IOException {
+            try {
+                if (context instanceof HttpCoreContext) {
+                    HttpCoreContext ctx = (HttpCoreContext) context;
+                    if (ctx.getTargetHost().getHostName().endsWith("collections.clarin.eu")
+                            && request.getFirstHeader("accept") == null) {
+                        // we require machine-readable mediatypes from vcr collections
+                        request.setHeader("accept", "application/*");
+                    }
+                }
+            } catch (Exception xc) {
+                LOGGER.warn("exception in quirks interceptor: ", xc);
+            }
+        }
+    };
 
     public static void fillInfoBasedOnOrigin(FileInfo fileInfo, String origin) {
         if (origin == null || fileInfo == null) {
