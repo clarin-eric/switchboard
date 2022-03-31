@@ -1,5 +1,62 @@
 # Changelog
 
+
+## [2.4.1] - 2022-03-31
+    - Added support for ranged requests e6f5c01adb8ccb655f9e65d5c9012a117778723b
+    - Added "more text" button in content #244
+    - Added support for multiple files sent by calling repositories
+    - Added special content negotiation case for the CLARIN VCR (CMDI format)
+    - Fixed resource leak when backend http requests return 40x (#278)
+    - Improved Switchboard pop-up UI #247 
+    - Improved "open" and "error" buttons d3acecb6ca43bc5517c0538e130dc8b62315a882
+    - Upgraded backend dependencies:
+      - dropwizard to 2.0.28
+      - logback-classic to 1.2.10
+      - logback-core to 1.2.10
+      - slf4j-api to 1.7.36
+    - Upgraded WebUI runtime dependencies:
+      - axios to 0.24.0
+      - core-js to 3.19.1
+      - follow-redirects to 1.14.8
+      - history to 5.1.0
+      - nanoid to 3.2.0
+      - react to 17.0.2
+      - react-dom to 17.0.2
+      - react-markdown to 7.1.0
+      - react-modal to 3.14.4
+      - react-redux to 7.2.6
+      - react-select to 5.2.1
+      - redux to 4.1.2
+      - redux-thunk to 2.4.0
+      - remark-gfm to 3.0.1
+    - Development project changes:
+      - Added UI tests #246.  UI tests are automatically run by github CI on each push #249 
+      - Switch style language to SCSS
+      - Added SCSS and Javascript linting
+      - Updated docker images used in build to support multi-architecture
+      - Upgrade npm to 8.3.2
+      - Upgraded WebUI development dependencies: 
+        - babel/core to 7.16.0
+        - babel/plugin-proposal-class-properties to 7.16.0
+        - babel/preset-env to 7.16.4
+        - babel/preset-react to 7.16.0
+        - babel-loader to 8.2.3
+        - browserslist to 4.18.1
+        - css-loader to 6.5.1
+        - glob-parent to 5.1.2
+        - style-loader to 3.3.1
+        - webpack to 5.35.0
+        - webpack-bundle-analyzer to 4.5.0
+        - webpack-cli to 4.9.1
+        - webpack-dev-server to 4.5.0
+        - webpack-merge to 5.8.0
+        - terser-webpack-plugin to 5.2.5
+      - Added WebUI development dependencies:
+        - cypress 9.1.0
+        - cypress-file-upload 5.0.8
+        - node-sass 7.0.0
+        - sass-loader 2.3.0
+
 ## [2.4.0] - 2021-10-28
     - Support unique service ids
     - Improve resources UI
