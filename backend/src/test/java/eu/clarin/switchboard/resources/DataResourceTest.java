@@ -44,7 +44,7 @@ public class DataResourceTest {
 
         DataStore dataStore = new DataStore(dataStoreRoot, storagePolicy);
         DefaultProfiler profiler = new DefaultProfiler();
-        UrlResolverConfig urlResolver = new UrlResolverConfig(3, 3, "seconds", 10);
+        UrlResolverConfig urlResolver = new UrlResolverConfig(3, 3, 3, 3, "seconds", 10);
         MediaLibrary mediaLibrary = new MediaLibrary(
                 dataStore, profiler, profiler.getTextExtractor(),
                 storagePolicy, urlResolver, dataStoreConfig);

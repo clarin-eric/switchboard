@@ -1,5 +1,6 @@
 package eu.clarin.switchboard.core;
 
+import com.google.common.io.ByteStreams;
 import eu.clarin.switchboard.app.config.DataStoreConfig;
 import eu.clarin.switchboard.app.config.UrlResolverConfig;
 import eu.clarin.switchboard.core.xc.CommonException;
@@ -41,6 +42,7 @@ public class MediaLibrary {
     private final TextExtractor textExtractor;
     private final StoragePolicy storagePolicy;
     private final CloseableHttpClient cachingClient;
+    private final CloseableHttpClient preflightCachingClient;
     private final ExecutorService executorService;
 
     Map<UUID, FileInfoFuture> fileInfoFutureMap = Collections.synchronizedMap(new HashMap<>());
@@ -61,6 +63,7 @@ public class MediaLibrary {
                 .setMaxObjectSize(dataStoreConfig.getMaxSize())
                 .build();
         RequestConfig requestConfig = RequestConfig.custom()
+                .setConnectionRequestTimeout(urlResolverConfig.getConnectTimeout())
                 .setConnectTimeout(urlResolverConfig.getConnectTimeout())
                 .setSocketTimeout(urlResolverConfig.getReadTimeout())
                 .setMaxRedirects(MAX_ALLOWED_REDIRECTS)
@@ -71,6 +74,18 @@ public class MediaLibrary {
                 .setCacheConfig(cacheConfig)
                 .setDefaultRequestConfig(requestConfig)
                 .addInterceptorFirst(Quirks.QUIRKS_REQUEST_INTERCEPTOR)
+                .build();
+
+        RequestConfig preflightRequestConfig = RequestConfig.custom()
+                .setConnectionRequestTimeout(urlResolverConfig.getPreflightConnectTimeout())
+                .setConnectTimeout(urlResolverConfig.getPreflightConnectTimeout())
+                .setSocketTimeout(urlResolverConfig.getPreflightReadTimeout())
+                .setMaxRedirects(MAX_ALLOWED_REDIRECTS)
+                .setRedirectsEnabled(true)
+                .build();
+        preflightCachingClient = CachingHttpClients.custom()
+                .setCacheConfig(cacheConfig)
+                .setDefaultRequestConfig(preflightRequestConfig)
                 .build();
 
         executorService = Executors.newCachedThreadPool();
@@ -90,7 +105,14 @@ public class MediaLibrary {
 
     public FileInfo addByUrl(String originalUrlOrDoiOrHandle, Profile profile) throws CommonException, ProfilingException {
         UUID id = UUID.randomUUID();
-        FileInfo fileInfo = addByUrl(cachingClient, dataStore, profiler, storagePolicy, id, originalUrlOrDoiOrHandle, profile);
+        FileInfo fileInfo = addByUrl(cachingClient, dataStore, profiler, storagePolicy, id, originalUrlOrDoiOrHandle, profile, null);
+        addFileInfoFuture(new FileInfoFuture(id, wrap(fileInfo)));
+        return fileInfo;
+    }
+
+    public FileInfo addByUrlPreflight(String originalUrlOrDoiOrHandle, Profile profile) throws CommonException, ProfilingException {
+        UUID id = UUID.randomUUID();
+        FileInfo fileInfo = addByUrl(preflightCachingClient, dataStore, profiler, storagePolicy, id, originalUrlOrDoiOrHandle, profile, 4096L);
         addFileInfoFuture(new FileInfoFuture(id, wrap(fileInfo)));
         return fileInfo;
     }
@@ -106,7 +128,7 @@ public class MediaLibrary {
     public UUID addByUrlAsync(String originalUrlOrDoiOrHandle, Profile profile) throws StoragePolicyException {
         UUID id = UUID.randomUUID();
         Future<FileInfo> future = executorService.submit(() ->
-                addByUrl(cachingClient, dataStore, profiler, storagePolicy, id, originalUrlOrDoiOrHandle, profile));
+                addByUrl(cachingClient, dataStore, profiler, storagePolicy, id, originalUrlOrDoiOrHandle, profile, null));
         addFileInfoFuture(new FileInfoFuture(id, future));
         return id;
     }
@@ -202,13 +224,14 @@ public class MediaLibrary {
 
     private static FileInfo addByUrl(CloseableHttpClient cachingClient,
                                      DataStore dataStore, Profiler profiler, StoragePolicy storagePolicy,
-                                     UUID id, String originalUrlOrDoiOrHandle, Profile profile)
+                                     UUID id, String originalUrlOrDoiOrHandle, Profile profile, Long dataLimit)
             throws CommonException, ProfilingException {
         LinkMetadata.LinkInfo linkInfo = LinkMetadata.getLinkData(cachingClient, originalUrlOrDoiOrHandle);
         try {
             storagePolicy.acceptSize(linkInfo.response.getEntity().getContentLength());
-            FileInfo fileInfo = addFile(dataStore, profiler, storagePolicy,
-                    id, linkInfo.filename, linkInfo.response.getEntity().getContent(), null);
+            InputStream dataStream = dataLimit == null ? linkInfo.response.getEntity().getContent() :
+                    ByteStreams.limit(linkInfo.response.getEntity().getContent(), dataLimit);
+            FileInfo fileInfo = addFile(dataStore, profiler, storagePolicy, id, linkInfo.filename, dataStream, null);
             fileInfo.setLinksInfo(originalUrlOrDoiOrHandle, linkInfo.downloadLink, linkInfo.redirects);
             Quirks.specializeProfile(fileInfo, profile);
             return fileInfo;

@@ -20,7 +20,7 @@ const newwindowimage = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC8AAAAwCA
 
 var $ = window.$ = Zepto;
 
-const switchboardConfig = {switchboardURL: "https://switchboard.clarin.eu/"};
+const switchboardConfig = {switchboardURL: "https://switchboard.clarin.eu/", preflightTimeout: 1000};
 
 function init() {
     const originMap = {
@@ -55,7 +55,7 @@ function setSwitchboardURL(url) {
     switchboardConfig.switchboardURL = url;
 }
 
-const ALLOWED_CONFIG_KEYS = new Set(['switchboardURL', 'title', 'origin']);
+const ALLOWED_CONFIG_KEYS = new Set(['switchboardURL', 'title', 'origin', 'preflightTimeout']);
 
 function setSwitchboardConfig(config) {
     for (const key in config) {
@@ -134,6 +134,45 @@ function showSwitchboardPopup(align, params) {
     }
 
     makeDomElements(align, switchboardConfig, params);
+}
+
+function testSwitchboardMatches(params) {
+    return new Promise((resolve, reject) => {
+        const start = Date.now();
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", switchboardConfig.switchboardURL + "api/urlmatch");
+        xhr.setRequestHeader("Accept", "application/json");
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.responseType = 'json';
+        xhr.onload = function() {
+            if (xhr.readyState === 4) {
+                const duration = (Date.now()-start)+"ms";
+                if (xhr.status === 200) {
+                    const data = xhr.response;
+                    if (data.timeout) {
+                        // console.log("urlmatch ok: timeout, unknown", duration);
+                        resolve(data, xhr);
+                    } else if (data.matches) {
+                        // console.log("urlmatch ok: we have matches", duration);
+                        resolve(data, xhr);
+                    } else {
+                        // console.log("urlmatch ok: no match, running callback", duration);
+                        resolve(data, xhr);
+                    }
+                } else {
+                    console.error("Switchboard request to urlmatch failed: ", xhr.statusText, duration);
+                    reject(xhr);
+                }
+            }
+        };
+        xhr.timeout = switchboardConfig.preflightTimeout;
+        xhr.ontimeout = function () {
+            const duration = (Date.now()-start)+"ms";
+            console.error("Switchboard request to urlmatch " + params.url + " timed out.", duration);
+            reject(xhr);
+        };
+        xhr.send(JSON.stringify(params));
+    })
 }
 
 function makeDomElements(align, config, params) {
@@ -396,7 +435,7 @@ init();
 window.setSwitchboardURL = setSwitchboardURL;
 window.setSwitchboardConfig = setSwitchboardConfig;
 window.showSwitchboardPopup = showSwitchboardPopup;
+window.testSwitchboardMatches = testSwitchboardMatches;
 window.showSwitchboardPopupOnSelection = showSwitchboardPopupOnSelection;
 window.disableSwitchboardPopupOnSelection = disableSwitchboardPopupOnSelection;
-
 })();

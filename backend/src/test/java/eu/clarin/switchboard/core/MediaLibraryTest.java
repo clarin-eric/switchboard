@@ -44,7 +44,7 @@ public class MediaLibraryTest {
 
         profiler = new DefaultProfiler();
 
-        urlResolver = new UrlResolverConfig(3, 3, "seconds", 10);
+        urlResolver = new UrlResolverConfig(3, 3, 3, 3, "seconds", 10);
     }
 
     @Test

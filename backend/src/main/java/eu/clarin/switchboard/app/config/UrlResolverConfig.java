@@ -15,6 +15,12 @@ public class UrlResolverConfig {
     @NotNull
     private int readTimeout;
 
+    @NotNull
+    private int preflightConnectTimeout;
+
+    @NotNull
+    private int preflightReadTimeout;
+
     @Valid
     @NotNull
     @JsonProperty
@@ -26,9 +32,11 @@ public class UrlResolverConfig {
     public UrlResolverConfig() {
     }
 
-    public UrlResolverConfig(int connectTimeout, int readTimeout, String unit, int maxHttpCacheEntries) {
+    public UrlResolverConfig(int connectTimeout, int readTimeout, int preflightConnectTimeout, int preflightReadTimeout, String unit, int maxHttpCacheEntries) {
         this.connectTimeout = connectTimeout;
         this.readTimeout = readTimeout;
+        this.preflightConnectTimeout = preflightConnectTimeout;
+        this.preflightReadTimeout = preflightReadTimeout;
         this.unit = unit;
         this.maxHttpCacheEntries = maxHttpCacheEntries;
     }
@@ -41,6 +49,16 @@ public class UrlResolverConfig {
     public int getReadTimeout() {
         ChronoUnit u = ChronoUnit.valueOf(unit.trim().toUpperCase());
         return (int) Duration.of(readTimeout, u).getNano() / 1000 / 1000;
+    }
+
+    public int getPreflightConnectTimeout() {
+        ChronoUnit u = ChronoUnit.valueOf(unit.trim().toUpperCase());
+        return (int) Duration.of(preflightConnectTimeout, u).getNano() / 1000 / 1000;
+    }
+
+    public int getPreflightReadTimeout() {
+        ChronoUnit u = ChronoUnit.valueOf(unit.trim().toUpperCase());
+        return (int) Duration.of(preflightReadTimeout, u).getNano() / 1000 / 1000;
     }
 
     public int getMaxHttpCacheEntries() {

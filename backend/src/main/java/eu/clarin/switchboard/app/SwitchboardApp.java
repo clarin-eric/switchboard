@@ -10,11 +10,11 @@ import eu.clarin.switchboard.core.xc.BadToolException;
 import eu.clarin.switchboard.core.xc.SwitchboardExceptionMapper;
 import eu.clarin.switchboard.health.AppHealthCheck;
 import eu.clarin.switchboard.profiler.DefaultProfiler;
-import eu.clarin.switchboard.profiler.api.Profiler;
 import eu.clarin.switchboard.resources.DataResource;
 import eu.clarin.switchboard.resources.InfoResource;
 import eu.clarin.switchboard.resources.MainResource;
 import eu.clarin.switchboard.resources.ToolsResource;
+import eu.clarin.switchboard.resources.UrlMatchResource;
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
@@ -98,12 +98,14 @@ public class SwitchboardApp extends Application<RootConfig> {
         InfoResource infoResource = new InfoResource(toolRegistry, gitProperties, switchboardConfig);
         DataResource dataResource = new DataResource(mediaLibrary);
         ToolsResource toolsResource = new ToolsResource(toolRegistry, switchboardConfig.getTools());
+        UrlMatchResource urlMatchResource = new UrlMatchResource(mediaLibrary, toolRegistry, switchboardConfig.getTools());
 
         environment.jersey().register(SwitchboardExceptionMapper.class);
         environment.jersey().register(MultiPartFeature.class);
         environment.jersey().register(infoResource);
         environment.jersey().register(dataResource);
         environment.jersey().register(toolsResource);
+        environment.jersey().register(urlMatchResource);
         environment.jersey().register(new MainResource(mediaLibrary));
 
         environment.healthChecks().register("switchboard", new AppHealthCheck());
