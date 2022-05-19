@@ -82,11 +82,6 @@ public class LinkMetadataTest {
         System.out.println("contentType = " + contentType);
         assertEquals("application/x-cmdi+xml", contentType);
         info.response.close();
-
-        info = LinkMetadata.getLinkData(cachingClient, "https://alpha-collections.clarin.eu/service/v1/collections//1060");
-        contentType = info.response.getFirstHeader("content-type").getValue();
-        assertEquals("application/x-cmdi+xml", contentType);
-        info.response.close();
     }
 
     @Test
