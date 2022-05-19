@@ -34,8 +34,8 @@
         "webpack-merge": "^5.8.0"
     },
     "dependencies": {
-        "axios": "^0.24.0",
         "core-js": "^3.22.2",
+        "axios": "^0.26.1",
         "history": "^5.1.0",
         "prop-types": "^15.8.1",
         "react": "^17.0.2",
