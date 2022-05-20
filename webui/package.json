@@ -46,7 +46,7 @@
         "react-router-dom": "^5.2.0",
         "react-router-hash-link": "^1.2.2",
         "react-select": "^5.3.0",
-        "redux": "^4.1.2",
+        "redux": "^4.2.0",
         "redux-thunk": "^2.4.0",
         "remark-gfm": "^3.0.1",
         "seamless-immutable": "^7.1.4"
