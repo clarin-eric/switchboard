@@ -57,33 +57,14 @@ export default class About extends React.Component {
                     <li><em>Your Name Here</em> (integration of <em>your</em> tool)</li>
                 </ul>
 
-
-                <h3 id="licence">Licence</h3>
-                <div className="licenceText">
-                    <p>Copyright (C) 2017-2019 CLARIN ERIC</p>
-
-                    <p>
-                        This program is free software: you can redistribute it and/or modify it under the
-                        terms of the GNU General Public License as published by the Free Software Foundation,
-                        either version 3 of the License, or (at your option) any later version.
-                    </p>
-
-                    <p>
-                        This program is distributed in the hope that it will be useful, but WITHOUT ANY
-                        WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-                        PARTICULAR PURPOSE. See the GNU General Public License for more details.
-                    </p>
-
-                    <p>
-                        You should have received a copy of the GNU General Public License along with this
-                        program. If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.
-                    </p>
-
-                </div>
-
                 <h3>Source Code</h3>
                 <p>
                     The <a href="https://github.com/clarin-eric/switchboard">Switchboard GitHub repository</a> provides the source code.
+                </p>
+
+                <p>
+                    The Switchboard is open source software, and all of its code is released under a GNU General Public License Version 3 (GPLv3) licence.
+                    The full licence can be found in the source code repository and in the packaged sources and binaries.
                 </p>
 
                 <h3 id="funding">Funding</h3>
