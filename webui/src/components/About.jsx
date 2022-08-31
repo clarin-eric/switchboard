@@ -64,7 +64,7 @@ export default class About extends React.Component {
 
                 <p>
                     The Switchboard is open source software, and all of its code is released under a GNU General Public License Version 3 (GPLv3) licence.
-                    The full licence can be found in the source code repository and in the packaged sources and binaries.
+                    The <a href="https://github.com/clarin-eric/switchboard/blob/-/LICENCE">full licence</a> can be found in the source code repository and in the packaged sources and binaries.
                 </p>
 
                 <h3 id="funding">Funding</h3>
