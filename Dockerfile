@@ -20,10 +20,10 @@ COPY ./webui/src                ./webui/src
 RUN make dependencies && make build-webui-production
 
 # --- build java code with maven
-FROM registry.gitlab.com/clarin-eric/docker-alpine-supervisor-java-base:openjdk11-2.1.0 AS backend_builder
+FROM registry.gitlab.com/clarin-eric/docker-alpine-supervisor-java-base:openjdk17-1.1.1 AS backend_builder
 
 ARG version
-ARG MAVEN_VERSION=3.6.3-r1
+ARG MAVEN_VERSION=3.8.3-r0
 ENV SWITCHBOARD_VERSION=$version
 
 RUN apk add maven=$MAVEN_VERSION
@@ -41,7 +41,7 @@ RUN mvn -q clean package
 ###############################################################################
 
 # now setup running environment
-FROM registry.gitlab.com/clarin-eric/docker-alpine-supervisor-java-base:openjdk11-2.1.0
+FROM registry.gitlab.com/clarin-eric/docker-alpine-supervisor-java-base:openjdk17-1.1.1
 
 COPY --from=backend_builder /build/backend/target/appassembler /switchboard/
 
