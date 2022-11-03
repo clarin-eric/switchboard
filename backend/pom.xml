@@ -48,6 +48,17 @@
             <artifactId>jersey-media-multipart</artifactId>
             <version>3.0.8</version>
         </dependency>
+<dependency>
+    <groupId>org.glassfish.jersey.core</groupId>
+    <artifactId>jersey-common</artifactId>
+    <version>3.0.8</version>
+</dependency>
+<dependency>
+    <groupId>jakarta.ws.rs</groupId>
+    <artifactId>jakarta.ws.rs-api</artifactId>
+    <version>3.1.0</version>
+</dependency>
+
 
         <dependency>
             <groupId>org.slf4j</groupId>

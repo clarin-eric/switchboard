@@ -5,11 +5,11 @@ import eu.clarin.switchboard.profiler.api.TextExtractionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.Response;
+import jakarta.ws.rs.WebApplicationException;
+import jakarta.ws.rs.core.Response;
 import java.net.HttpURLConnection;
 
-public class SwitchboardExceptionMapper implements javax.ws.rs.ext.ExceptionMapper<Exception> {
+public class SwitchboardExceptionMapper implements jakarta.ws.rs.ext.ExceptionMapper<Exception> {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(SwitchboardExceptionMapper.class);
 
