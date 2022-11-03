@@ -102,7 +102,8 @@ public class LinkMetadata {
                     String filename = disposition.getFileName();
                     if (filename != null && !DataStore.sanitize(filename).isEmpty()) {
                         // LOGGER.debug("found content-disposition filename: " + filename);
-                        linkInfo.filename = filename;
+                        int separatorIndex = filename.indexOf("''");
+                        linkInfo.filename = separatorIndex > 0 ? filename.substring(separatorIndex + 2) : filename;
                         break;
                     }
                 } catch (ParseException e) {
