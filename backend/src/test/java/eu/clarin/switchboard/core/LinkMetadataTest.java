@@ -20,8 +20,8 @@ public class LinkMetadataTest {
                 .setMaxObjectSize(1024 * 1024)
                 .build();
         RequestConfig requestConfig = RequestConfig.custom()
-                .setConnectTimeout(2000)
-                .setSocketTimeout(2000)
+                .setConnectTimeout(120000)
+                .setSocketTimeout(120000)
                 .setMaxRedirects(10)
                 .setRedirectsEnabled(true)
                 .build();
