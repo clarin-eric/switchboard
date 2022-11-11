@@ -1,4 +1,4 @@
-FROM cypress/browsers:node16.5.0-chrome94-ff93
+FROM cypress/browsers:node18.12.0-chrome106-ff106
 
 WORKDIR /build
 
@@ -9,6 +9,10 @@ COPY ./webui/package-lock.json  ./webui/
 COPY ./webui/webpack.config.js  ./webui/
 COPY ./webui/src                ./webui/src
 COPY ./webui/test               ./webui/test
+
+RUN apt-get update && \
+    apt-get install -y \
+    make
 
 RUN make dev-dependencies
 
