@@ -11,7 +11,7 @@ on:
 jobs:
   prepare:
     name: "Prepare"
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
     outputs:
       version: ${{ steps.get_version.outputs.VERSION }}
       create_release: ${{ steps.check_release.outputs.CREATE_RELEASE }}
@@ -39,7 +39,7 @@ jobs:
     if: github.event_name == 'release' || !contains(github.ref, 'refs/tags/') || needs.prepare.outputs.create_release == 'true'
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: '2'
       - name: Build
@@ -49,7 +49,7 @@ jobs:
         env:
           CI_VERSION: ${{ needs.prepare.outputs.version }}
       - name: Upload exported docker image
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: switchboard-docker-image
           path: switchboard-docker-image.tar
@@ -59,15 +59,15 @@ jobs:
     needs: [build]
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: '1'
       - name: Download docker image from build job
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: switchboard-docker-image
       - name: 'Fetch tools'
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: clarin-eric/switchboard-tool-registry
           ref: production
@@ -84,13 +84,13 @@ jobs:
     needs: [prepare, build, test-ui]
     # Run job for github releases and tag pushes (without github release)
     if: github.event_name == 'release' || needs.prepare.outputs.create_release == 'true'
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: '1'
       - name: Download docker image from build job
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: switchboard-docker-image
       - name: Make release package
