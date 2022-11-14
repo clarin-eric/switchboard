@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import {compose, applyMiddleware, createStore} from 'redux';
 import {connect, Provider} from 'react-redux';
 import thunk from 'redux-thunk';
-import {withRouter, BrowserRouter, Route, Switch, Link} from 'react-router-dom';
+import {useLocation, useNavigate, useParams, BrowserRouter, Route, Switch, Link} from 'react-router-dom';
 import Modal from 'react-modal';
 
 import './style.scss';
@@ -25,6 +25,22 @@ import {AboutContainer, HelpContainer} from './containers/HelpContainers';
 if (!window.origin) {
     const loc = window.location;
     window.origin = loc.protocol + "//" + loc.hostname + (loc.port ? ':' + loc.port: '');
+}
+
+function withRouter(Component) {
+  function ComponentWithRouterProp(props) {
+    let location = useLocation();
+    let navigate = useNavigate();
+    let params = useParams();
+    return (
+      <Component
+        {...props}
+        router={{ location, navigate, params }}
+      />
+    );
+  }
+
+  return ComponentWithRouterProp;
 }
 
 function middleware() {
