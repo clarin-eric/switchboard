@@ -33,8 +33,8 @@ export class Input extends React.Component {
         }
 
         this.props.onFile(files[0]);
-        if (this.props.history && this.props.history.push) {
-            this.props.history.push(clientPath.root);
+        if (this.props.router.navigate) {
+            this.props.router.navigate(clientPath.root);
         }
         if (this.props.onSubmit) {
             this.props.onSubmit();
@@ -50,8 +50,8 @@ export class Input extends React.Component {
         e.stopPropagation();
 
         this.props.onLink({url:this.state.link});
-        if (this.props.history && this.props.history.push) {
-            this.props.history.push(clientPath.root);
+        if (this.props.router.navigate) {
+            this.props.router.navigate(clientPath.root);
         }
         if (this.props.onSubmit) {
             this.props.onSubmit();
@@ -69,8 +69,8 @@ export class Input extends React.Component {
         const blob = new Blob([this.state.text], {type: "text/plain"});
         blob.name = "submitted_text.txt";
         this.props.onFile(blob);
-        if (this.props.history && this.props.history.push) {
-            this.props.history.push(clientPath.root);
+        if (this.props.router.navigate) {
+            this.props.router.navigate(clientPath.root);
         }
         if (this.props.onSubmit) {
             this.props.onSubmit();

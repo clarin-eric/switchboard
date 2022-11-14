@@ -2,7 +2,7 @@ import React from 'react';
 
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux';
-import {withRouter} from 'react-router-dom';
+import {withRouter} from '../tools';
 import {uploadFile, uploadLink, clearResources} from '../actions/actions';
 import {Input} from '../components/Input';
 

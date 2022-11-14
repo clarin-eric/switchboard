@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import {compose, applyMiddleware, createStore} from 'redux';
 import {connect, Provider} from 'react-redux';
 import thunk from 'redux-thunk';
-import {useLocation, useNavigate, useParams, BrowserRouter, Route, Switch, Link} from 'react-router-dom';
+import {BrowserRouter, Route, Routes, Link} from 'react-router-dom';
 import Modal from 'react-modal';
 
 import './style.scss';
@@ -11,6 +11,7 @@ import './style.scss';
 import {clientPath} from './constants';
 import rootReducers from './actions/reducers';
 import * as actions from './actions/actions';
+import {withRouter} from './tools';
 
 import {NavBarContainer} from './containers/NavBarContainer';
 import {FooterContainer} from './containers/FooterContainer';
@@ -27,21 +28,6 @@ if (!window.origin) {
     window.origin = loc.protocol + "//" + loc.hostname + (loc.port ? ':' + loc.port: '');
 }
 
-function withRouter(Component) {
-  function ComponentWithRouterProp(props) {
-    let location = useLocation();
-    let navigate = useNavigate();
-    let params = useParams();
-    return (
-      <Component
-        {...props}
-        router={{ location, navigate, params }}
-      />
-    );
-  }
-
-  return ComponentWithRouterProp;
-}
 
 function middleware() {
     if (process.env.NODE_ENV === 'production') {
@@ -60,16 +46,12 @@ Modal.setAppElement("#reactapp");
 class FrameComponent extends React.Component {
     constructor(props) {
         super(props);
-        this.props.history.listen((location, action) => {
-            _paq.push(['setCustomUrl', window.location.href]);
-            _paq.push(['trackPageView']);
-        });
     }
 
     render() {
         return (
             <div id="bodycontainer">
-                <NavBarContainer history={this.props.history} mode={this.props.mode}/>
+                <NavBarContainer mode={this.props.mode}/>
                 <div className="container">
                     <div className="row">
                         <div className="col-md-12">
@@ -136,14 +118,14 @@ class Application extends React.Component {
             <Provider store={store}>
                 <BrowserRouter>
                     <Frame>
-                        <Switch>
-                            <Route exact path={clientPath.root} component={MainContainer} />
-                            <Route exact path={clientPath.input} component={MainInputContainer} />
-                            <Route exact path={clientPath.tools} component={AllToolsContainer} />
-                            <Route exact path={clientPath.help} component={HelpContainer} />
-                            <Route exact path={clientPath.about} component={AboutContainer} />
-                            <Route component={NotFound} />
-                        </Switch>
+                        <Routes>
+                            <Route path={clientPath.root} element={<MainContainer />} />
+                            <Route path={clientPath.input} element={<MainInputContainer />} />
+                            <Route path={clientPath.tools} element={<AllToolsContainer />} />
+                            <Route path={clientPath.help} element={<HelpContainer />} />
+                            <Route path={clientPath.about} element={<AboutContainer />} />
+                            <Route component={<NotFound />} />
+                        </Routes>
                     </Frame>
                     { store.getState().mode === 'popup' ?
                         false : // no footer in popup mode
