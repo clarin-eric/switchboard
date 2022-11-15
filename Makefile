@@ -53,7 +53,7 @@ dependencies:
 	(cd webui && npm install -g npm@${NPM_VERSION} && npm install)
 
 dev-dependencies:
-	(cd webui && npm install -g npm@${NPM_VERSION} && npm install --only=development)
+	(cd webui && npm install -g npm@${NPM_VERSION} && npm install --save-dev)
 
 clean:
 	(cd backend && mvn -q clean)
