@@ -12,7 +12,7 @@ COPY ./webui/test               ./webui/test
 
 RUN apt-get update && \
     apt-get install -y \
-    make
+    make g++
 
 RUN make dev-dependencies
 
