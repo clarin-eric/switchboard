@@ -28,7 +28,7 @@ describe('Uploads', () => {
         cy.visit('/');
 
         cy.contains('a', 'Upload files or text').should('be.visible').click();
-        cy.contains('a', 'Submit URL').should('be.visible').click();
+        cy.contains('a', 'Submit URL').should('be.visible').trigger("click");
 
         cy.get('.inputzone').should('have.value', '');
         cy.contains('button', "Submit URL").should('be.disabled');
@@ -47,7 +47,7 @@ describe('Uploads', () => {
         cy.visit('/');
 
         cy.contains('a', 'Upload files or text').should('be.visible').click();
-        cy.contains('a', 'Submit Text').should('be.visible').click();
+        cy.contains('a', 'Submit Text').should('be.visible').trigger("click");
 
         cy.get('.inputzone').should('have.value', '');
         cy.contains('button', "Submit Text").should('be.disabled');

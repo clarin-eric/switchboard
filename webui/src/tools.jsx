@@ -11,12 +11,12 @@ export function withRouter(Component) {
     let navigate = useNavigate();
     let params = useParams();
 
-  React.useEffect(() => {
-    if (window && window._paq) {
-      window._paq.push(['setCustomUrl', window.location.href]);
-      window._paq.push(['trackPageView']);
-    }
-  }, [location]);
+    React.useEffect(() => {
+      if (window && window._paq) {
+        window._paq.push(['setCustomUrl', window.location.href]);
+        window._paq.push(['trackPageView']);
+      }
+    }, [location]);
 
     return (
       <Component

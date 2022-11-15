@@ -5,7 +5,7 @@ describe('Resource content and archives', () => {
 
         cy.contains('a', 'Upload files or text').click();
 
-        cy.contains('a', 'Submit Text').click();
+        cy.contains('a', 'Submit Text').trigger("click");
         cy.get('.inputzone').type(myinput).should('have.value', myinput);
         cy.contains('button', "Submit Text").click();
 

@@ -4,7 +4,7 @@ describe('Regressions', () => {
         cy.visit('/');
 
         cy.contains('a', 'Upload files or text').should('be.visible').click();
-        cy.contains('a', 'Submit Text').should('be.visible').click();
+        cy.contains('a', 'Submit Text').should('be.visible').trigger("click");
         cy.get('.inputzone').type(myinput).should('have.value', myinput);
         cy.contains('button', "Submit Text").should('be.enabled') .click();
         cy.get('.tool.match').should('be.visible');
@@ -13,7 +13,7 @@ describe('Regressions', () => {
 
         cy.go('back');
 
-        cy.contains('a', 'Submit Text').should('be.visible').click();
+        cy.contains('a', 'Submit Text').should('be.visible').trigger("click");
         cy.get('.inputzone').type(myinput).should('have.value', myinput);
         cy.contains('button', "Submit Text").should('be.enabled') .click();
         cy.get('.tool.match').should('be.visible');
