@@ -11,7 +11,7 @@ import './style.scss';
 import {clientPath} from './constants';
 import rootReducers from './actions/reducers';
 import * as actions from './actions/actions';
-import {withRouter} from './tools';
+import {withRouter} from './reactHelpers';
 
 import {NavBarContainer} from './containers/NavBarContainer';
 import {FooterContainer} from './containers/FooterContainer';
