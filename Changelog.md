@@ -17,6 +17,8 @@
 	- Upgraded WebUI runtime dependencies:
 	   - axios to 1.1.3
 	   - core-js to 3.26.1
+	   - prop-types to 15.8.1
+	   - history to 5.3.0
 	   - react to 18.2.0
 	   - react-dom to 18.2.0
 	   - react-markdown to 8.0.3
@@ -25,6 +27,7 @@
 	   - react-router-dom to 6.4.3
 	   - react-router-hash-link to 2.4.3
 	   - react-select to 5.6.1
+	   - redux to 4.2.0
 	   - redux-thunk to 2.4.2
 	-  Development project changes:
 	   - Increased Java tests connection timeout to 120000ms
@@ -50,8 +53,8 @@
 	     - terser-webpack-plugin to 5.3.6
 	     - webpack to 5.75.0
 	     - webpack-bundle-analyzer to 4.7.0
-	     - webpack-dev-server to 4.11.1
 	     - webpack-cli to 4.10.0
+	     - webpack-dev-server to 4.11.1
 
 
 ## [2.4.1] - 2022-03-31
