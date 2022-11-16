@@ -1,5 +1,58 @@
 # Changelog
 
+## [2.4.2] - 2022-1?-??
+	- Updated contributors and license information on About page
+	- Upgrade to openJDK 17
+	- Upgraded backend dependencies:
+	   - dropwizard to 2.1.4
+	- Added backend dependencies:
+	   - dropwizard-forms 2.1.4
+	- Removed direct backend dependency declarations:
+	  - slf4j-api (pulled as Dropwizard dependency)
+	  - logback-core (pulled as Dropwizard dependency)
+	  - logback-classic (pulled as Dropwizard dependency)
+	  - httpclient (pulled as Tika profiler dependency)
+	  - jersey-media-multipart (replaced by dropwizard-forms)
+	  - validation-api
+	- Upgraded WebUI runtime dependencies:
+	   - axios to 1.1.3
+	   - core-js to 3.26.1
+	   - react to 18.2.0
+	   - react-dom to 18.2.0
+	   - react-markdown to 8.0.3
+	   - react-modal to 3.16.1
+	   - react-redux to 8.0.5
+	   - react-router-dom to 6.4.3
+	   - react-router-hash-link to 2.4.3
+	   - react-select to 5.6.1
+	   - redux-thunk to 2.4.2
+	-  Development project changes:
+	   - Increased Java tests connection timeout to 120000ms
+	   - Upgrade build Java docker base image: docker-alpine-supervisor-java-base to `openjdk17-1.1.1` (was `openjdk11-2.1.0`)
+	   - Upgrade build UI test base image: cypress/browsers to `node18.12.0-chrome106-ff106`
+	   - Upgrade github actions to v3
+	   - Upgrade npm to 9.1.1
+	   - Upgraded WebUI development dependencies: 
+	     - babel/core to 7.20.2
+	     - babel/plugin-proposal-class-properties to 7.18.6
+	     - babel/preset-env to 7.20.2
+	     - babel/preset-react to 7.18.6
+	     - babel-loader to 9.1.0
+	     - browserslist to 4.21.4
+	     - css-loader to 6.7.2
+	     - cypress to 11.0.1
+	     - eslint to 8.27.0
+	     - glob-parent to 6.0.2
+	     - node-sass to 8.0.0
+	     - sass-loader to 13.2.0
+	     - stylelint to 14.15.0
+	     - stylelint-config-standard to 29.0.0
+	     - terser-webpack-plugin to 5.3.6
+	     - webpack to 5.75.0
+	     - webpack-bundle-analyzer to 4.7.0
+	     - webpack-dev-server to 4.11.1
+	     - webpack-cli to 4.10.0
+
 
 ## [2.4.1] - 2022-03-31
     - Added support for ranged requests e6f5c01adb8ccb655f9e65d5c9012a117778723b
