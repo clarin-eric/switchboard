@@ -43,16 +43,16 @@ export default class About extends React.Component {
                     The following people have contributed to the Switchboard:
                 </p>
                 <ul>
-                    <li>Emanuel Dima (current developer and maintainer)</li>
-                    <li>Claus Zinn (original developer, responsible for Switchboard design, back-end and front-end)</li>
+                    <li>André Moreira (current codebase maintainer. Use Cases, Dockerization and live system operations)</li>
+                    <li>Twan Goosen (current codebase maintainer. Switchboard integration in the VLO, use Cases) </li>
+                    <li>Emanuel Dima (former developer and maintainer, original developer of the current implementation [Switchboard 2])</li>
+                    <li>Claus Zinn (former developer and maintainer, original developer of proof of concept implementation [Switchboard 1])</li>
                     <li>Marie Hinrichs, Wei Qui (integration of WebLicht)</li>
                     <li>Maarten van Gompel (integration of the CLAM Webservices)</li>
                     <li>Bart Jongejan (integration of the CLARIN-DK Tool Box)</li>
                     <li>Wojtek Rauk (integration of MorphoDoTa, WebSty, Morfeusz, Liner2 etc.)</li>
                     <li>Rafael Jaworski (integration of Concraft, Nerf, Spejd etc.)</li>
                     <li>Josef Misutka and Pavel Stranak (UDPipe)</li>
-                    <li>Twan Goosen (switchboard integration in the VLO, Use Cases) </li>
-                    <li>André Moreira (Use Cases, Dockerization)</li>
                     <li>Dieter Van Uytvanck (feedback on specification and usability, Use Cases)</li>
                     <li><em>Your Name Here</em> (integration of <em>your</em> tool)</li>
                 </ul>
