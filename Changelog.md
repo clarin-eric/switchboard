@@ -1,6 +1,7 @@
 # Changelog
 
 ## [2.4.2] - 2022-1?-??
+    - Added support for pre-flight API
 	- Updated contributors and license information on About page
 	- Upgraded to openJDK 17
 	- Upgraded backend dependencies:
@@ -33,6 +34,7 @@
 	   - Increased Java tests connection timeout to 120000ms
 	   - Upgraded build Java docker base image: docker-alpine-supervisor-java-base to `openjdk17-1.1.1` (was `openjdk11-2.1.0`)
 	   - Upgraded build UI test base image: cypress/browsers to `node18.12.0-chrome106-ff106`
+	   - Upgraded github actions run OS to ubuntu-22.04
 	   - Upgraded github actions to v3
 	   - Upgraded npm to 9.1.1
 	   - Upgraded WebUI development dependencies: 
