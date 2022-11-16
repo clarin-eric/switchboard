@@ -2,7 +2,7 @@
 
 ## [2.4.2] - 2022-1?-??
 	- Updated contributors and license information on About page
-	- Upgrade to openJDK 17
+	- Upgraded to openJDK 17
 	- Upgraded backend dependencies:
 	   - dropwizard to 2.1.4
 	- Added backend dependencies:
