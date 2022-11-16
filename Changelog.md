@@ -28,10 +28,10 @@
 	   - redux-thunk to 2.4.2
 	-  Development project changes:
 	   - Increased Java tests connection timeout to 120000ms
-	   - Upgrade build Java docker base image: docker-alpine-supervisor-java-base to `openjdk17-1.1.1` (was `openjdk11-2.1.0`)
-	   - Upgrade build UI test base image: cypress/browsers to `node18.12.0-chrome106-ff106`
-	   - Upgrade github actions to v3
-	   - Upgrade npm to 9.1.1
+	   - Upgraded build Java docker base image: docker-alpine-supervisor-java-base to `openjdk17-1.1.1` (was `openjdk11-2.1.0`)
+	   - Upgraded build UI test base image: cypress/browsers to `node18.12.0-chrome106-ff106`
+	   - Upgraded github actions to v3
+	   - Upgraded npm to 9.1.1
 	   - Upgraded WebUI development dependencies: 
 	     - babel/core to 7.20.2
 	     - babel/plugin-proposal-class-properties to 7.18.6
