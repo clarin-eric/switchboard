@@ -43,8 +43,9 @@ export default class About extends React.Component {
                     The following people have contributed to the Switchboard:
                 </p>
                 <ul>
-                    <li>André Moreira (current codebase maintainer. Use Cases, Dockerization and live system operations)</li>
-                    <li>Twan Goosen (current codebase maintainer. Switchboard integration in the VLO, use Cases) </li>
+                    <li>André Moreira (current codebase maintainer. Use Cases, Dockerization and continuous integration)</li>
+                    <li>Twan Goosen (current codebase maintainer. Switchboard integration in the <a href="https://vlo.clarin.eu">VLO</a>, use Cases) </li>
+                    <li>Alexander König (switchboard tools management) </li>
                     <li>Emanuel Dima (former developer and maintainer, original developer of the current implementation [Switchboard 2])</li>
                     <li>Claus Zinn (former developer and maintainer, original developer of proof of concept implementation [Switchboard 1])</li>
                     <li>Marie Hinrichs, Wei Qui (integration of WebLicht)</li>
@@ -53,8 +54,9 @@ export default class About extends React.Component {
                     <li>Wojtek Rauk (integration of MorphoDoTa, WebSty, Morfeusz, Liner2 etc.)</li>
                     <li>Rafael Jaworski (integration of Concraft, Nerf, Spejd etc.)</li>
                     <li>Josef Misutka and Pavel Stranak (UDPipe)</li>
+                    <li>Willem Elbers (Switchboard integration in the <a href="https://collections.clarin.eu">VCR</a>) </li>
                     <li>Dieter Van Uytvanck (feedback on specification and usability, Use Cases)</li>
-                    <li><em>Your Name Here</em> (integration of <em>your</em> tool)</li>
+                    <li><em>Your Name Here</em> <a href="https://github.com/clarin-eric/switchboard-tool-registry#how-to-add-a-tool-to-the-switchboard">(integration of <em>your</em> tool)</a></li>
                 </ul>
 
                 <h3>Source Code</h3>
