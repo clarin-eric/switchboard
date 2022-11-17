@@ -103,15 +103,15 @@ jobs:
       - name: Create prelease for this tag
         if: needs.prepare.outputs.create_release == 'true'
         id: create_release
-        uses: actions/create-release@v1
+        uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ needs.prepare.outputs.version }}
-          release_name: Release ${{ needs.prepare.outputs.version }}
+          name: Release ${{ needs.prepare.outputs.version }}
           draft: true
           prerelease: true
-      - uses: actions/upload-release-asset@v1.0.1
+      - uses: shogo82148/actions-upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
