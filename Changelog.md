@@ -45,7 +45,7 @@
 	     - babel-loader to 9.1.0
 	     - browserslist to 4.21.4
 	     - css-loader to 6.7.2
-	     - cypress to 11.0.1
+	     - cypress to 11.1.0
 	     - eslint to 8.27.0
 	     - glob-parent to 6.0.2
 	     - node-sass to 8.0.0
@@ -55,7 +55,7 @@
 	     - terser-webpack-plugin to 5.3.6
 	     - webpack to 5.75.0
 	     - webpack-bundle-analyzer to 4.7.0
-	     - webpack-cli to 4.10.0
+	     - webpack-cli to 5.0.0
 	     - webpack-dev-server to 4.11.1
 
 
