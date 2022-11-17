@@ -12,28 +12,31 @@ jobs:
   prepare:
     name: "Prepare"
     runs-on: ubuntu-22.04
+    outputs:
+      version: ${{ steps.get_version.outputs.VERSION }}
+      create_release: ${{ steps.check_release.outputs.CREATE_RELEASE }}
     steps:
       - name: Get the version
-        id: set_version
-        run: echo "version=${GITHUB_REF##*/}" >> $GITHUB_ENV
+        id: get_version
+        run: echo "VERSION=${GITHUB_REF##*/}" >> $GITHUB_OUTPUT
       - name: Check create release for tag
         if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
         id: check_release
         run: |
-          URL="https://api.github.com/repos/${{ github.repository }}/releases/tags/${{ env.version }}"
+          URL="https://api.github.com/repos/${{ github.repository }}/releases/tags/${{ steps.get_version.outputs.VERSION }}"
           StatusCode=$(curl -o -I -L -s -w "%{http_code}" -X GET -G $URL)
           if [ "$StatusCode" == 200 ]; then
             echo "Release exists"
-            echo "create_release=false" >> $GITHUB_ENV
+            echo ::set-output name=CREATE_RELEASE::false
           else
             echo "Release does not exist"
-            echo "create_release=true" >> $GITHUB_ENV
+            echo ::set-output name=CREATE_RELEASE::true
           fi
   build:
     name: "Build"
     needs: [prepare]
     # Run job for: github releases, tag pushes without github release and regular pushes (not tag)
-    if: github.event_name == 'release' || !contains(github.ref, 'refs/tags/') || env.create_release == 'true'
+    if: github.event_name == 'release' || !contains(github.ref, 'refs/tags/') || needs.prepare.outputs.create_release == 'true'
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v3
@@ -44,7 +47,7 @@ jobs:
           make build-docker-image
           docker save switchboard/switchboard:latest > switchboard-docker-image.tar
         env:
-          CI_VERSION: ${{ env.version }}
+          CI_VERSION: ${{ needs.prepare.outputs.version }}
       - name: Upload exported docker image
         uses: actions/upload-artifact@v3
         with:
@@ -75,12 +78,12 @@ jobs:
           docker load < switchboard-docker-image.tar
           SWITCHBOARD_TOOL_REGISTRY_DIR=${GITHUB_WORKSPACE}/switchboard-tool-registry  test/run-end-to-end.sh
         env:
-          CI_VERSION: ${{ env.version }}
+          CI_VERSION: ${{ needs.prepare.outputs.version }}
   release:
     name: "Release"
     needs: [prepare, build, test-ui]
     # Run job for github releases and tag pushes (without github release)
-    if: github.event_name == 'release' || env.create_release == 'true'
+    if: github.event_name == 'release' || needs.prepare.outputs.create_release == 'true'
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
@@ -94,18 +97,18 @@ jobs:
         run: |
           docker load < switchboard-docker-image.tar
           make package
-          cp build/switchboard.tar.gz switchboard-${{ env.version }}.tar.gz
+          cp build/switchboard.tar.gz switchboard-${{ needs.prepare.outputs.version }}.tar.gz
       # For github releases -> upload release package to existing release
       # For tag pushes without github release -> create a github release with release package
       - name: Create prelease for this tag
-        if: env.create_release == 'true'
+        if: needs.prepare.outputs.create_release == 'true'
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ env.version }}
-          release_name: Release ${{ env.version }}
+          tag_name: ${{ needs.prepare.outputs.version }}
+          release_name: Release ${{ needs.prepare.outputs.version }}
           draft: true
           prerelease: true
       - uses: actions/upload-release-asset@v1.0.1
@@ -113,12 +116,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           # Pseudo-ternary expression: get "upload_url" from the release created above, or from github "release" event if release is pre-created
-          upload_url: ${{ env.create_release == 'true' && steps.create_release.outputs.upload_url || github.event.release.upload_url }} 
-          asset_path: ./switchboard-${{ env.version }}.tar.gz
-          asset_name: switchboard-${{ env.version }}.tar.gz
+          upload_url: ${{ needs.prepare.outputs.create_release == 'true' && steps.create_release.outputs.upload_url || github.event.release.upload_url }} 
+          asset_path: ./switchboard-${{ needs.prepare.outputs.version }}.tar.gz
+          asset_name: switchboard-${{ needs.prepare.outputs.version }}.tar.gz
           asset_content_type: application/tar+gzip
       - uses: eregon/publish-release@v1
-        if: env.create_release == 'true'
+        if: needs.prepare.outputs.create_release == 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
