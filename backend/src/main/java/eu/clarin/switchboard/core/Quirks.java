@@ -41,7 +41,7 @@ public class Quirks {
                     if (ctx.getTargetHost().getHostName().endsWith("collections.clarin.eu")
                             && request.getFirstHeader("accept") == null) {
                         // we require machine-readable mediatypes from vcr collections
-                        request.setHeader("accept", "application/*");
+                        request.setHeader("accept", "application/x-cmdi+xml");
                     }
                 }
             } catch (Exception xc) {
