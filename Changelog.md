@@ -6,6 +6,7 @@
 	- Upgraded to openJDK 17
 	- Upgraded backend dependencies:
 	   - dropwizard to 2.1.4
+	   - commons-compress to 1.22.2
 	- Added backend dependencies:
 	   - dropwizard-forms 2.1.4
 	- Removed direct backend dependency declarations:
