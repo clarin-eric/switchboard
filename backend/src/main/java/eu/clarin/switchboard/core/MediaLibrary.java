@@ -112,7 +112,7 @@ public class MediaLibrary {
 
     public FileInfo addByUrlPreflight(String originalUrlOrDoiOrHandle, Profile profile) throws CommonException, ProfilingException {
         UUID id = UUID.randomUUID();
-        FileInfo fileInfo = addByUrl(preflightCachingClient, dataStore, profiler, storagePolicy, id, originalUrlOrDoiOrHandle, profile, 4096L);
+        FileInfo fileInfo = addByUrl(preflightCachingClient, dataStore, profiler, storagePolicy, id, originalUrlOrDoiOrHandle, profile, 40096L);
         addFileInfoFuture(new FileInfoFuture(id, wrap(fileInfo)));
         return fileInfo;
     }
