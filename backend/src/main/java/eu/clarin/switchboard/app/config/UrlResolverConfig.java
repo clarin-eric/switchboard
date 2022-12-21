@@ -29,16 +29,20 @@ public class UrlResolverConfig {
     @NotNull
     private int maxHttpCacheEntries;
 
+    @NotNull
+    private long preflightDataLimit;
+
     public UrlResolverConfig() {
     }
 
-    public UrlResolverConfig(int connectTimeout, int readTimeout, int preflightConnectTimeout, int preflightReadTimeout, String unit, int maxHttpCacheEntries) {
+    public UrlResolverConfig(int connectTimeout, int readTimeout, int preflightConnectTimeout, int preflightReadTimeout, String unit, int maxHttpCacheEntries, long preflightDataLimit) {
         this.connectTimeout = connectTimeout;
         this.readTimeout = readTimeout;
         this.preflightConnectTimeout = preflightConnectTimeout;
         this.preflightReadTimeout = preflightReadTimeout;
         this.unit = unit;
         this.maxHttpCacheEntries = maxHttpCacheEntries;
+        this.preflightDataLimit = preflightDataLimit;
     }
 
     public int getConnectTimeout() {
@@ -60,6 +64,8 @@ public class UrlResolverConfig {
         ChronoUnit u = ChronoUnit.valueOf(unit.trim().toUpperCase());
         return (int) Duration.of(preflightReadTimeout, u).getNano() / 1000 / 1000;
     }
+
+    public long getPreflightDataLimit() { return (long) preflightDataLimit; }
 
     public int getMaxHttpCacheEntries() {
         return maxHttpCacheEntries;

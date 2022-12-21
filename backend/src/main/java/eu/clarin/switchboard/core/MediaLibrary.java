@@ -45,6 +45,8 @@ public class MediaLibrary {
     private final CloseableHttpClient preflightCachingClient;
     private final ExecutorService executorService;
 
+    private final long preflightDataLimit;
+
     Map<UUID, FileInfoFuture> fileInfoFutureMap = Collections.synchronizedMap(new HashMap<>());
 
     public MediaLibrary(DataStore dataStore,
@@ -88,6 +90,7 @@ public class MediaLibrary {
                 .setDefaultRequestConfig(preflightRequestConfig)
                 .build();
 
+        preflightDataLimit = urlResolverConfig.getPreflightDataLimit();
         executorService = Executors.newCachedThreadPool();
 
         ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
@@ -112,7 +115,7 @@ public class MediaLibrary {
 
     public FileInfo addByUrlPreflight(String originalUrlOrDoiOrHandle, Profile profile) throws CommonException, ProfilingException {
         UUID id = UUID.randomUUID();
-        FileInfo fileInfo = addByUrl(preflightCachingClient, dataStore, profiler, storagePolicy, id, originalUrlOrDoiOrHandle, profile, 40096L);
+        FileInfo fileInfo = addByUrl(preflightCachingClient, dataStore, profiler, storagePolicy, id, originalUrlOrDoiOrHandle, profile, preflightDataLimit);
         addFileInfoFuture(new FileInfoFuture(id, wrap(fileInfo)));
         return fileInfo;
     }

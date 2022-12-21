@@ -36,6 +36,7 @@ switchboard:
         #   https://github.com/clarin-eric/switchboard-doc/blob/master/documentation/IntegrationProvider.md#preflight-api
         preflightConnectTimeout: ${URLRESOLVER_PREFLIGHT_CONNECTTIMEOUT:-1}
         preflightReadTimeout: ${URLRESOLVER_PREFLIGHT_READTIMEOUT:-1}
+        preflightDataLimit: ${URLRESOLVER_PREFLIGHT_DATALIMIT:-8192}
         # connectTimeout is also used both as a socket connection timeout and
         #   also as a timeout for the http client library, until it can provide
         #   a thread for the request; 0 is infinite
