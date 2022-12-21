@@ -7,6 +7,8 @@
 	- Upgraded backend dependencies:
 	   - dropwizard to 2.1.4
 	   - commons-compress to 1.22.2
+	   - httpclient-cache to 4.5.14
+	   - junit to 4.13.2
 	- Added backend dependencies:
 	   - dropwizard-forms 2.1.4
 	- Removed direct backend dependency declarations:
@@ -17,18 +19,18 @@
 	  - jersey-media-multipart (replaced by dropwizard-forms)
 	  - validation-api
 	- Upgraded WebUI runtime dependencies:
-	   - axios to 1.1.3
+	   - axios to 1.2.1
 	   - core-js to 3.26.1
 	   - prop-types to 15.8.1
 	   - history to 5.3.0
 	   - react to 18.2.0
 	   - react-dom to 18.2.0
-	   - react-markdown to 8.0.3
+	   - react-markdown to 8.0.4
 	   - react-modal to 3.16.1
 	   - react-redux to 8.0.5
-	   - react-router-dom to 6.4.3
+	   - react-router-dom to 6.5.0
 	   - react-router-hash-link to 2.4.3
-	   - react-select to 5.6.1
+	   - react-select to 5.7.0
 	   - redux to 4.2.0
 	   - redux-thunk to 2.4.2
 	-  Development project changes:
@@ -39,24 +41,24 @@
 	   - Upgraded github actions to v3
 	   - Upgraded npm to 9.1.1
 	   - Upgraded WebUI development dependencies: 
-	     - babel/core to 7.20.2
+	     - babel/core to 7.20.5
 	     - babel/plugin-proposal-class-properties to 7.18.6
 	     - babel/preset-env to 7.20.2
 	     - babel/preset-react to 7.18.6
 	     - babel-loader to 9.1.0
 	     - browserslist to 4.21.4
-	     - css-loader to 6.7.2
-	     - cypress to 11.1.0
+	     - css-loader to 6.7.3
+	     - cypress to 12.2.0
 	     - eslint to 8.27.0
 	     - glob-parent to 6.0.2
 	     - node-sass to 8.0.0
 	     - sass-loader to 13.2.0
-	     - stylelint to 14.15.0
+	     - stylelint to 14.16.0
 	     - stylelint-config-standard to 29.0.0
 	     - terser-webpack-plugin to 5.3.6
 	     - webpack to 5.75.0
 	     - webpack-bundle-analyzer to 4.7.0
-	     - webpack-cli to 5.0.0
+	     - webpack-cli to 5.0.1
 	     - webpack-dev-server to 4.11.1
 
 
