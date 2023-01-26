@@ -1,4 +1,4 @@
-FROM cypress/browsers:node18.12.0-chrome106-ff106
+FROM cypress/browsers:node18.12.0-chrome107-ff107
 
 WORKDIR /build
 
