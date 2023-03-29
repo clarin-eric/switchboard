@@ -47,8 +47,8 @@ public class LinkMetadataTest {
         assertEquals("sherlock-short.txt", info.filename);
         info.response.close();
 
-        info = LinkMetadata.getLinkData(cachingClient, "https://google.com/trends");
-        assertEquals("trends", info.filename);
+        info = LinkMetadata.getLinkData(cachingClient, "https://trends.google.com/home");
+        assertEquals("home", info.filename);
         info.response.close();
     }
 
