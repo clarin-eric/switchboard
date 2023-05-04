@@ -61,6 +61,29 @@ jobs:
           name: switchboard-docker-image
           path: switchboard-docker-image.tar
           retention-days: 1
+  sauce-test:
+    name: "Test UI on SauceLabs"
+    needs: [build]
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: '1'
+      - name: Download docker image from build job
+        uses: actions/download-artifact@v3
+        with:
+          name: switchboard-docker-image
+      - name: 'Fetch tools'
+        uses: actions/checkout@v3
+        with:
+          repository: clarin-eric/switchboard-tool-registry
+          ref: production
+          fetch-depth: '1'
+          path: switchboard-tool-registry
+      - name: Cypress UI test on Sauce Labs
+        uses: saucelabs/saucectl-run-action@v3
+        with:
+          working-directory: webui/test
   test-ui:
     name: "Test UI"
     needs: [build]
