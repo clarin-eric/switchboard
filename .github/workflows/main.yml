@@ -84,7 +84,7 @@ jobs:
         run: |
           docker load < switchboard-docker-image.tar
           cd test
-          SWITCHBOARD_TOOL_REGISTRY_DIR=${GITHUB_WORKSPACE}/switchboard-tool-registry docker-compose up --abort-on-container-exit tester
+          SWITCHBOARD_TOOL_REGISTRY_DIR=${GITHUB_WORKSPACE}/switchboard-tool-registry docker-compose up --abort-on-container-exit switchboard
         env:
           CI_VERSION: ${{ needs.prepare.outputs.version }}
       - uses: saucelabs/sauce-connect-action@v2
@@ -100,7 +100,7 @@ jobs:
 
   release:
     name: "Release"
-    needs: [prepare, build, test-ui]
+    needs: [prepare, build, sauce-test]
     # Run job for github releases and tag pushes (without github release)
     if: github.event_name == 'release' || needs.prepare.outputs.create_release == 'true'
     runs-on: ubuntu-22.04
