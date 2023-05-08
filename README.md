@@ -21,6 +21,18 @@ resource, language code, mimetype etc.) is encoded in the URL used to invoke the
 # Status
 The software is currently being developed and actively maintained.
 
+## Build status
+
+[![Sauce Test Status](https://saucelabs.com/buildstatus/switchboard)](https://app.saucelabs.com/u/switchboard)
+
+[![Build Status](https://app.saucelabs.com/browser-matrix/switchboard.svg)](https://saucelabs.com/u/switchboard)
+
+### Acknowledgment
+
+Automated cross-browser testing platform provided by [Sauce Labs][homepage] with ❤️ for open source 
+
+[homepage]: https://saucelabs.com
+
 # Documentation
 
 For more technical details, see the Switchboard specification in the Publications section. For a
