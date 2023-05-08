@@ -86,7 +86,8 @@ jobs:
           docker run -d -p 8080:8080 -v ${GITHUB_WORKSPACE}/switchboard-tool-registry:/switchboard-tool-registry:ro switchboard/switchboard:latest
         env:
           CI_VERSION: ${{ needs.prepare.outputs.version }}
-      - uses: saucelabs/sauce-connect-action@v2
+      - name: Launch Sauce connect tunnel proxy
+        uses: saucelabs/sauce-connect-action@v2
         with:
           username: ${{ secrets.SAUCE_USERNAME }}
           accessKey: ${{ secrets.SAUCE_ACCESS_KEY }}
