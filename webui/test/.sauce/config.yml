@@ -13,7 +13,7 @@ sauce:
     tags:
       - e2e
       - switchboard
-  build: Github Run $GITHUB_RUN_ID
+    build: Github Run $GITHUB_RUN_ID
 cypress:
   configFile: cypress.config.js
   version: 12.3.0
