@@ -80,6 +80,14 @@ jobs:
           ref: production
           fetch-depth: '1'
           path: switchboard-tool-registry
+          
+      - uses: saucelabs/sauce-connect-action@v2
+        with:
+          username: ${{ secrets.SAUCE_USERNAME }}
+          accessKey: ${{ secrets.SAUCE_ACCESS_KEY }}
+          tunnelName: github-action-tunnel
+          configFile: ${{ github.workspace }}/webui/test/sc-configuration/config.yml
+
       - name: Cypress UI test on Sauce Labs
         uses: saucelabs/saucectl-run-action@v3
         with:
