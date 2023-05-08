@@ -21,13 +21,30 @@ cypress:
   key: ""
   reporters: []
 suites:
-- name: "Cypress - windows 11 - chrome"
+- name: "Cypress - windows 11 - Chrome"
   browser: chrome
   platformName: "Windows 11"
+  screenResolution: "1440x900"
   config:
     testingType: e2e
     specPattern:
-    - 'cypress/**/*.*'
+    - 'cypress/e2e/**/*.*'
+- name: "Cypress - windows 11 - Firefox"
+  browser: firefox
+  platformName: "Windows 11"
+  screenResolution: "1440x900"
+  config:
+    testingType: e2e
+    specPattern:
+    - 'cypress/e2e/**/*.*'
+- name: "Cypress - windows 11 - Edge"
+  browser: microsoftedge
+  platformName: "Windows 11"
+  screenResolution: "1440x900"
+  config:
+    testingType: e2e
+    specPattern:
+    - 'cypress/e2e/**/*.*'
 rootDir: .
 artifacts:
   download:
