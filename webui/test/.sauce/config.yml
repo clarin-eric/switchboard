@@ -7,7 +7,7 @@ sauce:
   concurrency: 2
   sauceignore: .sauceignore
   tunnel:
-    name: github-action-tunnel
+    name: github-action-tunnel-$GITHUB_RUN_ID
     owner: switchboard
   metadata:
     tags:
