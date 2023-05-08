@@ -95,7 +95,7 @@ jobs:
       - name: Run Cypress UI test on Sauce Labs
         uses: saucelabs/saucectl-run-action@v3
         with:
-          working-directory: webui/test
+          working-directory: webui/test/cypress
   release:
     name: "Release"
     needs: [prepare, build, sauce-test]
