@@ -58,7 +58,7 @@ suites:
     specPattern:
     - 'cypress/e2e/**/*.*'
 - name: "Cypress - macOS 13 - Chrome"
-  browser: firefox
+  browser: chrome
   platformName: "macOS 13"
   screenResolution: "1440x900"
   shard: spec
