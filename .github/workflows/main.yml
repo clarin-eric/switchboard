@@ -80,43 +80,24 @@ jobs:
           ref: production
           fetch-depth: '1'
           path: switchboard-tool-registry
-
+      - name: Launch Switchboard server
+        run: |
+          docker load < switchboard-docker-image.tar
+          cd test
+          SWITCHBOARD_TOOL_REGISTRY_DIR=${GITHUB_WORKSPACE}/switchboard-tool-registry docker-compose up --abort-on-container-exit tester
+        env:
+          CI_VERSION: ${{ needs.prepare.outputs.version }}
       - uses: saucelabs/sauce-connect-action@v2
         with:
           username: ${{ secrets.SAUCE_USERNAME }}
           accessKey: ${{ secrets.SAUCE_ACCESS_KEY }}
           tunnelName: github-action-tunnel
           configFile: ${{ github.workspace }}/webui/test/sc-configuration/config.yml
-
-      - name: Cypress UI test on Sauce Labs
+      - name: Run Cypress UI test on Sauce Labs
         uses: saucelabs/saucectl-run-action@v3
         with:
           working-directory: webui/test
-  test-ui:
-    name: "Test UI"
-    needs: [build]
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: '1'
-      - name: Download docker image from build job
-        uses: actions/download-artifact@v3
-        with:
-          name: switchboard-docker-image
-      - name: 'Fetch tools'
-        uses: actions/checkout@v3
-        with:
-          repository: clarin-eric/switchboard-tool-registry
-          ref: production
-          fetch-depth: '1'
-          path: switchboard-tool-registry
-      - name: Test UI
-        run: |
-          docker load < switchboard-docker-image.tar
-          SWITCHBOARD_TOOL_REGISTRY_DIR=${GITHUB_WORKSPACE}/switchboard-tool-registry  test/run-end-to-end.sh
-        env:
-          CI_VERSION: ${{ needs.prepare.outputs.version }}
+
   release:
     name: "Release"
     needs: [prepare, build, test-ui]
