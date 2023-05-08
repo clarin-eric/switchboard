@@ -83,7 +83,7 @@ jobs:
       - name: Launch Switchboard server
         run: |
           docker load < switchboard-docker-image.tar
-          docker run -p 8080:8080 -v ${GITHUB_WORKSPACE}/switchboard-tool-registry:/switchboard-tool-registry:ro switchboard/switchboard:latest
+          docker run -d -p 8080:8080 -v ${GITHUB_WORKSPACE}/switchboard-tool-registry:/switchboard-tool-registry:ro switchboard/switchboard:latest
         env:
           CI_VERSION: ${{ needs.prepare.outputs.version }}
       - uses: saucelabs/sauce-connect-action@v2
