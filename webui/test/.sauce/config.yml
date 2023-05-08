@@ -48,9 +48,27 @@ suites:
     testingType: e2e
     specPattern:
     - 'cypress/e2e/**/*.*'
-- name: "Cypress - macOS 12 - Firefox"
+- name: "Cypress - macOS 13 - Firefox"
   browser: firefox
-  platformName: "macOS 12"
+  platformName: "macOS 13"
+  screenResolution: "1440x900"
+  shard: spec
+  config:
+    testingType: e2e
+    specPattern:
+    - 'cypress/e2e/**/*.*'
+- name: "Cypress - macOS 13 - Chrome"
+  browser: firefox
+  platformName: "macOS 13"
+  screenResolution: "1440x900"
+  shard: spec
+  config:
+    testingType: e2e
+    specPattern:
+    - 'cypress/e2e/**/*.*'
+- name: "Cypress - macOS 13 - Safari"
+  browser: safari
+  platformName: "macOS 13"
   screenResolution: "1440x900"
   shard: spec
   config:
