@@ -28,7 +28,7 @@ suites:
     testingType: e2e
     specPattern:
     - '**/*.*'
-rootDir: .
+rootDir: ./cypress
 artifacts:
   download:
     match:
