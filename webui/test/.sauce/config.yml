@@ -21,7 +21,7 @@ cypress:
   key: ""
   reporters: []
 suites:
-- name: "Cypress - Windows 11 - Chrome"
+- name: "Windows 11 - Chrome"
   browser: chrome
   platformName: "Windows 11"
   screenResolution: "1440x900"
@@ -30,7 +30,7 @@ suites:
     testingType: e2e
     specPattern:
     - 'cypress/e2e/**/*.*'
-- name: "Cypress - Windows 11 - Firefox"
+- name: "Windows 11 - Firefox"
   browser: firefox
   platformName: "Windows 11"
   screenResolution: "1440x900"
@@ -39,7 +39,7 @@ suites:
     testingType: e2e
     specPattern:
     - 'cypress/e2e/**/*.*'
-- name: "Cypress - Windows 11 - Edge"
+- name: "Windows 11 - Edge"
   browser: microsoftedge
   platformName: "Windows 11"
   screenResolution: "1440x900"
@@ -48,7 +48,7 @@ suites:
     testingType: e2e
     specPattern:
     - 'cypress/e2e/**/*.*'
-- name: "Cypress - macOS 13 - Chrome"
+- name: "macOS 13 - Chrome"
   browser: chrome
   platformName: "macOS 13"
   screenResolution: "1440x900"
@@ -57,7 +57,7 @@ suites:
     testingType: e2e
     specPattern:
     - 'cypress/e2e/**/*.*'
-- name: "Cypress - macOS 13 - Firefox"
+- name: "macOS 13 - Firefox"
   browser: firefox
   platformName: "macOS 13"
   screenResolution: "1440x900"
@@ -66,7 +66,7 @@ suites:
     testingType: e2e
     specPattern:
     - 'cypress/e2e/**/*.*'
-- name: "Cypress - macOS 13 - Safari"
+- name: "macOS 13 - Safari"
   browser: safari
   platformName: "macOS 13"
   screenResolution: "1440x900"
