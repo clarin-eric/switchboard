@@ -11,8 +11,6 @@ on:
 
 
 env:
-  SAUCE_USERNAME: ${{secrets.SAUCE_USERNAME}}
-  SAUCE_ACCESS_KEY: ${{secrets.SAUCE_ACCESS_KEY}}
   GITHUB_TOKEN: ${{ github.token }}
 
 jobs:
@@ -92,7 +90,7 @@ jobs:
           username: ${{ secrets.SAUCE_USERNAME }}
           accessKey: ${{ secrets.SAUCE_ACCESS_KEY }}
           tunnelName: github-action-tunnel
-          configFile: ${{ github.workspace }}/webui/test/sc-configuration/config.yml
+          region: us-west-1
       - name: Run Cypress UI test on SauceLabs
         uses: saucelabs/saucectl-run-action@v3
         with:
