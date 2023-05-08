@@ -21,7 +21,7 @@ cypress:
   key: ""
   reporters: []
 suites:
-- name: "Cypress - windows 11 - Chrome"
+- name: "Cypress - Windows 11 - Chrome"
   browser: chrome
   platformName: "Windows 11"
   screenResolution: "1440x900"
@@ -29,7 +29,7 @@ suites:
     testingType: e2e
     specPattern:
     - 'cypress/e2e/**/*.*'
-- name: "Cypress - windows 11 - Firefox"
+- name: "Cypress - Windows 11 - Firefox"
   browser: firefox
   platformName: "Windows 11"
   screenResolution: "1440x900"
@@ -37,7 +37,7 @@ suites:
     testingType: e2e
     specPattern:
     - 'cypress/e2e/**/*.*'
-- name: "Cypress - windows 11 - Edge"
+- name: "Cypress - Windows 11 - Edge"
   browser: microsoftedge
   platformName: "Windows 11"
   screenResolution: "1440x900"
