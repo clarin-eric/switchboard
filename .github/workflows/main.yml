@@ -90,6 +90,7 @@ jobs:
         with:
           username: ${{ secrets.SAUCE_USERNAME }}
           accessKey: ${{ secrets.SAUCE_ACCESS_KEY }}
+          tunnelName: github-action-tunnel-${{ GITHUB_RUN_ID }}
           configFile: ${{ github.workspace }}/webui/test/sc-configuration/config.yml
       - name: Run Cypress UI test on Sauce Labs
         uses: saucelabs/saucectl-run-action@v3
