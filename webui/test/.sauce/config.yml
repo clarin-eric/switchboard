@@ -1,1 +1,30 @@
-region: us-west-1
+apiVersion: v1
+kind: cypress
+defaults: {}
+showConsoleLog: true
+sauce:
+  region: us-west-1
+  concurrency: 2
+  sauceignore: .sauceignore
+cypress:
+  configFile: cypress.config.js
+  version: 12.3.0
+  record: true
+  key: ""
+  reporters: []
+suites:
+- name: cypress - windows 11 - chrome
+  browser: chrome
+  platformName: windows 11
+  config:
+    testingType: e2e
+    specPattern:
+    - '**/*.*'
+rootDir: .
+artifacts:
+  download:
+    match:
+    - '*'
+    when: always
+    directory: ./artifacts
+
