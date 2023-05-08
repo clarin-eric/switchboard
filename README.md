@@ -1,4 +1,7 @@
 [![CI](https://github.com/clarin-eric/switchboard/workflows/CI/badge.svg?branch=master)](https://github.com/clarin-eric/switchboard/actions?query=workflow%3ACI+branch%3Amaster)
+[![Sauce Test Status](https://saucelabs.com/buildstatus/switchboard)](https://app.saucelabs.com/u/switchboard)
+
+[![Build Status](https://app.saucelabs.com/browser-matrix/switchboard.svg)](https://saucelabs.com/u/switchboard)
 
 # switchboard
 Code Repository for the Language Resource Switchboard.
@@ -17,21 +20,8 @@ resource, language code, mimetype etc.) is encoded in the URL used to invoke the
  * beta version: https://beta-switchboard.clarin.eu/
  * alpha/development version: https://switchboard.clarin-dev.eu/switchboard-test/
 
-
 # Status
 The software is currently being developed and actively maintained.
-
-## Build status
-
-[![Sauce Test Status](https://saucelabs.com/buildstatus/switchboard)](https://app.saucelabs.com/u/switchboard)
-
-[![Build Status](https://app.saucelabs.com/browser-matrix/switchboard.svg)](https://saucelabs.com/u/switchboard)
-
-### Acknowledgment
-
-Automated cross-browser testing platform provided by [Sauce Labs][homepage] with ❤️ for open source 
-
-[homepage]: https://saucelabs.com
 
 # Documentation
 
@@ -61,3 +51,10 @@ See https://www.clarin.eu/sites/default/files/zinn-CLARIN2016_paper_26.pdf
 # Contact
 
 For questions and remarks, please contact switchboard@clarin.eu
+
+
+### Acknowledgment
+
+Automated cross-browser testing platform provided by [Sauce Labs][homepage] with ❤️ for open source 
+
+[homepage]: https://saucelabs.com
