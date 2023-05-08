@@ -9,13 +9,13 @@ sauce:
 cypress:
   configFile: cypress.config.js
   version: 12.3.0
-  record: true
+  record: false
   key: ""
   reporters: []
 suites:
 - name: cypress - windows 11 - chrome
   browser: chrome
-  platformName: windows 11
+  platformName: Windows 11
   config:
     testingType: e2e
     specPattern:
