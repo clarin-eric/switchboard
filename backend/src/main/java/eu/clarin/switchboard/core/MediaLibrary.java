@@ -17,7 +17,7 @@ import org.apache.http.impl.client.cache.CachingHttpClients;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.MediaType;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
