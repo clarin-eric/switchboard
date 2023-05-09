@@ -1,7 +1,7 @@
 [![CI](https://github.com/clarin-eric/switchboard/workflows/CI/badge.svg?branch=master)](https://github.com/clarin-eric/switchboard/actions?query=workflow%3ACI+branch%3Amaster)
-[![Sauce Test Status](https://saucelabs.com/buildstatus/switchboard?dummy=unused)](https://app.saucelabs.com/u/switchboard)
+[![Sauce Test Status](https://saucelabs.com/buildstatus/switchboard)](https://app.saucelabs.com/u/switchboard)
 
-[![Build Status](https://app.saucelabs.com/browser-matrix/switchboard.svg?dummy=unused)](https://saucelabs.com/u/switchboard)
+[![Build Status](https://app.saucelabs.com/browser-matrix/switchboard.svg)](https://saucelabs.com/u/switchboard)
 
 # switchboard
 Code Repository for the Language Resource Switchboard.
