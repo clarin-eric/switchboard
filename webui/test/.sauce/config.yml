@@ -1,0 +1,70 @@
+apiVersion: v1
+kind: cypress
+defaults: {}
+showConsoleLog: true
+sauce:
+  region: us-west-1
+  concurrency: 2
+  sauceignore: .sauceignore
+  tunnel:
+    name: github-action-tunnel-$GITHUB_RUN_ID
+    owner: switchboard
+  metadata:
+    tags:
+      - e2e
+      - switchboard
+    build: Github Run $GITHUB_RUN_ID
+cypress:
+  configFile: cypress.config.js
+  version: 12.3.0
+  record: false
+  key: ""
+  reporters: []
+suites:
+- name: "Windows 11 - Chrome"
+  browser: chrome
+  platformName: "Windows 11"
+  screenResolution: "1440x900"
+  config:
+    testingType: e2e
+    specPattern:
+    - 'cypress/e2e/**/*.*'
+- name: "Windows 11 - Firefox"
+  browser: firefox
+  platformName: "Windows 11"
+  screenResolution: "1440x900"
+  config:
+    testingType: e2e
+    specPattern:
+    - 'cypress/e2e/**/*.*'
+- name: "Windows 11 - Edge"
+  browser: microsoftedge
+  platformName: "Windows 11"
+  screenResolution: "1440x900"
+  config:
+    testingType: e2e
+    specPattern:
+    - 'cypress/e2e/**/*.*'
+- name: "macOS 13 - Chrome"
+  browser: chrome
+  platformName: "macOS 13"
+  screenResolution: "1440x900"
+  config:
+    testingType: e2e
+    specPattern:
+    - 'cypress/e2e/**/*.*'
+- name: "macOS 13 - Firefox"
+  browser: firefox
+  platformName: "macOS 13"
+  screenResolution: "1440x900"
+  config:
+    testingType: e2e
+    specPattern:
+    - 'cypress/e2e/**/*.*'
+rootDir: .
+artifacts:
+  download:
+    match:
+    - '*'
+    when: always
+    directory: ./artifacts

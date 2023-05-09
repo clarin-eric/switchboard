@@ -1,4 +1,4 @@
-name: CI
+name: Build+Test+Release pipeline
 
 on:
   push:
@@ -8,6 +8,10 @@ on:
   workflow_dispatch:
   schedule:
   - cron: "23 4 12 * *"
+
+env:
+  GITHUB_TOKEN: ${{ github.token }}
+
 jobs:
   prepare:
     name: "Prepare"
@@ -54,8 +58,8 @@ jobs:
           name: switchboard-docker-image
           path: switchboard-docker-image.tar
           retention-days: 1
-  test-ui:
-    name: "Test UI"
+  sauce-test:
+    name: "E2E test on SauceLabs"
     needs: [build]
     runs-on: ubuntu-20.04
     steps:
@@ -73,15 +77,28 @@ jobs:
           ref: production
           fetch-depth: '1'
           path: switchboard-tool-registry
-      - name: Test UI
+      - name: Launch Switchboard server
         run: |
           docker load < switchboard-docker-image.tar
-          SWITCHBOARD_TOOL_REGISTRY_DIR=${GITHUB_WORKSPACE}/switchboard-tool-registry  test/run-end-to-end.sh
+          docker run -d -p 8080:8080 -v ${GITHUB_WORKSPACE}/switchboard-tool-registry:/switchboard-tool-registry:ro switchboard/switchboard:latest
         env:
           CI_VERSION: ${{ needs.prepare.outputs.version }}
+      - name: Setup tunnel proxy to SauceLabs
+        uses: saucelabs/sauce-connect-action@v2
+        with:
+          username: ${{ secrets.SAUCE_USERNAME }}
+          accessKey: ${{ secrets.SAUCE_ACCESS_KEY }}
+          tunnelName: github-action-tunnel-${{ github.run_id }}
+          region: us-west-1
+      - name: Run Cypress UI test on SauceLabs
+        uses: saucelabs/saucectl-run-action@v3
+        with:
+          sauce-username: ${{ secrets.SAUCE_USERNAME }}
+          sauce-access-key: ${{ secrets.SAUCE_ACCESS_KEY }}
+          working-directory: webui/test
   release:
     name: "Release"
-    needs: [prepare, build, test-ui]
+    needs: [prepare, build, sauce-test]
     # Run job for github releases and tag pushes (without github release)
     if: github.event_name == 'release' || needs.prepare.outputs.create_release == 'true'
     runs-on: ubuntu-22.04
