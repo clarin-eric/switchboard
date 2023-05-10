@@ -16,7 +16,7 @@ sauce:
     build: Github Run $GITHUB_RUN_ID
 cypress:
   configFile: cypress.config.js
-  version: 12.3.0
+  version: 12.6.0
   record: false
   key: ""
   reporters: []
