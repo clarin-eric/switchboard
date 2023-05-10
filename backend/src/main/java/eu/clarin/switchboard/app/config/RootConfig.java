@@ -1,9 +1,9 @@
 package eu.clarin.switchboard.app.config;
 
-import io.dropwizard.Configuration;
+import io.dropwizard.core.Configuration;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 
 public class RootConfig extends Configuration {
     @Valid

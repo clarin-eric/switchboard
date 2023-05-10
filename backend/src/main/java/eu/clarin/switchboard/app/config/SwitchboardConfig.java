@@ -2,8 +2,8 @@ package eu.clarin.switchboard.app.config;
 
 import com.google.common.base.MoreObjects;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 
 public class SwitchboardConfig {
     @Valid

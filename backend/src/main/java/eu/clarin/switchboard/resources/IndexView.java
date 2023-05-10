@@ -3,7 +3,7 @@ package eu.clarin.switchboard.resources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.clarin.switchboard.app.SwitchboardApp;
-import io.dropwizard.views.View;
+import io.dropwizard.views.common.View;
 
 import java.util.List;
 import java.util.UUID;
