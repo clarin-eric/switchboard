@@ -25,6 +25,7 @@ suites:
   browser: chrome
   platformName: "Windows 11"
   screenResolution: "1440x900"
+  shard: spec
   config:
     testingType: e2e
     specPattern:
@@ -33,6 +34,7 @@ suites:
   browser: firefox
   platformName: "Windows 11"
   screenResolution: "1440x900"
+  shard: spec
   config:
     testingType: e2e
     specPattern:
@@ -41,6 +43,7 @@ suites:
   browser: microsoftedge
   platformName: "Windows 11"
   screenResolution: "1440x900"
+  shard: spec
   config:
     testingType: e2e
     specPattern:
@@ -49,6 +52,7 @@ suites:
   browser: chrome
   platformName: "macOS 13"
   screenResolution: "1440x900"
+  shard: spec
   config:
     testingType: e2e
     specPattern:
@@ -57,6 +61,7 @@ suites:
   browser: firefox
   platformName: "macOS 13"
   screenResolution: "1440x900"
+  shard: spec
   config:
     testingType: e2e
     specPattern:
