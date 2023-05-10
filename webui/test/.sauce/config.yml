@@ -4,7 +4,7 @@ defaults: {}
 showConsoleLog: true
 sauce:
   region: us-west-1
-  concurrency: 2
+  concurrency: 5
   sauceignore: .sauceignore
   tunnel:
     name: github-action-tunnel-$GITHUB_RUN_ID
@@ -68,6 +68,7 @@ suites:
     - 'cypress/e2e/**/*.*'
 rootDir: .
 artifacts:
+  cleanup: true
   download:
     match:
     - '*'
