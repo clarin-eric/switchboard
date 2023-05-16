@@ -47,7 +47,7 @@ run-uitests:
 	(cd webui/test && ../node_modules/cypress/bin/cypress run -q -c baseUrl=${SWITCHBOARD_URL})
 
 run-interactive-uitests:
-	(cd webui/test && ../node_modules/cypress/bin/cypress run --headed --no-exit -c baseUrl=${SWITCHBOARD_URL})
+	(cd webui/test && ../node_modules/cypress/bin/cypress run --headed -c baseUrl=${SWITCHBOARD_URL})
 
 dependencies:
 	(cd webui && npm install -g npm@${NPM_VERSION} && npm install)
