@@ -43,7 +43,7 @@ public class LinkMetadataTest {
         assertEquals("LICENCE", info.filename);
         info.response.close();
 
-        info = LinkMetadata.getLinkData(cachingClient, "https://b2drop.eudat.eu/s/ekDJNz7fWw69w5Y");
+        info = LinkMetadata.getLinkData(cachingClient, "https://b2drop.eudat.eu/s/D3j9TP47Y7iyf32");
         assertEquals("sherlock-short.txt", info.filename);
         info.response.close();
 
