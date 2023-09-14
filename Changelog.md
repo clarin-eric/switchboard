@@ -1,6 +1,6 @@
 # Changelog
 
-## [2.4.2] - 2022-1?-??
+## [2.4.2] - 2023-01-27
     - Added support for pre-flight API
 	- Updated contributors and license information on About page
 	- Upgraded to openJDK 17
