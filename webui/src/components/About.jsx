@@ -79,7 +79,7 @@ export default class About extends React.Component {
                 </ul>
 
                 <hr />
-                <p> We value your feedback! For any questions or suggestions, please <a href={ this.props.contact }>contact the Switchboard Team</a>. </p>
+                <p> We value your feedback! For any questions or suggestions, please <a href={'mailto:'+this.props.contact}>contact the Switchboard Team</a>. </p>
             </React.Fragment>
         );
     }
