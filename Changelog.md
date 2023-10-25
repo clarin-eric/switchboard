@@ -1,5 +1,49 @@
 # Changelog
 
+## [2.4.3] - 2023-10-25
+    * Fix contact link on About page
+    * Upgraded from JDK to JRE 17.0.9
+    * Upgraded backend dependencies:
+      * dropwizard to 4.0.2
+      * commons-compress to 1.24.0
+    * Upgraded WebUI runtime dependencies:
+       * axios to 1.5.1
+       * core-js to 3.33.1
+       * react-markdown to 9.0.0
+       * react-redux to 8.1.3
+       * react-router-dom to 6.17.0
+       * react-select to 5.7.7
+       * redux to 4.2.1
+       * remark-gfm to 4.0.0
+    *  Development project changes:
+       * Add UI testing in CI via SauceLabs
+       * Upgrade CLARIN node build image (registry.gitlab.com/clarin-eric/docker-alpine-clrs-build_env) to [2.4.2](https://gitlab.com/CLARIN-ERIC/docker-alpine-clrs-build_env/-/releases/2.4.2) 
+       * Upgraded build Java docker base image: docker-alpine-supervisor-java-base to [openjdk17_jre-1.3.9](https://gitlab.com/CLARIN-ERIC/docker-alpine-supervisor-java-base/-/releases/openjdk17_jre-1.3.9)
+       * Upgraded build UI test base image: cypress/browsers to `node-20.9.0-chrome-118.0.5993.88-1-ff-118.0.2-edge-118.0.2088.46-1`
+       * Fix warnings in github actions
+       * Upgraded npm to 10.2.1
+       * Upgraded WebUI development dependencies: 
+         * babel/core to 7.23.2
+         * babel/preset-env to 7.23.2
+         * babel/preset-react to 7.22.15
+         * babel-loader to 9.1.3
+         * browserslist to 4.22.1
+         * css-loader to 6.8.1
+         * cypress to 13.3.2
+         * eslint to 8.52.0
+         * node-sass to 9.0.0
+         * sass-loader to 13.2.2
+         * style-loader to 3.3.3
+         * stylelint to 15.11.0
+         * stylelint-config-sass-guidelines to 10.0.0
+         * stylelint-config-standard to 34.0.0
+         * terser-webpack-plugin to 5.3.9
+         * webpack to 5.89.0
+         * webpack-bundle-analyzer to 4.9.1
+         * webpack-cli to 5.1.4
+         * webpack-dev-server to 4.15.1
+         * webpack-merge to 5.10.0
+
 ## [2.4.2] - 2023-01-27
     - Added support for pre-flight API
 	- Updated contributors and license information on About page
