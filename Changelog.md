@@ -1,13 +1,13 @@
 # Changelog
 
-## [2.4.3] - 2023-10-25
+## [2.4.3] - 2023-11-01
     - Fix contact link on About page
     - Upgraded from JDK to JRE 17.0.9
     - Upgraded backend dependencies:
       - dropwizard to 4.0.2
       - commons-compress to 1.24.0
     - Upgraded WebUI runtime dependencies:
-       - axios to 1.5.1
+       - axios to 1.6.0
        - core-js to 3.33.1
        - react-markdown to 9.0.0
        - react-redux to 8.1.3
