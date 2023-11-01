@@ -32,6 +32,7 @@ WORKDIR /build
 COPY ./.git                     ./.git
 COPY ./backend                  ./backend
 COPY --from=webui_builder /build/backend/src/main/resources/webui/bundle.js* ./backend/src/main/resources/webui/
+COPY ./profiler /root/.m2/repository/eu/clarin/switchboard/profiler
 
 WORKDIR /build/backend
 RUN mvn versions:set -DnewVersion=${SWITCHBOARD_VERSION}
