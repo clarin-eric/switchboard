@@ -7,39 +7,39 @@
     <snapshot>
       <localCopy>true</localCopy>
     </snapshot>
-    <lastUpdated>20231101142501</lastUpdated>
+    <lastUpdated>20231101154028</lastUpdated>
     <snapshotVersions>
       <snapshotVersion>
         <classifier>javadoc</classifier>
         <extension>jar.asc</extension>
         <value>1.0.12-SNAPSHOT</value>
-        <updated>20231101142501</updated>
+        <updated>20231101154028</updated>
       </snapshotVersion>
       <snapshotVersion>
         <extension>pom.asc</extension>
         <value>1.0.12-SNAPSHOT</value>
-        <updated>20231101142501</updated>
+        <updated>20231101154028</updated>
       </snapshotVersion>
       <snapshotVersion>
         <extension>jar.asc</extension>
         <value>1.0.12-SNAPSHOT</value>
-        <updated>20231101142501</updated>
+        <updated>20231101154028</updated>
       </snapshotVersion>
       <snapshotVersion>
         <classifier>javadoc</classifier>
         <extension>jar</extension>
         <value>1.0.12-SNAPSHOT</value>
-        <updated>20231101142501</updated>
+        <updated>20231101154028</updated>
       </snapshotVersion>
       <snapshotVersion>
         <extension>jar</extension>
         <value>1.0.12-SNAPSHOT</value>
-        <updated>20231101142501</updated>
+        <updated>20231101154028</updated>
       </snapshotVersion>
       <snapshotVersion>
         <extension>pom</extension>
         <value>1.0.12-SNAPSHOT</value>
-        <updated>20231101142501</updated>
+        <updated>20231101154028</updated>
       </snapshotVersion>
     </snapshotVersions>
   </versioning>
