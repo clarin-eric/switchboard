@@ -57,7 +57,7 @@
         <dependency>
             <groupId>eu.clarin.switchboard</groupId>
             <artifactId>profiler</artifactId>
-            <version>1.0.12-SNAPSHOT</version>
+            <version>1.0.14</version>
         </dependency>
 
         <dependency>
