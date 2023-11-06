@@ -1,5 +1,8 @@
 # Changelog
 
+## [2.4.4] - 202X-XX-XX
+    - 
+
 ## [2.4.3] - 2023-11-01
     - Fix contact link on About page
     - Upgraded from JDK to JRE 17.0.9
