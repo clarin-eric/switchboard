@@ -6,3 +6,4 @@ build/
 bundle.js*
 webui/test/cypress/videos
 webui/test/cypress/screenshots
+webui/.idea/
