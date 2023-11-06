@@ -4,6 +4,7 @@
     - Fix contact link on About page
     - Upgraded from JDK to JRE 17.0.9
     - Upgraded backend dependencies:
+      - CLARIN profiler to 1.0.14
       - dropwizard to 4.0.2
       - commons-compress to 1.24.0
     - Upgraded WebUI runtime dependencies:
@@ -17,11 +18,11 @@
        - remark-gfm to 4.0.0
     -  Development project changes:
        - Add UI testing in CI via SauceLabs
-       - Upgrade CLARIN node build image (registry.gitlab.com/clarin-eric/docker-alpine-clrs-build_env) to [2.4.2](https://gitlab.com/CLARIN-ERIC/docker-alpine-clrs-build_env/-/releases/2.4.2) 
-       - Upgraded build Java docker base image: docker-alpine-supervisor-java-base to [openjdk17_jre-1.3.9](https://gitlab.com/CLARIN-ERIC/docker-alpine-supervisor-java-base/-/releases/openjdk17_jre-1.3.9)
+       - Upgrade CLARIN node build image (registry.gitlab.com/clarin-eric/docker-alpine-clrs-build_env) to [2.4.3](https://gitlab.com/CLARIN-ERIC/docker-alpine-clrs-build_env/-/releases/2.4.3) 
+       - Upgraded build Java docker base image: docker-alpine-supervisor-java-base to [openjdk17_jre-1.3.10](https://gitlab.com/CLARIN-ERIC/docker-alpine-supervisor-java-base/-/releases/openjdk17_jre-1.3.10)
        - Upgraded build UI test base image: cypress/browsers to [node-20.9.0-chrome-118.0.5993.88-1-ff-118.0.2-edge-118.0.2088.46-1](https://hub.docker.com/layers/cypress/browsers/node-20.9.0-chrome-118.0.5993.88-1-ff-118.0.2-edge-118.0.2088.46-1/images/sha256-c2f9b80afa112a99157b3f4bec793c7651bb9bdc292eb2a792e1ed4512763304?context=explore)
        - Fix warnings in github actions
-       - Upgraded npm to 10.2.1
+       - Upgraded npm to 10.2.3
        - Upgraded WebUI development dependencies: 
          - babel/core to 7.23.2
          - babel/preset-env to 7.23.2
