@@ -265,11 +265,11 @@ class ToolCard extends React.Component {
         const Highlighter = this.props.highlighter;
         const isManual = tool.webApplication && tool.webApplication.manualParameters;
         const manualHelpText = "The Switchboard cannot automatically send the data to this web application. Please download the resources locally and upload them manually in the web applications' environment";
-        return <div style={{display:'flex'}}>
+        return <div style={{display:'flex'}} onClick={toggle.bind(this, 'showDetails')}>
             <div className="img-holder hidden-xs"><img src={imgSrc}/></div>
             <Indicator className="tool-chevron" title={"menu-" + (this.state.showDetails ? "down":"right")}/>
             <div className="toolheader"
-                onClick={toggle.bind(this, 'showDetails')} title={isManual ? manualHelpText : ""}>
+                title={isManual ? manualHelpText : ""}>
                 <div className="toolname">
                     <span style={{fontSize:"120%"}}><Highlighter text={tool.name}/></span>
                 </div>
