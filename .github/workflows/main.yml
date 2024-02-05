@@ -93,7 +93,7 @@ jobs:
         env:
           USERNAME: ${{ secrets.SAUCE_USERNAME }}
           SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
-          RUN_ID: github-action-tunnel-${{ github.run_id }}
+          RUN_ID: ${{ github.run_id }}
       - name: Run Cypress UI test on SauceLabs
         uses: saucelabs/saucectl-run-action@v4
         with:
