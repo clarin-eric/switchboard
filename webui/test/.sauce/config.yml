@@ -59,7 +59,7 @@ suites:
     testingType: e2e
     specPattern:
     - 'cypress/e2e/**/*.*'
-rootDir: .
+rootDir: ./
 artifacts:
   cleanup: true
   download:
