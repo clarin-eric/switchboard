@@ -90,11 +90,6 @@ jobs:
           accessKey: ${{ secrets.SAUCE_ACCESS_KEY }}
           tunnelName: github-action-tunnel-${{ github.run_id }}
           region: us-west-1
-      - uses: actions/upload-artifact@v4
-        if: ${{ failure() }}
-        with:
-          name: sauce-connect-log
-          path: ${{ env.SAUCE_CONNECT_DIR_IN_HOST }}/sauce-connect.log
       - name: Run Cypress UI test on SauceLabs
         uses: saucelabs/saucectl-run-action@v4
         with:

@@ -15,8 +15,8 @@ sauce:
       - switchboard
     build: Github Run $GITHUB_RUN_ID
 cypress:
-  configFile: cypress.config.js
-  version: 12.17.4
+  configFile: "cypress.config.js"
+  version: 13.3.6
   record: false
 suites:
 - name: "Windows 11 - Chrome"
