@@ -11,6 +11,7 @@ on:
 
 env:
   GITHUB_TOKEN: ${{ github.token }}
+  SAUCE_CONNECT_VERSION: '4.9.2'
 
 jobs:
   prepare:
@@ -85,9 +86,9 @@ jobs:
           CI_VERSION: ${{ needs.prepare.outputs.version }}
       - name: Setup tunnel proxy to SauceLabs
         run: |
-          curl https://saucelabs.com/downloads/sc-4.9.2-linux.tar.gz | tar -xz # Install sauce connect
-          chmod 777 -R ./sc-4.9.2-linux
-          PATH=./sc-4.9.2-linux/bin:${PATH}
+          curl https://saucelabs.com/downloads/sc-${SAUCE_CONNECT_VERSION}-linux.tar.gz | tar -xz # Install sauce connect
+          chmod 777 -R ./sc-${SAUCE_CONNECT_VERSION}-linux
+          PATH=./sc-${SAUCE_CONNECT_VERSION}-linux/bin:${PATH}
           sc -u "${USERNAME}" -k "${SAUCE_ACCESS_KEY}" -i "github-action-tunnel-${RUN_ID}" --readyfile /tmp/sc.ready --region us-west-1 &
           until [ -f /tmp/sc.ready ]; do sleep 1; done
           echo "SC ready"
