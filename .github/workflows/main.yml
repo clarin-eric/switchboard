@@ -101,6 +101,8 @@ jobs:
           sauce-access-key: ${{ secrets.SAUCE_ACCESS_KEY }}
           working-directory: webui/test
           showConsoleLog: true
+        env:
+          CYPRESS_BASE_URL: "http://127.0.0.1:8080"
   release:
     name: "Release"
     needs: [prepare, build, sauce-test]
