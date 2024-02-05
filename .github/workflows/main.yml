@@ -89,7 +89,7 @@ jobs:
           chmod 777 -R ./sc-4.9.2-linux
           PATH=./sc-4.9.2-linux/bin:${PATH}
           sc -u "${USERNAME}" -k "${SAUCE_ACCESS_KEY}" -i "github-action-tunnel-${RUN_ID}" -c webui/test/.sauce/config.yml --region us-west-1 &
-          sleep 20
+          sleep 200
         env:
           USERNAME: ${{ secrets.SAUCE_USERNAME }}
           SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
@@ -101,8 +101,6 @@ jobs:
           sauce-access-key: ${{ secrets.SAUCE_ACCESS_KEY }}
           working-directory: webui/test
           showConsoleLog: true
-        env:
-          CYPRESS_BASE_URL: "http://127.0.0.1:8080"
   release:
     name: "Release"
     needs: [prepare, build, sauce-test]
