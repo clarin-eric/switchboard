@@ -89,7 +89,7 @@ jobs:
           chmod 777 -R ./sc-4.9.2-linux
           PATH=./sc-4.9.2-linux/bin:${PATH}
           sc -u "${USERNAME}" -k "${SAUCE_ACCESS_KEY}" -i "github-action-tunnel-${RUN_ID}" --region us-west-1 &
-          wait 20
+          sleep 20
         env:
           USERNAME: ${{ secrets.SAUCE_USERNAME }}
           SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
