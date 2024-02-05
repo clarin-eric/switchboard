@@ -91,7 +91,7 @@ jobs:
           tunnelName: github-action-tunnel-${{ github.run_id }}
           region: us-west-1
       - name: Run Cypress UI test on SauceLabs
-        uses: saucelabs/saucectl-run-action@v3
+        uses: saucelabs/saucectl-run-action@v4
         with:
           sauce-username: ${{ secrets.SAUCE_USERNAME }}
           sauce-access-key: ${{ secrets.SAUCE_ACCESS_KEY }}
