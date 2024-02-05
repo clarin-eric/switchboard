@@ -88,7 +88,7 @@ jobs:
           curl https://saucelabs.com/downloads/sc-4.9.2-linux.tar.gz | tar -xz # Install sauce connect
           chmod 777 -R ./sc-4.9.2-linux
           PATH=./sc-4.9.2-linux/bin:${PATH}
-          sc -u "${USERNAME}" -k "${SAUCE_ACCESS_KEY}" -i "github-action-tunnel-${RUN_ID}" --region us-west-1 &
+          sc -u "${USERNAME}" -k "${SAUCE_ACCESS_KEY}" -i "github-action-tunnel-${RUN_ID}" -c webui/test/.sauce/config.yml --region us-west-1 &
           sleep 20
         env:
           USERNAME: ${{ secrets.SAUCE_USERNAME }}
