@@ -84,12 +84,11 @@ jobs:
         env:
           CI_VERSION: ${{ needs.prepare.outputs.version }}
       - name: Setup tunnel proxy to SauceLabs
-        uses: saucelabs/sauce-connect-action@v2
-        with:
-          username: ${{ secrets.SAUCE_USERNAME }}
-          accessKey: ${{ secrets.SAUCE_ACCESS_KEY }}
-          tunnelName: github-action-tunnel-${{ github.run_id }}
-          region: us-west-1
+        run: |
+          curl https://saucelabs.com/downloads/sc-4.9.2-linux.tar.gz | tar -xz # Install sauce connect
+          chmod 777 -R ./sc-4.9.2-linux
+          PATH=./sc-4.9.2-linux/bin:${PATH}
+          sc -u "${{ secrets.SAUCE_USERNAME }} -k ${{ secrets.SAUCE_ACCESS_KEY }} -i github-action-tunnel-${{ github.run_id }} &
       - name: Run Cypress UI test on SauceLabs
         uses: saucelabs/saucectl-run-action@v4
         with:
