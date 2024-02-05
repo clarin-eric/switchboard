@@ -90,7 +90,7 @@ jobs:
           PATH=./sc-4.9.2-linux/bin:${PATH}
           sc -u "${USERNAME}" -k "${SAUCE_ACCESS_KEY}" -i "github-action-tunnel-${RUN_ID}" -c webui/test/.sauce/config.yml --region us-west-1 &
           sleep 10
-          npm -i cypress-file-upload
+          npm i cypress-file-upload
         env:
           USERNAME: ${{ secrets.SAUCE_USERNAME }}
           SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
