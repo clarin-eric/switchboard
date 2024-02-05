@@ -100,7 +100,7 @@ jobs:
           sauce-username: ${{ secrets.SAUCE_USERNAME }}
           sauce-access-key: ${{ secrets.SAUCE_ACCESS_KEY }}
           working-directory: webui/test
-          show-console-log: true
+          showConsoleLog: true
   release:
     name: "Release"
     needs: [prepare, build, sauce-test]
