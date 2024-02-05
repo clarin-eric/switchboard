@@ -1,18 +1,3 @@
-beforeEach(() => {
-  if (!window.navigator || !navigator.serviceWorker) {
-    return null;
-  }
-  const cypressPromise = new Cypress.Promise((resolve, reject) => {
-    navigator.serviceWorker.getRegistrations().then((registrations) => {
-      if(!registrations.length) resolve();
-      Promise.all(registrations).then(() => {
-        resolve();
-      });
-    });
-  });
-  cy.wrap('Unregister service workers').then(() => cypressPromise)
-});
-
 describe('Frontpage', () => {
     it('renders all elements', () => {
         cy.visit('/');
