@@ -33,7 +33,7 @@ describe('Uploads', () => {
         cy.contains('a', 'Upload files or text').should('be.visible').click();
 
         const textFile = 'txt-sherlock-short.txt';
-        cy.get('.dropzone > input').attachFile(textFile);
+        cy.get('.dropzone > input').selectFile('cypress/fixtures/'.concat(textFile), {force: true});
 
         cy.get('.tool.match').should('be.visible');
         cy.get('.value.namesize').contains('a', textFile).should('be.visible');

@@ -23,7 +23,7 @@ describe('Resource content and archives', () => {
 
         cy.contains('a', 'Upload files or text').click();
 
-        cy.get('.dropzone > input').attachFile(zipfile);
+        cy.get('.dropzone > input').selectFile('cypress/fixtures/'.concat(zipfile), {force: true});
 
         cy.get('.results').should('be.visible');
         cy.contains('a', "Show content").click();
