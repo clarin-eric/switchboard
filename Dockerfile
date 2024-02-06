@@ -41,7 +41,7 @@ RUN mvn -q clean package
 ###############################################################################
 
 # now setup running environment
-FROM registry.gitlab.com/clarin-eric/docker-alpine-supervisor-java-base:openjdk17_jre-1.3.10
+FROM registry.gitlab.com/clarin-eric/docker-alpine-supervisor-java-base:openjdk17_jre-1.3.14
 
 COPY --from=backend_builder /build/backend/target/appassembler /switchboard/
 
