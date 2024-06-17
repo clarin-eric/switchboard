@@ -37,6 +37,7 @@ suites:
     - 'cypress/e2e/**/*.*'
 - name: "Windows 11 - Edge"
   browser: microsoftedge
+  browserVersion: "125"
   platformName: "Windows 11"
   screenResolution: "1440x900"
   config:
