@@ -15,7 +15,7 @@
         "babel-register": "^6.26.0",
         "browserslist": "^4.22.3",
         "css-loader": "^6.10.0",
-        "cypress": "^13.6.4",
+        "cypress": "^13.10.0",
         "eslint": "^8.56.0",
         "glob-parent": ">=6.0.2",
         "sass": "^1.70.0",
