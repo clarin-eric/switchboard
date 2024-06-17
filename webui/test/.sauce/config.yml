@@ -16,7 +16,7 @@ sauce:
     build: Github Run $GITHUB_RUN_ID
 cypress:
   configFile: "cypress.config.js"
-  version: 13.6.3
+  version: 13.10.0
   record: false
 suites:
 - name: "Windows 11 - Chrome"
@@ -37,7 +37,6 @@ suites:
     - 'cypress/e2e/**/*.*'
 - name: "Windows 11 - Edge"
   browser: microsoftedge
-  browserVersion: "119"
   platformName: "Windows 11"
   screenResolution: "1440x900"
   config:
