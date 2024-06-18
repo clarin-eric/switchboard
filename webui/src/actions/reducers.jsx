@@ -102,7 +102,7 @@ function resourceListReducer(state = SI([]), action) {
                     ret = ret.set(index, SI.without(r, ['sourceID', 'sourceEventName']));
                 }
             }
-            return SI(reorderAndIndent(ret));
+            return SI(reorderAndIndentReducer(ret));
         }
 
         case actionType.RESOURCE_UPDATE: {
@@ -114,12 +114,12 @@ function resourceListReducer(state = SI([]), action) {
             } else {
                 ret = ret.set(ret.length, newres);
             }
-            return SI(reorderAndIndent(ret));
+            return SI(reorderAndIndentReducer(ret));
         }
 
         case actionType.RESOURCE_REMOVE: {
             let ret = state.filter(r => !action.data.has(r.id));
-            return SI(reorderAndIndent(ret));
+            return SI(reorderAndIndentReducer(ret));
         }
     }
     return state;
