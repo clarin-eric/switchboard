@@ -35,14 +35,14 @@ module.exports = {
             watch: true,
         },
         historyApiFallback: true,
-        proxy: {
-            '/api/**': {target :'http://localhost:8080', changeOrigin: true, secure: false},
-            '/': {target :'http://localhost:8080', changeOrigin: true, secure: false},
-            '/css': {target :'http://localhost:8080', changeOrigin: true, secure: false},
-            '/fonts': {target :'http://localhost:8080', changeOrigin: true, secure: false},
-            '/webfonts': {target :'http://localhost:8080', changeOrigin: true, secure: false},
-            '/images': {target :'http://localhost:8080', changeOrigin: true, secure: false},
-            '/popup': {target :'http://localhost:8080', changeOrigin: true, secure: false},
-        }
+        proxy: [
+            {context: ['/api/**'], target :'http://localhost:8080', changeOrigin: true, secure: false},
+            {context: ['/'], target :'http://localhost:8080', changeOrigin: true, secure: false},
+            {context: ['/css'], target :'http://localhost:8080', changeOrigin: true, secure: false},
+            {context: ['/fonts'], target :'http://localhost:8080', changeOrigin: true, secure: false},
+            {context: ['/webfonts'], target :'http://localhost:8080', changeOrigin: true, secure: false},
+            {context: ['/images'], target :'http://localhost:8080', changeOrigin: true, secure: false},
+            {context: ['/popup'], target :'http://localhost:8080', changeOrigin: true, secure: false},
+        ]
     }
 };
