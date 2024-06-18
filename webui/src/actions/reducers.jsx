@@ -1,8 +1,7 @@
 import SI from 'seamless-immutable';
-import { combineReducers } from 'redux';
 import { actionType } from '../constants';
 
-function apiinfo(state = SI({}), action) {
+function apiinfoReducer(state = SI({}), action) {
     switch (action.type) {
         case actionType.APIINFO_FETCH_SUCCESS:
             return SI(action.data);
@@ -11,7 +10,7 @@ function apiinfo(state = SI({}), action) {
     }
 }
 
-function mode(state = null, action) {
+function modeReducer(state = null, action) {
     switch (action.type) {
         case actionType.MODE:
             return SI(action.mode);
@@ -20,7 +19,7 @@ function mode(state = null, action) {
     }
 }
 
-function mediatypes(state = SI([]), action) {
+function mediatypesReducer(state = SI([]), action) {
     switch (action.type) {
         case actionType.MEDIATYPES_FETCH_SUCCESS:
             return SI(action.data);
@@ -29,7 +28,7 @@ function mediatypes(state = SI([]), action) {
     }
 }
 
-function languages(state = SI([]), action) {
+function languagesReducer(state = SI([]), action) {
     switch (action.type) {
         case actionType.LANGUAGES_FETCH_SUCCESS:
             return SI(action.data);
@@ -38,7 +37,7 @@ function languages(state = SI([]), action) {
     }
 }
 
-function allTools(state = SI([]), action) {
+function allToolsReducer(state = SI([]), action) {
     switch (action.type) {
         case actionType.ALL_TOOLS_FETCH_SUCCESS:
             return SI(action.data);
@@ -47,7 +46,7 @@ function allTools(state = SI([]), action) {
     }
 }
 
-function reorderAndIndent(resources) {
+function reorderAndIndentReducer(resources) {
     resources = SI.asMutable(resources);
     resources = resources.map(r => SI.asMutable(r));
 
@@ -89,7 +88,7 @@ function reorderAndIndent(resources) {
     return neworder;
 }
 
-function resourceList(state = SI([]), action) {
+function resourceListReducer(state = SI([]), action) {
     switch (action.type) {
         case actionType.RESOURCE_CLEAR_ALL: {
             return SI([]);
@@ -126,7 +125,7 @@ function resourceList(state = SI([]), action) {
     return state;
 }
 
-function matchingTools(state = SI({}), action) {
+function matchingToolsReducer(state = SI({}), action) {
     switch (action.type) {
         case actionType.MATCHING_TOOLS_FETCH_START:
             return SI({tools: null});
@@ -145,7 +144,7 @@ function matchingTools(state = SI({}), action) {
     }
 }
 
-function alerts(state = SI([]), action) {
+function alertsReducer(state = SI([]), action) {
     switch (action.type) {
         case actionType.ERROR:
             let alert = {
@@ -167,15 +166,15 @@ function alerts(state = SI([]), action) {
     }
 }
 
-const rootReducer = combineReducers({
-    mode,
-    apiinfo,
-    mediatypes,
-    languages,
-    allTools,
-    resourceList,
-    matchingTools,
-    alerts
-});
+const rootReducer = {
+        mode: modeReducer,
+        apiinfo: apiinfoReducer,
+        mediatypes: mediatypesReducer,
+        languages: languagesReducer,
+        allTools: allToolsReducer,
+        resourceList: resourceListReducer,
+        matchingTools: matchingToolsReducer,
+        alerts: alertsReducer
+    };
 
 export default rootReducer;

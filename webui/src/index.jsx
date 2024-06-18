@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {compose, applyMiddleware, createStore} from 'redux';
+import {configureStore} from '@reduxjs/toolkit';
 import {connect, Provider} from 'react-redux';
-import thunk from 'redux-thunk';
-import {BrowserRouter, Route, Routes, Link} from 'react-router-dom';
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import Modal from 'react-modal';
 
 import './style.scss';
@@ -28,17 +27,15 @@ if (!window.origin) {
     window.origin = loc.protocol + "//" + loc.hostname + (loc.port ? ':' + loc.port: '');
 }
 
+const store = configureStore({
+    reducer: rootReducers,
+    middleware: getDefaultMiddleware => {
+        const middleware = getDefaultMiddleware();
 
-function middleware() {
-    if (process.env.NODE_ENV === 'production') {
-        return applyMiddleware(thunk);
-    }
-    const rde = window.__REDUX_DEVTOOLS_EXTENSION__;
-    const devTools = (rde && rde()) || (f => f);
-    return compose(applyMiddleware(thunk), devTools);
-}
-const store = createStore(rootReducers, middleware());
-
+        return middleware;
+    },
+    devTools: process.env.NODE_ENV !== 'production'
+});
 
 Modal.setAppElement("#reactapp");
 

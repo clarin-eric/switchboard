@@ -1,6 +1,5 @@
 import React from 'react';
 
-import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux';
 import {withRouter} from '../reactHelpers';
 import {uploadFile, uploadLink, clearResources} from '../actions/actions';
