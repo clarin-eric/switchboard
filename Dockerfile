@@ -26,7 +26,7 @@ ARG version
 ARG MAVEN_VERSION=3.9.5-r0
 ENV SWITCHBOARD_VERSION=$version
 
-RUN apk add maven=${MAVEN_VERSION} openjdk21-jdk=${JAVA_ALPINE_VERSION} openjdk21-jmods=${JAVA_ALPINE_VERSION}
+RUN apk add --no-cache maven=${MAVEN_VERSION}
 
 WORKDIR /build
 COPY ./.git                     ./.git
