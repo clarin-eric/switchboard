@@ -59,6 +59,12 @@
             <artifactId>profiler</artifactId>
             <version>1.0.14</version>
         </dependency>
+        <!-- override vulnerable profiler sub-dependency -->
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk18on</artifactId>
+            <version>1.78.1</version>
+        </dependency>
 
         <dependency>
             <groupId>org.apache.commons</groupId>
