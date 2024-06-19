@@ -2,21 +2,21 @@ package eu.clarin.switchboard.core;
 
 import eu.clarin.switchboard.profiler.api.Profile;
 import eu.clarin.switchboard.tool.Tool;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static java.util.Arrays.asList;
 
 public class ToolRegistryTest {
     ToolRegistry toolRegistry;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         toolRegistry = new ToolRegistry("./src/test/resources/registry");
     }

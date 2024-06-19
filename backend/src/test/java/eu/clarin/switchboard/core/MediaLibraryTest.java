@@ -8,8 +8,8 @@ import eu.clarin.switchboard.core.xc.StorageException;
 import eu.clarin.switchboard.core.xc.StoragePolicyException;
 import eu.clarin.switchboard.profiler.DefaultProfiler;
 import eu.clarin.switchboard.profiler.api.ProfilingException;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -18,6 +18,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collections;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public class MediaLibraryTest {
     DataStoreConfig dataStoreConfig;
     DefaultStoragePolicy storagePolicy;
@@ -25,7 +27,7 @@ public class MediaLibraryTest {
     DefaultProfiler profiler;
     UrlResolverConfig urlResolver;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         Path dataStoreRoot = Files.createTempDirectory("switchboard-test-");
         String maxSize = "1M";
@@ -57,31 +59,36 @@ public class MediaLibraryTest {
         assert (true);
     }
 
-    @Test(expected = StoragePolicyException.class)
+    @Test
     public void tooManyFiles() throws IOException, StoragePolicyException, ProfilingException, StorageException {
-        MediaLibrary mediaLibrary = new MediaLibrary(
-                dataStore, profiler, profiler.getTextExtractor(),
-                storagePolicy, urlResolver, dataStoreConfig);
-        mediaLibrary.addFile("test", new ByteArrayInputStream("test".getBytes(StandardCharsets.UTF_8)), null);
-        mediaLibrary.addFile("test", new ByteArrayInputStream("test".getBytes(StandardCharsets.UTF_8)), null);
-        mediaLibrary.addFile("test", new ByteArrayInputStream("test".getBytes(StandardCharsets.UTF_8)), null);
-        assert (false); // will not get here
+        assertThrows(StoragePolicyException.class, () -> {
+            MediaLibrary mediaLibrary = new MediaLibrary(
+                    dataStore, profiler, profiler.getTextExtractor(),
+                    storagePolicy, urlResolver, dataStoreConfig);
+            mediaLibrary.addFile("test", new ByteArrayInputStream("test".getBytes(StandardCharsets.UTF_8)), null);
+            mediaLibrary.addFile("test", new ByteArrayInputStream("test".getBytes(StandardCharsets.UTF_8)), null);
+            mediaLibrary.addFile("test", new ByteArrayInputStream("test".getBytes(StandardCharsets.UTF_8)), null);
+        });
     }
 
-    @Test(expected = LinkException.class)
+    @Test
     public void addMedia1() throws CommonException, ProfilingException {
-        MediaLibrary mediaLibrary = new MediaLibrary(
-                dataStore, profiler, profiler.getTextExtractor(),
-                storagePolicy, urlResolver, dataStoreConfig);
-        mediaLibrary.addByUrl("http://this^is&a)bad@url", null);
+        assertThrows(LinkException.class, () -> {
+            MediaLibrary mediaLibrary = new MediaLibrary(
+                    dataStore, profiler, profiler.getTextExtractor(),
+                    storagePolicy, urlResolver, dataStoreConfig);
+            mediaLibrary.addByUrl("http://this^is&a)bad@url", null);
+        });
     }
 
-    @Test(expected = StoragePolicyException.class)
+    @Test
     public void addMedia2() throws CommonException, ProfilingException {
-        MediaLibrary mediaLibrary = new MediaLibrary(
-                dataStore, profiler, profiler.getTextExtractor(),
-                storagePolicy, urlResolver, dataStoreConfig);
-        // a site that does a HTTP redirect
-        mediaLibrary.addByUrl("http://clarin.eu", null);
+        assertThrows(StoragePolicyException.class, () -> {
+            MediaLibrary mediaLibrary = new MediaLibrary(
+                    dataStore, profiler, profiler.getTextExtractor(),
+                    storagePolicy, urlResolver, dataStoreConfig);
+            // a site that does a HTTP redirect
+            mediaLibrary.addByUrl("http://clarin.eu", null);
+        });
     }
 }

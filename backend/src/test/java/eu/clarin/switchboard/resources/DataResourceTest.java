@@ -7,8 +7,8 @@ import eu.clarin.switchboard.core.DefaultStoragePolicy;
 import eu.clarin.switchboard.core.MediaLibrary;
 import eu.clarin.switchboard.profiler.DefaultProfiler;
 import eu.clarin.switchboard.profiler.api.Profiler;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.StreamingOutput;
@@ -21,12 +21,12 @@ import java.nio.file.Path;
 import java.util.Collections;
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class DataResourceTest {
     DataResource dataResource;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         Path dataStoreRoot = Files.createTempDirectory("switchboard-test-");
         String maxSize = "1M";

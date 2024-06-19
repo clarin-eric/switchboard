@@ -2,8 +2,8 @@ package eu.clarin.switchboard.core;
 
 import eu.clarin.switchboard.app.config.DataStoreConfig;
 import eu.clarin.switchboard.core.xc.StoragePolicyException;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -14,13 +14,13 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.UUID;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class DataStoreTest {
     DataStore dataStore;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         Path dataStoreRoot = Files.createTempDirectory("switchboard-test-");
         String maxSize = "1k";
@@ -93,13 +93,13 @@ public class DataStoreTest {
         assertEquals(storePath.toFile().listFiles().length, 0);
     }
 
-    @Test(expected = StoragePolicyException.class)
+    @Test
     public void uploadTooLarge() throws IOException, StoragePolicyException {
-        UUID id = UUID.randomUUID();
-        InputStream is = new ByteArrayInputStream(new byte[2 * 1024]);
-        Path path = dataStore.save(id, "test", is);
-
-        assert (false); // will not get here
+        assertThrows(StoragePolicyException.class, () -> {
+            UUID id = UUID.randomUUID();
+            InputStream is = new ByteArrayInputStream(new byte[2 * 1024]);
+            Path path = dataStore.save(id, "test", is);
+        });
     }
 
     @Test

@@ -2,14 +2,14 @@ package eu.clarin.switchboard.core;
 
 import eu.clarin.switchboard.core.xc.LinkException;
 import eu.clarin.switchboard.profiler.api.Profile;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.UUID;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class QuirksTest {
     @Test
