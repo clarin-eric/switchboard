@@ -59,11 +59,16 @@
             <artifactId>profiler</artifactId>
             <version>1.0.14</version>
         </dependency>
-        <!-- override vulnerable profiler sub-dependency -->
+        <!-- override vulnerable profiler sub-dependencies -->
         <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcprov-jdk18on</artifactId>
             <version>1.78.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.james</groupId>
+            <artifactId>apache-mime4j-core</artifactId>
+            <version>0.8.11</version>
         </dependency>
 
         <dependency>
