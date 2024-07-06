@@ -1,6 +1,7 @@
 # Changelog
 
 ## [2.4.4] - 2024-07-08
+    - Make UI tool list entries expand on click in the entire row
     - Upgraded JRE to 21.0.3
     - Upgraded Java unit tests to JUnit Jupiter API 5.x specification
     - Upgrade WebUI to @reduxjs/toolkit
@@ -63,7 +64,7 @@
          - Upgrade to Cypress 13.10.0
          - Upgrade to Sauceconnect 4.9.2
          - Update Microsoft Edge test version to 119
-         - Removed cypress-file-upload module. File upload handeling is now part of Cypress core via "selectFile()"
+         - Removed cypress-file-upload module. File upload is now handled by Cypress native "selectFile()"
        - Upgrade CLARIN node build image (registry.gitlab.com/clarin-eric/docker-alpine-clrs-build_env) to [2.5.0](https://gitlab.com/CLARIN-ERIC/docker-alpine-clrs-build_env/-/releases/2.5.0) 
        - Upgraded build Java docker base image: docker-alpine-supervisor-java-base to [openjdk21_jre-1.0.1](https://gitlab.com/CLARIN-ERIC/docker-alpine-supervisor-java-base/-/releases/openjdk21_jre-1.0.1)
        - Upgraded build UI test base image: cypress/browsers to [node-20.14.0-chrome-125.0.6422.141-1-ff-126.0.1-edge-125.0.2535.85-1](https://hub.docker.com/layers/cypress/browsers/node-20.14.0-chrome-125.0.6422.141-1-ff-126.0.1-edge-125.0.2535.85-1/images/sha256-ff28576b934d19b7da254d7c1f0da3d9272097bf7465c942ad52dd2573c6484e?context=explore)
