@@ -1,7 +1,86 @@
 # Changelog
 
-## [2.4.4] - 202X-XX-XX
-    - 
+## [2.4.4] - 2024-07-08
+    - Upgraded JRE to 21.0.3
+    - Upgraded Java unit tests to JUnit Jupiter API 5.x specification
+    - Upgrade WebUI to @reduxjs/toolkit
+    - Upgraded backend dependencies:
+      - dropwizard to 4.0.7
+      - commons-compress to 1.26.2
+      - tika-core to 2.9.2 (override profiler dependency)
+      - tika-parsers-standard-package to 2.9.2 (override profiler dependency)
+      - bcprov-jdk18on to 1.78.1 (override profiler dependency)
+      - net.sf.trove4j.trove4j 3.0.3 to net.sf.trove4j.core 3.1.0  (override profiler dependency)
+      - junit.junit 4.13.2 to org.junit.jupiter.junit-jupiter-api 5.11.0-M2
+    - Upgraded WebUI runtime dependencies: 
+      - axios to 1.7.2
+      - prop-types to 15.8.1
+      - core-js to 3.37.1
+      - react to 18.3.1
+      - react-dom to 18.3.1
+      - react-markdown to 9.0.1
+      - react-redux to 9.1.2
+      - react-router-dom to 6.23.1
+      - react-select to 5.8.0
+    - Added WebUI development dependencies:
+      - @reduxjs/toolkit 2.2.5
+    - Removed WebUI development dependencies:
+      - redux (replaced by @reduxjs/toolkit)
+      - redux-thunk (replaced by @reduxjs/toolkit)
+    - Development project changes:
+       - Upgraded WebUI development dependencies: 
+         - @babel/core to 7.24.7
+         - @babel/preset-env to 7.24.7
+         - @babel/preset-react to 7.24.7
+         - @babel/cli to 7.24.7
+         - @babel/register to 7.24.6
+         - browserslist to 4.23.1
+         - css-loader to 7.1.2
+         - cypress to 13.11.0
+         - eslint to 9.5.0
+         - sass-loader to 14.2.1
+         - style-loader to 4.0.0
+         - stylelint to 16.6.1
+         - stylelint-config-sass-guidelines to 11.1.0
+         - stylelint-config-standard to 36.0.0
+         - terser-webpack-plugin to 5.3.10
+         - webpack to 5.92.0
+         - webpack-bundle-analyzer to 4.10.2
+         - webpack-dev-server to 5.0.4
+       - Added WebUI development dependencies:
+         - @babel/plugin-transform-class-properties 7.24.7
+         - sass 1.77.5
+       - Removed WebUI development dependencies:
+         - @babel/plugin-proposal-class-properties (replaced by @babel/plugin-transform-class-properties)
+         - cypress-file-upload (now part opf cypress core)
+         - node-sass (replaced by sass)
+       - Upgraded Maven plugins:
+         - maven-release-plugin to 3.1.0 (with it dependent "maven-scm-provider-gitexe" upgraded to 2.1.0)
+         - maven-compiler-plugin to 3.13.0
+         - appassembler-maven-plugin to 2.1.0
+         - git-commit-id-plugin to 4.9.10
+       - CI, GitHub Actions and SauceLabs:
+         - Upgrade to Cypress 13.10.0
+         - Upgrade to Sauceconnect 4.9.2
+         - Update Microsoft Edge test version to 119
+         - Removed cypress-file-upload module. File upload handeling is now part of Cypress core via "selectFile()"
+       - Upgrade CLARIN node build image (registry.gitlab.com/clarin-eric/docker-alpine-clrs-build_env) to [2.5.0](https://gitlab.com/CLARIN-ERIC/docker-alpine-clrs-build_env/-/releases/2.5.0) 
+       - Upgraded build Java docker base image: docker-alpine-supervisor-java-base to [openjdk21_jre-1.0.1](https://gitlab.com/CLARIN-ERIC/docker-alpine-supervisor-java-base/-/releases/openjdk21_jre-1.0.1)
+       - Upgraded build UI test base image: cypress/browsers to [node-20.14.0-chrome-125.0.6422.141-1-ff-126.0.1-edge-125.0.2535.85-1](https://hub.docker.com/layers/cypress/browsers/node-20.14.0-chrome-125.0.6422.141-1-ff-126.0.1-edge-125.0.2535.85-1/images/sha256-ff28576b934d19b7da254d7c1f0da3d9272097bf7465c942ad52dd2573c6484e?context=explore)
+       - Fix all warnings in GitHub actions
+    SECURITY FIXES:
+        - https://security.snyk.io/vuln/SNYK-JAVA-COMMONSCODEC-561518
+        - https://security.snyk.io/vuln/SNYK-JAVA-ORGAPACHECOMMONS-6254297 (CVE-2024-26308)
+        - https://security.snyk.io/vuln/SNYK-JS-AXIOS-6124857
+        - https://security.snyk.io/vuln/SNYK-JAVA-ORGAPACHEJAMES-6282851 (CVE-2024-21742)
+        - https://security.snyk.io/vuln/SNYK-JAVA-CHQOSLOGBACK-6094942 (CVE-2023-6378)
+        - https://security.snyk.io/vuln/SNYK-JAVA-CHQOSLOGBACK-6094943 (CVE-2023-6378)
+        - https://security.snyk.io/vuln/SNYK-JAVA-CHQOSLOGBACK-6097492 (CVE-2023-6481)
+        - https://security.snyk.io/vuln/SNYK-JAVA-CHQOSLOGBACK-6097493 (CVE-2023-6481)
+        - https://security.snyk.io/vuln/SNYK-JS-AXIOS-6144788
+        - https://security.snyk.io/vuln/SNYK-JAVA-ORGBOUNCYCASTLE-6612984 (CVE-2024-30172)
+        - https://security.snyk.io/vuln/SNYK-JAVA-ORGAPACHECOMMONS-6254296 (CVE-2024-25710)
+ 
 
 ## [2.4.3] - 2023-11-01
     - Fix contact link on About page
