@@ -11,7 +11,7 @@ on:
 
 env:
   GITHUB_TOKEN: ${{ github.token }}
-  SAUCE_CONNECT_VERSION: '4.9.2'
+  SAUCE_CONNECT_VERSION: '5.2.2'
 
 jobs:
   prepare:
@@ -86,11 +86,13 @@ jobs:
           CI_VERSION: ${{ needs.prepare.outputs.version }}
       - name: Setup tunnel proxy to SauceLabs
         run: |
-          curl https://saucelabs.com/downloads/sc-${SAUCE_CONNECT_VERSION}-linux.tar.gz | tar -xz # Install sauce connect
-          chmod 777 -R ./sc-${SAUCE_CONNECT_VERSION}-linux
-          PATH=./sc-${SAUCE_CONNECT_VERSION}-linux/bin:${PATH}
-          sc -u "${USERNAME}" -k "${SAUCE_ACCESS_KEY}" -i "github-action-tunnel-${RUN_ID}" --readyfile /tmp/sc.ready --region us-west-1 &
-          until [ -f /tmp/sc.ready ]; do sleep 1; done
+          mkdir sauce-connect-${SAUCE_CONNECT_VERSION}_linux.x86_64
+          (cd sauce-connect-${SAUCE_CONNECT_VERSION}_linux.x86_64
+          curl https://saucelabs.com/downloads/sauce-connect/${SAUCE_CONNECT_VERSION}/sauce-connect-${SAUCE_CONNECT_VERSION}_linux.x86_64.tar.gz | tar -xz) # Install sauce connect
+          chmod 777 -R ./sauce-connect-${SAUCE_CONNECT_VERSION}_linux.x86_64
+          PATH=./sauce-connect-${SAUCE_CONNECT_VERSION}_linux.x86_64:${PATH}
+          sc run -u "${USERNAME}" -k "${SAUCE_ACCESS_KEY}" -i "github-action-tunnel-${RUN_ID}" --api-address :8032 --region us-west-1 --proxy-localhost allow &
+          until curl localhost:8032/readiness > /dev/null 2>&1; do sleep 1; done
           echo "SC ready"
         env:
           USERNAME: ${{ secrets.SAUCE_USERNAME }}
