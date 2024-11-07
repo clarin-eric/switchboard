@@ -29,6 +29,7 @@ suites:
     - 'cypress/e2e/**/*.*'
 - name: "Windows 11 - Firefox"
   browser: firefox
+  browserVersion: "latest"
   platformName: "Windows 11"
   screenResolution: "1440x900"
   config:
@@ -54,6 +55,7 @@ suites:
     - 'cypress/e2e/**/*.*'
 - name: "macOS 13 - Firefox"
   browser: firefox
+  browserVersion: "latest"
   platformName: "macOS 13"
   screenResolution: "1440x900"
   config:
