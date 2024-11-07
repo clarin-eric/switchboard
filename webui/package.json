@@ -4,7 +4,7 @@
     "description": "Switchboard web user interface",
     "repository": "https://github.com/clarin-eric/switchboard",
     "devDependencies": {
-        "@babel/core": "^7.24.7",
+        "@babel/core": "^7.26.0",
         "@babel/plugin-syntax-dynamic-import": "^7.8.3",
         "@babel/plugin-syntax-import-meta": "^7.10.4",
         "@babel/plugin-transform-class-properties": "^7.25.9",
