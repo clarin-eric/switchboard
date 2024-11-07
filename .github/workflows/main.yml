@@ -91,7 +91,7 @@ jobs:
           curl https://saucelabs.com/downloads/sauce-connect/${SAUCE_CONNECT_VERSION}/sauce-connect-${SAUCE_CONNECT_VERSION}_linux.x86_64.tar.gz | tar -xz) # Install sauce connect
           chmod 777 -R ./sauce-connect-${SAUCE_CONNECT_VERSION}_linux.x86_64
           PATH=./sauce-connect-${SAUCE_CONNECT_VERSION}_linux.x86_64:${PATH}
-          sc run -u "${USERNAME}" -k "${SAUCE_ACCESS_KEY}" -i "github-action-tunnel-${RUN_ID}" --readyfile /tmp/sc.ready --region us-west-1 --proxy-sauce &
+          sc legacy -u "${USERNAME}" -k "${SAUCE_ACCESS_KEY}" -i "github-action-tunnel-${RUN_ID}" --readyfile /tmp/sc.ready --region us-west-1 --proxy-sauce &
           until [ -f /tmp/sc.ready ]; do sleep 1; done
           echo "SC ready"
         env:
