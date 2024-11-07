@@ -86,7 +86,7 @@ jobs:
           CI_VERSION: ${{ needs.prepare.outputs.version }}
       - name: Setup tunnel proxy to SauceLabs
         run: |
-          curl https://saucelabs.com/downloads/sc-${SAUCE_CONNECT_VERSION}-linux.tar.gz | tar -xz # Install sauce connect
+          curl https://saucelabs.com/downloads/sauce-connect/${SAUCE_CONNECT_VERSION}/sauce-connect-${SAUCE_CONNECT_VERSION}_linux.x86_64.tar.gz | tar -xz # Install sauce connect
           chmod 777 -R ./sc-${SAUCE_CONNECT_VERSION}-linux
           PATH=./sc-${SAUCE_CONNECT_VERSION}-linux/bin:${PATH}
           sc -u "${USERNAME}" -k "${SAUCE_ACCESS_KEY}" -i "github-action-tunnel-${RUN_ID}" --readyfile /tmp/sc.ready --region us-west-1 --proxy-sauce &
