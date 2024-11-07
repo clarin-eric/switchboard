@@ -1,4 +1,4 @@
-[![Build+Test+Release pipeline](https://github.com/clarin-eric/switchboard/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/clarin-eric/switchboard/actions/workflows/main.yml
+[![Build+Test+Release pipeline](https://github.com/clarin-eric/switchboard/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/clarin-eric/switchboard/actions/workflows/main.yml)
 [![Sauce Test Status](https://saucelabs.com/buildstatus/switchboard)](https://app.saucelabs.com/u/switchboard)
 
 [![Build Status](https://app.saucelabs.com/browser-matrix/switchboard.svg)](https://saucelabs.com/u/switchboard)
