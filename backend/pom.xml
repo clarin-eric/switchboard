@@ -10,7 +10,7 @@
     <version>0.0.0-SNAPSHOT</version>
 
     <properties>
-        <dropwizard.version>4.0.10</dropwizard.version>
+        <dropwizard.version>4.0.11</dropwizard.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
