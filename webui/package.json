@@ -45,7 +45,7 @@
         "react-redux": "^9.2.0",
         "react-router-dom": "^6.28.2",
         "react-router-hash-link": "^2.4.3",
-        "react-select": "^5.9.0",
+        "react-select": "^5.10.0",
         "remark-gfm": "^4.0.0",
         "seamless-immutable": "^7.1.4"
     }
