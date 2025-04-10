@@ -11,14 +11,14 @@ import java.util.Set;
 
 public class DefaultStoragePolicy implements StoragePolicy {
     private final DataStoreConfig dataStoreConfig;
-    private Set<String> allowedMediaTypes = new HashSet<>();
+    private Set<String> supportedToolMediaTypes = new HashSet<>();
 
     public DefaultStoragePolicy(DataStoreConfig dataStoreConfig) {
         this.dataStoreConfig = dataStoreConfig;
     }
 
-    public void setAllowedMediaTypes(Set<String> allowedMediaTypes) {
-        this.allowedMediaTypes = allowedMediaTypes;
+    public void setSupportedToolMediaTypes(Set<String> supportedToolMediaTypes) {
+        this.supportedToolMediaTypes = supportedToolMediaTypes;
     }
 
     @Override
@@ -57,13 +57,18 @@ public class DefaultStoragePolicy implements StoragePolicy {
 
     @Override
     public void acceptProfile(Profile profile) throws StoragePolicyException {
-        if (!allowedMediaTypes.contains(profile.getMediaType())) {
-            // allow xml as a special case, see https://github.com/clarin-eric/switchboard/issues/14
-            if (!profile.isXmlMediaType() && !isArchiveOrCompressed(profile)) {
-                throw new StoragePolicyException("This resource type (" + profile.getMediaType() + ") is currently not supported.",
-                        StoragePolicyException.Kind.MEDIA_NOT_ALLOWED);
-            }
+        String mediaType = profile.getMediaType();
+
+        if (!supportedToolMediaTypes.contains(mediaType) &&
+            !isWhitelistedMediaType(profile)) {
+                throw new StoragePolicyException("This resource type (" + mediaType + ") is currently not allowed.",
+                StoragePolicyException.Kind.MEDIA_NOT_ALLOWED);
         }
+    }
+
+    private boolean isWhitelistedMediaType(Profile profile) {
+        // allow xml as a special case, see https://github.com/clarin-eric/switchboard/issues/14
+        return (profile.isXmlMediaType() || isArchiveOrCompressed(profile));
     }
 
     static final Set<String> ARCHIVE_OR_COMPRESSED_MEDIATYPES = Set.of(
@@ -75,6 +80,11 @@ public class DefaultStoragePolicy implements StoragePolicy {
 
     private boolean isArchiveOrCompressed(Profile profile) {
         return ARCHIVE_OR_COMPRESSED_MEDIATYPES.contains(profile.getMediaType());
+    }
+
+    private boolean isDefaultAcceptedMediatypeType(String mediaType) {
+        String type = mediaType.split("/")[0];
+        return Constants.ACCEPTED_MEDIATYPE_TYPES.contains(type);
     }
 
     private StoragePolicyException tooBig() {
