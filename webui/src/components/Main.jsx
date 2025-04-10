@@ -105,7 +105,8 @@ const MatchingTools = (props) => {
     if (tools === null)
         return <h3 className="smooth-update">Searching...</h3>;
     if (!tools.length)
-        return <h3 className="smooth-update">No matching tools found.</h3>;
+        return <div><h3 className="smooth-update">No matching tools found.</h3><p>Try different mediatypes and languages 
+        using the options above or submmit a different file.</p></div>;
 
     return <ToolListWithControls title="Matching Tools"
                 tools={tools}
