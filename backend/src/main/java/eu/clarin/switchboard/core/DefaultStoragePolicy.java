@@ -60,6 +60,7 @@ public class DefaultStoragePolicy implements StoragePolicy {
         String mediaType = profile.getMediaType();
 
         if (!supportedToolMediaTypes.contains(mediaType) &&
+            !isDefaultAcceptedMediatypeType(mediaType) &&
             !isWhitelistedMediaType(profile)) {
                 throw new StoragePolicyException("This resource type (" + mediaType + ") is currently not allowed.",
                 StoragePolicyException.Kind.MEDIA_NOT_ALLOWED);
