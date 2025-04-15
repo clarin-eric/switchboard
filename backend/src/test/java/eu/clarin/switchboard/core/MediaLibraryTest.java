@@ -88,7 +88,7 @@ public class MediaLibraryTest {
                     dataStore, profiler, profiler.getTextExtractor(),
                     storagePolicy, urlResolver, dataStoreConfig);
             // a "font/woff2" file is in principle not allowed
-            mediaLibrary.addByUrl("https://www.clarin.eu/themes/contrib/clarin_bootstrap/fonts/sourcesans3/SourceSans3-Regular.ttf.woff2", null);
+            mediaLibrary.addByUrl("https://www.cardbox.com/download/samples1.exe", null);
         });
     }
 }
