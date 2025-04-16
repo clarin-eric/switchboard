@@ -16,7 +16,7 @@ sauce:
     build: Github Run $GITHUB_RUN_ID
 cypress:
   configFile: "cypress.config.js"
-  version: 14.1.0
+  version: 13.15.2
   record: false
 suites:
 - name: "Windows 11 - Chrome"
