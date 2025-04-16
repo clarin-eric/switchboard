@@ -2,7 +2,7 @@ DOCKERTAG=switchboard/switchboard:latest
 WEBUIAPP=src/main/resources/webui
 JSBUNDLE=$(WEBUIAPP)/bundle.js
 SWITCHBOARD_URL?=http://localhost:8080
-NPM_VERSION=10.2.3
+NPM_VERSION=11.3.0
 
 build-docker-image:
 	@GIT_COMMIT=$(shell git log -1 --pretty=format:"%H"|cut -c1-7) ;\
