@@ -54,7 +54,8 @@
       - Upgrade CLARIN node build image (registry.gitlab.com/clarin-eric/docker-alpine-clrs-build_env) to [2.6.0](https://gitlab.com/CLARIN-ERIC/docker-alpine-clrs-build_env/-/releases/2.6.0) 
       - Upgraded build Java docker base image: docker-alpine-supervisor-java-base to [openjdk21_jre-1.0.10](https://gitlab.com/CLARIN-ERIC/docker-alpine-supervisor-java-base/-/releases/openjdk21_jre-1.0.10)
       - Upgraded npm to 11.3.0
-    **Full Changelog**: https://github.com/clarin-eric/switchboard/compare/2.4.4...2.4.5
+      
+    See full changelog: https://github.com/clarin-eric/switchboard/compare/2.4.4...2.4.5
 
 ## [2.4.4] - 2024-07-08
     - Make UI tool list entries expand on click in the entire row
