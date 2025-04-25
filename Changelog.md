@@ -1,5 +1,61 @@
 # Changelog
 
+## [2.4.5] - 2025-04-25
+    UX improvements:
+      - Always allow files from media supertypes: `text/`, `image/`, `audio/`, `video/`. Only reply with 415 for `application/` types without a registered tool supporting them.
+      - Improve user interface message when no matches are found.
+      - Improve user interface file name display for files provided via 3rd party caller applications, without filename indication.
+    Security and maintenance:
+      - Upgraded backend dependencies:
+        - dropwizard to 4.0.13
+        - commons-compress to 1.27.1
+        - tika-core to 3.1.0 (override profiler dependency)
+        - tika-parsers-standard-package to 3.1.0 (override profiler dependency)
+        - bcprov-jdk18on to 1.80 (override profiler dependency)
+        - commons-io to 2.19.0 (override profiler dependency)
+        - junit-jupiter-api to 5.12.2
+      - Upgraded Maven plugins:
+        - maven-release-plugin to 3.1.1
+        - maven-compiler-plugin to 3.14.0
+      - Upgraded WebUI runtime dependencies: 
+        - @reduxjs/toolkit to 2.6.1
+        - axios to 1.8.4
+        - core-js to 3.41.0
+        - react-markdown to 10.1.0
+        - react-modal to 3.16.3
+        - react-redux to 9.2.0
+        - react-router-dom to 7.5.2
+        - react-select to 5.10.1
+        - remark-gfm to 4.0.1
+      - Moved react and react-dom to development dependencies section
+      - Upgraded WebUI development dependencies:
+        - @babel/core to 7.26.10
+        - @babel/cli to 7.27.0
+        - @babel/plugin-transform-class-properties to 7.25.9
+        - @babel/preset-env to 7.26.9
+        - @babel/preset-react to 7.26.3
+        - @babel/register to 7.25.9
+        - babel-loader to 10.0.0
+        - browserslist to 4.24.4
+        - cypress to 14.1.0
+        - eslint to 9.24.0
+        - sass to 1.86.3
+        - sass-loader to 16.0.5
+        - stylelint to 16.18.0
+        - stylelint-config-sass-guidelines to 12.1.0
+        - stylelint-config-standard to 38.0.0
+        - terser-webpack-plugin to 5.3.14
+        - webpack to 5.99.5
+        - webpack-cli to 6.0.1
+        - webpack-dev-server to 5.2.1
+        - webpack-merge to 6.0.1
+    CI, building and testing:
+      - Upgraded to SauceConnect 5 (5.2.3) by @andmor- in https://github.com/clarin-eric/switchboard/pull/424
+      - Upgrade CLARIN node build image (registry.gitlab.com/clarin-eric/docker-alpine-clrs-build_env) to [2.6.0](https://gitlab.com/CLARIN-ERIC/docker-alpine-clrs-build_env/-/releases/2.6.0) 
+      - Upgraded build Java docker base image: docker-alpine-supervisor-java-base to [openjdk21_jre-1.0.10](https://gitlab.com/CLARIN-ERIC/docker-alpine-supervisor-java-base/-/releases/openjdk21_jre-1.0.10)
+      - Upgraded npm to 11.3.0
+    **Full Changelog**: https://github.com/clarin-eric/switchboard/compare/2.4.4...2.4.5
+
 ## [2.4.4] - 2024-07-08
     - Make UI tool list entries expand on click in the entire row
     - Upgraded JRE to 21.0.3
