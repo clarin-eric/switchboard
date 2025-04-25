@@ -5,6 +5,7 @@
       - Always allow files from media supertypes: `text/`, `image/`, `audio/`, `video/`. Only reply with 415 for `application/` types without a registered tool supporting them.
       - Improve user interface message when no matches are found.
       - Improve user interface file name display for files provided via 3rd party caller applications, without filename indication.
+    Added javascript 'no strict' version of the Switchboard popup
     Security and maintenance:
       - Upgraded backend dependencies:
         - dropwizard to 4.0.13
