@@ -113,7 +113,6 @@ class Application extends React.Component {
     render() {
         return (
             <Provider store={store}>
-                <BrowserRouter>
                     <Frame>
                         <Routes>
                             <Route path={clientPath.root} element={<MainContainer />} />
@@ -128,7 +127,6 @@ class Application extends React.Component {
                         false : // no footer in popup mode
                         <FooterContainer />
                     }
-                </BrowserRouter>
             </Provider>
         );
     }
