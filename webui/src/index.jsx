@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {configureStore} from '@reduxjs/toolkit';
 import {connect, Provider} from 'react-redux';
-import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import {BrowserRouter, Route, Routes} from 'react-router';
 import Modal from 'react-modal';
 
 import './style.scss';
@@ -138,4 +138,4 @@ const NotFound = () => (
     <div>This page is not found!</div>
 );
 
-ReactDOM.render(<Application />, document.getElementById('reactapp'));
+ReactDOM.render(<BrowserRouter><Application /></BrowserRouter>, document.getElementById('reactapp'));
