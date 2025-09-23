@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  RouterProvider,
   useLocation,
   useNavigate,
   useParams,
@@ -20,10 +19,10 @@ export function withRouter(Component) {
     }, [location]);
 
     return (
-      <RouterProvider 
-          router={{ location, navigate, params }}>
-        <Component {...props} />
-      </RouterProvider>
+      <Component
+        {...props}
+        router={{ location, navigate, params }}
+      />
     );
   }
 
