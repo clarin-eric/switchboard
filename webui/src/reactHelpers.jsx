@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  BrowserRouter,
   useLocation,
   useNavigate,
   useParams,
@@ -19,10 +20,10 @@ export function withRouter(Component) {
     }, [location]);
 
     return (
-      <Component
-        {...props}
-        router={{ location, navigate, params }}
-      />
+      <BrowserRouter {...props}
+          router={{ location, navigate, params }}>
+        <Component />
+      </BrowserRouter>
     );
   }
 
