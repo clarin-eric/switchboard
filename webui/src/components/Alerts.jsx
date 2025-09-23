@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import {clientPath} from '../constants';
 import {isUrl} from '../actions/utils';
 
