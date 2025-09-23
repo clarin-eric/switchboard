@@ -20,9 +20,9 @@ export function withRouter(Component) {
     }, [location]);
 
     return (
-      <RouterProvider {...props}
+      <RouterProvider 
           router={{ location, navigate, params }}>
-        <Component />
+        <Component {...props} />
       </RouterProvider>
     );
   }
