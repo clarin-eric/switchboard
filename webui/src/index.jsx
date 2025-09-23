@@ -138,4 +138,4 @@ const NotFound = () => (
     <div>This page is not found!</div>
 );
 
-ReactDOM.render(<BrowserRouter><Application /></BrowserRouter>, document.getElementById('reactapp'));
+ReactDOM.render(<Application />, document.getElementById('reactapp'));
