@@ -23,7 +23,7 @@ RUN make dependencies && make build-webui-production
 FROM registry.gitlab.com/clarin-eric/docker-alpine-supervisor-java-base:openjdk21_jre-1.1.0 AS backend_builder
 
 ARG version
-ARG MAVEN_VERSION=3.9.5-r0
+ARG MAVEN_VERSION=3.9.9-r0
 ENV SWITCHBOARD_VERSION=$version
 
 RUN apk add --no-cache maven=${MAVEN_VERSION}
