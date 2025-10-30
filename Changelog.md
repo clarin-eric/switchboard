@@ -1,5 +1,32 @@
 # Changelog
 
+## [2.4.6] - 2025-10-31
+    Security maintenance release:
+      - Upgraded backend dependencies:
+        - dropwizard to 5.0.0
+        - commons-compress to 1.28.0
+        - tika-core to 3.2.3
+        - tika-parsers-standard-package to 3.2.3
+        - bcprov-jdk18on to 1.82
+
+      - Added WebUI runtime dependencies:
+        - regenerator-runtime 0.14.1
+      - Upgraded WebUI runtime dependencies: 
+        - @reduxjs/toolkit to 2.8.2
+        - axios to 1.12.0
+        - core-js to 3.45.1
+        - react-select to 5.10.2
+
+      - Upgraded WebUI development dependencies:
+        - Replace react-router-dom by react-router 7.9.2
+
+    CI, building and testing:
+      - Upgraded SauceConnect to 5.3.0
+      - Upgraded build Java docker base image: docker-alpine-supervisor-java-base to [openjdk21_jre-1.1.0](https://gitlab.com/CLARIN-ERIC/docker-alpine-supervisor-java-base/-/releases/openjdk21_jre-1.1.0)
+      - Upgraded npm to 11.5.2
+
+    See full Changelog: https://github.com/clarin-eric/switchboard/compare/2.4.5...2.4.6
+
 ## [2.4.5] - 2025-04-25
     UX improvements:
       - Always allow files from media supertypes: `text/`, `image/`, `audio/`, `video/`. Only reply with 415 for `application/` types without a registered tool supporting them.
