@@ -20,11 +20,11 @@
       - Upgraded WebUI development dependencies:
         - Replace react-router-dom by react-router 7.9.2
 
-    CI, building and testing:
-      - Upgraded SauceConnect to 5.3.0
-      - Upgraded build Java docker base image: docker-alpine-supervisor-java-base to [openjdk21_jre-1.1.0](https://gitlab.com/CLARIN-ERIC/docker-alpine-supervisor-java-base/-/releases/openjdk21_jre-1.1.0)
-      - Upgraded npm to 11.5.2
-      - Upgraded maven to 3.9.9
+      - CI, building and testing:
+        - Upgraded SauceConnect to 5.3.0
+        - Upgraded build Java docker base image: docker-alpine-supervisor-java-base to [openjdk21_jre-1.1.0](https://gitlab.com/CLARIN-ERIC/docker-alpine-supervisor-java-base/-/releases/openjdk21_jre-1.1.0)
+        - Upgraded npm to 11.5.2
+        - Upgraded maven to 3.9.9
 
     See full Changelog: https://github.com/clarin-eric/switchboard/compare/2.4.5...2.4.6
 
