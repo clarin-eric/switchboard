@@ -5,9 +5,11 @@
       - Upgraded backend dependencies:
         - dropwizard to 5.0.0
         - commons-compress to 1.28.0
+        - commons-io to 2.20.0
         - tika-core to 3.2.3
         - tika-parsers-standard-package to 3.2.3
         - bcprov-jdk18on to 1.82
+        - logback-core to 1.5.19
 
       - Added WebUI runtime dependencies:
         - regenerator-runtime 0.14.1
