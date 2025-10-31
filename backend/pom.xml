@@ -47,6 +47,12 @@
             <artifactId>dropwizard-forms</artifactId>
             <version>${dropwizard.version}</version>
         </dependency>
+        <!-- override vulnerable dropwizard sub-dependencies -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>1.5.19</version>
+        </dependency>
 
         <dependency>
             <groupId>net.sf.trove4j</groupId>
