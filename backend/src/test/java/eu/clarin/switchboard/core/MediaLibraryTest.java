@@ -40,7 +40,7 @@ public class MediaLibraryTest {
                 dataStoreRoot.toString(), false, maxSize, maxFiles, maxLifetime, maxLifetimeUnit, cleanupPeriod, cleanupPeriodUnit);
 
         storagePolicy = new DefaultStoragePolicy(dataStoreConfig);
-        storagePolicy.setAllowedMediaTypes(Collections.singleton("text/plain"));
+        storagePolicy.setSupportedToolMediaTypes(Collections.singleton("text/plain"));
 
         dataStore = new DataStore(dataStoreRoot, storagePolicy);
 
@@ -87,8 +87,8 @@ public class MediaLibraryTest {
             MediaLibrary mediaLibrary = new MediaLibrary(
                     dataStore, profiler, profiler.getTextExtractor(),
                     storagePolicy, urlResolver, dataStoreConfig);
-            // a site that does a HTTP redirect
-            mediaLibrary.addByUrl("http://clarin.eu", null);
+            // a "font/woff2" file is in principle not allowed
+            mediaLibrary.addByUrl("https://www.cardbox.com/download/samples1.exe", null);
         });
     }
 }

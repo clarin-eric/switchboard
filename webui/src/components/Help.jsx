@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Link} from 'react-router-dom';
+import {Link} from 'react-router';
 import FAQ from './FAQ';
 import ForDevelopers from './ForDevelopers';
 import {image} from '../actions/utils'

@@ -84,9 +84,9 @@ public class SwitchboardApp extends Application<RootConfig> {
         }
 
         ToolRegistry toolRegistry = new ToolRegistry(switchboardConfig.getTools().getToolRegistryPath());
-        storagePolicy.setAllowedMediaTypes(toolRegistry.getAllMediatypes());
+        storagePolicy.setSupportedToolMediaTypes(toolRegistry.getAllMediatypes());
         toolRegistry.setOnUpdate(() -> {
-            storagePolicy.setAllowedMediaTypes(toolRegistry.getAllMediatypes());
+            storagePolicy.setSupportedToolMediaTypes(toolRegistry.getAllMediatypes());
         });
 
         Map<String, String> gitProperties = GitProperties.load("switchboard");

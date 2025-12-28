@@ -191,7 +191,12 @@ function NormalResource({mediatypes, languages, res, actions, enableMultipleReso
         (res.isSource ? " disabled" : "") +
         (res.specialResourceType === 'EXTRACTED_TEXT' ? " extracted" : "");
 
-    const resourceName = res.specialResourceType === 'EXTRACTED_TEXT' ? "Extracted Text" : res.filename;
+    let resourceName = res.specialResourceType === 'EXTRACTED_TEXT' ? "Extracted Text" : res.filename;
+
+    if (resourceName.indexOf(".") === -1 && resourceName.length > 16) {
+        //long filename without extension -> use something cuter
+        resourceName = "Download file"
+    }
 
     const warningAndContentOrOutline = (
         <>
@@ -234,10 +239,11 @@ function NormalResource({mediatypes, languages, res, actions, enableMultipleReso
         <div className={resClass}>
             <div className={res.isSource ? "col-md-12" : "col-md-5"}>
                 <div className="value namesize">
-                    <a href={res.originalLink || res.localLink} title="Click to download" style={{marginRight:10}}>
+                    <a href={res.originalLink || res.localLink} title="Click to download" style={{marginRight:4}}>
                         {resourceName}
                     </a>
-                    <span style={{fontSize:'66%'}} style={{marginRight:10}}>{humanSize(res.fileLength)}</span>
+                    <u style={{marginRight:10, fontSize:'23px'}}>&#x2193;</u>
+                    <span style={{fontSize:'66%', marginRight:10}}>{humanSize(res.fileLength)}</span>
                     {toggleContentButton}
                     {uncompressButton}
                     {extractTextButton}

@@ -40,7 +40,7 @@ public class DataResourceTest {
                 dataStoreRoot.toString(), false, maxSize, maxFiles, maxLifetime, maxLifetimeUnit, cleanupPeriod, cleanupPeriodUnit);
 
         DefaultStoragePolicy storagePolicy = new DefaultStoragePolicy(dataStoreConfig);
-        storagePolicy.setAllowedMediaTypes(Collections.singleton("text/plain"));
+        storagePolicy.setSupportedToolMediaTypes(Collections.singleton("text/plain"));
 
         DataStore dataStore = new DataStore(dataStoreRoot, storagePolicy);
         DefaultProfiler profiler = new DefaultProfiler();

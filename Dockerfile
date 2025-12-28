@@ -1,7 +1,7 @@
 ARG version
 
 # --- build web ui (js bundles)
-FROM registry.gitlab.com/clarin-eric/docker-alpine-clrs-build_env:2.5.0 AS webui_builder
+FROM registry.gitlab.com/clarin-eric/docker-alpine-clrs-build_env:2.6.0 AS webui_builder
 
 # create final location for bundle files
 WORKDIR /build/backend/src/main/resources/webui
@@ -20,10 +20,10 @@ COPY ./webui/src                ./webui/src
 RUN make dependencies && make build-webui-production
 
 # --- build java code with maven
-FROM registry.gitlab.com/clarin-eric/docker-alpine-supervisor-java-base:openjdk21_jre-1.0.1 AS backend_builder
+FROM registry.gitlab.com/clarin-eric/docker-alpine-supervisor-java-base:openjdk21_jre-1.1.0 AS backend_builder
 
 ARG version
-ARG MAVEN_VERSION=3.9.5-r0
+ARG MAVEN_VERSION=3.9.9-r0
 ENV SWITCHBOARD_VERSION=$version
 
 RUN apk add --no-cache maven=${MAVEN_VERSION}
@@ -41,7 +41,7 @@ RUN mvn -q clean package
 ###############################################################################
 
 # now setup running environment
-FROM registry.gitlab.com/clarin-eric/docker-alpine-supervisor-java-base:openjdk21_jre-1.0.1
+FROM registry.gitlab.com/clarin-eric/docker-alpine-supervisor-java-base:openjdk21_jre-1.1.0
 
 COPY --from=backend_builder /build/backend/target/appassembler /switchboard/
 
