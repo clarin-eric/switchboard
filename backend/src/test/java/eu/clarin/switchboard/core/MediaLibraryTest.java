@@ -88,7 +88,7 @@ public class MediaLibraryTest {
                     dataStore, profiler, profiler.getTextExtractor(),
                     storagePolicy, urlResolver, dataStoreConfig);
             // a "font/woff2" file is in principle not allowed
-            mediaLibrary.addByUrl("https://www.cardbox.com/download/samples1.exe", null);
+            mediaLibrary.addByUrl("https://www.fileexamples.com/files/sample_setup.exe", null);
         });
     }
 }
