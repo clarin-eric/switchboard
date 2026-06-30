@@ -35,8 +35,8 @@ public class LinkMetadataTest {
         assertEquals("05payette.html", info.filename);
         info.response.close();
 
-        info = LinkMetadata.getLinkData(cachingClient, "https://people.sc.fsu.edu/~jburkardt/data/ply/airplane.ply");
-        assertEquals("airplane.ply", info.filename);
+        info = LinkMetadata.getLinkData(cachingClient, "https://raw.githubusercontent.com/dranjan/python-plyfile/refs/heads/master/examples/tet.ply");
+        assertEquals("tet.ply", info.filename);
         info.response.close();
 
         info = LinkMetadata.getLinkData(cachingClient, "https://raw.githubusercontent.com/clarin-eric/switchboard/master/LICENCE");
