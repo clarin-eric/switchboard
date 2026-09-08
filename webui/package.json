@@ -13,7 +13,7 @@
         "@babel/preset-react": "^7.26.3",
         "@babel/register": "^7.25.9",
         "babel-loader": "^10.0.0",
-        "browserslist": "^4.24.4",
+        "browserslist": "^4.28.9",
         "css-loader": "^7.1.2",
         "cypress": "^15.16.0",
         "eslint": "^9.24.0",
