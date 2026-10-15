@@ -24,7 +24,7 @@
         "sass-loader": "^16.0.5",
         "style-loader": "^4.0.0",
         "stylelint": "^16.18.0",
-        "stylelint-config-sass-guidelines": "^12.1.0",
+        "stylelint-config-sass-guidelines": "^13.0.0",
         "stylelint-config-standard": "^38.0.0",
         "terser-webpack-plugin": "^5.3.17",
         "uglify-loader": "^3.0.0",
