@@ -1,5 +1,58 @@
 # Changelog
 
+
+## [2.4.7] - 2026-11-19
+    Security maintenance release:
+      - Fixed vulnerabilities:
+        - CVE-2026-110306 — `fast-uri` scheme spoofing.
+        - CVE-2026-110180 — `fast-uri` host confusion.
+        - CVE-2026-110095 — `fast-uri` relative-reference normalization.
+        - CVE-2026-110725 — `fast-uri` scheme injection.
+        - CVE-2026-93749 — denial of service through malicious indexed source maps.
+        - CVE-2026-90711 — incorrect IPv4 trust handling.
+        - CVE-2026-87776 — compression response handling.
+        - CVE-2026-4800 — Lodash template code injection.
+        - CVE-2026-29063 — `immutable` `Repeat.lastIndexOf()` issue.
+        - CVE-2026-13149 — brace-expansion Regular Expression Denial of Service.
+        - CVE-2026-33671 — Picomatch vulnerability.
+        - CVE-2026-33672 — Picomatch vulnerability.
+        - CVE-2026-71887 — Bouncy Castle OpenPGP subkey verification issue.
+        - CVE-2026-9358 — `postcss-selector-parser`.
+        - CVE-2025-12816 — Node Forge ASN.1 validator desynchronization.
+        - CVE-2025-66031 — Node Forge uncontrolled ASN.1 recursion.
+        - CVE-2025-66030 — Node Forge OID integer truncation.
+        - CVE-2024-39338 — Axios SSRF.
+        - CVE-2023-45857 — Axios CSRF.
+        - CVE-2023-44270 — PostCSS ANSI escape sequence issue.
+        - CVE-2023-26115 — `word-wrap` Regular Expression Denial of Service.
+        - CVE-2022-37603 — Webpack path traversal/integrity issue.
+        - CVE-2020-7662 — `websocket-extensions` Regular Expression Denial of Service.
+        - CVE-2024-47764 — Cookie package vulnerability fixed by the Express/Cookie upgrade.
+      - Upgraded backend dependencies:
+        - dropwizard to 5.0.2
+        - logback-classic to 1.5.25
+        - commons-io to 2.22.0
+        - tika-core to 3.3.3
+        - tika-parsers-standard-package to 3.3.3
+        - bcprov-jdk18on to 1.87
+      - Upgraded WebUI runtime dependencies:
+        - @reduxjs/toolkit to 2.11.2
+        - axios to 1.20.0
+        - core-js to 3.48.0
+        - react-router to 7.18.2
+      - Upgraded WebUI development dependencies:
+        - @babel/core to 7.29.6
+        - browserslist to 4.28.9
+        - cypress to 15.16.0
+        - stylelint to 17.1.0
+        - stylelint-config-sass-guidelines to 13.0.0
+        - terser-webpack-plugin to 5.3.17
+        - webpack-dev-server to 6.0.0
+      - CI, building and testing:
+        - Upgraded SauceConnect to 5.5.3
+        - Updated external test resources used by backend tests
+    See full Changelog: https://github.com/clarin-eric/switchboard/compare/2.4.6...2.4.7
+
 ## [2.4.6] - 2025-10-31
     Security maintenance release:
       - Fixed vulnerabilities:
