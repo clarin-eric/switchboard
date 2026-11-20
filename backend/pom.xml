@@ -105,7 +105,6 @@
             <groupId>org.apache.tika</groupId>
             <artifactId>tika-parsers-standard-package</artifactId>
             <version>3.3.3</version>
-            <type>pom</type>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
