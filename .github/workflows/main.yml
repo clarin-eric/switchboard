@@ -106,7 +106,7 @@ jobs:
           working-directory: webui/test
   release:
     name: "Release"
-    needs: [prepare, build, sauce-test]
+    needs: [prepare, build]
     # Run job for github releases and tag pushes (without github release)
     if: github.event_name == 'release' || needs.prepare.outputs.create_release == 'true'
     runs-on: ubuntu-22.04
