@@ -1,4 +1,4 @@
-FROM cypress/browsers:node-20.14.0-chrome-125.0.6422.141-1-ff-126.0.1-edge-125.0.2535.85-1
+FROM cypress/browsers:node-26.13.1-chrome-157.0.8103.50-1-ff-160.0-edge-157.0.4341.46-1
 
 WORKDIR /build
 
