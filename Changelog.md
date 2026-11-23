@@ -1,5 +1,72 @@
 # Changelog
-
+## [2.4.8] - 2026-11-23
+    Security maintenance release:
+      - Fixed vulnerabilities:
+        - CVE-2026-13006 — Incomplete protection against CVE-2025-11226.
+        - CVE-2026-68498 — jackson-core: Delayed maxNameLength enforcement for char-backed input (ReaderBasedJsonParser) allows memory-exhaustion denial of service
+        - CVE-2026-89425 — jackson-core: UTF8DataInputJsonParser._reportInvalidToken() does not honor maxErrorTokenLength, allowing unbounded StringBuilder growth
+        - CVE-2026-91777 — jackson-databind: quadratic forward-reference completion in Collection and Map deserializers
+        - CVE-2026-68497 —  jackson-databind: unbounded numeric parse in Duration and XMLGregorianCalendar deserialization allows CPU denial of service
+        - CVE-2026-59889 — jackson-databind: @JsonView ypassed for @JsonUnwrapped container properties on deserialization
+        - CVE-2026-110879 — jackson-databind: PolymorphicTypeValidator bypass via generic type arguments and array element types allows arbitrary class instantiation (incomplete fix for CVE-2026-54512)
+        - CVE-2026-102554 — Denial of Service via Eager Array Allocation During Deserialization in Guava
+        - CVE-2026-19203 — HTTP Request/Response smuggling
+        - CVE-2026-10050 — Digest authentication lossy encoding
+        - CVE-2026-19863 — Authentication Bypass Using an Alternate Path or Channel
+        - CVE-2026-18660 — Jetty proxy blacklist performs case-sensitive matching of case-insensitive DNS hostnames
+        - CVE-2026-92877 — XML External Entity (XXE) Injection
+      - Upgraded backend dependencies:
+        - logback-classic to 1.5.38
+        - jackson-core to 2.21.8
+        - jackson-databind to 2.21.8
+        - jetty-http to 12.1.15
+        - jetty-security to 12.1.15
+        - guava to 33.8.0-jre
+        - junit-jupiter-api 6.1.3
+      - Upgraded WebUI runtime dependencies:
+        -  @reduxjs/toolkit to 2.15.0
+        - axios to 1.21.1
+        - core-js to 3.51.0
+        - react-redux to 9.3.1
+        - react-router to 7.18.6
+      - Upgraded WebUI development dependencies:
+        - @babel/cli to 7.29.7
+        - @babel/core to 7.29.13
+        - @babel/plugin-transform-class-properties to 7.29.7
+        - @babel/preset-env to 7.29.7
+        - @babel/preset-react to 7.29.7
+        - @babel/register to 7.29.13
+        - babel-loader to 10.1.1
+        - browserslist to 4.29.6
+        - css-loader to 7.1.5
+        - cypress to 16.3.0
+        - eslint to 10.15.0
+        - glob-parent to 6.0.2
+        - sass to 1.108.2
+        - sass-loader to 17.1.1
+        - stylelint to 17.16.0
+        - stylelint-config-standard to 40.0.0
+        - terser-webpack-plugin to 5.6.1
+        - webpack to 5.113.0
+        - webpack-bundle-analyzer to 5.4.3
+        - webpack-cli to 7.3.1
+        - webpack-dev-server to 6.1.0
+      - CI, building and testing:
+        - Upgraded SauceConnect to 5.5.6
+        - Upgraded Maven to 3.9.16-r0
+        - Upgraded actions/checkout to v7
+        - Upgraded actions/upload-artifact to v7
+        - Upgraded Cypress on SauceLabs to 16.1.1
+        - Upgraded npm to 12.2.3
+        - Upgraded registry.gitlab.com/clarin-eric/docker-alpine-clrs-build_env build image to [2.7.0](https://gitlab.com/CLARIN-ERIC/docker-alpine-clrs-build_env/-/releases/2.7.0)
+        - Upgraded registry.gitlab.com/clarin-eric/docker-alpine-supervisor-java-base build image to [openjdk21_jre-1.4.1](https://gitlab.com/CLARIN-ERIC/docker-alpine-supervisor-java-base/-/releases/openjdk21_jre-1.4.1)
+        - Upgraded cypress/browsers testing image to node-26.13.1-chrome-157.0.8103.50-1-ff-160.0-edge-157.0.4341.46-1
+        - Disable Chrome tests on SauceLabs. Currently broken on 16.1.1. See: https://github.com/cypress-io/cypress/pull/35198
+      - Added to `package.json` allow scripts:
+        - core-js 3.51.0
+        - cypress 16.3.0
+        - @parcel/watcher 2.6.0
+    See full Changelog: https://github.com/clarin-eric/switchboard/compare/2.4.7...2..4.8
 
 ## [2.4.7] - 2026-11-19
     Security maintenance release:
