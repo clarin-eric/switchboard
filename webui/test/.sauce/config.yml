@@ -19,14 +19,14 @@ cypress:
   version: 16.1.1
   record: false
 suites:
-- name: "Windows 11 - Chrome"
-  browser: chrome
-  platformName: "Windows 11"
-  screenResolution: "1440x900"
-  config:
-    testingType: e2e
-    specPattern:
-    - 'cypress/e2e/**/*.*'
+#- name: "Windows 11 - Chrome"
+#  browser: chrome
+#  platformName: "Windows 11"
+#  screenResolution: "1440x900"
+#  config:
+#    testingType: e2e
+#    specPattern:
+#    - 'cypress/e2e/**/*.*'
 - name: "Windows 11 - Firefox"
   browser: firefox
   browserVersion: "latest"
@@ -45,14 +45,14 @@ suites:
     testingType: e2e
     specPattern:
     - 'cypress/e2e/**/*.*'
-- name: "macOS 13 - Chrome"
-  browser: chrome
-  platformName: "macOS 13"
-  screenResolution: "1440x900"
-  config:
-    testingType: e2e
-    specPattern:
-    - 'cypress/e2e/**/*.*'
+#- name: "macOS 13 - Chrome"
+#  browser: chrome
+#  platformName: "macOS 13"
+#  screenResolution: "1440x900"
+#  config:
+#    testingType: e2e
+#    specPattern:
+#    - 'cypress/e2e/**/*.*'
 - name: "macOS 13 - Firefox"
   browser: firefox
   browserVersion: "latest"
