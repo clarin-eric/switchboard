@@ -50,10 +50,10 @@ run-interactive-uitests:
 	(cd webui/test && ../node_modules/cypress/bin/cypress run --headed -c baseUrl=${SWITCHBOARD_URL})
 
 dependencies:
-	(cd webui && npm install -g npm@${NPM_VERSION} && npm install)
+	(cd webui && npm install -g npm@${NPM_VERSION} && npm install --force)
 
 dev-dependencies:
-	(cd webui && npm install -g npm@${NPM_VERSION} && npm install --save-dev)
+	(cd webui && npm install -g npm@${NPM_VERSION} && npm install --save-dev --force)
 
 clean:
 	(cd backend && mvn -q clean)
